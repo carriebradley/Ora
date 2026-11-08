@@ -185,11 +185,34 @@
       ${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
   }
 
+  /* ---------- at-a-glance: feast or fast? ---------- */
+  const FEASTRANK = /Solemnity|Feast|Holy Day|Great Feast|Triduum|Principal|Double/;
+  function status(r, rite) {
+    const rk = r.rank || '';
+    const alsoFeast = (r.also || []).find(x => FEASTRANK.test(x.note || ''));
+    const major = /Solemnity|Principal|Great Feast|Feast of the Lord|Holy Day/.test(rk);
+    const feast = (FEASTRANK.test(rk) && !/Holy Week/.test(rk)) || !!alsoFeast;
+    let fast = r.fast || (r.ember ? 'Ember Day — fast and abstinence' : '');
+    if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';  // ordinary weekly fast is lifted on a great feast
+    const minor = /Memorial|Saint|Commemoration|Octave/.test(rk);
+    const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : 'plain';
+    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : minor ? (/Octave/.test(rk) ? 'Octave' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : 'Ordinary day';
+    const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
+    return { kind, badge, detail: [name, fast].filter(Boolean).join(' · ') };
+  }
+  function glanceHTML(v) {
+    const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Sarum', v.sarum, 'sarum']];
+    return `<section class="card glance"><div class="lab"><span class="grow">Today: feast or fast?</span></div>` + rows.map(([n, r, k]) => {
+      const x = status(r, k);
+      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span><span class="gd">${esc(x.detail)}</span></div>`;
+    }).join('') + '</section>';
+  }
+
   /* ---------- tabs ---------- */
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    let h = cardRoman(v) + cardByz(v) + cardSarum(v);
+    let h = glanceHTML(v) + cardRoman(v) + cardByz(v) + cardSarum(v);
     h += `<section class="card"><div class="lab"><span class="grow">Readings of the day</span></div>
       <div class="seg" style="margin-top:8px"><button data-act="rr" data-v="roman" class="${st.readRite === 'roman' ? 'on' : ''}">Roman</button><button data-act="rr" data-v="byz" class="${st.readRite === 'byz' ? 'on' : ''}">Byzantine</button></div>
       ${st.readRite === 'roman' ? romanReadingsHTML(st.date) : byzReadingsHTML(v)}</section>`;
