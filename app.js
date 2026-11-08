@@ -80,7 +80,6 @@
   const usccbAudio = iso => {
     const d = new Date(iso + 'T12:00:00');
     let u = `https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-${MONTHS[d.getMonth()]}-${d.getDate()}-${d.getFullYear()}`;
-    if (d.getDay() === 0) { const x = L.roman(P(iso), S).sundayCycle; if (x) u += '-year-' + String(x).toLowerCase(); }
     return u;
   };
   let feed = null;
