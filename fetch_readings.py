@@ -6,9 +6,9 @@ does not require users to give anything of value. The feed's copyright notice mu
 the text (the app does this). Run daily (see .github/workflows/readings.yml) — the feed only holds
 ~10 days, so readings.json accumulates history.
 
-usage: python3 tools/fetch_readings.py [--file sample.xml] [--out readings.json]
+usage: python3 fetch_readings.py [--file sample.xml] [--out readings.json]
 """
-import json, re, sys, os, urllib.request
+import json, re, sys, os, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 
@@ -69,6 +69,47 @@ def parse(xml_bytes):
     return out, copyright_
 
 
+MONTHS = ['january','february','march','april','may','june','july','august','september','october','november','december']
+PODCAST = 'https://bible.usccb.org/podcasts/audio'
+
+
+def get(url):
+    req = urllib.request.Request(url, headers={'User-Agent': 'ora-personal-prayer-app/1.0 (personal use)'})
+    return urllib.request.urlopen(req, timeout=30).read().decode('utf-8', 'replace')
+
+
+def track_id(html):
+    """The USCCB podcast page embeds a SoundCloud player; pull out the track id."""
+    m = re.search(r'api\.soundcloud\.com(?:%2F|/)tracks(?:%2F|/)(\d+)', html)
+    return m.group(1) if m else None
+
+
+def podcast_slugs(index_html):
+    """Map 'YYYY-MM-DD' -> page slug, from links on the podcast index page (handles feast-day suffixes)."""
+    out = {}
+    for slug in re.findall(r'/podcasts/audio/(daily-mass-reading-podcast-[a-z0-9-]+)', index_html):
+        m = re.match(r'daily-mass-reading-podcast-([a-z]+)-(\d{1,2})-(\d{4})', slug)
+        if m and m.group(1) in MONTHS:
+            out.setdefault(f'{m.group(3)}-{MONTHS.index(m.group(1)) + 1:02d}-{int(m.group(2)):02d}', slug)
+    return out
+
+
+def add_audio(days, fetch=get):
+    """Attach a SoundCloud track id (field 'audio') to each day that lacks one. Failures are skipped quietly."""
+    try: slugs = podcast_slugs(fetch(PODCAST))
+    except Exception: slugs = {}
+    for date, rec in days.items():
+        if rec.get('audio'): continue
+        y, mo, d = date.split('-')
+        guess = f'daily-mass-reading-podcast-{MONTHS[int(mo) - 1]}-{int(d)}-{y}'
+        for slug in dict.fromkeys([slugs.get(date), guess]):
+            if not slug: continue
+            try:
+                t = track_id(fetch(f'{PODCAST}/{slug}'))
+                if t: rec['audio'] = t; break
+            except Exception: pass
+
+
 def main():
     a = sys.argv[1:]
     out_path = a[a.index('--out') + 1] if '--out' in a else 'readings.json'
@@ -78,7 +119,10 @@ def main():
         data = urllib.request.urlopen(req, timeout=30).read()
     new, copyright_ = parse(data)
     old = json.load(open(out_path)) if os.path.exists(out_path) else {}
+    for k, v in new.items():
+        if old.get(k, {}).get('audio') and not v.get('audio'): v['audio'] = old[k]['audio']
     old.update(new)
+    if '--no-audio' not in a: add_audio({k: v for k, v in old.items() if not k.startswith('_')})
     old['_copyright'] = copyright_ or old.get('_copyright', '')
     days = sorted(k for k in old if not k.startswith('_'))
     for k in days[:-KEEP_DAYS]: del old[k]

@@ -106,6 +106,7 @@
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
       if (r.full.title) h += `<p class="muted">${esc(r.full.title)}</p>`;
+      if (/^\d+$/.test(String(r.full.audio || ''))) h += `<iframe title="USCCB audio of the readings" width="100%" height="120" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
       for (const s of r.full.sections) {
         h += `<div class="step" style="margin-top:10px"><div class="t">${esc(s.label)}${s.cite ? ' · ' + esc(s.cite) : ''}</div><div class="tx">${esc(s.text)}</div>${speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
       }
@@ -155,7 +156,7 @@
   }
 
   /* ---------- UI pieces ---------- */
-  const hasTTS = typeof speechSynthesis !== 'undefined';
+  const hasTTS = false; // computer-voice read-aloud switched off (set to typeof speechSynthesis !== 'undefined' to bring it back)
   const speakBtn = text => hasTTS ? `<button class="listen" data-act="say" data-say="${encodeURIComponent(text)}">🔊 Listen</button>` : '';
   const chip = (t, cls = '') => t ? `<span class="chip ${cls}">${esc(t)}</span>` : '';
   const chipsFor = r => chip(r.rank, MAJOR.test(r.rank || '') ? 'major' : '') + (r.season && r.season !== r.rank ? chip(r.season) : '');
