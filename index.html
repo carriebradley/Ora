@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3b1f2b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ora">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Ora — Daily Prayer</title>
+<style>
+:root{
+  --bg:#f6f1e7; --card:#fffdf8; --ink:#2a2220; --muted:#7a6d66; --line:#e4dccd; --accent:#7a2a3d; --accent-ink:#fff; --gold:#b8922a;
+  --shadow:0 1px 2px rgba(60,30,20,.06),0 6px 18px rgba(60,30,20,.06);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{--bg:#171214;--card:#221a1d;--ink:#efe6dc;--muted:#a99b92;--line:#352a2e;--accent:#d98a9c;--accent-ink:#1a1013;--gold:#d3b04c;--shadow:none}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 12px 8px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line)}
+header .date{flex:1;text-align:center;min-width:0}
+header .date b{display:block;font-family:var(--serif);font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#dp{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:50%;top:48px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;color:var(--accent)}
+.ib:active{background:var(--line)}
+main{max-width:720px;margin:0 auto;padding:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 12px;box-shadow:var(--shadow)}
+.lab{display:flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.lab .grow{flex:1}
+.sw{width:12px;height:12px;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.35);flex:none}
+h2{font-family:var(--serif);font-weight:600;font-size:1.3rem;line-height:1.25;margin:6px 0 8px}
+h3{font-family:var(--serif);margin:0 0 6px;font-size:1.05rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chip{font-size:.74rem;padding:2px 9px;border-radius:99px;background:var(--line);color:var(--ink)}
+.chip.major{background:var(--accent);color:var(--accent-ink)}
+.chip.fast{background:#6a3f9a22;color:#6a3f9a}
+@media (prefers-color-scheme:dark){.chip.fast{background:#a07bd422;color:#c4a6ee}}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:.88rem}
+.fast{font-size:.9rem;color:#6a3f9a}
+@media (prefers-color-scheme:dark){.fast{color:#c4a6ee}}
+ul.also{margin:6px 0 0;padding:0;list-style:none;font-size:.88rem;color:var(--muted)}
+ul.also li{padding:2px 0}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;border:1px solid var(--accent);color:var(--accent);font-size:.9rem;text-decoration:none;background:transparent}
+.btn.fill{background:var(--accent);color:var(--accent-ink)}
+.btn.sm{padding:4px 10px;font-size:.8rem}
+.btn:active{opacity:.7}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.listen{color:var(--accent);font-size:.8rem;padding:2px 8px;border-radius:99px;border:1px solid var(--line)}
+.seg{display:flex;background:var(--line);border-radius:99px;padding:3px;gap:2px;margin:0 0 12px}
+.seg button{flex:1;padding:7px 4px;border-radius:99px;font-size:.88rem}
+.seg button.on{background:var(--card);box-shadow:var(--shadow);font-weight:600}
+.quote{font-family:var(--serif);font-size:1.12rem;line-height:1.5;margin:8px 0}
+.quote small{display:block;font-family:var(--sans);font-size:.82rem;color:var(--muted);margin-top:6px}
+.art img{width:100%;max-height:420px;object-fit:contain;background:#0001;border-radius:10px;display:block}
+.art .ph{height:160px;border-radius:10px;background:var(--line);display:grid;place-items:center;color:var(--muted);font-size:.85rem}
+.cite{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--line);font-size:.95rem}
+.cite:first-of-type{border-top:0}.cite span:first-child{color:var(--muted)}
+.step{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:0 0 14px}
+.step.on{border-color:var(--accent)}
+.step .t{font-family:var(--serif);font-weight:600}
+.step .tx{font-family:var(--serif);font-size:1.02rem;line-height:1.55;white-space:pre-wrap}
+.timer{font-variant-numeric:tabular-nums;font-size:1.6rem;font-family:var(--serif)}
+/* tab bar */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.68rem;color:var(--muted);padding:4px 0;border-radius:10px}
+nav button b{font-size:1.25rem;font-weight:400;line-height:1}
+nav button.on{color:var(--accent);font-weight:600}
+/* player */
+#player{position:fixed;left:8px;right:8px;bottom:calc(68px + env(safe-area-inset-bottom));z-index:7;background:var(--accent);color:var(--accent-ink);border-radius:16px;padding:8px 12px;display:none;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+#player.show{display:flex}
+#player .nm{flex:1;min-width:0;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#player button{color:inherit;font-size:1.2rem;width:36px;height:36px;border-radius:50%;background:#fff2}
+/* calendar */
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dow{font-size:.68rem;text-align:center;color:var(--muted);padding:2px 0}
+.cell{aspect-ratio:1/1.08;border-radius:10px;border:1px solid var(--line);background:var(--card);padding:3px 2px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font-size:.82rem;position:relative}
+.cell.out{opacity:.38}.cell.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.cell.sel{background:var(--line)}
+.cell .dots{display:flex;gap:3px;min-height:10px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.35)}
+.dot.maj{box-shadow:0 0 0 2px var(--gold)}
+.cell .f{position:absolute;top:1px;right:3px;font-size:.6rem;color:#6a3f9a}
+.legend{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.legend button{padding:4px 10px;border-radius:99px;border:1px solid var(--line);font-size:.8rem;color:var(--muted)}
+.legend button.on{border-color:var(--accent);color:var(--accent);font-weight:600}
+dialog{border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);max-width:460px;width:calc(100% - 28px);padding:16px}
+dialog::backdrop{background:#0008}
+label{display:block;font-size:.85rem;color:var(--muted);margin:10px 0 3px}
+select,input[type=range]{width:100%;font:inherit;padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.check{display:flex;align-items:center;gap:8px;margin:10px 0;color:var(--ink);font-size:.95rem}
+.check input{width:20px;height:20px}
+a{color:var(--accent)}
+.note{background:var(--line);border-radius:10px;padding:8px 10px;font-size:.84rem;margin:8px 0}
+</style>
+</head>
+<body>
+<header id="hdr"></header>
+<main id="app"></main>
+<div id="player"><div class="nm" id="pname"></div><button data-act="pp" id="ppbtn" title="Pause">❚❚</button><button data-act="stop" title="Stop">■</button></div>
+<nav id="nav">
+  <button data-tab="today"><b>☩</b>Today</button>
+  <button data-tab="pray"><b>✦</b>Pray</button>
+  <button data-tab="calendar"><b>▦</b>Calendar</button>
+  <button data-tab="more"><b>☰</b>More</button>
+</nav>
+<dialog id="dlg"></dialog>
+<script src="calendar.js"></script>
+<script src="sarum.js"></script>
+<script src="data.js"></script>
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
