@@ -243,7 +243,8 @@
     function sundayInfo(L, sunDate) {   // which Sunday after Trinity this is, or null when outside the season covered
       const y = sunDate.getUTCFullYear(), E = L.westernEaster(y), trin = L.add(E, 56), adv = L.advent(y);
       const kt = dd(sunDate, trin);
-      if (kt <= 11 || sunDate >= adv) return null;        // Trinity week and the Octave of Corpus Christi are not covered
+      if (kt < 0 || sunDate >= adv) return null;
+      if (kt === 0) return { key: 1, mk: null, n: 0, trinWeek: true };   // Monday–Wednesday after Trinity Sunday
       const last = dd(adv, sunDate) === 7, n = Math.floor(kt / 7);
       return { key: last ? 'Adv' : Math.min(n, 24), mk: last ? 'trAdv' : 'tr' + Math.min(n, 24), n, last };
     }
@@ -922,6 +923,79 @@
       }
       return pOffice(o, which, dow);
     }
+    /* ---------- Trinity Sunday and the Octave of Corpus Christi (Hayes, Proper of Seasons, pp. 191–201; collects from Warren's Sarum Missal) ---------- */
+    const TC = {
+      trin: 'Almighty and everlasting God, Who hast given unto us Thy servants grace, by the confession of a true faith, to acknowledge the glory of the eternal Trinity, and in the power of Thy majesty to worship the Unity; we beseech Thee that Thou wouldest keep us steadfast in this faith, and evermore defend us from all adversities. Who livest and reignest, One God, world without end. Amen.',
+      corp: 'O God, Who in a wonderful sacrament hast left us a memory of Thy Passion, grant us, we beseech Thee, so to venerate the sacred mysteries of Thy Body and Blood, that we may ever perceive in ourselves the fruit of Thy redemption. Who livest and reignest with God the Father in the unity of the Holy Ghost, God, world without end. Amen.'
+    };
+    const ADESTO = ['Adesto Sancta Trinitas', "Be present, Holy Trinity;\nLike splendour, and one Deity:\nOf things above, and things below,\nBeginning that no end shall know.\n\nThee all the armies of the sky\nAdore, and laud, and magnify:\nWhile Nature, in her triple frame,\nFor ever sanctifies Thy Name.\n\nAnd we, too, thanks and homage pay,\nThine own adoring flock to-day;\nO join to that celestial song\nThe praises of our suppliant throng!\n\nLight, sole and one, we Thee confess,\nWith triple praise we rightly bless;\nAlpha and Omega we own,\nWith every spirit round Thy throne.\n\nTo Thee, O Unbegotten One,\nAnd Thee, O Sole-begotten Son,\nAnd Thee, O Holy Ghost, we raise\nOur equal and eternal praise. Amen."];
+    const OPATER = ['O Pater sancte, mitis atque pie', "O Holy Father, merciful and loving;\nO Jesu Christ, the only Son Eternal;\nO Spirit blest, our spirits sweetly moving,\nOne God supernal.\n\nO Trine, thrice hallowed, Unity unshaken,\nGodhead most mighty; good, all goodness giving,\nLight of the Angels, health of the forsaken,\nHope of all living.\n\nThee, all things worship, which Thou hast created:\nAll Thy creation, Lord, in Thee rejoices,\nWe too will worship Thee with hearts elated;\nO hear our voices.\n\nGlory to Thee, Whose might all might excelleth,\nOne in Three Persons, Thee Whom nought can sever,\nThee, song beseemeth, Thee, with Whom praise dwelleth,\nEver and ever. Amen."];
+    const XDOX2 = "All honour, laud, and glory be,\nO Jesu, Virgin-born, to Thee;\nAll glory, as is ever meet,\nTo Father, and to Paraclete. Amen.";
+    const SACRIS = ['Sacris solemniis', "Let this our solemn feast\nWith holy joys be crowned,\nAnd from each loving breast\nThe voice of gladness sound;\nLet ancient things depart,\nAnd all be new around,\nIn every act and voice and heart.\n\nRemember we that eve,\nThat Supper last and dread,\nWhen Christ, as we believe,\nThe Lamb and leavenless Bread\nUnto His brethren brought;\nAnd thus the law obeyed,\nOf old time to the fathers taught.\n\nBut when the law's repast\nWas o'er, the type complete,\nTo His disciples last\nThe Lord His Flesh to eat,\nThe whole to all, no less\nThe whole to each, doth mete,\nWith His own hand, as we confess.\n\nHe gave the weak and frail\nHis Body for their food,\nThe sad for their regale\nThe Chalice of His Blood,\nAnd said: Take ye of this,\nMy Cup, with life imbued;\nO drink ye all this draught of bliss!\n\nHe ordered in this wise\nOur Holy Offering,\nTo be the Sacrifice\nWhich Priests alone should bring:\nFor whom is meet and fit\nThat they should eat of it,\nAnd in their turn to others give.\n\nLo! Angels' Bread is made\nThe Bread of mortal man;\nShews forth this heavenly Bread\nThe ends which types began;\nO wondrous boon indeed!\nUpon his Lord now can\nA poor and humble servant feed!\n\nThee, Deity Triune\nYet One, we meekly pray\nO visit us right soon,\nAs we our homage pay;\nAnd in Thy footsteps bright,\nConduct us on our way,\nTo where Thou dwell'st in cloudless light. Amen."];
+    const VERBUM = ['Verbum supernum prodiens', "The Word of God proceeding forth,\nYet leaving not the Father's side,\nAnd going to His work on earth,\nHad reached at length life's eventide.\n\nBy a disciple to be given\nTo rivals, for His Blood athirst:\nHimself, the very Bread of heaven,\nHe gave to His disciples first.\n\nHe gave Himself in either kind,\nHis precious Flesh, His precious Blood;\nOf flesh and blood is man combined,\nAnd He of man would be the Food.\n\nIn birth, man's fellow man was He;\nHis Meat, while sitting at the board;\nHe died, his Ransomer to be;\nHe reigns, to be his great Reward.\n\nO saving Victim, slain to bless,\nWho op'st the heavenly gate to all:\nThe attacks of many a foe oppress;\nGive strength in strife, and help in fall.\n\nTo God, the Three in One, ascend\nAll thanks and praise for evermore;\nHe grant the life that shall not end,\nUpon the heavenly country's shore. Amen."];
+    const CC1 = ['1 Corinthians 11', 'The Lord Jesus the same night in which He was betrayed, took bread, and when He had given thanks, He brake it, and said, Take, eat: This is My Body, which is broken for you.'];
+    const BREADV = 'V. Thou gavest them Bread from heaven.\nR. Containing in Itself all sweetness. Alleluia.';
+    const PEACEV = 'V. He maketh peace in thy borders.\nR. And filleth thee with the flour of wheat. Alleluia.';
+    const CFV_ANTS = ['Christ the Lord, a Priest for ever after the order of Melchisedec: offered bread and wine.', 'The merciful Lord hath given meat to them that fear Him: in remembrance of His marvellous works.', 'I will receive the cup of salvation: and offer the sacrifice of thanksgiving.', 'May the children of the church be like the olive-branches: round about the table of the Lord.', 'The Lord Who maketh peace in the borders of the church: filleth us with the flour of wheat.'];
+    const CFV_PS = ['109', '110', '115', '127', '147'];
+    const WISDOM = 'Wisdom hath builded her house, she hath mingled her wine: she hath also furnished her table. Alleluia.';
+    const CL_ANTS = [WISDOM, 'Thou feddest Thine own people with Angels\' food: and didst send them Bread from heaven. Alleluia.', 'The Bread of Christ is fat: yielding royal dainties. Alleluia. Alleluia. Alleluia.', 'Consecrated priests offer incense: and Bread unto the Lord. Alleluia.', 'To him that overcometh will I give the hidden manna: and a new name. Alleluia.'];
+    const SWEET = 'O how sweet is Thy Spirit, O Lord, Who, that Thou mightest shew Thy kindness unto Thy children, giving them most sweet Bread from heaven: fillest the hungry with good things, and sendest the scornful and rich empty away. Alleluia.';
+    const BANQUET = 'O Sacred Banquet, wherein Christ is received, the memory of His Passion renewed: the soul filled with grace, and a pledge of future glory given unto us. Alleluia.';
+    const SUPPER = 'R. A certain man made a great supper, and sent his servants at supper-time to say to them that were bidden, Come, * for all things are now ready.\nV. Come, eat of my bread, and drink of the wine which I have mingled for you.\nR. For all things are now ready.\nV. Glory be to the Father, and to the Son: and to the Holy Ghost.\nR. For all things are now ready.';
+    const ELIJAH = 'R. And Elijah looked, and behold, there was a cake baken on the coals, and he arose and did eat and drink, * and in the strength of that meat he went unto the mount of God.\nV. If any man eat of this Bread, he shall live for ever.\nR. And in the strength of that meat he went unto the mount of God.\nV. Glory be to the Father, and to the Son: and to the Holy Ghost.\nR. He went unto the mount of God.';
+    function tcOffice(o, which) {
+      let h = `<p class="muted" style="font-size:.82rem">${esc(o.name)}. Sarum ${which === 'L' ? 'Lauds' : 'Vespers'} · antiphons, chapters, hymns, responds and memorials from the Hayes <i>Breviary Offices</i> (1880), Proper of Seasons · collect from Warren's Sarum Missal · psalms in the Douay version.${o.extra ? ' ' + esc(o.extra) : ''}</p>`;
+      h += sec('Opening', lines((o.open ? o.open + '\n' : '') + OPEN));
+      const one = o.ants.length === 1;
+      h += sec('Psalms', '<p class="muted" style="font-size:.78rem;margin:2px 0 6px">' + (one ? 'All the psalms are said under one antiphon.' : 'Only the first words of the antiphon before the psalm, the whole antiphon after it.') + (o.vv ? ' On Trinity Sunday a versicle is sung after each psalm, before the antiphon is repeated.' : '') + '</p>' + o.ps.map((refs, i) => one ? (i === 0 ? ant(incipit(o.ants[0]), true) : '') + refs.map(body).join('') + glo() + (i === o.ps.length - 1 ? ant(o.ants[0]) : '') : ant(incipit(o.ants[i]), true) + refs.map(body).join('') + glo() + (o.vv ? lines('V. ' + o.vv[i]) : '') + ant(o.ants[i])).join(''));
+      h += sec(`Chapter · ${o.cap[0]}`, lines(o.cap[1] + '\nR. Thanks be to God.'));
+      if (o.resp) h += sec('Respond', lines(o.resp));
+      h += sec('Hymn · ' + o.hymn[0], lines(o.hymn[1]));
+      h += sec('Versicle', lines(o.v));
+      const ca = which === 'L' ? o.ben : o.mag;
+      h += sec(which === 'L' ? 'Benedictus' : 'Magnificat', ant(incipit(ca), true) + canticle(which === 'L' ? '231' : '232') + ant(ca));
+      h += sec('Collect', lines('V. The Lord be with you.\nR. And with thy spirit.\nLet us pray.') + lines(o.coll));
+      if (o.mem && o.mem.length) h += o.mem.map(([t, a, v, c]) => sec(t, ant(a) + lines(v) + lines('Let us pray.') + lines(c))).join('');
+      h += sec('', lines(ENDV));
+      if (o.note) h += `<p class="muted" style="font-size:.78rem">${esc(o.note)}</p>`;
+      return h;
+    }
+    function corpus(L, date, which, Sar) {
+      const y = date.getUTCFullYear(), E = L.westernEaster(y), kt = dd(date, L.add(E, 56)), dow = date.getUTCDay();
+      if (kt < -1 || kt > 11 || (kt === -1 && which === 'L')) return null;
+      const SUNPS = LAUDS[0].map(g => g[2]);
+      const TRIN5 = ['Glory to Thee, co-equal Trinity, One Deity: before all worlds, and now and for ever.', 'Praise and ceaseless glory be to God, the Father, the Son, and the Holy Ghost: world without end.', 'Glory and praise resound from the lips of all to the Father, and the Only-begotten Son: and like praise for ever to the Holy Ghost.', 'For ever from all lips let praise resound to God the Father, and the Only-begotten Son: and Thee, O Holy Ghost.', 'Of Whom, and through Whom, and in Whom, are all things: to Him be glory for ever.'];
+      const ROM11 = ['Romans 11', 'O the depth of the riches both of the wisdom and knowledge of God! For of Him, and through Him, and to Him, are all things: to Whom be glory for ever. Amen.'];
+      const BLESSV = 'V. Let us bless the Father, the Son, and the Holy Ghost.\nR. Let us praise and exalt Him above all for ever.';
+      const SUNMEM = { v1: ['Memorial of the Sunday', 'Speak, Lord: for Thy servant heareth.', 'V. Let our evening prayer come up before Thee, O Lord.\nR. And let Thy mercy come down on us.', null], l: ['Memorial of the Sunday', 'Father Abraham, have mercy on me: and send Lazarus that he may dip the tip of his finger in water, and cool my tongue.', 'V. The Lord is King.\nR. He hath put on glorious apparel. Alleluia.', null], v2: ['Memorial of the Sunday', 'Son, remember that thou in thy lifetime receivedst thy good things: and likewise Lazarus evil things.', 'V. Lord, let my prayer be set forth.\nR. In Thy sight as the incense.', null] };
+      const c1 = collectFor(Sar, 'tr1'); for (const k in SUNMEM) SUNMEM[k][3] = c1;
+      let o;
+      if (kt === -1) o = { name: 'First Vespers of Trinity Sunday', ants: TRIN5, ps: ['112', '116', '145', '146', '147'].map(p => [p]), cap: ['2 Corinthians 13', 'The grace of our Lord Jesus Christ, and the love of God, and the communion of the Holy Ghost, be with you all.'], resp: 'R. Honour and might, dominion and power, be to the Trinity in Unity, and to the Unity in Trinity, * through everlasting ages.\nV. To the Trinity be constant praise, unceasing glory to the Unity.\nR. Through everlasting ages.\nV. Glory be to the Father, and to the Son: and to the Holy Ghost.\nR. Through everlasting ages.', hymn: ADESTO, v: BLESSV, mag: 'Thanks be to Thee, O God; thanks be to Thee, One Very Trinity: One Supreme Deity, One Holy Unity.', coll: TC.trin };
+      else if (kt === 0 && which === 'L') o = { name: 'Trinity Sunday', open: 'V. Blessed art Thou, O Lord, in the firmament of heaven.\nR. And above all to be praised and glorified for ever.', ants: ['O Holy, blessed, glorious Trinity: Father, and Son, and Holy Ghost.', 'O Holy, blessed, glorious Trinity: Father, and Son, and Holy Ghost.', 'O very and eternal Trinity, supreme: Father, and Son, and Holy Ghost.', 'O very and eternal Trinity, supreme: Father, and Son, and Holy Ghost.', 'Justly, O Blessed Trinity, do all Thy creatures: praise Thee and worship Thee, and glorify Thee.'], vv: ['To Thee be praise, glory, and thanksgiving.', 'Have mercy, have mercy, have mercy upon us.', 'To Thee be praise, glory, and thanksgiving.', 'Have mercy, have mercy, have mercy upon us.', 'To Thee be praise, glory, and thanksgiving.'], ps: SUNPS, cap: ROM11, hymn: OPATER, v: 'V. Blessed be the Name of the Lord.\nR. From this time forth for evermore.', ben: 'Blessed be the Creator and Preserver of all things, the Holy and Undivided Trinity: now and ever, and to ages of ages.', coll: TC.trin };
+      else if (kt === 0) o = { name: 'Trinity Sunday (Vespers)', ants: ['O holy, blessed, glorious Trinity: Father, Son and Holy Ghost.'], ps: VESP[0].map(g => g[2]), cap: ROM11, resp: 'R. Let us bless the Father, the Son, and the Holy Ghost. Alleluia. Alleluia.\nV. Let us praise and exalt Him above all for ever.\nR. Alleluia. Alleluia.\nV. Glory be to the Father, and to the Son: and to the Holy Ghost.\nR. Let us bless the Father, the Son, and the Holy Ghost. Alleluia. Alleluia.', hymn: ADESTO, v: BLESSV, mag: 'Thee O Father unbegotten, Thee O Son Only-begotten, Thee O Holy Ghost the Comforter, O Holy and undivided Trinity: with our whole heart and with our lips we acknowledge Thee, we praise Thee, we bless Thee, to Thee be glory for ever.', coll: TC.trin };
+      else if (kt < 3 || (kt === 3 && which === 'L')) return null;   // Monday to Wednesday morning: the ordinary office (handled by the Trinity-season office)
+      else {
+        const sacr = [SACRIS[0], SACRIS[1].replace(/ Amen\.$/, '').replace(/Thee, Deity Triune[\s\S]*$/, '') + "Thee, Deity Triune\nYet One, we meekly pray\nO visit us right soon,\nAs we our homage pay;\nAnd in Thy footsteps bright,\nConduct us on our way,\nTo where Thou dwell'st in cloudless light. Amen."];
+        const firstV = (dd2) => ({ ants: CFV_ANTS, ps: CFV_PS.map(p => [p]), cap: CC1, resp: SUPPER, hymn: sacr, v: BREADV, mag: SWEET, coll: TC.corp });
+        const secondV = { ants: [WISDOM], ps: CFV_PS.map(p => [p]), cap: CC1, resp: ELIJAH, hymn: sacr, v: BREADV, mag: BANQUET, coll: TC.corp };
+        const lauds = { open: BREADV, ants: CL_ANTS, ps: SUNPS, cap: CC1, hymn: VERBUM, v: PEACEV, ben: 'I am the Living Bread which came down from heaven: if any man eat of this Bread he shall live for ever. Alleluia.', coll: TC.corp };
+        const rot = k => CFV_ANTS[k % 5];
+        if (kt === 3) o = Object.assign({ name: 'First Vespers of Corpus Christi', extra: 'Corpus Christi, the Thursday after Trinity Sunday, is a Principal Double; its office is said throughout the octave, even on Sunday.' }, firstV());
+        else if (kt === 4) o = which === 'L' ? Object.assign({ name: 'Corpus Christi' }, lauds) : Object.assign({ name: 'Corpus Christi (Vespers)' }, secondV);
+        else if (kt === 10 && which === 'V') o = Object.assign({ name: 'First Vespers of the Octave of Corpus Christi' }, firstV(), { ants: [CFV_ANTS[0]] });
+        else if (kt === 11) o = which === 'L' ? Object.assign({ name: 'The Octave of Corpus Christi' }, lauds, { ants: [WISDOM] }) : Object.assign({ name: 'The Octave of Corpus Christi (Vespers)' }, secondV, { resp: null });
+        else if (kt === 7) o = which === 'L' ? Object.assign({ name: 'First Sunday after Trinity (Sunday within the Octave of Corpus Christi)' }, lauds, { ants: [WISDOM], mem: [SUNMEM.l], extra: 'The office is wholly of Corpus Christi, with a memorial of the Sunday.' }) : Object.assign({ name: 'First Sunday after Trinity (Vespers)' }, secondV, { resp: null, mem: [SUNMEM.v2] });
+        else if (kt === 6 && which === 'V') o = Object.assign({ name: 'First Vespers of the Sunday within the Octave of Corpus Christi' }, secondV, { resp: null, mag: SWEET, mem: [SUNMEM.v1, MEM.trinity1V, MEM.cross1V], extra: 'Hayes directs memorials of any saint, of the Sunday, of the Holy Trinity and of the Cross at these Vespers.' });
+        else {
+          const k = (kt - 5) * 2 - (kt > 7 ? 2 : 0) + (which === 'V' ? 1 : 0);
+          o = which === 'L' ? Object.assign({ name: `${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dow]} within the Octave of Corpus Christi` }, lauds, { ants: [WISDOM], ben: rot(k) })
+            : Object.assign({ name: `${['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][dow]} within the Octave of Corpus Christi (Vespers)` }, secondV, { resp: null, mag: rot(k) });
+          o.note = 'Within the octave the antiphons to the Benedictus and Magnificat are taken in turn from the five psalm antiphons of the first Vespers, as Hayes directs.';
+        }
+      }
+      return tcOffice(o, which);
+    }
     function christmas(L, date, which) {
       const m = date.getUTCMonth() + 1, d = date.getUTCDate(), dow = date.getUTCDay();
       const o = (m === 1 && d >= 2) ? epiphanyEntry(m, d, dow, which) : XMAS[`${m}-${d}${which}`]; if (!o) return null;
@@ -954,10 +1028,11 @@
       let first = false, sunDate;
       if (which === 'V' && dow === 6) { first = true; sunDate = L.add(date, 1); }
       else sunDate = L.add(date, -dow);
+      const tcx = corpus(L, date, which, Sar); if (tcx) return tcx;
       const si = sundayInfo(L, sunDate); if (!si) return christmas(L, date, which) || lent(L, date, which, Sar) || paschal(L, date, which, Sar) || advent(L, date, which, Sar);
       const r = Sar && Sar.sarum ? Sar.sarum(date) : null;
       const plain = !r || ['Weekday', 'Sunday', 'Ember Day', 'Vigil', 'Saint of the Missal'].includes(r.rank) || (first && r.rank !== 'Principal Feast');
-      const sunName = si.last ? 'the Sunday next before Advent' : `the ${ordw(si.n)} Sunday after Trinity`;
+      const sunName = si.trinWeek ? 'Trinity Sunday' : si.last ? 'the Sunday next before Advent' : `the ${ordw(si.n)} Sunday after Trinity`;
       const sunday = dow === 0, ferial = !sunday && !first;
       let h = `<p class="muted" style="font-size:.82rem">${first ? 'First Vespers of ' + esc(sunName) + '. ' : ''}Sarum ${which === 'L' ? 'Lauds' : 'Vespers'} for the Trinity season · antiphons, chapter, hymn, petitions and memorials from the Hayes <i>Breviary Offices</i> (1880), translated from the Sarum book · psalms in the Douay version (Vulgate numbering) · collect from Warren's Sarum Missal.</p>`;
       if (!plain) h += `<p class="muted" style="font-size:.82rem">Today is <b>${esc(r.title)}</b> (${esc(r.rank)}). In the Sarum Use a feast takes its Office from the Proper or Common of Saints, which is not in the app yet, so this is the office of the season for the day of the week.</p>`;
@@ -976,9 +1051,10 @@
       h += sec(cname, (ca ? ant(incipit(ca), true) : '<p class="muted" style="font-size:.78rem">The Sarum antiphon to the Magnificat at First Vespers of Sunday follows the summer “histories” (Kings, Wisdom, Job, Tobit, Judith, Maccabees, the Prophets), which change by month. It is not in the app yet.</p>') + canticle(cant) + (ca ? ant(ca) : ''));
       if (ferial) h += sec('Petitions', lines(PRECES_A) + `<div class="muted" style="font-size:.78rem;margin-top:6px">Psalm 50 (Miserere)${which === 'V' ? ' and Psalm 129 (De profundis)' : ''}:</div>` + body('50') + (which === 'V' ? body('129') : '') + glo() + lines(PRECES_B));
       else h += sec('', lines('V. The Lord be with you.\nR. And with thy spirit.'));
-      const coll = collectFor(Sar, si.mk);
+      const coll = si.trinWeek ? TC.trin : collectFor(Sar, si.mk);
       h += sec(`Collect · ${sunName.replace(/^the /, '')}`, lines('Let us pray.') + lines(coll) + '<br>' + lines(ENDV));
       const mems = which === 'L' ? (sunday ? ['crossSunL', 'marySunL'] : ['cross', 'maryFerL', 'saintsL']) : first ? ['trinity1V', 'cross1V', 'mary1V'] : sunday ? ['cross', 'maryV'] : ['cross', 'maryV', 'saintsV'];
+      if (si.trinWeek && mems.includes('cross')) mems.splice(mems.indexOf('cross'), 1);
       h += '<p class="muted" style="font-size:.78rem;margin:8px 0 2px">Memorials (from the Octave of Trinity to Advent):</p>' + memHTML(mems) + sec('', lines(ENDV));
       if (which === 'L') h += sec('For the Peace of the Church', body('122') + glo() + lines("Lord, have mercy. Christ, have mercy. Lord, have mercy.\nOur Father (said silently to the end; then aloud):\nV. And lead us not into temptation.\nR. But deliver us from evil.\n" + PRECES_B) + lines('Let us pray.') + lines(PEACE_C));
       return h;
