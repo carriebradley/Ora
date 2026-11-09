@@ -232,13 +232,13 @@
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Sarum · traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
-      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.mass ? `<p class="muted"><b>${esc(r.mass.title)}</b> — the Mass is in the Readings tab.</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
+      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
   }
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
-    if (!m) return romanReadingsHTML(st.date) + '<p class="muted" style="font-size:.8rem">No Sarum Mass has been transcribed for today yet, so the Roman readings are shown as a stand-in.</p>';
-    let h = `<p class="muted">${esc(m.note)}</p>`;
+    if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">The Sarum Mass for this day has not been added to the app yet. So far the app has the Sundays and weekdays after Trinity, St Patrick and St Bridget; feasts and the other seasons are still to come.</p>`;
+    let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3><p class="muted">${esc(m.note)}</p>`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="cite"><span><b>${esc(p.k)}</b></span><span class="muted" style="text-align:right;font-size:.74rem">${esc(p.pr)}</span></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
       else h += `<div class="cite"><span><b>${esc(p.k)}</b></span></div><p style="white-space:pre-line">${esc(p.tx)}</p>`;
@@ -335,10 +335,10 @@
 
   function viewReadings() {
     const v = dayInfo(st.date); loadReadings(st.date);
-    const rr = st.readRite === 'byz' || st.readRite === 'sarum' ? st.readRite : 'roman';
+    const rr = st.readRite === 'byz' ? 'byz' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Sarum')}</div>${body}</section>`;
+    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}</div>${body}</section>`;
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -353,7 +353,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem"><b>Stand-in:</b> the Sarum text for this part of the year is not in the app yet (so far only the Trinity season, from the end of the Octave of Corpus Christi to Advent). Below is the traditional Roman office instead.</p>' + Hours.hour(L, P(st.date), s.which)) : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : ''}` : '');
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (so far only the Trinity season, from the end of the Octave of Corpus Christi to Advent). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : ''}` : '');
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
