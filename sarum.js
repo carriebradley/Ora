@@ -253,6 +253,9 @@
     Y: 'The Golden Legend, in Caxton\'s English (1483), ed. Ellis (Temple Classics, 1900)',
     X: 'Mirk\'s Festial (c. 1400), English sermons for parishioners on each feast, ed. Erbe (EETS, 1905)',
     P: 'Wordsworth, Ceremonies and Processions of the Cathedral Church of Salisbury (1901), with extracts from the printed Sarum Processionals of 1502–1558',
+    S: 'Reames, Saints\' Legends in Medieval Sarum Breviaries (2021), on the dating of new feasts',
+    Q: 'Pfaff, New Liturgical Feasts in Later Medieval England (1970)',
+    Z: 'Catholic Encyclopedia (1907–1912), article on the feast or saint',
     G: 'Gwynn, "Provincial and Diocesan Decrees of the Diocese of Dublin during the Anglo-Norman Period", Archivium Hibernicum 11 (1944): constitutions of Bicknor (c. 1320), John of St Paul (1352) and Minot (1367)'
   };
   const KEPT = {
@@ -312,7 +315,7 @@
     'fast:ember': [['E', 'Ember Days were fast days on the Wednesday, Friday and Saturday of the four seasons. Ordinations were held on Ember Saturday. The 1526 Sarum kalendar fixes the autumn fast "always on the Wednesday after the Exaltation of the Cross."', 'W'], ['E', 'Mirk has a sermon announcing the Ember days of the coming week ("Wednesday, Friday and Saturday"), which he says Pope Callixtus ordained to be fasted four times a year.', 'X']],
     'fast:rogation': [['E', 'Rogation days: the parish walked in procession behind the cross and banners singing the litany, asking blessing on the growing crops; the Missal says banners were carried on the Rogation Days. In English parishes this was also when the parish boundaries were walked ("beating the bounds"). Meat was not eaten.', 'W R']],
     'fast:vigil': [['E', 'A vigil fast: one meal and no meat, kept on the eve of a great feast. When the eve fell on a Sunday, the fast was kept on the Saturday instead.', 'D'], ['I', 'In 1367 Archbishop Minot of Dublin forbade dances, wrestling and "theatrical games" in churches and churchyards, "especially on vigils and feasts of saints", and banned markets in churchyards.', 'G']],
-    'fast:friday': [['E', 'Every Friday was a day of abstinence from meat in memory of the Passion (Christmas Day was the usual exception). Saturday abstinence was also widely kept in honour of Our Lady.', 'D R'], ['F', 'Irish weekday names preserve an older habit of fasting on Wednesdays and Fridays (Céadaoin, "first fast"; Aoine, "fast"). Wednesday and Friday fasting is documented in early Irish monastic rules; how widely lay people kept the Wednesday fast c. 1500 is not known.', 'O'], ['I', 'At Christ Church, Dublin (1337–46), Friday meals were fish: herrings, oysters, salmon and stockfish. On an ordinary Friday outside Lent the prior\'s party bought butter and cheese as well, since dairy was only forbidden in Lent.', 'A']],
+    'fast:friday': [['E', 'Every Friday was a day of abstinence from meat in memory of the Passion (Christmas Day was the usual exception). Saturday abstinence was also widely kept in honour of Our Lady.', 'D R'], ['O', 'Irish weekday names preserve an older habit of fasting on Wednesdays and Fridays (Céadaoin, "first fast"; Aoine, "fast"). Wednesday and Friday fasting is documented in early Irish monastic rules; how widely lay people kept the Wednesday fast c. 1500 is not known.', 'O'], ['I', 'At Christ Church, Dublin (1337–46), Friday meals were fish: herrings, oysters, salmon and stockfish. On an ordinary Friday outside Lent the prior\'s party bought butter and cheese as well, since dairy was only forbidden in Lent.', 'A']],
     'fast:martin': [['U', 'The "Lent of St Martin", a fast from Martinmas (11 November) to Christmas, is old: it is found in 6th-century Gaul, and early Irish monastic texts know a winter "Lent" before Christmas. Whether lay people in Ireland still kept it c. 1500 has not been confirmed. Sarum Advent itself had no general fast apart from the Ember Days and the Christmas vigil.', 'O']],
     // ----- seasons and movable days -----
     'note:Season of Advent': [['E', 'No Gloria in excelsis; the deacon and subdeacon wore folded chasubles instead of dalmatics. Weddings were not celebrated in Advent. From 16 December the great "O" antiphons were sung at Vespers; the 1526 kalendar marks the day "O Sapientia".', 'W'], ['I', 'In 1352 the Dublin province ordered the sentences of excommunication to be read out in every parish church three times a year: on the first Sunday of Advent, on Septuagesima Sunday and on the Sunday before Lammas. They were read at Mass, with candles lit and bells rung, and explained in the people\'s own language.', 'G']],
@@ -367,6 +370,37 @@
     '11/14': [['I', 'Laurence O\'Toole, archbishop of Dublin (d. 1180, canonised 1225), was patron of Dublin and is in TCD 78 and TCD 88 with nine lessons.', 'B'], ['I', 'Bicknor\'s council (c. 1320) ordered Laurence O\'Toole\'s day to be kept as a double throughout the province of Dublin, and the Eleven Thousand Virgins and the Translation of St Patrick with nine lessons.', 'G']],
     '10/11': [['I', 'Canice was patron of St Canice\'s Cathedral, Kilkenny, and made a double under Bicknor\'s constitutions.', 'B'], ['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Canice in the diocese of Ossory a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
   };
+  // When late feasts entered the calendar (tag N). Added to any notes the day already has.
+  const ADDED = {
+    '7/2': ['The Visitation was instituted by Pope Boniface IX in 1389 and mandated by the Council of Basel in 1441, but English service-books ordinarily include it only after about 1475. A calendar of 1300 or 1400 would not have it.', 'S'],
+    '8/6': ['The Transfiguration was made a feast of the whole Church by Pope Callixtus III in 1457, in thanksgiving for the relief of Belgrade the year before. It belongs only to the calendar of the later 1400s.', 'Z Q'],
+    '8/7': ['The Name of Jesus was one of the last feasts added to the Sarum calendar, in the later 1400s (date approximate). Earlier kalendars do not have it.', 'Q'],
+    '7/16': ['St Osmund, the founder of Salisbury cathedral, traditionally credited with the Sarum Use, was canonized only in 1457 after a long campaign by Salisbury. His feasts are additions of the later 1400s.', 'Z'],
+    '12/4': ['St Osmund, the founder of Salisbury cathedral, traditionally credited with the Sarum Use, was canonized only in 1457 after a long campaign by Salisbury. His feasts are additions of the later 1400s.', 'Z'],
+    '3/1': ['David, Chad and Winifred were ordered for the province of Canterbury by Archbishop Roger Walden in 1398, and again by Archbishop Chichele in 1415. Before then they were mainly local feasts.', 'S'],
+    '3/2': ['David, Chad and Winifred were ordered for the province of Canterbury by Archbishop Roger Walden in 1398, and again by Archbishop Chichele in 1415. Before then they were mainly local feasts.', 'S'],
+    '11/3': ['St Winifred was ordered for the province of Canterbury, with David and Chad, by Archbishop Roger Walden in 1398 and again by Archbishop Chichele in 1415.', 'S'],
+    '5/7': ['John of Beverley (with his Translation on 25 October) was mandated by Archbishop Chichele in 1416, the year after Agincourt, which was fought on the day of his Translation.', 'S'],
+    '10/2': ['Thomas Cantilupe, bishop of Hereford, died in 1282 and was canonized in 1320, so his feast was new in the early 1300s.', 'Z'],
+    '12/29': ['Thomas Becket was murdered in 1170 and canonized in 1173. His feast spread at once and was still new in 1200.', 'Z'],
+    '7/7': ['The Translation of St Thomas Becket commemorates the moving of his relics to the new shrine at Canterbury in 1220, so it belongs to the calendar from the 1220s on.', 'Z'],
+    '10/13': ['Edward the Confessor was canonized in 1161; this feast keeps the translation of his body at Westminster on 13 October 1163.', 'Z'],
+    '11/16': ['Edmund Rich, archbishop of Canterbury, died in 1240 and was canonized in 1246, so his feast was new in the mid-1200s.', 'Z'],
+    '7/26': ['In England St Anne\'s feast was mandated only in 1382–3, after Richard II married Anne of Bohemia; the province of Dublin had already made it a double in 1352.', 'S G'],
+    '12/8': ['The Conception was ordered for the province of Canterbury in 1328–9. Some Sarum books kept it earlier; Dublin made it a double in 1352.', 'S G'],
+    '11/14': ['St Laurence O\'Toole, archbishop of Dublin, died in 1180 and was canonized by Pope Honorius III in 1225, so in 1200 his feast was not yet kept.', 'Z'],
+    'note:Feast of Corpus Christi & Octave': ['Corpus Christi was instituted by Pope Urban IV in 1264, but the first clear evidence of it in England comes more than half a century later. A calendar of 1300 would not have it.', 'S'],
+    'note:Trinity Sunday': ['Long kept in England (Becket was consecrated archbishop on that day in 1162, and tradition linked the feast to him), Trinity Sunday was made a feast of the whole Church by Pope John XXII in 1334.', 'Z']
+  };
+  (KEPT['11/3'] = KEPT['11/3'] || []).push(['N', 'St Malachy of Armagh died at Clairvaux in 1148 and was canonized in 1190, so in 1200 he was a newly canonized Irish saint.', 'Z']);
+  // Older Gaelic customs (tag O): earlier Irish practice, not Sarum observance c. 1500.
+  const GAEL = {
+    'fast:lent': 'Early Irish texts speak of three Lents in the year: the great Lent before Easter, a winter Lent before Christmas and a summer Lent after Pentecost (some texts name them for Jesus, Elijah and Moses). Only the Lent before Easter remained a general fast in the Sarum calendar.',
+    'day:wednesday': 'Wednesday was a fast day in the early Irish Church, kept with Friday: the Irish name Céadaoin means "the first fast", Déardaoin (Thursday) "between the two fasts", and Aoine (Friday) simply "fast". Sarum c. 1500 had no weekly Wednesday fast outside Ember weeks and Lent.',
+    'note:Pentecost (Whitsun) & Whitsun Octave': 'Early Irish monastic texts count a "summer Lent" of forty days after Pentecost. It had no place in the Sarum calendar, where Whitsun week was a time of feasting.'
+  };
+  for (const k in GAEL) (KEPT[k] = KEPT[k] || []).push(['O', GAEL[k], 'O']);
+  for (const k in ADDED) (KEPT[k] = KEPT[k] || []).push(['N', ADDED[k][0], ADDED[k][1]]);
   function keptFor(d, w, t, fast, mk) {
     const out = [], add = (k, lab) => { for (const e of (KEPT[k] || [])) out.push({ tag: e[0], text: e[1], src: e[2].split(' ').filter(Boolean).map(s => KSRC[s]), about: lab }); };
     if (mk) add(mk, w.title);
@@ -380,6 +414,7 @@
     else if (/Vigil|vigil/.test(f) && !/Christmas/.test(w.title)) add('fast:vigil', 'Vigil');
     if (/Lenten fast|Strict fast/.test(f) && t.season !== 'Advent' && !/Martin/.test(f)) add('fast:lent', 'Lenten fast');
     if (/Friday/.test(f)) add('fast:friday', 'Friday');
+    if (dow(d) === 3 && !/Ember|Vigil|vigil|Rogation|Lenten|Strict/.test(f)) add('day:wednesday', 'Wednesday');
     if (/Martin/.test(f)) add('fast:martin', "St Martin's Lent");
     const seen = new Set(); return out.filter(o => { const k = o.text; if (seen.has(k)) return false; seen.add(k); return true; });
   }
