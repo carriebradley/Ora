@@ -748,6 +748,7 @@
     if (rite === 'byz' && now >= 0 && cur < 0) cur = 0;
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div>`;
     hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b>${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
+    if (rite === 'sarum' && window.Hours && Hours.sarumBVM) h += `<details style="margin:10px 0 8px"><summary><b>The Commemoration of Our Lady</b> <span class="muted" style="font-size:.8rem">· a short office of Mary, said on free days, chiefly Saturdays</span></summary>${[['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None'], ['V', 'Vespers'], ['C', 'Compline']].map(([w, n]) => `<details style="margin:4px 0 4px 10px"><summary class="muted" style="font-size:.82rem">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}</details>`;
     h += `<div class="row">${linksHTML(rite, 'any')}</div>`;
     return h;
   }
@@ -779,6 +780,14 @@
     }
   }
   new MutationObserver(() => hydrateAsv()).observe(document.getElementById('app'), { childList: true, subtree: true });
+  // Psalms the Sarum office loads live (not in the built-in psalter): fetch and save them once in the background, so every hour works offline afterwards.
+  setTimeout(async () => {
+    if (!navigator.onLine) return;
+    for (const r of ['psalms 4', 'psalms 6', 'psalms 7', 'psalms 21', 'psalms 22', 'psalms 24', 'psalms 25', 'psalms 30:2-6', 'psalms 37', 'psalms 39', 'psalms 53', 'psalms 90', 'psalms 101', 'psalms 133']) {
+      try { await asvText(r, 'dra'); } catch (e) { /* try again next time */ }
+      await new Promise(res => setTimeout(res, 700));
+    }
+  }, 4000);
 
   function renderHeader() {
     $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button><button class="ib" data-act="today" title="Today">⌂</button>`;

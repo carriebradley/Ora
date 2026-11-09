@@ -1761,7 +1761,7 @@
     const C_END = 'V. Turn us again, O Lord God of Hosts.\nR. Shew the light of Thy countenance, and we shall be whole.\nV. Hear my prayer, O Lord.\nR. And let my crying come unto Thee.\nV. The Lord be with you.\nR. And with thy spirit.\nLet us pray.';
     const C_BLESS = 'V. The Lord be with you.\nR. And with thy spirit.\nV. Bless we the Lord.\nR. Thanks be to God.';
     const BVM_RX = /Blessed Virgin|Virgin Mary|of Mary|Purification|Candlemas|Annunciation|Lady Day|Visitation|Assumption|Conception of/;
-    function compline(L, date, Sar) {
+    function compline(L, date, Sar, forceBVM) {
       const y = date.getUTCFullYear(), m = date.getUTCMonth() + 1, d = date.getUTCDate(), dow = date.getUTCDay(), E = L.westernEaster(y);
       const tom = L.add(date, 1), de = dd(date, E), adv = L.advent(y);
       const ft = feastOf(Sar, date), fm = feastOf(Sar, tom);
@@ -1770,7 +1770,7 @@
       const titles = tT + ' | ' + tM;
       const holyName = /Name of Jesus/.test(titles);
       const festal = lev >= 2 && !holyName;
-      const bvm = BVM_RX.test(titles);
+      const bvm = forceBVM || BVM_RX.test(titles);
       const assump = /Assumption/.test(titles), corpus = de >= 59 && de <= 67;
       // seasons (an evening belongs to the next day's office when that day is a Sunday)
       const od = dow === 6 ? tom : date, ode = dd(od, E);
@@ -2183,7 +2183,7 @@
     }
     /* A Little Hour from a fixed set of proper parts (used for Trinity Sunday, Corpus Christi and the proper feasts) */
     function fixedLH(L, date, which, Sar, NAME, label, D, srcNote) {
-      const coll = dayCollect(L, date, Sar);
+      const coll = D.coll || dayCollect(L, date, Sar);
       const HY = LH_HYMN[which];
       let h = `<p class="muted" style="font-size:.82rem"><b>${NAME}</b> · ${esc(label)}. Sarum ${NAME} from the Hayes <i>Breviary Offices</i> (1880)${srcNote ? ', ' + srcNote : ''} · psalms in the Douay version.</p>`;
       h += sec('Opening', lines('In the Name of the Father, and of the Son, and of the Holy Ghost. Amen.\nOur Father (in silence).\n' + (D.sept ? OPEN.replace('\nAlleluia.', '\nPraise be to Thee, O Lord, King of eternal glory.') : OPEN)));
@@ -2286,6 +2286,47 @@
         rv: { T: [fixR(rvSrc.T[0]), fixR(rvSrc.T[1])], S: [fixR(rvSrc.S[0]), fixR(rvSrc.S[1])], N: [fixR(rvSrc.N[0]), fixR(rvSrc.N[1])] } };
       const label = oc ? oc.head.replace(/ of Feast of /, ' of ').replace(/ of (Assumption|Nativity|Translation|Visitation)/, ' of the $1') : f.r.title.replace(/\s*\(transferred\)/, '');
       return fixedLH(L, date, which, Sar, NAME, label, D, 'Proper of Saints' + (oc ? ' (the hours of the feast are said through its octave)' : ''));
+    }
+    /* The Commemoration of the Blessed Virgin Mary (Hayes, Common of Saints): said in the Sarum Use on free days, chiefly Saturdays */
+    const BVMC = {
+      year: { v: { a: 'Thou art all fair, My love: there is no spot in thee.', cap: ['St Luke 1', 'Blessed is she that believed: for there shall be a performance of those things which were told her from the Lord.'], vv: 'V. Thou art the holy Mother of God.\nR. O Mary, ever Virgin.', mag: 'Thy lips drop as the honeycomb: honey and milk are under thy tongue.' },
+        l: { a: 'O wonderful exchange! The Creator of mankind taking to Himself a living body, vouchsafed to be born of a Virgin: and, proceeding forth as man, made us co-heirs of His Godhead.', cap: ['Ecclesiasticus 24', 'With all these I sought rest: and in whose inheritance shall I abide? So the Creator of all things gave me a commandment, and he that made me caused my tabernacle to rest, and said, Let thy dwelling be in Jacob, and thine inheritance in Israel.'], vv: 'V. God is in the midst of her.\nR. Therefore shall she not be removed.', ben: 'Who is this that goeth forth as the morning: fair as the moon, clear as the sun, terrible as an army with banners?' },
+        h: { T: 'When Thou wast born ineffably of a Virgin, then was the Scripture fulfilled: He shall come down like the rain into a fleece of wool, to save mankind. We praise Thee, O our God.', S: 'In the burning bush which Moses saw unconsumed: we recognise the preservation of thy glorious virginity, O Mother of God.', N: 'The Root of Jesse hath budded; a Star hath risen out of Jacob: a Virgin hath brought forth the Saviour. We praise Thee, O our God.' },
+        hc: { S: ['Ecclesiasticus 24', 'In the holy tabernacle I served before him: and so was I established in Sion.'], N: ['Ecclesiasticus 24', 'And I took root in an honourable people, even in the portion of the Lord\'s inheritance.'] },
+        coll: 'We beseech Thee, O merciful God, grant succour to our frailty: that we who commemorate the holy Virgin Mary, Mother of God, assisted by her pleading, may rise anew from our iniquities. Through Jesus Christ our Lord, Who liveth and reigneth with Thee in the unity of the Holy Ghost, God, world without end. Amen.' },
+      adv: { v: { a: 'The prophets did tell: that the Saviour should be born of the Virgin Mary.', cap: ['Isaiah 7', 'Behold, a Virgin shall conceive, and bear a Son, and shall call His name Emmanuel. Butter and honey shall He eat, that He may know to refuse the evil, and choose the good.'], vv: 'V. Full of grace are thy lips.\nR. Because God hath blessed thee for ever.', mag: 'Fear not, Mary, thou hast found favour with God: behold, thou shalt conceive and bring forth a Son. Alleluia.' },
+        l: { a: 'The prophets did tell: that the Saviour should be born of the Virgin Mary.', cap: ['Isaiah 7', 'Behold, a Virgin shall conceive, and bear a Son, and shall call His name Emmanuel. Butter and honey shall He eat, that He may know to refuse the evil, and choose the good.'], vv: 'V. Full of grace are thy lips.\nR. Because God hath blessed thee for ever.', ben: 'The Holy Ghost shall come down upon thee, Mary: fear not, thou who hast in thy womb the Son of God. Alleluia.' },
+        h: { T: 'The Angel Gabriel was sent to Mary, a Virgin: espoused to Joseph.', S: 'The Angel of the Lord brought tidings unto Mary: and she conceived of the Holy Ghost. Alleluia.', N: 'Hail, Mary, full of grace, the Lord is with thee: blessed art thou among women. Alleluia.' },
+        hc: { S: ['Isaiah 11', 'He shall smite the earth with the rod of His mouth, and with the breath of His lips shall He slay the wicked. And righteousness shall be the girdle of His loins, and faithfulness the girdle of His reins.'], N: ['Isaiah 7', 'The Lord spake unto Ahaz, saying, Ask thee a sign of the Lord thy God; ask it either in the depth, or in the height above. But Ahaz said, I will not ask, neither will I tempt the Lord.'] },
+        coll: 'O God, Who didst will that at the word of an Angel Thy Word should take flesh in the womb of blessed Mary, ever-Virgin: grant to Thy suppliants, that we, who believe her to be the Mother of God, may be helped by her pleading before Thee; through the same Thy Son, Jesus Christ our Lord, Who liveth and reigneth with Thee in the unity of the Holy Ghost, God, world without end. Amen.' }
+    };
+    function bvmHour(L, date, which, Sar) {
+      const y = date.getUTCFullYear(), m = date.getUTCMonth() + 1, d = date.getUTCDate(), dow = date.getUTCDay(), E = L.westernEaster(y), de = dd(date, E), adv = L.advent(y);
+      const advent = date >= adv && !(m === 12 && d >= 24);
+      const easter = de >= 0 && de <= 55, sept = de >= -63 && de < 0;
+      const B = advent ? BVMC.adv : BVMC.year;
+      const fix = t => !t ? t : sept ? t.replace(/\s*Alleluia\.?/g, '').replace(/:\s*$/, '.') : easter && !/Alleluia\.$/.test(t) ? t.replace(/\.?$/, '. Alleluia.') : t;
+      const praise = sept ? '\nPraise be to Thee, O Lord, King of eternal glory.' : '\nAlleluia.';
+      const NAME = { L: 'Lauds', P: 'Prime', T: 'Terce', S: 'Sext', N: 'None', V: 'Vespers' }[which];
+      if (which === 'C') return compline(L, date, Sar, true).replace(/<b>Compline<\/b>[^.]*\./, '<b>Compline</b> · of the Commemoration of Our Lady: Compline of the season, with the Christmas doxology to the hymn and the antiphon "We glorify thee, Mother of God" at the Nunc dimittis (Hayes).');
+      if ('PTSN'.includes(which)) {
+        const D = { dbl: false, pa: fix(B.l.a), prv: 'Thou that didst vouchsafe to be born of a Virgin.', prAl: easter, qa: 'Thee duly praise and adore: Thee all Thy creatures glorify, O Blessed Trinity.' + (easter ? ' Alleluia.' : ''), dox: XDOX, sept, coll: B.coll,
+          a: { T: fix(B.h.T), S: fix(B.h.S), N: fix(B.h.N) }, cap: { T: B.l.cap, S: B.hc.S, N: B.hc.N }, rv: RV_ANN };
+        return fixedLH(L, date, which, Sar, NAME, 'the Commemoration of Our Lady' + (advent ? ' in Advent' : ''), D, 'Common of Saints');
+      }
+      const P = which === 'V' ? B.v : B.l;
+      let h = `<p class="muted" style="font-size:.82rem"><b>${NAME} of the Commemoration of Our Lady</b>${advent ? ' · in Advent' : ''}. From the Hayes <i>Breviary Offices</i> (1880), Common of Saints. In the Sarum Use this short office of Our Lady was said on free days, chiefly Saturdays, when no feast was kept · psalms in the Douay version.</p>`;
+      h += sec('Opening', lines(OPEN.replace('\nAlleluia.', praise)));
+      const a = fix(P.a), ps = which === 'V' ? VESP[dow].map(g => g[2]) : LAUDS[0].map(g => g[2]);
+      h += sec('Psalms', '<p class="muted" style="font-size:.78rem;margin:2px 0 6px">All the psalms are said under one antiphon.</p>' + ant(incipit(a), true) + ps.map(refs => [].concat(refs).map(body).join('') + glo()).join('') + ant(a));
+      h += sec(`Chapter · ${P.cap[0]}`, lines(P.cap[1] + '\nR. Thanks be to God.'));
+      const HK = which === 'V' ? 'ave' : 'gloriosa', H0 = PH2[HK];
+      h += sec('Hymn · ' + H0[0], lines(H0[1].replace('@XDOX', XDOX).replace('@DOX', CDOX)));
+      h += sec('Versicle', lines(P.vv));
+      const ca = fix(which === 'V' ? P.mag : P.ben);
+      h += sec(which === 'V' ? 'Magnificat' : 'Benedictus', ant(incipit(ca), true) + canticle(which === 'V' ? '232' : '231') + ant(ca));
+      h += sec('Collect', lines('V. The Lord be with you.\nR. And with thy spirit.\nLet us pray.\n' + B.coll + '\n' + ENDV));
+      return h;
     }
     function littleHour(L, date, which, Sar) {
       const y = date.getUTCFullYear(), m = date.getUTCMonth() + 1, d = date.getUTCDate(), dow = date.getUTCDay(), E = L.westernEaster(y), de = dd(date, E), adv = L.advent(y);
@@ -2490,9 +2531,9 @@
       if (which === 'L') h += sec('For the Peace of the Church', body('122') + glo() + lines("Lord, have mercy. Christ, have mercy. Lord, have mercy.\nOur Father (said silently to the end; then aloud):\nV. And lead us not into temptation.\nR. But deliver us from evil.\n" + PRECES_B) + lines('Let us pray.') + lines(PEACE_C));
       return h;
     }
-    return { hour, sundayInfo };
+    return { hour, sundayInfo, bvmHour };
   })();
 
-  const api = { hour, week, H, modern, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo };
+  const api = { hour, week, H, modern, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo, sarumBVM: SH.bvmHour };
   if (typeof module !== 'undefined') module.exports = api; else root.Hours = api;
 })(typeof window !== 'undefined' ? window : globalThis);
