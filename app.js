@@ -112,6 +112,7 @@
         h += `<div class="step" style="margin-top:10px"><div class="t">${esc(s.label)}${s.cite ? ' · ' + esc(s.cite) : ''}</div><div class="tx">${esc(s.text)}</div>${speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
       }
       h += `<div class="row">${speakBtn(readingsSpeech(r))}</div>`;
+      const gs = r.full.sections.find(s => /gospel/i.test(s.label) && s.cite); if (gs) h += fathersBlock(gs.cite);
     } else if (r) {
       for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['gospel', 'Gospel']]) if (r[k]) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
@@ -144,11 +145,43 @@
         h += '</div>';
       }
       for (const n of day.notes) h += `<p class="muted">${esc(n)}</p>`;
+      for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
     h += `<p class="muted" style="font-size:.8rem">Citations from the Byzantine lectionary table on byzcath.org (2013, unofficial, Slavic usage). Tap a reference to read it in the RSV-CE. It is built from a table, so check it against your parish book or ECPubs; the Pentecost-to-Triodion stretch around Christmas varies by church.</p>`;
     h += `<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://ecpubs.gumroad.com/l/jTBr">ECPubs Daily Office</a><a class="btn" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Stamford propers</a><a class="btn" target="_blank" rel="noopener" href="https://www.oca.org/readings/daily/${ocaDate(v.iso)}">OCA (Orthodox) check</a></div>`;
     return h;
   }
+
+
+  /* ---------- Church Fathers on the Gospel (public-domain translations, from the open Commentaries Database) ---------- */
+  const GBOOK = { mt: 'Matthew', matthew: 'Matthew', mk: 'Mark', mark: 'Mark', lk: 'Luke', luke: 'Luke', jn: 'John', john: 'John' };
+  function gospelRef(cite) {
+    const m = String(cite || '').match(/^\s*(Mt|Mk|Lk|Jn|Matthew|Mark|Luke|John)\.?\s*(\d+):(\d+)(?:\s*[-–]\s*(?:(\d+):)?(\d+))?(.*)$/i);
+    if (!m) return null;
+    const book = GBOOK[m[1].toLowerCase()], ch = +m[2], v1 = +m[3], ch2 = m[4] ? +m[4] : ch, v2 = m[5] ? +m[5] : v1, out = [];
+    if (ch2 === ch) for (let v = v1; v <= v2; v++) out.push([ch, v]); else out.push([ch, v1]);
+    const rest = m[6] || '', more = rest.match(/^\s*,\s*(\d+)(?:\s*[-–]\s*(\d+))?/);
+    if (more) { const a = +more[1], b = more[2] ? +more[2] : a; for (let v = a; v <= b; v++) out.push([ch, v]); }
+    return { book, verses: out, label: `${book} ${ch}:${v1}${v2 !== v1 && ch2 === ch ? '-' + v2 : ''}` };
+  }
+  let fathersP = null;
+  const loadFathers = () => fathersP || (fathersP = fetch('fathers.json').then(r => { if (!r.ok) throw new Error('x'); return r.json(); }));
+  const AUTH = { 'John Chrysostom': 'St. John Chrysostom', 'Augustine of Hippo': 'St. Augustine', 'Ambrose of Milan': 'St. Ambrose', 'Jerome': 'St. Jerome', 'Gregory the Dialogist': 'St. Gregory the Great', 'Basil of Caesarea': 'St. Basil', 'Hilary of Poitiers': 'St. Hilary', 'Cyril of Alexandria': 'St. Cyril of Alexandria', 'Athanasius of Alexandria': 'St. Athanasius', 'Bede': 'St. Bede', 'Theophylact of Ohrid': 'Theophylact of Ohrid', 'Origen of Alexandria': 'Origen' };
+  function fathersBlock(cite) {
+    const g = gospelRef(cite); if (!g) return '';
+    return `<details class="fathers" data-cite="${esc(cite)}" style="margin-top:12px"><summary><b>Church Fathers on this Gospel</b></summary><div class="fbody muted">Tap to load…</div></details>`;
+  }
+  document.addEventListener('toggle', async e => {
+    const d = e.target; if (!d.classList || !d.classList.contains('fathers') || !d.open || d.dataset.done) return;
+    d.dataset.done = '1'; const body = d.querySelector('.fbody'), g = gospelRef(d.dataset.cite);
+    try {
+      const data = await loadFathers(), bk = data[g.book] || {}, have = g.verses.filter(([c, v]) => bk[c] && bk[c][v]);
+      const pick = have.length <= 4 ? have : [0, 1, 2, 3].map(i => have[Math.round(i * (have.length - 1) / 3)]);
+      if (!pick.length) { body.textContent = 'No commentary found for this passage.'; return; }
+      body.className = 'fbody';
+      body.innerHTML = pick.map(([c, v]) => { const [a, t, q] = bk[c][v]; return `<div class="fq"><div class="muted" style="font-size:.78rem">${esc(g.book)} ${c}:${v}</div><p style="font-family:var(--serif);line-height:1.55;margin:2px 0">“${esc(q)}”</p><div class="muted" style="font-size:.78rem">${esc(AUTH[a] || a)} — ${esc(t)}</div></div>`; }).join('') + '<p class="muted" style="font-size:.74rem">Public-domain translations (Newman’s Catena Aurea; Schaff for Chrysostom and Augustine) from the open Commentaries Database. Excerpts are shortened.</p>';
+    } catch (err) { d.dataset.done = ''; body.textContent = 'Could not load the commentary. Check your connection and try again.'; }
+  }, true);
 
   /* ---------- art (live from Wikipedia, cached) ---------- */
   function loadArt(a) {
