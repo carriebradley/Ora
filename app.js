@@ -184,21 +184,22 @@
   }, true);
 
   /* ---------- art (live from Wikipedia, cached) ---------- */
-  function loadArt(a) {
-    const k = 'ora.art.' + a.q; if (st.art[a.q] !== undefined) return;
+  function loadArt(a) {   // exact Wikipedia article for the work; the image is used only if its file name matches the work (a.fm)
+    const k = 'ora.art2.' + a.q; if (st.art[a.q] !== undefined) return;
     const c = store.get(k, null); if (c) { st.art[a.q] = c; return; }
     st.art[a.q] = 'loading';
-    const u = 'https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=' + encodeURIComponent(a.q) + '&gsrlimit=1&prop=pageimages|info&piprop=thumbnail&pithumbsize=1100&inprop=url&format=json&origin=*';
+    const u = 'https://en.wikipedia.org/w/api.php?action=query&redirects=1&titles=' + encodeURIComponent(a.wt || a.t) + '&prop=pageimages|info&piprop=thumbnail|name&pithumbsize=1100&inprop=url&format=json&origin=*';
     fetch(u).then(r => r.json()).then(j => {
-      const p = j.query && Object.values(j.query.pages)[0];
-      const out = p ? { img: p.thumbnail && p.thumbnail.source, url: p.fullurl } : null;
-      st.art[a.q] = out; if (out) store.set(k, out); render();
+      const p = j.query && j.query.pages && Object.values(j.query.pages)[0];
+      const ok = p && !p.missing && p.pageimage && p.thumbnail && (!a.fm || new RegExp(a.fm, 'i').test(decodeURIComponent(p.pageimage).replace(/_/g, ' ')));
+      const out = p && !p.missing ? { img: ok ? p.thumbnail.source : '', url: p.fullurl } : { img: '', url: 'https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(a.q) };
+      st.art[a.q] = out; store.set(k, out); render();
     }).catch(() => { st.art[a.q] = null; render(); });
   }
   function artHTML(a, big) {
     loadArt(a); const m = st.art[a.q];
     let h = '<div class="art">';
-    h += m && m.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy">` : `<div class="ph">${m === 'loading' ? 'Loading image…' : 'Image unavailable offline'}</div>`;
+    h += m && m.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy">` : `<div class="ph">${m === 'loading' ? 'Loading image…' : m ? 'No verified image of this work — use “About this work”' : 'Image unavailable offline'}</div>`;
     h += `<h3 style="margin-top:10px">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="quote" style="font-size:1rem">${esc(a.p)}</p>`;
     h += `<div class="row"><button class="btn sm" data-act="artnext">Another</button>${m && m.url ? `<a class="btn sm" target="_blank" rel="noopener" href="${esc(m.url)}">About this work</a>` : ''}${speakBtn(`${a.t}. ${a.a}. ${a.p}`)}</div></div>`;
     return h;
@@ -297,10 +298,9 @@
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    let h = glanceHTML(v) + popeCard(v.iso) + histCard(v.iso) + cardRoman(v) + cardByz(v) + cardSarum(v);
+    let h = `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + glanceHTML(v) + popeCard(v.iso) + histCard(v.iso) + cardRoman(v) + cardByz(v) + cardSarum(v);
     h += `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)} · ${q.tr === 'East' ? 'Eastern' : 'Western'} Father/Saint</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    h += `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>`;
     return h;
   }
 
