@@ -126,7 +126,7 @@ const CONTENT = (() => {
         { type: 'quote', title: 'From the Fathers' }, { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Dismissal', T.dismissal)],
       evening: [P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
         P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe), { type: 'art', title: 'Icon' },
-        { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), P('Dismissal', T.dismissal)]
+        { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)]
     },
     sarum: {
       morning: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church (Sarum)' },

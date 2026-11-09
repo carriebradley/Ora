@@ -328,13 +328,14 @@
   const HOURLINKS = {
     roman: { lauds: ['Universalis', 'https://universalis.com/'], vespers: ['Universalis', 'https://universalis.com/'], daytime: ['Universalis', 'https://universalis.com/'], compline: ['Universalis', 'https://universalis.com/'], any: ['Divine Office (audio & text)', 'https://divineoffice.org/'] },
     byz: { orthros: ['Horologion · MCI', 'https://mci.archpitt.org/liturgy/Horologion.html'], vespers: ['Horologion · MCI', 'https://mci.archpitt.org/liturgy/Horologion.html'], hours: ['Horologion · MCI', 'https://mci.archpitt.org/liturgy/Horologion.html'], compline: ['Horologion · MCI', 'https://mci.archpitt.org/liturgy/Horologion.html'], midnight: ['Horologion · MCI', 'https://mci.archpitt.org/liturgy/Horologion.html'], any: ['Divine Praises', 'https://divinepraises.github.io/'] },
-    sarum: { any: ['Divinum Officium (pre-1955 Roman — the text used here)', 'https://www.divinumofficium.com/'] }
+    sarum: { any: ['Breviary Offices — Sarum hours in English (1880)', 'https://commons.ptsem.edu/id/breviaryofficesf00cath'], more: [['Sarum Office with chant, English edition', 'https://www.sarum-chant.ca/'], ['Lesser Hours of the Sarum Breviary', 'https://archive.org/details/lesserhoursofsar00cathuoft']] }
   };
   function linksHTML(rite, hour) {
     const m = HOURLINKS[rite], a = m[hour] || m.any, b = m.any;
     let h = `<a class="btn sm" target="_blank" rel="noopener" href="${a[1]}">${esc(a[0])}</a>`;
     if (b[1] !== a[1]) h += `<a class="btn sm" target="_blank" rel="noopener" href="${b[1]}">${esc(b[0])}</a>`;
     if (rite === 'byz') h += '<a class="btn sm" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Propers</a>';
+    for (const [t, u] of (m.more || [])) h += `<a class="btn sm" target="_blank" rel="noopener" href="${u}">${esc(t)}</a>`;
     return h;
   }
 
@@ -358,7 +359,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (so far only the Trinity season, from the end of the Octave of Corpus Christi to Advent). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : ''}` : '');
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (so far only the Trinity season, from the end of the Octave of Corpus Christi to Advent). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Not in the app yet — Matins, Prime, Terce, Sext, None, Compline, saints\u2019 offices and the other seasons. Read them in English here:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
