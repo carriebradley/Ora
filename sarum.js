@@ -1968,7 +1968,7 @@
       return T(diff(adv, d) === 7 ? 'Sunday next before Advent' : `${ORD(nS)} Sunday after Trinity`, 38, 'Sunday', 'g', 'After Trinity', Object.assign({ mk }, post));
     }
     const ws = add(d, -dow(d)), fmk = diff(adv, ws) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
-    return T(`${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', Object.assign({ fmk, wed: dow(d) === 3 }, post));
+    return T(nS === 0 ? `${wd} after Trinity Sunday` : `${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', Object.assign({ fmk, wed: dow(d) === 3 }, post));
   }
 
   const MN3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
