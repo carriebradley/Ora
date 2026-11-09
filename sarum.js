@@ -1974,11 +1974,24 @@
     const martin = (d >= D(y, 11, 11) && d < D(y, 12, 24)) && dow(d) !== 0 && !same(d, D(y, 11, 11));
     if (!fast && martin) fast = "St. Martin's Lent — an old pre-Christmas fast (whether kept c. 1500 is uncertain)";
     if (!fast && dow(d) === 5 && !(t.season === 'Eastertide' && diff(d, E) < 7) && !/^Nativity of Our Lord/.test(t.title)) fast = 'Friday — day of abstinence';
+    // Vestment colour by the rubric in the 1526 Sarum Missal (Warren I, pp. 24–25); other days keep the app's default.
+    let color = w.color, colorNote = '';
+    const md = w.mk || '', nm = w.title || '', easter = t.season === 'Eastertide' || (t.season === 'Whitsuntide' && t.rank !== 'Principal Feast' && !/Trinity/.test(t.title));
+    const rule = (c, why) => { color = c; colorNote = 'Colour: ' + why + ' (rubric of the Sarum Missal, 1526).'; };
+    if (md === '5/3' || md === '9/14') rule('r', 'red on both feasts of the Holy Cross');
+    else if (easter) rule('w', 'white at every Mass in Eastertide');
+    else if (['3/25', '12/8', '9/29', '10/16', '12/27'].includes(md)) rule('w', 'white for this feast');
+    else if (/^Ash Wednesday|^Maundy Thursday/.test(nm)) rule('r', 'red on Ash Wednesday and Maundy Thursday');
+    else if (w === t && t.rank === 'Sunday') rule('r', 'red on all Sundays outside Eastertide when the Mass is of the Sunday');
+    else if (w.feast && /Confessor|Abbot|Abbess/.test(nm) && !/Martyr/.test(nm)) rule('y', 'yellow on all feasts of confessors');
+    else if (w.feast && (w.src === 'B' || w.src === 'C') && /Kevin|Colmcille|Columba|Brendan|Fursey|Ciar|Finnian|Fintan|Canice|Laserian|Aidan|Moling|Michan|Mac Cuilinn|Eugene|Malachy|Laurence O|Patrick$|Finbarr/.test(nm) && !/Translation of Sts/.test(nm)) rule('y', 'yellow on all feasts of confessors');
+    else if (w.feast && ['1/27','2/6','3/12','4/3','4/4','4/30','6/8','6/9','6/16','7/4','7/15','7/28','8/28','9/4','9/30','10/1','10/23','11/11','11/16','12/6'].includes(md) && !/Colmcille/.test(nm)) rule('y', 'yellow on all feasts of confessors');
+    else if (w.feast && (/Martyr|Apostle|Evangelist/.test(nm) || ['1/25','2/22','4/23','5/1','5/6','6/30','8/1','8/3','8/29','11/25','7/27'].includes(md))) rule('r', 'red on feasts of martyrs, apostles and evangelists');
     const noteKey = w.noteKey || t.noteKey;
     let mass = w.mk && MASS[w.mk] || null; const srcNote = w.mk && SRCNOTE[w.mk] || '';
     if (!mass && t.fmk && (w === t || w.score <= 30)) { mass = ferialMass(t.fmk, t.wed); if (mass && w !== t) mass = Object.assign({}, mass, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the weekday. ` + mass.note }); }
     const kept = keptFor(d, w, t, fast, w.mk);
-    return { kept, rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color: w.color, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
+    return { kept, rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color, colorNote, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
   }
 
   return { sarum, temporal, setData, FIXED, VIGILS, MASS };
