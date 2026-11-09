@@ -10,7 +10,7 @@
 })(typeof self !== 'undefined' ? self : this, function (LC) {
   'use strict';
   const { D, add, iso, westernEaster, advent, DN, ORD } = LC;
-  const SRCTXT = { G: 'Dublin provincial constitutions (Gwynn 1944)', W: 'English Sarum Missal (supplement where no Irish source)', K: 'Standard kalendar', B: 'Irish Sarum kalendars (Buckley 2022)', I: 'Not found in the Irish Sarum kalendars surveyed — your addition, unverified' };
+  const SRCTXT = { C: 'Christ Church, Dublin: martyrology and Dublin kalendars (Todd 1844)', G: 'Dublin provincial constitutions (Gwynn 1944)', W: 'English Sarum Missal (supplement where no Irish source)', K: 'Standard kalendar', B: 'Irish Sarum kalendars (Buckley 2022)', I: 'Not found in the Irish Sarum kalendars surveyed — your addition, unverified' };
   const DAY = 864e5, diff = (a, b) => Math.round((a - b) / DAY), dow = d => d.getUTCDay(), same = (a, b) => a.getTime() === b.getTime();
   const sunBefore = d => add(d, -(dow(d) || 7)), sunOnOrBefore = d => add(d, -dow(d));
   let NOTES = {};
@@ -30,6 +30,7 @@
 1/14|St. Felix, Bishop and Martyr|T|r|0|W
 1/15|St. Maurus, Abbot and Confessor|T|w|0|W
 1/16|St. Marcellus, Pope and Martyr|T|r|0|W
+1/16|St. Fursey (Fursa), Abbot|T|w|0|C
 1/17|St. Sulpicius, Bishop and Confessor|T|w|0|W
 1/18|St. Prisca, Virgin and Martyr|T|r|0|W
 1/19|St. Wulstan, Bishop and Confessor|N|w|0|W
@@ -49,6 +50,7 @@
 2/10|St. Scholastica, Virgin|T|w|0|W
 2/14|St. Valentine, Bishop and Martyr|T|r|0|W
 2/16|St. Juliana, Virgin and Martyr|T|r|0|W
+2/17|St. Fintan of Clonenagh, Abbot|T|w|0|C
 2/22|Chair of St. Peter|D|w|0|W
 2/24|St. Matthias, Apostle|D|r|0|W
 3/1|St. David, Bishop and Confessor|N|w|0|W
@@ -77,6 +79,7 @@
 5/6|St. John before the Latin Gate|T|w|0|W
 5/7|St. John of Beverley, Bishop and Confessor|T|w|0|W
 5/10|Sts. Gordian and Epimachus, Martyrs|T|r|0|W
+5/10|Translation of St. Laurence O'Toole|T|w|0|C
 5/12|Sts. Nereus, Achilleus and Pancras, Martyrs|T|r|0|W
 5/16|Feast of St. Brendan the Navigator|T|w|0|B
 5/19|St. Dunstan, Archbishop and Confessor|N|w|0|W
@@ -86,7 +89,7 @@
 5/31|St. Petronilla, Virgin|T|w|0|W
 6/1|St. Nicomede, Martyr|T|r|0|W
 6/2|Sts. Marcellinus and Peter, Martyrs|T|r|0|W
-6/3|Feast of St. Kevin of Glendalough|N|w|0|B
+6/3|Feast of St. Kevin of Glendalough|D|w|0|B
 6/5|St. Boniface and Companions, Martyrs|T|r|0|W
 6/8|Sts. Medard and Godard, Bishops|T|w|0|W
 6/9|Feast of St. Colmcille (Columba)|N|w|0|B
@@ -144,7 +147,7 @@
 8/19|St. Magnus, Martyr|M|r|0|W
 8/23|Sts. Timothy and Apollinaris, Martyrs|T|r|0|W
 8/24|St. Bartholomew, Apostle|D|r|0|W
-8/25|St. Michan of Dublin|N|w|0|B
+8/25|St. Michan of Dublin|D|w|0|B
 8/27|St. Rufus, Martyr|T|r|0|W
 8/28|St. Augustine of Hippo|D|w|0|W
 8/29|Beheading of St. John the Baptist|N|r|0|W
@@ -154,7 +157,7 @@
 9/1|St. Giles, Abbot|N|w|0|W
 9/4|Translation of St. Cuthbert, Bishop|N|w|0|W
 9/5|St. Bertin, Abbot|T|w|0|W
-9/6|St. Mac Cuilinn of Lusk|T|w|0|B
+9/6|St. Mac Cuilinn of Lusk|D|w|0|B
 9/8|Nativity of the Virgin Mary & Octave|J|w|7|W
 9/9|Feast of St. Ciarán of Clonmacnoise|D|w|0|I
 9/9|St. Gorgonius, Martyr|M|r|0|W
@@ -199,6 +202,7 @@
 11/8|The Four Crowned Martyrs|T|r|0|W
 11/9|St. Theodore, Martyr|T|r|0|W
 11/11|Martinmas / Saint Martin's Lent|N|w|0|W
+11/12|St. Begnet, Virgin (patron of Dalkey)|N|w|0|C
 11/13|St. Brice, Bishop and Confessor|T|w|0|W
 11/14|Feast of St. Laurence O'Toole|N|w|0|B
 11/15|St. Machutus (Malo), Bishop and Confessor|N|w|0|W
@@ -244,6 +248,7 @@
     L: 'Fourth Lateran Council (1215), canon 21',
     O: 'Early Irish monastic texts (8th–9th c.), e.g. the Céli Dé rules',
     T: 'Fletcher, "Early Dublin Drama", in Drama, Performance, and Polity in Pre-Cromwellian Ireland (2000)',
+    V: 'Berry, ed., Register of Wills and Inventories of the Diocese of Dublin, 1457–1483 (1898)',
     A: 'Mills, ed., Account Roll of the Priory of the Holy Trinity, Dublin, 1337–1346 (1891)',
     Y: 'The Golden Legend, in Caxton\'s English (1483), ed. Ellis (Temple Classics, 1900)',
     X: 'Mirk\'s Festial (c. 1400), English sermons for parishioners on each feast, ed. Erbe (EETS, 1905)',
@@ -299,7 +304,7 @@
     '1/31': [['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Aidan (Maedóc) in the diocese of Ferns a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
     '4/18': [['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Laserian in the diocese of Leighlin a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
     '7/22': [['I', 'In 1367 Archbishop Minot made St Mary Magdalene a double throughout the province of Dublin, with a duty to hear Mass in the parish church and abstain from all servile, farm and manual work.', 'G'], ['E', 'Mirk tells the parish to come to church on St Mary Magdalene\'s day.', 'X']],
-    '11/25': [['I', 'St Katherine was made a double and a holy day in the province of Dublin in 1352. In 1367 work was again allowed when needed, because the extra holidays were being spent in taverns.', 'G'], ['E', 'Mirk tells the parish to come to church on St Katherine\'s day.', 'X'], ['E', 'Who she was, as the Golden Legend tells it: Katherine of Alexandria, a king\'s daughter who out-argued the emperor\'s philosophers. The spiked wheel built to kill her broke apart, and she was beheaded.', 'Y']],
+    '11/25': [['I', 'St Katherine was made a double and a holy day in the province of Dublin in 1352. In 1367 work was again allowed when needed, because the extra holidays were being spent in taverns.', 'G'], ['E', 'Mirk tells the parish to come to church on St Katherine\'s day.', 'X'], ['E', 'Who she was, as the Golden Legend tells it: Katherine of Alexandria, a king\'s daughter who out-argued the emperor\'s philosophers. The spiked wheel built to kill her broke apart, and she was beheaded.', 'Y'], ['I', 'A Dublin will of 1457–83 leaves money to "the light of St Katherine of Swords", a candle kept burning before her image.', 'V']],
     '7/26': [['I', 'In 1352 St Anne was made a double and a holy day in the province of Dublin, together with the Translation of St Thomas and St Katherine. In 1367 Archbishop Minot kept them as doubles but allowed work outside church when needed, especially to help the poor at harvest. He complained that many people spent these new holidays "in taverns and drunkenness" instead of at church.', 'G']],
     'title:Easter Monday': [['I', 'Easter Monday was "Black Monday" in Dublin: the mayor and citizens rode out in a civic progress, a custom shared with Chester.', 'T']],
     // ----- fasts -----
@@ -337,9 +342,9 @@
     'note:Vigil Fast of Christmas': [['E', 'The Christmas vigil was a strict fast; the Christmas Masses began at midnight.', 'W']],
     // ----- fixed feasts -----
     '1/1': [['E', 'The Circumcision, a Lesser Double and the octave day of Christmas. New Year\'s gifts were exchanged on this day, but the legal year in England and the English parts of Ireland began on 25 March.', 'W R'], ['E', 'Mirk: "this day is called New Year\'s day, as ending of the year that is gone and beginning of the year that is coming"; the people come to church to begin the year\'s service of God.', 'X'], ['I', 'At Christ Church, Dublin (accounts of 1337–46), wine was served in the refectory on only twelve days a year: Christmas, Epiphany, the Purification, Easter Day and the Ascension (the most); the Circumcision, St Patrick and the Invention of the Cross; and Palm Sunday, the Easter Vigil, Easter Tuesday and Low Sunday. On other days the canons drank ale.', 'A']],
-    '2/1': [['I', 'Brigid is in every Irish Sarum kalendar Buckley surveyed; a double in the Dublin province under Archbishop Bicknor (c. 1320), nine lessons in TCD 78.', 'B'], ['F', 'Brigid\'s crosses, the brat Bríde (a cloth left out for her blessing) and the Brídeóg procession are recorded in folklore of the 19th and 20th centuries; their medieval history is not documented.', 'K'], ['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Brigid in the diocese of Kildare a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
+    '2/1': [['I', 'Brigid is in every Irish Sarum kalendar Buckley surveyed; a double in the Dublin province under Archbishop Bicknor (c. 1320), nine lessons in TCD 78.', 'B'], ['F', 'Brigid\'s crosses, the brat Bríde (a cloth left out for her blessing) and the Brídeóg procession are recorded in folklore of the 19th and 20th centuries; their medieval history is not documented.', 'K'], ['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Brigid in the diocese of Kildare a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G'], ['I', 'A Dublin will of 1457–83 leaves money to "the light of St Brigid" in the church of Swords, a candle kept burning before her image and paid for by parishioners.', 'V']],
     '2/2': [['E', 'Candlemas: candles were blessed for clergy and people at a station before Mass, and everyone walked in procession carrying a lit candle, then offered the candle. A Greater Double.', 'W P D'], ['I', 'In 1509 St Patrick\'s Cathedral, Dublin, paid Thomas Mayowe for "playing with seven lights" at Christmas and at the Purification (Candlemas).', 'T'], ['E', 'Mirk speaks of devout people who "fast her evens bread and water" in honour of Our Lady, and says that on Candlemas "holy church maketh great melody" in Our Lady\'s purifying, Simeon\'s meeting and "candles offering".', 'X'], ['I', 'At Christ Church, Dublin (accounts of 1337–46), wine was served in the refectory on only twelve days a year: Christmas, Epiphany, the Purification, Easter Day and the Ascension (the most); the Circumcision, St Patrick and the Invention of the Cross; and Palm Sunday, the Easter Vigil, Easter Tuesday and Low Sunday. On other days the canons drank ale.', 'A']],
-    '3/17': [['I', 'Patrick\'s feast became a major double under Bicknor\'s constitutions (c. 1320) and was red-letter in the Irish kalendars. His relics, with Brigid\'s and Columba\'s, were enshrined at Downpatrick (see 10 June).', 'B'], ['I', 'St Patrick\'s Purgatory on Lough Derg drew pilgrims from all over Europe. Pope Alexander VI ordered the cave closed in 1497, and the order was carried out on St Patrick\'s Day; the pilgrimage soon resumed on Station Island.', 'C'], ['U', 'The idea that the Lenten fast was lifted for St Patrick\'s Day is not documented for c. 1500.', ''], ['I', 'In 1466 the Dublin city assembly guaranteed safe passage to everyone coming into the city for the feasts of Corpus Christi, St George and St Patrick "for procession and pilgrimage".', 'T'], ['I', 'Archbishop Bicknor\'s provincial council (c. 1320) made Patrick\'s day a double throughout the province of Dublin and ordered a solemn commemoration of Patrick once a week outside Lent. In 1367 Archbishop Minot confirmed it as a full holy day, with no work.', 'G'], ['E', 'Who he was, as the Golden Legend tells it: Patrick, who, when the Irish would not repent, drew a circle on the ground with his staff; a deep pit opened, which God showed him was a place of purgatory. "Certainly such a place there is in Ireland wherein many men have been, and yet daily go in and come again." It also says Patrick "professed and veiled" St Bride (Brigid), and that he, Columba and Bride were buried together in Ulster.', 'Y'], ['I', 'At Christ Church, Dublin (accounts of 1337–46), wine was served in the refectory on only twelve days a year: Christmas, Epiphany, the Purification, Easter Day and the Ascension (the most); the Circumcision, St Patrick and the Invention of the Cross; and Palm Sunday, the Easter Vigil, Easter Tuesday and Low Sunday. On other days the canons drank ale.', 'A']],
+    '3/17': [['I', 'Patrick\'s feast became a major double under Bicknor\'s constitutions (c. 1320) and was red-letter in the Irish kalendars. His relics, with Brigid\'s and Columba\'s, were enshrined at Downpatrick (see 10 June).', 'B'], ['I', 'St Patrick\'s Purgatory on Lough Derg drew pilgrims from all over Europe. Pope Alexander VI ordered the cave closed in 1497, and the order was carried out on St Patrick\'s Day; the pilgrimage soon resumed on Station Island.', 'C'], ['U', 'The idea that the Lenten fast was lifted for St Patrick\'s Day is not documented for c. 1500.', ''], ['I', 'In 1466 the Dublin city assembly guaranteed safe passage to everyone coming into the city for the feasts of Corpus Christi, St George and St Patrick "for procession and pilgrimage".', 'T'], ['I', 'Archbishop Bicknor\'s provincial council (c. 1320) made Patrick\'s day a double throughout the province of Dublin and ordered a solemn commemoration of Patrick once a week outside Lent. In 1367 Archbishop Minot confirmed it as a full holy day, with no work.', 'G'], ['E', 'Who he was, as the Golden Legend tells it: Patrick, who, when the Irish would not repent, drew a circle on the ground with his staff; a deep pit opened, which God showed him was a place of purgatory. "Certainly such a place there is in Ireland wherein many men have been, and yet daily go in and come again." It also says Patrick "professed and veiled" St Bride (Brigid), and that he, Columba and Bride were buried together in Ulster.', 'Y'], ['I', 'At Christ Church, Dublin (accounts of 1337–46), wine was served in the refectory on only twelve days a year: Christmas, Epiphany, the Purification, Easter Day and the Ascension (the most); the Circumcision, St Patrick and the Invention of the Cross; and Palm Sunday, the Easter Vigil, Easter Tuesday and Low Sunday. On other days the canons drank ale.', 'A'], ['I', 'Christ Church, Dublin, kept the Bachal Ísu, the "staff of Jesus" said to have been carried by St Patrick, brought from Armagh in 1180. Crowds of pilgrims came to venerate it.', 'V']],
     '3/25': [['E', 'Lady Day, a Lesser Double, and the first day of the legal year in England and English Ireland (until 1752); a quarter day for rents.', 'W']],
     '4/23': [['I', 'Dublin kept St George\'s Day with a civic pageant recorded in the Chain Book: the past mayor provided the emperor and empress, the current mayor a horse for St George, with a maiden leading the dragon.', 'H'], ['E', 'An Inferior Double in the 1526 Sarum kalendar.', 'W'], ['I', 'In 1466 St George\'s Day drew crowds into Dublin. In the 1498 pageant lists the city\'s St George pageant, with the dragon, went in procession out to St George\'s Chapel beyond the walls.', 'T'], ['E', 'Mirk tells the parish to come to church on St George\'s day.', 'X']],
     '4/25': [['E', 'St Mark: the Greater Litany, a procession with banners and litany (the kalendar notes "Greater Litany").', 'W'], ['E', 'Mirk has a short parish sermon for St Mark\'s day.', 'X'], ['E', 'The Golden Legend explains that the Greater Litany on St Mark\'s day was also called "the black cross": people went in black clothing, and crosses and altars were covered, as a sign of penance.', 'Y']],
@@ -351,9 +356,9 @@
     '8/7': [['E', 'The Name of Jesus, a Greater Double: a late-medieval devotion, often paired with the weekly Jesus Mass on Fridays.', 'W D']],
     '8/15': [['E', 'The Assumption, a Principal Double, with a vigil fast.', 'W'], ['F', '"Pattern" days at holy wells around mid-August are documented mostly after the Reformation.', 'K'], ['E', 'Mirk calls the Assumption "an high feast" and says the eve is to be fasted by "each man and woman that is twelve year old".', 'X']],
     '9/14': [['E', 'Holy Cross Day, a Lesser Double. The autumn Ember fast followed on the next Wednesday.', 'W']],
-    '9/29': [['E', 'Michaelmas: an Inferior Double and one of the English quarter days, when rents fell due and terms began.', 'W R'], ['E', 'Mirk: on Michaelmas the Church remembers all God\'s angels, and especially St Michael; the people were to come to church.', 'X']],
+    '9/29': [['E', 'Michaelmas: an Inferior Double and one of the English quarter days, when rents fell due and terms began.', 'W R'], ['E', 'Mirk: on Michaelmas the Church remembers all God\'s angels, and especially St Michael; the people were to come to church.', 'X'], ['I', 'The Dublin wills register (1457–83) includes provision for a pilgrimage to St Michael\'s Mount in Cornwall, where pilgrims could gain a plenary indulgence.', 'V']],
     '11/1': [['E', 'All Saints, a Greater Double. On the evening, and through the night into All Souls, church bells were rung for the dead.', 'W D'], ['E', 'Mirk: fast the eve, "and come to the church to the first evensong, and on the morrow to matins, and to mass, and to the second evensong".', 'X']],
-    '11/2': [['E', 'All Souls: Masses and the Office of the Dead (Placebo and Dirige) for all the faithful departed. Families paid for prayers and the bells were rung.', 'W D'], ['F', 'Soul cakes, and the Irish customs of Samhain night, are recorded in later folklore.', 'K'], ['E', 'Mirk: "the morrow after All-hallow-day is evermore Soulmass-day", when the Church sings and reads for all the souls in purgatory.', 'X']],
+    '11/2': [['E', 'All Souls: Masses and the Office of the Dead (Placebo and Dirige) for all the faithful departed. Families paid for prayers and the bells were rung.', 'W D'], ['F', 'Soul cakes, and the Irish customs of Samhain night, are recorded in later folklore.', 'K'], ['E', 'Mirk: "the morrow after All-hallow-day is evermore Soulmass-day", when the Church sings and reads for all the souls in purgatory.', 'X'], ['I', 'Dublin wills of 1457–83 show how the dead were remembered: money for "trentals" (sets of thirty Masses, sometimes three on each of the ten great feasts), month\'s minds, chantry priests, and bequests to parish fraternities whose members prayed for one another in life and after death.', 'V']],
     '11/11': [['E', 'Martinmas: a feast of nine lessons (triple invitatory). In England it was the season for slaughtering and salting beef for the winter.', 'W R'], ['F', 'The Irish custom of shedding the blood of an animal on St Martin\'s Eve is recorded in 19th–20th-century folklore.', 'K'], ['E', 'Mirk tells the parish to come to church on St Martin\'s day, calling him "the holiest confessor" after the apostles.', 'X']],
     '12/6': [['E', 'In English cathedrals and collegiate churches a boy bishop was chosen from the choirboys around St Nicholas and presided at services on Holy Innocents (28 December).', 'R P']],
     '12/8': [['E', 'The Conception of Blessed Mary, a Lesser Double.', 'W'], ['I', 'In 1352 the Conception of Our Lady was made a double throughout the province of Dublin and a holy day: people were to go to Mass in their parish church and do no servile, farm or manual work, as on her Nativity. Minot confirmed it in 1367.', 'G'], ['E', 'Mirk announces it to the parish as "our Lady-day that is called the Conception", and the sermon tells the story of Joachim and Anne.', 'X']],
@@ -392,7 +397,7 @@
     '2/24': 'Rank: an Inferior Double of nine lessons in Procter and Wordsworth\'s table of feasts (Breviarium, fasc. III, 1886).'
   }, RANK_PLUS = new Set(["2/22", "7/7", "8/6", "8/28", "11/2", "4/30"]);
   function rankNote(f) {
-    if (f.src === 'B' || f.src === 'I') return '';
+    if (f.src === 'B' || f.src === 'I' || f.src === 'C') return '';
     if (f.src === 'G') return 'Rank: a double in the province of Dublin under its provincial constitutions (1352 for St Anne and St Katherine, 1367 for St Mary Magdalene; Gwynn 1944). In the English Sarum kalendar it was a feast of nine lessons.';
     if (RANK_PLUS.has(f.m + '/' + f.d)) return "Rank: Warren (1911) lists this as a double that was kept as such although the 1526 Sarum kalendar does not mark it.";
     if (RANK_UNC.has(f.m + '/' + f.d)) return "";
@@ -402,10 +407,14 @@
 
   // Evidence notes for the Irish entries: Ann Buckley, 'Insular Saints in Irish Sarum Kalendars of the Office' (2022).
   const SRCNOTE = {
+    "1/16": "Fursey (Fursa), the Irish monk whose visions Bede recorded, is in the Christ Church, Dublin martyrology (Todd 1844). The martyrology does not give his rank, so three lessons is assumed.",
+    "2/17": "Fintan of Clonenagh is in the Christ Church, Dublin martyrology (Todd 1844). His rank is not recorded there, so three lessons is assumed.",
+    "5/10": "The translation of Laurence O'Toole's relics is in the Christ Church, Dublin martyrology (Todd 1844). His rank is not recorded there, so three lessons is assumed. In England 10 May is Sts Gordian and Epimachus.",
+    "11/12": "Begnet, patron of Dalkey: the Dublin kalendars quoted by Todd (1844) give her nine lessons \"per constitutiones\", by the Dublin constitutions.",
     "3/17": "Patrick is in every Irish Sarum kalendar Buckley surveyed, always a double and usually red-letter. Under Archbishop Bicknor's constitutions (c. 1320) his feast became a major double. TCD 78 (1488–1500) and TCD 88 (after 1488) both give him nine lessons, in red.",
     "2/1": "Procter and Wordsworth's table of Sarum feasts (1886) gives Brigid three lessons in England but notes she was a double in the diocese of Kildare and in the province of Dublin. Brigit is in every Irish Sarum kalendar surveyed. TCD 78 (1488–1500) has her in red with nine lessons; the Dublin province made her a double under Bicknor's constitutions (c. 1320). She is also in English Sarum kalendars.",
     "5/16": "Brendan of Clonfert: three lessons in TCD 78 and TCD 88, nine lessons in TCD 77 (Armagh, c. 1450).",
-    "6/3": "Kevin: nine lessons in TCD 88; in the Irish kalendars but not among the saints named in Dublin's episcopal constitutions.",
+    "6/3": "Kevin: Dublin kalendars quoted by Todd (1844) mark him \"duplex festum per constitutiones Dublin\", a double by the Dublin constitutions; he is also in the Christ Church martyrology. Nine lessons in TCD 88 (Buckley).",
     "6/9": "Colmcille shares 9 June with the Translation of St Edmund of Abingdon and is often a later addition. Absent from TCD 78 (1488–1500) and NLI 19954.",
     "11/3": "Malachy appears only in TCD 77 (Armagh Cathedral, c. 1450), with nine lessons. The ordinary Sarum saint of 3 November is Winifred.",
     "11/14": "Laurence O'Toole: in TCD 78, TCD 88 (nine lessons) and named in Dublin's constitutions.",
@@ -418,8 +427,8 @@
     "4/18": "Laserian of Leighlin: a double under Bicknor's constitutions (c. 1320); nine lessons in TCD 88.",
     "6/10": "Translation of Patrick, Columba and Brigit: in every manuscript surveyed except TCD 77 and NLW 21604A.",
     "6/17": "Moling of Ferns: nine lessons in TCD 78.",
-    "8/25": "Michan of Dublin: nine lessons in TCD 78; named in Dublin's constitutions.",
-    "9/6": "Mac Cuilinn of Lusk: in TCD 78 and TCD 88; named in Dublin's constitutions.",
+    "8/25": "Michan of Dublin: nine lessons in TCD 78; named in Dublin's constitutions. The Dublin kalendars quoted by Todd (1844) mark him \"duplex festum per constitutiones\", a double by the Dublin constitutions. St Michan's church in Dublin was one of the prebends of Christ Church. He is also in the Christ Church martyrology.",
+    "9/6": "Mac Cuilinn of Lusk: in TCD 78 and TCD 88; named in Dublin's constitutions. The Dublin kalendars quoted by Todd (1844) mark him \"duplex festum per constitutiones\", a double by the Dublin constitutions.",
     "10/11": "Canice of Kilkenny: red-letter, nine lessons in TCD 78 (written for St Canice's, Kilkenny, 1488–1500); a double under Bicknor's constitutions (Ossory).",
     "12/12": "Finnian of Clonard: nine lessons in TCD 78; a 16th-century addition in TCD 88."
   };
@@ -1939,7 +1948,7 @@
     };
     for (const f of FIXED) {
       const e = feastDate(f);
-      if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: (f.src === 'B' || f.src === 'G') && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
+      if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: (f.src === 'B' || f.src === 'G' || f.src === 'C') && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
       if (f.oct) {
         const j = diff(d, e);
         if (j > 0 && j <= f.oct) items.push({ title: j === f.oct ? `Octave Day of ${f.name.replace(/ & Octave$/, '')}` : `Day within the Octave of ${f.name.replace(/ & Octave$/, '')}`, score: j === f.oct ? 62 : 38, rank: 'Octave Day', color: f.color, season: t.season, noteKey: f.name, src: f.src });
@@ -1955,7 +1964,8 @@
           items.push({ title: `Vigil of ${key}`, score: 50, rank: 'Vigil', color: 'v', season: t.season, fast: 'Vigil fast and abstinence', noteKey: nk || `Vigil Fast of ${key}` });
       }
     }
-    items.sort((a, b) => b.score - a.score);
+    const pref = i => (i.src && i.src !== 'W' && i.src !== 'K') ? 1 : 0;
+    items.sort((a, b) => b.score - a.score || pref(b) - pref(a));
     const w = items[0];
     const also = items.slice(1).filter(i => i.score >= 30 || i.fast).map(i => ({ title: i.title, note: i.rank }));
     // fasts: strongest of any item; Fridays are days of abstinence
