@@ -692,7 +692,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Prime, Terce, Sext and None are under More → Hours of the day. Not in the app yet: Matins (except Matins of the Dead). Read it in English here:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Matins, Prime, Terce, Sext and None are under More → Hours of the day. Other English Sarum resources:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
@@ -750,7 +750,7 @@
     let cur = -1; hrs.forEach((x, i) => { if (x.start != null && x.start <= now) cur = i; });
     if (rite === 'byz' && now >= 0 && cur < 0) cur = 0;
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div>`;
-    hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b>${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
+    hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b>${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'sarum' && x.w === 'M' && window.Hours && Hours.sarumMatins) h += `<details class="matins-d" style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray Matins for ${esc(fmtShort(st.date))}</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>`; else if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
     if (rite === 'sarum' && window.Hours && Hours.sarumBVM) h += `<details style="margin:10px 0 8px"><summary><b>The Commemoration of Our Lady</b> <span class="muted" style="font-size:.8rem">· a short office of Mary, said on free days, chiefly Saturdays</span></summary>${[['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None'], ['V', 'Vespers'], ['C', 'Compline']].map(([w, n]) => `<details style="margin:4px 0 4px 10px"><summary class="muted" style="font-size:.82rem">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}</details>`;
     h += `<div class="row">${linksHTML(rite, 'any')}</div>`;
     return h;
@@ -782,15 +782,19 @@
       } catch (e) { el.innerHTML = '<span class="muted">Text unavailable offline — it loads and is saved the first time you open this day online.</span>'; }
     }
   }
+  /* ---------- Sarum Matins: the texts (matins.json) are loaded the first time Matins is opened ---------- */
+  let matinsP = null;
+  function loadMatins() {
+    if (!matinsP) matinsP = fetch('matins.json').then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); }).then(d => { Hours.setMatins(d); return d; }).catch(e => { matinsP = null; throw e; });
+    return matinsP;
+  }
+  document.addEventListener('toggle', ev => {
+    const det = ev.target; if (!det || !det.classList || !det.classList.contains('matins-d') || !det.open) return;
+    const slot = det.querySelector('.matins-slot'); if (!slot || slot.dataset.done) return;
+    loadMatins().then(() => { slot.dataset.done = '1'; slot.innerHTML = Hours.sarumMatins(L, P(slot.dataset.d), window.Sarum); hydrateAsv(); })
+      .catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">Matins could not be loaded. Ora needs to be online the first time you open Matins; please try again when you have a connection.</p>'; });
+  }, true);
   new MutationObserver(() => hydrateAsv()).observe(document.getElementById('app'), { childList: true, subtree: true });
-  // Psalms the Sarum office loads live (not in the built-in psalter): fetch and save them once in the background, so every hour works offline afterwards.
-  setTimeout(async () => {
-    if (!navigator.onLine) return;
-    for (const r of ['psalms 4', 'psalms 6', 'psalms 7', 'psalms 21', 'psalms 22', 'psalms 24', 'psalms 25', 'psalms 30:2-6', 'psalms 37', 'psalms 39', 'psalms 53', 'psalms 90', 'psalms 101', 'psalms 133']) {
-      try { await asvText(r, 'dra'); } catch (e) { /* try again next time */ }
-      await new Promise(res => setTimeout(res, 700));
-    }
-  }, 4000);
 
   function renderHeader() {
     $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button><button class="ib" data-act="today" title="Today">⌂</button>`;

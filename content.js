@@ -161,14 +161,14 @@ const CONTENT = (() => {
       { n: 'Compline', alt: 'Apodeipnon', at: 'Before sleep', start: 20, d: 'Psalms, Prayer of Manasseh, Forgive-Us Prayers.', hour: 'compline' }
     ],
     sarum: [
-      { n: 'Matins', alt: 'Matutinae', at: 'Night', start: null, d: 'Night office with psalms and lessons.' },
-      { n: 'Lauds', alt: 'Laudes', at: 'Dawn', start: 5, d: 'Morning praise with the Benedictus.' },
-      { n: 'Prime', alt: 'Prima', at: '6 am', start: 6, d: 'First hour; reading of the martyrology and chapter.' },
-      { n: 'Terce', alt: 'Tertia', at: '9 am', start: 9, d: 'Third hour.' },
-      { n: 'Sext', alt: 'Sexta', at: 'Noon', start: 12, d: 'Sixth hour.' },
-      { n: 'None', alt: 'Nona', at: '3 pm', start: 15, d: 'Ninth hour.' },
-      { n: 'Vespers', alt: 'Vesperae', at: 'Evening', start: 17, d: 'Evening praise with the Magnificat.' },
-      { n: 'Compline', alt: 'Completorium', at: 'Before sleep', start: 20, d: 'Night prayer with the Nunc dimittis.' }
+      { w: 'M', n: 'Matins', alt: 'Matutinae', at: 'Night', start: null, d: 'Night office with psalms and lessons.' },
+      { w: 'L', n: 'Lauds', alt: 'Laudes', at: 'Dawn', start: 5, d: 'Morning praise with the Benedictus.' },
+      { w: 'P', n: 'Prime', alt: 'Prima', at: '6 am', start: 6, d: 'First hour; reading of the martyrology and chapter.' },
+      { w: 'T', n: 'Terce', alt: 'Tertia', at: '9 am', start: 9, d: 'Third hour.' },
+      { w: 'S', n: 'Sext', alt: 'Sexta', at: 'Noon', start: 12, d: 'Sixth hour.' },
+      { w: 'N', n: 'None', alt: 'Nona', at: '3 pm', start: 15, d: 'Ninth hour.' },
+      { w: 'V', n: 'Vespers', alt: 'Vesperae', at: 'Evening', start: 17, d: 'Evening praise with the Magnificat.' },
+      { w: 'C', n: 'Compline', alt: 'Completorium', at: 'Before sleep', start: 20, d: 'Night prayer with the Nunc dimittis.' }
     ]
   };
 

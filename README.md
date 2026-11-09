@@ -5,7 +5,7 @@ Static web app (no build step, no backend). Open `index.html` through any static
 Deep links for testing: `index.html?tab=pray&date=2026-11-08&kind=morning&rite=byz`.
 
 ## What's in it
-- **Today** – three calendars (Roman modern · Ukrainian/Ruthenian · Sarum traditional), readings, saint quote, sacred art.
+- **Today** – three calendars (Roman modern · Byzantine · Sarum traditional), readings, saint quote, sacred art.
 - **Pray** – morning/evening session per rite, with "Play session aloud" (browser text-to-speech), silence timers, links to the full hours.
 - **Calendar** – month grid with all three calendars as toggleable layers; ƒ marks fasts; gold ring marks solemnities / principal / great feasts.
 - **More** – hours of the day (highlights the current hour), settings, credits.
@@ -36,12 +36,12 @@ Ascension (Thu/Sun), Corpus Christi (Thu/Sun), Epiphany (Jan 6/Sunday), Byzantin
 
 ## Roman readings from the USCCB feed (added)
 
-`fetch_readings.py` downloads the official feed (https://bible.usccb.org/readings.rss), splits it into
+`tools/fetch_readings.py` downloads the official feed (https://bible.usccb.org/readings.rss), splits it into
 Reading 1 / Psalm / Reading 2 / Alleluia / Gospel, and merges it into `readings.json` (the feed holds only ~10 days,
 so the file accumulates). The app reads `readings.json` first, then falls back to citations-only, then links.
 
 - Hosted on GitHub Pages: `.github/workflows/readings.yml` refreshes it daily.
-- Self-hosted: `15 9 * * * cd /path/to/ora && python3 fetch_readings.py`.
+- Self-hosted: `15 9 * * * cd /path/to/ora && python3 tools/fetch_readings.py`.
 - Run it once before first use (it needs normal internet; the build sandbox could not reach USCCB, so it was tested on a synthetic sample only).
 - Terms: USCCB allows the daily readings on a website that does not require users to give anything of value, with the
   Lectionary copyright notice shown (the app does). Don't distribute through an app store or charge for it without a USCCB license.
@@ -52,3 +52,12 @@ so the file accumulates). The app reads `readings.json` first, then falls back t
 
 No open, dated Epistle/Gospel dataset was found. Links are provided to the Stamford propers, MCI Apostol, the Byzantine Catholic
 Daily Readings Substack and ECPubs (free app + $7.50 Byzantine Daily Office). ECPubs states no reuse terms, so it is link-only.
+
+## Byzantine readings
+`byzlect.js` computes the Epistle and Gospel citations from the Byzantine lectionary table on byzcath.org (2013, unofficial, Slavic usage). Only citations are stored, linked to RSV-CE on Bible Gateway. A few entries are flagged "check this one" where the source table had typos. Verify against your parish book or ECPubs.
+
+## Traditional Lauds and Vespers
+`hours.js` holds the weekly psalter, hymns and collects from the Divinum Officium project (MIT licence, https://github.com/DivinumOfficium/divinum-officium), pre-1955 Roman breviary in English (Douay psalter). Shown on the Pray tab for the Sarum / traditional rite. Saints' days and Christmas-season propers are not included.
+
+## Sarum Matins
+`matins.json` (loaded the first time Matins is opened, then kept offline) holds the Matins lessons, homilies, responsories, antiphons, invitatories and hymns of the Roman Breviary before 1911 in English, from Divinum Officium (MIT licence). `hours.js` (`sarumMatins`) arranges them in the Sarum order: Sarum Sunday psalm scheme, Sarum antiphons, versicles and invitatory for the Sundays of Advent (Ora's own English of the Latin), the Sarum Gospel of the day for the homily on the Sundays of Advent and after Trinity, Sarum rules for blessings, lesson endings and the Te Deum. Each section of the office says whether its text is Sarum or Roman. `hours.js` now also holds the whole Douay psalter, so no psalm is loaded from the internet.
