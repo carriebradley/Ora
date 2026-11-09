@@ -10,7 +10,7 @@
 })(typeof self !== 'undefined' ? self : this, function (LC) {
   'use strict';
   const { D, add, iso, westernEaster, advent, DN, ORD } = LC;
-  const SRCTXT = { W: 'In the Sarum Missal', K: 'Standard kalendar', I: 'Irish addition — not in the Sarum Missal (unverified)' };
+  const SRCTXT = { W: 'English Sarum Missal (supplement where no Irish source)', K: 'Standard kalendar', B: 'Irish Sarum kalendars (Buckley 2022)', I: 'Not found in the Irish Sarum kalendars surveyed — your addition, unverified' };
   const DAY = 864e5, diff = (a, b) => Math.round((a - b) / DAY), dow = d => d.getUTCDay(), same = (a, b) => a.getTime() === b.getTime();
   const sunBefore = d => add(d, -(dow(d) || 7)), sunOnOrBefore = d => add(d, -dow(d));
   let NOTES = {};
@@ -19,188 +19,214 @@
 
   // m/d|name|rank|color|octaveDays|src
   //   rank: P principal feast, D double, L lesser double, M saint with a Mass in the Missal (rank not given there)
-  //   src (evidence): W = appears in Warren's 'Sarum Missal in English' Proper of Saints (verified, 2026 read)
+  //   src (evidence):  B = in the Irish Sarum kalendars surveyed by Ann Buckley (2022); rank from the manuscripts (TCD 78, 1488–1500; TCD 88, after 1488)
+  //                   (J major double, N nine lessons, T three lessons)
+  //   src (evidence, continued): W = appears in Warren's 'Sarum Missal in English' Proper of Saints (verified, 2026 read)
   //                   K = standard medieval kalendar entry, not individually checked (Christmas-week days)
   //                   I = Irish/Gaelic addition kept from the user's own calendar — NOT in the Sarum Missal; unverified
   // Ranks P/D are carried over from the user's earlier calendar and are approximate; only Gregory (Inferior Double) and
   // the Annunciation (Lesser Double) were cross-checked against a modern Sarum ordo.
-  const FIXED = `1/1|Circumcision of Our Lord (Octave Day of Christmas)|D|w|0|K
-1/14|St. Felix, Bishop and Martyr|M|r|0|W
-1/15|St. Maurus, Abbot and Confessor|M|w|0|W
-1/16|St. Marcellus, Pope and Martyr|M|r|0|W
-1/17|St. Sulpicius, Bishop and Confessor|M|w|0|W
-1/18|St. Prisca, Virgin and Martyr|M|r|0|W
-1/19|St. Wulstan, Bishop and Confessor|M|w|0|W
-1/20|Sts. Fabian and Sebastian, Martyrs|M|r|0|W
-1/21|St. Agnes, Virgin and Martyr|M|r|0|W
-1/22|St. Vincent, Martyr|M|r|0|W
-1/25|Conversion of St. Paul|D|w|0|W
-1/27|St. Julian, Bishop|M|w|0|W
-1/28|St. Agnes (second feast)|M|r|0|W
-1/30|St. Bathild, Queen|M|w|0|W
-2/1|Feast of St. Brigid of Kildare (Imbolc)|D|w|0|W
-2/2|Purification of Mary / Candlemas|P|w|0|W
-2/3|St. Blase, Bishop and Martyr|M|r|0|W
-2/5|St. Agatha, Virgin and Martyr|M|r|0|W
-2/6|Sts. Vedast and Amandus, Bishops|M|w|0|W
-2/10|St. Scholastica, Virgin|M|w|0|W
-2/14|St. Valentine, Bishop and Martyr|M|r|0|W
-2/16|St. Juliana, Virgin and Martyr|M|r|0|W
+  const FIXED = `1/1|Circumcision of Our Lord (Octave Day of Christmas)|L|w|0|W
+1/13|Octave of the Epiphany; St. Hilary (middle lessons)|N|w|0|W
+1/14|St. Felix, Bishop and Martyr|T|r|0|W
+1/15|St. Maurus, Abbot and Confessor|T|w|0|W
+1/16|St. Marcellus, Pope and Martyr|T|r|0|W
+1/17|St. Sulpicius, Bishop and Confessor|T|w|0|W
+1/18|St. Prisca, Virgin and Martyr|T|r|0|W
+1/19|St. Wulstan, Bishop and Confessor|N|w|0|W
+1/20|Sts. Fabian and Sebastian, Martyrs|N|r|0|W
+1/21|St. Agnes, Virgin and Martyr|N|r|0|W
+1/22|St. Vincent, Martyr|N|r|0|W
+1/25|Conversion of St. Paul|N|w|0|W
+1/27|St. Julian, Bishop|T|w|0|W
+1/28|St. Agnes (second feast)|T|r|0|W
+1/30|St. Bathild, Queen|T|w|0|W
+1/31|St. Aidan (Maedoc) of Ferns|D|w|0|B
+2/1|Feast of St. Brigid of Kildare (Imbolc)|D|w|0|B
+2/2|Purification of Mary / Candlemas|J|w|0|W
+2/3|St. Blase, Bishop and Martyr|T|r|0|W
+2/5|St. Agatha, Virgin and Martyr|N|r|0|W
+2/6|Sts. Vedast and Amandus, Bishops|T|w|0|W
+2/10|St. Scholastica, Virgin|T|w|0|W
+2/14|St. Valentine, Bishop and Martyr|T|r|0|W
+2/16|St. Juliana, Virgin and Martyr|T|r|0|W
 2/22|Chair of St. Peter|D|w|0|W
-2/24|St. Matthias, Apostle|D|r|0|W
-3/1|St. David, Bishop and Confessor|M|w|0|W
-3/2|St. Chad, Bishop and Confessor|M|w|0|W
-3/7|Sts. Perpetua and Felicitas, Martyrs|M|r|0|W
-3/12|St. Gregory the Great, Pope (Inferior Double)|L|w|0|W
-3/17|Feast of St. Patrick|D|w|0|W
-3/18|St. Edward, King and Martyr|M|r|0|W
-3/20|St. Cuthbert, Bishop and Confessor|M|w|0|W
-3/21|St. Benedict, Abbot|D|w|0|W
-3/25|Lady Day (Annunciation)|P|w|0|W
-4/3|St. Richard, Bishop|M|w|0|W
-4/4|St. Ambrose, Bishop and Doctor|M|w|0|W
-4/14|Sts. Tiburtius and Valerian, Martyrs|M|r|0|W
-4/19|St. Alphege, Bishop and Martyr|M|r|0|W
+2/24|St. Matthias, Apostle|N|r|0|W
+3/1|St. David, Bishop and Confessor|N|w|0|W
+3/2|St. Chad, Bishop and Confessor|N|w|0|W
+3/5|St. Ciarán (Kieran) of Saighir|N|w|0|B
+3/7|Sts. Perpetua and Felicitas, Martyrs|T|r|0|W
+3/12|St. Gregory the Great, Pope (Inferior Double)|D|w|0|W
+3/15|St. Eugene of Ardstraw|N|w|0|B
+3/16|St. Finnian of Swords|N|w|0|B
+3/17|Feast of St. Patrick|J|w|0|B
+3/18|St. Edward, King and Martyr|N|r|0|W
+3/20|St. Cuthbert, Bishop and Confessor|N|w|0|W
+3/21|St. Benedict, Abbot|N|w|0|W
+3/25|Lady Day (Annunciation)|L|w|0|W
+4/3|St. Richard, Bishop|N|w|0|W
+4/4|St. Ambrose, Bishop and Doctor|D|w|0|W
+4/14|Sts. Tiburtius and Valerian, Martyrs|T|r|0|W
+4/18|St. Laserian of Leighlin|D|w|0|B
+4/19|St. Alphege, Bishop and Martyr|T|r|0|W
 4/23|Feast of St. George|D|r|0|W
 4/25|St. Mark, Evangelist (Major Litany)|D|r|0|W
-4/28|St. Vitalis, Martyr|M|r|0|W
+4/28|St. Vitalis, Martyr|T|r|0|W
+4/30|Deposition of St. Erkenwald, Bishop of London|D|w|0|W
 5/1|Bealtaine / Feast of St. Philip & St. James|D|r|0|W
-5/3|Invention of the Holy Cross|D|r|0|W
-5/6|St. John before the Latin Gate|M|w|0|W
-5/7|St. John of Beverley, Bishop and Confessor|M|w|0|W
-5/10|Sts. Gordian and Epimachus, Martyrs|M|r|0|W
-5/12|Sts. Nereus, Achilleus and Pancras, Martyrs|M|r|0|W
-5/16|Feast of St. Brendan the Navigator|D|w|0|I
-5/19|St. Dunstan, Archbishop and Confessor|M|w|0|W
-5/25|St. Aldhelm, Bishop and Confessor|M|w|0|W
-5/26|St. Augustine of Canterbury, Apostle of the English|M|w|0|W
-5/28|St. Germanus, Bishop and Confessor|M|w|0|W
-5/31|St. Petronilla, Virgin|M|w|0|W
-6/1|St. Nicomede, Martyr|M|r|0|W
-6/2|Sts. Marcellinus and Peter, Martyrs|M|r|0|W
-6/3|Feast of St. Kevin of Glendalough|D|w|0|I
-6/5|St. Boniface and Companions, Martyrs|M|r|0|W
-6/8|Sts. Medard and Godard, Bishops|M|w|0|W
-6/9|Feast of St. Colmcille (Columba)|D|w|0|I
-6/9|Translation of St. Edmund, Archbishop|M|w|0|W
-6/11|St. Barnabas, Apostle|D|r|0|W
-6/12|Sts. Basilides, Cyrinus, Nabor and Nazarius, Martyrs|M|r|0|W
-6/14|St. Basil, Bishop and Confessor|M|w|0|W
-6/15|Sts. Vitus, Modestus and Crescentia, Martyrs|M|r|0|W
-6/16|Translation of St. Richard|M|w|0|W
-6/18|Sts. Mark and Marcellian, Martyrs|M|r|0|W
-6/19|Sts. Gervase and Protase, Martyrs|M|r|0|W
-6/20|Translation of St. Edward, King and Martyr|M|r|0|W
-6/22|St. Alban, Martyr|M|r|0|W
-6/24|Nativity of St. John the Baptist|P|w|0|W
-6/26|Sts. John and Paul, Martyrs|M|r|0|W
-6/29|Feast of Sts. Peter and Paul & Octave|P|r|7|W
-6/30|Commemoration of St. Paul|M|r|0|W
-7/2|Visitation of the Blessed Virgin Mary|D|w|0|W
-7/4|Translation and Ordination of St. Martin|M|w|0|W
-7/7|Translation of St. Thomas Becket & Octave|P|w|7|W
-7/10|The Seven Brothers, Martyrs|M|r|0|W
-7/11|Translation of St. Benedict, Abbot|M|w|0|W
-7/15|Translation of St. Swithun|M|w|0|W
-7/16|Translation of St. Osmund, Bishop and Confessor|M|w|0|W
-7/17|St. Kenelm, King and Martyr|M|r|0|W
-7/18|St. Arnulph, Bishop and Martyr|M|r|0|W
-7/20|St. Margaret, Virgin and Martyr|M|r|0|W
-7/21|St. Praxedes, Virgin|M|w|0|W
-7/22|St. Mary Magdalene|D|w|0|W
-7/23|St. Apollinaris, Martyr|M|r|0|W
-7/25|St. James, Apostle|D|r|0|W
-7/26|St. Anne, Mother of Mary|D|w|0|W
-7/27|The Seven Sleepers|M|w|0|W
-7/28|St. Samson, Bishop (with St. Pantaleon)|M|w|0|W
-7/29|Sts. Felix, Simplicius, Faustinus and Beatrice, Martyrs|M|r|0|W
-7/30|Sts. Abdon and Sennen, Martyrs|M|r|0|W
-7/31|St. Germanus, Bishop and Confessor|M|w|0|W
-8/1|Lammas / St. Peter in Chains (Lughnasadh)|D|w|0|W
-8/2|St. Stephen, Pope and Martyr|M|r|0|W
-8/3|Invention of St. Stephen, Protomartyr|M|r|0|W
-8/5|St. Oswald, King and Martyr|M|r|0|W
-8/6|Transfiguration of Our Lord|M|w|0|W
-8/7|Feast of the Name of Jesus|M|w|0|W
+5/3|Invention of the Holy Cross|L|r|0|W
+5/6|St. John before the Latin Gate|T|w|0|W
+5/7|St. John of Beverley, Bishop and Confessor|T|w|0|W
+5/10|Sts. Gordian and Epimachus, Martyrs|T|r|0|W
+5/12|Sts. Nereus, Achilleus and Pancras, Martyrs|T|r|0|W
+5/16|Feast of St. Brendan the Navigator|T|w|0|B
+5/19|St. Dunstan, Archbishop and Confessor|N|w|0|W
+5/25|St. Aldhelm, Bishop and Confessor|N|w|0|W
+5/26|St. Augustine of Canterbury, Apostle of the English|D|w|0|W
+5/28|St. Germanus, Bishop and Confessor|T|w|0|W
+5/31|St. Petronilla, Virgin|T|w|0|W
+6/1|St. Nicomede, Martyr|T|r|0|W
+6/2|Sts. Marcellinus and Peter, Martyrs|T|r|0|W
+6/3|Feast of St. Kevin of Glendalough|N|w|0|B
+6/5|St. Boniface and Companions, Martyrs|T|r|0|W
+6/8|Sts. Medard and Godard, Bishops|T|w|0|W
+6/9|Feast of St. Colmcille (Columba)|N|w|0|B
+6/9|Translation of St. Edmund, Archbishop|N|w|0|W
+6/10|Translation of Sts. Patrick, Columba and Brigit|N|w|0|B
+6/11|St. Barnabas, Apostle|N|r|0|W
+6/12|Sts. Basilides, Cyrinus, Nabor and Nazarius, Martyrs|T|r|0|W
+6/14|St. Basil, Bishop and Confessor|T|w|0|W
+6/15|Sts. Vitus, Modestus and Crescentia, Martyrs|T|r|0|W
+6/16|Translation of St. Richard|N|w|0|W
+6/17|St. Moling of Ferns|N|w|0|B
+6/18|Sts. Mark and Marcellian, Martyrs|T|r|0|W
+6/19|Sts. Gervase and Protase, Martyrs|T|r|0|W
+6/20|Translation of St. Edward, King and Martyr|N|r|0|W
+6/22|St. Alban, Martyr|N|r|0|W
+6/23|St. Etheldreda, Virgin (Vigil of St. John the Baptist)|T|w|0|W
+6/24|Nativity of St. John the Baptist|L|w|0|W
+6/26|Sts. John and Paul, Martyrs|T|r|0|W
+6/29|Feast of Sts. Peter and Paul & Octave|L|r|7|W
+6/30|Commemoration of St. Paul|N|r|0|W
+7/2|Visitation of the Blessed Virgin Mary|J|w|0|W
+7/4|Translation and Ordination of St. Martin|N|w|0|W
+7/7|Translation of St. Thomas Becket & Octave|L|w|7|W
+7/10|The Seven Brothers, Martyrs|T|r|0|W
+7/11|Translation of St. Benedict, Abbot|N|w|0|W
+7/15|Translation of St. Swithun|N|w|0|W
+7/16|Translation of St. Osmund, Bishop and Confessor|N|w|0|W
+7/17|St. Kenelm, King and Martyr|T|r|0|W
+7/18|St. Arnulph, Bishop and Martyr|T|r|0|W
+7/20|St. Margaret, Virgin and Martyr|N|r|0|W
+7/21|St. Praxedes, Virgin|T|w|0|W
+7/22|St. Mary Magdalene|N|w|0|W
+7/23|St. Apollinaris, Martyr|T|r|0|W
+7/25|St. James, Apostle|L|r|0|W
+7/26|St. Anne, Mother of Mary|N|w|0|W
+7/27|The Seven Sleepers|T|w|0|W
+7/28|St. Samson, Bishop (with St. Pantaleon)|T|w|0|W
+7/29|Sts. Felix, Simplicius, Faustinus and Beatrice, Martyrs|T|r|0|W
+7/30|Sts. Abdon and Sennen, Martyrs|T|r|0|W
+7/31|St. Germanus, Bishop and Confessor|T|w|0|W
+8/1|Lammas / St. Peter in Chains (Lughnasadh)|N|w|0|W
+8/2|St. Stephen, Pope and Martyr|T|r|0|W
+8/3|Invention of St. Stephen, Protomartyr|N|r|0|W
+8/5|St. Oswald, King and Martyr|T|r|0|W
+8/6|Transfiguration of Our Lord|L|w|0|W
+8/7|Feast of the Name of Jesus|J|w|0|W
 8/8|St. Cyriac and Companions, Martyrs|M|r|0|W
-8/10|St. Laurence, Deacon and Martyr|D|r|0|W
+8/9|St. Romanus, Martyr (Vigil of St. Laurence)|M|r|0|W
+8/10|St. Laurence, Deacon and Martyr|N|r|0|W
 8/11|St. Tiburtius, Martyr|M|r|0|W
-8/13|St. Hippolytus and Companions, Martyrs|M|r|0|W
+8/13|St. Hippolytus and Companions, Martyrs|N|r|0|W
 8/15|Assumption of Mary & Octave|P|w|7|W
 8/17|Octave Day of St. Laurence|M|r|0|W
+8/18|St. Agapitus, Martyr|M|r|0|W
+8/19|St. Magnus, Martyr|M|r|0|W
+8/23|Sts. Timothy and Apollinaris, Martyrs|T|r|0|W
 8/24|St. Bartholomew, Apostle|D|r|0|W
-8/27|St. Rufus, Martyr|M|r|0|W
+8/25|St. Michan of Dublin|N|w|0|B
+8/27|St. Rufus, Martyr|T|r|0|W
 8/28|St. Augustine of Hippo|D|w|0|W
-8/29|Beheading of St. John the Baptist|D|r|0|W
+8/29|Beheading of St. John the Baptist|N|r|0|W
 8/29|St. Sabina, Virgin|M|w|0|W
-8/30|Sts. Felix and Adauctus, Martyrs|M|r|0|W
-8/31|St. Cuthburga, Virgin|M|w|0|W
-9/1|St. Giles, Abbot|M|w|0|W
-9/4|Translation of St. Cuthbert, Bishop|M|w|0|W
-9/5|St. Bertin, Abbot|M|w|0|W
-9/8|Nativity of the Virgin Mary & Octave|P|w|7|W
+8/30|Sts. Felix and Adauctus, Martyrs|T|r|0|W
+8/31|St. Cuthburga, Virgin|T|w|0|W
+9/1|St. Giles, Abbot|N|w|0|W
+9/4|Translation of St. Cuthbert, Bishop|N|w|0|W
+9/5|St. Bertin, Abbot|T|w|0|W
+9/6|St. Mac Cuilinn of Lusk|T|w|0|B
+9/8|Nativity of the Virgin Mary & Octave|J|w|7|W
 9/9|Feast of St. Ciarán of Clonmacnoise|D|w|0|I
-9/14|Exaltation of the Holy Cross|D|r|0|W
-9/16|St. Edith, Virgin|M|w|0|W
-9/17|St. Lambert, Bishop and Martyr|M|r|0|W
+9/9|St. Gorgonius, Martyr|M|r|0|W
+9/11|Sts. Protus and Hyacinth, Martyrs|M|r|0|W
+9/14|Exaltation of the Holy Cross|L|r|0|W
+9/16|St. Edith, Virgin|N|w|0|W
+9/17|St. Lambert, Bishop and Martyr|T|r|0|W
 9/21|St. Matthew, Apostle and Evangelist|D|r|0|W
-9/22|St. Maurice and Companions, Martyrs|M|r|0|W
-9/23|St. Thecla, Virgin|M|w|0|W
+9/22|St. Maurice and Companions, Martyrs|N|r|0|W
+9/23|St. Thecla, Virgin|T|w|0|W
 9/25|Feast of St. Finbarr of Cork|D|w|0|I
-9/25|St. Firmin, Bishop and Martyr|M|r|0|W
-9/26|Sts. Cyprian and Justina, Martyrs|M|r|0|W
-9/27|Sts. Cosmas and Damian, Martyrs|M|r|0|W
-9/29|Michaelmas (Feast of St. Michael)|P|w|0|W
-9/30|St. Jerome, Priest and Doctor|M|w|0|W
-10/1|Sts. Remigius, Germanus, Vedast and Bavo, Bishops|M|w|0|W
-10/2|St. Leger, Bishop and Martyr|M|r|0|W
-10/6|St. Faith, Virgin and Martyr|M|r|0|W
-10/7|Sts. Mark, Marcellus and Apuleius, Martyrs|M|r|0|W
-10/9|St. Denys and Companions, Martyrs|M|r|0|W
-10/10|St. Gereon and Companions, Martyrs|M|r|0|W
-10/11|St. Nicasius and Companions, Martyrs|M|r|0|W
+9/25|St. Firmin, Bishop and Martyr|T|r|0|W
+9/26|Sts. Cyprian and Justina, Martyrs|T|r|0|W
+9/27|Sts. Cosmas and Damian, Martyrs|T|r|0|W
+9/29|Michaelmas (Feast of St. Michael)|D|w|0|W
+9/30|St. Jerome, Priest and Doctor|D|w|0|W
+10/1|Sts. Remigius, Germanus, Vedast and Bavo, Bishops|N|w|0|W
+10/2|St. Thomas of Hereford, Bishop and Confessor (middle lessons of St. Leger)|N|w|0|W
+10/6|St. Faith, Virgin and Martyr|T|r|0|W
+10/7|Sts. Mark, Marcellus and Apuleius, Martyrs|T|r|0|W
+10/9|St. Denys and Companions, Martyrs|N|r|0|W
+10/10|St. Gereon and Companions, Martyrs|T|r|0|W
+10/11|St. Nicasius and Companions, Martyrs|T|r|0|W
+10/11|St. Canice of Kilkenny|D|w|0|B
 10/13|Feast of St. Edward the Confessor|D|w|0|W
-10/14|St. Calixtus, Pope and Martyr|M|r|0|W
-10/15|St. Wulfran, Bishop and Confessor|M|w|0|W
-10/16|St. Michael in Monte Tumba|M|w|0|W
-10/17|St. Etheldreda, Virgin|M|w|0|W
+10/14|St. Calixtus, Pope and Martyr|D|r|0|W
+10/15|St. Wulfran, Bishop and Confessor|T|w|0|W
+10/16|St. Michael in Monte Tumba|N|w|0|W
+10/17|St. Etheldreda, Virgin|N|w|0|W
 10/18|St. Luke, Evangelist|D|r|0|W
-10/19|St. Frideswide, Virgin|M|w|0|W
-10/21|The Eleven Thousand Virgins|M|r|0|W
-10/23|St. Romanus, Archbishop of Rouen|M|w|0|W
-10/25|Sts. Crispin and Crispinian, Martyrs|M|r|0|W
+10/19|St. Frideswide, Virgin|N|w|0|W
+10/21|The Eleven Thousand Virgins|N|r|0|W
+10/23|St. Romanus, Archbishop of Rouen|T|w|0|W
+10/25|Sts. Crispin and Crispinian, Martyrs|N|r|0|W
 10/28|Sts. Simon and Jude, Apostles|D|r|0|W
-11/1|All Saints (All Hallows)|P|w|0|W
-11/2|All Souls (soul-cakes)|P|v|0|W
-11/3|Feast of St. Malachy of Armagh|D|w|0|I
-11/3|St. Winifred, Virgin and Martyr|M|r|0|W
-11/6|St. Leonard, Abbot|M|w|0|W
-11/8|The Four Crowned Martyrs|M|r|0|W
-11/9|St. Theodore, Martyr|M|r|0|W
-11/11|Martinmas / Saint Martin's Lent|D|w|0|W
-11/13|St. Brice, Bishop and Confessor|M|w|0|W
-11/14|Feast of St. Laurence O'Toole|D|w|0|I
-11/15|St. Machutus (Malo), Bishop and Confessor|M|w|0|W
-11/16|St. Edmund, Archbishop|M|w|0|W
-11/17|St. Hugh, Bishop and Confessor|M|w|0|W
-11/18|Octave Day of St. Martin|M|w|0|W
-11/20|St. Edmund, King and Martyr|M|r|0|W
-11/22|St. Cecilia, Virgin and Martyr|D|r|0|W
-11/23|St. Clement, Pope and Martyr|M|r|0|W
-11/24|St. Chrysogonus, Martyr|M|r|0|W
-11/25|St. Katherine of Alexandria|D|r|0|W
-11/26|St. Linus, Pope and Martyr|M|r|0|W
+10/31|St. Quintin, Martyr|T|r|0|W
+11/1|All Saints (All Hallows)|J|w|0|W
+11/2|All Souls (soul-cakes)|D|v|0|W
+11/3|Feast of St. Malachy of Armagh|N|w|0|B
+11/3|St. Winifred, Virgin and Martyr|N|r|0|W
+11/6|St. Leonard, Abbot|N|w|0|W
+11/8|The Four Crowned Martyrs|T|r|0|W
+11/9|St. Theodore, Martyr|T|r|0|W
+11/11|Martinmas / Saint Martin's Lent|N|w|0|W
+11/13|St. Brice, Bishop and Confessor|N|w|0|W
+11/14|Feast of St. Laurence O'Toole|N|w|0|B
+11/14|Translation of St. Erkenwald|T|w|0|W
+11/15|St. Machutus (Malo), Bishop and Confessor|N|w|0|W
+11/16|St. Edmund, Archbishop|N|w|0|W
+11/17|St. Hugh, Bishop and Confessor|N|w|0|W
+11/18|Octave Day of St. Martin|T|w|0|W
+11/20|St. Edmund, King and Martyr|N|r|0|W
+11/22|St. Cecilia, Virgin and Martyr|N|r|0|W
+11/23|St. Clement, Pope and Martyr|N|r|0|W
+11/24|St. Chrysogonus, Martyr|T|r|0|W
+11/25|St. Katherine of Alexandria|N|r|0|W
+11/26|St. Linus, Pope and Martyr|T|r|0|W
+11/29|Sts. Saturninus and Sisinnius, Martyrs|T|r|0|W
 11/30|St. Andrew, Apostle|D|r|0|W
-12/4|St. Osmund, Bishop and Confessor|M|w|0|W
-12/6|Feast of St. Nicholas (Boy Bishop Rule)|D|w|0|W
-12/7|Octave Day of St. Andrew|M|r|0|W
-12/8|Conception of the Blessed Virgin Mary|D|w|0|W
-12/13|St. Lucy, Virgin and Martyr|D|r|0|W
+12/4|St. Osmund, Bishop and Confessor|N|w|0|W
+12/6|Feast of St. Nicholas (Boy Bishop Rule)|N|w|0|W
+12/7|Octave Day of St. Andrew|T|r|0|W
+12/8|Conception of the Blessed Virgin Mary|L|w|0|W
+12/12|St. Finnian of Clonard|N|w|0|B
+12/13|St. Lucy, Virgin and Martyr|N|r|0|W
 12/21|St. Thomas, Apostle|D|r|0|W
-12/26|St. Stephen, First Martyr (Stephenmas)|D|r|0|K
-12/27|St. John, Apostle and Evangelist|D|w|0|K
-12/28|Holy Innocents (Childermas)|D|r|0|K
-12/29|Martyrdom of St. Thomas Becket|D|r|0|K`.split('\n').map(l => {
+12/26|St. Stephen, First Martyr (Stephenmas)|L|r|0|W
+12/27|St. John, Apostle and Evangelist|L|w|0|W
+12/28|Holy Innocents (Childermas)|L|r|0|W
+12/29|Martyrdom of St. Thomas Becket|L|r|0|W
+12/31|St. Silvester, Pope and Confessor|N|w|0|W`.split('\n').map(l => {
     const [md, name, rank, color, oct, src] = l.split('|'), [m, d] = md.split('/').map(Number);
     return { m, d, name, rank, color, oct: +oct, src };
   });
@@ -208,40 +234,1442 @@
   const VIGILS = [[2, 2, 'Purification'], [2, 24, 'St. Matthias'], [3, 25, 'Lady Day'], [6, 24, 'St. John the Baptist'], [6, 29, 'Sts. Peter and Paul'], [7, 25, 'St. James'],
     [8, 10, 'St. Laurence'], [8, 15, 'the Assumption', 'Vigil Fast of the Assumption'], [8, 24, 'St. Bartholomew'], [9, 21, 'St. Matthew'], [10, 28, 'Sts. Simon and Jude'], [11, 1, 'All Hallows', 'Vigil Fast of All Hallows'],
     [11, 30, 'St. Andrew'], [12, 21, 'St. Thomas'], [12, 25, 'Christmas', 'Vigil Fast of Christmas']];
-  const RANK = { P: 'Principal Feast', D: 'Double Feast', L: 'Lesser Double', S: 'Feast', M: 'Saint of the Missal' };
-  const SCORE = { P: 90, D: 60, L: 45, S: 30, M: 30 };
+  const RANK = { P: 'Principal Double', J: 'Greater Double', L: 'Lesser Double', D: 'Inferior Double', N: 'Nine lessons', T: 'Three lessons', S: 'Feast', M: 'Memory only' };
+  const SCORE = { P: 90, J: 72, L: 62, D: 55, N: 40, T: 32, S: 30, M: 30 };
+  // Where the rank comes from (W rows): the 1526 Sarum kalendar printed in Warren (1911), with Warren's classification of doubles.
+  const RANK_UNC = new Set(["1/17", "2/3", "2/5", "2/24", "3/1", "3/2", "3/7", "3/18", "3/20", "3/21", "10/6", "10/7", "10/9", "10/10", "10/11", "10/15", "10/16", "10/17", "10/19", "10/21", "10/23", "11/3", "11/6", "11/8", "11/9", "11/11", "11/13", "11/16", "11/18", "11/20", "11/22", "11/23", "11/24", "11/25", "11/26", "10/31", "11/14"]), RANK_PLUS = new Set(["2/22", "7/7", "8/6", "8/28", "11/2", "4/30"]);
+  function rankNote(f) {
+    if (f.src === 'B' || f.src === 'I') return '';
+    if (RANK_PLUS.has(f.m + '/' + f.d)) return "Rank: Warren (1911) lists this as a double that was kept as such although the 1526 Sarum kalendar does not mark it.";
+    if (RANK_UNC.has(f.m + '/' + f.d)) return "Rank: from the 1526 Sarum kalendar (Warren 1911), but the number of lessons is not legible in the scanned page, so nine or three lessons is inferred from the kalendar's other markings. Treat as uncertain.";
+    return 'Rank: the 1526 Sarum kalendar and Warren\'s classification of doubles (The Sarum Missal in English, 1911).';
+  }
 
+
+  // Evidence notes for the Irish entries: Ann Buckley, 'Insular Saints in Irish Sarum Kalendars of the Office' (2022).
+  const SRCNOTE = {
+    "3/17": "Patrick is in every Irish Sarum kalendar Buckley surveyed, always a double and usually red-letter. Under Archbishop Bicknor's constitutions (c. 1320) his feast became a major double. TCD 78 (1488–1500) and TCD 88 (after 1488) both give him nine lessons, in red.",
+    "2/1": "Brigit is in every Irish Sarum kalendar surveyed. TCD 78 (1488–1500) has her in red with nine lessons; the Dublin province made her a double under Bicknor's constitutions (c. 1320). She is also in English Sarum kalendars.",
+    "5/16": "Brendan of Clonfert: three lessons in TCD 78 and TCD 88, nine lessons in TCD 77 (Armagh, c. 1450).",
+    "6/3": "Kevin: nine lessons in TCD 88; in the Irish kalendars but not among the saints named in Dublin's episcopal constitutions.",
+    "6/9": "Colmcille shares 9 June with the Translation of St Edmund of Abingdon and is often a later addition. Absent from TCD 78 (1488–1500) and NLI 19954.",
+    "11/3": "Malachy appears only in TCD 77 (Armagh Cathedral, c. 1450), with nine lessons. The ordinary Sarum saint of 3 November is Winifred.",
+    "11/14": "Laurence O'Toole: in TCD 78, TCD 88 (nine lessons) and named in Dublin's constitutions.",
+    "9/9": "Ciarán of Clonmacnoise on 9 September was not found in the Irish Sarum kalendars Buckley surveyed. They have Ciarán of Saighir on 5 March instead.",
+    "9/25": "Finbarr was not found in the Irish Sarum kalendars Buckley surveyed.",
+    "1/31": "Aidan of Ferns: a double under Bicknor's constitutions (c. 1320); nine lessons in TCD 78 and TCD 88.",
+    "3/5": "Ciarán (Kieran) of Saighir: red-letter, nine lessons in TCD 78 (1488–1500).",
+    "3/15": "Eugene of Ardstraw: nine lessons in TCD 88, marked 'Dublinie' in a 16th-century hand.",
+    "3/16": "Finnian of Swords: nine lessons, a 16th-century addition in TCD 78; in TCD 88.",
+    "4/18": "Laserian of Leighlin: a double under Bicknor's constitutions (c. 1320); nine lessons in TCD 88.",
+    "6/10": "Translation of Patrick, Columba and Brigit: in every manuscript surveyed except TCD 77 and NLW 21604A.",
+    "6/17": "Moling of Ferns: nine lessons in TCD 78.",
+    "8/25": "Michan of Dublin: nine lessons in TCD 78; named in Dublin's constitutions.",
+    "9/6": "Mac Cuilinn of Lusk: in TCD 78 and TCD 88; named in Dublin's constitutions.",
+    "10/11": "Canice of Kilkenny: red-letter, nine lessons in TCD 78 (written for St Canice's, Kilkenny, 1488–1500); a double under Bicknor's constitutions (Ossory).",
+    "12/12": "Finnian of Clonard: nine lessons in TCD 78; a 16th-century addition in TCD 88."
+  };
 
   // ---- Proper texts of Masses transcribed from the Sarum Missal --------------------------------
   // Source: F. E. Warren, 'The Sarum Missal in English' (1911), Part II, Proper of Saints (public domain).
   // Scripture is shown live from the Douay-Rheims (public domain). Warren cites English Bible numbering, so each
   // reference below was converted to Douay numbering and checked against the Douay text (Sirach 44-45, Psalms 88, 109).
-  // Parts with only `sum` give a plain summary of the prayer: the exact wording of the Collect, Secret and Postcommunion
-  // has NOT yet been transcribed, and nothing has been invented to fill the gap.
+  // `tx` = Warren's English text, copied word for word. Epistle and Gospel are printed in the Missal only as the first and last
+  // words (`inc`); the full Scripture is shown from the Douay text (`ref`).
   const MASS = {
-    '3/17': { title: 'Mass of St. Patrick, Bishop and Confessor', source: "Warren, Sarum Missal in English, Part II (Mar. 17)",
-      note: "Verified: this Mass appears in Warren's English Sarum Missal. Warren's footnote adds: 'An almost entirely different Mass is provided for St. Patrick's Day in the printed Sarum Missals of 1494, 1497, 1498.' Those printed missals are closer to the period of c. 1500, and their Mass has not yet been read.",
-      parts: [
-        { k: 'Introit', pr: "Ecclus. xlv. 24 (Warren) = Sirach 45:30 (Douay); psalm verse 'My song shall be alway of the loving-kindness of the Lord' = Ps. 88:2 (Douay)", ref: 'sirach 45:30|psalms 88:2' },
-        { k: 'Collect', sum: 'Prayer that, honouring the feast of the blessed confessor and bishop Patrick, we may increase in devotion and further our salvation. (Summary only — exact wording not yet transcribed.)' },
-        { k: 'Epistle', pr: 'Ecclus. xliv. 16, 17, 19–23; xlv. 3, 7, 16 (Warren) = Sirach 44:16–17; 44:20–26; 45:2–3; 45:8–9; 45:20 (Douay)', ref: 'sirach 44:16-17|sirach 44:20-26|sirach 45:2-3|sirach 45:8-9|sirach 45:20' },
-        { k: 'Gradual', pr: 'Ps. cx. 4 and 1 (Warren) = Ps. 109:4 and 1 (Douay)', ref: 'psalms 109:4|psalms 109:1' },
-        { k: 'Tract', pr: "'Blessed is the man that feareth…' (Warren: as at the Common of a Confessor Bishop) = Ps. 111:1 (Douay), first verse only", ref: 'psalms 111:1' },
-        { k: 'Gospel', pr: 'St. Matt. xxiv. 42–47', ref: 'matthew 24:42-47' },
-        { k: 'Offertory', pr: 'Ps. lxxxix. 21, 22 (Warren) = Ps. 88:21–22 (Douay)', ref: 'psalms 88:21-22' },
-        { k: 'Secret', sum: 'Prayer that the gifts offered in honour of Patrick may be profitable to salvation. (Summary only.)' },
-        { k: 'Communion', pr: 'St. Luke xii. 42', ref: 'luke 12:42' },
-        { k: 'Postcommunion', sum: "Prayer that, through Patrick's prayers, the sacrament may bring us the fruit of redemption. (Summary only.)" }
-      ] },
-    '2/1': { title: 'Mass of St. Bridget, Virgin', source: 'Warren, Sarum Missal in English, Part II (Feb. 1)',
-      note: "Verified: this Mass appears in Warren's English Sarum Missal under 'St. Bridget, Virgin' on Feb. 1. The Missal does not say which Bridget; Feb. 1 is the day of Brigid of Kildare. The Office is 'The rich also among the people…' as for St. Agnes II.",
-      parts: [
-        { k: 'Collect', sum: "Prayer that the prayers of saint Bridget, thy virgin, which are pleasing to thee, may aid us. (Summary only.)" },
-        { k: 'Epistle', pr: '2 Cor. x. 17, 18; xi. 1, 2', ref: '2 corinthians 10:17-18|2 corinthians 11:1-2' },
-        { k: 'Gospel', pr: 'St. Matt. xiii. 44–52', ref: 'matthew 13:44-52' },
-        { k: 'Communion', pr: 'St. Matt. xxv. 4, 6', ref: 'matthew 25:4|matthew 25:6' }
-      ] }
+    "3/17": {
+      "title": "Mass of St. Patrick, Bishop and Confessor",
+      "source": "Warren, The Sarum Missal in English (1911), Part II (Mar. 17), p. 313–314",
+      "note": "Source tier: English Sarum, used as the supplement because no Irish-specific text has been found yet. Wording below is Warren's English, copied from the 1911 book. His footnote: 'An almost entirely different Mass is provided for St. Patrick's Day in the printed Sarum Missals of 1494, 1497, 1498.' Those printed missals are closer to c. 1500 and have not yet been read.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Therefore was there a covenant of peace made with him by the Lord that he should be the chief of the sanctuary and of his people, and that he and his posterity should have the dignity of the priesthood for ever.\nPs. My song shall be alway of the loving-kindness of the Lord."
+        },
+        {
+          "k": "Collect",
+          "tx": "Grant, we beseech thee, almighty God, that honouring the feast of thy blessed confessor and bishop Patrick, we may both increase our devotion and further our salvation. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Ecclus. xliv. 16, 17, 19–23; xlv. 3, 7, 16",
+          "inc": "Behold a high priest … a sweet savour.",
+          "ref": "sirach 44:16-17|sirach 44:20-26|sirach 45:2-3|sirach 45:8-9|sirach 45:20"
+        },
+        {
+          "k": "Gradual",
+          "tx": "The Lord sware and will not repent: thou art a priest for ever after the order of Melchisedech.\nV. The Lord said unto my Lord: Sit thou on my right hand."
+        },
+        {
+          "k": "Tract",
+          "tx": "Blessed is the man that feareth the Lord: he hath great delight in his commandments.\nV. His seed shall be mighty upon earth: the generation of the faithful shall be blessed.\nV. Riches and plenteousness shall be in his house: and his righteousness endureth for ever."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. xxiv. 42–47",
+          "inc": "Watch, therefore, … all his goods.",
+          "ref": "matthew 24:42-47"
+        },
+        {
+          "k": "Offertory",
+          "tx": "I have found David my servant: with my holy oil have I anointed him. My hand shall hold him fast: and my arm shall strengthen him."
+        },
+        {
+          "k": "Secret",
+          "tx": "Regard, we beseech thee, O Lord, the gifts of thy people offered in honour of thy blessed confessor and bishop Patrick; and may the testimony borne to thy truth be profitable to our salvation. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Faithful and wise is that servant whom his lord hath made ruler over his household, to give them their portion of meat in due season."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Mercifully raise, O Lord, those whom thou dost refresh by the sacrament, through the prayers of thy holy confessor and bishop Patrick; that both in these mysteries and in our lives we may receive the fruit of our redemption. Through etc."
+        }
+      ]
+    },
+    "2/1": {
+      "title": "Mass of St. Bridget, Virgin",
+      "source": "Warren, The Sarum Missal in English (1911), Part II (Feb. 1), p. 287–288",
+      "note": "Source tier: English Sarum. Warren's text, copied from the 1911 book. The Missal does not say which Bridget; Feb. 1 is the day of Brigid of Kildare. The Office is 'The rich also among the people etc.', as in the Mass for St. Agnes (II).",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "The rich also among the people etc., as in the Mass for St. Agnes (II)."
+        },
+        {
+          "k": "Collect",
+          "tx": "We beseech thee, O Lord, that the prayers of saint Bridget, thy virgin, which are pleasing to thee, may aid us, and may never cease to demand thy loving-kindness towards us. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "2 Cor. x. 17, 18; xi. 1, 2",
+          "inc": "He that glorieth … virgin to Christ.",
+          "ref": "2 corinthians 10:17-18|2 corinthians 11:1-2"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Full of grace are thy lips, because God hath blessed thee for ever.\nV. Because of the word of truth, of meekness, and righteousness; and thy right hand shall teach thee terrible things."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "V. According to thy worship and renown. Good luck have thou with thine honour; ride on."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. xiii. 44–52",
+          "inc": "The kingdom of heaven … new and old.",
+          "ref": "matthew 13:44-52"
+        },
+        {
+          "k": "Offertory",
+          "tx": "The virgins that be her fellows shall bear her company, and shall be brought unto thee."
+        },
+        {
+          "k": "Secret",
+          "tx": "We beseech thee, O Lord, that being reconciled unto us by the sacrifice now offered unto thee, through the intercession of blessed Bridget thy virgin, thou wouldest mercifully grant us thy assistance in our time. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "The five wise virgins took oil in their vessels with their lamps. And at midnight there was a cry made, Behold the bridegroom cometh; go ye out to meet Christ the Lord."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May the gifts which we have received, O Lord, result favourably to thy faithful people, through the prayers of blessed Bridget thy virgin; and may she who pleased thee implore thy assistance for us. Through etc."
+        }
+      ]
+    }
   };
+  const TRIN = {
+    "tr1": {
+      "title": "Mass of the First Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "My trust is in thy mercy, O Lord, and my heart is joyful in thy salvation. I will sing of the Lord, because he hath dealt so lovingly with me.\nPs. How long wilt thou forget me, O Lord, for ever: how long wilt thou hide thy face from me?"
+        },
+        {
+          "k": "Collect",
+          "tx": "O God, the strength of them that put their trust in thee, mercifully accept our prayers ; and because the weakness of our mortal nature can do nothing without thee, grant us the help of thy grace, that in keeping of thy commandments we may please thee both in will and deed. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 St. John iv. 8–21",
+          "inc": "God is love . . . his brother also.",
+          "ref": "1 john 4:8-21"
+        },
+        {
+          "k": "Gradual",
+          "tx": "I said, Lord, be merciful unto me : heal my soul, for I have sinned against thee. ℣. Blessed is he that considereth the poor and needy : the Lord shall deliver him in the time of trouble."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Ponder my words, O Lord : consider my meditation. No Sequence is said when the service is of the Sunday, until Advent."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xvi. 19–31",
+          "inc": "There was a certain rich . . . rose from the dead.",
+          "ref": "luke 16:19-31"
+        },
+        {
+          "k": "Offertory",
+          "tx": "O hearken unto the voice of my calling, my king and my God : for unto thee will I make my prayer, O Lord."
+        },
+        {
+          "k": "Secret",
+          "tx": "O God, who renewest us, who are created after thine own image, both by sacraments and by precepts, mercifully accept the prayers and gifts of thy suppliants, that what trust in their own merits cannot secure, these propitiatory offerings may obtain for them. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "I will speak of all thy marvellous works : I will rejoice and be glad in thee : yea, my songs will I make of thy name, O most highest."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Grant, we beseech thee, O Lord, that we, who have been filled with so great bounties, may both receive the gift of salvation and never cease from praising thee. Through etc."
+        }
+      ]
+    },
+    "tr2": {
+      "title": "Mass of the Second Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "The Lord was my upholder. He brought me forth also into a place of liberty : he brought me forth, even because he had a favour unto me.\nPs. I will love thee, O Lord my strength ; the Lord is my stony rock, and my defence, and my Saviour."
+        },
+        {
+          "k": "Collect",
+          "tx": "O Lord, who never failest to help and govern them whom thou dost bring up in thy steadfast love, make us to have a perpetual fear and love of thy holy name. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 St. John iii. 13–18",
+          "inc": "Marvel not, my brethren . . . and in truth.",
+          "ref": "1 john 3:13-18"
+        },
+        {
+          "k": "Gradual",
+          "tx": "When I was in trouble I called upon the Lord : and he heard me. ℣. Deliver my soul, O Lord, from lying lips, and from a deceitful tongue."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. God is a righteous judge, strong and patient : and God is provoked every day."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xiv. 16–24",
+          "inc": "A certain man . . . taste of my supper.",
+          "ref": "luke 14:16-24"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Turn thee, O Lord, and deliver my soul : O save me for thy mercy's sake."
+        },
+        {
+          "k": "Secret",
+          "tx": "May the oblation to be offered to thy name purify us, O Lord, and make us day by day to live a more heavenly life. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "I will sing of the Lord, because he hath dealt so lovingly with me : yea, I will praise the name of the Lord most highest."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Having received these holy gifts, we beseech thee, O Lord, to grant that the more frequently we approach these mysteries, the more effectually we may work out our salvation. Through etc."
+        }
+      ]
+    },
+    "tr3": {
+      "title": "Mass of the Third Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Turn thee unto me, and have mercy upon me, O Lord, for I am desolate, and in misery. Look upon my adversity and misery : and forgive me all my sin, O my God.\nPs. Unto thee, O Lord, will I lift up my soul ; my God, I have put my trust in thee : O let me not be confounded."
+        },
+        {
+          "k": "Collect",
+          "tx": "O Lord, we beseech thee, mercifully to hear our supplications ; and grant that we, to whom thou hast given an hearty desire to pray, may by thy aid be defended. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 St. Peter v. 6–11",
+          "inc": "Humble yourselves, therefore, . . . ever and ever.",
+          "ref": "1 peter 5:6-11"
+        },
+        {
+          "k": "Gradual",
+          "tx": "O cast thy burden upon the Lord : and he shall nourish thee. ℣. When I cried unto the Lord, he heard my voice from the battle that was against me."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. I will love thee, O Lord my strength : the Lord is my stony rock, and my defence, and my Saviour."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xv. 1–10",
+          "inc": "Then drew near . . . that repenteth.",
+          "ref": "luke 15:1-10"
+        },
+        {
+          "k": "Offertory",
+          "tx": "They that know thy name will put their trust in thee : for thou, Lord, hast never failed them that seek thee. O praise the Lord which dwelleth in Sion ; for he forgetteth not the complaint of the poor."
+        },
+        {
+          "k": "Secret",
+          "tx": "We beseech thee, O Lord, to sanctify the gifts now offered unto thee, that they may become the body and blood of thy Only-begotten One, for our healing. Who liveth etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "I have called upon thee, O God, for thou shalt hear me : incline thine ear unto me, and hearken unto my words."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Having received the holy gifts, we beseech thee, O Lord, that by their virtue thou wouldest purify us from all vices, and fill us abundantly with the gifts of thy grace. Through etc."
+        }
+      ]
+    },
+    "tr4": {
+      "title": "Mass of the Fourth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "The Lord is my light and my salvation ; whom shall then I fear ? the Lord is the strength of my life ; of whom then shall I be afraid ? When mine enemies and my foes came upon me, they stumbled and fell.\nPs. Though an host of men were laid against me, yet shall not my heart be afraid."
+        },
+        {
+          "k": "Collect",
+          "tx": "O God, the protector of all that trust in thee, without whom nothing is strong, nothing is holy, multiply upon us thy mercy ; that, thou being our ruler and guide, we may so pass through things temporal, that we lose not the things eternal. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Rom. viii. 18–23",
+          "inc": "For I reckon . . . of our body.",
+          "ref": "romans 8:18-23"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Be merciful to our sins, O Lord. Wherefore do the heathen say, Where is now their God ? ℣. Help us, O God of our salvation, and for the glory of thy name, O Lord, deliver us."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. The king shall rejoice in thy strength, O Lord: exceeding glad shall he be of thy salvation."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke vi. 36–42",
+          "inc": "Be ye therefore merciful . . . brother's eye.",
+          "ref": "luke 6:36-42"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Lighten mine eyes that I sleep not in death, lest mine enemies say, I have prevailed against him."
+        },
+        {
+          "k": "Secret",
+          "tx": "Regard, we beseech thee, O Lord, the offerings of thy suppliant Church ; and grant that they may be ever consecrated and received for the salvation of thy faithful people. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "The Lord is my stony rock and my defence, my Saviour, my God, and my might."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May thy holy gifts, O Lord, which we have received, quicken us ; and having cleansed us from our sins, prepare us for thine everlasting mercy. Through etc."
+        }
+      ]
+    },
+    "tr5": {
+      "title": "Mass of the Fifth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Hearken unto my voice, O Lord, when I cry unto thee. Thou hast been my succour, leave me not, neither forsake me, O God of my salvation.\nPs. The Lord is my light and my salvation : whom then shall I fear?"
+        },
+        {
+          "k": "Collect",
+          "tx": "Grant, we beseech thee, O Lord, that the course of this world may be so peaceably ordered by thy governance, that thy Church may joyfully serve thee in godly quietness. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 St. Peter iii. 8–15",
+          "inc": "Be ye all . . . in your hearts.",
+          "ref": "1 peter 3:8-15"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Behold, O God, our defender, and look upon thy servants. ℣. O Lord God of hosts, hear the prayers of thy servants."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. In thee, O Lord have I put my trust ; let me never be put to confusion ; rid me and deliver me in thy righteousness; incline thine ear unto me: make haste to deliver me."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke v. 1–11",
+          "inc": "As the people pressed . . . followed him.",
+          "ref": "luke 5:1-11"
+        },
+        {
+          "k": "Offertory",
+          "tx": "I will thank the Lord for giving me warning : I have set God always before me ; for he is on my right hand, therefore shall I not fall."
+        },
+        {
+          "k": "Secret",
+          "tx": "Let our humble prayers, we beseech thee, O Lord, ascend into thy merciful presence; and let thy divine power, which thou bestowest upon us abundantly for the purification of our minds, descend upon these oblations. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "One thing have I desired of the Lord, which I will require; even that I may dwell in the house of the Lord all the days of my life."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord, that these holy mysteries may purify us, and protect us by their efficacy. Through etc."
+        }
+      ]
+    },
+    "tr6": {
+      "title": "Mass of the Sixth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "The Lord is my strength and he is the wholesome defence of his Anointed. Save thy people, O Lord, and give thy blessing unto thine inheritance : feed them for ever.\nPs. Unto thee will I cry, O Lord my strength : think no scorn of me, lest if thou make as though thou hearest not, I become like them that go down into the pit."
+        },
+        {
+          "k": "Collect",
+          "tx": "O God, who hast prepared for them that love thee good things as yet unseen, pour into our hearts such love towards thee, that we loving thee in all things and above all things, may obtain thy promises, which exceed all that we can desire. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Rom. vi. 3–11",
+          "inc": "Know ye not . . . Jesus Christ our Lord.",
+          "ref": "romans 6:3-11"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Turn thee, O Lord, at the last, and be gracious unto thy servants. ℣. Lord, thou hast been our refuge from one generation."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Deliver me from mine enemies, O God ; defend me from them that rise up against me."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. v. 20–24",
+          "inc": "For I say unto you . . . offer thy gift.",
+          "ref": "matthew 5:20-24"
+        },
+        {
+          "k": "Offertory",
+          "tx": "O hold thou up my goings in thy paths, that my footsteps slip not. Incline thine ear to me, and hearken unto my words. Shew thy marvellous loving-kindness, thou that art the saviour of them that put their trust in thee, O Lord."
+        },
+        {
+          "k": "Secret",
+          "tx": "Favourably hear our supplications, O Lord, and graciously receive the offerings of thy servants ; that what each hath offered to the honour of thy name, may be profitable to the salvation of all men. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Therefore will I offer in his dwelling an oblation with great gladness : I will sing and speak praises unto the Lord."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Grant, we beseech thee, O Lord, that we, who have been fed with this heavenly gift, may be cleansed from our secret sins, and delivered from the snares of our enemies. Through etc."
+        }
+      ]
+    },
+    "tr7": {
+      "title": "Mass of the Seventh Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "O clap your hands together, all ye people : O sing unto God with the voice of melody.\nPs. He shall subdue the people under us : and the nations under our feet."
+        },
+        {
+          "k": "Collect",
+          "tx": "God of all power, who art the author of all good things, graft in our hearts the love of thy name, increase in us true religion, nourish us with all goodness, and of thy great mercy keep us in the same. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Rom. vi. 19–23",
+          "inc": "I speak after . . . Christ our Lord.",
+          "ref": "romans 6:19-23"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Come ye children, and hearken unto me: I will teach you the fear of the Lord. ℣. They had an eye unto him and were lightened : and their faces were not ashamed."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. Thou, O God, art praised in Sion: and unto thee shall the vow be performed in Jerusalem."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Mark viii. 1–9",
+          "inc": "In those days . . . sent them away.",
+          "ref": "mark 8:1-9"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Like as in burnt offerings of rams and bullocks, and like as in ten thousands of fat lambs, so let our sacrifice be in thy sight this day, and grant that we may wholly go after thee ; for they shall not be confounded that put their trust in thee, O Lord."
+        },
+        {
+          "k": "Secret",
+          "tx": "Favourably hear our supplications, O Lord, and mercifully receive these offerings of thy people, and that the vow of none may be of no effect, and that the request of none may be sent empty away, grant that the things which we ask faithfully, we may obtain effectually. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Bow down thine ear to me : make haste to deliver me."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord, to grant that having been replenished with thy gifts, we may both be cleansed by their efficacy and strengthened by their aid. Through etc."
+        }
+      ]
+    },
+    "tr8": {
+      "title": "Mass of the Eighth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "We wait for thy loving-kindness, O God, in the midst of thy temple. O God, according to thy name, so is thy praise unto the world's end : thy right hand is full of righteousness.\nPs. Great is the Lord, and highly to be praised : in the city of our God, even upon his holy hill."
+        },
+        {
+          "k": "Collect",
+          "tx": "O God, whose providence ordereth all things, we humbly beseech thee to put away from us all hurtful things, and to give us those things which be profitable for us. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Rom. viii. 12–17",
+          "inc": "Therefore, brethren, we . . . joint-heirs with Christ.",
+          "ref": "romans 8:12-17"
+        },
+        {
+          "k": "Gradual",
+          "tx": "And be thou my strong rock, and house of defence, that thou mayest save me. ℣. In thee, O Lord God, have I put my trust : let me never be put to confusion."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Hear my law, O my people."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. vii. 15–21",
+          "inc": "Beware of false . . . which is in heaven.",
+          "ref": "matthew 7:15-21"
+        },
+        {
+          "k": "Offertory",
+          "tx": "For thou shalt save the people that are in adversity : and shalt bring down the high looks of the proud. For who is God, beside thee, O Lord ?"
+        },
+        {
+          "k": "Secret",
+          "tx": "O God, who by one perfect sacrifice hast confirmed the various offerings under the law, accept this sacrifice offered unto thee by thy devout servants, and sanctify it by a like blessing to that wherewith thou didst sanctify the offering of righteous Abel, that what each hath offered in honour of thy majesty may be profitable for the salvation of all. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "O taste and see how gracious the Lord is : blessed is the man that trusteth in him."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May thy wholesome working, O Lord, both mercifully set us free from our perverse ways, and lead us unto those things which be rightful. Through etc."
+        }
+      ]
+    },
+    "tr9": {
+      "title": "Mass of the Ninth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Behold, God is my helper : the Lord is with them that uphold my soul. He shall reward evil unto mine enemies : destroy thou them in thy truth, O God, my defender.\nPs. Save me, O God, for thy name's sake : and avenge me in thy strength."
+        },
+        {
+          "k": "Collect",
+          "tx": "Grant to us, Lord, we beseech thee, the spirit to think and do always such things as be rightful ; that we, who cannot exist without thee, may be enabled to live according to thy will. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 Cor. x. 6–13",
+          "inc": "Let us not lust . . . able to bear it.",
+          "ref": "1 corinthians 10:6-13"
+        },
+        {
+          "k": "Gradual",
+          "tx": "O Lord, our Governor, how excellent is thy name in all the world. ℣. Thou that hast set thy glory above the heavens."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Sing we merrily unto God our strength : make a cheerful noise unto the God of Jacob. Take the psalm : the merry harp with the lute."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xvi. 1–9",
+          "inc": "There was a certain rich . . . habitation.",
+          "ref": "luke 16:1-9"
+        },
+        {
+          "k": "Offertory",
+          "tx": "The statutes of the Lord are right and rejoice the heart : sweeter also than honey and the honey-comb, and thy servant keepeth them."
+        },
+        {
+          "k": "Secret",
+          "tx": "Receive, we beseech thee, O Lord, the gifts which of thine own bounty we present unto thee, that these most holy mysteries may, by the powerful working of thy grace, make us holy in conversation in this present life, and bring us to the joys everlasting. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Seek ye first the kingdom of God, and all things shall be added unto you, saith the Lord."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord, that this heavenly mystery may renew us both in soul and body, that we may inwardly perceive the virtue of that which we outwardly perform. Through etc."
+        }
+      ]
+    },
+    "tr10": {
+      "title": "Mass of the Tenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "When I called upon the Lord, he heard my voice from the battle that was against me, and brought them down, even God that endureth for ever. O cast thy burden upon the Lord, and he shall nourish thee.\nPs. Hear my prayer, O God : and hide not thyself from my petition. Take heed unto me, and hear me."
+        },
+        {
+          "k": "Collect",
+          "tx": "Let thy merciful ears, O Lord, be open to the prayers of thy humble servants ; and that they may obtain their petitions make them to ask such things as shall please thee. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 Cor. xii. 2–11",
+          "inc": "Ye know that ye . . . as he will.",
+          "ref": "1 corinthians 12:2-11"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Keep me, O Lord, as the apple of an eye : hide me under the shadow of thy wings. ℣. Let my sentence come forth from thy presence : and let thine eyes look upon the thing that is equal."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. O Lord God of my salvation, I have cried day and night before thee."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xix. 41–47",
+          "inc": "And when he was come . . . in the temple.",
+          "ref": "luke 19:41-47"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Unto thee, O God, will I lift up my soul : my God, I have put my trust in thee : O let me not be confounded, neither let mine enemies triumph over me. For all they that hope in thee shall not be ashamed."
+        },
+        {
+          "k": "Secret",
+          "tx": "Grant us, O Lord, we beseech thee, frequently and worthily to approach these mysteries, because, as often as this commemorative sacrifice is celebrated, the work of our redemption is carried out. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Thou shalt be pleased with the sacrifice of righteousness, with the burnt offerings and oblations upon thine altar, O Lord."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May communion in thy sacrament, O Lord, both bestow upon us purity and contribute to our unity. Through etc."
+        }
+      ]
+    },
+    "tr11": {
+      "title": "Mass of the Eleventh Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "God in his holy habitation, God that maketh men to be of one mind in an house : he will give strength and power unto his people.\nPs. Let God arise, and let his enemies be scattered : let them also that hate him flee before him."
+        },
+        {
+          "k": "Collect",
+          "tx": "O God, who declarest thy almighty power most chiefly in shewing mercy and pity, mercifully grant unto us thy grace, that we, running the way of thy promises, may be made partakers of thy heavenly treasure. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 Cor. xv. 1–10",
+          "inc": "Moreover, brethren, . . . not in vain.",
+          "ref": "1 corinthians 15:1-10"
+        },
+        {
+          "k": "Gradual",
+          "tx": "My heart hath trusted in God and I am helped : therefore my heart danceth for joy, and in my song will I praise him. ℣. Unto thee will I cry, O Lord : my God, think no scorn of me."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Lord, thou hast been our refuge : from one generation to another."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xviii. 9–14",
+          "inc": "And he spake . . . shall be exalted.",
+          "ref": "luke 18:9-14"
+        },
+        {
+          "k": "Offertory",
+          "tx": "I will magnify thee, O Lord, for thou hast set me up, and not made my foes to triumph over me. O Lord my God, I cried unto thee, and thou hast healed me."
+        },
+        {
+          "k": "Secret",
+          "tx": "May this consecrated oblation be presented before thee, O Lord, which thou hast in such wise appointed to be offered in honour of thy name, that it may at the same time be made to work our healing. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Honour the Lord with thy substance, and with the first fruits of all thine increase : so shall thy barns be filled with plenty, and thy presses shall burst out with new wine."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord our God, that thou wouldest mercifully never leave those destitute of thy aid whom thou ceasest not to restore by divine sacraments. Through etc."
+        }
+      ]
+    },
+    "tr12": {
+      "title": "Mass of the Twelfth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Haste thee, O God, to deliver me : make haste to help me, O God. Let them be ashamed and confounded that seek after my soul.\nPs. Let them be turned backward and put to confusion that wish me evil."
+        },
+        {
+          "k": "Collect",
+          "tx": "Almighty and everlasting God, who in the abundance of thy mercy art wont to give more than either we desire or deserve, pour down upon us thy mercy, forgiving us those things whereof our conscience is afraid, and giving us those things which we are not worthy to ask. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "2 Cor. iii. 4–9",
+          "inc": "Such trust have we . . . in glory.",
+          "ref": "2 corinthians 3:4-9"
+        },
+        {
+          "k": "Gradual",
+          "tx": "I will alway give thanks unto the Lord : his praise shall ever be in my mouth. ℣. My soul shall make her boast in the Lord: the humble shall hear thereof and be glad."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. O come, let us sing unto the Lord: let us heartily rejoice in the strength of our salvation. Another Verse. ℣. Let us come before his presence with thanksgiving: and shew ourselves glad in him with psalms."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Mark vii. 31–37",
+          "inc": "And again departing . . . dumb to speak.",
+          "ref": "mark 7:31-37"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Moses besought the Lord his God, and said, Lord, why doth thy wrath wax hot against thy people ? Spare the wrath of thy soul. Remember Abraham, Isaac, and Jacob, to whom thou swarest to give a land flowing with milk and honey. And the Lord repented of the evil which he said he would do unto his people."
+        },
+        {
+          "k": "Secret",
+          "tx": "Look down, we beseech thee, O Lord, mercifully on this our bounden service ; that the gift which we offer may be acceptable to thee, and may be a succour to our frailty. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "The earth is filled with the fruit of thy works, O Lord : that he may bring food out of the earth, and wine that maketh glad the heart of man, and oil to make him a cheerful countenance, and bread to strengthen man's heart."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Grant, we beseech thee, O Lord, that in partaking of thy sacrament we may have a sense of support both in mind and body, and being saved in both we may glory in the fulness of the heavenly healing. Through etc."
+        }
+      ]
+    },
+    "tr13": {
+      "title": "Mass of the Thirteenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Look upon the covenant, O Lord, and forget not the congregation of the poor for ever. Arise, O God, maintain thine own cause: forget not the voice of thine enemies.\nPs. O God, wherefore art thou absent from us so long ? Why is thy wrath so hot against the sheep of thy pasture ?"
+        },
+        {
+          "k": "Collect",
+          "tx": "Almighty and merciful God, of whose only gift it cometh that thy faithful people do unto thee true and laudable service, grant, we beseech thee, that we may without stumbling run the way of thy promises. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Gal. iii. 16–22",
+          "inc": "Now to Abraham . . . them that believe.",
+          "ref": "galatians 3:16-22"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Look upon thy covenant, O Lord, and forget not the congregation of the poor for ever. ℣. Arise, O God, maintain thine own cause: and forget not the voice of thine enemies."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. For the Lord is a great God : and a great King above all the earth."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke x. 23–37",
+          "inc": "Blessed are the eyes . . . do thou likewise.",
+          "ref": "luke 10:23-37"
+        },
+        {
+          "k": "Offertory",
+          "tx": "My hope hath been in thee, O Lord : I have said, Thou art my God. My time is in thy hand."
+        },
+        {
+          "k": "Secret",
+          "tx": "Mercifully look down, O Lord, we beseech thee, on the offerings which we present on thy holy altar ; that by obtaining abundant pardon for us, they may redound to the honour of thy name. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Thou didst send us from heaven bread, O Lord, able to content every man's delight, and agreeing to every taste."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord, that participation in this holy mystery may quicken us ; and procure for us both pardon and protection. Through etc."
+        }
+      ]
+    },
+    "tr14": {
+      "title": "Mass of the Fourteenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Behold, O God our defender, and look upon the face of thine anointed. For one day in thy courts : is better than a thousand.\nPs. O how amiable are thy dwellings, thou Lord of hosts. My soul hath a desire and longing to enter into the courts of the Lord."
+        },
+        {
+          "k": "Collect",
+          "tx": "Almighty and everlasting God, give unto us the increase of faith, hope, and charity; and that we may obtain that which thou dost promise, make us to love that which thou dost command. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Gal. v. 16–24",
+          "inc": "Walk in the Spirit . . . affections and lusts.",
+          "ref": "galatians 5:16-24"
+        },
+        {
+          "k": "Gradual",
+          "tx": "It is a good thing to give thanks unto the Lord : and to sing praises unto thy name, O most highest. ℣. To tell of thy loving kindness early in the morning, and of thy truth in the night season."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. O give thanks unto the Lord, and call upon his name : tell the people what things he hath done."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xvii. 11–19",
+          "inc": "And it came to pass . . . made thee whole.",
+          "ref": "luke 17:11-19"
+        },
+        {
+          "k": "Offertory",
+          "tx": "The angel of the Lord tarrieth round about them that fear him, and delivereth them. O taste and see how gracious the Lord is."
+        },
+        {
+          "k": "Secret",
+          "tx": "Be favourable, O Lord, to thy people ; be favourable to their gifts ; that being appeased by this oblation, thou mayest bestow upon us pardon, and grant our requests. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "The bread that I will give is my flesh, which I will give for the life of the world."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May thy sacraments, O God, continually purify and strengthen us, and lead us to the attainment of everlasting salvation. Through etc."
+        }
+      ]
+    },
+    "tr15": {
+      "title": "Mass of the Fifteenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Bow down thine ear, O Lord, and hear me : my God, save thy servant that putteth his trust in thee. Be merciful unto me, O Lord, for I will call daily upon thee.\nPs. Comfort the soul of thy servant : for unto thee, O Lord, do I lift up my soul."
+        },
+        {
+          "k": "Collect",
+          "tx": "Keep, we beseech thee, O Lord, thy Church with thy perpetual mercy, and because the frailty of man without thee cannot but fall, keep us ever by thy help from all things hurtful, and lead us to all things profitable to our salvation. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Gal. v. 25, 26; vi. 1–10",
+          "inc": "If we live . . . household of faith.",
+          "ref": "galatians 5:25-26|galatians 6:1-10"
+        },
+        {
+          "k": "Gradual",
+          "tx": "It is better to trust in the Lord : than to put any confidence in man. ℣. It is better to trust in the Lord : than to put any confidence in princes."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. O God, my heart is ready, my heart is ready : I will sing and give praise with the best member that I have."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. vi. 24–33",
+          "inc": "No man can . . . added unto you.",
+          "ref": "matthew 6:24-33"
+        },
+        {
+          "k": "Offertory",
+          "tx": "I waited patiently for the Lord : and he inclined unto me and heard my calling. And he hath put a new song in my mouth : even a thanksgiving unto our God."
+        },
+        {
+          "k": "Secret",
+          "tx": "Grant, O Lord, we beseech thee, that this saving offering may be to us both the cleansing away of our sins, and the reconciliation of us to thy loving kindness. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "He that eateth my flesh, and drinketh my blood, dwelleth in me, and I in him, saith the Lord."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May thy sacraments, O God, ever purify and strengthen us, and lead us to the attainment of everlasting salvation. Through etc."
+        }
+      ]
+    },
+    "tr16": {
+      "title": "Mass of the Sixteenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Be merciful unto me, O Lord : for I will call daily upon thee. For thou, Lord, art good and gracious, and of great mercy unto all them that call upon thee.\nPs. Bow down thine ear, O Lord, and hear me: for I am poor and in misery."
+        },
+        {
+          "k": "Collect",
+          "tx": "O Lord, we beseech thee, let thy continual pity cleanse and defend thy Church, and because it cannot continue in safety without thy succour, let it be governed evermore by thy favour. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Eph. iii. 13–21",
+          "inc": "I desire that . . . without end. Amen.",
+          "ref": "ephesians 3:13-21"
+        },
+        {
+          "k": "Gradual",
+          "tx": "The heathen shall fear thy name, O Lord : and all the kings of the earth thy majesty. ℣. When the Lord shall build up Sion : and when his glory shall appear."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Ye that fear the Lord, put your trust in the Lord : he is their helper and defender."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke vii. 11–16",
+          "inc": "And it came to pass . . . visited his people.",
+          "ref": "luke 7:11-16"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Make haste, O Lord, to help me. Let them be ashamed and confounded together, that seek after my soul to destroy it."
+        },
+        {
+          "k": "Secret",
+          "tx": "We beseech thee, O Lord, that thy sacrament may keep us in safety ; and ever defend us against the assaults of the devil. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Lord, I will make mention of thy righteousness only. Thou, O God, hast taught me from my youth up until now : forsake me not, O God, in mine old age, when I am grey headed."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord, that the working of this heavenly gift may take possession both of our souls and bodies ; that what it alloweth, and not that which our own mind deviseth, may continually prevent us. Through etc."
+        }
+      ]
+    },
+    "tr17": {
+      "title": "Mass of the Seventeenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Righteous art thou, O Lord : and true is thy judgment. O deal with thy servant according unto thy loving mercy.\nPs. Blessed are those that are undefiled in the way : and walk in the law of the Lord."
+        },
+        {
+          "k": "Collect",
+          "tx": "Lord, we pray thee that thy grace may always prevent and follow us, and make us continually to be given to good works. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Eph. iv. 1–6",
+          "inc": "I, therefore, the prisoner . . . in you all.",
+          "ref": "ephesians 4:1-6"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Blessed are the people whose God is the Lord Jehovah : and blessed are the folk that the Lord hath chosen to him to be his inheritance. ℣. By the word of the Lord were the heavens made : and all the hosts of them by the breath of his mouth."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. The right hand of the Lord bringeth mighty things to pass: the right hand of the Lord hath the pre-eminence."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Luke xiv. 1–11",
+          "inc": "And it came to pass . . . be exalted.",
+          "ref": "luke 14:1-11"
+        },
+        {
+          "k": "Offertory",
+          "tx": "I Daniel prayed unto my God, and said: Hear, O Lord, the prayers of thy servant : cause thy face to shine upon thy sanctuary ; and mercifully look down upon this thy people, which is called by thy name, O God."
+        },
+        {
+          "k": "Secret",
+          "tx": "Cleanse us, O Lord, we beseech thee, by the effectual working of this present sacrifice ; and by thy mercy make us meet to be partakers thereof. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Promise unto the Lord your God, and keep it, all ye that are round about him : bring presents unto him that ought to be feared. He shall refrain the spirit of princes : and is wonderful among the kings of the earth."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We beseech thee, O Lord, mercifully to purify our souls, that we may receive consequently help for our bodies both now and hereafter. Through etc."
+        }
+      ]
+    },
+    "tr18": {
+      "title": "Mass of the Eighteenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "Give peace, O Lord, to them that wait for thee, and let thy prophets be found faithful. Hear the prayers of thy servant, and of thy people Israel.\nPs. I was glad when they said unto me : We will go into the house of the Lord."
+        },
+        {
+          "k": "Collect",
+          "tx": "Lord, we beseech thee, grant thy people grace to withstand the temptations of the devil, and with pure minds to follow thee the only God. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "1 Cor. i. 4–8",
+          "inc": "I thank my God . . . our Lord Jesus Christ.",
+          "ref": "1 corinthians 1:4-8"
+        },
+        {
+          "k": "Gradual",
+          "tx": "I was glad when they said unto me : We will go into the house of the Lord. ℣. Peace be within thy walls : and plenteousness within thy palaces."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. I was glad when they said unto me : We will go into the house of the Lord. [Alleluya.] ℣. Our feet shall stand in thy gates: O Jerusalem. These last two Verses are said alternately throughout the week, but in such wise that Our feet shall stand etc. is said first, when the service is ferial. If there be no ferial day throughout the week vacant for this purpose, then in that year the last Verse shall be omitted altogether."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. xxii. 35–46",
+          "inc": "Then one of them . . . any more questions.",
+          "ref": "matthew 22:35-46"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Moses consecrated an altar unto the Lord, offering burnt-offerings thereon, and sacrificing a peace offering : he made an evening sacrifice for a sweet odour to the Lord God in the sight of the children of Israel."
+        },
+        {
+          "k": "Secret",
+          "tx": "We humbly beseech thy majesty, O Lord, that these holy things which we present, may set us free both from past and from future transgressions. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Bring presents, and come into his courts. O worship the Lord in the beauty of holiness."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Almighty God, we beseech thee, that by thy sanctifying ordinances both our vices may be cured, and eternal healing may spring up for us. Through etc."
+        }
+      ]
+    },
+    "tr19": {
+      "title": "Mass of the Nineteenth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "I am the salvation of the people, saith the Lord : in whatsoever distress they shall call upon me, I will hear them ; and I will be their Lord for ever.\nPs. Hear my law, O ye people: incline your ears unto the words of my mouth."
+        },
+        {
+          "k": "Collect",
+          "tx": "O Lord, forasmuch as without thee we are not able to please thee, we beseech thee that thy pity may work in us and direct our hearts. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Eph. iv. 23–28",
+          "inc": "Be renewed . . . to him that needeth.",
+          "ref": "ephesians 4:23-28"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Let my prayer be set forth in thy sight as the incense, O Lord. ℣. Let the lifting up of my hands be an evening sacrifice."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. They that put their trust in the Lord shall be even as the mount Sion : which may not be removed, but standeth fast for ever, in Jerusalem."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. ix. 1–8",
+          "inc": "And he entered into . . . unto men.",
+          "ref": "matthew 9:1-8"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Though I walk in the midst of trouble, yet shalt thou refresh me, O Lord : thou shalt stretch forth thy hand upon the furiousness of mine enemies, and thy right hand shall save me."
+        },
+        {
+          "k": "Secret",
+          "tx": "O God, who by our communion in this sacred sacrifice makest us to be partakers of the one supreme divine nature, grant, we beseech thee, that as we know thy truth, so we may attain unto it by a worthy understanding and conversation. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Thou hast charged : that we shall diligently keep thy commandments. O that my ways were made so direct : that I might keep thy statutes !"
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "We give thee thanks, O Lord, who hast fed us with this holy gift, beseeching thee of thy mercy that thou wouldest make us worthy partakers of it. Through etc."
+        }
+      ]
+    },
+    "tr20": {
+      "title": "Mass of the Twentieth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "In all things that thou hast brought upon us, O Lord, thou hast executed true judgment: we have trespassed, and not obeyed thy commandments, but give glory to thy name, and deal with us according to the multitude of thy mercy.\nPs. Great is the Lord and highly to be praised : in the city of our God, even upon his holy hill."
+        },
+        {
+          "k": "Collect",
+          "tx": "O almighty and merciful God, of thy bountiful goodness keep us, we beseech thee, from all things that may hurt us, that we, being ready both in body and soul, may cheerfully accomplish those things that thou wouldest have done. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Eph. v. 15–21",
+          "inc": "See then that . . . fear of Christ.",
+          "ref": "ephesians 5:15-21"
+        },
+        {
+          "k": "Gradual",
+          "tx": "The eyes of all wait upon thee, O Lord : and thou givest them their meat in due season. ℣. Thou openest thine hand : and fillest all things living with plenteousness."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Out of the deep have I called unto thee, O Lord : Lord, hear my voice."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. xxii. 1–14",
+          "inc": "And Jesus answered . . . few are chosen.",
+          "ref": "matthew 22:1-14"
+        },
+        {
+          "k": "Offertory",
+          "tx": "By the waters of Babylon we sat down and wept : when we remembered thee, O Sion."
+        },
+        {
+          "k": "Secret",
+          "tx": "Grant, we beseech thee, O Lord, that these gifts which we offer in the sight of thy majesty may be profitable for our salvation. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "O think upon thy servant, O Lord, as concerning thy word : wherein thou hast caused me to put my trust. The same is my comfort in my trouble."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "May thy healing virtue, O Lord, both mercifully free us from our frowardness, and make us ever hold fast to thy commandments. Through etc."
+        }
+      ]
+    },
+    "tr21": {
+      "title": "Mass of the Twenty-first Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "O Lord, the whole world is in thy power, and there is no man that can gainsay thee ; for thou hast made all things, heaven, and earth, and all the wondrous things under heaven. Thou art lord of all things.\nPs. Blessed are those that are undefiled in the way : and walk in the law of the Lord."
+        },
+        {
+          "k": "Collect",
+          "tx": "Grant, we beseech thee, merciful Lord, to thy faithful people pardon and peace ; that they may be cleansed from all their sins, and serve thee with a quiet mind. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Eph. vi. 10–17",
+          "inc": "Finally, my brethren, be strong . . . word of God.",
+          "ref": "ephesians 6:10-17"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Lord, thou hast been our refuge : from one generation to another. ℣. Before the mountains were brought forth, or ever the earth and the world were made: thou art God from everlasting, and world without end."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. Praise the Lord, O my soul ; while I live will I praise the Lord : yea, as long as I have any being, I will sing praises unto my God."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. John iv. 46–53",
+          "inc": "There was a certain . . . his whole house.",
+          "ref": "john 4:46-53"
+        },
+        {
+          "k": "Offertory",
+          "tx": "There was a man in the land whose name was Job, perfect and upright, and one that feared God : and Satan asked that he might tempt him; and power was given him by the Lord over his possessions, and over his flesh, and he destroyed all his substance, and his sons ; he smote his flesh also with a grievous boil."
+        },
+        {
+          "k": "Secret",
+          "tx": "Let these mysteries, O Lord, we beseech thee, provide for us a heavenly medicine, and cleanse away the vices of our hearts. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "My soul hath longed for thy salvation ; and I have a good hope because of thy word. When wilt thou be avenged of them that persecute me? They persecute me falsely: be thou my help, O Lord my God."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Make us, we beseech thee, O Lord, always to obey thy commandments, that we may be rendered worthy of thy sacred gifts. Through etc."
+        }
+      ]
+    },
+    "tr22": {
+      "title": "Mass of the Twenty-second Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "If thou, Lord, wilt be extreme to mark what is done amiss : O Lord, who may abide it ? For there is mercy with thee, O God of Israel.\nPs. Out of the deep have I called unto thee, O Lord : Lord hear my voice."
+        },
+        {
+          "k": "Collect",
+          "tx": "Lord, we beseech thee to keep thy household [the Church] in continual godliness ; that through thy protection it may be free from all adversities, and devoutly given to serve thee in good works, to the glory of thy name. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Phil. i. 6–11",
+          "inc": "We are confident . . . praise of God.",
+          "ref": "philippians 1:6-11"
+        },
+        {
+          "k": "Gradual",
+          "tx": "Behold how good and joyful a thing it is : brethren, to dwell together in unity ! . ℣. It is like the precious ointment upon the head, that ran down unto the beard : even unto Aaron's beard."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. He healeth those that are broken in heart : and giveth medicine to heal their sickness. Another verse. [Alleluya.] The Lord promised his blessing : and life for ever more. These last two Verses are said alternately throughout the week, when the service is ferial. If there be no ferial day throughout the week vacant for this purpose, then the second Verse shall be omitted altogether."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. xviii. 23–35",
+          "inc": "The kingdom of heaven . . . their trespasses.",
+          "ref": "matthew 18:23-35"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Remember me, O Lord, who art above all power ; give me proper and eloquent speech in my mouth, that my words may be pleasing in the presence of princes."
+        },
+        {
+          "k": "Secret",
+          "tx": "Mercifully receive, O Lord, the sacrifice by which thou hast willed that both thou thyself shouldest be propitiated, and that salvation should be restored to us in the might of thy loving-kindness. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "I say unto you, there is joy in the presence of the angels of God over one sinner that repenteth."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Having partaken of the food of immortality, we beseech thee, O Lord, that that which we have received with our mouths may bring forth in us the fruit of pure minds. Through etc."
+        }
+      ]
+    },
+    "tr23": {
+      "title": "Mass of the Twenty-third Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary. Warren's rubric: when the season is prolonged, the Office 'I know the thoughts' is sung on three Sundays; the Sunday next before Advent always has its own Mass.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "I know the thoughts that I think toward you, saith the Lord, thoughts of peace and not of evil. Then shall ye call upon me, and I will hearken unto you, and I will turn away your captivity from all places.\nPs. Lord, thou hast become gracious unto thy land : thou hast turned away the captivity of Jacob."
+        },
+        {
+          "k": "Collect",
+          "tx": "O God, our refuge and strength, who art the author of all godliness, be ready to hear the devout prayers of thy Church ; and grant that those things which we ask faithfully we may obtain effectually. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Phil. iii. 17–21",
+          "inc": "Brethren, be followers . . . unto himself.",
+          "ref": "philippians 3:17-21"
+        },
+        {
+          "k": "Gradual",
+          "tx": "It is thou, O Lord, that savest us from our enemies : and puttest them to confusion that hate us. ℣. We make our boast of God all day long : and will praise thy name for ever."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. He maketh peace in thy borders : and filleth thee with the flour of wheat."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. xxii. 15–21",
+          "inc": "Then went the Pharisees . . . that are God's.",
+          "ref": "matthew 22:15-21"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Out of the deep have I called unto thee, O Lord : Lord, hear my voice."
+        },
+        {
+          "k": "Secret",
+          "tx": "We beseech thee, O Lord, to make us attentive unto thy sacred service ; and that we may serve thee without any stain of offence, do thou thyself make us such as thou commandest us to be. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Verily, I say unto you, what things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Having received, O Lord, the gifts of the holy mystery, we humbly beseech thee, that what thou hast commanded us to do in remembrance of thee, may be an effectual help to our weakness. Through etc."
+        }
+      ]
+    },
+    "tr24": {
+      "title": "Mass of the Twenty-fourth Sunday after Trinity",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary. Warren's rubric: when the season is prolonged, the Office 'I know the thoughts' is sung on three Sundays; the Sunday next before Advent always has its own Mass.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "I know the thoughts that I think toward you, saith the Lord, thoughts of peace and not of evil. Then shall ye call upon me, and I will hearken unto you, and I will turn away your captivity from all places.\nPs. Lord, thou art become gracious unto thy land ; thou hast turned away the captivity of Jacob."
+        },
+        {
+          "k": "Collect",
+          "tx": "O Lord, we beseech thee, absolve thy people from their offences ; that through thy bountiful goodness we may be delivered from the bonds of those sins which by our frailty we have committed. Through etc."
+        },
+        {
+          "k": "Epistle",
+          "pr": "Col. i. 9–11",
+          "inc": "For this cause . . . with joyfulness.",
+          "ref": "colossians 1:9-11"
+        },
+        {
+          "k": "Gradual",
+          "tx": "But it is thou, O Lord, that savest us from our enemies : and puttest them to confusion that hate us. ℣. We make our boast of God all day long : and will praise thy name for ever."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. O Lord my God, in thee have I put my trust : save me from all them that persecute me, and deliver me."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. Matt. ix. 18–22",
+          "inc": "While he spake . . . from that hour.",
+          "ref": "matthew 9:18-22"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Out of the deep have I called unto thee, O Lord : Lord, hear my voice."
+        },
+        {
+          "k": "Secret",
+          "tx": "We beseech thee, O Lord, that the offering of this present gift may cleanse us, and make us wholly worthy of the sacred things which we have received. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Verily, I say unto you, what things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Receiving thy heavenly gift, we beseech thee, O Lord, that thou wilt not suffer that which thou hast ordained for the healing of thy faithful people to turn to our condemnation. Through etc."
+        }
+      ]
+    },
+    "trAdv": {
+      "title": "Mass of the Sunday next before Advent",
+      "source": "Warren, The Sarum Missal in English (1911), Part I (Sundays after Trinity), pp. 365–406",
+      "note": "Source tier: English Sarum (Warren's translation of the Sarum Missal), used as the supplement because no Irish-specific text for the Sundays has been found. The wording is Warren's English from the 1911 book (scanning errors repaired). Warren prints only the first and last words of the Epistle and Gospel; the full reading is shown in the Douay-Rheims Bible, which is not the wording of the Sarum Latin lectionary. Warren's rubric: when the season is prolonged, the Office 'I know the thoughts' is sung on three Sundays; the Sunday next before Advent always has its own Mass.",
+      "parts": [
+        {
+          "k": "Introit (Office)",
+          "tx": "I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil. Then shall ye call upon me, and I will hearken unto you, and I will turn away your captivity from all places.\nPs. Lord, thou art become gracious unto thy land : thou hast turned away the captivity of Jacob."
+        },
+        {
+          "k": "Collect",
+          "tx": "Stir up, we beseech thee, O Lord, the wills of thy faithful people ; that they more plenteously bringing forth the fruit of good works, may of thy loving-kindness be more plenteously rewarded. Through etc."
+        },
+        {
+          "k": "Lesson",
+          "pr": "Jer. xxiii. 5–8",
+          "inc": "Behold the days . . . their own land.",
+          "ref": "jeremiah 23:5-8"
+        },
+        {
+          "k": "Gradual",
+          "tx": "It is thou that savest us from our enemies : and puttest them to confusion that hate us. ℣. We make our boast of God all day long : and will praise thy name for ever."
+        },
+        {
+          "k": "Alleluya",
+          "tx": "Alleluya. ℣. The heathen shall fear thy name, O Lord : and all the kings of the earth thy majesty. Throughout the week, when the service is ferial, the following Verse is said: Alleluya. ℣. When Israel came out of Egypt : and the house of Jacob from among the strange people. Or this Verse : Alleluya. ℣. I will give thanks unto thee with my whole heart : even before the gods will I sing praise unto thee."
+        },
+        {
+          "k": "Gospel",
+          "pr": "St. John vi. 5–14",
+          "inc": "When Jesus then lifted . . . into the world.",
+          "ref": "john 6:5-14"
+        },
+        {
+          "k": "Offertory",
+          "tx": "Out of the deep have I called unto thee, O Lord : Lord, hear my voice."
+        },
+        {
+          "k": "Secret",
+          "tx": "Favourably regard, O Lord, the sacrifice which is about to be offered unto thee, that it may both cleanse us from the corruptions of our present state and make us acceptable unto thy name. Through etc."
+        },
+        {
+          "k": "Communion",
+          "tx": "Verily, I say unto you, what things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them."
+        },
+        {
+          "k": "Postcommunion",
+          "tx": "Grant, we beseech thee, almighty God, that our souls having been satisfied with the divine gift, may be filled with a longing desire to be kindled by the flame of thy Spirit, and to shine as bright lights in the presence of Christ thy Son at his coming. Through etc."
+        }
+      ]
+    }
+  };
+  Object.assign(MASS, TRIN);
+  const TRIN_WED = {"1": ["2 St. Peter i. 16–19", "We made known . . . in your hearts.", "2 peter 1:16-19", "St. Matt. v. 17–19", "Think not that . . . kingdom of heaven.", "matthew 5:17-19"], "2": ["Eph. iv. 17–24", "This I say, therefore, . . . true holiness.", "ephesians 4:17-24", "St. Matt. xxi. 23–27", "And when he was come . . . do these things.", "matthew 21:23-27"], "3": ["2 Tim. iv. 17, 18", "The Lord stood by me . . . Amen.", "2 timothy 4:17-18", "St. Matt. v. 25–30", "Agree with thine adversary . . . into hell.", "matthew 5:25-30"], "4": ["1 St. John ii. 3–6", "Hereby we do know . . . as he walked.", "1 john 2:3-6", "St. Matt. xvii. 10–18", "His disciples asked him . . . that very hour.", "matthew 17:9-17"], "5": ["1 Tim. ii. 1–7", "I exhort . . . in faith and verity.", "1 timothy 2:1-7", "St. Luke viii. 22–25", "Now it came to pass . . . obey him.", "luke 8:22-25"], "6": ["1 St. John ii. 21–25", "I have not written . . . eternal life.", "1 john 2:21-25", "St. Mark x. 17–21", "When he was gone . . . follow me.", "mark 10:17-21"], "7": ["Rom. viii. 1–6", "There is therefore now . . . life and peace.", "romans 8:1-6", "St. Matt. xii. 1–7", "At that time Jesus . . . the guiltless.", "matthew 12:1-7"], "8": ["Rom. v. 8–11", "God commendeth . . . Lord Jesus Christ.", "romans 5:8-11", "St. Mark ix. 38–48", "Master, we saw . . . is not quenched.", "mark 9:37-47"], "9": ["Rom. vi. 16–18", "Know ye not . . . of righteousness.", "romans 6:16-18", "St. Luke xvi. 10–15", "He that is faithful . . . sight of God.", "luke 16:10-15"], "10": ["1 Cor. xv. 39–46", "All flesh is not . . . which is spiritual.", "1 corinthians 15:39-46", "St. Luke xxi. 34–36", "Take heed to yourselves . . . Son of man.", "luke 21:34-36"], "11": ["1 Cor. vi. 15–20", "Know ye not . . . in your body.", "1 corinthians 6:15-20", "St. Luke xviii. 1–8", "And he spake . . . avenge them speedily.", "luke 18:1-8"], "12": ["2 Cor. iv. 5–11", "We preach not ourselves . . . mortal flesh.", "2 corinthians 4:5-11", "St. Matt. xi. 20–24", "Then began he to upbraid . . . than for thee.", "matthew 11:20-24"], "13": ["1 Thess. ii. 9–13", "Ye remember, brethren, . . . you that believe.", "1 thessalonians 2:9-13", "St. Matt. xii. 14–21", "Then the Pharisees . . . Gentiles trust.", "matthew 12:14-21"], "14": ["1 Tim. i. 8–14", "We know that the law . . . in Christ Jesus.", "1 timothy 1:8-14", "St. Luke xx. 1–8", "And it came to pass . . . do these things.", "luke 20:1-8"], "15": ["1 Tim. i. 8–14", "But we know . . . in Christ Jesus.", "1 timothy 1:8-14", "St. Luke xx. 1–8", "And it came to pass . . . I do these things.", "luke 20:1-8"], "16": ["Col. ii. 8–13", "Beware lest any man . . . all trespasses.", "colossians 2:8-13", "St. Mark viii. 22–26", "And he cometh . . . any in the town.", "mark 8:22-26"], "18": ["Rom. xv. 30–33", "Now I beseech you . . . with you all. Amen.", "romans 15:30-33", "St. Matt. xiii. 31–35", "The kingdom of heaven . . . of the world.", "matthew 13:31-35"], "19": ["2 Thess. ii. 15–17; iii. 1–5", "Therefore, brethren, stand . . . waiting for Christ.", "2 thessalonians 2:15-17|2 thessalonians 3:1-5", "St. Matt. xiii. 36–43", "His disciples came . . . let him hear.", "matthew 13:36-43"], "20": ["2 Tim. ii. 1–7", "Thou, therefore, my son, . . . in all things.", "2 timothy 2:1-7", "St. Luke xiv. 12–15", "When thou makest . . . kingdom of God.", "luke 14:12-15"], "21": ["1 Thess. i. 4–10", "Knowing, brethren beloved . . . even Jesus.", "1 thessalonians 1:4-10", "St. Luke vi. 6–11", "And it came to pass . . . do to Jesus.", "luke 6:6-11"], "22": ["Rom. iii. 19–26", "Now we know that . . . believeth in Jesus.", "romans 3:19-26", "St. Mark xi. 23–26", "Verily I say . . . forgive your trespasses.", "mark 11:23-26"], "23": ["Rom. v. 17–21", "For if by one . . . Jesus Christ our Lord.", "romans 5:17-21", "St. Matt. xvii. 24–27", "When they were come . . . for me and thee.", "matthew 17:23-26"], "24": ["1 Cor. x. 20–31", "I would not that . . . the glory of God.", "1 corinthians 10:20-31", "St. Matt. xxi. 28–32", "A certain man . . . might believe him.", "matthew 21:28-32"], "17": ["Rom. v. 17–21", "For if by one . . . Jesus Christ our Lord.", "romans 5:17-21", "St. Matt. xvii. 24–27", "When they were come . . . for me and thee.", "matthew 17:23-26"]};
+  function ferialMass(mk, isWed) {   // Sarum: the Sunday Mass is repeated on the weekdays of its week; Wednesday has its own Epistle and Gospel
+    const m = MASS[mk]; if (!m) return null;
+    const n = mk.slice(2), wd = isWed && TRIN_WED[n];
+    const parts = m.parts.map(p => {
+      if (wd && p.k === 'Epistle') return { k: 'Epistle (Wednesday)', pr: wd[0], inc: wd[1], ref: wd[2] };
+      if (wd && p.k === 'Gospel') return { k: 'Gospel (Wednesday)', pr: wd[3], inc: wd[4], ref: wd[5] };
+      return p;
+    });
+    const note = 'Weekday: in the Sarum Missal the Mass of the preceding Sunday is said again on the weekdays of its week' + (wd ? ', with a proper Epistle and Gospel on Wednesday (Warren prints these after each Sunday).' : '.') + (n === '17' && wd ? ' Warren directs that this Wednesday uses the readings of the Wednesday after the 23rd Sunday.' : '') + ' ' + m.note;
+    return Object.assign({}, m, { title: m.title + (wd ? ' — Wednesday' : ' — said on the weekday'), note, parts });
+  }
 
   function emberWed(d0) { let e = add(d0, 1); while (dow(e) !== 3) e = add(e, 1); return e; }   // first Wednesday after d0
 
@@ -258,7 +1686,7 @@
       const x = { noteKey: 'Season of Advent' };
       const wed = emberWed(D(y, 12, 13)), eb = [0, 2, 3].map(n => add(wed, n)).find(z => same(z, d));
       if (d.getUTCDate() === 24 && d.getUTCMonth() === 11) return T('Christmas Eve — Vigil Fast', 85, 'Vigil', 'v', 'Advent', { fast: 'Strict fast and abstinence', noteKey: 'Vigil Fast of Christmas' });
-      if (sun) return T(`${ORD(wk)} Sunday of Advent`, 70, 'Sunday', 'v', 'Advent', x);
+      if (sun) return T(`${ORD(wk)} Sunday of Advent`, wk === 1 ? 95 : 75, 'Sunday', 'v', 'Advent', x);
       if (eb) return T(`${wd} — Winter Ember Day`, 45, 'Ember Day', 'v', 'Advent', Object.assign(x, em('Winter'), { noteKey: 'Winter Ember Days (Advent Fast)' }));
       return T(`${wd} of the ${ORD(wk)} Week of Advent`, 10, 'Weekday', 'v', 'Advent', x);
     }
@@ -274,7 +1702,7 @@
       if (o === 0) return T('Epiphany of Our Lord (Nollaig Beag)', 95, 'Principal Feast', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)' });
       if (o === 7) return T('Octave Day of the Epiphany', 62, 'Octave Day', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)' });
       const sn = Math.floor((o - 1) / 7) + 1;
-      if (sun) return T(`${ORD(sn)} Sunday after Epiphany`, 70, 'Sunday', 'g', 'Epiphanytide', { noteKey: 'Time after Epiphany' });
+      if (sun) return T(`${ORD(sn)} Sunday after Epiphany`, 50, 'Sunday', 'g', 'Epiphanytide', { noteKey: 'Time after Epiphany' });
       if (o < 7) return T(`${wd} within the Octave of Epiphany`, 40, 'Octave Day', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)' });
       return T(`${wd} after the ${ORD(Math.floor((diff(sunOnOrBefore(d), epi) - 1) / 7) + 1)} Sunday after Epiphany`, 10, 'Weekday', 'g', 'Epiphanytide', { noteKey: 'Time after Epiphany' });
     }
@@ -311,12 +1739,12 @@
       const eas = { noteKey: 'Easter Sunday & Octave of Easter (Paschaltide)' };
       if (k === 0) return T('Easter Sunday', 100, 'Principal Feast', 'w', 'Eastertide', eas);
       if (k < 7) return T(`${wd} within the Octave of Easter`, 96, 'Octave Day', 'w', 'Eastertide', eas);
-      if (k === 7) return T('Low Sunday (Octave Day of Easter)', 90, 'Sunday', 'w', 'Eastertide', eas);
+      if (k === 7) return T('Low Sunday (Octave Day of Easter)', 62, 'Sunday', 'w', 'Eastertide', eas);
       if (k === 38) return T('Rogation Wednesday — Vigil of the Ascension', 55, 'Vigil', 'v', 'Eastertide', { fast: 'Vigil fast and abstinence', noteKey: 'Vigil Fast of the Ascension' });
       if (k >= 36 && k <= 38) return T(`Rogation ${wd}`, 50, 'Rogation Day', 'v', 'Eastertide', { fast: 'Rogation Day — litanies, procession, fast and abstinence', noteKey: 'Rogationtide Processions' });
       if (k === 39) return T('Ascension Day', 100, 'Principal Feast', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
       if (k > 39 && k <= 46 && !sun) return T(`${wd} within the Octave of the Ascension`, 40, 'Octave Day', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
-      if (k === 42) return T('Sunday after the Ascension', 70, 'Sunday', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
+      if (k === 42) return T('Sunday after the Ascension', 50, 'Sunday', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
       if (k === 48) return T('Whitsun Eve — Vigil of Pentecost', 85, 'Vigil', 'v', 'Eastertide', { fast: 'Vigil fast; baptismal preparation', noteKey: 'Vigil Fast of Pentecost' });
       if (k === 49) return T('Pentecost (Whitsunday)', 100, 'Principal Feast', 'r', 'Whitsuntide', { noteKey: 'Pentecost (Whitsun) & Whitsun Octave' });
       if (k > 49 && k < 56) {
@@ -324,18 +1752,23 @@
         return T(`${wd} within the Whitsun Octave`, 85, 'Octave Day', 'r', 'Whitsuntide', { noteKey: 'Pentecost (Whitsun) & Whitsun Octave' });
       }
       if (k === 56) return T('Trinity Sunday', 98, 'Principal Feast', 'w', 'Whitsuntide', { noteKey: 'Trinity Sunday' });
-      if (sun) return T(`${ORD(k / 7)} Sunday after Easter`, 70, 'Sunday', 'w', 'Eastertide', eas);
+      if (sun) return T(`${ORD(k / 7)} Sunday after Easter`, k === 35 ? 52 : 50, 'Sunday', 'w', 'Eastertide', eas);
       return T(`${wd} of the ${ORD(Math.floor(k / 7) + 1)} Week of Easter`, 10, 'Weekday', 'w', 'Eastertide', eas);
     }
     // after Trinity
     const kt = diff(d, trin), post = { noteKey: 'Sundays after Trinity (Green Season)' };
     if (same(d, corp)) return T('Corpus Christi', 100, 'Principal Feast', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave' });
+    if (kt === 7) return T('1st Sunday after Trinity (within the Octave of Corpus Christi)', 50, 'Sunday', 'g', 'After Trinity', { mk: 'tr1', noteKey: 'Feast of Corpus Christi & Octave' });
     if (kt > 4 && kt <= 11) return T(`${wd} within the Octave of Corpus Christi`, 45, 'Octave Day', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave' });
     const holyCrossEmber = emberWed(D(y, 9, 14)), eb = [0, 2, 3].map(n => add(holyCrossEmber, n)).find(z => same(z, d));
     if (eb) return T(`${wd} — Autumn Ember Day (Holy Cross)`, 45, 'Ember Day', 'g', 'After Trinity', Object.assign(em('Autumn'), { noteKey: 'Autumn Ember Days (Holy Cross Fast)' }));
     const nS = Math.floor(kt / 7);
-    if (sun) return T(`${ORD(nS)} Sunday after Trinity`, 70, 'Sunday', 'g', 'After Trinity', post);
-    return T(`${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', post);
+    if (sun) {
+      const mk = diff(adv, d) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
+      return T(diff(adv, d) === 7 ? 'Sunday next before Advent' : `${ORD(nS)} Sunday after Trinity`, 50, 'Sunday', 'g', 'After Trinity', Object.assign({ mk }, post));
+    }
+    const ws = add(d, -dow(d)), fmk = diff(adv, ws) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
+    return T(`${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', Object.assign({ fmk, wed: dow(d) === 3 }, post));
   }
 
   function sarum(d, o) {
@@ -352,7 +1785,7 @@
     };
     for (const f of FIXED) {
       const e = feastDate(f);
-      if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: RANK[f.rank], color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
+      if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: f.src === 'B' && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
       if (f.oct) {
         const j = diff(d, e);
         if (j > 0 && j <= f.oct) items.push({ title: j === f.oct ? `Octave Day of ${f.name.replace(/ & Octave$/, '')}` : `Day within the Octave of ${f.name.replace(/ & Octave$/, '')}`, score: j === f.oct ? 62 : 38, rank: 'Octave Day', color: f.color, season: t.season, noteKey: f.name, src: f.src });
@@ -378,8 +1811,9 @@
     if (!fast && martin) fast = "St. Martin's Lent — abstinence from meat (medieval Gaelic Advent fast)";
     if (!fast && dow(d) === 5 && !(t.season === 'Eastertide' && diff(d, E) < 7)) fast = 'Friday — day of abstinence';
     const noteKey = w.noteKey || t.noteKey;
-    const mass = w.mk && MASS[w.mk] || null;
-    return { src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color: w.color, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
+    let mass = w.mk && MASS[w.mk] || null; const srcNote = w.mk && SRCNOTE[w.mk] || '';
+    if (!mass && t.fmk && (w === t || w.score <= 30)) { mass = ferialMass(t.fmk, t.wed); if (mass && w !== t) mass = Object.assign({}, mass, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the weekday. ` + mass.note }); }
+    return { rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color: w.color, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
   }
 
   return { sarum, temporal, setData, FIXED, VIGILS, MASS };

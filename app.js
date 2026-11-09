@@ -232,7 +232,7 @@
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Sarum · traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
-      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
+      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
   }
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
   function sarumMassHTML(v) {
