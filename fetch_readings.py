@@ -8,7 +8,7 @@ the text (the app does this). Run daily (see .github/workflows/readings.yml) —
 
 usage: python3 fetch_readings.py [--file sample.xml] [--out readings.json]
 """
-import json, re, sys, os, urllib.request, urllib.error
+import json, re, sys, os, datetime, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 
@@ -110,6 +110,84 @@ def add_audio(days, fetch=get):
             except Exception: pass
 
 
+# ---------- Justice tab: daily ~5-minute readings from public-domain texts ----------
+# Add more public-domain pages here: (author, work, url). Each page is split into ~850-word readings.
+JUSTICE_SOURCES = [
+    ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, I', 'https://tertullian.org/fathers/chrysostom_four_discourses_01_discourse1.htm'),
+    ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, II', 'https://tertullian.org/fathers/chrysostom_four_discourses_02_discourse2.htm'),
+    ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, III', 'https://tertullian.org/fathers/chrysostom_four_discourses_03_discourse3.htm'),
+    ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, IV', 'https://tertullian.org/fathers/chrysostom_four_discourses_04_discourse4.htm'),
+]
+CHUNK_WORDS = 850
+SKIP = re.compile(r'previous page|next page|table of contents|public domain|roger pearse|^footnotes?$|^notes?$|tertullian\.org|^\W*$', re.I)
+
+
+class _Text(HTMLParser):
+    BLOCK = {'p', 'br', 'div', 'h1', 'h2', 'h3', 'h4', 'li', 'tr', 'blockquote'}
+    def __init__(self): super().__init__(convert_charrefs=True); self.out = []; self.skip = 0
+    def handle_starttag(self, t, a):
+        if t in ('script', 'style', 'head'): self.skip += 1
+        if t in self.BLOCK: self.out.append('\n')
+    def handle_endtag(self, t):
+        if t in ('script', 'style', 'head'): self.skip = max(0, self.skip - 1)
+        if t in self.BLOCK: self.out.append('\n')
+    def handle_data(self, d):
+        if not self.skip: self.out.append(d)
+
+
+def page_paragraphs(html):
+    p = _Text(); p.feed(html)
+    lines = [re.sub(r'\s+', ' ', l).strip() for l in ''.join(p.out).split('\n')]
+    paras = []
+    for l in lines:
+        if re.match(r'^(footnotes?|notes)\b', l, re.I) and len(l) < 20: break   # stop at the footnotes
+        if SKIP.search(l) or len(l.split()) < 12: continue                        # nav, headings, stray bits
+        paras.append(l)
+    return paras
+
+
+def split_long(par, limit):
+    parts, cur = [], ''
+    for sent in re.split(r'(?<=[.!?])\s+', par):
+        if len((cur + ' ' + sent).split()) > limit and cur: parts.append(cur); cur = sent
+        else: cur = (cur + ' ' + sent).strip()
+    if cur: parts.append(cur)
+    return parts
+
+
+def chunk(paras, size=CHUNK_WORDS):
+    flat = []
+    for p in paras: flat += split_long(p, size) if len(p.split()) > size else [p]
+    out, cur, n = [], [], 0
+    for p in flat:
+        w = len(p.split())
+        if cur and n + w > size * 1.15: out.append(cur); cur, n = [], 0
+        cur.append(p); n += w
+    if cur and (n > 150 or not out): out.append(cur)
+    elif cur: out[-1] += cur
+    return out
+
+
+def build_justice(fetch=None):
+    fetch = fetch or (lambda u: urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent': 'ora-personal-prayer-app/1.0 (personal use)'}), timeout=30).read().decode('utf-8', 'replace'))
+    items = []
+    for author, work, url in JUSTICE_SOURCES:
+        try: parts = chunk(page_paragraphs(fetch(url)))
+        except Exception as e: print('justice: skipped', url, e); continue
+        for i, c in enumerate(parts, 1):
+            items.append({'author': author, 'work': work, 'part': f'{i} of {len(parts)}', 'url': url, 'words': sum(len(p.split()) for p in c), 'paras': c})
+    return items
+
+
+def update_justice(old, fetch=None):
+    """Refresh the reading list at most weekly; on any failure keep what is already there."""
+    cur = old.get('_justice') or {}
+    if cur.get('items') and cur.get('fetched', '') > (datetime.date.today() - datetime.timedelta(days=7)).isoformat(): return
+    try: items = build_justice(fetch)
+    except Exception as e: print('justice: failed', e); return
+    if items: old['_justice'] = {'fetched': datetime.date.today().isoformat(), 'items': items}; print(f'justice: {len(items)} readings')
+
+
 def main():
     a = sys.argv[1:]
     out_path = a[a.index('--out') + 1] if '--out' in a else 'readings.json'
@@ -123,6 +201,7 @@ def main():
         if old.get(k, {}).get('audio') and not v.get('audio'): v['audio'] = old[k]['audio']
     old.update(new)
     if '--no-audio' not in a: add_audio({k: v for k, v in old.items() if not k.startswith('_')})
+    if '--no-justice' not in a: update_justice(old)
     old['_copyright'] = copyright_ or old.get('_copyright', '')
     days = sorted(k for k in old if not k.startswith('_'))
     for k in days[:-KEEP_DAYS]: del old[k]

@@ -84,6 +84,7 @@
   };
   let feed = null;
   const feedP = fetch('readings.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => store.get('ora.feed', {})).then(j => { feed = j || {}; if (Object.keys(feed).length > 1) store.set('ora.feed', feed); return feed; });
+  feedP.then(() => { if (st.tab === 'justice') render(); });
   function loadReadings(iso) {
     if (st.readings[iso] !== undefined) return;
     st.readings[iso] = 'loading';
@@ -291,6 +292,22 @@
     return h;
   }
 
+  function justiceCard(j) {
+    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag)}</span></div><p style="font-family:var(--serif);font-size:1.05rem;line-height:1.55">“${esc(j.text)}”</p><p class="muted">${esc(j.who)} — ${esc(j.note)}</p><div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(j.url)}">Read the full text</a></div></section>`;
+  }
+  function viewJustice() {
+    const J = window.JUSTICE || [];
+    if (!J.length) return '<p class="muted">No excerpts loaded.</p>';
+    const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
+    const items = (feed && feed._justice && feed._justice.items) || [];
+    let daily = '';
+    if (items.length) {
+      const it = items[((n % items.length) + items.length) % items.length], mins = Math.max(1, Math.round(it.words / 200));
+      daily = `<h3>Today’s reading · about ${mins} min</h3><section class="card"><div class="lab"><span class="grow">${esc(it.author)}</span></div><p class="muted" style="margin-top:0">${esc(it.work)} — part ${esc(it.part)}</p>${it.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.65">${esc(p)}</p>`).join('')}<div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(it.url)}">Full text</a></div><p class="muted" style="font-size:.78rem">Public-domain translation. A new passage each day; the series repeats when it ends.</p></section>`;
+    } else daily = '<p class="muted">The daily reading appears after the next refresh of your readings (the GitHub job runs a few times a day). Short quotations are below.</p>';
+    return `<h2 style="font-family:var(--serif)">Justice and the poor</h2><p class="muted">The Fathers, saints, councils, popes and the Catechism on wealth, work, the poor and creation.</p>${daily}<h3>A short quotation</h3>${justiceCard(f)}<h3>More quotations</h3>${J.map(justiceCard).join('')}`;
+  }
+
   function viewCalendar() {
     if (!st.month) { const d = P(st.date); st.month = { y: d.getUTCFullYear(), m: d.getUTCMonth() }; }
     const { y, m } = st.month, first = L.D(y, m + 1, 1), start = L.add(first, -first.getUTCDay()), today = todayISO();
@@ -360,7 +377,7 @@
   function render() {
     renderHeader();
     document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === st.tab));
-    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'calendar' ? viewCalendar() : viewMore();
+    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
   }
 
   /* ---------- audio (Web Speech API) ---------- */
