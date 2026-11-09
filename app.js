@@ -253,6 +253,7 @@
         else { const rd = st.readings[v.iso]; x.text = rd && rd !== 'loading' ? readingsSpeech(rd) : 'The Mass readings of the day. Open the readings to read or listen.'; }
       }
       if (s.type === 'silence') x.text = `${s.title}. ${s.text || 'Be still.'}`;
+      if (s.type === 'office') x.text = s.title;
       if (s.type === 'hourlink') x.text = `${s.title}. Open the full office to pray the psalms.`;
       if (s.type === 'prayer') { x.body = s.text; x.text = `${s.title}. ${s.text}`; }
       out.push(x);
@@ -285,6 +286,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : romanReadingsHTML(st.date));
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${Hours.hour(L, P(st.date), s.which)}</details>` : '');
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
