@@ -1425,6 +1425,7 @@
       h += sec('', lines(fde >= 0 && fde <= 55 ? PENDV : ENDV));
       if (fdate.getUTCDay() === 0) h += '<p class="muted" style="font-size:.78rem">When the feast falls on a Sunday, a memorial of the Sunday is also made.</p>';
       if (P.v2 && P.v2.note && part === 'v2') h += `<p class="muted" style="font-size:.78rem">${esc(P.v2.note)}</p>`;
+      if (key === 'allsaints' && part === 'v2') h += '<h3 style="margin:16px 0 4px">Vespers of the Dead, for All Souls</h3>' + deadOffice('V', true);
       return h;
     }
     const EASTRESP = 'R. Daughters of Jerusalem, come and behold the Martyr with the crown wherewith the Lord crowned Him: * on the day of solemnity and gladness. Alleluia.\nV. For He hath made fast the bars of thy gates, and hath blessed thy children within thee.\nR. On the day of solemnity and gladness. Alleluia.\nV. Glory be to the Father, and to the Son: and to the Holy Ghost.\nR. Alleluia.';
@@ -1614,6 +1615,51 @@
       }
       return '';
     }
+    /* ---------- The Office of the Dead (Hayes, Occasional Offices, pp. 335–350): Vespers ("Placebo") and Lauds of "Dirige" ---------- */
+    const DEADC = {
+      fidelium: 'O God, the Creator and Redeemer of all the faithful, grant to the souls of Thy servants and handmaidens remission of all their sins: that the pardon they have always desired, by pious supplications they may obtain. Who livest and reignest with God the Father, in the unity of the Holy Ghost, God, throughout all ages. Amen.',
+      parents: 'O God, Who didst command us to honour our father and mother: graciously have mercy on the souls of my father and mother, and cause me to see them in the joy of eternal glory. Through Jesus Christ our Lord. Amen.',
+      general: 'We beseech Thee, O Lord, let our prayers and supplications avail for the souls of all the faithful departed: that Thou mayest both deliver them from all their sins, and make them partakers of Thy redemption. Who livest and reignest with God the Father, in the unity of the Holy Ghost, God, world without end. Amen.'
+    };
+    function deadOffice(which, allSouls) {
+      const g = (a, refs) => ant(incipit(a), true) + refs.map(body).join('') + ant(a);
+      let h = '';
+      if (which === 'V') {
+        h += '<p class="muted" style="font-size:.78rem;margin:2px 0 6px">The office begins at once with the first antiphon. In the Sarum Use neither "Glory be" nor "Eternal rest" is said at the end of the psalms.</p>';
+        h += sec('Psalms', g('I will walk before the Lord: in the land of the living.', ['114(1-8)']) + g('Wo is me: that I am constrained to dwell with Mesech.', ['119']) + g('The Lord shall preserve thee from all evil: yea, it is even He that shall keep thy soul.', ['120']) + g('If Thou, Lord, wilt be extreme to mark what is done amiss: O Lord, who may abide it?', ['129']) + g('Despise not then, O Lord: the works of Thine own hands.', ['137']));
+        h += sec('Versicle', lines('V. From the gates of hell.\nR. Deliver their souls, O Lord.'));
+        const ma = 'I heard a voice from heaven, saying: Blessed are the dead which die in the Lord.';
+        h += sec('Magnificat', ant(incipit(ma), true) + body('232') + ant(ma));
+        h += sec('The prayers (said kneeling)', lines('Our Father (in silence).\nV. And lead us not into temptation.\nR. But deliver us from evil.') + (allSouls ? '' : '<div class="muted" style="font-size:.78rem;margin-top:6px">Psalm 145 (Lauda, anima mea), not said on All Souls\' Day or on the day of a death or burial:</div>' + body('145')) + lines('V. From the gates of hell.\nR. Deliver their souls, O Lord.\nV. I believe verily to see the goodness of the Lord.\nR. In the land of the living.\nV. The Lord be with you.\nR. And with thy spirit.\nLet us pray.') + lines(DEADC.fidelium));
+      } else {
+        h += '<p class="muted" style="font-size:.78rem;margin:2px 0 6px">Lauds of the Dead follow the Nocturn of Matins ("Dirige"). No "Glory be" is said at the end of the psalms.</p>';
+        h += sec('Psalms', g('The bones which have been humbled: shall rejoice unto the Lord.', ['50']) + g('Hear, Lord, my prayer: unto Thee shall all flesh come.', ['64']) + g('Thy right hand: hath upholden me, O Lord.', ['62', '66']) + g('From the gates of hell: deliver my soul, O Lord.', [B('Song of Hezekiah · Isaiah 38', 'Isaiah 38:10-20')]) + g('Let every spirit: praise the Lord.', ['148', '149', '150']));
+        h += sec('Versicle', lines('V. Eternal rest grant unto them, O Lord.\nR. And light perpetual shine upon them.'));
+        const ba = 'I am the Resurrection and the Life: he that believeth in Me, though he were dead, yet shall he live, and whosoever liveth and believeth in Me, shall never die.';
+        h += sec('Benedictus', ant(incipit(ba), true) + body('231') + ant(ba));
+        h += sec('The prayers (said kneeling)', lines('Lord, have mercy. Christ, have mercy. Lord, have mercy.\nOur Father (in silence).\nV. And lead us not into temptation.\nR. But deliver us from evil.') + (allSouls ? '' : '<div class="muted" style="font-size:.78rem;margin-top:6px">Psalm 144 (Exaltabo te, Deus), not said on All Souls\' Day or on the day of a death or burial:</div>' + body('144')) + lines('V. From the gates of hell.\nR. Deliver their souls, O Lord.\nV. I believe verily to see the goodness of the Lord.\nR. In the land of the living.\nV. The Lord be with you.\nR. And with thy spirit.\nLet us pray.') + lines(DEADC.fidelium) + '<p class="muted" style="font-size:.78rem">Then prayers for friends are said in silence, and aloud this general collect:</p>' + lines(DEADC.general));
+      }
+      h += sec('', lines('V. May they rest in peace.\nR. Amen.'));
+      h += '<p class="muted" style="font-size:.74rem">Other collects in the book may be added for particular dead, for example for father and mother: ' + esc(DEADC.parents) + '</p>';
+      return h;
+    }
+    function deadAllowed(L, date, which, Sar) {
+      const y = date.getUTCFullYear(), dow = date.getUTCDay(), E = L.westernEaster(y), de = dd(date, E), m = date.getUTCMonth() + 1, dm = date.getUTCDate();
+      if (dow === 0 || (which === 'V' && dow === 6)) return false;
+      const adv = L.advent(y);
+      const inAdvent = date >= adv && m === 12 && dm <= 23;
+      const epiLent = (m > 1 || dm > 13) && de < -5 && de >= -120;
+      const trinity = de > 56 && date < adv;
+      if (!(inAdvent || epiLent || trinity)) return false;
+      const r = Sar && Sar.sarum ? Sar.sarum(date) : null;
+      if (r && /Double|Nine lessons|Principal|Octave/.test(r.rank || '')) return false;
+      if (r && /Octave/.test(r.title || '')) return false;
+      if (de >= 60 && de <= 67) return false;   // octave of Corpus Christi
+      return true;
+    }
+    function deadDetails(which) {
+      return `<details style="margin-top:14px"><summary><b>The Office of the Dead</b> <span class="muted" style="font-size:.8rem">(${which === 'V' ? 'Vespers, said after the Vespers of the day' : 'Lauds, said after Lauds of the day'})</span></summary><p class="muted" style="font-size:.78rem">In the Sarum Use the Office of the Dead was said on every weekday in Advent, from the day after the Octave of the Epiphany to Tuesday in Holy Week, and from the day after Trinity Sunday to Advent, but never on double feasts or in their octaves (Hayes, after the Sarum rubric).</p>${deadOffice(which, false)}</details>`;
+    }
     function christmas(L, date, which) {
       const m = date.getUTCMonth() + 1, d = date.getUTCDate(), dow = date.getUTCDay();
       const o = (m === 1 && d >= 2) ? epiphanyEntry(m, d, dow, which) : XMAS[`${m}-${d}${which}`]; if (!o) return null;
@@ -1643,7 +1689,11 @@
     }
     function hour(L, date, which, Sar) {
       const sx = saintHour(L, date, which, Sar); if (sx) return sx;
-      return withSimples(L, date, which, Sar, hour0(L, date, which, Sar));
+      const r0 = Sar && Sar.sarum ? Sar.sarum(date) : null;
+      if (which === 'L' && r0 && /All Souls/.test(r0.title)) return '<p class="muted" style="font-size:.82rem"><b>All Souls</b>. On this day Lauds are the Lauds of the Dead, after the three Nocturns of Matins of the Dead (Hayes, Occasional Offices; the Sarum order).</p>' + deadOffice('L', true);
+      let h = withSimples(L, date, which, Sar, hour0(L, date, which, Sar));
+      if (h && deadAllowed(L, date, which, Sar)) h += deadDetails(which);
+      return h;
     }
     function hour0(L, date, which, Sar) {
       const dow = date.getUTCDay();
