@@ -1421,10 +1421,9 @@
       h += sec(which === 'L' ? 'Benedictus' : 'Magnificat', ant(incipit(ca), true) + canticle(which === 'L' ? '231' : '232') + ant(ca) + (S.note ? `<p class="muted" style="font-size:.78rem">${esc(S.note)}</p>` : ''));
       h += sec('Collect', lines('V. The Lord be with you.\nR. And with thy spirit.\nLet us pray.') + lines(coll));
       if (easter && fde <= 38) h += sec('Memorial of the Resurrection', ant(which === 'L' ? 'The Lord is risen from the tomb: Who for our sakes hung upon the tree. Alleluia.' : 'Go quickly, and tell His disciples: that He is risen from the dead. Alleluia.') + lines(which === 'L' ? PV.said : PV.simon) + lines('Let us pray.') + lines(PC.easter));
+      h += seasonMem(L, date, which);
       h += sec('', lines(fde >= 0 && fde <= 55 ? PENDV : ENDV));
-      const a = L.advent(fdate.getUTCFullYear()); const inAdvent = fdate >= a && fdate.getUTCMonth() === 11 && fdate.getUTCDate() < 24;
-      if (inAdvent || (fde >= -46 && fde < -7)) h += '<p class="muted" style="font-size:.78rem">In Advent and Lent a memorial of the weekday is also made, with the antiphon and collect of the day in the office of the season.</p>';
-      else if (fdate.getUTCDay() === 0) h += '<p class="muted" style="font-size:.78rem">When the feast falls on a Sunday, a memorial of the Sunday is also made.</p>';
+      if (fdate.getUTCDay() === 0) h += '<p class="muted" style="font-size:.78rem">When the feast falls on a Sunday, a memorial of the Sunday is also made.</p>';
       if (P.v2 && P.v2.note && part === 'v2') h += `<p class="muted" style="font-size:.78rem">${esc(P.v2.note)}</p>`;
       return h;
     }
@@ -1484,10 +1483,136 @@
       if (easter && fde <= 38 && f.lev >= 2) h += sec(which === 'L' ? 'Memorial of the Resurrection' : 'Memorial of the Resurrection', ant(which === 'L' ? 'The Lord is risen from the tomb: Who for our sakes hung upon the tree. Alleluia.' : 'Go quickly, and tell His disciples: that He is risen from the dead. Alleluia.') + lines(which === 'L' ? PV.said : PV.simon) + lines('Let us pray.') + lines(PC.easter));
       const tdow = fdate.getUTCDay();
       if (tdow === 0) notes.push('When a feast falls on a Sunday, a memorial of the Sunday is also made; its antiphon and collect are those of the Sunday\'s own office in this app.');
-      else { const advent = (() => { const a = L.advent(fdate.getUTCFullYear()); return fdate >= a && fdate.getUTCMonth() === 11 && fdate.getUTCDate() < 24; })(); if (advent || (fde >= -46 && fde < -7)) notes.push('In Advent and Lent a memorial of the weekday is also made, with the antiphon and collect of the day in the office of the season.'); }
+      h += seasonMem(L, date, which);
       h += sec('', lines(fde >= 0 && fde <= 55 ? PENDV : ENDV));
       if (notes.length) h += `<p class="muted" style="font-size:.78rem">${esc(notes.join(' '))}</p>`;
       return h;
+    }
+    Object.assign(SCOLL, {
+"St. Felix, Bishop and Martyr": "Grant, we beseech Thee, Almighty God, that the example of saint Felix, Thy martyr and bishop, may provoke us to lead a better life, so that we may imitate the acts ot him whose feast we celebrate. Through etc.",
+"St. Maurus, Abbot and Confessor": "O God, Who didst grant unto Thy blessed deacon and abbot Maurus to become a partaker of Thine eternal glory • mercifully grant unto us an entrance into the kingdom of heaven, through the intercession of him by whose example we are taught to live aright. Through etc.",
+"St. Marcellus, Pope and Martyr": "Mercifully hear, O Lord, we beseech Thee, the prayers of Thy people, that we may be helped through the merits of Thy blessed martyr and bishop Marcellus, in whose passion we rejoice. Through etc.",
+"St. Sulpicius, Bishop and Confessor": "Grant, we beseech Thee, Almighty God, that we who commemorate the deposition of Thy blessed confessor and bishop Sulpicius, may be helped by his intercession before Thee. Through etc.",
+"St. Prisca, Virgin and Martyr": "Grant, we beseech Thee, Almighty God, that we who keep the feast-day of Thy blessed virgin and martyr Prisca, may both rejoice in the yearly solemnity, and profit by the example of so great faith. Through etc.",
+"St. Julian, Bishop": "O God, Who didst give the blessed Julian to be the wondrous leader of Thy Church, mercifully grant that we may be alway found worthy to have him as a devout intercessor before Thee. Through etc.",
+"St. Agnes (second feast)": "O God, Who dost gladden us with the yearly feast of Thy blessed martyr Agnes, grant that we may follow the example of the holy conversation of her whom we honour in this service. Through etc.",
+"St. Bathild, Queen": "Let Thy Church, we beseech Thee, O Lord, devoutly celebrate the holy festival of blessed Bathild, both waxing more fervent through love of the great glory bestowed upon her, and profiting by the example of so great faith. Through etc.",
+"St. Blase, Bishop and Martyr": "Let Thy blessed martyr Blase, O Lord, implore the aid of Thy loving-kindness for us; that we may be sensible of the advocacy before Thee of him whose feast we celebrate. Through etc.",
+"St. Scholastica, Virgin": "O God, Who for the showing forth of the way of innocence didst cause the soul of Thy blessed virgin Scholastica to enter heaven in the shape of a dove; grant unto us, we beseech Thee, through her merits so innocently to live that we may be found worthy to attain unto the same joys. Through etc.",
+"St. Valentine, Bishop and Martyr": "Grant, we beseech Thee, Almighty God, that we who celebrate the feast day of Thy blessed martyr Valentine, may through his intercession be delivered from all the evils which threaten us. Through etc.",
+"St. Juliana, Virgin and Martyr": "Almighty and everlasting God, Who choosest the weak things of the world to confound the things which are mighty, grant unto us to rejoice with meet devotion on the feast of Thy holy martyr Juliana; so that we may both praise Thy power in her passion, and perceive the help that hath been provided for us. Through etc.",
+"Sts. Perpetua and Felicitas, Martyrs": "Grant unto us, we beseech Thee, O Lord our God, to venerate the victory of Thy holy martyrs Perpetua and Felicitas with unceasing devotion ; that we may at least honour with most humble dutifulness those whom we are unable to imitate with worthy intention. Through etc.",
+"Sts. Tiburtius and Valerian, Martyrs": "Grant, we beseech Thee, Almighty God, that we who keep the feasts of Thy holy martyrs Tyburtius, Valerianus, and Maximus, may also imitate their virtues. Through etc.",
+"St. Alphege, Bishop and Martyr": "O God, Who didst adorn Thy blessed bishop Alphege with the dignity of the priesthood, and with the palm of martyrdom ; mercifully grant that we may be so assisted by his intercession before Thee, that with him we may be enabled to rejoice in everlasting felicity. Through etc.",
+"St. Vitalis, Martyr": "Grant, we beseech Thee, Almighty God, that through the intercession of Thy blessed martyr Vitalis we may be defended from all adversities which may happen to the body, and may be cleansed from evil thoughts which may assault and hurt the soul.1 Through etc.",
+"St. John before the Latin Gate": "O God, Who seest that our adversities trouble us on every side, grant, we beseech Thee, that the glorious intercession of Thy blessed apostle and evangelist John may protect us. Through etc.",
+"St. John of Beverley, Bishop and Confessor": "Grant, we beseech Thee, Almighty God, that in honouring the feast of Thy blessed confessor and bishop John, we may both increase our devotion, and further our salvation. Through etc.",
+"Sts. Gordian and Epimachus, Martyrs": "Grant, we beseech Thee, Almighty God, that we who keep the feast of Thy blessed martyrs Gordian and Epimachus, may be helped by their intercessions before Thee. Through etc.",
+"Sts. Nereus, Achilleus and Pancras, Martyrs": "We beseech Thee, O Lord, that the blessed feast of Thy holy martyrs Nereus, and Achilleus, and Pancras, may always comfort us, and render us worthy of Thy service. Through etc.",
+"St. Germanus, Bishop and Confessor": "Hear us, O God of our salvation, and forasmuch as our voices deserve not to be heard, we beseech Thee that the intervention of Thy holy confessor and bishop Germanus may be accepted on our behalf. Through etc.",
+"St. Petronilla, Virgin": "O God, Who hast given unto the soul of Thy blessed virgin Petronilla a place in heaven ; make us by her intervention to be loosed from the bands of our sins, and evermore to be defended from all adversity. Through etc.",
+"Sts. Marcellinus and Peter, Martyrs": "O God, Who makest us glad on the yearly feast of Thy blessed martyrs, Marcellinus and Peter; grant, we beseech Thee, that we may be instructed by the examples of those in whose merits we rejoice. Through etc.",
+"St. Boniface and Companions, Martyrs": "Almighty and everlasting God, Who didst bestow the palm of martyrdom upon the blessed Boniface and his companions ; grant unto us Thy pardon, we beseech Thee, through the merits of them on whom Thou deignedst to confer the crown. Through etc.",
+"Sts. Medard and Godard, Bishops": "O God, Who hast consecrated this day’s holy feast in honour of Thy holy confessors and bishops, Medard and Godard; be favourable to the prayers of Thy family, and grant that we may be supported by the merit and help of those whose feast we celebrate. Through etc.",
+"Sts. Basilides, Cyrinus, Nabor and Nazarius, Martyrs": "We beseech Thee, O Lord, that the feast of Thy holy martyrs Basilides, Cirinus, Nabor, and Nazarius may be resplendent in answer to our prayers; and that our devotion may bring forth the fruit which Thy eternal goodness hath bestowed upon them. Through etc.",
+"St. Basil, Bishop and Confessor": "O God, Who didst deign to choose out Thy blessed confessor Basil to be a chief doctor and preacher of the Catholic faith : grant that through his intercession for us we may be found worthy to be set free from the evil of our sins, and to serve Thee, O Lord, with sincerity of mind. Through etc.",
+"Sts. Vitus, Modestus and Crescentia, Martyrs": "Grant, we beseech Thee, Almighty God, that we may share in the reward of Thy holy martyrs Vitus and Modestus, and Crescentia, whose victory we celebrate. Through etc.",
+"Sts. Mark and Marcellian, Martyrs": "Grant, we beseech Thee, Almighty God, that we who keep the feast of Thy holy martyrs Marcus and Marcellianus [Pt. II.] may through their intercessions be delivered from all impending evils. Through etc.",
+"St. Etheldreda, Virgin (Vigil of St. John the Baptist)": "Grant, we beseech Thee, Almighty God, that Thy family may walk in the way of salvation, and that by following the exhortations of blessed John, forerunner of Christ, they may safely attain unto him whom he foretold, our Lord Jesus Christ, Thy Son. Who liveth etc.",
+"Sts. John and Paul, Martyrs": "We beseech Thee, Almighty God, that on this festival a two-fold joy may await us, proceeding from the glorification of blessed John and Paul, whom one and the same faith and passion made to be twins in very deed. Through etc.",
+"St. Kenelm, King and Martyr": "Almighty and merciful God, Who hast given unto us pre-eminent joy this day in the feast of Thy blessed king and martyr Kenelm ; look with serenity on the vows of Thy faithful people, and grant that we may ever be sustained by the merits and prayers of him whose feast we celebrate to-day. Through etc.",
+"St. Arnulph, Bishop and Martyr": "Almighty God, be favourable to our supplications ; and through the intercession of Thy blessed martyr and bishop Arnulph, mercifully grant that the effect of Thy accustomed compassion may be felt by those whom Thou dost encourage to hope for Thy pity. Through etc.",
+"St. Praxedes, Virgin": "Almighty God, let the prayers of Thy blessed virgin Praxedes support Thy people; that whosoever rejoices in honouring her may ever be protected by Thy help. Through etc.",
+"St. Apollinaris, Martyr": "Let the votive anniversary of Thy blessed martyr and bishop Apollinaris ever continue with us, O Lord, and both infuse into us the joy of his glory, and render us acceptable unto Thee. Through etc.",
+"The Seven Sleepers": "O God, Who didst magnificently crown the seven sleepers who were the glorious heralds of the eternal resurrection; grant, we beseech Thee, that through their prayers we may attain unto that holy resurrection, which by anticipation was marvellously shewn forth in them. Through etc.",
+"St. Samson, Bishop (with St. Pantaleon)": "O God, Who hast consecrated this day by the martyrdom of the blessed Pantaleon ; grant, we beseech Thee, that through his intervention we may so flourish in our actions here, as to be recompensed by the reward of heaven hereafter. Through etc.",
+"Sts. Felix, Simplicius, Faustinus and Beatrice, Martyrs": "Grant, we beseech Thee, Almighty God, that as Thy Christian people rejoice here on earth in the feast of Thy martyrs Felix, Simplicius, Faustinus, and Beatrice, so they may rejoice in life eternal; and may reap the fruit of their piety, and of their vows and celebrations here. Through etc.",
+"Sts. Abdon and Sennen, Martyrs": "O God, Who of Thy bountiful grace didst bestow upon Thy holy martyrs Abdon and Sennes the gift of attaining unto this glory ; grant unto Thy servants the pardon of their sins, that through the intercession and merits of Thy saints, we may be found worthy to be delivered from all adversities. Through etc.",
+"St. Stephen, Pope and Martyr": "O God, Who dost gladden us by the yearly festival of Thy blessed martyr and bishop Stephen, mercifully grant that we may rejoice in the protection of him whose anniversary we keep. Through etc.",
+"St. Oswald, King and Martyr": "Almighty and everlasting God, Who hast consecrated the sacred joy and gladness of this day by the passion of Thy holy servant Oswald; grant unto our hearts an increase of Thy love and charity, that we may have a sense of his guardianship in heaven, the shedding of whose holy blood we commemorate on earth. Through etc.",
+"St. Cyriac and Companions, Martyrs": "O God, Who makest us glad with the yearly feast of Thy blessed martyrs Cyriac and his companions ; mercifully grant than we may imitate the valour and the passion of those whose birthday we commemorate. \\ Through etc.",
+"St. Romanus, Martyr (Vigil of St. Laurence)": "Grant, we beseech Thee, Almighty God, that we may worthily reverence with fervent faith the triumph of Thy blessed martyr Laurence, which by despising the fire he achieved on earth, and which shines forth clearly in the everlasting light of heaven. Through etc.",
+"Octave Day of St. Laurence": "May the adorable passion of Thy blessed martyr Laurence make us glad, O Lord ; and render us more ready daily to rehearse the same. Through etc.",
+"St. Rufus, Martyr": "Be favourable, O Lord, to our supplications, so that trusting to the intercessions of Thy blessed martyr Rufus we may be disturbed by neither the threats nor assault of any adversary. Through etc.",
+"St. Sabina, Virgin": "Trusting to the prayers of Thy blessed virgin and martyr Sabina, we implore Thy mercy, O Lord, that through her merits and prayers we may find strength to attain unto eternal joy. Through etc.",
+"Sts. Felix and Adauctus, Martyrs": "We humbly entreat Thy majesty, O Lord, that as Thou dost ever make us joyful in the commemoration of Thy holy martyrs Felix and Adauctus, so Thou wouldest always defend us by their prayers. Through etc.",
+"St. Cuthburga, Virgin": "O God, Who didst in divers ways adorn Thy hand' maiden Cuthburga with the most excellent gift of chastity ; grant unto us Thy servants through the merit of her intercession to prosper in both lives; that as we do keep her feast on earth, so through her intervention we may ever be had in remembrance before Thee in heaven. Through etc.",
+"St. Bertin, Abbot": "Almighty and everlasting God, Who shinest forth forth wondrously in Thine elect, whom Thou hast been pleased to glorify with Thine indwelling; grant unto us, we beseech Thee, so worthily to honour the feast of Thy blessed confessor and abbot Bertin, that through his merits and prayers we may deserve to be made a temple acceptable unto Thee. Through etc.",
+"St. Lambert, Bishop and Martyr": "We beseech Thee, O Lord, that the prayers of Thy holy martyr and bishop Lambert may commend us unto Thee; and as his glorious passion adorns this day, so may we ever be defended by his advocacy. Through etc.",
+"St. Thecla, Virgin": "Almighty everlasting God, the author of virtue and lover of virginity, grant, we beseech Thee, that we may be commended by the merits of Thy holy virgin Thecla, which were well pleasing unto Thee, and whose life of chastity deserved to win Thy favour. Through etc.",
+"St. Firmin, Bishop and Martyr": "O God, Who hast sanctified unto us this joyful day for the commemoration of Thy blessed martyr and bishop Firminus; be favourable to the prayers of Thy family, and grant that we may be succoured through the merits and intercession of him whose feast we celebrate to-day. Through etc.",
+"Sts. Cyprian and Justina, Martyrs": "Let the continual protection of Thy blessed martyrs Cyprian and Justina enfold us, O Lord; for Thou ceasest not to behold graciously them to whom Thou hast granted to be assisted by such help. Through etc.",
+"Sts. Cosmas and Damian, Martyrs": "Let the blessed feast of Thy holy martyrs Cosmas and Damian redound to Thy praise, O Lord; wherein Thou hast both bestowed upon them everlasting glory, and of Thy unspeakable providence hast also granted unto us Thine aid. Through etc.",
+"St. Faith, Virgin and Martyr": "O God, Who dost make this day to be an holy day through the martyrdom of Thy blessed virgin Faith; grant unto Thy Church that it may be helped by the prayers of her in whose merits she makes her boast. Through etc.",
+"Sts. Mark, Marcellus and Apuleius, Martyrs": "May the blessed merits of Thy holy martyrs Mark, Marcellus, and Apuleius accompany us, O Lord, and make us ever to be fervent in love of Thee. Through to Epistle. Heb. xi. 33—39. Vv ho through faith . . . good report through faith. Gradual. The souls of the righteous are in the hand of God: and there shall no torment touch them.2 tJ. In the sight of the unwise they seemed to die: but they are in peace.3 Alleluya. T7. Our Lord is wonderful in his saints.4 Gospel. St. Luke, xxi. 9—19. When ye shall hear ... ye your souls. Offertory. Let the saints be joyful with glory: let them rejoice in their beds. Let the praises of God be in their mouth.3",
+"St. Gereon and Companions, Martyrs": "Grant, we beseech Thee, O Lord, that as we never cease to celebrate the feast of Thy holy martyrs Gereon, Victor, Cassius, Florentius, and their companions, so their protection may accompany us continually. Through etc.",
+"St. Romanus, Archbishop of Rouen": "O God, unto whom the blessed bishop Romanus, adorned with the grace of sanctity, was so pleasing that he was counted worthy to have fellowship with Thy saints in heaven ; grant, we beseech Thee, unto Thy Church to ' St' Matt-xxv- 4, 6. * Ecclus. xlv. 2 (Vulg. 30). obtain everlasting joy, through the intercession of him the day of whose deposition she thankfully celebrates. Through etc.",
+"St. Theodore, Martyr": "O God, Who dost surround us and protect us with the glorious confession of Thy blessed martyr Theodore, grant that we may both profit by his example, and be supported by his prayers. Through etc.",
+"St. Brice, Bishop and Confessor": "Keep, we beseech Thee, O Lord, Thy people in Thy trust and love, through the intercession of Thy blessed con fessor and bishop Brice; that by his prayers we may be found worthy to be made partakers of heavenly joy. Through etc.",
+"Octave Day of St. Martin": "Grant, we beseech Thee, Almighty God, that the repeated festival of Thy blessed confessor and bishop Martin may avail to the everlasting salvation of Thy people; and that we may ever have as our patron in heaven him whom we frequently venerate on earth. Through etc.",
+"St. Chrysogonus, Martyr": "Be favourable, O Lord, to our prayers, that we who out of our own wickedness know that we are guilty, may be delivered by the intercession of Thy blessed martyr Chrysogonus. Through etc.",
+"Octave Day of St. Andrew": "We beseech Thee, O Lord, that the repeated feast of Thy blessed apostle Andrew, may be our protection, that we may have a sense of his perpetual defence, whose patronage we call to mind with pious devotion. Through etc • Epistle. Rom. x. io—18. For with the heart . . . ends of the world. Gradual. How idear are Thy counsels unto me, O God: O how great is the sum of them.1 17. If I tell them, they are more in number than the sand.2 Alleluya. 17. The Lord loved Andrew: for an odour of sweet savour. Gospel. St. Mark, i. 14—18. Now after that John . . . followed him. Offertory. Their sound is gone out into all lands: and their words unto the end of the world.3"
+});
+    /* ---------- Memorials: simple saints in the office of the season, and the weekday on feasts in Advent and Lent ---------- */
+    const CMEM = {
+      M: { V: ['He made him like to the glorious saints, and shewed him part of His glory: He made him to hear His voice, and gave him commandments before His face.', LV_.crowned], L: ['Verily, verily, I say unto you, Except a corn of wheat fall into the ground and die, it abideth alone: but if it die, it bringeth forth much fruit.', LV_.lily] },
+      MM: { V: ['In heaven rejoice the souls of the Saints, who followed the footsteps of Christ: and because for His love they shed their blood, therefore with Christ they shall reign for ever.', LV_.wonderful], L: ['Theirs is the kingdom of heaven who despised the life of this world: and have gained a reward in the kingdom, and have washed their robes in the Blood of the Lamb.', LV_.wonderful] },
+      C: { V: ['I will liken him to a wise man: which built his house upon a rock.', LV_.loved], L: ['Well done, good and faithful servant; thou hast been faithful over a few things, I will make thee ruler over many things: enter thou into the joy of thy Lord.', LV_.lily] },
+      V: { V: ['The kingdom of heaven is like unto a net, that was cast into the sea, and gathered of every kind: which, when it was full, they drew to shore, and gathered the good into vessels, but cast the bad away.', LV_.grace], L: ['When the Bridegroom came, the wise virgin, being ready: went in with Him to the marriage.', LV_.fellows] },
+      MAT: { V: ['My heart rejoiceth in the Lord: my mouth is enlarged, because I rejoice in Thy salvation.', 'V. O turn away mine eyes, lest they behold vanity.\nR. And quicken Thou me in Thy way.'], L: ['The prayer of the humble pierceth the clouds: he will not depart till the Most High shall behold.', 'V. I humbled my soul with fasting.\nR. And my prayer shall turn into mine own bosom.'] }
+    };
+    function simplesOf(Sar, date) {
+      const r = Sar && Sar.sarum ? Sar.sarum(date) : null; if (!r) return [];
+      const out = [];
+      const ok = (t, rk) => /Three lessons|Memory/.test(rk || '') && saintCat(t) && saintCat(t) !== 'PR';
+      if (ok(r.title, r.rank)) out.push({ r: { title: r.title, mass: r.mass }, cat: saintCat(r.title) });
+      for (const a of (r.also || [])) if (ok(a.title, a.note)) out.push({ r: { title: a.title }, cat: saintCat(a.title) });
+      return out;
+    }
+    function memSaint(f, which, easter) {
+      const base = f.cat === 'MB' ? 'M' : f.cat === 'MMB' ? 'MM' : f.cat === 'VM' || f.cat === 'VV' ? 'V' : f.cat === 'BC' || f.cat === 'A' ? 'C' : f.cat;
+      const T = CMEM[base] || CMEM.C;
+      let [a, v] = T[which];
+      if (easter && ['M', 'MM', 'C'].includes(base)) { a = DAUGHTERS; v = which === 'V' ? LV_.sorrow : LV_.rejoice; }
+      let [c] = saintCollect(f);
+      if (base === 'MAT' && !SCOLL[f.r.title.replace(/\s*\(transferred\)/, '')]) c = 'O God of mercy, enlighten the hearts of Thy faithful people, and, blessed ' + saintName(f.r.title) + ' interceding, make us to despise things earthly, and love things heavenly. ' + TJC;
+      return sec('Memorial of ' + f.r.title.replace(/\s*\(transferred\)/, '').replace(/^Feast of /, ''), ant(a) + lines(v) + lines('Let us pray.') + lines(c));
+    }
+    function insertBeforeEnd(h, extra) {
+      const i = h.lastIndexOf('<div class="sec"><b></b>');
+      return i < 0 ? h + extra : h.slice(0, i) + extra + h.slice(i);
+    }
+    function withSimples(L, date, which, Sar, h) {
+      if (!h) return h;
+      const y = date.getUTCFullYear(), E = L.westernEaster(y), m = date.getUTCMonth() + 1, d = date.getUTCDate();
+      const tgt = which === 'L' ? date : L.add(date, 1), tde = dd(tgt, E), tm = tgt.getUTCMonth() + 1, td = tgt.getUTCDate(), tdow = tgt.getUTCDay();
+      if ((tm === 12 && td >= 24) || (tm === 1 && td <= 13)) return h;
+      if (tde >= -7 && tde <= 7) return h;
+      if (tde >= 39 && tde <= 62) return h;
+      if (tde >= -63 && tde < -14 && (tdow === 0 || (which === 'V' && date.getUTCDay() === 6))) return h;
+      if (which === 'V' && tdow === 0) return h;
+      const list = simplesOf(Sar, tgt); if (!list.length) return h;
+      const easter = tde >= 7 && tde <= 38;
+      const extra = '<p class="muted" style="font-size:.78rem;margin:8px 0 2px">' + (which === 'L' ? 'Memorial of the saint of the day, a feast of three lessons (or kept only by memorial):' : 'Memorial of to-morrow\'s saint, a feast of three lessons (or kept only by memorial):') + '</p>' + list.map(f => memSaint(f, which, easter)).join('') + '<p class="muted" style="font-size:.74rem">Antiphon and versicle from the Common Memorials of Saints in Hayes; collect from Warren\'s Sarum Missal where it has one for the saint, otherwise the collect of the Common.</p>';
+      return insertBeforeEnd(h, extra);
+    }
+    function seasonMem(L, date, which) {   // memorial of the weekday of Advent or Lent on a feast
+      const y = date.getUTCFullYear(), dow = date.getUTCDay(), E = L.westernEaster(y), m = date.getUTCMonth() + 1, dm = date.getUTCDate();
+      if (dow === 0) return '';
+      const adv = L.advent(y);
+      if (date >= adv && m === 12 && dm <= 23) {
+        const wk = Math.floor(dd(date, adv) / 7) + 1;
+        const a = which === 'L' ? (ADV.ben[wk] || {})[dow] : (ADV.mag[wk] || {})[dow]; if (!a) return '';
+        return sec('Memorial of the weekday of Advent', ant(a) + lines(which === 'L' ? 'V. A voice crying in the wilderness.\nR. Prepare ye the way of the Lord: make straight a highway for our God.' : 'V. Drop down, ye heavens, from above.\nR. And let the skies pour down righteousness: let the earth open, and let them bring forth salvation.') + lines('Let us pray.') + lines(ADV.coll[wk]));
+      }
+      const k = dd(date, L.add(E, -46));
+      if (k >= 0 && k <= 42) {
+        const wk = k < 4 ? 0 : Math.floor((k - 4) / 7) + 1, F = (LFER[wk] || {})[dow]; if (!F) return '';
+        const a = which === 'L' ? F[0] : F[2], c = which === 'L' ? F[1] : F[3]; if (!a || !c) return '';
+        const passion = wk >= 5;
+        return sec('Memorial of the weekday of Lent', ant(a) + lines(which === 'L' ? (passion ? LV.enemies : LV.faith) : (passion ? LV.gall : LV.angels)) + lines('Let us pray.') + lines(/Amen\.$/.test(c) ? c : c + ' ' + TJC));
+      }
+      return '';
     }
     function christmas(L, date, which) {
       const m = date.getUTCMonth() + 1, d = date.getUTCDate(), dow = date.getUTCDay();
@@ -1517,11 +1642,14 @@
       return h;
     }
     function hour(L, date, which, Sar) {
+      const sx = saintHour(L, date, which, Sar); if (sx) return sx;
+      return withSimples(L, date, which, Sar, hour0(L, date, which, Sar));
+    }
+    function hour0(L, date, which, Sar) {
       const dow = date.getUTCDay();
       let first = false, sunDate;
       if (which === 'V' && dow === 6) { first = true; sunDate = L.add(date, 1); }
       else sunDate = L.add(date, -dow);
-      const sx = saintHour(L, date, which, Sar); if (sx) return sx;
       const tcx = corpus(L, date, which, Sar); if (tcx) return tcx;
       const si = sundayInfo(L, sunDate); if (!si) return christmas(L, date, which) || winter(L, date, which, Sar) || lent(L, date, which, Sar) || paschal(L, date, which, Sar) || advent(L, date, which, Sar);
       const r = Sar && Sar.sarum ? Sar.sarum(date) : null;
