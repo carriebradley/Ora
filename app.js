@@ -137,7 +137,7 @@
     if (day && day.sets.length) {
       for (const s of day.sets) {
         h += `<div class="step" style="margin-top:10px"><div class="t">${esc(s.t)}</div>`;
-        for (const [lab, cs] of s.r) h += `<div class="cite"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>`;
+        for (const [lab, cs] of s.r) h += `<div class="cite"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>` + String(cs).split(' · ').map(c => `<div class="asv" data-ref="${esc(c.replace(/\s*\([^)]*\)/g, '').trim())}"></div>`).join('');
         for (const [lab, cs] of (s.a || [])) h += `<div class="cite muted"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>`;
         if (s.chk) h += `<p class="note">Check this one: ${esc(s.chk)}</p>`;
         h += '</div>';
@@ -331,6 +331,29 @@
   }
 
   /* ---------- render ---------- */
+
+  /* ---------- ASV text for Byzantine readings (public domain, fetched once, cached) ---------- */
+  const asvCache = {};
+  async function asvText(ref) {
+    const k = 'ora.asv.' + ref;
+    if (asvCache[ref]) return asvCache[ref];
+    const c = store.get(k, null); if (c) return (asvCache[ref] = c);
+    const r = await fetch('https://bible-api.com/' + encodeURIComponent(ref) + '?translation=asv');
+    if (!r.ok) throw new Error('http ' + r.status);
+    const j = await r.json();
+    const html = (j.verses || []).map(v => `<sup>${v.verse}</sup>${esc(String(v.text).replace(/\s+/g, ' ').trim())}`).join(' ');
+    if (!html) throw new Error('empty');
+    store.set(k, html); return (asvCache[ref] = html);
+  }
+  async function hydrateAsv() {
+    for (const el of document.querySelectorAll('.asv[data-ref]:not([data-done])')) {
+      el.dataset.done = '1'; el.textContent = 'Loading text…';
+      try { el.innerHTML = await asvText(el.dataset.ref) + '<div class="muted" style="font-size:.74rem;margin-top:4px">American Standard Version (1901, public domain) — close to the RSV but not identical.</div>'; }
+      catch (e) { el.innerHTML = '<span class="muted">Text unavailable offline — tap the reference above.</span>'; }
+    }
+  }
+  new MutationObserver(() => hydrateAsv()).observe(document.getElementById('app'), { childList: true, subtree: true });
+
   function renderHeader() {
     $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button><button class="ib" data-act="today" title="Today">⌂</button>`;
   }
