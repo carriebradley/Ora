@@ -1856,7 +1856,7 @@
     if (d >= D(y, 12, 25) || d < epi) {
       const cy = d.getUTCMonth() === 11 ? y : y - 1, C = D(cy, 12, 25), n = diff(d, C), x = { noteKey: 'Christmastide & The 12 Days of Christmas' };
       if (n === 0) return T('Nativity of Our Lord (Christmas)', 100, 'Principal Feast', 'w', 'Christmastide', x);
-      if (sun) return T('Sunday within the Octave of Christmas', 70, 'Sunday', 'w', 'Christmastide', x);
+      if (sun) return T('Sunday within the Octave of Christmas', 50, 'Sunday', 'w', 'Christmastide', x);
       return T(`${ORD(n + 1)} Day of Christmas`, 20, 'Weekday', 'w', 'Christmastide', x);
     }
     // Epiphanytide
@@ -1921,19 +1921,20 @@
     // after Trinity
     const kt = diff(d, trin), post = { noteKey: 'Sundays after Trinity (Green Season)' };
     if (same(d, corp)) return T('Corpus Christi', 100, 'Principal Feast', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave' });
-    if (kt === 7) return T('1st Sunday after Trinity (within the Octave of Corpus Christi)', 50, 'Sunday', 'g', 'After Trinity', { mk: 'tr1', noteKey: 'Feast of Corpus Christi & Octave' });
+    if (kt === 7) return T('1st Sunday after Trinity (within the Octave of Corpus Christi)', 38, 'Sunday', 'g', 'After Trinity', { mk: 'tr1', noteKey: 'Feast of Corpus Christi & Octave' });
     if (kt > 4 && kt <= 11) return T(`${wd} within the Octave of Corpus Christi`, 45, 'Octave Day', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave' });
     const holyCrossEmber = emberWed(D(y, 9, 14)), eb = [0, 2, 3].map(n => add(holyCrossEmber, n)).find(z => same(z, d));
     if (eb) return T(`${wd} — Autumn Ember Day (Holy Cross)`, 45, 'Ember Day', 'g', 'After Trinity', Object.assign(em('Autumn'), { noteKey: 'Autumn Ember Days (Holy Cross Fast)' }));
     const nS = Math.floor(kt / 7);
     if (sun) {
       const mk = diff(adv, d) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
-      return T(diff(adv, d) === 7 ? 'Sunday next before Advent' : `${ORD(nS)} Sunday after Trinity`, 50, 'Sunday', 'g', 'After Trinity', Object.assign({ mk }, post));
+      return T(diff(adv, d) === 7 ? 'Sunday next before Advent' : `${ORD(nS)} Sunday after Trinity`, 38, 'Sunday', 'g', 'After Trinity', Object.assign({ mk }, post));
     }
     const ws = add(d, -dow(d)), fmk = diff(adv, ws) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
     return T(`${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', Object.assign({ fmk, wed: dow(d) === 3 }, post));
   }
 
+  const MN3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   function sarum(d, o) {
     o = Object.assign({ ladyDayTransfer: true }, o);
     const y = d.getUTCFullYear(), E = westernEaster(y), t = temporal(d), items = [t];
@@ -1946,8 +1947,21 @@
       }
       return e;
     };
+    // Sarum: a double displaced by a higher day is transferred to the next day on which it can be kept;
+    // feasts of three lessons and memories in Lent are kept only as memories (Warren: such feasts were "treated as ferias, especially in Lent").
+    const LENT = /^(Lent|Passiontide|Holy Week)$/;
+    const baseTop = (day, skip) => { let best = temporal(day).score; for (const g of FIXED) if (g !== skip && same(feastDate(g), day)) best = Math.max(best, SCORE[g.rank]); return best; };
+    const placed = f => {
+      const e = feastDate(f), sc = SCORE[f.rank];
+      if (sc < 55 || baseTop(e, f) < sc) return e;
+      for (let k = 1; k <= 20; k++) { const n = add(e, k); if (baseTop(n, f) < sc) return n; }
+      return e;
+    };
     for (const f of FIXED) {
-      const e = feastDate(f);
+      const nat = feastDate(f), e = placed(f), moved = !same(nat, e);
+      if (same(nat, d) && moved) { items.push({ title: `${f.name} (transferred to ${MN3[e.getUTCMonth()]} ${e.getUTCDate()})`, score: 25, rank: 'Transferred', color: f.color, season: t.season }); continue; }
+      if (same(e, d) && LENT.test(t.season) && (f.rank === 'T' || f.rank === 'M') && t.score < 90) { items.push({ title: f.name, score: 25, rank: 'Memory only (in Lent)', color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d }); continue; }
+      if (same(e, d) && moved) { items.push({ title: f.name + ' (transferred)', score: SCORE[f.rank], rank: (f.src === 'B' || f.src === 'G' || f.src === 'C') && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f) + ' Transferred from ' + MN3[nat.getUTCMonth()] + ' ' + nat.getUTCDate() + ', where a higher day fell.', color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: true }); continue; }
       if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: (f.src === 'B' || f.src === 'G' || f.src === 'C') && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
       if (f.oct) {
         const j = diff(d, e);
@@ -1967,7 +1981,7 @@
     const pref = i => (i.src && i.src !== 'W' && i.src !== 'K') ? 1 : 0;
     items.sort((a, b) => b.score - a.score || pref(b) - pref(a));
     const w = items[0];
-    const also = items.slice(1).filter(i => i.score >= 30 || i.fast).map(i => ({ title: i.title, note: i.rank }));
+    const also = items.slice(1).filter(i => i.score >= 30 || i.fast || /Memory only|Transferred/.test(i.rank)).map(i => ({ title: i.title, note: i.rank }));
     // fasts: strongest of any item; Fridays are days of abstinence
     let fast = items.map(i => i.fast).filter(Boolean)[0] || '';
     const y1 = d.getUTCMonth() * 100 + d.getUTCDate();
