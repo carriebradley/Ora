@@ -10,7 +10,7 @@
 })(typeof self !== 'undefined' ? self : this, function (LC) {
   'use strict';
   const { D, add, iso, westernEaster, advent, DN, ORD } = LC;
-  const SRCTXT = { W: 'English Sarum Missal (supplement where no Irish source)', K: 'Standard kalendar', B: 'Irish Sarum kalendars (Buckley 2022)', I: 'Not found in the Irish Sarum kalendars surveyed — your addition, unverified' };
+  const SRCTXT = { G: 'Dublin provincial constitutions (Gwynn 1944)', W: 'English Sarum Missal (supplement where no Irish source)', K: 'Standard kalendar', B: 'Irish Sarum kalendars (Buckley 2022)', I: 'Not found in the Irish Sarum kalendars surveyed — your addition, unverified' };
   const DAY = 864e5, diff = (a, b) => Math.round((a - b) / DAY), dow = d => d.getUTCDay(), same = (a, b) => a.getTime() === b.getTime();
   const sunBefore = d => add(d, -(dow(d) || 7)), sunOnOrBefore = d => add(d, -dow(d));
   let NOTES = {};
@@ -45,12 +45,12 @@
 2/2|Purification of Mary / Candlemas|J|w|0|W
 2/3|St. Blase, Bishop and Martyr|T|r|0|W
 2/5|St. Agatha, Virgin and Martyr|N|r|0|W
-2/6|Sts. Vedast and Amandus, Bishops|T|w|0|W
+2/6|Sts. Vedast and Amandus, Bishops|N|w|0|W
 2/10|St. Scholastica, Virgin|T|w|0|W
 2/14|St. Valentine, Bishop and Martyr|T|r|0|W
 2/16|St. Juliana, Virgin and Martyr|T|r|0|W
 2/22|Chair of St. Peter|D|w|0|W
-2/24|St. Matthias, Apostle|N|r|0|W
+2/24|St. Matthias, Apostle|D|r|0|W
 3/1|St. David, Bishop and Confessor|N|w|0|W
 3/2|St. Chad, Bishop and Confessor|N|w|0|W
 3/5|St. Ciarán (Kieran) of Saighir|N|w|0|B
@@ -118,10 +118,10 @@
 7/18|St. Arnulph, Bishop and Martyr|T|r|0|W
 7/20|St. Margaret, Virgin and Martyr|N|r|0|W
 7/21|St. Praxedes, Virgin|T|w|0|W
-7/22|St. Mary Magdalene|N|w|0|W
+7/22|St. Mary Magdalene|D|w|0|G
 7/23|St. Apollinaris, Martyr|T|r|0|W
 7/25|St. James, Apostle|L|r|0|W
-7/26|St. Anne, Mother of Mary|N|w|0|W
+7/26|St. Anne, Mother of Mary|D|w|0|G
 7/27|The Seven Sleepers|T|w|0|W
 7/28|St. Samson, Bishop (with St. Pantaleon)|T|w|0|W
 7/29|Sts. Felix, Simplicius, Faustinus and Beatrice, Martyrs|T|r|0|W
@@ -181,9 +181,9 @@
 10/11|St. Canice of Kilkenny|D|w|0|B
 10/13|Feast of St. Edward the Confessor|D|w|0|W
 10/14|St. Calixtus, Pope and Martyr|D|r|0|W
-10/15|St. Wulfran, Bishop and Confessor|T|w|0|W
+10/15|St. Wulfran, Bishop and Confessor|N|w|0|W
 10/16|St. Michael in Monte Tumba|N|w|0|W
-10/17|St. Etheldreda, Virgin|N|w|0|W
+10/17|Translation of St. Etheldreda, Virgin|N|w|0|W
 10/18|St. Luke, Evangelist|D|r|0|W
 10/19|St. Frideswide, Virgin|N|w|0|W
 10/21|The Eleven Thousand Virgins|N|r|0|W
@@ -199,9 +199,8 @@
 11/8|The Four Crowned Martyrs|T|r|0|W
 11/9|St. Theodore, Martyr|T|r|0|W
 11/11|Martinmas / Saint Martin's Lent|N|w|0|W
-11/13|St. Brice, Bishop and Confessor|N|w|0|W
+11/13|St. Brice, Bishop and Confessor|T|w|0|W
 11/14|Feast of St. Laurence O'Toole|N|w|0|B
-11/14|Translation of St. Erkenwald|T|w|0|W
 11/15|St. Machutus (Malo), Bishop and Confessor|N|w|0|W
 11/16|St. Edmund, Archbishop|N|w|0|W
 11/17|St. Hugh, Bishop and Confessor|N|w|0|W
@@ -210,7 +209,7 @@
 11/22|St. Cecilia, Virgin and Martyr|N|r|0|W
 11/23|St. Clement, Pope and Martyr|N|r|0|W
 11/24|St. Chrysogonus, Martyr|T|r|0|W
-11/25|St. Katherine of Alexandria|N|r|0|W
+11/25|St. Katherine of Alexandria|D|r|0|G
 11/26|St. Linus, Pope and Martyr|T|r|0|W
 11/29|Sts. Saturninus and Sisinnius, Martyrs|T|r|0|W
 11/30|St. Andrew, Apostle|D|r|0|W
@@ -243,54 +242,64 @@
     K: 'Danaher, The Year in Ireland (1972): folklore collected mainly in the 19th–20th centuries',
     M: 'MacNeill, The Festival of Lughnasa (1962)',
     L: 'Fourth Lateran Council (1215), canon 21',
-    O: 'Early Irish monastic texts (8th–9th c.), e.g. the Céli Dé rules'
+    O: 'Early Irish monastic texts (8th–9th c.), e.g. the Céli Dé rules',
+    T: 'Fletcher, "Early Dublin Drama", in Drama, Performance, and Polity in Pre-Cromwellian Ireland (2000)',
+    P: 'Wordsworth, Ceremonies and Processions of the Cathedral Church of Salisbury (1901), with extracts from the printed Sarum Processionals of 1502–1558',
+    G: 'Gwynn, "Provincial and Diocesan Decrees of the Diocese of Dublin during the Anglo-Norman Period", Archivium Hibernicum 11 (1944): constitutions of Bicknor (c. 1320), John of St Paul (1352) and Minot (1367)'
   };
   const KEPT = {
+    'note:Sundays after Trinity (Green Season)': [['E', 'Every Sunday began with the blessing of salt and water and a procession round the church, sprinkling holy water. After the octave of Trinity an antiphon of the Holy Cross ("Adoramus crucis signaculum" or "Salvator mundi") was sung, and the procession returned to the choir with an antiphon of Our Lady.', 'W P']],
+    '1/31': [['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Aidan (Maedóc) in the diocese of Ferns a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
+    '4/18': [['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Laserian in the diocese of Leighlin a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
+    '7/22': [['I', 'In 1367 Archbishop Minot made St Mary Magdalene a double throughout the province of Dublin, with a duty to hear Mass in the parish church and abstain from all servile, farm and manual work.', 'G']],
+    '11/25': [['I', 'St Katherine was made a double and a holy day in the province of Dublin in 1352. In 1367 work was again allowed when needed, because the extra holidays were being spent in taverns.', 'G']],
+    '7/26': [['I', 'In 1352 St Anne was made a double and a holy day in the province of Dublin, together with the Translation of St Thomas and St Katherine. In 1367 Archbishop Minot kept them as doubles but allowed work outside church when needed, especially to help the poor at harvest. He complained that many people spent these new holidays "in taverns and drunkenness" instead of at church.', 'G']],
+    'title:Easter Monday': [['I', 'Easter Monday was "Black Monday" in Dublin: the mayor and citizens rode out in a civic progress, a custom shared with Chester.', 'T']],
     // ----- fasts -----
     'fast:lent': [['E', 'A Lenten fast day: one meal only, eaten in the afternoon after the hour of None (by 1500 it was often taken nearer midday). No meat, and in Lent no eggs, milk, butter or cheese either (the "white meats") unless dispensed; fish was the Lenten food.', 'D R']],
     'fast:ember': [['E', 'Ember Days were fast days on the Wednesday, Friday and Saturday of the four seasons. Ordinations were held on Ember Saturday. The 1526 Sarum kalendar fixes the autumn fast "always on the Wednesday after the Exaltation of the Cross."', 'W']],
     'fast:rogation': [['E', 'Rogation days: the parish walked in procession behind the cross and banners singing the litany, asking blessing on the growing crops; the Missal says banners were carried on the Rogation Days. In English parishes this was also when the parish boundaries were walked ("beating the bounds"). Meat was not eaten.', 'W R']],
-    'fast:vigil': [['E', 'A vigil fast: one meal and no meat, kept on the eve of a great feast. When the eve fell on a Sunday, the fast was kept on the Saturday instead.', 'D']],
+    'fast:vigil': [['E', 'A vigil fast: one meal and no meat, kept on the eve of a great feast. When the eve fell on a Sunday, the fast was kept on the Saturday instead.', 'D'], ['I', 'In 1367 Archbishop Minot of Dublin forbade dances, wrestling and "theatrical games" in churches and churchyards, "especially on vigils and feasts of saints", and banned markets in churchyards.', 'G']],
     'fast:friday': [['E', 'Every Friday was a day of abstinence from meat in memory of the Passion (Christmas Day was the usual exception). Saturday abstinence was also widely kept in honour of Our Lady.', 'D R'], ['F', 'Irish weekday names preserve an older habit of fasting on Wednesdays and Fridays (Céadaoin, "first fast"; Aoine, "fast"). Wednesday and Friday fasting is documented in early Irish monastic rules; how widely lay people kept the Wednesday fast c. 1500 is not known.', 'O']],
     'fast:martin': [['U', 'The "Lent of St Martin", a fast from Martinmas (11 November) to Christmas, is old: it is found in 6th-century Gaul, and early Irish monastic texts know a winter "Lent" before Christmas. Whether lay people in Ireland still kept it c. 1500 has not been confirmed. Sarum Advent itself had no general fast apart from the Ember Days and the Christmas vigil.', 'O']],
     // ----- seasons and movable days -----
-    'note:Season of Advent': [['E', 'No Gloria in excelsis; the deacon and subdeacon wore folded chasubles instead of dalmatics. Weddings were not celebrated in Advent. From 16 December the great "O" antiphons were sung at Vespers; the 1526 kalendar marks the day "O Sapientia".', 'W']],
-    'note:Christmastide & The 12 Days of Christmas': [['E', 'Three Masses on Christmas Day: at midnight, at dawn and in the day. The Twelve Days were a holiday from work, with feasting, carols and games until Twelfth Night.', 'W R'], ['I', 'In Dublin the craft guilds played a new play each day of Christmas 1528 before the Lord Deputy: the tailors played Adam and Eve, the shoemakers Crispin and Crispinian, the carpenters Joseph and Mary.', 'H']],
+    'note:Season of Advent': [['E', 'No Gloria in excelsis; the deacon and subdeacon wore folded chasubles instead of dalmatics. Weddings were not celebrated in Advent. From 16 December the great "O" antiphons were sung at Vespers; the 1526 kalendar marks the day "O Sapientia".', 'W'], ['I', 'In 1352 the Dublin province ordered the sentences of excommunication to be read out in every parish church three times a year: on the first Sunday of Advent, on Septuagesima Sunday and on the Sunday before Lammas. They were read at Mass, with candles lit and bells rung, and explained in the people\'s own language.', 'G']],
+    'note:Christmastide & The 12 Days of Christmas': [['E', 'Three Masses on Christmas Day: at midnight, at dawn and in the day. The Twelve Days were a holiday from work, with feasting, carols and games until Twelfth Night.', 'W R'], ['I', 'In Dublin the craft guilds played a new play each day of Christmas 1528 before the Lord Deputy: the tailors played Adam and Eve, the shoemakers Crispin and Crispinian, the carpenters Joseph and Mary.', 'H'], ['I', 'In 1509 St Patrick\'s Cathedral, Dublin, paid Thomas Mayowe for "playing with seven lights" at Christmas and at the Purification.', 'T']],
     'note:Epiphany & Octave of Epiphany (Nollaig Beag)': [['E', 'Epiphany was a Principal Double, the end of the Twelve Days. Twelfth Night was the climax of the Christmas revels in England.', 'W R'], ['F', 'The Irish name Nollaig Bheag ("Little Christmas"), and Nollaig na mBan ("Women\'s Christmas") on this day, are recorded in later folklore.', 'K']],
-    'note:Septuagesima Sunday (Pre-Lent Begins)': [['E', 'Alleluia is no longer sung from Septuagesima until Easter, and from Septuagesima the deacon and subdeacon wear chasubles. The season of marriages closed until after Easter.', 'W']],
-    'note:Quinquagesima & Shrovetide Carnival': [['E', 'Shrovetide: people went to confession ("were shriven") before Lent and used up meat, eggs and fat. Shrove Tuesday was a day of feasting and sports in English towns.', 'R']],
+    'note:Septuagesima Sunday (Pre-Lent Begins)': [['E', 'Alleluia is no longer sung from Septuagesima until Easter, and from Septuagesima the deacon and subdeacon wear chasubles. The season of marriages closed until after Easter.', 'W'], ['I', 'One of the three Sundays (with the first Sunday of Advent and the Sunday before Lammas) when the province of Dublin had the sentences of excommunication read out at Mass, with candles and bells, in the people\'s own language (1352).', 'G']],
+    'note:Quinquagesima & Shrovetide Carnival': [['E', 'Shrovetide: people went to confession ("were shriven") before Lent and used up meat, eggs and fat. Shrove Tuesday was a day of feasting and sports in English towns.', 'R'], ['I', 'In Dublin, Shrove Tuesday ("Corperaunt") brought horse-riding and the civic ceremony of the "bearing of balls"; the 1466 city assembly guaranteed free passage to people coming in for it.', 'T']],
     'note:Ash Wednesday (Start of Lent / An Charghas)': [['E', 'Ashes were blessed and put on the heads of clergy and people. Public penitents were solemnly put out of the church, with a procession and banners, to be readmitted on Maundy Thursday.', 'W']],
     'note:Season of Lent (An Charghas)': [['E', 'From the Monday after the first Sunday of Lent all crosses and images in the church were covered, and a great Lenten veil hung before the high altar. Everyone was bound to confess and receive Communion at least once a year, at Easter, so Lent was the season of confession.', 'W L D']],
     'note:Spring Ember Days (Lenten Fast)': [['E', 'Ember Days in the first week of Lent: Wednesday, Friday and Saturday. Ordinations were held on the Saturday.', 'W']],
     'note:Passiontide': [['E', 'From Passion Sunday the Gloria Patri is left out of the psalm at the start of Mass; the church stays veiled for Lent.', 'W']],
-    'title:Palm Sunday': [['E', 'Palms (in England yew, willow and box) were blessed and carried in an outdoor procession; the Gospel was read at stations, and the veiled rood was uncovered before the people as the procession re-entered the church. The Passion was then sung at Mass.', 'W D']],
+    'title:Palm Sunday': [['E', 'Branches for the clergy, and flowers and leaves for the people, were blessed and carried in an outdoor procession; the Gospel was read at stations, and the veiled rood was uncovered before the people as the procession re-entered the church. The Passion was then sung at Mass.', 'W P D']],
     'title:Maundy Thursday': [['E', 'The bishop blessed the holy oils; penitents were reconciled; after Mass the altars were stripped and washed, and the "maundy" (the washing of feet) followed.', 'W']],
-    'title:Good Friday': [['E', 'The clergy, barefoot, brought out the veiled cross; it was uncovered and the clergy and people "crept to the cross" on their knees to kiss it. The cross, with the reserved Host, was then laid in the Easter Sepulchre and watched until Easter morning.', 'W D']],
+    'title:Good Friday': [['E', 'The clergy, barefoot, brought out the veiled cross; it was uncovered and the clergy and people "crept to the cross" on their knees to kiss it. The cross, with the reserved Host, was then laid in the Easter Sepulchre and watched until Easter morning.', 'W D'], ['I', 'In 1352 Archbishop John of St Paul ordered that no farm or other secular work be done anywhere in the province of Dublin on Good Friday, and that the day be kept with fasting and prayer. Some people had been working on it.', 'G']],
     'title:Holy Saturday': [['E', 'All lights were put out, the new fire was struck and blessed, and the Paschal candle was lit from it; the font was blessed for baptism. The fast lasted until the Vigil.', 'W']],
-    'note:Easter Sunday & Octave of Easter (Paschaltide)': [['E', 'Before Mass on Easter morning the cross was taken out of the Easter Sepulchre and carried in procession to "Christus resurgens"; the veiled images were uncovered. Most of the parish made their one Communion of the year at Easter.', 'W D L']],
+    'note:Easter Sunday & Octave of Easter (Paschaltide)': [['E', 'Before Mass on Easter morning the cross was taken out of the Easter Sepulchre and carried in procession to "Christus resurgens"; the veiled images were uncovered. Most of the parish made their one Communion of the year at Easter.', 'W D L'], ['I', 'Dublin had its own Easter play, the Visitatio Sepulchri (the three Marys at the tomb), in two manuscripts of c. 1400. It was played in the early hours of Easter morning at the Easter Sepulchre in the church of St John the Evangelist beside Christ Church. An Easter play of the Resurrection was still put on at Christ Church in 1542.', 'T']],
     'note:Rogationtide Processions': [['E', 'The three Rogation days before Ascension: processions with cross and banners round the parish and fields, singing the litany, to bless the crops. Meat was not eaten.', 'W R']],
     'note:Vigil Fast of the Ascension': [['E', 'Rogation Wednesday, also the vigil of the Ascension.', 'W']],
-    'note:Ascension Day & Octave of the Ascension': [['E', 'A Principal Double. Banners were carried in procession on Ascension Day, according to the Processional.', 'W']],
+    'note:Ascension Day & Octave of the Ascension': [['E', 'A Principal Double. In the procession before Mass the banners went in a set order: the lion banner first, then the lesser banners, and the dragon banner last.', 'W P']],
     'note:Vigil Fast of Pentecost': [['E', 'A principal feria and fast; as at Easter the font was blessed and baptisms were held.', 'W']],
-    'note:Pentecost (Whitsun) & Whitsun Octave': [['E', 'Whitsunday was a Principal Double; Monday to Wednesday of Whitsun week were Lesser Doubles and holidays. In England Whitsun was the great season for parish "ales", feasts that raised money for the church.', 'W R']],
+    'note:Pentecost (Whitsun) & Whitsun Octave': [['E', 'Whitsunday was a Principal Double; Monday to Wednesday of Whitsun week were Lesser Doubles and holidays. In England Whitsun was the great season for parish "ales", feasts that raised money for the church.', 'W R'], ['I', 'At Whitsun 1509 St Patrick\'s Cathedral, Dublin, paid players "with the great angel and the little one and a dragon", and fed them through the feast. This was evidently a Pentecost play.', 'T']],
     'note:Summer Ember Days (Whitsuntide Fast)': [['E', 'Ember Days in Whitsun week, with ordinations on the Saturday.', 'W']],
     'note:Trinity Sunday': [['E', 'A Greater Double. Sarum counted the summer Sundays "after Trinity", where the Roman books counted them after Pentecost.', 'W']],
-    'note:Feast of Corpus Christi & Octave': [['E', 'Corpus Christi, the Thursday after Trinity, was enjoined on the province of Canterbury in 1332. Its great feature was the procession carrying the Host through the streets.', 'W D'], ['I', 'In Dublin each guild provided a pageant for the Corpus Christi procession, recorded in the city\'s Chain Book: the glovers Adam and Eve, the mariners and vintners Noah\'s ark, the smiths Pharaoh\'s host, the Corpus Christi guild the Passion, and so on. In 1541 the lords of the Irish parliament rode in the Corpus Christi procession and "the Nine Worthies was played."', 'H']],
+    'note:Feast of Corpus Christi & Octave': [['E', 'Corpus Christi, the Thursday after Trinity, was enjoined on the province of Canterbury in 1332. Its great feature was the procession carrying the Host through the streets.', 'W D'], ['I', 'In Dublin each guild provided a pageant for the Corpus Christi procession, recorded in the city\'s Chain Book: the glovers Adam and Eve, the mariners and vintners Noah\'s ark, the smiths Pharaoh\'s host, the Corpus Christi guild the Passion, and so on. In 1541 the lords of the Irish parliament rode in the Corpus Christi procession and "the Nine Worthies was played."', 'H'], ['I', 'Dublin\'s Corpus Christi pageant lists of 1498 (in the Chain Book) name at least sixteen guild pageants, made "by an olde law". The procession probably ended at St George\'s Chapel outside the walls. In 1554–6 the Tailors still paid a man "for playnge pilote a corpus criste day". Kilkenny is the one Irish town where Corpus Christi plays were certainly acted (16th century).', 'T']],
     'note:Autumn Ember Days (Holy Cross Fast)': [['E', 'Autumn Ember Days, fixed by the 1526 kalendar on the Wednesday after Holy Cross Day, with Friday and Saturday.', 'W']],
     'note:Winter Ember Days (Advent Fast)': [['E', 'Winter Ember Days in the third week of Advent (after St Lucy), with ordinations on the Saturday.', 'W']],
     'note:Vigil Fast of Christmas': [['E', 'The Christmas vigil was a strict fast; the Christmas Masses began at midnight.', 'W']],
     // ----- fixed feasts -----
     '1/1': [['E', 'The Circumcision, a Lesser Double and the octave day of Christmas. New Year\'s gifts were exchanged on this day, but the legal year in England and the English parts of Ireland began on 25 March.', 'W R']],
-    '2/1': [['I', 'Brigid is in every Irish Sarum kalendar Buckley surveyed; a double in the Dublin province under Archbishop Bicknor (c. 1320), nine lessons in TCD 78.', 'B'], ['F', 'Brigid\'s crosses, the brat Bríde (a cloth left out for her blessing) and the Brídeóg procession are recorded in folklore of the 19th and 20th centuries; their medieval history is not documented.', 'K']],
-    '2/2': [['E', 'Candlemas: candles were blessed and everyone walked in procession carrying a lit candle before Mass, then offered the candle. A Greater Double.', 'W D']],
-    '3/17': [['I', 'Patrick\'s feast became a major double under Bicknor\'s constitutions (c. 1320) and was red-letter in the Irish kalendars. His relics, with Brigid\'s and Columba\'s, were enshrined at Downpatrick (see 10 June).', 'B'], ['I', 'St Patrick\'s Purgatory on Lough Derg drew pilgrims from all over Europe. Pope Alexander VI ordered the cave closed in 1497, and the order was carried out on St Patrick\'s Day; the pilgrimage soon resumed on Station Island.', 'C'], ['U', 'The idea that the Lenten fast was lifted for St Patrick\'s Day is not documented for c. 1500.', '']],
+    '2/1': [['I', 'Brigid is in every Irish Sarum kalendar Buckley surveyed; a double in the Dublin province under Archbishop Bicknor (c. 1320), nine lessons in TCD 78.', 'B'], ['F', 'Brigid\'s crosses, the brat Bríde (a cloth left out for her blessing) and the Brídeóg procession are recorded in folklore of the 19th and 20th centuries; their medieval history is not documented.', 'K'], ['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Brigid in the diocese of Kildare a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
+    '2/2': [['E', 'Candlemas: candles were blessed for clergy and people at a station before Mass, and everyone walked in procession carrying a lit candle, then offered the candle. A Greater Double.', 'W P D'], ['I', 'In 1509 St Patrick\'s Cathedral, Dublin, paid Thomas Mayowe for "playing with seven lights" at Christmas and at the Purification (Candlemas).', 'T']],
+    '3/17': [['I', 'Patrick\'s feast became a major double under Bicknor\'s constitutions (c. 1320) and was red-letter in the Irish kalendars. His relics, with Brigid\'s and Columba\'s, were enshrined at Downpatrick (see 10 June).', 'B'], ['I', 'St Patrick\'s Purgatory on Lough Derg drew pilgrims from all over Europe. Pope Alexander VI ordered the cave closed in 1497, and the order was carried out on St Patrick\'s Day; the pilgrimage soon resumed on Station Island.', 'C'], ['U', 'The idea that the Lenten fast was lifted for St Patrick\'s Day is not documented for c. 1500.', ''], ['I', 'In 1466 the Dublin city assembly guaranteed safe passage to everyone coming into the city for the feasts of Corpus Christi, St George and St Patrick "for procession and pilgrimage".', 'T'], ['I', 'Archbishop Bicknor\'s provincial council (c. 1320) made Patrick\'s day a double throughout the province of Dublin and ordered a solemn commemoration of Patrick once a week outside Lent. In 1367 Archbishop Minot confirmed it as a full holy day, with no work.', 'G']],
     '3/25': [['E', 'Lady Day, a Lesser Double, and the first day of the legal year in England and English Ireland (until 1752); a quarter day for rents.', 'W']],
-    '4/23': [['I', 'Dublin kept St George\'s Day with a civic pageant recorded in the Chain Book: the past mayor provided the emperor and empress, the current mayor a horse for St George, with a maiden leading the dragon.', 'H'], ['E', 'An Inferior Double in the 1526 Sarum kalendar.', 'W']],
+    '4/23': [['I', 'Dublin kept St George\'s Day with a civic pageant recorded in the Chain Book: the past mayor provided the emperor and empress, the current mayor a horse for St George, with a maiden leading the dragon.', 'H'], ['E', 'An Inferior Double in the 1526 Sarum kalendar.', 'W'], ['I', 'In 1466 St George\'s Day drew crowds into Dublin. In the 1498 pageant lists the city\'s St George pageant, with the dragon, went in procession out to St George\'s Chapel beyond the walls.', 'T']],
     '4/25': [['E', 'St Mark: the Greater Litany, a procession with banners and litany (the kalendar notes "Greater Litany").', 'W']],
     '5/1': [['F', 'May Day (Bealtaine) customs such as May bushes, protecting milk and butter, and fires are recorded mainly in later folklore; early Irish texts (c. 900) mention Bealtaine fires.', 'K']],
     '6/10': [['I', 'The translation of Patrick, Columba and Brigit commemorates the enshrining of their relics together at Downpatrick in 1186. It is kept in the Irish Sarum kalendars.', 'B']],
-    '6/24': [['E', 'Midsummer: bonfires were lit on St John\'s Eve in late-medieval England, and preachers explained the custom.', 'R'], ['F', 'St John\'s Eve bonfires in Ireland are documented from the 17th century and richly in later folklore.', 'K']],
-    '7/7': [['E', 'The Translation of St Thomas Becket. The 1526 kalendar notes that the Feast of Relics was kept on the first Sunday after it.', 'W']],
+    '6/24': [['E', 'Midsummer: bonfires were lit on St John\'s Eve in late-medieval England, and preachers explained the custom.', 'R'], ['F', 'St John\'s Eve bonfires in Ireland are documented from the 17th century and richly in later folklore.', 'K'], ['I', 'The Dublin Tailors\' guild accounts (16th century) record spending on the Midsummer festivities as well as Corpus Christi.', 'T']],
+    '7/7': [['E', 'The Translation of St Thomas Becket. The 1526 kalendar notes that the Feast of Relics was kept on the first Sunday after it.', 'W'], ['I', 'Made a double and a holy day in the province of Dublin in 1352. In 1367 work was again allowed when needed, because the extra holidays were being spent in taverns.', 'G']],
     '8/1': [['E', 'Lammas ("loaf-mass"): in England bread from the new harvest was offered.', 'R'], ['F', 'Lughnasa gatherings on hilltops and at wells around 1 August are documented in detail only from later sources, though they have roots in early Irish assemblies.', 'M']],
     '8/7': [['E', 'The Name of Jesus, a Greater Double: a late-medieval devotion, often paired with the weekly Jesus Mass on Fridays.', 'W D']],
     '8/15': [['E', 'The Assumption, a Principal Double, with a vigil fast.', 'W'], ['F', '"Pattern" days at holy wells around mid-August are documented mostly after the Reformation.', 'K']],
@@ -299,23 +308,24 @@
     '11/1': [['E', 'All Saints, a Greater Double. On the evening, and through the night into All Souls, church bells were rung for the dead.', 'W D']],
     '11/2': [['E', 'All Souls: Masses and the Office of the Dead (Placebo and Dirige) for all the faithful departed. Families paid for prayers and the bells were rung.', 'W D'], ['F', 'Soul cakes, and the Irish customs of Samhain night, are recorded in later folklore.', 'K']],
     '11/11': [['E', 'Martinmas: a feast of nine lessons (triple invitatory). In England it was the season for slaughtering and salting beef for the winter.', 'W R'], ['F', 'The Irish custom of shedding the blood of an animal on St Martin\'s Eve is recorded in 19th–20th-century folklore.', 'K']],
-    '12/6': [['E', 'In English cathedrals and collegiate churches a boy bishop was chosen from the choirboys at St Nicholas and presided at services until Holy Innocents (28 December).', 'R']],
-    '12/8': [['E', 'The Conception of Blessed Mary, a Lesser Double.', 'W']],
-    '12/28': [['E', 'Holy Innocents (Childermas): the boy bishop\'s day. It was thought an unlucky day to begin any work.', 'R']],
+    '12/6': [['E', 'In English cathedrals and collegiate churches a boy bishop was chosen from the choirboys around St Nicholas and presided at services on Holy Innocents (28 December).', 'R P']],
+    '12/8': [['E', 'The Conception of Blessed Mary, a Lesser Double.', 'W'], ['I', 'In 1352 the Conception of Our Lady was made a double throughout the province of Dublin and a holy day: people were to go to Mass in their parish church and do no servile, farm or manual work, as on her Nativity. Minot confirmed it in 1367.', 'G']],
+    '12/28': [['E', 'Holy Innocents (Childermas). At Salisbury, at Vespers on the eve (27 December), the choirboys went in procession in silk copes, with lighted candles, to the altar of the Innocents. The boy bishop, in pontificals, censed the altar and said the collect of the Innocents. Childermas was also thought an unlucky day to begin any work.', 'P R']],
     '12/29': [['I', 'Becket\'s cult was strong in English Ireland: the great Augustinian abbey of St Thomas the Martyr in Dublin was founded in his honour in 1177.', '']],
-    '11/14': [['I', 'Laurence O\'Toole, archbishop of Dublin (d. 1180, canonised 1225), was patron of Dublin and is in TCD 78 and TCD 88 with nine lessons.', 'B']],
-    '10/11': [['I', 'Canice was patron of St Canice\'s Cathedral, Kilkenny, and made a double under Bicknor\'s constitutions.', 'B']]
+    '11/14': [['I', 'Laurence O\'Toole, archbishop of Dublin (d. 1180, canonised 1225), was patron of Dublin and is in TCD 78 and TCD 88 with nine lessons.', 'B'], ['I', 'Bicknor\'s council (c. 1320) ordered Laurence O\'Toole\'s day to be kept as a double throughout the province of Dublin, and the Eleven Thousand Virgins and the Translation of St Patrick with nine lessons.', 'G']],
+    '10/11': [['I', 'Canice was patron of St Canice\'s Cathedral, Kilkenny, and made a double under Bicknor\'s constitutions.', 'B'], ['I', 'Bicknor\'s provincial council (c. 1320) made the feast of Canice in the diocese of Ossory a double, kept with ruling of the choir throughout the province. The people of each diocese were to do no farm work on their patron\'s day and go to their parish church for the services.', 'G']],
   };
   function keptFor(d, w, t, fast, mk) {
     const out = [], add = (k, lab) => { for (const e of (KEPT[k] || [])) out.push({ tag: e[0], text: e[1], src: e[2].split(' ').filter(Boolean).map(s => KSRC[s]), about: lab }); };
     if (mk) add(mk, w.title);
     for (const p of ['Palm Sunday', 'Maundy Thursday', 'Good Friday', 'Holy Saturday']) if (t.title.startsWith(p)) add('title:' + p, t.title);
+    if (/^Monday within the Octave of Easter/.test(t.title)) add('title:Easter Monday', t.title);
     if (t.noteKey) add('note:' + t.noteKey, t.title);
     if (w.noteKey && w.noteKey !== t.noteKey) add('note:' + w.noteKey, w.title);
     const f = fast || '';
     if (/Ember/.test(f)) add('fast:ember', 'Ember Day'); else if (/Rogation/.test(f)) add('fast:rogation', 'Rogation Day');
     else if (/Vigil|vigil/.test(f) && !/Christmas/.test(w.title)) add('fast:vigil', 'Vigil');
-    if (/Lent|Strict fast/.test(f) && t.season !== 'Advent' && !/Martin/.test(f)) add('fast:lent', 'Lenten fast');
+    if (/Lenten fast|Strict fast/.test(f) && t.season !== 'Advent' && !/Martin/.test(f)) add('fast:lent', 'Lenten fast');
     if (/Friday/.test(f)) add('fast:friday', 'Friday');
     if (/Martin/.test(f)) add('fast:martin', "St Martin's Lent");
     const seen = new Set(); return out.filter(o => { const k = o.text; if (seen.has(k)) return false; seen.add(k); return true; });
@@ -327,19 +337,25 @@
   const RANK = { P: 'Principal Double', J: 'Greater Double', L: 'Lesser Double', D: 'Inferior Double', N: 'Nine lessons', T: 'Three lessons', S: 'Feast', M: 'Memory only' };
   const SCORE = { P: 90, J: 72, L: 62, D: 55, N: 40, T: 32, S: 30, M: 30 };
   // Where the rank comes from (W rows): the 1526 Sarum kalendar printed in Warren (1911), with Warren's classification of doubles.
-  const RANK_UNC = new Set(["1/17", "2/3", "2/5", "2/24", "3/1", "3/2", "3/7", "3/18", "3/20", "3/21", "10/6", "10/7", "10/9", "10/10", "10/11", "10/15", "10/16", "10/17", "10/19", "10/21", "10/23", "11/3", "11/6", "11/8", "11/9", "11/11", "11/13", "11/16", "11/18", "11/20", "11/22", "11/23", "11/24", "11/25", "11/26", "10/31", "11/14"]), RANK_PLUS = new Set(["2/22", "7/7", "8/6", "8/28", "11/2", "4/30"]);
+  const RANK_UNC = new Set([]), RANK_EXTRA = {
+    '10/21': 'Rank: in England a simple feast of three lessons, but Procter and Wordsworth (Breviarium, fasc. III, 1886) note it had nine lessons in the province of Dublin.',
+    '4/23': 'Rank: an Inferior Double in the 1526 Sarum kalendar. Procter and Wordsworth note that under the provincial constitutions of Canterbury (1415) it was a Greater Double; that ruling applied to the English province.',
+    '10/14': 'Rank: Warren lists St Calixtus among the Inferior Doubles from the 1526 kalendar, but Procter and Wordsworth\'s table (1886) has him as a simple feast. The sources disagree.',
+    '2/24': 'Rank: an Inferior Double of nine lessons in Procter and Wordsworth\'s table of feasts (Breviarium, fasc. III, 1886).'
+  }, RANK_PLUS = new Set(["2/22", "7/7", "8/6", "8/28", "11/2", "4/30"]);
   function rankNote(f) {
     if (f.src === 'B' || f.src === 'I') return '';
+    if (f.src === 'G') return 'Rank: a double in the province of Dublin under its provincial constitutions (1352 for St Anne and St Katherine, 1367 for St Mary Magdalene; Gwynn 1944). In the English Sarum kalendar it was a feast of nine lessons.';
     if (RANK_PLUS.has(f.m + '/' + f.d)) return "Rank: Warren (1911) lists this as a double that was kept as such although the 1526 Sarum kalendar does not mark it.";
-    if (RANK_UNC.has(f.m + '/' + f.d)) return "Rank: from the 1526 Sarum kalendar (Warren 1911), but the number of lessons is not legible in the scanned page, so nine or three lessons is inferred from the kalendar's other markings. Treat as uncertain.";
-    return 'Rank: the 1526 Sarum kalendar and Warren\'s classification of doubles (The Sarum Missal in English, 1911).';
+    if (RANK_UNC.has(f.m + '/' + f.d)) return "";
+    return RANK_EXTRA[f.m + '/' + f.d] || 'Rank: the 1526 Sarum kalendar (Warren, 1911) and the table of feasts in Procter and Wordsworth, Breviarium ad usum Sarum, fasc. III (1886).';
   }
 
 
   // Evidence notes for the Irish entries: Ann Buckley, 'Insular Saints in Irish Sarum Kalendars of the Office' (2022).
   const SRCNOTE = {
     "3/17": "Patrick is in every Irish Sarum kalendar Buckley surveyed, always a double and usually red-letter. Under Archbishop Bicknor's constitutions (c. 1320) his feast became a major double. TCD 78 (1488–1500) and TCD 88 (after 1488) both give him nine lessons, in red.",
-    "2/1": "Brigit is in every Irish Sarum kalendar surveyed. TCD 78 (1488–1500) has her in red with nine lessons; the Dublin province made her a double under Bicknor's constitutions (c. 1320). She is also in English Sarum kalendars.",
+    "2/1": "Procter and Wordsworth's table of Sarum feasts (1886) gives Brigid three lessons in England but notes she was a double in the diocese of Kildare and in the province of Dublin. Brigit is in every Irish Sarum kalendar surveyed. TCD 78 (1488–1500) has her in red with nine lessons; the Dublin province made her a double under Bicknor's constitutions (c. 1320). She is also in English Sarum kalendars.",
     "5/16": "Brendan of Clonfert: three lessons in TCD 78 and TCD 88, nine lessons in TCD 77 (Armagh, c. 1450).",
     "6/3": "Kevin: nine lessons in TCD 88; in the Irish kalendars but not among the saints named in Dublin's episcopal constitutions.",
     "6/9": "Colmcille shares 9 June with the Translation of St Edmund of Abingdon and is often a later addition. Absent from TCD 78 (1488–1500) and NLI 19954.",
@@ -1875,7 +1891,7 @@
     };
     for (const f of FIXED) {
       const e = feastDate(f);
-      if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: f.src === 'B' && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
+      if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: (f.src === 'B' || f.src === 'G') && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
       if (f.oct) {
         const j = diff(d, e);
         if (j > 0 && j <= f.oct) items.push({ title: j === f.oct ? `Octave Day of ${f.name.replace(/ & Octave$/, '')}` : `Day within the Octave of ${f.name.replace(/ & Octave$/, '')}`, score: j === f.oct ? 62 : 38, rank: 'Octave Day', color: f.color, season: t.season, noteKey: f.name, src: f.src });
