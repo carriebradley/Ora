@@ -117,7 +117,7 @@ const CONTENT = (() => {
   const FLOWS = {
     roman: {
       morning: [P('Sign of the Cross', T.cross), P('Opening', T.lips + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
-        { type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }, { type: 'readings', title: 'Mass Readings' },
+        { type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }, 
         { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
         P('Intercessions', 'Lord, I offer you this day: my work, my words, my joys and my sufferings. Bless those I love. Remember the sick, the dying and the lonely, and those who have asked for my prayers.'),
         P('Our Father', T.our), P('Blessing', T.blessing)],
@@ -129,18 +129,18 @@ const CONTENT = (() => {
     },
     byz: {
       morning: [P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
-        P('Morning Troparion', T.morningTrop), { type: 'hourlink', title: 'Orthros (Matins) and the Hours', hour: 'orthros' }, { type: 'readings', title: 'Epistle & Gospel' },
+        P('Morning Troparion', T.morningTrop), { type: 'hourlink', title: 'Orthros (Matins) and the Hours', hour: 'orthros' }, 
         { type: 'quote', title: 'From the Fathers' }, { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Dismissal', T.dismissal)],
       evening: [P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
         P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe), { type: 'art', title: 'Icon' },
         { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), P('Dismissal', T.dismissal)]
     },
     sarum: {
-      morning: [P('Sign of the Cross', T.cross), P('Deus in adjutorium', T.sarumHelp), { type: 'calendar', title: 'Today in the Church (Sarum)' },
-        { type: 'readings', title: 'Mass of the Day (Sarum Missal)' }, { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 },
-        { type: 'office', title: 'Lauds — traditional Roman text (stand-in; not yet Sarum)', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
-      evening: [P('Sign of the Cross', T.cross), P('Deus in adjutorium', T.sarumHelp), { type: 'calendar', title: 'Today in the Church (Sarum)' },
-        { type: 'art', title: 'Sacred Art' }, { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers — traditional Roman text (stand-in; not yet Sarum)', which: 'V' }, P('Kyrie', T.kyrie),
+      morning: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church (Sarum)' },
+        { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 },
+        { type: 'office', title: 'Lauds (Sarum)', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
+      evening: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church (Sarum)' },
+        { type: 'art', title: 'Sacred Art' }, { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers (Sarum)', which: 'V' }, P('Kyrie', T.kyrie),
         P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Nunc dimittis', T.nunc), P('Blessing', T.blessing)]
     }
   };

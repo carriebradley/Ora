@@ -139,6 +139,171 @@
     h += `<div class="sec"><b>Conclusion</b>${lines(H.g.Dominus.split('\n').slice(0, 2).join('\n'))}<br>${lines(H.g['Benedicamus Domino'])}</div>`;
     return h;
   }
-  const api = { hour, week, H, modern, psalterWeek };
+
+  /* ---------- Sarum Lauds and Vespers, Trinity season (after the Octave of Corpus Christi until Advent) ----------
+     Order, antiphons, chapters, hymns, versicles, petitions and memorials: Breviary Offices from Lauds to Compline
+     inclusive, translated and arranged from the Sarum Book (Hayes, 1880), Psalter and Proper of Seasons.
+     Psalms: Douay psalter (Vulgate numbering). Sunday collects: Warren, The Sarum Missal in English (1911). */
+  const SH = (() => {
+    const OPEN = "V. O God, make speed to save us.\nR. O Lord, make haste to help us.\nV. Glory be to the Father, and to the Son, and to the Holy Ghost.\nR. As it was in the beginning, is now, and ever shall be, world without end. Amen.\nAlleluia.";
+    const ENDV = "V. The Lord be with you.\nR. And with thy spirit.\nV. Bless we the Lord.\nR. Thanks be to God.";
+    const ECCE = "Lo! now the melting shades of night are ending,\nFlickers the golden gleam of dawning day,\nLet us before the Lord of all, low bending,\nSuppliants pray;\n\nThat He would of the stain of guilt relieve us,\nGrant our soul's health, of His most blessed love,\nAnd of His pitying grace and mercy give us\nHeaven above.\n\nBe this by Thy thrice holy Godhead granted,\nFather, and Son, and Spirit ever blest,\nWhose glory by the firmament is chanted,\nBy all confest. Amen.";
+    const LUCIS = "O blest Creator of the light,\nWho mak'st the day with radiance bright,\nAnd o'er the forming world didst call\nThe light from chaos first of all;\n\nWhose wisdom joined in meet array\nThe morn and eve, and named them day:\nNight comes with all its darkling fears,\nRegard Thy people's prayers and tears.\n\nLest, sunk in sin, and whelmed with strife,\nThey lose the gift of endless life;\nWhile thinking but the thoughts of time,\nThey weave new chains of woe and crime.\n\nBut grant them grace that they may strain\nThe heavenly gate, and prize to gain;\nEach harmful lure aside to cast,\nAnd purge away each error past.\n\nO Father, that we ask be done,\nThrough Jesus Christ, Thine only Son;\nWho, with the Holy Ghost, and Thee,\nShall live and reign eternally. Amen.";
+    const OLUX = "O Trinity of blessed light,\nO Unity of princely might,\nThe fiery sun now goes his way;\nShed Thou within our hearts Thy ray.\n\nTo Thee our morning song of praise,\nTo Thee our evening prayer we raise;\nThy glory suppliant we adore\nFor ever and for evermore.\n\nAll laud to God the Father be;\nAll laud, Eternal Son, to Thee;\nAll laud, as is for ever meet,\nTo God the blessed Paraclete. Amen.";
+    // psalm groups: [incipit, full antiphon, [psalm refs (Vulgate) | 'b:label|ref'] ]
+    const B = (label, ref) => 'b:' + label + '|' + ref;
+    const LAUDS = {
+      0: [['The Lord is King', 'The Lord is King, and hath put on glorious apparel: He hath girded Himself with strength, and His seat is from everlasting.', ['92']],
+          ['Let us all know', 'Let us all know that the Lord He is God: in Him let us be joyful, and exalt and praise His Name for ever.', ['99']],
+          ['As long as I live', 'As long as I live will I magnify Thee: that I may behold Thy power and glory.', ['62', '66']],
+          ['Let every creature', 'Let every creature which is in heaven, and on the earth, bless the Lord: praise Him and magnify Him for ever.', ['c210']],
+          ['Let every thing that hath breath', 'Let every thing that hath breath praise the Lord: for He spake the word, and they were made; He commanded, and they were created.', ['148', '149', '150']]],
+      1: [['Have mercy', 'Have mercy: upon me, O God.', ['50']], ['Consider', 'Consider my meditation: O Lord.', ['5']], ['O God', 'O God, Thou art my God: early will I seek Thee.', ['62', '66']],
+          ['Thine anger is turned away', 'Thine anger is turned away, O Lord: and Thou comfortedst me.', [B('Song of Isaiah · Isaiah 12', 'Isaiah 12:1-6')]], ['O praise', 'O praise: the Lord of heaven.', ['148', '149', '150']]],
+      2: [['According to the multitude', 'According to the multitude of Thy mercies: have mercy upon me, O God.', ['50']], ['The help of my countenance', 'The help of my countenance: and my God.', ['42']], ['Early', 'Early: will I seek Thee.', ['62', '66']],
+          ['All the days of my life', 'All the days of my life: the Lord was ready to save me.', [B('Song of Hezekiah · Isaiah 38', 'Isaiah 38:10-20')]], ['Praise Him', 'Praise Him: in the firmament of His power.', ['148', '149', '150']]],
+      3: [['Wash me throughly', 'Wash me throughly: from my wickedness, O God.', ['50']], ['Thou, O God', 'Thou, O God: art praised in Sion.', ['64']], ['My lips shall praise Thee', 'My lips shall praise Thee: as long as I live.', ['62', '66']],
+          ['The Lord shall judge', 'The Lord shall judge: the ends of the earth.', [B('Song of Hannah · 1 Samuel (1 Kings) 2', '1 Samuel 2:1-10')]], ['O praise God', 'O praise God: all ye heavens.', ['148', '149', '150']]],
+      4: [['Against Thee only', 'Against Thee only have I sinned: have mercy upon me, O God.', ['50']], ['Lord, Thou hast been', 'O Lord: Thou hast been our refuge.', ['89']], ['Have I not thought', 'Have I not thought upon Thee: when I was waking?', ['62', '66']],
+          ['The Lord shall reign', 'The Lord shall reign: for ever and ever.', [B('Song of Moses · Exodus 15', 'Exodus 15:1-19')]], ['O praise', 'O praise: the Lord of heaven.', ['148', '149', '150']]],
+      5: [['O stablish me', 'O stablish me: with Thy free Spirit.', ['50']], ['Hearken unto me', "Hearken unto me: for Thy truth and righteousness' sake.", ['142']], ['God shew us', 'God shew us: the light of His countenance.', ['62', '66']],
+          ['O Lord, I have heard', 'O Lord, I have heard Thy speech: and was afraid.', [B('Song of Habakkuk · Habakkuk 3', 'Habakkuk 3:2-19')]], ['Praise Him in the cymbals', 'Praise Him in the cymbals and dances: praise Him upon the strings and pipe.', ['148', '149', '150']]],
+      6: [['O be favourable', 'O be favourable: and gracious unto Sion.', ['50']], ['It is a good thing', 'It is a good thing: to give thanks unto the Lord.', ['91']], ['All the ends of the world', 'All the ends of the world: shall fear Him.', ['62', '66']],
+          ['The Lord shall repent', 'The Lord shall repent Himself: for His servants.', [B('Song of Moses · Deuteronomy 32', 'Deuteronomy 32:1-43')]], ['Praise Him', 'Praise Him: on the well-tuned cymbals.', ['148', '149', '150']]]
+    };
+    const VESP = {
+      0: [['Sit Thou', 'Sit Thou on My right hand: said the Lord my God.', ['109']], ['All His commandments', 'All His commandments are true: they stand fast for ever and ever.', ['110']],
+          ['He hath great delight', 'He hath great delight: in His commandments.', ['111']], ['Blessed be the Name', 'Blessed be the Name of the Lord: from this time forth for evermore.', ['112']],
+          ['But we who live', 'But we who live: will praise the Lord.', ['113']]],
+      1: [['The Lord hath inclined', 'The Lord hath inclined: His ear unto me.', ['114']], ['I believed', 'I believed: and therefore will I speak.', ['115']], ['O praise the Lord', 'O praise the Lord: all ye heathen.', ['116']],
+          ['I called', 'I called: and He heard me.', ['119']], ['My help', 'My help: cometh even from the Lord.', ['120']]],
+      2: [['We will go', 'We will go gladly: into the house of the Lord.', ['121']], ['O Thou that dwellest', 'O Thou that dwellest in the heavens: have mercy upon us.', ['122']], ['Our help', 'Our help standeth: in the Name of the Lord.', ['123']],
+          ['Do well', 'Do well, O Lord: unto those that are good and true of heart.', ['124']], ['Then were we like', 'Then were we like: unto them that dream.', ['125']]],
+      3: [['Happy is the man', 'Happy is the man: that hath his quiver full.', ['126']], ['Blessed are all they', 'Blessed are all they: that fear the Lord.', ['127']], ['We wish you good luck', 'We wish you good luck: in the Name of the Lord.', ['128']],
+          ['Out of the deep', 'Out of the deep: have I called unto Thee, O Lord.', ['129']], ['O Israel', 'O Israel: trust in the Lord.', ['130']]],
+      4: [['And all', 'And all: his trouble.', ['131']], ['Behold, how good', 'Behold: how good and joyful.', ['132']], ['Whatsoever', 'Whatsoever: the Lord pleased, that did He.', ['134']],
+          ['For His mercy', 'For His mercy: endureth for ever.', ['135']], ['Sing us', 'Sing us: one of the songs of Sion.', ['136']]],
+      5: [['Before the gods', 'Before the gods: will I sing praise unto Thee, my God.', ['137']], ['O Lord, Thou hast searched', 'O Lord, Thou hast searched me out: and known me.', ['138']], ['Preserve me', 'Preserve me: from the wicked man.', ['139']],
+          ['Lord, I call', 'Lord, I call upon Thee: haste Thee unto me.', ['140']], ['Thou art my portion', 'Thou art my portion: in the land of the living.', ['141']]],
+      6: [['Blessed be', 'Blessed be: the Lord my strength.', ['143']], ['For ever', 'For ever: and ever.', ['144']], ['While I live', 'While I live: will I praise the Lord.', ['145']],
+          ['Yea, a joyful and pleasant thing', 'Yea, a joyful and pleasant thing: it is to be thankful.', ['146']], ['Praise the Lord', 'Praise the Lord: O Jerusalem.', ['147']]]
+    };
+    const BEN_F = { 1: 'Blessed be: the Lord God of Israel.', 2: 'And the Lord shall be to us a mighty salvation: in the house of His servant David.', 3: 'That we should be saved from our enemies, and from the hands of all that hate us: good Lord, deliver us.', 4: 'Let us serve the Lord in holiness: and He shall deliver us out of the hand of our enemies.', 5: 'Through the tender mercy of our God: whereby the Day-spring from on high hath visited us.', 6: 'Guide our feet, O Lord: into the way of peace.' };
+    const MAG_F = { 1: 'My soul shall magnify Thee: for ever, O my God.', 2: 'My spirit hath rejoiced: in God my Saviour.', 3: 'O Lord my God: Thou hast regarded my lowliness.', 4: 'He hath put down the mighty from their seat: and hath exalted the humble and meek that confess His Christ.', 5: 'God hath holpen His servant Israel, as He promised Abraham and his seed: and He hath exalted the humble for ever.' };
+    // Sunday antiphons to Benedictus (Lauds) and Magnificat (second Vespers), from the Gospel of the Sunday
+    const SUN = {
+      1: ['Father Abraham, have mercy on me: and send Lazarus that he may dip the tip of his finger in water, and cool my tongue.', 'Son, remember that thou in thy lifetime receivedst thy good things: and likewise Lazarus evil things.'],
+      2: ['A certain man made a great supper, and bade many: and sent his servants at supper-time to say to them that were bidden, Come, for all things are now ready. Alleluia.', 'Go out quickly into the streets and lanes of the city: and bring in hither the poor, and the maimed, and the halt, and the blind, that my house may be filled. Alleluia.'],
+      3: ['What man of you having an hundred sheep, if he lose one of them: doth not leave the ninety and nine in the wilderness, and go after that which is lost, until he find it? Alleluia.', 'What woman having ten pieces of silver, if she lose one piece: doth not light a candle, and sweep the house, and seek diligently till she find it? Alleluia.'],
+      4: ['Be ye therefore merciful: as your Father also is merciful, saith the Lord.', 'Judge not, and ye shall not be judged: for with the same measure that ye mete withal, it shall be measured to you again.'],
+      5: ['And Jesus entered into one of the ships: and sat down, and taught the people. Alleluia.', 'Master, we have toiled all the night, and have taken nothing: nevertheless, at Thy word I will let down the net.'],
+      6: ['Ye have heard that it was said by them of old time, Thou shalt not kill: and whosoever shall kill, shall be in danger of the judgment.', 'If thou bring thy gift to the altar, and there rememberest that thy brother hath ought against thee: leave there thy gift before the altar, and go thy way, first be reconciled to thy brother, and then come and offer thy gift. Alleluia.'],
+      7: ['I have compassion on the multitude, because they have now been with Me three days, and have nothing to eat: and if I send them away fasting to their own houses, they will faint by the way. Alleluia.', 'And Jesus took the seven loaves, and gave thanks, and brake, and gave to His disciples to set before them: and they did set them before the people. Alleluia.'],
+      8: ["Beware of false prophets, which come to you in sheep's clothing: but inwardly they are ravening wolves. Ye shall know them by their fruits.", 'Not every one that saith unto Me, Lord, Lord, shall enter into the kingdom of heaven: but he that doeth the will of My Father Which is in heaven. Alleluia.'],
+      9: ['And his lord called him, and said unto him, How is it that I hear this of thee? Give an account of thy stewardship. Alleluia.', 'What shall I do? for my lord taketh away from me the stewardship: I cannot dig, to beg I am ashamed; I am resolved what to do, that, when I am put out of the stewardship, they may receive me into their houses.'],
+      10: ['And when He was come near, He beheld the city, and wept over it, saying, If thou hadst known! For the days shall come upon thee, that thine enemies shall cast a trench about thee, and compass thee round, and keep thee in on every side, and shall lay thee even with the ground, because thou knewest not the time of thy visitation. Alleluia.', 'It is written, My house is the house of prayer: but ye have made it a den of thieves. And He taught daily in the temple.'],
+      11: ['Two men went up into the temple to pray; the one a Pharisee, and the other a publican: This man went down to his house justified rather than the other. Alleluia.', 'And the publican, standing afar off, would not lift up so much as his eyes unto heaven, but smote upon his breast, saying: God be merciful to me a sinner.'],
+      12: ['Jesus, departing from the coasts of Tyre and Sidon, came unto the sea of Galilee: through the midst of the coasts of Decapolis. Alleluia.', 'He hath done all things well: He maketh both the deaf to hear and the dumb to speak.'],
+      13: ['A certain man went down from Jerusalem to Jericho, and fell among thieves: which stripped him of his raiment, and wounded him, and departed, leaving him half dead.', 'Which now of these three, thinkest thou, was neighbour unto him that fell among the thieves? And he said, He that shewed mercy on him. Go, and do thou likewise. Alleluia.'],
+      14: ['And as He entered into a certain village, there met Him ten men that were lepers, which stood afar off: and they lifted up their voices, and said, Jesus, Master, have mercy on us.', 'Were there not ten cleansed? but where are the nine? There are not found that returned to give glory to God, save this stranger: Arise, go thy way, thy faith hath made thee whole. Alleluia.'],
+      15: ['Take no thought, saying, What shall we eat? or what shall we drink? for your heavenly Father knoweth that ye have need of all these things. Alleluia.', 'Seek ye first the kingdom of God, and His righteousness: and all these things shall be added unto you. Alleluia.'],
+      16: ['Jesus went into a city called Nain: and behold, there was a dead man carried out, the only son of his mother.', 'And there came a fear on all, and they glorified God, saying: That a great prophet is risen up among us, and that God hath visited His people.'],
+      17: ['And Jesus spake unto the lawyers and Pharisees, saying, Is it lawful to heal on the Sabbath-day? And they held their peace. And He took him, and healed him, and let him go.', 'When thou art bidden to a wedding, go and sit down in the lowest room; that, when he that bade thee cometh, he may say unto thee, Friend, go up higher: then shalt thou have worship in the presence of them that sit at meat with thee. Alleluia.'],
+      18: ['Master, which is the great commandment in the law? Jesus said unto him, Thou shalt love the Lord thy God with all thy heart. Alleluia.', 'What think ye of Christ? whose Son is He? They say unto Him, The Son of David: He saith unto them, How then doth David in spirit call Him Lord, saying, The Lord said unto my Lord, Sit Thou on My right hand?'],
+      19: ['Jesus said unto the sick of the palsy: Son, be of good cheer, thy sins be forgiven thee.', 'But when the multitude saw it, they marvelled, and glorified God: Who had given such power unto men.'],
+      20: ['Tell them which are bidden, Behold, I have prepared my dinner: come unto the marriage. Alleluia.', 'The wedding is ready, but they who were bidden were not worthy: go ye therefore into the highways, and as many as ye shall find, bid to the marriage. Alleluia.'],
+      21: ['There was a certain nobleman, whose son was sick at Capernaum: when he heard that Jesus was come out of Judea into Galilee, he besought Him that He would come down and heal his son.', 'So the father knew that it was at the same hour, in the which Jesus said unto him, Thy son liveth; and himself believed, and his whole house.'],
+      22: ['And the lord commanded payment to be made. The servant therefore fell down and worshipped him, saying: Lord, have patience with me, and I will pay thee all.', 'O thou wicked servant, I forgave thee all that debt, because thou desiredst me: shouldest not thou also have had compassion on thy fellow-servant, even as I had pity on thee? Alleluia.'],
+      23: ['Master, we know that Thou art true: and teachest the way of God in truth. Alleluia.', "Render therefore unto Caesar the things which are Caesar's: and unto God the things that are God's. Alleluia."],
+      24: ['While Jesus spake these things unto John\'s disciples, behold, there came a certain ruler, and worshipped Him, saying: My daughter is even now dead; but come and lay Thy hand upon her, and she shall live.', 'Daughter, be of good comfort, thy faith hath made thee whole: and the woman was made whole from that hour.'],
+      Adv: ['When Jesus then lift up His eyes, and saw a great company come unto Him, He saith unto Philip, Whence shall we buy bread that these may eat? (And this He said to prove him; for He Himself knew what he would do.)', 'Then those men, when they had seen the miracle that Jesus did, said: This is of a truth that Prophet that should come into the world.']
+    };
+    const MEM = {
+      crossSunL: ['Memorial of the Holy Cross', 'It behoveth us to glory: in the Cross of our Lord Jesus Christ.', 'V. All the world shall worship Thee, and sing of Thee.\nR. And praise Thy Name.', 'O God, Who didst ascend Thy holy Cross to enlighten the darkness of the world; may it please Thee to enlighten our hearts and bodies, Thou Saviour of the world, Who livest and reignest with the Father and the Holy Ghost, ever one God, world without end. Amen.'],
+      marySunL: ['Memorial of S. Mary', 'Lo, Mary hath brought forth the Saviour, of Whom when John saw Him, he said: Behold the Lamb of God, which taketh away the sins of the world.', 'V. After child-bearing thou remainedst a Virgin.\nR. O Mother of God.', 'O God, Who through the fruitful virginity of the Blessed Virgin Mary hast bestowed the rewards of eternal salvation on the human race; grant, we beseech Thee, that she may intercede for us, through whom we have received the Author of Life, Thy Son Jesus Christ our Lord. Amen.'],
+      cross: ['Memorial of the Holy Cross', 'Save us, O Christ our Saviour, by the virtue of the Holy Cross: as Thou savedst Peter in the sea; and have mercy upon us.', 'V. All the world shall worship Thee, and sing of Thee.\nR. And praise Thy Name.', 'Keep, we beseech Thee, O Lord, in perpetual peace, those whom Thou hast vouchsafed to redeem by the wood of the Holy Cross, O Saviour of the world, Who livest and reignest with the Father and the Holy Ghost, ever one God, world without end. Amen.'],
+      maryFerL: ['Memorial of S. Mary', 'The Root of Jesse hath budded; a Star hath risen out of Jacob; a Virgin hath brought forth the Saviour: We praise Thee, O our God.', 'V. After child-bearing thou remainedst a Virgin.\nR. O Mother of God.', 'O God, Who through the fruitful virginity of the Blessed Virgin Mary hast bestowed the rewards of eternal salvation on the human race; grant, we pray Thee, that she may intercede for us, through whom we have received the Author of Life, Thy Son Jesus Christ our Lord. Amen.'],
+      saintsL: ['Memorial of All Saints', 'Let the Saints be joyful with glory: they shall rejoice in their beds.', 'V. The souls of the righteous are in the hand of God.\nR. And there shall no torment touch them.', 'We pray Thee, O Lord, let the intercession of all Thy Saints be acceptable unto Thee; and grant us forgiveness of our sins and the remedies of eternal life, through Jesus Christ our Lord. Amen.'],
+      maryV: ['Memorial of S. Mary', 'In the Bush which Moses saw unconsumed: we recognize thy glorious virginity, O Mother of God.', 'V. Thou art fairer than the children of men.\nR. Full of grace are thy lips.', 'Almighty, everlasting God, by the right hand of Thy power defend Thy servants from all perils; and, blessed Mary ever-virgin gloriously interceding, grant us prosperity both now and hereafter; through Jesus Christ our Lord. Amen.'],
+      saintsV: ['Memorial of All Saints', 'O how glorious is the kingdom where all the Saints rejoice with Christ: they are clothed with white robes and follow the Lamb whithersoever He goeth.', 'V. Let the Saints be joyful with glory.\nR. Let them rejoice in their beds.', 'Grant, we beseech Thee, O Lord, that all Thy Saints may always pray for us; and vouchsafe always to hear their prayers; through Jesus Christ our Lord. Amen.'],
+      trinity1V: ['Memorial of the Holy Trinity', 'Thou art our hope, our salvation, our honour: O blessed Trinity.', 'V. Let us bless the Father, the Son, and the Holy Ghost.\nR. Let us praise and exalt Him for ever.', 'Almighty and everlasting God, Who hast given unto us Thy servants grace by the confession of a true faith to acknowledge the glory of the eternal Trinity, and in the power of the Divine Majesty to worship the Unity; grant that by stedfastness in this faith we may be evermore defended from all adversities: Who livest and reignest, one God, world without end. Amen.'],
+      cross1V: ['Memorial of the Holy Cross', 'O glorious Cross, O adorable Cross, O precious wood, O admirable sign: whereby the devil hath been conquered, and the world redeemed with the Blood of Christ. Alleluia.', 'V. We adore Thee, O Christ, and bless Thee.\nR. For by Thy Cross Thou hast redeemed the world.', 'O God, Who by the precious and life-giving Blood of Thy only-begotten Son our Lord Jesus Christ, hast willed to consecrate the standard of the Cross; grant, we pray Thee, that they who rejoice in the honour of the holy Cross, may also rejoice everywhere in Thy protection; through the same Thy Son Jesus Christ our Lord. Amen.'],
+      mary1V: ['Memorial of S. Mary', 'Thou art become fair and pleasant, O holy Mother of God, in the delights of virginity: when the daughters of Sion saw thee among the roses and lilies they blessed thee, and queens praised thee.', 'V. After child-bearing thou remainedst a Virgin.\nR. O Mother of God.', 'Almighty, everlasting God, by the right hand of Thy power defend Thy servants from all perils; and, blessed Mary, ever-Virgin, gloriously interceding, grant us prosperity both now and hereafter; through Jesus Christ our Lord. Amen.']
+    };
+    const PRECES_A = "Lord, have mercy. Lord, have mercy. Lord, have mercy.\nChrist, have mercy. Christ, have mercy. Christ, have mercy.\nLord, have mercy. Lord, have mercy. Lord, have mercy.\nOur Father (said silently to the end; then aloud):\nV. And lead us not into temptation.\nR. But deliver us from evil.\nV. I said, Lord, be merciful unto me.\nR. Heal my soul, for I have sinned against Thee.\nV. Turn Thee again, O Lord, at the last.\nR. And be gracious unto Thy servants.\nV. Let Thy merciful kindness, O Lord, be upon us.\nR. As we do put our trust in Thee.\nV. Let Thy priests be clothed with righteousness.\nR. And Thy saints sing with joyfulness.\nV. O Lord, save the King.\nR. And mercifully hear us when we call upon Thee.\nV. O Lord, save Thy servants and handmaidens.\nR. Which put their trust in Thee.\nV. O Lord, save Thy people, and bless Thine inheritance.\nR. Govern them, and lift them up for ever.\nV. Peace be within Thy walls.\nR. And plenteousness within Thy palaces.\nV. Let us pray for the faithful departed.\nR. Eternal rest grant unto them, O Lord, and light perpetual shine upon them.\nV. Hearken unto my voice, O Lord, when I cry unto Thee.\nR. Have mercy upon me, and hear me.";
+    const PRECES_B = "V. O Lord, arise, help us.\nR. And deliver us for Thy Name's sake.\nV. Turn us again, O Lord God of Hosts.\nR. Show the light of Thy countenance, and we shall be whole.\nV. Hear my prayer, O Lord.\nR. And let my crying come unto Thee.\nV. The Lord be with you.\nR. And with thy spirit.";
+    const PEACE_C = "O Lord, we beseech Thee, mercifully to hear the prayers of Thy Church, and grant that we, being delivered from all adversities, may serve Thee with a quiet mind; and grant us Thy peace all the days of our life; through Jesus Christ our Lord, who liveth and reigneth with Thee and the Holy Ghost, ever One God, world without end. Amen.";
+    const CH = {
+      sunL: ['Revelation 7', 'Blessing, and glory, and wisdom, and thanksgiving, and honour, and power, and might, be unto our God for ever and ever. Amen.'],
+      ferL: ['1 Corinthians 16', 'Watch ye, stand fast in the faith, quit you like men, be strong. Let all your things be done with charity.'],
+      V: ['2 Thessalonians 3', 'The Lord direct your hearts into the love of God, and into the patient waiting for Christ.'],
+      satV: ['2 Corinthians 1', 'Blessed be God, even the Father of our Lord Jesus Christ, the Father of mercies, and the God of all comfort: Who comforteth us in all our tribulation.']
+    };
+    const DAYMS = 864e5, dd = (a, b) => Math.round((a - b) / DAYMS);
+    function sundayInfo(L, sunDate) {   // which Sunday after Trinity this is, or null when outside the season covered
+      const y = sunDate.getUTCFullYear(), E = L.westernEaster(y), trin = L.add(E, 56), adv = L.advent(y);
+      const kt = dd(sunDate, trin);
+      if (kt <= 11 || sunDate >= adv) return null;        // Trinity week and the Octave of Corpus Christi are not covered
+      const last = dd(adv, sunDate) === 7, n = Math.floor(kt / 7);
+      return { key: last ? 'Adv' : Math.min(n, 24), mk: last ? 'trAdv' : 'tr' + Math.min(n, 24), n, last };
+    }
+    const LONG = 'Through our Lord Jesus Christ thy Son, who liveth and reigneth with thee in the unity of the Holy Ghost, God, world without end. Amen.';
+    function collectFor(Sar, mk) {
+      const m = Sar && Sar.MASS && Sar.MASS[mk], p = m && m.parts.find(x => x.k === 'Collect');
+      return p ? p.tx.replace(/Through etc\.$/, LONG) : '';
+    }
+    const ordw = n => ['', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth', 'Eleventh', 'Twelfth', 'Thirteenth', 'Fourteenth', 'Fifteenth', 'Sixteenth', 'Seventeenth', 'Eighteenth', 'Nineteenth', 'Twentieth', 'Twenty-first', 'Twenty-second', 'Twenty-third', 'Twenty-fourth'][n] || (n + 'th');
+    function body(ref) {   // one psalm without its Gloria, or a Douay canticle hydrated live
+      if (ref[0] === 'b') { const [label, r] = ref.slice(2).split('|'); return `<div class="psalm"><div class="muted" style="font-size:.78rem">${esc(label)} (Douay-Rheims)</div><div class="asv" data-ref="${esc(r)}" data-tr="dra"></div></div>`; }
+      const p = psalm(ref[0] === 'c' ? ref.slice(1) : ref)[0]; if (!p) return '';
+      const lab = ref[0] === 'c' ? (p.title || 'Canticle') : `Psalm ${p.n}${p.title ? ' — ' + p.title : ''}`;
+      return `<div class="psalm"><div class="muted" style="font-size:.78rem">${esc(lab)}</div>${p.rows.map(r => `<div>${esc(vclean(r[2]))}</div>`).join('')}</div>`;
+    }
+    const glo = () => `<div class="muted" style="margin-top:6px">${esc(H.g.Gloria).replace(/\n/g, '<br>')}</div>`;
+    const ant = (t, pre) => `<div class="ant"><i>Ant.</i> ${esc(t)}${pre ? ' …' : ''}</div>`;
+    const incipit = t => t.split(/[:;,?]/)[0];
+    const sec = (title, inner) => `<div class="sec"><b>${esc(title)}</b>${inner}</div>`;
+    const memHTML = keys => keys.map(k => { const [t, a, v, c] = MEM[k]; return sec(t, ant(a) + lines(v) + lines('Let us pray.') + lines(c)); }).join('');
+    function group([inc, full, refs]) {
+      return ant(inc, true) + refs.map(body).join('') + glo() + ant(full);
+    }
+    function hour(L, date, which, Sar) {
+      const dow = date.getUTCDay();
+      let first = false, sunDate;
+      if (which === 'V' && dow === 6) { first = true; sunDate = L.add(date, 1); }
+      else sunDate = L.add(date, -dow);
+      const si = sundayInfo(L, sunDate); if (!si) return null;
+      const r = Sar && Sar.sarum ? Sar.sarum(date) : null;
+      const plain = !r || ['Weekday', 'Sunday', 'Ember Day', 'Vigil', 'Saint of the Missal'].includes(r.rank) || (first && r.rank !== 'Principal Feast');
+      const sunName = si.last ? 'the Sunday next before Advent' : `the ${ordw(si.n)} Sunday after Trinity`;
+      const sunday = dow === 0, ferial = !sunday && !first;
+      let h = `<p class="muted" style="font-size:.82rem">${first ? 'First Vespers of ' + esc(sunName) + '. ' : ''}Sarum ${which === 'L' ? 'Lauds' : 'Vespers'} for the Trinity season · antiphons, chapter, hymn, petitions and memorials from the Hayes <i>Breviary Offices</i> (1880), translated from the Sarum book · psalms in the Douay version (Vulgate numbering) · collect from Warren's Sarum Missal.</p>`;
+      if (!plain) h += `<p class="muted" style="font-size:.82rem">Today is <b>${esc(r.title)}</b> (${esc(r.rank)}). In the Sarum Use a feast takes its Office from the Proper or Common of Saints, which is not in the app yet, so this is the office of the season for the day of the week.</p>`;
+      h += sec('Opening', lines((ferial ? 'V. Let Thy merciful kindness, O Lord, be upon us.\nR. As we do put our trust in Thee.\n' : '') + OPEN));
+      const groups = (which === 'L' ? LAUDS : VESP)[dow];
+      h += sec('Psalms', '<p class="muted" style="font-size:.78rem;margin:2px 0 6px">Sarum rule: only the first words of the antiphon before the psalm, the whole antiphon after it.</p>' + groups.map(group).join(''));
+      const [cref, ctext] = which === 'L' ? (sunday ? CH.sunL : CH.ferL) : (first ? CH.satV : CH.V);
+      h += sec(`Chapter · ${cref}`, lines(ctext + '\nR. Thanks be to God.'));
+      h += sec(which === 'L' ? 'Hymn · Ecce jam noctis' : first ? 'Hymn · O lux beata Trinitas' : 'Hymn · Lucis Creator optime', lines(which === 'L' ? ECCE : first ? OLUX : LUCIS));
+      h += sec('Versicle', lines(which === 'L' ? (sunday ? 'V. The Lord is King.\nR. He hath put on glorious apparel. Alleluia.' : 'V. Have I not thought upon Thee when I was waking?\nR. Because Thou hast been my helper.') : first ? 'V. Let our evening prayer come up before Thee, O Lord.\nR. And let Thy mercy come down on us.' : 'V. Lord, let my prayer be set forth.\nR. In Thy sight as the incense.'));
+      const cant = which === 'L' ? '231' : '232', cname = which === 'L' ? 'Benedictus' : 'Magnificat';
+      let ca = '';
+      if (which === 'L') ca = sunday ? SUN[si.key][0] : BEN_F[dow];
+      else if (first) ca = '';
+      else ca = sunday ? SUN[si.key][1] : MAG_F[dow];
+      h += sec(cname, (ca ? ant(incipit(ca), true) : '<p class="muted" style="font-size:.78rem">The Sarum antiphon to the Magnificat at First Vespers of Sunday follows the summer “histories” (Kings, Wisdom, Job, Tobit, Judith, Maccabees, the Prophets), which change by month. It is not in the app yet.</p>') + canticle(cant) + (ca ? ant(ca) : ''));
+      if (ferial) h += sec('Petitions', lines(PRECES_A) + `<div class="muted" style="font-size:.78rem;margin-top:6px">Psalm 50 (Miserere)${which === 'V' ? ' and Psalm 129 (De profundis)' : ''}:</div>` + body('50') + (which === 'V' ? body('129') : '') + glo() + lines(PRECES_B));
+      else h += sec('', lines('V. The Lord be with you.\nR. And with thy spirit.'));
+      const coll = collectFor(Sar, si.mk);
+      h += sec(`Collect · ${sunName.replace(/^the /, '')}`, lines('Let us pray.') + lines(coll) + '<br>' + lines(ENDV));
+      const mems = which === 'L' ? (sunday ? ['crossSunL', 'marySunL'] : ['cross', 'maryFerL', 'saintsL']) : first ? ['trinity1V', 'cross1V', 'mary1V'] : sunday ? ['cross', 'maryV'] : ['cross', 'maryV', 'saintsV'];
+      h += '<p class="muted" style="font-size:.78rem;margin:8px 0 2px">Memorials (from the Octave of Trinity to Advent):</p>' + memHTML(mems) + sec('', lines(ENDV));
+      if (which === 'L') h += sec('For the Peace of the Church', body('122') + glo() + lines("Lord, have mercy. Christ, have mercy. Lord, have mercy.\nOur Father (said silently to the end; then aloud):\nV. And lead us not into temptation.\nR. But deliver us from evil.\n" + PRECES_B) + lines('Let us pray.') + lines(PEACE_C));
+      return h;
+    }
+    return { hour, sundayInfo };
+  })();
+
+  const api = { hour, week, H, modern, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo };
   if (typeof module !== 'undefined') module.exports = api; else root.Hours = api;
 })(typeof window !== 'undefined' ? window : globalThis);

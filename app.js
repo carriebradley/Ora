@@ -27,7 +27,7 @@
   /* ---------- settings & state ---------- */
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '' }, store.get('ora.settings', {}));
   const save = () => store.set('ora.settings', S);
-  const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite === 'byz' ? 'byz' : 'roman',
+  const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
     kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, active: -1, readings: {}, art: {} };
 
   { const q = new URLSearchParams(location.search); if (q.get('tab')) st.tab = q.get('tab'); if (/^\d{4}-\d\d-\d\d$/.test(q.get('date') || '')) st.date = q.get('date'); if (q.get('kind')) st.kind = q.get('kind'); if (q.get('rite')) S.rite = q.get('rite'); }
@@ -232,7 +232,7 @@
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Sarum · traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
-      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.mass ? `<p class="muted"><b>${esc(r.mass.title)}</b> — the Mass is in the Pray tab.</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
+      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.mass ? `<p class="muted"><b>${esc(r.mass.title)}</b> — the Mass is in the Readings tab.</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
   }
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
   function sarumMassHTML(v) {
@@ -293,9 +293,6 @@
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
     let h = glanceHTML(v) + popeCard(v.iso) + histCard(v.iso) + cardRoman(v) + cardByz(v) + cardSarum(v);
-    h += `<section class="card"><div class="lab"><span class="grow">Readings of the day</span></div>
-      <div class="seg" style="margin-top:8px"><button data-act="rr" data-v="roman" class="${st.readRite === 'roman' ? 'on' : ''}">Roman</button><button data-act="rr" data-v="byz" class="${st.readRite === 'byz' ? 'on' : ''}">Byzantine</button></div>
-      ${st.readRite === 'roman' ? romanReadingsHTML(st.date) : byzReadingsHTML(v)}</section>`;
     h += `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)} · ${q.tr === 'East' ? 'Eastern' : 'Western'} Father/Saint</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
     h += `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>`;
@@ -337,6 +334,13 @@
     return h;
   }
 
+  function viewReadings() {
+    const v = dayInfo(st.date); loadReadings(st.date);
+    const rr = st.readRite === 'byz' || st.readRite === 'sarum' ? st.readRite : 'roman';
+    const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
+    const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
+    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Sarum')}</div>${body}</section>`;
+  }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, st.kind, v);
@@ -350,7 +354,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : ''}` : '');
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem"><b>Stand-in:</b> the Sarum text for this part of the year is not in the app yet (so far only the Trinity season, from the end of the Octave of Corpus Christi to Advent). Below is the traditional Roman office instead.</p>' + Hours.hour(L, P(st.date), s.which)) : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : ''}` : '');
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
@@ -447,7 +451,7 @@
   function render() {
     renderHeader();
     document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === st.tab));
-    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
+    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
   }
 
   /* ---------- audio (Web Speech API) ---------- */
