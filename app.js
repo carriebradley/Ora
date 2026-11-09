@@ -1,4 +1,4 @@
-/* Ora — app logic. Three calendars (Roman, Byzantine/Ukrainian, Sarum), daily readings, prayer flows, art, saints, audio. */
+/* Ora — app logic. Three calendars (Roman, Byzantine, Sarum), daily readings, prayer flows, art, saints, audio. */
 (() => {
   'use strict';
   const L = LitCal, SA = Sarum, C = CONTENT;
@@ -22,7 +22,7 @@
   const COLORS = { w: '#f4efe0', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
   const col = c => COLORS[c] || COLORS.g;
   const MAJOR = /Solemnity|Principal|Great Feast|Triduum|Holy Week|Class I$/;
-  const RITES = { roman: 'Roman (modern)', byz: 'Ukrainian / Ruthenian', sarum: 'Sarum (traditional)' };
+  const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Sarum (traditional)' };
 
   /* ---------- settings & state ---------- */
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '' }, store.get('ora.settings', {}));
@@ -126,11 +126,26 @@
     const e = (k >= -70 && k <= 56) ? L.add(pj, k) : d;
     return `${e.getUTCFullYear()}/${pad(e.getUTCMonth() + 1)}/${pad(e.getUTCDate())}`;
   }
+  const bible = c => `https://www.biblegateway.com/passage/?search=${encodeURIComponent(c.replace(/\s*\([^)]*\)/g, '').trim())}&version=RSVCE`;
+  const citeLinks = txt => String(txt).split(' · ').map(c => `<a href="${bible(c)}" target="_blank" rel="noopener">${esc(c)}</a>`).join(' · ');
+  const byzDay = iso => ByzLect.read(P(iso), S.byzOldCal ? 13 : 0, y => S.byzPascha === 'julian' ? L.julianEaster(y) : L.westernEaster(y));
+  const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
   function byzReadingsHTML(v) {
     const t = v.byz;
-    let h = `<p>${esc(t.title)}${t.tone ? ` · Tone ${t.tone}` : ''}</p>`;
-    h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="https://www.oca.org/readings/daily/${ocaDate(v.iso)}">Epistle &amp; Gospel · OCA</a><a class="btn" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Daily propers · Stamford</a><a class="btn" target="_blank" rel="noopener" href="https://mci.archpitt.org/liturgy/Apostol.html">Apostol</a><a class="btn" target="_blank" rel="noopener" href="https://byzantinecatholicdailyreadings.substack.com">Daily readings</a><a class="btn" target="_blank" rel="noopener" href="https://ecpubs.gumroad.com/l/jTBr">ECPubs Daily Office</a></div>`;
-    h += '<p class="muted">The Byzantine Epistle and Gospel follow the Pascha-based cycle (and the Lukan jump after September 14). The OCA button opens the same Pascha-based cycle, date-shifted to match your Pascha through Pentecost season (saints’ readings on that page may belong to the shifted date). After Pentecost, check the Stamford propers or your Ruthenian/Ukrainian lectionary.</p>';
+    let h = `<p>${esc(t.title)}${t.tone ? ` · Tone ${t.tone}` : ''}</p>`, day = null;
+    try { day = byzDay(v.iso); } catch (e) { day = null; }
+    if (day && day.sets.length) {
+      for (const s of day.sets) {
+        h += `<div class="step" style="margin-top:10px"><div class="t">${esc(s.t)}</div>`;
+        for (const [lab, cs] of s.r) h += `<div class="cite"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>`;
+        for (const [lab, cs] of (s.a || [])) h += `<div class="cite muted"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>`;
+        if (s.chk) h += `<p class="note">Check this one: ${esc(s.chk)}</p>`;
+        h += '</div>';
+      }
+      for (const n of day.notes) h += `<p class="muted">${esc(n)}</p>`;
+    } else h += '<p class="muted">No reading found in the table for this day.</p>';
+    h += `<p class="muted" style="font-size:.8rem">Citations from the Byzantine lectionary table on byzcath.org (2013, unofficial, Slavic usage). Tap a reference to read it in the RSV-CE. It is built from a table, so check it against your parish book or ECPubs; the Pentecost-to-Triodion stretch around Christmas varies by church.</p>`;
+    h += `<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://ecpubs.gumroad.com/l/jTBr">ECPubs Daily Office</a><a class="btn" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Stamford propers</a><a class="btn" target="_blank" rel="noopener" href="https://www.oca.org/readings/daily/${ocaDate(v.iso)}">OCA (Orthodox) check</a></div>`;
     return h;
   }
 
@@ -174,7 +189,7 @@
     const words = t => new Set(t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 4));
     const known = [r.title, ...r.also.map(x => x.title)].map(words);
     const ev = u.day.filter(e => { const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Ukrainian / Ruthenian</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine</span>${speakBtn(spokenCard(r))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${r.fast ? chip(r.fast, 'fast') : ''}</div>
       ${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)} (${S.byzPascha === 'julian' ? 'Julian reckoning' : 'Gregorian reckoning'})</p></section>`;
@@ -233,7 +248,7 @@
       if (s.type === 'quote') { const q = quoteFor(v, rite); x.q = q; x.text = `${q.t} — ${q.s}, ${q.w}.`; }
       if (s.type === 'art') { const a = artFor(v, rite); x.a = a; x.text = `${a.t}. ${a.a}. ${a.p}`; }
       if (s.type === 'readings') {
-        if (rite === 'byz') x.text = 'The Epistle and Gospel of the day. Open the daily propers to read them.';
+        if (rite === 'byz') x.text = byzSpeech(v.iso) || 'The Epistle and Gospel of the day. Open the daily propers to read them.';
         else { const rd = st.readings[v.iso]; x.text = rd && rd !== 'loading' ? readingsSpeech(rd) : 'The Mass readings of the day. Open the readings to read or listen.'; }
       }
       if (s.type === 'silence') x.text = `${s.title}. ${s.text || 'Be still.'}`;
@@ -280,7 +295,7 @@
     if (!st.month) { const d = P(st.date); st.month = { y: d.getUTCFullYear(), m: d.getUTCMonth() }; }
     const { y, m } = st.month, first = L.D(y, m + 1, 1), start = L.add(first, -first.getUTCDay()), today = todayISO();
     let h = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button class="ib" data-act="mprev">‹</button><h2 style="flex:1;text-align:center;margin:0">${L.MN[m]} ${y}</h2><button class="ib" data-act="mnext">›</button></div>
-      <div class="legend">${['roman', 'byz', 'sarum'].map(k => `<button data-act="layer" data-v="${k}" class="${st.layers[k] ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Ukrainian' : 'Sarum'}</button>`).join('')}</div><div class="grid">`;
+      <div class="legend">${['roman', 'byz', 'sarum'].map(k => `<button data-act="layer" data-v="${k}" class="${st.layers[k] ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div><div class="grid">`;
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
@@ -299,7 +314,7 @@
     <section class="card"><h3>Hours of the day</h3>${hoursHTML()}</section>
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
-      <p><b>Ukrainian / Ruthenian</b> — Byzantine cycle computed from Pascha (Gregorian or Julian reckoning), Menaion feasts on Gregorian dates by default, plus entries from your own UGCC calendar (2026–27).</p>
+      <p><b>Byzantine</b> — Byzantine cycle computed from Pascha (Gregorian or Julian reckoning), Menaion feasts on Gregorian dates by default, plus entries from your own UGCC calendar (2026–27).</p>
       <p><b>Sarum (traditional)</b> — Sarum temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <section class="card"><h3>Credits &amp; sources</h3>
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
