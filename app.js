@@ -528,7 +528,9 @@
   function stepsFor(rite, kind, v) {
     const tpl = C.FLOWS[rite][kind], r = v[rite === 'sarum' ? 'sarum' : rite === 'byz' ? 'byz' : 'roman'];
     const out = [];
-    for (const s of tpl) {
+    for (const s0 of tpl) {
+      if (s0.type === 'silence' && !s0.text) continue;  // silence timers removed
+      const s = s0.type === 'silence' ? { type: 'prayer', title: s0.title, text: s0.text } : s0;
       const x = Object.assign({}, s);
       if (s.type === 'calendar') { x.text = `${r.title}. ${r.season}.${r.fast ? ' ' + r.fast + '.' : ''}${rite === 'sarum' && r.notes ? ' ' + r.notes : ''}`; x.head = r.title; x.sub = [r.rank, r.season, r.fast].filter(Boolean).join(' · '); }
       if (s.type === 'quote') { const q = quoteFor(v, rite); x.q = q; x.text = `${q.t} — ${q.s}, ${q.w}.`; }
