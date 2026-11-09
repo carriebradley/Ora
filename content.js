@@ -137,10 +137,10 @@ const CONTENT = (() => {
     },
     sarum: {
       morning: [P('Sign of the Cross', T.cross), P('Deus in adjutorium', T.sarumHelp), { type: 'calendar', title: 'Today in the Church (Sarum)' },
-        { type: 'readings', title: 'Mass Readings' }, { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 },
-        { type: 'office', title: 'Lauds — Psalms, Hymn, Benedictus, Collect', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
+        { type: 'readings', title: 'Mass of the Day (Sarum Missal)' }, { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 },
+        { type: 'office', title: 'Lauds — traditional Roman text (stand-in; not yet Sarum)', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
       evening: [P('Sign of the Cross', T.cross), P('Deus in adjutorium', T.sarumHelp), { type: 'calendar', title: 'Today in the Church (Sarum)' },
-        { type: 'art', title: 'Sacred Art' }, { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers — Psalms, Hymn, Magnificat, Collect', which: 'V' }, P('Kyrie', T.kyrie),
+        { type: 'art', title: 'Sacred Art' }, { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers — traditional Roman text (stand-in; not yet Sarum)', which: 'V' }, P('Kyrie', T.kyrie),
         P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Nunc dimittis', T.nunc), P('Blessing', T.blessing)]
     }
   };
