@@ -134,7 +134,8 @@ const CONTENT = (() => {
         { type: 'office', title: 'Lauds (Sarum)', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
       evening: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church (Sarum)' },
         { type: 'art', title: 'Sacred Art' }, { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers (Sarum)', which: 'V' }, P('Kyrie', T.kyrie),
-        P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Nunc dimittis', T.nunc), P('Blessing', T.blessing)]
+        P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing),
+        { type: 'office', title: 'Compline (Sarum) · before sleep', which: 'C' }]
     }
   };
 

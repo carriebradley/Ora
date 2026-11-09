@@ -106,11 +106,11 @@
 6/20|Translation of St. Edward, King and Martyr|N|r|0|W
 6/22|St. Alban, Martyr|N|r|0|W
 6/23|St. Etheldreda, Virgin (Vigil of St. John the Baptist)|T|w|0|W
-6/24|Nativity of St. John the Baptist|L|w|0|W
+6/24|Nativity of St. John the Baptist|L|w|7|W
 6/26|Sts. John and Paul, Martyrs|T|r|0|W
 6/29|Feast of Sts. Peter and Paul & Octave|L|r|7|W
 6/30|Commemoration of St. Paul|N|r|0|W
-7/2|Visitation of the Blessed Virgin Mary|J|w|0|W
+7/2|Visitation of the Blessed Virgin Mary|J|w|7|W
 7/4|Translation and Ordination of St. Martin|N|w|0|W
 7/7|Translation of St. Thomas Becket & Octave|L|w|7|W
 7/10|The Seven Brothers, Martyrs|T|r|0|W
@@ -450,7 +450,9 @@
     "2/1": "Procter and Wordsworth's table of Sarum feasts (1886) gives Brigid three lessons in England but notes she was a double in the diocese of Kildare and in the province of Dublin. Brigit is in every Irish Sarum kalendar surveyed. TCD 78 (1488–1500) has her in red with nine lessons; the Dublin province made her a double under Bicknor's constitutions (c. 1320). She is also in English Sarum kalendars.",
     "5/16": "Brendan of Clonfert: three lessons in TCD 78 and TCD 88, nine lessons in TCD 77 (Armagh, c. 1450).",
     "6/3": "Kevin: Dublin kalendars quoted by Todd (1844) mark him \"duplex festum per constitutiones Dublin\", a double by the Dublin constitutions; he is also in the Christ Church martyrology. Nine lessons in TCD 88 (Buckley).",
-    "6/9": "Colmcille shares 9 June with the Translation of St Edmund of Abingdon and is often a later addition. Absent from TCD 78 (1488–1500) and NLI 19954.",
+    "6/9": "Colmcille shares 9 June with the Translation of St Edmund of Abingdon and is often a later addition. Absent from TCD 78 (1488–1500) and NLI 19954. In 1395 Richard II, at Kilkenny, confirmed to the Archbishop of Dublin an eight-day fair beginning on the vigil of St Columba (Calendar of Archbishop Alen's Register, ed. McNeill, 1950).",
+    "10/18": "In 1395 Richard II confirmed to the Archbishop of Dublin a fifteen-day fair at Ballymore beginning on the vigil of St Luke (Calendar of Archbishop Alen's Register, ed. McNeill, 1950).",
+    "3/21": "In 1395 Richard II confirmed to the Archbishop of Dublin a fair at Dublin on the vigil and feast of the translation of St Benedict; the register's editor dates it 20–21 March (Calendar of Archbishop Alen's Register, ed. McNeill, 1950).",
     "11/3": "Malachy appears only in TCD 77 (Armagh Cathedral, c. 1450), with nine lessons. The ordinary Sarum saint of 3 November is Winifred.",
     "11/14": "Laurence O'Toole: in TCD 78, TCD 88 (nine lessons) and named in Dublin's constitutions.",
     "9/9": "Ciarán of Clonmacnoise on 9 September was not found in the Irish Sarum kalendars Buckley surveyed. They have Ciarán of Saighir on 5 March instead.",
