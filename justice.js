@@ -1,0 +1,31 @@
+/* Ora — Justice tab. Short excerpts from Church fathers, saints, councils, encyclicals and the Catechism on the poor, wealth, work and creation.
+   Each quote was checked against the source page. Modern documents are short quotations with a link to the full text. */
+window.JUSTICE = [
+  { who: 'Catechism of the Catholic Church §2446', note: 'quoting St. John Chrysostom',
+    text: 'Not to enable the poor to share in our goods is to steal from them and deprive them of life. … The goods we possess are not ours, but theirs.',
+    url: 'https://www.vatican.va/archive/ENG0015/__P8F.HTM', tag: 'Catechism' },
+  { who: 'Catechism of the Catholic Church §2446', note: 'quoting St. Gregory the Great',
+    text: 'When we attend to the needs of those in want, we give them what is theirs, not ours.',
+    url: 'https://www.vatican.va/archive/ENG0015/__P8F.HTM', tag: 'Catechism' },
+  { who: 'St. Thomas Aquinas', note: 'Summa Theologiae II-II, q. 66, a. 7',
+    text: 'Whatever certain people have in superabundance is due, by natural law, to the purpose of succoring the poor.',
+    url: 'https://ccel.org/ccel/aquinas/summa/summa.SS_Q66_A7.html', tag: 'Doctor of the Church' },
+  { who: 'Pope Leo XIII', note: 'Rerum Novarum (1891), §3',
+    text: '… a small number of very rich men have been able to lay upon the teeming masses of the laboring poor a yoke little better than that of slavery itself.',
+    url: 'https://www.vatican.va/content/leo-xiii/en/encyclicals/documents/hf_l-xiii_enc_15051891_rerum-novarum.html', tag: 'Encyclical' },
+  { who: 'Second Vatican Council', note: 'Gaudium et Spes (1965), §69',
+    text: 'God intended the earth with everything contained in it for the use of all human beings and peoples.',
+    url: 'https://www.vatican.va/archive/hist_councils/ii_vatican_council/documents/vat-ii_const_19651207_gaudium-et-spes_en.html', tag: 'Council' },
+  { who: 'Second Vatican Council', note: 'Gaudium et Spes (1965), §69',
+    text: 'If one is in extreme necessity, he has the right to procure for himself what he needs out of the riches of others.',
+    url: 'https://www.vatican.va/archive/hist_councils/ii_vatican_council/documents/vat-ii_const_19651207_gaudium-et-spes_en.html', tag: 'Council' },
+  { who: 'Pope Paul VI', note: 'Populorum Progressio (1967), §23',
+    text: 'No one may appropriate surplus goods solely for his own private use when others lack the bare necessities of life.',
+    url: 'https://www.vatican.va/content/paul-vi/en/encyclicals/documents/hf_p-vi_enc_26031967_populorum.html', tag: 'Encyclical' },
+  { who: 'Pope Francis', note: 'Laudato Si’ (2015), §49',
+    text: 'A true ecological approach always becomes a social approach; it must integrate questions of justice in debates on the environment, so as to hear both the cry of the earth and the cry of the poor.',
+    url: 'https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20150524_enciclica-laudato-si.html', tag: 'Encyclical' },
+  { who: 'Pope Francis', note: 'Laudato Si’ (2015), §93',
+    text: 'The principle of the subordination of private property to the universal destination of goods … is a golden rule of social conduct.',
+    url: 'https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20150524_enciclica-laudato-si.html', tag: 'Encyclical' }
+];
