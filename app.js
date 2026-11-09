@@ -286,7 +286,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${Hours.hour(L, P(st.date), s.which)}</details>` : '');
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : ''}` : '');
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
@@ -353,22 +353,26 @@
 
   /* ---------- ASV text for Byzantine readings (public domain, fetched once, cached) ---------- */
   const asvCache = {};
-  async function asvText(ref) {
-    const k = 'ora.asv.' + ref;
-    if (asvCache[ref]) return asvCache[ref];
-    const c = store.get(k, null); if (c) return (asvCache[ref] = c);
-    const r = await fetch('https://bible-api.com/' + encodeURIComponent(ref) + '?translation=asv');
+  async function asvText(ref, tr) {
+    const k = `ora.${tr}.` + ref;
+    if (asvCache[k]) return asvCache[k];
+    const c = store.get(k, null); if (c) return (asvCache[k] = c);
+    const r = await fetch('https://bible-api.com/' + encodeURIComponent(ref) + '?translation=' + tr);
     if (!r.ok) throw new Error('http ' + r.status);
     const j = await r.json();
     const html = (j.verses || []).map(v => `<sup>${v.verse}</sup>${esc(String(v.text).replace(/\s+/g, ' ').trim())}`).join(' ');
     if (!html) throw new Error('empty');
-    store.set(k, html); return (asvCache[ref] = html);
+    store.set(k, html); return (asvCache[k] = html);
   }
   async function hydrateAsv() {
     for (const el of document.querySelectorAll('.asv[data-ref]:not([data-done])')) {
       el.dataset.done = '1'; el.textContent = 'Loading text…';
-      try { el.innerHTML = await asvText(el.dataset.ref) + '<div class="muted" style="font-size:.74rem;margin-top:4px">American Standard Version (1901, public domain) — close to the RSV but not identical.</div>'; }
-      catch (e) { el.innerHTML = '<span class="muted">Text unavailable offline — tap the reference above.</span>'; }
+      const tr = el.dataset.tr || 'asv';
+      try {
+        const parts = [];
+        for (const r of el.dataset.ref.split('|')) parts.push(await asvText(r, tr));
+        el.innerHTML = parts.join(' ') + `<div class="muted" style="font-size:.74rem;margin-top:4px">${tr === 'dra' ? 'Douay-Rheims (public domain). Verse numbers can differ slightly from the Liturgy of the Hours.' : 'American Standard Version (1901, public domain) — close to the RSV but not identical.'}</div>`;
+      } catch (e) { el.innerHTML = '<span class="muted">Text unavailable offline — it loads and is saved the first time you open this day online.</span>'; }
     }
   }
   new MutationObserver(() => hydrateAsv()).observe(document.getElementById('app'), { childList: true, subtree: true });

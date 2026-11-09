@@ -117,12 +117,12 @@ const CONTENT = (() => {
   const FLOWS = {
     roman: {
       morning: [P('Sign of the Cross', T.cross), P('Opening', T.lips + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
-        { type: 'hourlink', title: 'Psalms of the Morning (Lauds)', hour: 'lauds' }, { type: 'readings', title: 'Mass Readings' },
+        { type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }, { type: 'readings', title: 'Mass Readings' },
         { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
         P('Intercessions', 'Lord, I offer you this day: my work, my words, my joys and my sufferings. Bless those I love. Remember the sick, the dying and the lonely, and those who have asked for my prayers.'),
         P('Our Father', T.our), P('Blessing', T.blessing)],
       evening: [P('Sign of the Cross', T.cross), P('Opening', T.help + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
-        { type: 'hourlink', title: 'Psalms of the Evening (Vespers)', hour: 'vespers' }, { type: 'art', title: 'Sacred Art' },
+        { type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' }, { type: 'art', title: 'Sacred Art' },
         { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Mary (Magnificat)', T.magnificat),
         P('Examen', 'Where was God in this day? For what am I most grateful? Where did I fall short, and where did I feel most alive? What do I ask for tomorrow?'),
         P('Our Father', T.our), P('Hail Mary', T.hail), P('Blessing', T.blessing)]
