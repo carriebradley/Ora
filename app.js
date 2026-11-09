@@ -296,7 +296,6 @@
     h += `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)} · ${q.tr === 'East' ? 'Eastern' : 'Western'} Father/Saint</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
     h += `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>`;
-    h += `<div class="row" style="justify-content:center"><button class="btn fill" data-act="goPray" data-k="morning">Morning prayer</button><button class="btn fill" data-act="goPray" data-k="evening">Evening prayer</button></div>`;
     return h;
   }
 
