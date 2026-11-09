@@ -232,7 +232,12 @@
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Sarum · traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
-      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${alsoHTML(r.also)}</section>`;
+      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
+  }
+  function keptHTML(k) {
+    if (!k || !k.length) return '';
+    const TAG = { I: ['Ireland · documented', ''], E: ['Sarum / England · documented', ''], F: ['Later folklore', 'fast'], U: ['Uncertain', 'fast'] };
+    return `<details style="margin-top:8px" open><summary><b>How it was kept</b></summary>${k.map(e => `<div style="margin:8px 0">${chip(TAG[e.tag][0], TAG[e.tag][1])}<p style="margin:4px 0">${esc(e.text)}</p>${e.src.length ? `<p class="muted" style="font-size:.74rem;margin:0">${esc(e.src.join(' · '))}</p>` : ''}</div>`).join('')}</details>`;
   }
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
   function sarumMassHTML(v) {
