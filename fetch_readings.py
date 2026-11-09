@@ -117,6 +117,11 @@ JUSTICE_SOURCES = [
     ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, II', 'https://tertullian.org/fathers/chrysostom_four_discourses_02_discourse2.htm'),
     ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, III', 'https://tertullian.org/fathers/chrysostom_four_discourses_03_discourse3.htm'),
     ('St. John Chrysostom', 'Four Discourses on the Rich Man and Lazarus, IV', 'https://tertullian.org/fathers/chrysostom_four_discourses_04_discourse4.htm'),
+    ('Asterius of Amasea', 'Sermon 1: The Rich Man and Lazarus', 'https://tertullian.org/fathers/asterius_01_sermon1.htm'),
+    ('Asterius of Amasea', 'Sermon 2: The Unjust Steward', 'https://tertullian.org/fathers/asterius_02_sermon2.htm'),
+    ('Asterius of Amasea', 'Sermon 3: Against Covetousness', 'https://tertullian.org/fathers/asterius_03_sermon3.htm'),
+    ('Philoxenus of Hierapolis', 'First Discourse on Poverty', 'https://tertullian.org/fathers/philoxenus_discourse08.htm'),
+    ('Philoxenus of Hierapolis', 'Second Discourse on Poverty', 'https://tertullian.org/fathers/philoxenus_discourse09.htm'),
 ]
 CHUNK_WORDS = 850
 SKIP = re.compile(r'previous page|next page|table of contents|public domain|roger pearse|^footnotes?$|^notes?$|tertullian\.org|^\W*$', re.I)
@@ -137,7 +142,8 @@ class _Text(HTMLParser):
 
 def page_paragraphs(html):
     p = _Text(); p.feed(html)
-    lines = [re.sub(r'\s+', ' ', l).strip() for l in ''.join(p.out).split('\n')]
+    raw = re.sub(r'\|\d+|\[p\. ?\d+\]', '', ''.join(p.out))      # page markers from the print edition
+    lines = [re.sub(r'\s+', ' ', l).strip() for l in raw.split('\n')]
     paras = []
     for l in lines:
         if re.match(r'^(footnotes?|notes)\b', l, re.I) and len(l) < 20: break   # stop at the footnotes
@@ -182,10 +188,11 @@ def build_justice(fetch=None):
 def update_justice(old, fetch=None):
     """Refresh the reading list at most weekly; on any failure keep what is already there."""
     cur = old.get('_justice') or {}
-    if cur.get('items') and cur.get('fetched', '') > (datetime.date.today() - datetime.timedelta(days=7)).isoformat(): return
+    same = cur.get('urls') == [u for _, _, u in JUSTICE_SOURCES]
+    if same and cur.get('items') and cur.get('fetched', '') > (datetime.date.today() - datetime.timedelta(days=7)).isoformat(): return
     try: items = build_justice(fetch)
     except Exception as e: print('justice: failed', e); return
-    if items: old['_justice'] = {'fetched': datetime.date.today().isoformat(), 'items': items}; print(f'justice: {len(items)} readings')
+    if items: old['_justice'] = {'fetched': datetime.date.today().isoformat(), 'urls': [u for _, _, u in JUSTICE_SOURCES], 'items': items}; print(f'justice: {len(items)} readings')
 
 
 def main():

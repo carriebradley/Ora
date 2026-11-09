@@ -226,10 +226,15 @@
   }
 
   /* ---------- tabs ---------- */
+  const POPE = { '2026-01': ['For prayer with the word of God', 'Scripture as nourishment and hope, helping to build a more fraternal, missionary Church.'], '2026-02': ['For children with incurable diseases', 'Medical care and support for sick children and their families.'], '2026-03': ['For disarmament and peace', 'Progress on disarmament, especially nuclear, and dialogue in place of violence.'], '2026-04': ['For priests in crisis', 'That priests facing a crisis of vocation are accompanied and understood by their communities.'], '2026-05': ['That everyone might have food', 'Less food waste and fair access to good food for all.'], '2026-06': ['For the values of sports', 'Sport as a way to peace, encounter and dialogue, building respect and solidarity.'], '2026-07': ['For respect for human life', 'Protecting human life at every stage as a gift from God.'], '2026-08': ['For evangelization in the city', 'New ways to proclaim the Gospel and build community in large, lonely cities.'], '2026-09': ['For the care of water', 'Just, sustainable management of water so that everyone has equal access.'], '2026-10': ['For mental health ministry', 'Mental health ministry across the Church, countering stigma and discrimination.'], '2026-11': ['For the proper use of wealth', 'That wealth be used for the common good and for those with less, and never selfishly.'], '2026-12': ['For single-parent families', 'Support in the Church, and strength in faith, for families missing a mother or father.'] };
+  function popeCard(iso) {
+    const p = POPE[iso.slice(0, 7)], mo = L.MN[+iso.slice(5, 7) - 1];
+    return `<section class="card"><div class="lab"><span class="grow">Pope’s prayer intention · ${esc(mo)}</span></div>${p ? `<p style="font-family:var(--serif);font-size:1.05rem;margin:4px 0"><b>${esc(p[0])}</b></p><p class="muted" style="margin-top:0">${esc(p[1])}</p>` : '<p class="muted">This month’s intention is on the official site.</p>'}<div class="row"><a class="btn sm" target="_blank" rel="noopener" href="https://www.popesprayer.va/praywiththepope/">Pray with the Pope</a></div></section>`;
+  }
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    let h = glanceHTML(v) + cardRoman(v) + cardByz(v) + cardSarum(v);
+    let h = glanceHTML(v) + popeCard(v.iso) + cardRoman(v) + cardByz(v) + cardSarum(v);
     h += `<section class="card"><div class="lab"><span class="grow">Readings of the day</span></div>
       <div class="seg" style="margin-top:8px"><button data-act="rr" data-v="roman" class="${st.readRite === 'roman' ? 'on' : ''}">Roman</button><button data-act="rr" data-v="byz" class="${st.readRite === 'byz' ? 'on' : ''}">Byzantine</button></div>
       ${st.readRite === 'roman' ? romanReadingsHTML(st.date) : byzReadingsHTML(v)}</section>`;
