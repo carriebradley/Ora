@@ -298,7 +298,7 @@
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    let h = `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + glanceHTML(v) + popeCard(v.iso) + histCard(v.iso) + cardRoman(v) + cardByz(v) + cardSarum(v);
+    let h = `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + glanceHTML(v) + popeCard(v.iso) + histCard(v.iso);
     h += `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)} · ${q.tr === 'East' ? 'Eastern' : 'Western'} Father/Saint</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
     return h;
