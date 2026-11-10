@@ -1871,6 +1871,29 @@
     return Object.assign({}, m, { title: m.title + (wd ? ' — Wednesday' : ' — said on the weekday'), note, parts });
   }
 
+  // Masses of the seasons (Advent to Trinity, Ember Days, Christmas days): sarummass.js, parsed from Warren's translation.
+  const SM = (typeof self !== 'undefined' && self.SARUM_MASS) || (typeof globalThis !== 'undefined' && globalThis.SARUM_MASS) || {};
+  for (const k in SM) if (!MASS[k]) MASS[k] = SM[k];
+  function seasonMass(t) {
+    if (t.sk && MASS[t.sk]) return MASS[t.sk];
+    if (t.sk === 'rog2' || t.sk === 'hw0') return null;
+    const b = t.sfk && MASS[t.sfk]; if (!b) return null;
+    const o = t.swk && MASS[t.swk];
+    const rd = p => /^(Epistle|Lesson|Gospel)/.test(p.k);
+    let parts = b.parts;
+    if (o) {
+      const ep = o.parts.find(p => /^(Epistle|Lesson)/.test(p.k)), go = o.parts.find(p => p.k === 'Gospel');
+      parts = []; let doneE = false, doneG = false;
+      for (const p of b.parts) {
+        if (/^(Epistle|Lesson)/.test(p.k) && ep) { if (!doneE) { parts.push(Object.assign({}, ep, { k: ep.k + ' (' + t.title.split(' ')[0] + ')' })); doneE = true; } continue; }
+        if (p.k === 'Gospel' && go) { if (!doneG) { parts.push(Object.assign({}, go, { k: 'Gospel (' + t.title.split(' ')[0] + ')' })); doneG = true; } continue; }
+        parts.push(p);
+      }
+    }
+    const note = t.sfnote || ('Weekday: in the Sarum Missal the Mass of the Sunday (or feast) is said again on the weekdays that follow' + (o ? ', with a proper Epistle and Gospel on this day (Warren prints these after the Sunday).' : '.'));
+    return Object.assign({}, b, { title: b.title + (o ? ' — ' + t.title.split(' ')[0] : ' — said on the weekday'), note, parts });
+  }
+
   function emberWed(d0) { let e = add(d0, 1); while (dow(e) !== 3) e = add(e, 1); return e; }   // first Wednesday after d0
 
   function temporal(d) {
@@ -1885,90 +1908,95 @@
       const wk = Math.floor(diff(d, adv) / 7) + 1;
       const x = { noteKey: 'Season of Advent' };
       const wed = emberWed(D(y, 12, 13)), eb = [0, 2, 3].map(n => add(wed, n)).find(z => same(z, d));
-      if (d.getUTCDate() === 24 && d.getUTCMonth() === 11) return T('Christmas Eve — Vigil Fast', 85, 'Vigil', 'v', 'Advent', { fast: 'Strict fast and abstinence', noteKey: 'Vigil Fast of Christmas' });
-      if (sun) return T(`${ORD(wk)} Sunday of Advent`, wk === 1 ? 95 : 75, 'Sunday', 'v', 'Advent', x);
-      if (eb) return T(`${wd} — Winter Ember Day`, 45, 'Ember Day', 'v', 'Advent', Object.assign(x, em('Winter'), { noteKey: 'Winter Ember Days (Advent Fast)' }));
-      return T(`${wd} of the ${ORD(wk)} Week of Advent`, 10, 'Weekday', 'v', 'Advent', x);
+      if (d.getUTCDate() === 24 && d.getUTCMonth() === 11) return T('Christmas Eve — Vigil Fast', 85, 'Vigil', 'v', 'Advent', { fast: 'Strict fast and abstinence', noteKey: 'Vigil Fast of Christmas', sk: 'xmasEve' });
+      if (sun) return T(`${ORD(wk)} Sunday of Advent`, wk === 1 ? 95 : 75, 'Sunday', 'v', 'Advent', Object.assign(x, { sk: 'adv' + wk }));
+      if (eb) return T(`${wd} — Winter Ember Day`, 45, 'Ember Day', 'v', 'Advent', Object.assign(x, em('Winter'), { noteKey: 'Winter Ember Days (Advent Fast)', sk: 'adv3-' + dow(d) }));
+      return T(`${wd} of the ${ORD(wk)} Week of Advent`, 10, 'Weekday', 'v', 'Advent', Object.assign(x, { sfk: 'adv' + Math.min(wk, 4), swk: 'adv' + Math.min(wk, 4) + '-' + dow(d) }));
     }
     if (d >= D(y, 12, 25) || d < epi) {
       const cy = d.getUTCMonth() === 11 ? y : y - 1, C = D(cy, 12, 25), n = diff(d, C), x = { noteKey: 'Christmastide & The 12 Days of Christmas' };
-      if (n === 0) return T('Nativity of Our Lord (Christmas)', 100, 'Principal Feast', 'w', 'Christmastide', x);
-      if (sun) return T('Sunday within the Octave of Christmas', 50, 'Sunday', 'w', 'Christmastide', x);
-      return T(`${ORD(n + 1)} Day of Christmas`, 20, 'Weekday', 'w', 'Christmastide', x);
+      if (n === 0) return T('Nativity of Our Lord (Christmas)', 100, 'Principal Feast', 'w', 'Christmastide', Object.assign(x, { sk: 'xmas3' }));
+      if (sun) return T('Sunday within the Octave of Christmas', 50, 'Sunday', 'w', 'Christmastide', Object.assign(x, { sk: 'xmas6' }));
+      return T(`${ORD(n + 1)} Day of Christmas`, 20, 'Weekday', 'w', 'Christmastide', Object.assign(x, n === 5 ? { sk: 'xmas6' } : n === 11 ? { sk: 'epiEve' } : n > 7 ? { sfk: 'xmas3', sfnote: 'From the Octave of the Circumcision to the Epiphany the Sarum Missal has no proper Mass for these days; the Christmas Mass is shown.' } : {}));
     }
     // Epiphanytide
     if (d < sept) {
       const o = diff(d, epi);
-      if (o === 0) return T('Epiphany of Our Lord (Nollaig Beag)', 95, 'Principal Feast', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)' });
-      if (o === 7) return T('Octave Day of the Epiphany', 62, 'Octave Day', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)' });
+      if (o === 0) return T('Epiphany of Our Lord (Nollaig Beag)', 95, 'Principal Feast', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)', sk: '1/6' });
+      if (o === 7) return T('Octave Day of the Epiphany', 62, 'Octave Day', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)', sk: '1/13' });
       const sn = Math.floor((o - 1) / 7) + 1;
-      if (sun) return T(`${ORD(sn)} Sunday after Epiphany`, 50, 'Sunday', 'g', 'Epiphanytide', { noteKey: 'Time after Epiphany' });
-      if (o < 7) return T(`${wd} within the Octave of Epiphany`, 40, 'Octave Day', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)' });
-      return T(`${wd} after the ${ORD(Math.floor((diff(sunOnOrBefore(d), epi) - 1) / 7) + 1)} Sunday after Epiphany`, 10, 'Weekday', 'g', 'Epiphanytide', { noteKey: 'Time after Epiphany' });
+      const eS = n => n <= 1 ? { sfk: '1/6' } : { sfk: 'epi' + Math.min(n - 1, 5) };
+      if (sun) return T(`${ORD(sn)} Sunday after Epiphany`, 50, 'Sunday', 'g', 'Epiphanytide', Object.assign({ noteKey: 'Time after Epiphany' }, sn <= 1 ? { sfk: '1/6', swk: 'epiSun' } : { sk: 'epi' + Math.min(sn - 1, 5) }));
+      if (o < 7) return T(`${wd} within the Octave of Epiphany`, 40, 'Octave Day', 'w', 'Epiphanytide', { noteKey: 'Epiphany & Octave of Epiphany (Nollaig Beag)', sfk: '1/6' });
+      const psn = Math.floor((diff(sunOnOrBefore(d), epi) - 1) / 7) + 1;
+      return T(`${wd} after the ${ORD(psn)} Sunday after Epiphany`, 10, 'Weekday', 'g', 'Epiphanytide', Object.assign({ noteKey: 'Time after Epiphany' }, eS(psn), psn > 1 ? { swk: 'epi' + Math.min(psn - 1, 5) + '-' + dow(d) } : {}));
     }
     // Pre-Lent
     if (d < ash) {
       const j = diff(d, sept);
-      if (j === 0) return T('Septuagesima Sunday', 75, 'Sunday', 'v', 'Pre-Lent', { noteKey: 'Septuagesima Sunday (Pre-Lent Begins)' });
-      if (j === 7) return T('Sexagesima Sunday', 75, 'Sunday', 'v', 'Pre-Lent', { noteKey: 'Sexagesima Sunday' });
-      if (j === 14) return T('Quinquagesima Sunday', 75, 'Sunday', 'v', 'Pre-Lent', { noteKey: 'Quinquagesima & Shrovetide Carnival' });
-      if (j === 15) return T('Shrove Monday', 40, 'Shrovetide', 'v', 'Pre-Lent', { noteKey: 'Quinquagesima & Shrovetide Carnival' });
-      if (j === 16) return T('Shrove Tuesday', 45, 'Shrovetide', 'v', 'Pre-Lent', { noteKey: 'Quinquagesima & Shrovetide Carnival', fast: 'Day of shriving (confession); dairy and fat cleared before Lent' });
-      return T(`${wd} of ${['Septuagesima', 'Sexagesima', 'Quinquagesima'][Math.floor(j / 7)]} week`, 10, 'Weekday', 'v', 'Pre-Lent');
+      const PK = ['sept', 'sexa', 'quin'][Math.floor(j / 7)];
+      if (j === 0) return T('Septuagesima Sunday', 75, 'Sunday', 'v', 'Pre-Lent', { noteKey: 'Septuagesima Sunday (Pre-Lent Begins)', sk: 'sept' });
+      if (j === 7) return T('Sexagesima Sunday', 75, 'Sunday', 'v', 'Pre-Lent', { noteKey: 'Sexagesima Sunday', sk: 'sexa' });
+      if (j === 14) return T('Quinquagesima Sunday', 75, 'Sunday', 'v', 'Pre-Lent', { noteKey: 'Quinquagesima & Shrovetide Carnival', sk: 'quin' });
+      if (j === 15) return T('Shrove Monday', 40, 'Shrovetide', 'v', 'Pre-Lent', { noteKey: 'Quinquagesima & Shrovetide Carnival', sfk: 'quin' });
+      if (j === 16) return T('Shrove Tuesday', 45, 'Shrovetide', 'v', 'Pre-Lent', { noteKey: 'Quinquagesima & Shrovetide Carnival', fast: 'Day of shriving (confession); dairy and fat cleared before Lent', sfk: 'quin' });
+      return T(`${wd} of ${['Septuagesima', 'Sexagesima', 'Quinquagesima'][Math.floor(j / 7)]} week`, 10, 'Weekday', 'v', 'Pre-Lent', { sfk: PK, swk: PK + '-' + dow(d) });
     }
     // Lent, Passiontide, Holy Week
     if (d < E) {
       const L1 = add(E, -42), lent = { noteKey: 'Season of Lent (An Charghas)' };
       const lentFast = 'Lenten fast — abstinence from meat, eggs and dairy';
-      if (same(d, ash)) return T('Ash Wednesday (Caput Jejunii)', 95, 'Holy Day', 'v', 'Lent', { fast: 'Strict fast and abstinence', noteKey: 'Ash Wednesday (Start of Lent / An Charghas)' });
-      if (k === -3) return T('Maundy Thursday', 100, 'Holy Week', 'w', 'Holy Week', { noteKey: 'Holy Week', fast: lentFast });
-      if (k === -2) return T('Good Friday — Creeping to the Cross', 100, 'Holy Week', 'k', 'Holy Week', { noteKey: 'Holy Week', fast: 'Strict fast and abstinence' });
-      if (k === -1) return T('Holy Saturday — Easter Even', 100, 'Holy Week', 'v', 'Holy Week', { noteKey: 'Holy Week', fast: 'Strict fast until the Vigil' });
-      if (k === -7) return T('Palm Sunday', 100, 'Sunday', 'r', 'Holy Week', { noteKey: 'Holy Week' });
-      if (k > -7) return T(`${wd} of Holy Week`, 95, 'Holy Week', 'v', 'Holy Week', { noteKey: 'Holy Week', fast: lentFast });
-      if (k === -14) return T('Passion Sunday', 90, 'Sunday', 'v', 'Passiontide', { noteKey: 'Passiontide' });
+      if (same(d, ash)) return T('Ash Wednesday (Caput Jejunii)', 95, 'Holy Day', 'v', 'Lent', { fast: 'Strict fast and abstinence', noteKey: 'Ash Wednesday (Start of Lent / An Charghas)', sk: 'ash' });
+      if (k === -3) return T('Maundy Thursday', 100, 'Holy Week', 'w', 'Holy Week', { noteKey: 'Holy Week', fast: lentFast, sk: 'hw4' });
+      if (k === -2) return T('Good Friday — Creeping to the Cross', 100, 'Holy Week', 'k', 'Holy Week', { noteKey: 'Holy Week', fast: 'Strict fast and abstinence', sk: 'hw5' });
+      if (k === -1) return T('Holy Saturday — Easter Even', 100, 'Holy Week', 'v', 'Holy Week', { noteKey: 'Holy Week', fast: 'Strict fast until the Vigil', sk: 'hw6' });
+      if (k === -7) return T('Palm Sunday', 100, 'Sunday', 'r', 'Holy Week', { noteKey: 'Holy Week', sk: 'palm' });
+      if (k > -7) return T(`${wd} of Holy Week`, 95, 'Holy Week', 'v', 'Holy Week', { noteKey: 'Holy Week', fast: lentFast, sk: 'hw' + dow(d) });
+      if (k === -14) return T('Passion Sunday', 90, 'Sunday', 'v', 'Passiontide', { noteKey: 'Passiontide', sk: 'q5' });
       const pt = k > -14 ? 'Passiontide' : 'Lent', key = k > -14 ? 'Passiontide' : 'Season of Lent (An Charghas)';
-      if (d < L1) return T(`${wd} after Ash Wednesday`, 30, 'Lenten Day', 'v', 'Lent', { fast: lentFast, noteKey: key });
+      if (d < L1) return T(`${wd} after Ash Wednesday`, 30, 'Lenten Day', 'v', 'Lent', { fast: lentFast, noteKey: key, sk: 'ash-' + dow(d) });
       const wk = Math.floor(diff(d, L1) / 7) + 1;
-      if (sun) { const s = diff(d, L1) / 7 + 1; return T(s === 1 ? '1st Sunday of Lent (Quadragesima)' : `${ORD(s)} Sunday of Lent`, 75, 'Sunday', 'v', pt, { noteKey: key }); }
-      if (wk === 1 && [3, 5, 6].includes(dow(d))) return T(`${wd} — Spring Ember Day`, 45, 'Ember Day', 'v', 'Lent', Object.assign(em('Spring'), { fast: 'Ember Day — Lenten fast; no meat, eggs or dairy', noteKey: 'Spring Ember Days (Lenten Fast)' }));
-      return T(`${wd} of the ${ORD(wk)} Week of Lent`, 30, 'Lenten Day', 'v', pt, { fast: lentFast, noteKey: key });
+      if (sun) { const s = diff(d, L1) / 7 + 1; return T(s === 1 ? '1st Sunday of Lent (Quadragesima)' : `${ORD(s)} Sunday of Lent`, 75, 'Sunday', 'v', pt, { noteKey: key, sk: 'q' + s }); }
+      if (wk === 1 && [3, 5, 6].includes(dow(d))) return T(`${wd} — Spring Ember Day`, 45, 'Ember Day', 'v', 'Lent', Object.assign(em('Spring'), { fast: 'Ember Day — Lenten fast; no meat, eggs or dairy', noteKey: 'Spring Ember Days (Lenten Fast)', sk: 'q1-' + dow(d) }));
+      return T(`${wd} of the ${ORD(wk)} Week of Lent`, 30, 'Lenten Day', 'v', pt, { fast: lentFast, noteKey: key, sk: 'q' + wk + '-' + dow(d) });
     }
     // Eastertide → Pentecost → Trinity
     if (d <= trin) {
       const eas = { noteKey: 'Easter Sunday & Octave of Easter (Paschaltide)' };
-      if (k === 0) return T('Easter Sunday', 100, 'Principal Feast', 'w', 'Eastertide', eas);
-      if (k < 7) return T(`${wd} within the Octave of Easter`, 96, 'Octave Day', 'w', 'Eastertide', eas);
-      if (k === 7) return T('Low Sunday (Octave Day of Easter)', 62, 'Sunday', 'w', 'Eastertide', eas);
-      if (k === 38) return T('Rogation Wednesday — Vigil of the Ascension', 55, 'Vigil', 'v', 'Eastertide', { fast: 'Vigil fast and abstinence', noteKey: 'Vigil Fast of the Ascension' });
-      if (k >= 36 && k <= 38) return T(`Rogation ${wd}`, 50, 'Rogation Day', 'v', 'Eastertide', { fast: 'Rogation Day — litanies, procession, fast and abstinence', noteKey: 'Rogationtide Processions' });
-      if (k === 39) return T('Ascension Day', 100, 'Principal Feast', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
-      if (k > 39 && k <= 46 && !sun) return T(`${wd} within the Octave of the Ascension`, 40, 'Octave Day', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
-      if (k === 42) return T('Sunday after the Ascension', 50, 'Sunday', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension' });
-      if (k === 48) return T('Whitsun Eve — Vigil of Pentecost', 85, 'Vigil', 'v', 'Eastertide', { fast: 'Vigil fast; baptismal preparation', noteKey: 'Vigil Fast of Pentecost' });
-      if (k === 49) return T('Pentecost (Whitsunday)', 100, 'Principal Feast', 'r', 'Whitsuntide', { noteKey: 'Pentecost (Whitsun) & Whitsun Octave' });
+      const E1 = n => n === 1 ? 'e1w' : n >= 6 ? 'ascSun' : 'e' + n;
+      if (k === 0) return T('Easter Sunday', 100, 'Principal Feast', 'w', 'Eastertide', Object.assign({ sk: 'easter' }, eas));
+      if (k < 7) return T(`${wd} within the Octave of Easter`, 96, 'Octave Day', 'w', 'Eastertide', Object.assign({ sk: 'e0-' + dow(d) }, eas));
+      if (k === 7) return T('Low Sunday (Octave Day of Easter)', 62, 'Sunday', 'w', 'Eastertide', Object.assign({ sk: 'e1' }, eas));
+      if (k === 38) return T('Rogation Wednesday — Vigil of the Ascension', 55, 'Vigil', 'v', 'Eastertide', { fast: 'Vigil fast and abstinence', noteKey: 'Vigil Fast of the Ascension', sk: 'ascEve' });
+      if (k >= 36 && k <= 38) return T(`Rogation ${wd}`, 50, 'Rogation Day', 'v', 'Eastertide', { fast: 'Rogation Day — litanies, procession, fast and abstinence', noteKey: 'Rogationtide Processions', sk: 'rog1' });
+      if (k === 39) return T('Ascension Day', 100, 'Principal Feast', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension', sk: 'asc' });
+      if (k > 39 && k <= 46 && !sun) return T(`${wd} within the Octave of the Ascension`, 40, 'Octave Day', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension', sfk: k > 42 ? 'ascSun' : 'asc' });
+      if (k === 42) return T('Sunday after the Ascension', 50, 'Sunday', 'w', 'Eastertide', { noteKey: 'Ascension Day & Octave of the Ascension', sk: 'ascSun' });
+      if (k === 48) return T('Whitsun Eve — Vigil of Pentecost', 85, 'Vigil', 'v', 'Eastertide', { fast: 'Vigil fast; baptismal preparation', noteKey: 'Vigil Fast of Pentecost', sk: 'pentEve' });
+      if (k === 49) return T('Pentecost (Whitsunday)', 100, 'Principal Feast', 'r', 'Whitsuntide', { noteKey: 'Pentecost (Whitsun) & Whitsun Octave', sk: 'pent' });
       if (k > 49 && k < 56) {
-        if ([52, 54, 55].includes(k)) return T(`${wd} — Summer Ember Day (Whitsun Week)`, 80, 'Ember Day', 'r', 'Whitsuntide', Object.assign(em('Summer'), { noteKey: 'Summer Ember Days (Whitsuntide Fast)' }));
-        return T(`${wd} within the Whitsun Octave`, 85, 'Octave Day', 'r', 'Whitsuntide', { noteKey: 'Pentecost (Whitsun) & Whitsun Octave' });
+        if ([52, 54, 55].includes(k)) return T(`${wd} — Summer Ember Day (Whitsun Week)`, 80, 'Ember Day', 'r', 'Whitsuntide', Object.assign(em('Summer'), { noteKey: 'Summer Ember Days (Whitsuntide Fast)', sk: 'pent-' + dow(d) }));
+        return T(`${wd} within the Whitsun Octave`, 85, 'Octave Day', 'r', 'Whitsuntide', { noteKey: 'Pentecost (Whitsun) & Whitsun Octave', sk: 'pent-' + dow(d) });
       }
-      if (k === 56) return T('Trinity Sunday', 98, 'Principal Feast', 'w', 'Whitsuntide', { noteKey: 'Trinity Sunday' });
-      if (sun) return T(`${ORD(k / 7)} Sunday after Easter`, k === 35 ? 52 : 50, 'Sunday', 'w', 'Eastertide', eas);
-      return T(`${wd} of the ${ORD(Math.floor(k / 7) + 1)} Week of Easter`, 10, 'Weekday', 'w', 'Eastertide', eas);
+      if (k === 56) return T('Trinity Sunday', 98, 'Principal Feast', 'w', 'Whitsuntide', { noteKey: 'Trinity Sunday', sk: 'trin' });
+      if (sun) return T(`${ORD(k / 7)} Sunday after Easter`, k === 35 ? 52 : 50, 'Sunday', 'w', 'Eastertide', Object.assign({ sk: 'e' + (k / 7) }, eas));
+      const en = Math.floor(k / 7);
+      return T(`${wd} of the ${ORD(Math.floor(k / 7) + 1)} Week of Easter`, 10, 'Weekday', 'w', 'Eastertide', Object.assign({ sfk: E1(en), swk: 'e' + en + '-' + dow(d) }, eas));
     }
     // after Trinity
     const kt = diff(d, trin), post = { noteKey: 'Sundays after Trinity (Green Season)' };
-    if (same(d, corp)) return T('Corpus Christi', 100, 'Principal Feast', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave' });
+    if (same(d, corp)) return T('Corpus Christi', 100, 'Principal Feast', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave', sk: 'corpus' });
     if (kt === 7) return T('1st Sunday after Trinity (within the Octave of Corpus Christi)', 38, 'Sunday', 'g', 'After Trinity', { mk: 'tr1', noteKey: 'Feast of Corpus Christi & Octave' });
-    if (kt > 4 && kt <= 11) return T(`${wd} within the Octave of Corpus Christi`, 45, 'Octave Day', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave' });
+    if (kt > 4 && kt <= 11) return T(`${wd} within the Octave of Corpus Christi`, 45, 'Octave Day', 'w', 'After Trinity', { noteKey: 'Feast of Corpus Christi & Octave', sfk: 'corpus' });
     const holyCrossEmber = emberWed(D(y, 9, 14)), eb = [0, 2, 3].map(n => add(holyCrossEmber, n)).find(z => same(z, d));
-    if (eb) return T(`${wd} — Autumn Ember Day (Holy Cross)`, 45, 'Ember Day', 'g', 'After Trinity', Object.assign(em('Autumn'), { noteKey: 'Autumn Ember Days (Holy Cross Fast)' }));
+    if (eb) return T(`${wd} — Autumn Ember Day (Holy Cross)`, 45, 'Ember Day', 'g', 'After Trinity', Object.assign(em('Autumn'), { noteKey: 'Autumn Ember Days (Holy Cross Fast)', sk: 'sep-' + dow(d) }));
     const nS = Math.floor(kt / 7);
     if (sun) {
       const mk = diff(adv, d) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
       return T(diff(adv, d) === 7 ? 'Sunday next before Advent' : `${ORD(nS)} Sunday after Trinity`, 38, 'Sunday', 'g', 'After Trinity', Object.assign({ mk }, post));
     }
     const ws = add(d, -dow(d)), fmk = diff(adv, ws) === 7 ? 'trAdv' : 'tr' + Math.min(nS, 24);
-    return T(nS === 0 ? `${wd} after Trinity Sunday` : `${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', Object.assign({ fmk, wed: dow(d) === 3 }, post));
+    return T(nS === 0 ? `${wd} after Trinity Sunday` : `${wd} after the ${ORD(nS)} Sunday after Trinity`, 10, 'Weekday', 'g', 'After Trinity', Object.assign(nS === 0 ? { sfk: 'trin' } : { fmk, wed: dow(d) === 3 }, post));
   }
 
   const MN3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -2040,6 +2068,7 @@
     else if (w.feast && (/Martyr|Apostle|Evangelist/.test(nm) || ['1/25','2/22','4/23','5/1','5/6','6/30','8/1','8/3','8/29','11/25','7/27'].includes(md))) rule('r', 'red on feasts of martyrs, apostles and evangelists');
     const noteKey = w.noteKey || t.noteKey;
     let mass = w.mk && MASS[w.mk] || null; const srcNote = w.mk && SRCNOTE[w.mk] || '';
+    if (!mass && (w === t || w.score <= 30)) { const sm = seasonMass(t); if (sm) mass = w !== t ? Object.assign({}, sm, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the day. ` + sm.note }) : sm; }
     if (!mass && t.fmk && (w === t || w.score <= 30)) { mass = ferialMass(t.fmk, t.wed); if (mass && w !== t) mass = Object.assign({}, mass, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the weekday. ` + mass.note }); }
     const kept = keptFor(d, w, t, fast, w.mk);
     return { kept, rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color, colorNote, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
