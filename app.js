@@ -764,13 +764,21 @@
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
     let h = `<h2 style="font-family:var(--serif);margin-bottom:2px">Justice and the poor</h2><p class="muted" style="margin-top:0">What the Church has said about wealth, work and the poor, from the Fathers to today.</p>`;
-    // Today: one reading (or quotation), one voice, and a saint if it is their day
-    if (items.length) {
-      const it = items[((n % items.length) + items.length) % items.length], mins = Math.max(1, Math.round(it.words / 200));
-      h += `<section class="card"><div class="lab"><span class="grow">Today’s reading · ${mins} min</span></div><p style="margin:.2em 0"><b>${esc(it.author)}</b></p><p class="muted" style="margin-top:0">${esc(it.work)} — part ${esc(it.part)}</p><details><summary class="muted">Read</summary>${it.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.65">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem"><a target="_blank" rel="noopener" href="${esc(it.url)}">Full text</a> · public domain</p></details></section>`;
-    }
+    // Today: one quotation and one short piece, so the material lasts across many days
     h += justiceCard(f);
-    if (R.length) { const x = R[(((n * 7) % R.length) + R.length) % R.length]; h += `<section class="card"><div class="lab"><span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><details><summary class="muted" style="font-size:.85rem">Who was this?</summary><p class="muted" style="font-size:.85rem">${esc(x.bio)}</p></details></section>`; }
+    const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
+    const rch = []; items.forEach(it => { let cur = [], w = 0; const flush = () => { if (cur.length) rch.push({ it, paras: cur }); cur = []; w = 0; }; it.paras.forEach(p => { const pw = p.split(/\s+/).length; if (w && w + pw > 230) flush(); cur.push(p); w += pw; }); flush(); });
+    const kinds = [rch.length ? 'r' : 't', 't', 'v'].filter(k => k !== 'v' || R.length), kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
+    if (kind === 'r') {
+      const c = rch[((m3 % rch.length) + rch.length) % rch.length], parts = rch.filter(x => x.it === c.it), at = parts.indexOf(c) + 1;
+      h += `<section class="card"><div class="lab"><span class="grow">Reading · ${esc(c.it.author)}</span></div>${c.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.6">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem;margin:0">${esc(c.it.work)}${parts.length > 1 ? ` · ${at} of ${parts.length}, continued on later days` : ''} · <a target="_blank" rel="noopener" href="${esc(c.it.url)}">full text</a></p></section>`;
+    } else if (kind === 't' && tch.length) {
+      const c = tch[((m3 % tch.length) + tch.length) % tch.length];
+      h += `<section class="card"><div class="lab"><span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="line-height:1.55">${c.p}</div></section>`;
+    } else if (R.length) {
+      const x = R[((m3 % R.length) + R.length) % R.length];
+      h += `<section class="card"><div class="lab"><span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
+    }
     h += charitySaints(d);
     // Library: one card, four tabs
     const tabs = [['teach', 'Teaching'], ['saints', 'Saints'], ['quotes', 'Quotations'], ['voices', 'Voices']];
@@ -784,7 +792,7 @@
       const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture' };
       body = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99).map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(label[t] || t)} <span class="muted" style="font-weight:400">· ${groups[t].length}</span></summary>${groups[t].map(j => jRow(j.text, j.who + (j.note ? ' — ' + j.note : ''), '', j.url)).join('')}</details>`).join('');
     } else body = `<p class="muted" style="font-size:.82rem">Catholic Workers, liberation theologians, Catholic socialists, labour leaders and peacemakers, in their own words. Some of their views were debated in the Church in their time.</p>` + R.map(x => jRow(x.text, x.who + ' · ' + x.src, x.bio, x.url)).join('');
-    h += `<section class="card"><div class="lab"><span class="grow">Library</span></div><div class="seg">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</section>`;
+    h += `<details class="card" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
     return h;
   }
 
