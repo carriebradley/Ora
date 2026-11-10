@@ -230,11 +230,18 @@
       ${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)} (${S.byzPascha === 'julian' ? 'Julian reckoning' : 'Gregorian reckoning'})</p></section>`;
   }
+  const FMON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function felireHTML(iso, card) {
+    const F = window.FELIRE; if (!F || !iso) return '';
+    const [, m, d] = iso.split('-').map(Number), t = F[m + '-' + d];
+    if (!t) return '';
+    return `<div class="felire" style="${card ? '' : 'margin-top:12px;border-top:1px solid var(--line);padding-top:10px'}"><div class="muted" style="font-size:.8rem"><b>Félire Óengusso</b> · the Irish calendar of saints in verse, c. 800 · ${d} ${FMON[m - 1]}</div><p class="quote" style="font-style:italic;margin:6px 0 4px">${esc(t)}</p><p class="muted" style="font-size:.74rem;margin:0">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (1905). Read from a scan of the printed book, so a letter here and there may be misread. Brackets and question marks are Stokes’s own.</p></div>`;
+  }
   function cardSarum(v) {
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Sarum · traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
-      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.colorNote ? `<p class="muted" style="font-size:.78rem">${esc(r.colorNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
+      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.colorNote ? `<p class="muted" style="font-size:.78rem">${esc(r.colorNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
   }
   function keptHTML(k) {
     if (!k || !k.length) return '';
@@ -666,7 +673,7 @@
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    let h = `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + glanceHTML(v) + popeCard(v.iso) + histCard(v.iso);
+    let h = `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + glanceHTML(v) + popeCard(v.iso) + histCard(v.iso) + (S.rite === 'sarum' && felireHTML(st.date) ? `<section class="card">${felireHTML(st.date, 1)}</section>` : '');
     h += `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)} · ${q.tr === 'East' ? 'Eastern' : 'Western'} Father/Saint</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
     return h;
@@ -795,9 +802,18 @@
     return h;
   }
 
+  function felireMore() {
+    if (!window.FELIRE_PRO) return '';
+    const v = a => a.map(t => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:0 0 10px">${esc(t)}</p>`).join('');
+    return `<section class="card"><h3>Félire Óengusso</h3><p class="muted">The Calendar of Óengus the Culdee, a monk of Tallaght, written about 800: a verse for every day of the year naming the saints kept on it, with a long prologue and epilogue. Today’s verse is on the Today page when Sarum is chosen.</p>
+      <details style="margin:8px 0"><summary><b>The Prologue</b> <span class="muted" style="font-size:.8rem">· the saints outlast the kings</span></summary><div style="margin-top:10px">${v(window.FELIRE_PRO)}</div></details>
+      <details style="margin:8px 0"><summary><b>The Epilogue</b> <span class="muted" style="font-size:.8rem">· the troops of heaven, and “Mayst Thou save me, O Jesus”</span></summary><div style="margin-top:10px">${v(window.FELIRE_EPI)}</div></details>
+      <p class="muted" style="font-size:.74rem">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (Henry Bradshaw Society, 1905). Read from a scan of the printed book, so a letter here and there may be misread; brackets and question marks are Stokes’s own.</p></section>`;
+  }
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
     <section class="card"><h3>Hours of the day</h3>${hoursHTML()}</section>
+    ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
       <p><b>Byzantine</b> — Byzantine cycle computed from Pascha (Gregorian or Julian reckoning), Menaion feasts on Gregorian dates by default, plus entries from your own UGCC calendar (2026–27).</p>
