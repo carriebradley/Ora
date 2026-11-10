@@ -2030,7 +2030,7 @@
       if (same(e, d)) items.push({ title: f.name, score: SCORE[f.rank], rank: (f.src === 'B' || f.src === 'G' || f.src === 'C') && f.rank === 'D' ? 'Double (Irish constitutions)' : RANK[f.rank], rankNote: rankNote(f), color: f.color, season: t.season, noteKey: f.name, feast: true, src: f.src, mk: f.m + '/' + f.d, transferred: e.getUTCDate() !== f.d || e.getUTCMonth() + 1 !== f.m });
       if (f.oct) {
         const j = diff(d, e);
-        if (j > 0 && j <= f.oct) items.push({ title: j === f.oct ? `Octave Day of ${f.name.replace(/ & Octave$/, '')}` : `Day within the Octave of ${f.name.replace(/ & Octave$/, '')}`, score: j === f.oct ? 62 : 38, rank: 'Octave Day', color: f.color, season: t.season, noteKey: f.name, src: f.src });
+        if (j > 0 && j <= f.oct) items.push({ title: j === f.oct ? `Octave Day of ${f.name.replace(/ & Octave$/, '')}` : `Day within the Octave of ${f.name.replace(/ & Octave$/, '')}`, score: j === f.oct ? 62 : 38, rank: 'Octave Day', color: f.color, season: t.season, noteKey: f.name, src: f.src, ok: j === f.oct && MASS['oct' + f.m + '/' + f.d] ? 'oct' + f.m + '/' + f.d : f.m + '/' + f.d, okw: j !== f.oct || !MASS['oct' + f.m + '/' + f.d] });
       }
     }
     for (const [m, dd, key, nk] of VIGILS) {
@@ -2040,7 +2040,7 @@
       if (same(v, d) && !(t.rank === 'Holy Week' || t.rank === 'Principal Feast')) {
         // Lent already fasts; Christmas Eve handled by temporal
         if (!(m === 12 && dd === 25))
-          items.push({ title: `Vigil of ${key}`, score: 50, rank: 'Vigil', color: 'v', season: t.season, fast: 'Vigil fast and abstinence', noteKey: nk || `Vigil Fast of ${key}` });
+          items.push({ title: `Vigil of ${key}`, score: 50, rank: 'Vigil', color: 'v', season: t.season, fast: 'Vigil fast and abstinence', noteKey: nk || `Vigil Fast of ${key}`, vk: 'vig' + m + '/' + dd });
       }
     }
     const pref = i => (i.src && i.src !== 'W' && i.src !== 'K') ? 1 : 0;
@@ -2067,7 +2067,10 @@
     else if (w.feast && ['1/27','2/6','3/12','4/3','4/4','4/30','6/8','6/9','6/16','7/4','7/15','7/28','8/28','9/4','9/30','10/1','10/23','11/11','11/16','12/6'].includes(md) && !/Colmcille/.test(nm)) rule('y', 'yellow on all feasts of confessors');
     else if (w.feast && (/Martyr|Apostle|Evangelist/.test(nm) || ['1/25','2/22','4/23','5/1','5/6','6/30','8/1','8/3','8/29','11/25','7/27'].includes(md))) rule('r', 'red on feasts of martyrs, apostles and evangelists');
     const noteKey = w.noteKey || t.noteKey;
-    let mass = w.mk && MASS[w.mk] || null; const srcNote = w.mk && SRCNOTE[w.mk] || '';
+    let mass = (w.mk && MASS[w.mk]) || (w.vk && MASS[w.vk]) || null; const srcNote = w.mk && SRCNOTE[w.mk] || '';
+    if (mass && mass.nm && mass.nm !== w.title.replace(/ \(transferred\)$/, '')) mass = null;
+    if (!mass && w.mk) mass = MASS[w.mk + '|' + w.title.replace(/ \(transferred\)$/, '')] || null;
+    if (!mass && w.ok && MASS[w.ok]) { const b = MASS[w.ok]; mass = w.okw ? Object.assign({}, b, { title: b.title + ' — ' + (/^Octave Day/.test(w.title) ? 'on the octave day' : 'within the octave'), note: 'Within an octave the Sarum Missal repeats the Mass of the feast, unless the day has a Mass of its own. ' + (b.note || '') }) : b; }
     if (!mass && (w === t || w.score <= 30)) { const sm = seasonMass(t); if (sm) mass = w !== t ? Object.assign({}, sm, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the day. ` + sm.note }) : sm; }
     if (!mass && t.fmk && (w === t || w.score <= 30)) { mass = ferialMass(t.fmk, t.wed); if (mass && w !== t) mass = Object.assign({}, mass, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the weekday. ` + mass.note }); }
     const kept = keptFor(d, w, t, fast, w.mk);

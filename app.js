@@ -251,7 +251,7 @@
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
-    if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">The Sarum Mass for this day has not been added to the app yet. The app has the Masses of every season of the year (Advent to the Sundays after Trinity, Ember Days, Holy Week, and the days of Christmas), plus St Patrick and St Brigid; the other saints’ days are still to come.</p>`;
+    if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No Sarum Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
     let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3><p class="muted">${esc(m.note)}</p>`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="cite"><span><b>${esc(p.k)}</b></span><span class="muted" style="text-align:right;font-size:.74rem">${esc(p.pr)}</span></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
