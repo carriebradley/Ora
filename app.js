@@ -265,7 +265,7 @@
     let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3><p class="muted">${esc(m.note)}</p>`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="cite"><span><b>${esc(p.k)}</b></span><span class="muted" style="text-align:right;font-size:.74rem">${esc(p.pr)}</span></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
-      else h += `<div class="cite"><span><b>${esc(p.k)}</b></span></div><p style="white-space:pre-line">${esc(p.tx)}</p>`;
+      else h += `<div class="cite"><span><b>${esc(p.k)}</b></span></div><p style="white-space:pre-line;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${esc(p.tx)}</p>`;
     }
     return h + `<p class="muted" style="font-size:.74rem">Source: ${esc(m.source)}. Epistle and Gospel in full: Douay-Rheims (public domain).</p>`;
   }
@@ -678,7 +678,7 @@
     if (!best || bestGap > 3) return '';
     const when = bestGap === 0 ? '' : `${L.MN[best[0] - 1]} ${best[1]} · `;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
-    return `<section class="card"><div class="lab"><span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span></div><p style="margin:6px 0 2px"><b>${esc(when)}${esc(yr)}</b></p><p style="margin:0">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
+    return `<section class="card"><div class="lab"><span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span></div><p style="margin:6px 0 2px;font-family:var(--serif)"><b>${esc(when)}${esc(yr)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
   }
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -757,7 +757,7 @@
 
   const QS = 'font-family:var(--serif);font-size:1.05rem;line-height:1.55;margin:.3em 0';
   function justiceCard(j) {
-    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
+    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
   }
   function jRow(text, who, extra, url) {
     return `<div style="padding:10px 0;border-top:1px solid var(--line)"><p style="${QS}">“${esc(text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(who)}${url ? ` · <a target="_blank" rel="noopener" href="${esc(url)}">source</a>` : ''}</p>${extra ? `<p class="muted" style="margin:.2em 0;font-size:.76rem">${esc(extra)}</p>` : ''}</div>`;
@@ -784,7 +784,7 @@
       h += `<section class="card"><div class="lab"><span class="grow">Reading · ${esc(c.it.author)}</span></div>${c.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.6">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem;margin:0">${esc(c.it.work)}${parts.length > 1 ? ` · ${at} of ${parts.length}, continued on later days` : ''} · <a target="_blank" rel="noopener" href="${esc(c.it.url)}">full text</a></p></section>`;
     } else if (kind === 't' && tch.length) {
       const c = tch[((m3 % tch.length) + tch.length) % tch.length];
-      h += `<section class="card"><div class="lab"><span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="line-height:1.55">${c.p}</div></section>`;
+      h += `<section class="card"><div class="lab"><span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${c.p}</div></section>`;
     } else if (R.length) {
       const x = R[((m3 % R.length) + R.length) % R.length];
       h += `<section class="card"><div class="lab"><span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
@@ -794,12 +794,12 @@
     const tabs = [['teach', 'Teaching'], ['saints', 'Saints'], ['quotes', 'Quotations'], ['voices', 'Voices']];
     const jt = st.jtab || 'teach';
     let body = '';
-    if (jt === 'teach') body = T.map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(t.t)}</summary><div style="margin-top:8px;line-height:1.55">${t.h}</div></details>`).join('');
+    if (jt === 'teach') body = T.map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(t.t)}</summary><div style="margin-top:8px;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${t.h}</div></details>`).join('');
     else if (jt === 'saints') body = `<p class="muted" style="font-size:.82rem">${S.length} saints who gave their lives to the poor, through the year.</p>` + S.slice().sort((a, b) => a.m * 100 + a.d - b.m * 100 - b.d).map(x => `<div style="padding:9px 0;border-top:1px solid var(--line)"><b>${esc(x.name)}</b> <span class="muted" style="font-size:.8rem">· ${esc(L.MN[x.m - 1].slice(0, 3))} ${x.d}</span><br><span style="font-size:.92rem">${esc(x.why)}</span></div>`).join('');
     else if (jt === 'quotes') {
-      const order = ['Scripture', 'Church Father', 'Doctor of the Church', 'Saint', 'Council', 'Pope', 'Encyclical', 'Catechism'], groups = {};
+      const order = ['Scripture', 'Church Father', 'Doctor of the Church', 'Saint', 'Council', 'Pope', 'Encyclical', 'Catechism', 'Creation'], groups = {};
       J.forEach(j => (groups[j.tag] = groups[j.tag] || []).push(j));
-      const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture' };
+      const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture', Creation: 'Care for creation' };
       body = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99).map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(label[t] || t)} <span class="muted" style="font-weight:400">· ${groups[t].length}</span></summary>${groups[t].map(j => jRow(j.text, j.who + (j.note ? ' — ' + j.note : ''), '', j.url)).join('')}</details>`).join('');
     } else body = `<p class="muted" style="font-size:.82rem">Catholic Workers, liberation theologians, Catholic socialists, labour leaders and peacemakers, in their own words. Some of their views were debated in the Church in their time.</p>` + R.map(x => jRow(x.text, x.who + ' · ' + x.src, x.bio, x.url)).join('');
     h += `<details class="card" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
