@@ -285,6 +285,7 @@
     }
     if (second && second.a) {
       h += cite('Second reading', `<span style="font-family:var(--serif);font-size:1.02rem">${esc(second.a)}</span> <span class="muted">· <i>${esc(second.w)}</i></span>`);
+      if (second.t) h += `<details class="oortx" style="margin:2px 0 8px"><summary class="muted" style="font-size:.82rem">Read it here</summary><div class="oortx-slot" data-k="${esc(second.a + '|' + second.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>`;
     }
     if (opt) h += `<p class="muted" style="font-size:.78rem;margin:2px 0">If ${esc(opt.n)} is kept today, the second reading is from ${esc(opt.a)}, <i>${esc(opt.w)}</i>.</p>`;
     if (!(first && first.r) && !(second && second.a)) h += `<p class="muted">This day is not in the table of readings Ora uses${k === 'asc-thu' ? ' (Thursday of the 6th week of Easter, where the Ascension is kept on Sunday)' : ''}. Universalis has the full office.</p>`;
@@ -884,7 +885,7 @@
     <section class="card"><h3>Credits &amp; sources</h3>
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
-      <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Byzantine saints of the day: Ukrainian Catholic calendar of the Archeparchy of Winnipeg.</p>
+      <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Byzantine saints of the day: Ukrainian Catholic calendar of the Archeparchy of Winnipeg. Early Fathers read in full under “Read it here”: Kirsopp Lake’s translation of <i>The Apostolic Fathers</i> (Loeb Classical Library, 1912), read from scans, so an occasional misread word is possible.</p>
       <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></section>`;
   }
   function hoursHTML() {
@@ -924,6 +925,18 @@
       } catch (e) { el.innerHTML = '<span class="muted">Text unavailable offline — it loads and is saved the first time you open this day online.</span>'; }
     }
   }
+  /* ---------- Office of Readings: full second-reading texts (oortext.json, public-domain translations), loaded when first opened ---------- */
+  let oortxP = null;
+  const loadOorText = () => oortxP || (oortxP = fetch('oortext.json').then(r => { if (!r.ok) throw new Error('x'); return r.json(); }).catch(e => { oortxP = null; throw e; }));
+  document.addEventListener('toggle', ev => {
+    const det = ev.target; if (!det || !det.classList || !det.classList.contains('oortx') || !det.open) return;
+    const slot = det.querySelector('.oortx-slot'); if (!slot || slot.dataset.done) return;
+    loadOorText().then(d => {
+      const x = d[slot.dataset.k]; slot.dataset.done = '1';
+      if (!x) { slot.innerHTML = '<p class="muted" style="font-size:.8rem">Text not found.</p>'; return; }
+      slot.innerHTML = x.p.map(p => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:.5em 0">${p.replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
+    }).catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">The text could not be loaded. Ora needs to be online the first time you open it.</p>'; });
+  }, true);
   /* ---------- Sarum Matins: the texts (matins.json) are loaded the first time Matins is opened ---------- */
   let matinsP = null;
   function loadMatins() {
