@@ -323,7 +323,7 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Sarum', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab"><span class="grow">Today: feast or fast?</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span><span class="gd">${esc(x.detail)}</span></div>`;
+      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span>${x.detail ? `<span class="gd">${esc(x.detail)}</span>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -803,6 +803,11 @@
     const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), today = S.filter(x => x.m === m && x.d === dd);
     return today.map(x => `<section class="card"><div class="lab"><span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:.2em 0"><b>${esc(x.name)}</b></p><p style="margin:.3em 0">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
   }
+  /* typographic quotes in text (not inside tags): "x" -> “x”, it's -> it’s */
+  const curly = html => html.replace(/(^|>)([^<]+)/g, (m, a, t) => a + t
+    .replace(/&quot;|"/g, '\u0001').replace(/&#39;|'/g, '\u0002')
+    .replace(/(^|[\s(\[—–\-\/])\u0001/g, '$1“').replace(/\u0001/g, '”')
+    .replace(/(^|[\s(\[—–\-\/“])\u0002/g, '$1‘').replace(/\u0002/g, '’'));
   function viewJustice() {
     const J = window.JUSTICE || [];
     if (!J.length) return '<p class="muted">No excerpts loaded.</p>';
@@ -839,7 +844,7 @@
       body = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99).map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(label[t] || t)} <span class="muted" style="font-weight:400">· ${groups[t].length}</span></summary>${groups[t].map(j => jRow(j.text, j.who + (j.note ? ' — ' + j.note : ''), '', j.url)).join('')}</details>`).join('');
     } else body = `<p class="muted" style="font-size:.82rem">Catholic Workers, liberation theologians, Catholic socialists, labour leaders and peacemakers, in their own words. Some of their views were debated in the Church in their time.</p>` + R.map(x => jRow(x.text, x.who + ' · ' + x.src, x.bio, x.url)).join('');
     h += `<details class="card" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
-    return h;
+    return curly(h);
   }
 
   function viewCalendar() {
@@ -879,6 +884,7 @@
     <section class="card"><h3>Credits &amp; sources</h3>
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
+      <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Byzantine saints of the day: Ukrainian Catholic calendar of the Archeparchy of Winnipeg.</p>
       <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></section>`;
   }
   function hoursHTML() {
@@ -886,7 +892,7 @@
     let cur = -1; hrs.forEach((x, i) => { if (x.start != null && x.start <= now) cur = i; });
     if (rite === 'byz' && now >= 0 && cur < 0) cur = 0;
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div>`;
-    hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b>${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'roman' && x.oor) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray the Office of Readings for ${esc(fmtShort(st.date))}</summary>${oorHTML(st.date)}</details>`; else if (rite === 'sarum' && x.w === 'M' && window.Hours && Hours.sarumMatins) h += `<details class="matins-d" style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray Matins for ${esc(fmtShort(st.date))}</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>`; else if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
+    hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b style="color:var(--ink)">${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'roman' && x.oor) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray the Office of Readings for ${esc(fmtShort(st.date))}</summary>${oorHTML(st.date)}</details>`; else if (rite === 'roman' && /^(lauds|vespers)$/.test(x.hour || '') && window.Hours && Hours.modern) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.modern(L, P(st.date), x.hour === 'lauds' ? 'L' : 'V')}</details>`; else if (rite === 'sarum' && x.w === 'M' && window.Hours && Hours.sarumMatins) h += `<details class="matins-d" style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray Matins for ${esc(fmtShort(st.date))}</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>`; else if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
     if (rite === 'sarum' && window.Hours && Hours.sarumBVM) h += `<details style="margin:10px 0 8px"><summary><b>The Commemoration of Our Lady</b> <span class="muted" style="font-size:.8rem">· a short office of Mary, said on free days, chiefly Saturdays</span></summary>${[['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None'], ['V', 'Vespers'], ['C', 'Compline']].map(([w, n]) => `<details style="margin:4px 0 4px 10px"><summary class="muted" style="font-size:.82rem">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}</details>`;
     h += `<div class="row">${linksHTML(rite, 'any')}</div>`;
     return h;
