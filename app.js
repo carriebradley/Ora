@@ -815,7 +815,7 @@
     const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
-    let h = `<h2 style="font-family:var(--serif);margin-bottom:2px">Justice and the poor</h2><p class="muted" style="margin-top:0">What the Church has said about wealth, work and the poor, from the Fathers to today.</p>`;
+    let h = `<h2 style="font-family:var(--serif);margin-bottom:2px">Justice</h2><p class="muted" style="margin-top:0">Catholic teaching and witness on justice, from the Fathers to today.</p>`;
     // Today: one quotation and one short piece, so the material lasts across many days
     h += justiceCard(f);
     const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
