@@ -235,7 +235,7 @@
     const F = window.FELIRE; if (!F || !iso) return '';
     const [, m, d] = iso.split('-').map(Number), t = F[m + '-' + d];
     if (!t) return '';
-    return `<div class="felire" style="${card ? '' : 'margin-top:12px;border-top:1px solid var(--line);padding-top:10px'}"><div class="muted" style="font-size:.8rem"><b>Félire Óengusso</b> · the Irish calendar of saints in verse, c. 800 · ${d} ${FMON[m - 1]}</div><p class="quote" style="font-style:italic;margin:6px 0 4px">${esc(t)}</p><p class="muted" style="font-size:.74rem;margin:0">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (1905). Read from a scan of the printed book, so a letter here and there may be misread. Brackets and question marks are Stokes’s own.</p></div>`;
+    return `<div class="felire" style="${card ? '' : 'margin-top:12px;border-top:1px solid var(--line);padding-top:10px'}"><div class="lab"><span class="grow">Félire Óengusso · ${d} ${FMON[m - 1]}</span></div><p class="quote" style="font-style:italic;margin:6px 0 4px">${esc(t)}</p><p class="muted" style="font-size:.74rem;margin:0">Tr. Whitley Stokes (1905) · more under More → Félire Óengusso</p></div>`;
   }
   function cardSarum(v) {
     const r = v.sarum;
@@ -673,11 +673,12 @@
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    let h = `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + glanceHTML(v) + popeCard(v.iso) + histCard(v.iso) + (S.rite === 'sarum' && felireHTML(st.date) ? `<section class="card">${felireHTML(st.date, 1)}</section>` : '');
-    h += `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)} · ${q.tr === 'East' ? 'Eastern' : 'Western'} Father/Saint</small></div>
+    const fel = S.rite === 'sarum' && felireHTML(st.date) ? `<section class="card">${felireHTML(st.date, 1)}</section>` : '';
+    const saints = `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return h;
+    return glanceHTML(v) + fel + saints + `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
   }
+
 
   function stepsFor(rite, kind, v) {
     const tpl = C.FLOWS[rite][kind], r = v[rite === 'sarum' ? 'sarum' : rite === 'byz' ? 'byz' : 'roman'];
@@ -744,44 +745,47 @@
     return h;
   }
 
+  const QS = 'font-family:var(--serif);font-size:1.05rem;line-height:1.55;margin:.3em 0';
   function justiceCard(j) {
-    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag)}</span></div><p style="font-family:var(--serif);font-size:1.05rem;line-height:1.55">“${esc(j.text)}”</p><p class="muted">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}</p>${j.url ? `<div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(j.url)}">Read the full text</a></div>` : ''}</section>`;
+    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
+  }
+  function jRow(text, who, extra, url) {
+    return `<div style="padding:10px 0;border-top:1px solid var(--line)"><p style="${QS}">“${esc(text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(who)}${url ? ` · <a target="_blank" rel="noopener" href="${esc(url)}">source</a>` : ''}</p>${extra ? `<p class="muted" style="margin:.2em 0;font-size:.76rem">${esc(extra)}</p>` : ''}</div>`;
   }
   function charitySaints(d) {
     const S = window.JUSTICE_SAINTS || []; if (!S.length) return '';
-    const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), key = (a, b) => a * 100 + b, today = S.filter(x => x.m === m && x.d === dd);
-    const card = (x, lab) => `<section class="card"><div class="lab"><span class="grow">${esc(lab)}</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:.2em 0"><b>${esc(x.name)}</b></p><p style="margin:.3em 0">${esc(x.why)}</p><p class="muted" style="font-size:.78rem">${esc(L.MN[x.m - 1])} ${x.d}${x.cal ? ' · ' + esc(x.cal) : ''}</p></section>`;
-    let h = '<h3>A saint of charity</h3>';
-    if (today.length) h += today.map(x => card(x, 'Today')).join('');
-    else {
-      const k = key(m, dd), sorted = S.slice().sort((a, b) => key(a.m, a.d) - key(b.m, b.d)), nx = sorted.find(x => key(x.m, x.d) > k) || sorted[0];
-      h += card(nx, `Coming up · ${L.MN[nx.m - 1]} ${nx.d}`);
-    }
-    return h;
+    const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), today = S.filter(x => x.m === m && x.d === dd);
+    return today.map(x => `<section class="card"><div class="lab"><span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:.2em 0"><b>${esc(x.name)}</b></p><p style="margin:.3em 0">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
   }
   function viewJustice() {
     const J = window.JUSTICE || [];
     if (!J.length) return '<p class="muted">No excerpts loaded.</p>';
     const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
-    let daily = '';
+    const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
+    let h = `<h2 style="font-family:var(--serif);margin-bottom:2px">Justice and the poor</h2><p class="muted" style="margin-top:0">What the Church has said about wealth, work and the poor, from the Fathers to today.</p>`;
+    // Today: one reading (or quotation), one voice, and a saint if it is their day
     if (items.length) {
       const it = items[((n % items.length) + items.length) % items.length], mins = Math.max(1, Math.round(it.words / 200));
-      daily = `<h3>Today’s reading · about ${mins} min</h3><section class="card"><div class="lab"><span class="grow">${esc(it.author)}</span></div><p class="muted" style="margin-top:0">${esc(it.work)} — part ${esc(it.part)}</p>${it.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.65">${esc(p)}</p>`).join('')}<div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(it.url)}">Full text</a></div><p class="muted" style="font-size:.78rem">Public-domain translation. A new passage each day; the series repeats when it ends.</p></section>`;
-    } else daily = '<p class="muted">The daily reading appears after the next refresh of your readings (the GitHub job runs a few times a day). Short quotations are below.</p>';
-    const T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
-    const teach = T.length ? `<h3>Teaching</h3>${T.map(t => `<details class="card" style="padding:10px 14px"><summary style="font-weight:600;cursor:pointer">${esc(t.t)}</summary><div style="margin-top:8px;line-height:1.55">${t.h}</div></details>`).join('')}` : '';
-    const saintList = S.length ? `<details class="card" style="padding:10px 14px"><summary style="font-weight:600;cursor:pointer">Saints of charity through the year (${S.length})</summary>${S.slice().sort((a, b) => a.m * 100 + a.d - b.m * 100 - b.d).map(x => `<p style="margin:.6em 0"><b>${esc(L.MN[x.m - 1])} ${x.d} · ${esc(x.name)}</b><br><span style="font-size:.92rem">${esc(x.why)}</span>${x.cal ? `<br><span class="muted" style="font-size:.76rem">${esc(x.cal)}</span>` : ''}</p>`).join('')}</details>` : '';
-    const order = ['Scripture', 'Church Father', 'Doctor of the Church', 'Saint', 'Council', 'Pope', 'Encyclical', 'Catechism'], groups = {};
-    J.forEach(j => (groups[j.tag] = groups[j.tag] || []).push(j));
-    const tags = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99);
-    const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture' };
-    const more = tags.map(t => `<details style="margin:6px 0"><summary style="font-weight:600;cursor:pointer;padding:6px 0">${esc(label[t] || t)} (${groups[t].length})</summary>${groups[t].map(justiceCard).join('')}</details>`).join('');
-    const R = window.JUSTICE_RADICAL || [];
-    const rcard = x => `<section class="card"><div class="lab"><span class="grow">${esc(x.who)}</span></div><p style="font-family:var(--serif);font-size:1.05rem;line-height:1.55">“${esc(x.text)}”</p><p class="muted">${esc(x.src)}</p><p class="muted" style="font-size:.78rem">${esc(x.bio)}</p>${x.url ? `<div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(x.url)}">Source</a></div>` : ''}</section>`;
-    const radical = R.length ? `<h3>A radical voice</h3>${rcard(R[(((n * 7) % R.length) + R.length) % R.length])}` : '';
-    const radMore = R.length ? `<details style="margin:6px 0"><summary style="font-weight:600;cursor:pointer;padding:6px 0">Radical Catholic voices (${R.length})</summary><p class="muted" style="font-size:.8rem">Catholic Workers, liberation theologians, Catholic socialists and labour leaders, distributists and peacemakers. These are their own words; some of their views were debated or criticised in the Church in their time.</p>${R.map(rcard).join('')}</details>` : '';
-    return `<h2 style="font-family:var(--serif)">Justice and the poor</h2><p class="muted">Scripture, the Fathers, saints, councils, popes and the Catechism on wealth, work, the poor and creation, from the first centuries to today.</p>${daily}${charitySaints(d)}${radical}<h3>A short quotation</h3>${justiceCard(f)}${teach}<h3>More</h3>${saintList}<p class="muted" style="font-size:.82rem;margin:10px 0 4px">${J.length} quotations, each checked against its source:</p>${more}${radMore}`;
+      h += `<section class="card"><div class="lab"><span class="grow">Today’s reading · ${mins} min</span></div><p style="margin:.2em 0"><b>${esc(it.author)}</b></p><p class="muted" style="margin-top:0">${esc(it.work)} — part ${esc(it.part)}</p><details><summary class="muted">Read</summary>${it.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.65">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem"><a target="_blank" rel="noopener" href="${esc(it.url)}">Full text</a> · public domain</p></details></section>`;
+    }
+    h += justiceCard(f);
+    if (R.length) { const x = R[(((n * 7) % R.length) + R.length) % R.length]; h += `<section class="card"><div class="lab"><span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><details><summary class="muted" style="font-size:.85rem">Who was this?</summary><p class="muted" style="font-size:.85rem">${esc(x.bio)}</p></details></section>`; }
+    h += charitySaints(d);
+    // Library: one card, four tabs
+    const tabs = [['teach', 'Teaching'], ['saints', 'Saints'], ['quotes', 'Quotations'], ['voices', 'Voices']];
+    const jt = st.jtab || 'teach';
+    let body = '';
+    if (jt === 'teach') body = T.map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(t.t)}</summary><div style="margin-top:8px;line-height:1.55">${t.h}</div></details>`).join('');
+    else if (jt === 'saints') body = `<p class="muted" style="font-size:.82rem">${S.length} saints who gave their lives to the poor, through the year.</p>` + S.slice().sort((a, b) => a.m * 100 + a.d - b.m * 100 - b.d).map(x => `<div style="padding:9px 0;border-top:1px solid var(--line)"><b>${esc(x.name)}</b> <span class="muted" style="font-size:.8rem">· ${esc(L.MN[x.m - 1].slice(0, 3))} ${x.d}</span><br><span style="font-size:.92rem">${esc(x.why)}</span></div>`).join('');
+    else if (jt === 'quotes') {
+      const order = ['Scripture', 'Church Father', 'Doctor of the Church', 'Saint', 'Council', 'Pope', 'Encyclical', 'Catechism'], groups = {};
+      J.forEach(j => (groups[j.tag] = groups[j.tag] || []).push(j));
+      const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture' };
+      body = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99).map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(label[t] || t)} <span class="muted" style="font-weight:400">· ${groups[t].length}</span></summary>${groups[t].map(j => jRow(j.text, j.who + (j.note ? ' — ' + j.note : ''), '', j.url)).join('')}</details>`).join('');
+    } else body = `<p class="muted" style="font-size:.82rem">Catholic Workers, liberation theologians, Catholic socialists, labour leaders and peacemakers, in their own words. Some of their views were debated in the Church in their time.</p>` + R.map(x => jRow(x.text, x.who + ' · ' + x.src, x.bio, x.url)).join('');
+    h += `<section class="card"><div class="lab"><span class="grow">Library</span></div><div class="seg">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</section>`;
+    return h;
   }
 
   function viewCalendar() {
@@ -820,6 +824,7 @@
       <p><b>Sarum (traditional)</b> — Sarum temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <section class="card"><h3>Credits &amp; sources</h3>
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
+      <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
       <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></section>`;
   }
   function hoursHTML() {
@@ -963,6 +968,7 @@
       case 'today': st.date = todayISO(); st.month = null; break;
       case 'datepick': { const dp = $('#dp'); if (dp.showPicker) dp.showPicker(); else dp.click(); return; }
       case 'rr': st.readRite = v; break;
+      case 'jtab': st.jtab = v; break;
       case 'rite': S.rite = v; save(); break;
       case 'kind': st.kind = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
