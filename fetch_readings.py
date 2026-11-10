@@ -129,9 +129,16 @@ JUSTICE_SOURCES = [
     ('St. John Chrysostom', 'Homily 66 on Matthew (on almsgiving)', 'https://www.newadvent.org/fathers/200166.htm'),
     ('Pope St. Leo the Great', 'Sermon 9: Upon the Collections, IV', 'https://www.newadvent.org/fathers/360309.htm'),
     ('Pope St. Leo the Great', 'Sermon 10: On the Collections, V', 'https://www.newadvent.org/fathers/360310.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): Foreword', 'https://www.marxists.org/archive/connolly/1910/lnr/foreword.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): I. The Problem Stated', 'https://www.marxists.org/archive/connolly/1910/lnr/01.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): II. The Rights of Man', 'https://www.marxists.org/archive/connolly/1910/lnr/02.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): III. The Honour of the Home', 'https://www.marxists.org/archive/connolly/1910/lnr/03.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): IV. The Suicide of a Nation', 'https://www.marxists.org/archive/connolly/1910/lnr/04.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): V. God or Mammon', 'https://www.marxists.org/archive/connolly/1910/lnr/05.htm'),
+    ('James Connolly', 'Labour, Nationality and Religion (1910): VI. The Firebrand or the Olive Leaf', 'https://www.marxists.org/archive/connolly/1910/lnr/06.htm'),
 ]
 CHUNK_WORDS = 850
-SKIP = re.compile(r'previous page|next page|table of contents|public domain|roger pearse|^footnotes?$|^notes?$|tertullian\.org|new advent|newadvent|instant download|church fathers:|^\W*$', re.I)
+SKIP = re.compile(r'previous page|next page|table of contents|public domain|roger pearse|^footnotes?$|^notes?$|tertullian\.org|new advent|newadvent|instant download|church fathers:|marxists internet archive|transcri|^next:|^previous:|^index|^top of page|^\W*$', re.I)
 
 
 class _Text(HTMLParser):
