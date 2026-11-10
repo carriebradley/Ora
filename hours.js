@@ -2158,7 +2158,7 @@
       const label = { stephen: d === 26 ? "St Stephen's Day" : 'the Octave of St Stephen', john: d === 27 ? "St John's Day" : 'the Octave of St John', innoc: d === 28 ? 'Holy Innocents' : 'the Octave of the Holy Innocents', epi: d === 6 ? 'the Epiphany' : 'within the Octave of the Epiphany', epioct: 'the Octave of the Epiphany', xmas: m === 12 && d === 25 ? 'Christmas Day' : m === 1 && d === 1 ? 'the Circumcision' : m === 1 && d === 5 ? 'the Eve of the Epiphany' : 'within the Octave of Christmas' }[kind];
       const coll = dayCollect(L, date, Sar);
       const HY = LH_HYMN[which];
-      let h = `<p class="muted" style="font-size:.82rem"><b>${NAME}</b> · ${esc(label)}. Sarum ${NAME} from the Hayes <i>Breviary Offices</i> (1880), Proper of Seasons: the antiphons are those of the Lauds of ${esc(label.replace(/^within the Octave of |^the Octave of |^the Eve of /, 'the '))}. The memorials said at the Hours in this season are not reproduced · psalms in the Douay version.</p>`;
+      let h = `<p class="muted" style="font-size:.82rem"><b>${NAME}</b> · ${esc(label)}. Sarum ${NAME} from the Hayes <i>Breviary Offices</i> (1880), Proper of Seasons: the antiphons are those of the Lauds of ${esc(label.replace(/^within the Octave of |^the Octave of |^the Eve of /, 'the ').replace(/^the (Christmas|St |Holy Innocents)/, '$1'))}. The memorials of this season (the Nativity, St Stephen, St John, the Innocents, St Mary) belong to Lauds and Vespers, not to the Little Hours · psalms in the Douay version.</p>`;
       h += sec('Opening', lines('In the Name of the Father, and of the Son, and of the Holy Ghost. Amen.\nOur Father (in silence).\n' + OPEN));
       h += sec('Hymn · ' + HY[0], lines(HY[1].replace('@D', XDOX)));
       const aIdx = { P: 0, T: 1, S: 2, N: nIdx }[which], a = A[aIdx] || A[A.length - 1] || 'Alleluia.';
@@ -2625,10 +2625,10 @@
       if (GIX) return GIX; GIX = {};
       const norm = s => { const m = /^\s*([1-3]?\s?[A-Za-z]+)\.?\s+(\d+):(\d+)/.exec(s || ''); if (!m) return ''; let b = m[1].toLowerCase(); b = b.startsWith('mat') ? 'matthew' : b.startsWith('mar') ? 'mark' : b.startsWith('lu') ? 'luke' : b.startsWith('jo') ? 'john' : b; return `${b} ${m[2]}:${m[3]}`; };
       GIX.norm = norm;
-      for (const k in MD.T) {
-        const L = MD.T[k].L || [];
-        if (L[6] && L[6][0] && /Gospel/i.test(L[6][0].h)) { const n = norm(L[6][0].s); if (n && !GIX[n]) GIX[n] = { k, at: 6 }; }
-        if (L[0] && L[0][0] && /Gospel/i.test(L[0][0].h) && !/-0$/.test(k)) { const n = norm(L[0][0].s); if (n && !GIX[n]) GIX[n] = { k, at: 0 }; }
+      for (const grp of ['T', 'S']) for (const k in MD[grp]) {
+        const L = MD[grp][k].L || [], e = MD[grp][k];
+        if (L[6] && L[6][0] && /Gospel/i.test(L[6][0].h)) { const n = norm(L[6][0].s); if (n && !GIX[n]) GIX[n] = { k, at: 6, e }; }
+        if (grp === 'T' && L[0] && L[0][0] && /Gospel/i.test(L[0][0].h) && !/-0$/.test(k)) { const n = norm(L[0][0].s); if (n && !GIX[n]) GIX[n] = { k, at: 0, e }; }
       }
       return GIX;
     }
@@ -2746,10 +2746,12 @@
           const tmk = de > 56 && !advent ? (diff7(date, E, adv)) : '';
           if (tmk && Sar.MASS && Sar.MASS[tmk]) { const gp = Sar.MASS[tmk].parts.find(x => x.k === 'Gospel'); if (gp) g = gp.ref; }
           let used = null;
-          if (g) { const f = findGospel(g); if (f && MD.T[f.k] && MD.T[f.k].L) used = { e: MD.T[f.k], at: f.at, k: f.k }; }
+          if (de === 56) g = 'john 3:1';      // Trinity Sunday: the Sarum Gospel is John 3:1 (Nicodemus)
+          let incomplete = false;
+          if (g) { const f = findGospel(g); if (f && f.e && f.e.L) { if ([0, 1, 2].every(i => f.e.L[f.at + i])) used = { e: f.e, at: f.at, k: f.k }; else incomplete = true; } }
           for (let i = 0; i < 3; i++) LS.push(used ? used.e.L[used.at + i] : T9(te, 6 + i));
           for (let i = 0; i < 9; i++) RS.push((me && me.R && i < 8 && me.R[i]) || (te.R || [])[i] || (sun.R || [])[i] || (de > 56 && (MD.T['Pent04-0'].R || [])[i]) || null);
-          lessonsFrom = 'Lessons of the first and second Nocturns: the Roman lessons for this ' + (dow === 0 ? 'Sunday' : 'day') + (mk ? ' (the Roman reading of this week of the month)' : '') + (advent ? '. At Sarum the first Nocturn of Advent read Isaiah, as here; the second, a sermon of St. Maximus (here the Roman sermon)' : '') + '. Third Nocturn: ' + (used ? (used.k === tkey ? 'the Roman homily on the Gospel of the day, which is also the Sarum Gospel.' : `the Sarum Gospel of the day (${esc(g.replace(/^\w/, c => c.toUpperCase()).replace(/-.*/, ''))}), with the Roman homily on that Gospel (from the Roman office where it is read).`) : 'the Roman homily for this Sunday.') + ' Responsories: Roman' + (advent ? '; five of the nine on Advent Sunday are the same as at Sarum.' : '.');
+          lessonsFrom = 'Lessons of the first and second Nocturns: the Roman lessons for this ' + (dow === 0 ? 'Sunday' : 'day') + (mk ? ' (the Roman reading of this week of the month)' : '') + (advent ? '. At Sarum the first Nocturn of Advent read Isaiah, as here; the second, a sermon of St. Maximus (here the Roman sermon)' : '') + '. Third Nocturn: ' + (used ? (used.k === tkey ? 'the Roman homily on the Gospel of the day, which is also the Sarum Gospel.' : `the Sarum Gospel of the day (${esc(g.replace(/^\w/, c => c.toUpperCase()).replace(/-.*/, ''))}), with the Roman homily on that Gospel (from the Roman office where it is read).`) : (incomplete ? `the Roman homily for this day (the Sarum Gospel is ${esc(g.replace(/^\w/, c => c.toUpperCase()))}, but no complete English homily on it is available).` : 'the Roman homily for this Sunday.')) + ' Responsories: Roman' + (advent ? '; five of the nine on Advent Sunday are the same as at Sarum.' : '.');
         } else {
           const src = (me && me.L && me.L[0]) ? me : (te.L && te.L[0]) ? te : sun;
           for (let i = 0; i < 3; i++) { LS.push(T9(src, i)); RS.push((src.R || [])[i] || (te.R || [])[i] || (sun.R || [])[i] || (de > 56 && (MD.T['Pent04-0'].R || [])[i]) || null); }
