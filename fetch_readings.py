@@ -6,7 +6,7 @@ does not require users to give anything of value. The feed's copyright notice mu
 the text (the app does this). Run daily (see .github/workflows/readings.yml) — the feed only holds
 ~10 days, so readings.json accumulates history.
 
-usage: python3 fetch_readings.py [--file sample.xml] [--out readings.json]
+usage: python3 tools/fetch_readings.py [--file sample.xml] [--out readings.json]
 """
 import json, re, sys, os, datetime, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
@@ -122,9 +122,16 @@ JUSTICE_SOURCES = [
     ('Asterius of Amasea', 'Sermon 3: Against Covetousness', 'https://tertullian.org/fathers/asterius_03_sermon3.htm'),
     ('Philoxenus of Hierapolis', 'First Discourse on Poverty', 'https://tertullian.org/fathers/philoxenus_discourse08.htm'),
     ('Philoxenus of Hierapolis', 'Second Discourse on Poverty', 'https://tertullian.org/fathers/philoxenus_discourse09.htm'),
+    ('The Didache', 'The Teaching of the Twelve Apostles', 'https://www.newadvent.org/fathers/0714.htm'),
+    ('St. Clement of Alexandria', 'Who is the Rich Man that shall be Saved?', 'https://www.newadvent.org/fathers/0207.htm'),
+    ('St. Cyprian of Carthage', 'On Works and Alms', 'https://www.newadvent.org/fathers/050708.htm'),
+    ('St. John Chrysostom', 'Homily 50 on Matthew (honouring Christ in the poor)', 'https://www.newadvent.org/fathers/200150.htm'),
+    ('St. John Chrysostom', 'Homily 66 on Matthew (on almsgiving)', 'https://www.newadvent.org/fathers/200166.htm'),
+    ('Pope St. Leo the Great', 'Sermon 9: Upon the Collections, IV', 'https://www.newadvent.org/fathers/360309.htm'),
+    ('Pope St. Leo the Great', 'Sermon 10: On the Collections, V', 'https://www.newadvent.org/fathers/360310.htm'),
 ]
 CHUNK_WORDS = 850
-SKIP = re.compile(r'previous page|next page|table of contents|public domain|roger pearse|^footnotes?$|^notes?$|tertullian\.org|^\W*$', re.I)
+SKIP = re.compile(r'previous page|next page|table of contents|public domain|roger pearse|^footnotes?$|^notes?$|tertullian\.org|new advent|newadvent|instant download|church fathers:|^\W*$', re.I)
 
 
 class _Text(HTMLParser):
@@ -140,7 +147,20 @@ class _Text(HTMLParser):
         if not self.skip: self.out.append(d)
 
 
-def page_paragraphs(html):
+def trim_site(html, url=''):
+    """Cut away the site furniture around the text (New Advent's donation notice above, its 'About this page' below)."""
+    if 'newadvent.org' in url:
+        i = html.find('Please help support the mission of New Advent')
+        if i > 0:
+            k = html.find('</div>', i)
+            html = html[k if k > 0 else i:]
+        j = html.find('About this page')
+        if j > 0: html = html[:j]
+    return html
+
+
+def page_paragraphs(html, url=''):
+    html = trim_site(html, url)
     p = _Text(); p.feed(html)
     raw = re.sub(r'\|\d+|\[p\. ?\d+\]', '', ''.join(p.out))      # page markers from the print edition
     lines = [re.sub(r'\s+', ' ', l).strip() for l in raw.split('\n')]
@@ -178,7 +198,7 @@ def build_justice(fetch=None):
     fetch = fetch or (lambda u: urllib.request.urlopen(urllib.request.Request(u, headers={'User-Agent': 'ora-personal-prayer-app/1.0 (personal use)'}), timeout=30).read().decode('utf-8', 'replace'))
     items = []
     for author, work, url in JUSTICE_SOURCES:
-        try: parts = chunk(page_paragraphs(fetch(url)))
+        try: parts = chunk(page_paragraphs(fetch(url), url))
         except Exception as e: print('justice: skipped', url, e); continue
         for i, c in enumerate(parts, 1):
             items.append({'author': author, 'work': work, 'part': f'{i} of {len(parts)}', 'url': url, 'words': sum(len(p.split()) for p in c), 'paras': c})

@@ -738,7 +738,19 @@
   }
 
   function justiceCard(j) {
-    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag)}</span></div><p style="font-family:var(--serif);font-size:1.05rem;line-height:1.55">“${esc(j.text)}”</p><p class="muted">${esc(j.who)} — ${esc(j.note)}</p><div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(j.url)}">Read the full text</a></div></section>`;
+    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag)}</span></div><p style="font-family:var(--serif);font-size:1.05rem;line-height:1.55">“${esc(j.text)}”</p><p class="muted">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}</p>${j.url ? `<div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(j.url)}">Read the full text</a></div>` : ''}</section>`;
+  }
+  function charitySaints(d) {
+    const S = window.JUSTICE_SAINTS || []; if (!S.length) return '';
+    const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), key = (a, b) => a * 100 + b, today = S.filter(x => x.m === m && x.d === dd);
+    const card = (x, lab) => `<section class="card"><div class="lab"><span class="grow">${esc(lab)}</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:.2em 0"><b>${esc(x.name)}</b></p><p style="margin:.3em 0">${esc(x.why)}</p><p class="muted" style="font-size:.78rem">${esc(L.MN[x.m - 1])} ${x.d}${x.cal ? ' · ' + esc(x.cal) : ''}</p></section>`;
+    let h = '<h3>A saint of charity</h3>';
+    if (today.length) h += today.map(x => card(x, 'Today')).join('');
+    else {
+      const k = key(m, dd), sorted = S.slice().sort((a, b) => key(a.m, a.d) - key(b.m, b.d)), nx = sorted.find(x => key(x.m, x.d) > k) || sorted[0];
+      h += card(nx, `Coming up · ${L.MN[nx.m - 1]} ${nx.d}`);
+    }
+    return h;
   }
   function viewJustice() {
     const J = window.JUSTICE || [];
@@ -750,7 +762,15 @@
       const it = items[((n % items.length) + items.length) % items.length], mins = Math.max(1, Math.round(it.words / 200));
       daily = `<h3>Today’s reading · about ${mins} min</h3><section class="card"><div class="lab"><span class="grow">${esc(it.author)}</span></div><p class="muted" style="margin-top:0">${esc(it.work)} — part ${esc(it.part)}</p>${it.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.65">${esc(p)}</p>`).join('')}<div class="row"><a class="btn" target="_blank" rel="noopener" href="${esc(it.url)}">Full text</a></div><p class="muted" style="font-size:.78rem">Public-domain translation. A new passage each day; the series repeats when it ends.</p></section>`;
     } else daily = '<p class="muted">The daily reading appears after the next refresh of your readings (the GitHub job runs a few times a day). Short quotations are below.</p>';
-    return `<h2 style="font-family:var(--serif)">Justice and the poor</h2><p class="muted">The Fathers, saints, councils, popes and the Catechism on wealth, work, the poor and creation.</p>${daily}<h3>A short quotation</h3>${justiceCard(f)}<h3>More quotations</h3>${J.map(justiceCard).join('')}`;
+    const T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
+    const teach = T.length ? `<h3>Teaching</h3>${T.map(t => `<details class="card" style="padding:10px 14px"><summary style="font-weight:600;cursor:pointer">${esc(t.t)}</summary><div style="margin-top:8px;line-height:1.55">${t.h}</div></details>`).join('')}` : '';
+    const saintList = S.length ? `<details class="card" style="padding:10px 14px"><summary style="font-weight:600;cursor:pointer">Saints of charity through the year (${S.length})</summary>${S.slice().sort((a, b) => a.m * 100 + a.d - b.m * 100 - b.d).map(x => `<p style="margin:.6em 0"><b>${esc(L.MN[x.m - 1])} ${x.d} · ${esc(x.name)}</b><br><span style="font-size:.92rem">${esc(x.why)}</span>${x.cal ? `<br><span class="muted" style="font-size:.76rem">${esc(x.cal)}</span>` : ''}</p>`).join('')}</details>` : '';
+    const order = ['Scripture', 'Church Father', 'Doctor of the Church', 'Saint', 'Council', 'Pope', 'Encyclical', 'Catechism'], groups = {};
+    J.forEach(j => (groups[j.tag] = groups[j.tag] || []).push(j));
+    const tags = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99);
+    const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture' };
+    const more = tags.map(t => `<details style="margin:6px 0"><summary style="font-weight:600;cursor:pointer;padding:6px 0">${esc(label[t] || t)} (${groups[t].length})</summary>${groups[t].map(justiceCard).join('')}</details>`).join('');
+    return `<h2 style="font-family:var(--serif)">Justice and the poor</h2><p class="muted">Scripture, the Fathers, saints, councils, popes and the Catechism on wealth, work, the poor and creation, from the first centuries to today.</p>${daily}${charitySaints(d)}<h3>A short quotation</h3>${justiceCard(f)}${teach}<h3>More</h3>${saintList}<p class="muted" style="font-size:.82rem;margin:10px 0 4px">${J.length} quotations, each checked against its source:</p>${more}`;
   }
 
   function viewCalendar() {
