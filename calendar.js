@@ -245,6 +245,52 @@
       : T(`${wd} of the ${ORD(n)} Week in Ordinary Time`, 12, 'Weekday', 'g', 'Ordinary Time');
   }
 
+  /* Office of Readings key for the modern Liturgy of the Hours (matches the keys in oor.js) */
+  function oorKey(d, o) {
+    o = opts(o);
+    const y = d.getUTCFullYear(), E = westernEaster(y), ash = add(E, -46), pent = add(E, 49);
+    const adv = advent(y), ck = add(adv, -7), { epi, bap } = ofEpi(y, o), w = dow(d), m = d.getUTCMonth() + 1, dd = d.getUTCDate();
+    if (d >= adv && d < D(y, 12, 25)) {
+      const wk = Math.floor(diff(d, adv) / 7) + 1;
+      if (w === 0) return 'a' + wk + '-0';
+      return dd >= 17 && m === 12 ? 'd' + dd : 'a' + wk + '-' + w;
+    }
+    if (d >= D(y, 12, 25) || d <= bap) {
+      if (m === 12) {
+        const C = D(y, 12, 25), n = diff(d, C);
+        if (n === 0) return 'xmas';
+        if (n <= 6 && (dow(C) === 0 ? n === 5 : w === 0)) return 'hf';
+        return dd >= 29 ? 'd' + dd : 'saint';
+      }
+      if (dd === 1) return 'jan1';
+      if (same(d, epi)) return 'epi';
+      if (same(d, bap)) return 'bap';
+      return (d < epi ? 'j-' : 'pe-') + w;
+    }
+    if (d < ash) { const M = dow(bap) === 0 ? add(bap, 1) : bap; return 'o' + (Math.floor((diff(d, M) + 1) / 7) + 1) + '-' + w; }
+    if (d < E) {
+      const k = diff(E, d);
+      if (k === 7) return 'palm';
+      if (k < 7) return 'hw-' + w;
+      const L1 = add(E, -42);
+      if (d < L1) return 'ash-' + w;
+      return 'l' + (Math.floor(diff(d, L1) / 7) + 1) + '-' + w;
+    }
+    if (d <= pent) {
+      const k = diff(d, E);
+      if (k === 49) return 'pent';
+      if ((k === 42 && o.ascension === 'sunday') || (k === 39 && o.ascension !== 'sunday')) return 'asc';
+      if (k === 39) return 'asc-thu';
+      return 'e' + (Math.floor(k / 7) + 1) + '-' + w;
+    }
+    const k = diff(d, pent);
+    if (k === 7) return 'trin';
+    if (o.corpus === 'sunday' ? k === 14 : k === 11) return 'corp';
+    if (k === 19) return 'sh';
+    const sn = sunOnOrBefore(d);
+    return 'o' + (34 - diff(ck, sn) / 7) + '-' + w;
+  }
+
   function ofTransfer(e, y, o) {
     let eff = D(y, e.m, e.d);
     if (e.kind !== 'S') return eff;
@@ -669,5 +715,5 @@
     return { date: iso(d), weekday: DN[dow(d)], roman: roman(d, o), ef: extraordinary(d, o), byz: byzantine(d, o) };
   }
 
-  return { day, roman, extraordinary, byzantine, westernEaster, julianEaster, advent, setData, DEFAULTS, D, add, iso, DN, MN, ORD };
+  return { day, roman, oorKey, extraordinary, byzantine, westernEaster, julianEaster, advent, setData, DEFAULTS, D, add, iso, DN, MN, ORD };
 });

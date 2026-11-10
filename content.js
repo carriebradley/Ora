@@ -111,7 +111,7 @@ const CONTENT = (() => {
     roman: {
       morning: [P('Sign of the Cross', T.cross), P('Opening', T.lips + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
         { type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }, 
-        { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
+        { type: 'oor', title: 'Office of Readings' }, { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
         P('Intercessions', 'Lord, I offer you this day: my work, my words, my joys and my sufferings. Bless those I love. Remember the sick, the dying and the lonely, and those who have asked for my prayers.'),
         P('Our Father', T.our), P('Blessing', T.blessing)],
       evening: [P('Sign of the Cross', T.cross), P('Opening', T.help + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
@@ -142,7 +142,7 @@ const CONTENT = (() => {
   /* ---------- hours (traditional times) ---------- */
   const HOURS = {
     roman: [
-      { n: 'Office of Readings', alt: 'Matins', at: 'Any time', start: null, d: 'Psalms, a long Scripture reading and a patristic reading.' },
+      { n: 'Office of Readings', alt: 'Matins', at: 'Any time', start: null, d: 'A long Scripture reading and a reading from a Father or saint.', oor: true },
       { n: 'Morning Prayer', alt: 'Lauds', at: 'Dawn', start: 5, d: 'Hymn, three psalms, short reading, Canticle of Zechariah (Benedictus).', hour: 'lauds' },
       { n: 'Midmorning Prayer', alt: 'Terce', at: '9 am', start: 9, d: 'Short daytime office.', hour: 'daytime' },
       { n: 'Midday Prayer', alt: 'Sext', at: 'Noon', start: 12, d: 'Short daytime office.', hour: 'daytime' },

@@ -259,6 +259,40 @@
     return `<details style="margin-top:8px" open><summary><b>How it was kept</b></summary>${k.map(e => `<div style="margin:8px 0">${chip(TAG[e.tag][0], TAG[e.tag][1])}<p style="margin:4px 0">${esc(e.text)}</p>${e.src.length ? `<p class="muted" style="font-size:.74rem;margin:0">${esc(e.src.join(' · '))}</p>` : ''}</div>`).join('')}</details>`;
   }
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
+  /* ---------- Office of Readings (modern Liturgy of the Hours): the table of readings, with the Scripture in the Douay-Rheims ---------- */
+  const NAMEW = n => String(n).replace(/^(Saint|Saints|Our|The|Blessed|Dedication of the|Conversion of|Chair of|Nativity of|Passion of)\s+/i, '').split(/[ ,]/).find(w => w.length > 3) || n;
+  function oorSaint(iso, title) {
+    const md = (+iso.slice(5, 7)) + '/' + (+iso.slice(8, 10)), A = (self.OOR_SAINTS || {})[md] || [];
+    const hit = A.find(e => title.includes(NAMEW(e.n)));
+    if (hit) return hit;
+    for (const k in (self.OOR_SAINTS || {})) for (const e of self.OOR_SAINTS[k]) if (e.r && title.includes(NAMEW(e.n))) return e;
+    return null;
+  }
+  function oorHTML(iso) {
+    if (!self.OOR || !L.oorKey) return '';
+    const d = P(iso), r = L.roman(d, S), k = L.oorKey(d, S), md = (+iso.slice(5, 7)) + '/' + (+iso.slice(8, 10));
+    let sea = self.OOR[k] || null, sa = null, opt = null;
+    if (k === 'saint') sa = ((self.OOR_SAINTS || {})[md] || [])[0] || null;
+    else if (!r.temporal) sa = oorSaint(iso, r.title) || (((self.OOR_SAINTS || {})[md] || []).length === 1 ? self.OOR_SAINTS[md][0] : null);
+    else opt = ((self.OOR_SAINTS || {})[md] || []).find(e => (r.also || []).some(a => /Optional/.test(a.note) && a.title.includes(NAMEW(e.n)))) || null;
+    const big = sa && (k === 'saint' || /^(S|F|FL)$/.test(r.kind || ''));
+    const first = big && sa.r ? sa : sea, second = sa || sea;
+    const cite = (lab, val) => `<div style="margin:8px 0 2px"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${lab}</div><div>${val}</div></div>`;
+    let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(r.title)}</p>`;
+    if (first && first.r) {
+      h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
+      h += `<details style="margin:2px 0 8px"><summary class="muted" style="font-size:.82rem">Read it here</summary><div class="asv" data-tr="dra" data-ref="${esc(first.q)}" style="font-family:var(--serif);font-size:1.02rem;line-height:1.55"></div></details>`;
+    }
+    if (second && second.a) {
+      h += cite('Second reading', `<span style="font-family:var(--serif);font-size:1.02rem">${esc(second.a)}</span> <span class="muted">· <i>${esc(second.w)}</i></span>`);
+    }
+    if (opt) h += `<p class="muted" style="font-size:.78rem;margin:2px 0">If ${esc(opt.n)} is kept today, the second reading is from ${esc(opt.a)}, <i>${esc(opt.w)}</i>.</p>`;
+    if (!(first && first.r) && !(second && second.a)) h += `<p class="muted">This day is not in the table of readings Ora uses${k === 'asc-thu' ? ' (Thursday of the 6th week of Easter, where the Ascension is kept on Sunday)' : ''}. Universalis has the full office.</p>`;
+    else if (!(second && second.a)) h += `<p class="muted" style="font-size:.78rem">The second reading for this day is not in the table Ora uses; Universalis has it.</p>`;
+    h += `<div class="row"><a class="btn sm fill" target="_blank" rel="noopener" href="https://universalis.com/${iso.replace(/-/g, '')}/readings.htm">Full office (Universalis)</a></div>`;
+    h += `<p class="muted" style="font-size:.74rem">From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture in the Douay-Rheims. The psalms and the second readings are under copyright, so the full office is on Universalis.</p>`;
+    return h;
+  }
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
     if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No Sarum Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
@@ -706,6 +740,7 @@
         else { const rd = st.readings[v.iso]; x.text = rd && rd !== 'loading' ? readingsSpeech(rd) : 'The Mass readings of the day. Open the readings to read or listen.'; }
       }
       if (s.type === 'silence') x.text = `${s.title}. ${s.text || 'Be still.'}`;
+      if (s.type === 'oor') x.text = '';
       if (s.type === 'office') x.text = s.title;
       if (s.type === 'hourlink') x.text = `${s.title}. Open the full office to pray the psalms.`;
       if (s.type === 'prayer') { x.body = s.text; x.text = `${s.title}. ${s.text}`; }
@@ -748,6 +783,7 @@
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
       else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Matins, Prime, Terce, Sext and None are under More → Hours of the day. Other English Sarum resources:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'oor') h += `<details><summary class="muted">Show</summary>${oorHTML(st.date)}</details>`;
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
@@ -850,7 +886,7 @@
     let cur = -1; hrs.forEach((x, i) => { if (x.start != null && x.start <= now) cur = i; });
     if (rite === 'byz' && now >= 0 && cur < 0) cur = 0;
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div>`;
-    hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b>${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'sarum' && x.w === 'M' && window.Hours && Hours.sarumMatins) h += `<details class="matins-d" style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray Matins for ${esc(fmtShort(st.date))}</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>`; else if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
+    hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b>${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'roman' && x.oor) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray the Office of Readings for ${esc(fmtShort(st.date))}</summary>${oorHTML(st.date)}</details>`; else if (rite === 'sarum' && x.w === 'M' && window.Hours && Hours.sarumMatins) h += `<details class="matins-d" style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray Matins for ${esc(fmtShort(st.date))}</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>`; else if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
     if (rite === 'sarum' && window.Hours && Hours.sarumBVM) h += `<details style="margin:10px 0 8px"><summary><b>The Commemoration of Our Lady</b> <span class="muted" style="font-size:.8rem">· a short office of Mary, said on free days, chiefly Saturdays</span></summary>${[['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None'], ['V', 'Vespers'], ['C', 'Compline']].map(([w, n]) => `<details style="margin:4px 0 4px 10px"><summary class="muted" style="font-size:.82rem">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}</details>`;
     h += `<div class="row">${linksHTML(rite, 'any')}</div>`;
     return h;
