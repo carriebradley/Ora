@@ -26,6 +26,7 @@
 
   /* ---------- settings & state ---------- */
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '' }, store.get('ora.settings', {}));
+  S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   S.rite = 'roman';  // always open on the Roman tab; a tradition picked during a visit is not carried over
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
@@ -237,7 +238,7 @@
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine</span>${speakBtn(spokenCard(r))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${r.fast ? chip(r.fast, 'fast') : ''}</div>
       ${byzSaintHTML(v.iso, r)}${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
-      <p class="muted">Pascha ${fmtLong(r.pascha)} (${S.byzPascha === 'julian' ? 'Julian reckoning' : 'Gregorian reckoning'})</p></section>`;
+      <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
   }
   const FMON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   function felireHTML(iso, card) {
@@ -837,7 +838,7 @@
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
-      <p><b>Byzantine</b> — Byzantine cycle computed from Pascha (Gregorian or Julian reckoning), Menaion feasts on Gregorian dates by default, plus entries from your own UGCC calendar (2026–27).</p>
+      <p><b>Byzantine</b> — Byzantine Catholic cycle on the Gregorian calendar (the same dates as the Roman), with the saints of each day from the Ukrainian Catholic calendar and entries from your own UGCC calendar (2026–27).</p>
       <p><b>Sarum (traditional)</b> — Sarum temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <section class="card"><h3>Credits &amp; sources</h3>
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
@@ -958,8 +959,6 @@
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
-      ${sel('s_pas', 'Byzantine: Pascha reckoning', [['gregorian', 'Gregorian (same as Western Easter)'], ['julian', 'Julian (Orthodox date)']], S.byzPascha)}
-      <div class="check"><input type="checkbox" id="s_old" ${S.byzOldCal ? 'checked' : ''}><label for="s_old" style="margin:0;color:var(--ink)">Byzantine: fixed feasts on the Old (Julian) calendar</label></div>
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Sarum: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
@@ -968,7 +967,7 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzPascha: g('s_pas'), byzOldCal: $('#s_old').checked, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
     save(); infoCache.clear(); $('#dlg').close(); render();
   }
