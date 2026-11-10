@@ -860,7 +860,15 @@
   function renderHeader() {
     $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button><button class="ib" data-act="today" title="Today">⌂</button>`;
   }
+  function setLitColour() {
+    try {
+      const v = dayInfo(st.date), r = S.rite === 'sarum' ? v.sarum : S.rite === 'byz' ? v.byz : v.roman;
+      let c = r && r.color; if (c === 'w' || !c) c = 'gold';          // white vestments: show gold, which reads on a light page
+      document.documentElement.style.setProperty('--lit', col(c));
+    } catch (e) { /* keep the default */ }
+  }
   function render() {
+    setLitColour();
     renderHeader();
     document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === st.tab));
     $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
