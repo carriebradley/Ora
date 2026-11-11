@@ -30,7 +30,7 @@
   S.rite = 'roman';  // always open on the Roman tab; a tradition picked during a visit is not carried over
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
-    kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, active: -1, readings: {}, art: {} };
+    kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
 
   { const q = new URLSearchParams(location.search); if (q.get('tab')) st.tab = q.get('tab'); if (/^\d{4}-\d\d-\d\d$/.test(q.get('date') || '')) st.date = q.get('date'); if (q.get('kind')) st.kind = q.get('kind'); if (q.get('rite')) S.rite = q.get('rite'); }
 
@@ -738,11 +738,16 @@
   }
 
 
+  const SHOURS = [['M', 'Matins'], ['L', 'Lauds'], ['LH', 'Little Hrs'], ['V', 'Vespers'], ['C', 'Compline']];
+  const kindOf = rite => rite === 'sarum' ? st.shour : st.kind;
   function stepsFor(rite, kind, v) {
     const tpl = C.FLOWS[rite][kind], r = v[rite === 'sarum' ? 'sarum' : rite === 'byz' ? 'byz' : 'roman'];
     const out = [];
+    const sat = P(v.iso).getUTCDay() === 6;
     for (const s0 of tpl) {
-      if (s0.type === 'silence' && !s0.text) continue;  // silence timers removed
+      if (s0.type === 'silence' && !s0.text) continue;
+      if (s0.type === 'bvm' && !(sat && window.Hours && Hours.sarumBVM)) continue;   // Our Lady's office: Saturdays
+      if ((s0.type === 'matins' || s0.type === 'little') && !window.Hours) continue;  // silence timers removed
       const s = s0.type === 'silence' ? { type: 'prayer', title: s0.title, text: s0.text } : s0;
       const x = Object.assign({}, s);
       if (s.type === 'calendar') { x.text = `${r.title}. ${r.season}.${r.fast ? ' ' + r.fast + '.' : ''}${rite === 'sarum' && r.notes ? ' ' + r.notes : ''}`; x.head = r.title; x.sub = [r.rank, r.season, r.fast].filter(Boolean).join(' · '); }
@@ -756,15 +761,11 @@
       if (s.type === 'silence') x.text = `${s.title}. ${s.text || 'Be still.'}`;
       if (s.type === 'oor') x.text = '';
       if (s.type === 'office') x.text = s.title;
+      if (s.type === 'bvm') x.text = 'The Commemoration of Our Lady.';
+      if (s.type === 'matins' || s.type === 'little') x.text = s.title + '.';
       if (s.type === 'hourlink') x.text = `${s.title}. Open the full office to pray the psalms.`;
       if (s.type === 'prayer') { x.body = s.text; x.text = `${s.title}. ${s.text}`; }
       out.push(x);
-      /* Sarum morning: Matins and the little hours, each folded, after Lauds */
-      if (rite === 'sarum' && s.type === 'office' && s.which === 'L' && window.Hours)
-        out.push({ type: 'sarumhours', title: 'Matins and the little hours', text: 'Matins, Prime, Terce, Sext and None. Open each hour to pray it.' });
-      /* Saturdays in Sarum: the Commemoration of Our Lady after Lauds (morning) or Vespers (evening) */
-      if (rite === 'sarum' && s.type === 'office' && (s.which === 'L' || s.which === 'V') && P(v.iso).getUTCDay() === 6 && window.Hours && Hours.sarumBVM)
-        out.push({ type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: s.which === 'L' ? [['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']] : [['V', 'Vespers'], ['C', 'Compline']], text: 'The Commemoration of Our Lady. Open each hour to pray it.' });
     }
     return out;
   }
@@ -791,9 +792,9 @@
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
-    const rite = S.rite, steps = stepsFor(rite, st.kind, v);
+    const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
-      <div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`;
+      ${rite === 'sarum' ? `<div class="seg hrs">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`}`;
     h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps · ${esc(fmtLong(st.date))}</span></div>`;
     steps.forEach((s, i) => {
       h += `<div class="step ${st.active === i ? 'on' : ''}" id="st${i}"><div class="t">${esc(s.title)}</div>`;
@@ -802,7 +803,9 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (rite === 'roman' ? doSlot(st.date, { L: 'Morning Prayer', V: 'Evening Prayer', C: 'Night Prayer' }[s.which] || '') : '') + (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Matins, Prime, Terce, Sext and None are in the next step. Other English resources for this office:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'office') h += (rite === 'roman' ? doSlot(st.date, { L: 'Morning Prayer', V: 'Evening Prayer', C: 'Night Prayer' }[s.which] || '') : '') + (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Other English resources for this office:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'matins') h += Hours.sarumMatins ? `<details class="matins-d" open><summary class="muted">Show or hide</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : '';
+      else if (s.type === 'little') h += `<div class="muted" style="font-size:.82rem">Prime at about 6, Terce at 9, Sext at noon, None at 3. Open each hour to pray it.</div>${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'sarumhours') h += `<div class="muted" style="font-size:.82rem">Matins at night; Prime, Terce, Sext and None at about 6, 9, noon and 3.</div>${Hours.sarumMatins ? `<details class="matins-d" style="margin:4px 0"><summary class="muted">Matins</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : ''}${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'bvm') h += `<div class="muted" style="font-size:.82rem">A short office of Mary, said on free days, chiefly Saturdays. Optional.</div>${s.hrs.map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'oor') h += doSlot(st.date, 'Office of Readings') + `<details><summary class="muted">Show</summary>${oorHTML(st.date)}</details>`;
@@ -950,7 +953,7 @@
      refreshed twice a day by tools/fetch_divineoffice.py; the audio streams from Divine Office's own podcast host. ---------- */
   let doAudio = null;
   const doP = fetch('office_audio.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(j => { doAudio = j || store.get('ora.doaudio', {}) || {}; if (j) store.set('ora.doaudio', j); hydrateDo(); });
+    .then(j => { const ok = j && Object.keys(j).length; doAudio = ok ? j : (store.get('ora.doaudio', {}) || {}); if (ok) store.set('ora.doaudio', j); hydrateDo(); });   // an empty list never replaces the last good one
   const doSlot = (iso, name, quiet) => name ? `<div class="doaud"${quiet ? ' data-q="1"' : ''} data-iso="${esc(iso)}" data-k="${esc(String(name).replace(/[^A-Za-z]/g, ''))}"></div>` : '';
   function hydrateDo() {
     if (!doAudio) return;
@@ -1028,7 +1031,7 @@
   }
   async function playSession() {
     stopAudio(); const my = ++A.token; A.playing = true;
-    const steps = stepsFor(S.rite, st.kind, dayInfo(st.date));
+    const steps = stepsFor(S.rite, kindOf(S.rite), dayInfo(st.date));
     $('#player').classList.add('show'); $('#ppbtn').textContent = '❚❚';
     for (let i = 0; i < steps.length && my === A.token; i++) {
       st.active = i; $('#pname').textContent = steps[i].title;
@@ -1078,6 +1081,7 @@
       case 'jtab': st.jtab = v; break;
       case 'rite': S.rite = v; save(); break;
       case 'kind': st.kind = v; break;
+      case 'shour': st.shour = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
       case 'qnext': st.quoteShift++; break;
       case 'pnext': st.popeShift++; break;

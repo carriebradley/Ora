@@ -129,6 +129,20 @@ const CONTENT = (() => {
         { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)]
     },
     sarum: {
+      // the Traditional tab is laid out by hour: Matins, Lauds, the Little Hours, Vespers, Compline
+      M: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' }, { type: 'matins', title: 'Matins' },
+        P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail)],
+      L: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' }, { type: 'quote', title: 'From the Saints' },
+        { type: 'office', title: 'Lauds', which: 'L' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['L', 'Lauds']] },
+        P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
+      LH: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' },
+        { type: 'little', title: 'Prime, Terce, Sext and None' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']] },
+        P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail)],
+      V: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' }, { type: 'art', title: 'Sacred Art' },
+        { type: 'office', title: 'Vespers', which: 'V' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['V', 'Vespers']] },
+        P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
+      C: [P('Sign of the Cross', T.cross), { type: 'office', title: 'Compline', which: 'C' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['C', 'Compline']] },
+        P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
       morning: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' },
         { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 },
         { type: 'office', title: 'Lauds', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
