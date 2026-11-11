@@ -14,7 +14,7 @@
 :root{
   --bg:#f6f1e7; --card:#fffdf8; --ink:#2a2220; --muted:#655a54; --line:#e4dccd; --accent:#7a2a3d; --accent-ink:#fff; --gold:#b8922a; --lit:#3d7a4a; --lit-white:#b6a99b; --rubric:#a8232a;
   --shadow:0 1px 2px rgba(60,30,20,.06),0 6px 18px rgba(60,30,20,.06);
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --reading-scale:1; --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root{--bg:#171214;--card:#221a1d;--ink:#efe6dc;--muted:#a99b92;--line:#352a2e;--accent:#d98a9c;--accent-ink:#1a1013;--gold:#d3b04c;--lit-white:#f0e8da;--rubric:#e0787a;--shadow:none}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -28,8 +28,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;color:var(--accent)}
 .ib:active{background:var(--line)}
 main{max-width:720px;margin:0 auto;padding:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 12px;box-shadow:var(--shadow)}
-.lab{display:flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 17px;margin:0 0 12px;box-shadow:var(--shadow)}
+.lab{display:flex;align-items:center;gap:8px;font-size:.79rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .lab .grow{flex:1}
 .sw{width:12px;height:12px;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.35);flex:none}
 h2{font-family:var(--serif);font-weight:600;font-size:1.3rem;line-height:1.25;margin:6px 0 8px}
@@ -40,7 +40,7 @@ h3{font-family:var(--serif);margin:0 0 6px;font-size:1.05rem}
 .chip.fast{background:#6a3f9a22;color:#6a3f9a}
 @media (prefers-color-scheme:dark){.chip.fast{background:#a07bd422;color:#c4a6ee}}
 p{margin:6px 0}
-.muted{color:var(--muted);font-size:.88rem}
+.muted{color:var(--muted);font-size:.91rem}
 .fast{font-size:.9rem;color:#6a3f9a}
 @media (prefers-color-scheme:dark){.fast{color:#c4a6ee}}
 ul.also{margin:6px 0 0;padding:0;list-style:none;font-size:.88rem;color:var(--muted)}
@@ -55,7 +55,7 @@ ul.also li{padding:2px 0}
 .seg button{flex:1;padding:7px 4px;border-radius:99px;font-size:.88rem}
 .seg.hrs button{font-size:.8rem;padding:7px 1px;letter-spacing:-.01em;white-space:nowrap}
 .seg button.on{background:var(--card);box-shadow:var(--shadow);font-weight:600}
-.quote{font-family:var(--serif);font-size:1.12rem;line-height:1.5;margin:8px 0}
+.quote{font-family:var(--serif);font-size:calc(1.12rem * var(--reading-scale));line-height:1.6;margin:8px 0}
 .quote small{display:block;font-family:var(--sans);font-size:.82rem;color:var(--muted);margin-top:6px}
 .art img{width:100%;max-height:420px;object-fit:contain;background:#0001;border-radius:10px;display:block}
 .art .ph{height:160px;border-radius:10px;background:var(--line);display:grid;place-items:center;color:var(--muted);font-size:.85rem}
@@ -64,7 +64,7 @@ ul.also li{padding:2px 0}
 .step{border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:0 0 14px}
 .step.on{border-color:var(--accent)}
 .step .t{font-family:var(--serif);font-weight:600}
-.step .tx{font-family:var(--serif);font-size:1.02rem;line-height:1.55;white-space:pre-wrap}
+.step .tx{font-family:var(--serif);font-size:calc(1.02rem * var(--reading-scale));line-height:1.65;white-space:pre-wrap}
 .timer{font-variant-numeric:tabular-nums;font-size:1.6rem;font-family:var(--serif)}
 /* tab bar */
 nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
@@ -102,8 +102,8 @@ details>summary{cursor:pointer}
 .srcd{margin:8px 0 2px}.srcd>summary{font-size:.8rem;color:var(--muted)}.srcd p{font-size:.78rem;color:var(--muted);margin:6px 0}
 details.credits>summary{list-style:none;display:flex;align-items:center}details.credits>summary::-webkit-details-marker{display:none}details.credits>summary::after{content:"Show";margin-left:auto;font-size:.8rem;color:var(--accent)}details.credits[open]>summary::after{content:"Hide"}
 a{color:var(--accent)}
-.asv{font-family:var(--serif);font-size:1.02rem;line-height:1.6;padding:2px 0 10px}.asv sup{font-size:.65em;color:var(--muted);margin-right:2px}
-.sec{margin:14px 0;font-family:var(--serif);line-height:1.55}.sec>b{display:block;font-family:var(--sans,inherit);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}.psalm{margin:6px 0 12px}.ant{margin:10px 0 2px;font-style:italic}.ant i{color:var(--muted)}
+.asv{font-family:var(--serif);font-size:calc(1.02rem * var(--reading-scale));line-height:1.68;padding:2px 0 10px}.asv sup{font-size:.65em;color:var(--muted);margin-right:2px}
+.sec{margin:14px 0;font-family:var(--serif);font-size:calc(1rem * var(--reading-scale));line-height:1.65}.sec>b{display:block;font-family:var(--sans,inherit);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}.psalm{margin:6px 0 12px}.ant{margin:10px 0 2px;font-style:italic}.ant i{color:var(--muted)}
 .note{background:var(--line);border-radius:10px;padding:8px 10px;font-size:.84rem;margin:8px 0}
 .glance .gl{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:10px;align-items:center;padding:15px 0;border-top:1px solid var(--line);font-size:.9rem}
 .glance .gl:first-of-type,.glance .lab+.gl{border-top:0}
@@ -113,7 +113,7 @@ a{color:var(--accent)}
 .glance .gn{color:var(--ink);font-weight:700;font-size:.96rem;letter-spacing:.01em}
 .glance .gb{justify-self:end;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--line);white-space:nowrap}
 /* Badges use each rite's liturgical colour; the label retains feast/fast status. */
-.glance .gd{grid-column:1/-1;color:var(--ink);min-width:0;font-family:var(--serif);font-size:.95rem}
+.glance .gd{grid-column:1/-1;color:var(--ink);min-width:0;font-family:var(--serif);font-size:.99rem;line-height:1.5}
 @media (max-width:420px){.glance .gl{column-gap:10px}.glance .gb{font-size:.86rem}}
 
 /* the liturgical colour of the day (set from the day's colour in the chosen tradition) */

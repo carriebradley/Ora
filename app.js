@@ -25,11 +25,14 @@
   const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
 
   /* ---------- settings & state ---------- */
-  const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '' }, store.get('ora.settings', {}));
+  const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable' }, store.get('ora.settings', {}));
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
   if (!['ukrainian', 'ruthenian'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
   if (!['default', '8', '9'].includes(S.byzAnna)) S.byzAnna = 'default';
+  if (!['compact', 'comfortable', 'large'].includes(S.readingSize)) S.readingSize = 'comfortable';
+  const applyReadingSize = () => document.documentElement.style.setProperty('--reading-scale', { compact: .94, comfortable: 1, large: 1.18 }[S.readingSize]);
+  applyReadingSize();
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
     kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
@@ -333,7 +336,7 @@
     const minor = /Memorial|Saint|Commemoration|Octave|lessons|Memory/.test(rk);
     const martin = rite === 'sarum' && r.historicalObservance && r.historicalObservance.name === "St. Martin's Lent";
     const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : 'plain';
-    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : 'Ordinary day';
+    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
     const observance = r.historicalObservance;
     return { kind, badge, detail: [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean).join(' · ') };
@@ -341,7 +344,7 @@
   function observanceColor(r, rite) {
     const x = status(r, rite);
     const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
-    return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Sunday' ? 'g' : 'w';
+    return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
   }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
@@ -1084,6 +1087,7 @@
     const sel = (id, label, opts, cur) => `<label for="${id}">${label}</label><select id="${id}">${opts.map(([v, t]) => `<option value="${v}" ${cur === v ? 'selected' : ''}>${t}</option>`).join('')}</select>`;
     d.innerHTML = `<h3 id="settings-title">Settings</h3>
       ${sel('s_rite', 'Primary rite (prayer, quotes, hours)', Object.entries(RITES), S.rite)}
+      ${sel('s_reading', 'Prayer and Scripture text size', [['compact', 'Compact'], ['comfortable', 'Comfortable'], ['large', 'Large']], S.readingSize)}
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
@@ -1097,9 +1101,9 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzAnna: g('s_byz_anna'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzAnna: g('s_byz_anna'), readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
-    save(); infoCache.clear(); $('#dlg').close(); render();
+    applyReadingSize(); save(); infoCache.clear(); $('#dlg').close(); render();
   }
 
   /* ---------- events ---------- */
