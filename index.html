@@ -12,7 +12,7 @@
 <title>Ora — Daily Prayer</title>
 <style>
 :root{
-  --bg:#f6f1e7; --card:#fffdf8; --ink:#2a2220; --muted:#7a6d66; --line:#e4dccd; --accent:#7a2a3d; --accent-ink:#fff; --gold:#b8922a; --lit:#3d7a4a; --rubric:#a8232a;
+  --bg:#f6f1e7; --card:#fffdf8; --ink:#2a2220; --muted:#655a54; --line:#e4dccd; --accent:#7a2a3d; --accent-ink:#fff; --gold:#b8922a; --lit:#3d7a4a; --rubric:#a8232a;
   --shadow:0 1px 2px rgba(60,30,20,.06),0 6px 18px rgba(60,30,20,.06);
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
@@ -95,6 +95,10 @@ select,input[type=range]{width:100%;font:inherit;padding:8px;border-radius:10px;
 .check{display:flex;align-items:center;gap:8px;margin:10px 0;color:var(--ink);font-size:.95rem}
 .check input{width:20px;height:20px;accent-color:var(--accent)}
 details>summary{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.skip-link{position:fixed;top:0;left:8px;z-index:20;background:var(--card);padding:10px;transform:translateY(-120%)}
+.skip-link:focus{transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .srcd{margin:8px 0 2px}.srcd>summary{font-size:.8rem;color:var(--muted)}.srcd p{font-size:.78rem;color:var(--muted);margin:6px 0}
 details.credits>summary{list-style:none;display:flex;align-items:center}details.credits>summary::-webkit-details-marker{display:none}details.credits>summary::after{content:"Show";margin-left:auto;font-size:.8rem;color:var(--accent)}details.credits[open]>summary::after{content:"Hide"}
 a{color:var(--accent)}
@@ -125,10 +129,11 @@ nav button.on b{color:var(--lit);filter:saturate(1.1)}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#app">Skip to prayer content</a>
 <header id="hdr"></header>
-<main id="app"></main>
+<main id="app" tabindex="-1" aria-label="Daily prayer content"></main>
 <div id="player"><div class="nm" id="pname"></div><button data-act="pp" id="ppbtn" title="Pause">❚❚</button><button data-act="stop" title="Stop">■</button></div>
-<nav id="nav">
+<nav id="nav" aria-label="Main navigation">
   <button data-tab="today"><b>✦︎</b>Today</button>
   <button data-tab="pray"><b>☩︎</b>Pray</button>
   <button data-tab="readings"><b><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true" style="display:block"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5z"/><path d="M12 6.5v13"/></svg></b>Readings</button>
@@ -136,7 +141,7 @@ nav button.on b{color:var(--lit);filter:saturate(1.1)}
   <button data-tab="calendar"><b>▦︎</b>Calendar</button>
   <button data-tab="more"><b>☰︎</b>More</button>
 </nav>
-<dialog id="dlg"></dialog>
+<dialog id="dlg" aria-labelledby="settings-title"></dialog>
 <script src="calendar.js"></script>
 <script src="sarummass.js"></script>
 <script src="sarum.js"></script>

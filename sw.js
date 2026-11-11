@@ -1,5 +1,61 @@
-const V='ora-v108',FILES=['./','index.html','app.js','calendar.js','sarummass.js','sarum.js','data.js','content.js','byzlect.js','justice.js','felire.js', 'oor.js','hours.js','manifest.webmanifest','icon.svg'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES)));self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))));self.clients.claim()});
-self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.origin!==location.origin)return;if((u.pathname.endsWith('/readings.json')||u.pathname.endsWith('/fathers.json'))){e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(V).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)));return}if(u.pathname.endsWith('/office_audio.json')||u.pathname.endsWith('/angelus.json'))return;
-  if(u.pathname.endsWith('/matins.json')||u.pathname.endsWith('/oortext.json')){e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(x=>{const c=x.clone();caches.open(V).then(k=>k.put(e.request,c));return x})));return}e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))});
+const V = 'ora-v109', DATA = 'ora-data-v1';
+const FILES = ['./', 'index.html', 'app.js', 'calendar.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzlect.js', 'justice.js', 'felire.js', 'oor.js', 'hours.js', 'oortext.json', 'manifest.webmanifest', 'icon.svg'];
+const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json']);
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
+});
+self.addEventListener('activate', e => {
+  e.waitUntil((async () => {
+    const data = await caches.open(DATA);
+    // Retain downloaded texts from the previous version before removing its shell.
+    for (const key of await caches.keys()) {
+      if (!/^ora-v\d+$/.test(key) || key === V) continue;
+      const old = await caches.open(key);
+      let migrated = true;
+      for (const request of await old.keys()) {
+        if (!JSON_FILES.has(new URL(request.url).pathname.split('/').pop()) || await data.match(request)) continue;
+        const response = await old.match(request);
+        if (response && response.ok) {
+          try { await response.clone().json(); } catch (_) { continue; }
+          try { await data.put(request, response); } catch (_) { migrated = false; }
+        }
+      }
+      if (migrated) await caches.delete(key);
+    }
+    await self.clients.claim();
+  })());
+});
+
+self.addEventListener('fetch', e => {
+  const u = new URL(e.request.url);
+  if (e.request.method !== 'GET' || u.origin !== self.location.origin) return;
+  const file = u.pathname.split('/').pop();
+  if (JSON_FILES.has(file)) {
+    e.respondWith((async () => {
+      // The bundled reading library belongs to this shell version, so an older
+      // persistent copy cannot hide new readings when an upgrade is offline.
+      const data = await caches.open(file === 'oortext.json' ? V : DATA);
+      try {
+        const response = await fetch(e.request);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        await response.clone().json();
+        try { await data.put(e.request, response.clone()); } catch (_) { /* storage full: keep serving online */ }
+        return response;
+      } catch (_) {
+        return await data.match(e.request) || await caches.match(e.request) || new Response('Offline: this content has not been downloaded yet.', { status: 503 });
+      }
+    })());
+    return;
+  }
+  e.respondWith((async () => {
+    const shell = await caches.open(V);
+    const cached = await shell.match(e.request);
+    if (cached) return cached;
+    if (e.request.mode === 'navigate') {
+      try { return await fetch(e.request); }
+      catch (_) { return await shell.match('index.html') || new Response('Ora is unavailable offline.', { status: 503 }); }
+    }
+    return fetch(e.request);
+  })());
+});

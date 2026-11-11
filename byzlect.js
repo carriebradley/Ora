@@ -13,7 +13,7 @@
   function title(e, dow, label) { return /^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)$/.test(e.t) && label ? `${e.t} ${label}` : e.t; }
   /* read(d, shift, paschaFn): d = civil date (UTC midnight); shift = 0 (new calendar) or 13 (Menaion dates on the Old Calendar);
      paschaFn(year) = civil date of the Pascha you keep. Returns { sets:[{t,r,a,chk}], notes:[] } */
-  function read(d, shift, paschaFn) {
+  function read(d, shift, paschaFn, church = 'ukrainian') {
     const y = d.getUTCFullYear(), dow = d.getUTCDay(), notes = [], sets = [];
     const men = add(d, -shift), mk = (men.getUTCMonth() + 1) + '-' + men.getUTCDate(), mm = men.getUTCMonth() + 1, md = men.getUTCDate();
     const P = paschaFn(y), o = off(d, P);
@@ -62,6 +62,7 @@
     if (dow === 6) { if (inR(908, 913)) sp.push('sbe'); if (inR(915, 921)) sp.push('sae'); if (inR(1218, 1224)) sp.push('sbn'); if (inR(1226, 1231) || (mm === 1 && md === 1)) sp.push('san'); if (inR(102, 104)) sp.push('sbt'); if (inR(107, 113)) sp.push('sat'); }
     if (dow === 0) { if (inR(908, 913)) sp.push('sue'); if (inR(915, 921)) sp.push('suae'); if (inR(1211, 1217)) sp.push('fore'); if (inR(1218, 1224)) sp.push('subn'); if (inR(1226, 1231) || (mm === 1 && md === 1)) sp.push('suan'); if (inR(102, 104)) sp.push('subt'); if (inR(107, 113)) sp.push('suat'); if (inR(713, 719)) sp.push('f6'); }
     const feast = DATA.F[mk];
+    if (mk === (church === 'ruthenian' ? '12-8' : '12-9')) notes.push('The proper readings for the conception of the Mother of God by Saint Anna are not included in this table. Check your parish ordo; the cycle readings below are not the feast’s propers.');
     const front = [];
     if (feast) { const f = { ...feast, kind: 'feast' }; if (MAJOR.test(mk)) front.push(f); else sets.push(f); }
     sp.forEach(k => front.push({ ...X[k], kind: 'special' }));
