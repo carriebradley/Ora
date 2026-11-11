@@ -46,6 +46,18 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.equal(await page.locator('a[href$="LITURGY2009.pdf"]').count(),1);
  assert.equal(await page.locator('a[href="https://melkite.org/daily-readings"]').count(),1);
  assert.equal(await page.locator('a[href$="November-2026.docx"]').count(),1);
+ await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11&rite=sarum`);
+ await page.locator('[data-act="liturgyview"][data-v="mass"]').click();
+ assert.equal(await page.locator('#app .card > h2').innerText(),'Roman Mass');
+ assert.match(await page.locator('#app').innerText(),/Saint Martin of Tours, Bishop/);
+ assert.doesNotMatch(await page.locator('#app').innerText(),/Sarum Mass|Martinmas|After Trinity|Confessor/);
+ assert.match(await page.locator('#app').innerText(),/current Roman Catholic lectionary/);
+ await page.screenshot({path:path.join(artifacts,'current-roman-mass-mobile.png'),fullPage:true});
+ await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+ const massAudit=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
+ violations.push(...massAudit.violations.map(v=>({tab:'liturgy-mass',id:v.id})));
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ assert.equal(await page.locator('#app .card > h2').innerText(),'Melkite Divine Liturgy');
  await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();
  await page.selectOption('#s_reading','large');await page.locator('[data-act="savesettings"]').click();
  await page.setViewportSize({width:320,height:740});
