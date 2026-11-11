@@ -7,7 +7,7 @@ DivineOffice.org's own podcast host when someone presses play, as in any podcast
 Run by .github/workflows/readings.yml. The feed is published the evening before, so the
 workflow runs twice a day.
 
-usage: python3 tools/fetch_divineoffice.py [--file sample.xml] [--out office_audio.json]
+usage: python3 fetch_divineoffice.py [--file sample.xml] [--out office_audio.json]
 """
 import json, re, sys, os, datetime, urllib.request
 import xml.etree.ElementTree as ET
@@ -49,7 +49,7 @@ def parse(xml_bytes):
 
 def main():
     args = sys.argv[1:]
-    out = args[args.index('--out') + 1] if '--out' in args else os.path.join(os.path.dirname(__file__), '..', 'office_audio.json')
+    out = args[args.index('--out') + 1] if '--out' in args else 'office_audio.json'   # run from the repository's main folder
     if '--file' in args:
         data = open(args[args.index('--file') + 1], 'rb').read()
     else:

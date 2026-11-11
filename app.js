@@ -967,7 +967,7 @@
   new MutationObserver(() => { hydrateAsv(); hydrateDo(); }).observe(document.getElementById('app'), { childList: true, subtree: true });
 
   function renderHeader() {
-    $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button><button class="ib" data-act="today" title="Today">⌂</button>`;
+    $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button>`;
   }
   function setLitColour() {
     try {
