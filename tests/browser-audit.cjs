@@ -32,6 +32,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.match(await page.locator('#app').innerText(),/EIGHTH SUNDAY/);
  assert.match(await page.locator('#app').innerText(),/Luke 10:25-37/);
  assert.equal(await page.locator('a[href$="LITURGY2009.pdf"]').count(),1);
+ assert.equal(await page.locator('a[href="https://melkite.org/daily-readings"]').count(),1);
+ assert.equal(await page.locator('a[href$="November-2026.docx"]').count(),1);
  await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();
  await page.selectOption('#s_reading','large');await page.locator('[data-act="savesettings"]').click();
  await page.setViewportSize({width:320,height:740});

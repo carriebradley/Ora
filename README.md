@@ -39,4 +39,4 @@ Newton calendar facts are attributed by date/page. Full copyrighted liturgical t
 
 ## Verification
 
-Run `node --test --test-isolation=none tests/*.test.cjs` with Node 22 or newer. See [browser audit instructions](tests/README.md). GitHub Actions runs the regression suite and Chromium mobile/desktop audit and retains screenshots. Safari and real screen-reader checks remain separate.
+Run `node --test --test-isolation=none tests/*.test.cjs` with Node 24 or newer. See [browser audit instructions](tests/README.md). GitHub Actions runs the regression suite and Chromium mobile/desktop audit and retains screenshots. Safari and real screen-reader checks remain separate.

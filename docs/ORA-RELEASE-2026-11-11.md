@@ -39,3 +39,9 @@ The supplied `LITURGY2009.pdf` identifies itself as a final draft with experimen
 ## Verification status
 
 All 25 Node calendar, reading-preservation and offline tests pass locally. Browser verification and publication status are recorded with the release commit/Actions run. A passed automated browser audit does not establish complete liturgical or assistive-technology correctness.
+
+## Additional official resources supplied during this release
+
+Added the [official daily Gospel](https://melkite.org/daily-readings) and direct links to the twelve 2026 monthly Word documents listed by the diocese. The correct month follows the selected date; the live Gospel link is explicitly labeled “today” so it cannot be mistaken for historical readings. The retrieved daily page contains the unresolved `[sc_daily_readings]` shortcode rather than dated reading content. Automatic text ingestion is therefore blocked by the source response; Ora keeps the verified dated references and official link instead of inventing a feed or a date parameter.
+
+The final browser review also identified and corrected low contrast in selected navigation icons on Traditional feast days.
