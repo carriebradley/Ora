@@ -172,6 +172,160 @@ const CONTENT = (() => {
     ]
   };
 
-  return { ART, QUOTES, TEXTS: T, FLOWS, HOURS };
+  /* Popes: short quotations, each checked word for word against the text on vatican.va */
+  const POPEQ = [
+{
+"s": "Pope Leo XIV",
+"w": "First blessing Urbi et Orbi, 8 May 2025",
+"u": "https://www.vatican.va/content/leo-xiv/en/messages/urbi/documents/20250508-prima-benedizione-urbietorbi.html",
+"t": "God loves us, God loves you all, and evil will not prevail!"
+},
+{
+"s": "Pope Francis",
+"w": "Evangelii Gaudium 1",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20131124_evangelii-gaudium.html",
+"t": "The joy of the gospel fills the hearts and lives of all who encounter Jesus."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Homily at the start of his pontificate, 24 April 2005",
+"u": "https://www.vatican.va/content/benedict-xvi/en/homilies/2005/documents/hf_ben-xvi_hom_20050424_inizio-pontificato.html",
+"t": "Do not be afraid of Christ! He takes nothing away, and he gives you everything."
+},
+{
+"s": "Pope Leo XIV",
+"w": "Homily at the start of his pontificate, 18 May 2025",
+"u": "https://www.vatican.va/content/leo-xiv/en/homilies/2025/documents/20250518-inizio-pontificato.html",
+"t": "Brothers and sisters, this is the hour for love!"
+},
+{
+"s": "Pope Francis",
+"w": "Evangelii Gaudium 3",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20131124_evangelii-gaudium.html",
+"t": "God never tires of forgiving us; we are the ones who tire of seeking his mercy."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Spe Salvi 2",
+"u": "https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html",
+"t": "The one who has hope lives differently; the one who hopes has been granted the gift of a new life."
+},
+{
+"s": "Pope Leo XIV",
+"w": "Dilexi Te 5",
+"u": "https://www.vatican.va/content/leo-xiv/en/apost_exhortations/documents/20251004-dilexi-te.html",
+"t": "In the poor, he continues to speak to us."
+},
+{
+"s": "Pope Francis",
+"w": "Gaudete et Exsultate 1",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20180319_gaudete-et-exsultate.html",
+"t": "He wants us to be saints and not to settle for a bland and mediocre existence."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Spe Salvi 26",
+"u": "https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html",
+"t": "It is not science that redeems man: man is redeemed by love."
+},
+{
+"s": "Pope Leo XIV",
+"w": "Homily at the start of his pontificate, 18 May 2025",
+"u": "https://www.vatican.va/content/leo-xiv/en/homilies/2025/documents/20250518-inizio-pontificato.html",
+"t": "The heart of the Gospel is the love of God that makes us brothers and sisters."
+},
+{
+"s": "Pope Francis",
+"w": "Gaudete et Exsultate 9",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20180319_gaudete-et-exsultate.html",
+"t": "Holiness is the most attractive face of the Church."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Spe Salvi 32",
+"u": "https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html",
+"t": "When no one listens to me any more, God still listens to me."
+},
+{
+"s": "Pope Leo XIV",
+"w": "Dilexi Te 75",
+"u": "https://www.vatican.va/content/leo-xiv/en/apost_exhortations/documents/20251004-dilexi-te.html",
+"t": "Where the world sees threats, she sees children; where walls are built, she builds bridges."
+},
+{
+"s": "Pope Francis",
+"w": "Gaudete et Exsultate 14",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20180319_gaudete-et-exsultate.html",
+"t": "To be holy does not require being a bishop, a priest or a religious."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Homily at the start of his pontificate, 24 April 2005",
+"u": "https://www.vatican.va/content/benedict-xvi/en/homilies/2005/documents/hf_ben-xvi_hom_20050424_inizio-pontificato.html",
+"t": "There is nothing more beautiful than to be surprised by the Gospel, by the encounter with Christ."
+},
+{
+"s": "Pope Leo XIV",
+"w": "First blessing Urbi et Orbi, 8 May 2025",
+"u": "https://www.vatican.va/content/leo-xiv/en/messages/urbi/documents/20250508-prima-benedizione-urbietorbi.html",
+"t": "Help us, one and all, to build bridges through dialogue and encounter, joining together as one people, always at peace."
+},
+{
+"s": "Pope Francis",
+"w": "Gaudete et Exsultate 32",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20180319_gaudete-et-exsultate.html",
+"t": "Do not be afraid of holiness. It will take away none of your energy, vitality or joy."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Spe Salvi 32",
+"u": "https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html",
+"t": "When I can no longer talk to anyone or call upon anyone, I can always talk to God."
+},
+{
+"s": "Pope Leo XIV",
+"w": "Homily at the start of his pontificate, 18 May 2025",
+"u": "https://www.vatican.va/content/leo-xiv/en/homilies/2025/documents/20250518-inizio-pontificato.html",
+"t": "Look to Christ! Come closer to him!"
+},
+{
+"s": "Pope Francis",
+"w": "Laudato Si’ 84",
+"u": "https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20150524_enciclica-laudato-si.html",
+"t": "Soil, water, mountains: everything is, as it were, a caress of God."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Spe Salvi 33",
+"u": "https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html",
+"t": "Man was created for greatness—for God himself; he was created to be filled by God."
+},
+{
+"s": "Pope Leo XIV",
+"w": "Dilexi Te 61",
+"u": "https://www.vatican.va/content/leo-xiv/en/apost_exhortations/documents/20251004-dilexi-te.html",
+"t": "Christian charity is liberating when it becomes incarnate."
+},
+{
+"s": "Pope Francis",
+"w": "Gaudete et Exsultate 34",
+"u": "https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20180319_gaudete-et-exsultate.html",
+"t": "Holiness does not make you less human, since it is an encounter between your weakness and the power of God’s grace."
+},
+{
+"s": "Pope Benedict XVI",
+"w": "Spe Salvi 34",
+"u": "https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html",
+"t": "Hope in a Christian sense is always hope for others as well."
+},
+{
+"s": "Pope Francis",
+"w": "Laudato Si’ 13",
+"u": "https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20150524_enciclica-laudato-si.html",
+"t": "The Creator does not abandon us; he never forsakes his loving plan or repents of having created us."
+}
+];
+
+  return { ART, QUOTES, POPEQ, TEXTS: T, FLOWS, HOURS };
 })();
 if (typeof module === 'object' && module.exports) module.exports = CONTENT;

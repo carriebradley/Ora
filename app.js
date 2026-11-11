@@ -30,7 +30,7 @@
   S.rite = 'roman';  // always open on the Roman tab; a tradition picked during a visit is not carried over
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
-    kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, active: -1, readings: {}, art: {} };
+    kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, active: -1, readings: {}, art: {} };
 
   { const q = new URLSearchParams(location.search); if (q.get('tab')) st.tab = q.get('tab'); if (/^\d{4}-\d\d-\d\d$/.test(q.get('date') || '')) st.date = q.get('date'); if (q.get('kind')) st.kind = q.get('kind'); if (q.get('rite')) S.rite = q.get('rite'); }
 
@@ -333,9 +333,19 @@
 
   /* ---------- tabs ---------- */
   const POPE = { '2026-01': ['For prayer with the word of God', 'Scripture as nourishment and hope, helping to build a more fraternal, missionary Church.'], '2026-02': ['For children with incurable diseases', 'Medical care and support for sick children and their families.'], '2026-03': ['For disarmament and peace', 'Progress on disarmament, especially nuclear, and dialogue in place of violence.'], '2026-04': ['For priests in crisis', 'That priests facing a crisis of vocation are accompanied and understood by their communities.'], '2026-05': ['That everyone might have food', 'Less food waste and fair access to good food for all.'], '2026-06': ['For the values of sports', 'Sport as a way to peace, encounter and dialogue, building respect and solidarity.'], '2026-07': ['For respect for human life', 'Protecting human life at every stage as a gift from God.'], '2026-08': ['For evangelization in the city', 'New ways to proclaim the Gospel and build community in large, lonely cities.'], '2026-09': ['For the care of water', 'Just, sustainable management of water so that everyone has equal access.'], '2026-10': ['For mental health ministry', 'Mental health ministry across the Church, countering stigma and discrimination.'], '2026-11': ['For the proper use of wealth', 'That wealth be used for the common good and for those with less, and never selfishly.'], '2026-12': ['For single-parent families', 'Support in the Church, and strength in faith, for families missing a mother or father.'] };
+  /* weekly Angelus prayer requests: angelus.json, written by fetch_angelus.py in the daily GitHub Action */
+  let angelus = store.get('ora.angelus', null);
+  fetch('angelus.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(j => { if (j && j.date) { const ch = !angelus || angelus.date !== j.date; angelus = j; store.set('ora.angelus', j); if (ch && st.tab === 'today') render(); } }).catch(() => {});
   function popeCard(iso) {
-    const p = POPE[iso.slice(0, 7)], mo = L.MN[+iso.slice(5, 7) - 1];
-    return `<section class="card"><div class="lab"><span class="grow">Pope’s prayer intention · ${esc(mo)}</span></div>${p ? `<p style="font-family:var(--serif);font-size:1.05rem;margin:4px 0"><b>${esc(p[0])}</b></p><p class="muted" style="margin-top:0">${esc(p[1])}</p>` : '<p class="muted">This month’s intention is on the official site.</p>'}<div class="row"><a class="btn sm" target="_blank" rel="noopener" href="https://www.popesprayer.va/praywiththepope/">Pray with the Pope</a></div></section>`;
+    const p = POPE[iso.slice(0, 7)], mo = L.MN[+iso.slice(5, 7) - 1], Q = C.POPEQ || [];
+    const n = Math.round(P(iso).getTime() / 864e5), q = Q.length ? Q[(((n + st.popeShift) % Q.length) + Q.length) % Q.length] : null;
+    let h = `<section class="card"><div class="lab"><span class="grow">From the Holy Father</span></div>`;
+    if (q) h += `<div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · <a target="_blank" rel="noopener" href="${esc(q.u)}">${esc(q.w)}</a></small></div><div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="pnext">Another</button></div>`;
+    const ag = angelus, agAge = ag && ag.date ? (P(iso) - P(ag.date)) / 864e5 : 99;
+    if (ag && ag.pray && ag.pray.length && agAge >= 0 && agAge < 14)
+      h += `<div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px"><div class="muted" style="font-size:.8rem">At the Sunday Angelus · ${esc(fmtShort(ag.date))}, Pope Leo asked us to pray:</div><ul style="font-family:var(--serif);margin:6px 0 4px;padding-left:1.1em">${ag.pray.map(t => `<li style="margin:3px 0">${esc(t)}</li>`).join('')}</ul><a class="muted" style="font-size:.8rem" target="_blank" rel="noopener" href="${esc(ag.url)}">Read the whole Angelus on vatican.va</a></div>`;
+    h += `<div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px"><div class="muted" style="font-size:.8rem">Prayer intention for ${esc(mo)}</div>${p ? `<p style="font-family:var(--serif);font-size:1.05rem;margin:4px 0"><b>${esc(p[0])}</b></p><p class="muted" style="margin-top:0">${esc(p[1])}</p>` : '<p class="muted">This month’s intention is on the official site.</p>'}<div class="row"><a class="btn sm" target="_blank" rel="noopener" href="https://www.popesprayer.va/praywiththepope/">Pray with the Pope</a></div></div></section>`;
+    return h;
   }
   const HIST = [
 [1, 1, 1968, "Pope Paul VI keeps the first World Day of Peace. St Basil the Great also dies on this date in 379."],
@@ -896,6 +906,7 @@
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
       <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Byzantine saints of the day: Ukrainian Catholic calendar of the Archeparchy of Winnipeg. Audio of the Roman hours: the free daily recordings of <a href="https://divineoffice.org" target="_blank" rel="noopener">Divine Office</a> (DivineOffice.org), streamed from their podcast.</p>
+      <p class="muted">Papal quotations and the Sunday Angelus: the official English texts on <a href="https://www.vatican.va" target="_blank" rel="noopener">vatican.va</a> © Dicastero per la Comunicazione – Libreria Editrice Vaticana; only short excerpts are shown, with links to the full text.</p>
       <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></section>`;
   }
   function hoursHTML() {
@@ -1069,6 +1080,7 @@
       case 'kind': st.kind = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
       case 'qnext': st.quoteShift++; break;
+      case 'pnext': st.popeShift++; break;
       case 'artnext': st.artShift++; break;
       case 'mprev': st.month.m--; if (st.month.m < 0) { st.month.m = 11; st.month.y--; } break;
       case 'mnext': st.month.m++; if (st.month.m > 11) { st.month.m = 0; st.month.y++; } break;
