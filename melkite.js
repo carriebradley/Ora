@@ -1,0 +1,25 @@
+/* Newton's dated calendar is authoritative for 2026 only. No prayer translations. */
+(function(root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./melkite-2026.js'));
+  else root.Melkite = factory(root.MELKITE_2026);
+})(typeof self !== 'undefined' ? self : this, function(data) {
+  const entry = date => data.days[typeof date === 'string' ? date : date.toISOString().slice(0,10)] || null;
+  const books = {JN:'John',LK:'Luke',MK:'Mark',MT:'Matthew',COL:'Colossians',HEB:'Hebrews',TIM:'Timothy',COR:'Corinthians',ROM:'Romans',EPH:'Ephesians',PT:'Peter',JAS:'James',TI:'Titus',ACTS:'Acts',PHIL:'Philippians',THES:'Thessalonians',JN:'John',GAL:'Galatians',IS:'Isaiah',GEN:'Genesis',PROV:'Proverbs',JOEL:'Joel',ZECH:'Zechariah',JUDE:'Jude'};
+  const reference = text => text.replace(/\b[A-Z]{2,5}\b/g, s => books[s] || s).replace(/\s*\(\d+\)/g,'');
+  function read(date) {
+    const e = entry(date); if (!e) return null;
+    return {sets:[{t:e.observance || e.saints || 'Daily Scripture readings',r:e.references.map((r,i)=>[/\(\d+\)/.test(r) ? 'Orthros Gospel' : 'Scripture reading '+(i+1),reference(r)])}],notes:[`Diocese of Newton · 2026 calendar · PDF page ${e.page}. References follow the printed calendar, including its unusual entries. Holy Week references are not a complete list of every service reading.`]};
+  }
+  function calendar(date, fallback) {
+    const e = entry(date); if (!e) return {...fallback, fastingNote:'Melkite calendar unavailable for this year. Showing the Ukrainian fallback; verify with the Diocese of Newton.'};
+    const iso = date.toISOString().slice(0,10), md = iso.slice(5);
+    let fastSeason = md >= '02-16' && md <= '03-27' ? 'Great Fast' : md >= '03-30' && md <= '04-04' ? 'Great and Holy Week' : md >= '06-01' && md <= '06-28' ? 'Apostles’ Fast' : md >= '08-01' && md <= '08-14' ? 'Theotokos’ Fast' : md >= '11-15' && md <= '12-24' ? 'Nativity Fast (Philip’s Fast)' : '';
+    let fast = iso === '2026-02-16' || (md >= '04-02' && md <= '04-04') ? 'Fast — Newton Lenten discipline' : '';
+    if (date.getUTCDay() === 5 && md >= '02-16' && md <= '04-03') fast += (fast ? '; ' : '') + 'abstinence from meat';
+    const notes = ['Melkite Catholic Diocese of Newton · 2026 calendar · page '+e.page+'. Seasonal fasts describe the observance; follow your parish’s directions and personal exemptions.'];
+    if (md >= '06-20' && md <= '06-28') notes.push('The calendar also marks the shorter Apostles’ Fast from June 20.');
+    if (md >= '12-10' && md <= '12-24') notes.push('The calendar also marks the shorter Nativity Fast from December 10.');
+    return {...fallback,title:e.observance || e.saints || 'Weekday',rank:'Diocesan calendar',tone:e.tone,also:e.observance && e.saints ? [{title:e.saints,rank:'Commemoration'}] : [],fast,fastSeason,fastingNote:notes.join(' '),sourcePage:e.page};
+  }
+  return {entry,read,calendar,source:data};
+});

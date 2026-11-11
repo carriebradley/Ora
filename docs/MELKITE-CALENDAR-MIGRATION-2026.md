@@ -33,3 +33,8 @@ Primary source: *2026 Diocesan Calendar*, Melkite Catholic Diocese of Newton (us
 6. Only then switch the default to Melkite and verify Today, Readings, Liturgy, and Calendar on mobile.
 
 Status: migration audit and source mapping started; production calendar remains unchanged until validation.
+
+
+## Implementation follow-up
+
+The 365-date import and integration are now implemented; see [release report](ORA-RELEASE-2026-11-11.md) for the current result and explicit limits. The source has date/page attribution and a reproducible coordinate importer. All twelve monthly grids were reviewed, monthly anchors are tested, and wrapped/composite citations are retained. Color/season cues retain the existing engine; the displayed rank does not invent a source rank. This is not a full annual typikon. No annual data is reused for another year.

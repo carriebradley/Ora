@@ -8,7 +8,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  page.on('pageerror',e=>errors.push(e.message));
  await context.route('**/*',route=>route.request().url().startsWith(process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/')?route.continue():route.abort());
  const base=process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/';
- for (const rite of ['roman','byz','sarum']) for(const tab of ['today','pray','readings','justice','calendar','more']) {
+ for (const rite of ['roman','byz','sarum']) for(const tab of ['today','pray','readings','liturgy','justice','calendar','more']) {
   await page.goto(`${base}index.html?tab=${tab}&date=2026-11-15&rite=${rite}&kind=morning`);
   await page.waitForTimeout(150);
   assert.ok((await page.locator('#app').innerText()).length>100,`${rite} ${tab} content`);
@@ -18,6 +18,28 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   violations.push(...axe.violations.map(v=>({rite,tab,id:v.id,impact:v.impact,examples:v.nodes.slice(0,3).map(n=>({html:n.html,summary:n.failureSummary}))})));
   results.push(`${rite}/${tab}`);
  }
+ for(const rite of ['roman','byz']) {
+  await page.goto(`${base}index.html?tab=pray&date=2026-11-15&rite=${rite}&kind=night`);
+  assert.match(await page.locator('#app').innerText(), /Night Prayer|Song of Simeon/);
+  assert.equal(await page.locator('[data-act="kind"].on').getAttribute('data-v'),'night');
+ }
+ await page.goto(`${base}index.html?tab=justice&date=2026-11-11`);
+ const intro=page.locator('.justice-intro');
+ assert.equal(await intro.locator('h2').innerText(),'Faith in action');
+ assert.ok((await intro.boundingBox()).height < 110,'compact Justice heading');
+ await page.screenshot({path:path.join(artifacts,'justice-simple-mobile.png'),fullPage:true});
+ await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);
+ assert.match(await page.locator('#app').innerText(),/EIGHTH SUNDAY/);
+ assert.match(await page.locator('#app').innerText(),/Luke 10:25-37/);
+ assert.equal(await page.locator('a[href$="LITURGY2009.pdf"]').count(),1);
+ await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();
+ await page.selectOption('#s_reading','large');await page.locator('[data-act="savesettings"]').click();
+ await page.setViewportSize({width:320,height:740});
+ await page.goto(`${base}index.html?tab=justice`);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'large text at 320px');
+ await page.emulateMedia({colorScheme:'dark'});
+ await page.screenshot({path:path.join(artifacts,'justice-simple-dark-mobile.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});
  await page.goto(`${base}index.html?tab=today&date=2026-11-15&rite=sarum`);
  assert.match(await page.locator('.glance').innerText(),/St. Martin's Lent/);
  assert.match(await page.locator('#app').innerText(),/Sunday — no historical fast today/);
@@ -60,3 +82,4 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  console.log(JSON.stringify({pages:results.length,offline,errors,violations},null,2));
  await browser.close();assert.equal(violations.length,0,'automated accessibility violations');
 })().catch(e=>{console.error(e);process.exit(1)});
+
