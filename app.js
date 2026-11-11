@@ -19,7 +19,7 @@
   const fmtShort = s => { const d = P(s); return `${L.DN[d.getUTCDay()].slice(0, 3)}, ${L.MN[d.getUTCMonth()].slice(0, 3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
   const fmtLong = s => { const d = P(s); return `${L.DN[d.getUTCDay()]}, ${L.MN[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
   const hash = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
-  const COLORS = { y: '#d4a017', w: '#f4efe0', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
+  const COLORS = { y: '#d4a017', w: '#f0e8da', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
   const col = c => COLORS[c] || COLORS.g;
   const MAJOR = /Solemnity|Principal|Great Feast|Triduum|Holy Week|Class I$/;
   const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
@@ -343,9 +343,9 @@
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
-      const lit = r.color === 'w' || !r.color ? 'gold' : r.color;
-      const ink = ['gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
+      const lit = r.color || 'gold';
+      const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
+      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}${lit === 'w' ? ';box-shadow:inset 0 0 0 1px #b8aa99' : ''}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -1014,8 +1014,8 @@
   function setLitColour() {
     try {
       const v = dayInfo(st.date), r = S.rite === 'sarum' ? v.sarum : S.rite === 'byz' ? v.byz : v.roman;
-      let c = r && r.color; if (c === 'w' || !c) c = 'gold';          // white vestments: show gold, which reads on a light page
-      document.documentElement.style.setProperty('--lit', col(c));
+      const c = r && r.color;
+      document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c || 'gold'));
     } catch (e) { /* keep the default */ }
   }
   let renderedView = '';
