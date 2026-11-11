@@ -26,7 +26,10 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  fs.writeFileSync(path.join(artifacts,'accessibility-results.json'),JSON.stringify(violations,null,2));
  const poly=page.locator('.oortx-slot[data-k^="Church of Smyrna|"]');
  assert.equal(await poly.count(),1,'Polycarp available as Lenten commemoration');
- await poly.evaluate(el=>{for(let d=el.parentElement;d;d=d.parentElement) if(d.tagName==='DETAILS')d.open=true;});
+ // Open the office and its reading as a user does. Setting nested `open`
+ // attributes while the outer office is hidden races asynchronous page updates.
+ await page.locator('.step').filter({has:poly}).locator(':scope > details > summary').click();
+ await poly.locator('..').locator(':scope > summary').click();
  await page.waitForFunction(()=>document.querySelector('.oortx-slot[data-k^="Church of Smyrna|"]')?.textContent.includes('costly spices'));
  await page.screenshot({path:path.join(artifacts,'polycarp-mobile.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=pray&rite=roman`);await page.locator('[data-act="rite"][data-v="sarum"]').click();

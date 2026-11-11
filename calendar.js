@@ -31,9 +31,11 @@
     epiphany: 'jan6',        // 'jan6' (universal) | 'sunday' (USA)
     byzPascha: 'gregorian',  // 'gregorian' (same date as Western Easter) | 'julian' (Orthodox date)
     byzOldCal: false,        // true: Menaion dates follow the Julian calendar (+13 days)
-    byzChurch: 'ukrainian'   // 'ukrainian' | 'ruthenian' (U.S. practice)
+    byzChurch: 'ukrainian',  // 'ukrainian' | 'ruthenian' (U.S. practice)
+    byzAnna: 'default'       // 'default' | '8' | '9': follow the parish's observance
   };
   const opts = o => Object.assign({}, DEFAULTS, o || {});
+  const byzAnnaDay = (o = {}) => o.byzAnna === '8' ? 8 : o.byzAnna === '9' ? 9 : o.byzChurch === 'ruthenian' ? 8 : 9;
 
   let EXTRA = [];            // extra fixed Roman OF entries [m,d,name,kind] from imported calendars
   function setData(data) { EXTRA = (data && data.romanExtra) || []; ofCache = null; }
@@ -598,7 +600,7 @@
 11/21|Entrance of the Mother of God into the Temple|G
 11/30|Holy Apostle Andrew the First-called|F
 12/6|Saint Nicholas the Wonderworker|F
-12/9|Conception of the Mother of God by Saint Anna|S
+12/9|Conception of the Mother of God by Saint Anna|F
 12/25|Nativity of Our Lord, God and Saviour Jesus Christ|G
 12/26|Synaxis of the Mother of God|F
 12/27|Protomartyr and Archdeacon Stephen|S
@@ -638,7 +640,7 @@
     let anchor;
     if (d >= add(P, -70) && d < P) {
       const k = diff(P, d);
-      season = k > 48 ? 'Triodion — preparation for the Great Fast' : k < 7 ? 'Great and Holy Week' : 'Triodion — Great Fast';
+      season = k > 48 ? 'Triodion — preparation for the Great Fast' : k < 7 ? 'Great and Holy Week' : k <= 8 ? 'Lazarus Saturday and Palm Sunday' : 'Triodion — Great Fast';
       const sundays = { 70: 'Sunday of the Publican and the Pharisee', 63: 'Sunday of the Prodigal Son', 56: 'Meatfare Sunday — the Last Judgment', 49: 'Cheesefare Sunday — Forgiveness Sunday',
         42: '1st Sunday of Great Lent — Triumph of Orthodoxy', 35: '2nd Sunday of Great Lent — Saint Gregory Palamas', 28: '3rd Sunday of Great Lent — Veneration of the Holy Cross',
         21: '4th Sunday of Great Lent — Saint John Climacus', 14: '5th Sunday of Great Lent — Saint Mary of Egypt', 7: 'Palm Sunday — Entry of the Lord into Jerusalem' };
@@ -676,20 +678,20 @@
         let special = '';
         if (mm === 12 && md >= 11 && md <= 17) special = 'Sunday of the Holy Forefathers';
         else if (mm === 12 && md >= 18 && md <= 24) special = 'Sunday before the Nativity — Holy Fathers';
-        else if ((mm === 12 && md >= 26) || (mm === 1 && md === 1)) special = 'Sunday after the Nativity';
-        else if (mm === 1 && md >= 2 && md <= 5) special = 'Sunday before Theophany';
+        else if (mm === 12 && md >= 26) special = 'Sunday after the Nativity';
+        else if (mm === 1 && md >= 1 && md <= 5) special = 'Sunday before Theophany';
         else if (mm === 1 && md >= 7 && md <= 13) special = 'Sunday after Theophany';
         else if (mm === 9 && md >= 8 && md <= 13) special = 'Sunday before the Exaltation of the Cross';
         else if (mm === 9 && md >= 15 && md <= 21) special = 'Sunday after the Exaltation of the Cross';
         else if (mm === 7 && md >= 13 && md <= 19) special = 'Sunday of the Fathers of the First Six Ecumenical Councils';
-        else if (mm === 10 && md >= 11 && md <= 17) special = 'Sunday of the Fathers of the Seventh Ecumenical Council';
+        else if (mm === 10 && (o.byzChurch === 'ruthenian' ? md >= 8 && md <= 14 : md >= 11 && md <= 17)) special = 'Sunday of the Fathers of the Seventh Ecumenical Council';
         if (special) push(special, 55, 'Sunday', 'g', season);
         push(`${ORD(n)} Sunday after Pentecost`, special ? 30 : 50, 'Sunday', 'g', season);
       } else push(`${wd} after the ${ORD(n)} Sunday after Pentecost`, 5, 'Weekday', 'g', season);
     }
     // fixed (Menaion) feasts
     for (const e of byzTable()) {
-      const feastDay = e.m === 12 && e.d === 9 && o.byzChurch === 'ruthenian' ? 8 : e.d;
+      const feastDay = e.m === 12 && e.d === 9 ? byzAnnaDay(o) : e.d;
       if (e.m === mm && feastDay === md)
         push(e.name, e.lvl === 'G' ? 80 : e.lvl === 'F' ? 40 : 20, e.lvl === 'G' ? 'Great Feast' : e.lvl === 'F' ? 'Feast' : 'Saint', e.lvl === 'G' ? 'gold' : 'w', season);
     }
@@ -736,5 +738,5 @@
     return { date: iso(d), weekday: DN[dow(d)], roman: roman(d, o), ef: extraordinary(d, o), byz: byzantine(d, o) };
   }
 
-  return { day, roman, oorKey, extraordinary, byzantine, westernEaster, julianEaster, advent, setData, DEFAULTS, D, add, iso, DN, MN, ORD };
+  return { day, roman, oorKey, extraordinary, byzantine, byzAnnaDay, westernEaster, julianEaster, advent, setData, DEFAULTS, D, add, iso, DN, MN, ORD };
 });

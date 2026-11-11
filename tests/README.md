@@ -10,6 +10,8 @@ node --test --test-isolation=none tests/*.test.cjs
 
 The tests check the historical St. Martin's observance, fasting exceptions, Byzantine dates and tones, offline installation and upgrades, and all 63 original Church Fathers readings. The reading fingerprint file was generated from the untouched entries at commit `2b8e5af`; changing an old entry causes its preservation check to fail. Adding a new reading does not require changing those fingerprints.
 
+`byzantine-readings.test.cjs` checks sourced corrections and church-specific behavior. `stamford-readings-2026.json` contains the Scripture citation pairs from 48 official 2026 Stamford propers, with source URLs and explicit notes about two heading/text discrepancies. It contains no copied prayer or Scripture text. See [the follow-up review](../docs/BYZANTINE-REVIEW-2026-11-11.md) for evidence and limits.
+
 `byzantine-tones-2026.json` records 50 numeric Sunday tones from the Metropolitan Cantor Institute's published 2026 calendar. Palm Sunday and Pentecost have no ordinary tone in that source. The fixture checks facts, not the completeness of the calendar's propers.
 
 For browser checks, install Playwright and axe-core in a separate development tools folder, then make that folder's `node_modules` available through `NODE_PATH`. Start a local server in the repository:

@@ -29,6 +29,7 @@
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
   if (!['ukrainian', 'ruthenian'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
+  if (!['default', '8', '9'].includes(S.byzAnna)) S.byzAnna = 'default';
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
     kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
@@ -44,7 +45,7 @@
 
   /* ---------- calendar data ---------- */
   const infoCache = new Map();
-  const cacheKey = iso => iso + JSON.stringify([S.ascension, S.corpus, S.epiphany, S.byzPascha, S.byzOldCal, S.byzChurch, S.ladyDayTransfer]);
+  const cacheKey = iso => iso + JSON.stringify([S.ascension, S.corpus, S.epiphany, S.byzPascha, S.byzOldCal, S.byzChurch, S.byzAnna, S.ladyDayTransfer]);
   function dayInfo(iso) {
     const k = cacheKey(iso); if (infoCache.has(k)) return infoCache.get(k);
     const d = P(iso), v = { iso, roman: L.roman(d, S), byz: L.byzantine(d, S), sarum: SA.sarum(d, S), ugcc: userEvents(LITDATA.ugcc, iso) };
@@ -143,7 +144,7 @@
   }
   const bible = c => `https://www.biblegateway.com/passage/?search=${encodeURIComponent(c.replace(/\s*\([^)]*\)/g, '').trim())}&version=RSVCE`;
   const citeLinks = txt => String(txt).split(' · ').map(c => `<a href="${bible(c)}" target="_blank" rel="noopener">${esc(c)}</a>`).join(' · ');
-  const byzDay = iso => ByzLect.read(P(iso), S.byzOldCal ? 13 : 0, y => S.byzPascha === 'julian' ? L.julianEaster(y) : L.westernEaster(y), S.byzChurch);
+  const byzDay = iso => ByzLect.read(P(iso), S.byzOldCal ? 13 : 0, y => S.byzPascha === 'julian' ? L.julianEaster(y) : L.westernEaster(y), S.byzChurch, L.byzAnnaDay(S));
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
   function byzReadingsHTML(v) {
     const t = v.byz;
@@ -160,7 +161,7 @@
       for (const n of day.notes) h += `<p class="muted">${esc(n)}</p>`;
       for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
-    h += `<p class="muted" style="font-size:.8rem">Citations from the Byzantine lectionary table on byzcath.org (2013, unofficial, Slavic usage). Tap a reference to read it in the RSV-CE. It is built from a table, so check it against your parish book or ECPubs; the Pentecost-to-Triodion stretch around Christmas varies by church.</p>`;
+    h += `<p class="muted" style="font-size:.8rem">Based on the Slavic lectionary table on byzcath.org, with selected corrections checked against the <a href="https://mci.archpitt.org/Lectionary.html" target="_blank" rel="noopener">Metropolitan Cantor Institute</a> and Stamford's Ukrainian Catholic propers. Tap a reference to read it in the RSV-CE. This is not a complete eparchial ordo; check local combinations and the cycle around Christmas against your parish book.</p>`;
     h += `<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://ecpubs.gumroad.com/l/jTBr">ECPubs Daily Office</a><a class="btn" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Stamford propers</a><a class="btn" target="_blank" rel="noopener" href="https://www.oca.org/readings/daily/${ocaDate(v.iso)}">OCA (Orthodox) check</a></div>`;
     return h;
   }
@@ -236,6 +237,7 @@
     if (S.byzChurch === 'ruthenian') return ''; // This supplemental dataset is Ukrainian, not a Ruthenian ordo.
     const B = LITDATA.byzSaints; if (!B) return '';
     const d = L.add(P(iso), S.byzOldCal ? -13 : 0), t = B[(d.getUTCMonth() + 1) + '/' + d.getUTCDate()];
+    if (L.byzAnnaDay(S) === 8 && d.getUTCMonth() === 11 && d.getUTCDate() === 9) return ''; // Supplemental Ukrainian list uses December 9.
     if (!t) return '';
     const wk = x => new Set(x.toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter(w => w.length > 4 && !/^(saint|great|feast|which|their|those|father|mother|venerable|martyr|martyrs|after|sunday|monday|tuesday|wednesday|thursday|friday|saturday|week)$/.test(w)));
     const tw = wk(r.title), sw = wk(t);
@@ -246,7 +248,7 @@
     const r = v.byz, u = v.ugcc;
     const words = t => new Set(t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 4));
     const known = [r.title, ...r.also.map(x => x.title)].map(words);
-    const ev = S.byzChurch === 'ruthenian' ? [] : u.day.filter(e => { const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
+    const ev = S.byzChurch === 'ruthenian' ? [] : u.day.filter(e => { if (L.byzAnnaDay(S) === 8 && v.iso.endsWith('-12-09') && /anna|anne|conception/i.test(e.n)) return false; const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine</span>${speakBtn(spokenCard(r))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>
       ${byzSaintHTML(v.iso, r)}${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
@@ -1077,6 +1079,7 @@
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
       ${sel('s_byz_church', 'Byzantine practice (United States)', [['ukrainian', 'Ukrainian Greek Catholic'], ['ruthenian', 'Ruthenian Byzantine Catholic']], S.byzChurch)}
+      ${sel('s_byz_anna', 'Saint Anna’s feast — follow your parish', [['default', 'Default (Ukrainian: Dec 9; Ruthenian: Dec 8)'], ['8', 'December 8'], ['9', 'December 9']], S.byzAnna)}
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
@@ -1085,7 +1088,7 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzAnna: g('s_byz_anna'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
     save(); infoCache.clear(); $('#dlg').close(); render();
   }
