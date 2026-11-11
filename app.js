@@ -878,19 +878,17 @@
     const v = dayInfo(st.date); loadReadings(st.date);
     const byzantine = st.liturgyView === 'byz';
     const litRite = byzantine ? 'byz' : 'roman';
-    const name = byzantine
-      ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy')
-      : 'Roman Mass';
+    const service = LiturgySchedule.service(st.date);
+    const name = byzantine ? service.title : 'Roman Mass';
     const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : romanReadingsHTML(st.date, false);
     const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
-    const note = byzantine && S.byzLiturgyChurch === 'melkite'
-      ? '<div class="row"><a class="btn fill" href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener">Open Divine Liturgy text</a><a class="btn" href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Monthly hymns and propers</a></div><p class="muted">The diocese-hosted Liturgy PDF is the supplied 2009 draft. Use your parish book for the currently prescribed text.</p>'
-      : '';
+    const note = byzantine ? `<p class="muted">${esc(service.note)} The service follows the Melkite calendar; parish schedules may differ.</p><div class="row"><a class="btn" href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Monthly hymns and propers</a></div>` : '';
+    const reader = LiturgicalText.card(byzantine ? service.id : 'roman');
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
       <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
-      <p class="muted">${byzantine ? 'Melkite readings and official liturgical resources are displayed below. The complete Divine Liturgy text has not yet been incorporated.' : 'Daily readings follow the current Roman Catholic lectionary. The complete Roman Missal prayers have not yet been incorporated.'}</p>
-      ${note}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
+      <p class="muted">${byzantine ? 'Melkite readings and resources for the selected date appear below. Open a saved service book in Liturgical Text.' : 'Daily readings follow the current Roman Catholic lectionary. The complete Roman Missal prayers have not yet been incorporated.'}</p>
+      ${note}${reader}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
   }
   function romanNightHTML() {
     const ps = Hours.H.ps['90'].map(row => esc(row[2]).replace(/\s*\*\s*/g, ' ')).join('<br>');
@@ -1141,6 +1139,7 @@
     document.querySelectorAll('#nav button').forEach(b => { b.classList.toggle('on', b.dataset.tab === st.tab); if (b.dataset.tab === st.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     const content = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'liturgy' ? viewLiturgy() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
     $('#app').innerHTML = tabHeading() + content;
+    if (st.tab === 'liturgy') LiturgicalText.hydrate();
     document.querySelectorAll('.seg button[data-act], .legend button[data-act]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
     document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
     if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
@@ -1259,7 +1258,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v147';
+  const APP_BUILD = 'ora-v148';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

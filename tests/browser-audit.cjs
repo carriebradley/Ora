@@ -59,7 +59,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  const massAudit=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
  violations.push(...massAudit.violations.map(v=>({tab:'liturgy-mass',id:v.id})));
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
- assert.equal(await page.locator('#app .card > h2').innerText(),'Melkite Divine Liturgy');
+ assert.equal(await page.locator('#app .card > h2').innerText(),'Divine Liturgy of St. John Chrysostom');
+ await require('./liturgy-reader-browser.cjs')(page,context,base,artifacts,violations);
  await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();
  await page.selectOption('#s_reading','large');await page.locator('[data-act="savesettings"]').click();
  await page.setViewportSize({width:320,height:740});

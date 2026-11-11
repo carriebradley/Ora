@@ -139,6 +139,16 @@ nav button.on b{color:var(--accent)}
 .sec>b{color:var(--muted)}
 .cell.today{border-color:var(--lit);box-shadow:inset 0 0 0 1px var(--lit)}
 .tab-heading{padding:6px 4px 16px}.tab-heading h1{font-family:var(--serif);font-size:1.5rem;line-height:1.2;margin:0 0 6px;font-weight:600}.tab-heading p{font-size:.9rem;line-height:1.45;color:var(--muted);margin:0}
+/* Local liturgical reader */
+#liturgical-reader{max-width:900px;max-height:92dvh;overflow:auto}
+#liturgical-reader h2{font-family:var(--serif);font-size:1.2rem;margin:0 0 10px}
+#liturgical-reader .reader-tools{position:sticky;top:-16px;background:var(--card);padding:10px 0;z-index:1}
+#liturgical-reader input[type=number]{width:4.5em;min-height:40px;background:var(--bg);color:var(--ink);border:1px solid var(--line);font:inherit}
+#liturgical-reader [hidden]{display:none!important}
+#reader-page{width:100%;background:white;display:block}
+#reader-text{white-space:pre-wrap;font-family:var(--serif);line-height:1.65;overflow-wrap:anywhere}
+.reader-file{max-width:100%;font:inherit;color:var(--ink)}
+.reader-status{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -154,6 +164,7 @@ nav button.on b{color:var(--accent)}
   <button data-tab="liturgy"><b>☩</b>Liturgy</button>
   <button data-tab="more"><b>☰︎</b>More</button>
 </nav>
+<dialog id="liturgical-reader" aria-labelledby="reader-title"></dialog>
 <dialog id="dlg" aria-labelledby="settings-title"></dialog>
 <script src="melkite-2026.js"></script>
 <script src="melkite.js"></script>
@@ -166,6 +177,9 @@ nav button.on b{color:var(--accent)}
 <script src="justice.js"></script>
 <script src="felire.js"></script><script src="oor.js"></script>
 <script src="hours.js"></script>
+<script src="liturgy-schedule.js"></script>
+<script src="liturgy-reader.js"></script>
+<script src="liturgy-reader-ui.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
