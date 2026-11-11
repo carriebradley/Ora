@@ -321,7 +321,7 @@
     return h + `<p class="muted" style="font-size:.74rem">Source: ${esc(m.source)}. Epistle and Gospel in full: Douay-Rheims (public domain).</p>`;
   }
 
-  /* ---------- at-a-glance: feast or fast? ---------- */
+  /* ---------- at-a-glance: today ---------- */
   const FEASTRANK = /Solemnity|Feast|Holy Day|Great Feast|Triduum|Principal|Double/;
   function status(r, rite) {
     const rk = r.rank || '';
@@ -339,9 +339,10 @@
   }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
-    return `<section class="card glance"><div class="lab"><span class="grow">Today: feast or fast?</span></div>` + rows.map(([n, r, k]) => {
+    return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span>${x.detail ? `<span class="gd">${esc(x.detail)}</span>` : ''}</div>`;
+      const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
+      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 

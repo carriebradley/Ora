@@ -1,4 +1,4 @@
-const V = 'ora-v112', DATA = 'ora-data-v1';
+const V = 'ora-v113', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'calendar.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzlect.js', 'justice.js', 'felire.js', 'oor.js', 'hours.js', 'oortext.json', 'manifest.webmanifest', 'icon.svg'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json']);
 
