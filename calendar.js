@@ -30,7 +30,8 @@
     corpus: 'thursday',      // 'thursday' (universal) | 'sunday'
     epiphany: 'jan6',        // 'jan6' (universal) | 'sunday' (USA)
     byzPascha: 'gregorian',  // 'gregorian' (same date as Western Easter) | 'julian' (Orthodox date)
-    byzOldCal: false         // true: Menaion dates follow the Julian calendar (+13 days)
+    byzOldCal: false,        // true: Menaion dates follow the Julian calendar (+13 days)
+    byzChurch: 'ukrainian'   // 'ukrainian' | 'ruthenian' (U.S. practice)
   };
   const opts = o => Object.assign({}, DEFAULTS, o || {});
 
@@ -328,7 +329,7 @@
       also.push({ title: c.title, note: (w.p >= 9 && c.p >= 10) ? 'Optional commemoration' : 'Outranked — not observed this year' });
     const fast = [];
     if (w.title === 'Ash Wednesday' || /^Good Friday/.test(w.title)) fast.push('Day of fast and abstinence');
-    else if (dow(d) === 5 && t.season === 'Lent') fast.push('Friday of Lent — abstinence from meat');
+    else if (dow(d) === 5 && t.season === 'Lent' && w.kind !== 'S') fast.push('Friday of Lent — abstinence from meat');
     const c = ofCycles(d);
     return Object.assign({}, w, { also, fast: fast.join('; '), sundayCycle: c.sundayCycle, weekdayCycle: c.weekdayCycle, date: iso(d) });
   }
@@ -628,18 +629,20 @@
     const y = d.getUTCFullYear(), P = pascha(y, o), Pn = pascha(y + 1, o), Pp = pascha(y - 1, o), wd = DN[dow(d)], sun = dow(d) === 0;
     const items = [];   // {title, score, color, season, rank}
     const push = (title, score, rank, color, season, extra) => items.push(Object.assign({ title, score, rank, color, season }, extra));
-    let season = '', tone = 0;
+    const toneAnchor = d >= P ? P : Pp;
+    const toneWeeks = Math.floor(diff(d, add(toneAnchor, 49)) / 7);
+    let season = '', tone = sun ? ((toneWeeks - 2) % 8 + 8) % 8 + 1 : 0;
     const men = o.byzOldCal ? add(d, -julianOffset(y)) : d, mm = men.getUTCMonth() + 1, md = men.getUTCDate();
 
     // temporal cycle
     let anchor;
     if (d >= add(P, -70) && d < P) {
-      season = 'Triodion — Great Fast';
       const k = diff(P, d);
+      season = k > 48 ? 'Triodion — preparation for the Great Fast' : k < 7 ? 'Great and Holy Week' : 'Triodion — Great Fast';
       const sundays = { 70: 'Sunday of the Publican and the Pharisee', 63: 'Sunday of the Prodigal Son', 56: 'Meatfare Sunday — the Last Judgment', 49: 'Cheesefare Sunday — Forgiveness Sunday',
         42: '1st Sunday of Great Lent — Triumph of Orthodoxy', 35: '2nd Sunday of Great Lent — Saint Gregory Palamas', 28: '3rd Sunday of Great Lent — Veneration of the Holy Cross',
         21: '4th Sunday of Great Lent — Saint John Climacus', 14: '5th Sunday of Great Lent — Saint Mary of Egypt', 7: 'Palm Sunday — Entry of the Lord into Jerusalem' };
-      if (sun) push(sundays[k], k === 7 ? 90 : 50, k === 7 ? 'Great Feast' : 'Sunday', k === 7 ? 'g' : 'v', season);
+      if (sun) { if (k === 7) tone = 0; push(sundays[k], k === 7 ? 90 : 50, k === 7 ? 'Great Feast' : 'Sunday', k === 7 ? 'g' : 'v', season); }
       else if (k === 48) push('Clean Monday — beginning of the Great Fast', 60, 'Holy Day', 'v', season);
       else if (k === 8) push('Lazarus Saturday', 85, 'Feast', 'v', season);
       else if (k === 3) push('Great and Holy Thursday', 95, 'Holy Week', 'r', season);
@@ -650,7 +653,7 @@
       else { const wk = Math.floor((48 - k) / 7) + 1; push(`${wd} of the ${ORD(wk)} Week of Great Lent`, 20, 'Weekday', 'v', season); }
     } else if (d >= P && d <= add(P, 56)) {
       season = 'Pentecostarion'; const k = diff(d, P);
-      if (k === 0) push('Pascha — the Resurrection of Our Lord', 100, 'Great Feast', 'w', season);
+      if (k === 0) { tone = 1; push('Pascha — the Resurrection of Our Lord', 100, 'Great Feast', 'w', season); }
       else if (k < 7) push(`${wd} of Bright Week`, 98, 'Great Feast', 'w', season);
       else if (k === 7) { push('Thomas Sunday (Antipascha)', 60, 'Sunday', 'w', season); tone = 1; }
       else if (k === 14) { push('Sunday of the Holy Myrrh-bearing Women', 60, 'Sunday', 'w', season); tone = 2; }
@@ -660,7 +663,7 @@
       else if (k === 35) { push('Sunday of the Man Born Blind', 60, 'Sunday', 'w', season); tone = 5; }
       else if (k === 39) push('Ascension of Our Lord', 90, 'Great Feast', 'w', season);
       else if (k === 42) { push('Sunday of the Holy Fathers of the First Ecumenical Council', 60, 'Sunday', 'w', season); tone = 6; }
-      else if (k === 49) push('Pentecost — Descent of the Holy Spirit', 92, 'Great Feast', 'g', season);
+      else if (k === 49) { tone = 0; push('Pentecost — Descent of the Holy Spirit', 92, 'Great Feast', 'g', season); }
       else if (k === 50) push('Monday of the Holy Spirit', 70, 'Feast', 'g', season);
       else if (k === 56) { push('Sunday of All Saints', 60, 'Sunday', 'w', season); tone = 8; }
       else push(`${wd} of the ${ORD(Math.floor(k / 7) + 1)} Week of Pascha`, 5, 'Weekday', 'w', season);
@@ -673,22 +676,34 @@
         let special = '';
         if (mm === 12 && md >= 11 && md <= 17) special = 'Sunday of the Holy Forefathers';
         else if (mm === 12 && md >= 18 && md <= 24) special = 'Sunday before the Nativity — Holy Fathers';
-        else if (mm === 12 && md >= 26) special = 'Sunday after the Nativity';
+        else if ((mm === 12 && md >= 26) || (mm === 1 && md === 1)) special = 'Sunday after the Nativity';
         else if (mm === 1 && md >= 2 && md <= 5) special = 'Sunday before Theophany';
         else if (mm === 1 && md >= 7 && md <= 13) special = 'Sunday after Theophany';
         else if (mm === 9 && md >= 8 && md <= 13) special = 'Sunday before the Exaltation of the Cross';
         else if (mm === 9 && md >= 15 && md <= 21) special = 'Sunday after the Exaltation of the Cross';
+        else if (mm === 7 && md >= 13 && md <= 19) special = 'Sunday of the Fathers of the First Six Ecumenical Councils';
+        else if (mm === 10 && md >= 11 && md <= 17) special = 'Sunday of the Fathers of the Seventh Ecumenical Council';
         if (special) push(special, 55, 'Sunday', 'g', season);
         push(`${ORD(n)} Sunday after Pentecost`, special ? 30 : 50, 'Sunday', 'g', season);
       } else push(`${wd} after the ${ORD(n)} Sunday after Pentecost`, 5, 'Weekday', 'g', season);
     }
     // fixed (Menaion) feasts
-    for (const e of byzTable()) if (e.m === mm && e.d === md)
-      push(e.name, e.lvl === 'G' ? 80 : e.lvl === 'F' ? 40 : 20, e.lvl === 'G' ? 'Great Feast' : e.lvl === 'F' ? 'Feast' : 'Saint', e.lvl === 'G' ? 'gold' : 'w', season);
+    for (const e of byzTable()) {
+      const feastDay = e.m === 12 && e.d === 9 && o.byzChurch === 'ruthenian' ? 8 : e.d;
+      if (e.m === mm && feastDay === md)
+        push(e.name, e.lvl === 'G' ? 80 : e.lvl === 'F' ? 40 : 20, e.lvl === 'G' ? 'Great Feast' : e.lvl === 'F' ? 'Feast' : 'Saint', e.lvl === 'G' ? 'gold' : 'w', season);
+    }
     const kk = diff(d, P);
     if (dow(d) === 6 && [-57, -36, -29, -22, 48].includes(kk)) push('Saturday of the Dead (All Souls Saturday)', 35, 'Commemoration', 'v', season);
-    if (mm === 12 && md === 24) push('Eve of the Nativity — Royal Hours', 45, 'Feast', 'v', season);
-    if (mm === 1 && md === 5) push('Eve of Theophany — Royal Hours', 45, 'Feast', 'v', season);
+    if (mm === 12 && md === 24) push('Eve of the Nativity', 45, 'Vigil', 'v', season);
+    if (mm === 1 && md === 5) push('Eve of Theophany', 45, 'Vigil', 'v', season);
+    for (const [m, dd, name] of [[12, 24, 'Nativity'], [1, 5, 'Theophany']]) {
+      let hours = D(men.getUTCFullYear(), m, dd);
+      if (o.byzOldCal) hours = add(hours, julianOffset(hours.getUTCFullYear()));
+      if (dow(hours) === 0) hours = add(hours, -2);
+      else if (dow(hours) === 6) hours = add(hours, -1);
+      if (same(d, hours)) push(`Royal Hours of the ${name}`, 44, 'Observance', 'v', season);
+    }
     items.sort((a, b) => b.score - a.score);
     const w = items[0], also = items.slice(1).filter(i => i.score >= 20).map(i => ({ title: i.title, note: i.rank }));
 
@@ -697,15 +712,21 @@
     const menFast = (a, b) => { const x = mm * 100 + md; return x >= a && x <= b; };
     const apostlesStart = add(pascha(y, o), 57);
     const apEnd = o.byzOldCal ? add(D(y, 6, 28), julianOffset(y)) : D(y, 6, 28);
-    if (d >= add(P, -48) && d < add(P, -8)) fast = 'Great Fast — strict fast and abstinence from meat and dairy';
-    else if (d >= add(P, -7) && d < P) fast = 'Holy Week — strict fast';
-    else if (menFast(801, 814)) fast = 'Dormition Fast';
-    else if (menFast(1115, 1224)) fast = 'Nativity Fast (Philip’s Fast)';
-    else if (d >= apostlesStart && d <= apEnd) fast = 'Apostles’ Fast';
+    let fastSeason = '';
+    if (d >= add(P, -48) && d < add(P, -8)) fastSeason = 'Great Fast';
+    else if (d >= add(P, -6) && d < P) fastSeason = 'Great and Holy Week';
+    else if (menFast(801, 814)) fastSeason = 'Dormition Fast';
+    else if (menFast(1115, 1224)) fastSeason = 'Nativity Fast (Philip’s Fast)';
+    else if (d >= apostlesStart && d <= apEnd) fastSeason = 'Apostles’ Fast';
     const freeW = diff(d, P);
     const fastFree = (freeW >= 0 && freeW <= 6) || (freeW >= 49 && freeW <= 55) || menFast(1225, 1231) || menFast(101, 104) || (diff(P, d) <= 70 && diff(P, d) >= 64);
-    if (!fast && (dow(d) === 3 || dow(d) === 5) && !fastFree) fast = dow(d) === 3 ? 'Wednesday — traditional day of fasting' : 'Friday — traditional day of fasting';
-    return { title: w.title, rank: w.rank, color: w.color, season, tone, also, fast, date: iso(d), pascha: iso(P) };
+    const greatFast = d >= add(P, -48) && d < P;
+    const lordOrMary = byzTable().some(e => e.m === mm && e.d === md && (e.lvl === 'G' || (e.m === 1 && e.d === 1) || (e.m === 10 && e.d === 1)));
+    if (same(d, add(P, -48)) || same(d, add(P, -2))) fast = 'Strict abstinence — no meat, eggs or dairy';
+    else if (o.byzChurch === 'ukrainian' && ((mm === 12 && md === 24) || (mm === 1 && md === 5) || (mm === 9 && md === 14) || (mm === 8 && md === 29))) fast = 'Fast and abstinence from meat — U.S. Ukrainian practice';
+    else if (!fastFree && !lordOrMary && (dow(d) === 5 || (o.byzChurch === 'ruthenian' && greatFast && dow(d) === 3))) fast = o.byzChurch === 'ruthenian' && !greatFast ? 'Friday — abstinence from meat or equivalent penance' : 'Abstinence from meat';
+    const fastingNote = `${o.byzChurch === 'ruthenian' ? 'U.S. Ruthenian' : 'U.S. Ukrainian Greek Catholic'} practice. Seasonal fasting traditions are fuller than these general requirements; follow your eparchy’s current directions and personal exemptions.`;
+    return { title: w.title, rank: w.rank, color: w.color, season, tone, also, fast, fastSeason, fastingNote, date: iso(d), pascha: iso(P) };
   }
 
   /* ---------- combined ---------- */

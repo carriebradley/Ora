@@ -415,7 +415,7 @@
     if (/Lenten fast|Strict fast/.test(f) && t.season !== 'Advent' && !/Martin/.test(f)) add('fast:lent', 'Lenten fast');
     if (/Friday/.test(f)) add('fast:friday', 'Friday');
     if (dow(d) === 3 && !/Ember|Vigil|vigil|Rogation|Lenten|Strict/.test(f)) add('day:wednesday', 'Wednesday');
-    if (/Martin/.test(f)) add('fast:martin', "St Martin's Lent");
+    if (d >= D(d.getUTCFullYear(), 11, 11) && d < D(d.getUTCFullYear(), 12, 25)) add('fast:martin', "St Martin's Lent");
     const seen = new Set(); return out.filter(o => { const k = o.text; if (seen.has(k)) return false; seen.add(k); return true; });
   }
   // vigil fasts: eve of the feast (anticipated to Saturday when it falls on a Sunday). [m,d,keyForNotes,name]
@@ -1908,9 +1908,10 @@
       const wk = Math.floor(diff(d, adv) / 7) + 1;
       const x = { noteKey: 'Season of Advent' };
       const wed = emberWed(D(y, 12, 13)), eb = [0, 2, 3].map(n => add(wed, n)).find(z => same(z, d));
-      if (d.getUTCDate() === 24 && d.getUTCMonth() === 11) return T('Christmas Eve — Vigil Fast', 85, 'Vigil', 'v', 'Advent', { fast: 'Strict fast and abstinence', noteKey: 'Vigil Fast of Christmas', sk: 'xmasEve' });
+      if (d.getUTCDate() === 24 && d.getUTCMonth() === 11 && !sun) return T('Christmas Eve — Vigil Fast', 85, 'Vigil', 'v', 'Advent', { fast: 'Strict fast and abstinence', noteKey: 'Vigil Fast of Christmas', sk: 'xmasEve' });
       if (sun) return T(`${ORD(wk)} Sunday of Advent`, wk === 1 ? 95 : 75, 'Sunday', 'v', 'Advent', Object.assign(x, { sk: 'adv' + wk }));
-      if (eb) return T(`${wd} — Winter Ember Day`, 45, 'Ember Day', 'v', 'Advent', Object.assign(x, em('Winter'), { noteKey: 'Winter Ember Days (Advent Fast)', sk: 'adv3-' + dow(d) }));
+      if (eb) return T(`${wd} — Winter Ember Day`, 45, 'Ember Day', 'v', 'Advent', Object.assign(x, em('Winter'), { noteKey: 'Winter Ember Days (Advent Fast)', sk: 'adv3-' + dow(d) }, d.getUTCMonth() === 11 && d.getUTCDate() === 23 && dow(d) === 6 ? { fast: 'Ember Day — Winter fast; Christmas vigil fast anticipated from Sunday' } : {}));
+      if (d.getUTCMonth() === 11 && d.getUTCDate() === 23 && dow(d) === 6) Object.assign(x, { fast: 'Christmas vigil fast anticipated from Sunday', noteKey: 'Vigil Fast of Christmas' });
       return T(`${wd} of the ${ORD(wk)} Week of Advent`, 10, 'Weekday', 'v', 'Advent', Object.assign(x, { sfk: 'adv' + Math.min(wk, 4), swk: 'adv' + Math.min(wk, 4) + '-' + dow(d) }));
     }
     if (d >= D(y, 12, 25) || d < epi) {
@@ -2049,9 +2050,17 @@
     const also = items.slice(1).filter(i => i.score >= 30 || i.fast || /Memory only|Transferred/.test(i.rank)).map(i => ({ title: i.title, note: i.rank }));
     // fasts: strongest of any item; Fridays are days of abstinence
     let fast = items.map(i => i.fast).filter(Boolean)[0] || '';
-    const y1 = d.getUTCMonth() * 100 + d.getUTCDate();
-    const martin = (d >= D(y, 11, 11) && d < D(y, 12, 24)) && dow(d) !== 0 && !same(d, D(y, 11, 11));
-    if (!fast && martin) fast = "St. Martin's Lent — an old pre-Christmas fast (documented in Gaul from 581 and in Irish monastic texts of the 8th–9th centuries)";
+    // The historical observance is distinct from Sarum's four-week Advent.
+    // Mâcon's Monday/Wednesday/Friday rule is one documented form, not a
+    // universal medieval Sarum obligation or a rule for every Irish monastery.
+    const martin = d >= D(y, 11, 11) && d < D(y, 12, 25);
+    const martinFast = martin && [1, 3, 5].includes(dow(d)) && !same(d, D(y, 11, 11));
+    if (!fast && martinFast) fast = "St. Martin's Lent — historical Monday, Wednesday and Friday fast";
+    const historicalObservance = martin ? {
+      name: "St. Martin's Lent",
+      day: dow(d) === 0 ? 'Sunday — no historical fast today' : same(d, D(y, 11, 11)) ? 'Martinmas — feast opening the historical observance' : fast && /Christmas|Strict/.test(fast) ? 'Christmas vigil fast within the historical observance' : martinFast ? (w.feast ? 'Feast day within the historical fasting period' : 'Historical fasting day') : (w.feast ? 'Feast day — outside the Monday, Wednesday and Friday fast' : 'Outside the Monday, Wednesday and Friday fast'),
+      note: 'Martinmas (11 November) through Christmas Eve (24 December). The Council of Mâcon (581) prescribed Mondays, Wednesdays and Fridays; local and monastic rules varied. Sarum Advent had no general fast beyond Ember Days and the Christmas vigil. A feast is not assumed to cancel a fast.'
+    } : null;
     if (!fast && dow(d) === 5 && !(t.season === 'Eastertide' && diff(d, E) < 7) && !/^Nativity of Our Lord/.test(t.title)) fast = 'Friday — day of abstinence';
     // Vestment colour by the rubric in the 1526 Sarum Missal (Warren I, pp. 24–25); other days keep the app's default.
     let color = w.color, colorNote = '';
@@ -2074,7 +2083,7 @@
     if (!mass && (w === t || w.score <= 30)) { const sm = seasonMass(t); if (sm) mass = w !== t ? Object.assign({}, sm, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the day. ` + sm.note }) : sm; }
     if (!mass && t.fmk && (w === t || w.score <= 30)) { mass = ferialMass(t.fmk, t.wed); if (mass && w !== t) mass = Object.assign({}, mass, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the weekday. ` + mass.note }); }
     const kept = keptFor(d, w, t, fast, w.mk);
-    return { kept, rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color, colorNote, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
+    return { kept, historicalObservance, isFeast: !!w.feast && !/Memory/.test(w.rank), rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color, colorNote, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
   }
 
   return { sarum, temporal, setData, FIXED, VIGILS, MASS };

@@ -27,16 +27,24 @@
   /* ---------- settings & state ---------- */
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '' }, store.get('ora.settings', {}));
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
-  S.rite = 'roman';  // always open on the Roman tab; a tradition picked during a visit is not carried over
+  if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
+  if (!['ukrainian', 'ruthenian'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
     kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
 
-  { const q = new URLSearchParams(location.search); if (q.get('tab')) st.tab = q.get('tab'); if (/^\d{4}-\d\d-\d\d$/.test(q.get('date') || '')) st.date = q.get('date'); if (q.get('kind')) st.kind = q.get('kind'); if (q.get('rite')) S.rite = q.get('rite'); }
+  {
+    const q = new URLSearchParams(location.search), date = q.get('date');
+    if (['today', 'pray', 'readings', 'justice', 'calendar', 'more'].includes(q.get('tab'))) st.tab = q.get('tab');
+    if (/^\d{4}-\d\d-\d\d$/.test(date || '') && +date.slice(0, 4) >= 1000 && L.iso(P(date)) === date) st.date = date;
+    if (['morning', 'evening'].includes(q.get('kind'))) st.kind = q.get('kind');
+    if (Object.hasOwn(RITES, q.get('rite'))) S.rite = q.get('rite');
+    st.readRite = S.rite;
+  }
 
   /* ---------- calendar data ---------- */
   const infoCache = new Map();
-  const cacheKey = iso => iso + JSON.stringify([S.ascension, S.corpus, S.epiphany, S.byzPascha, S.byzOldCal, S.ladyDayTransfer]);
+  const cacheKey = iso => iso + JSON.stringify([S.ascension, S.corpus, S.epiphany, S.byzPascha, S.byzOldCal, S.byzChurch, S.ladyDayTransfer]);
   function dayInfo(iso) {
     const k = cacheKey(iso); if (infoCache.has(k)) return infoCache.get(k);
     const d = P(iso), v = { iso, roman: L.roman(d, S), byz: L.byzantine(d, S), sarum: SA.sarum(d, S), ugcc: userEvents(LITDATA.ugcc, iso) };
@@ -135,7 +143,7 @@
   }
   const bible = c => `https://www.biblegateway.com/passage/?search=${encodeURIComponent(c.replace(/\s*\([^)]*\)/g, '').trim())}&version=RSVCE`;
   const citeLinks = txt => String(txt).split(' · ').map(c => `<a href="${bible(c)}" target="_blank" rel="noopener">${esc(c)}</a>`).join(' · ');
-  const byzDay = iso => ByzLect.read(P(iso), S.byzOldCal ? 13 : 0, y => S.byzPascha === 'julian' ? L.julianEaster(y) : L.westernEaster(y));
+  const byzDay = iso => ByzLect.read(P(iso), S.byzOldCal ? 13 : 0, y => S.byzPascha === 'julian' ? L.julianEaster(y) : L.westernEaster(y), S.byzChurch);
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
   function byzReadingsHTML(v) {
     const t = v.byz;
@@ -170,7 +178,7 @@
     return { book, verses: out, label: `${book} ${ch}:${v1}${v2 !== v1 && ch2 === ch ? '-' + v2 : ''}` };
   }
   let fathersP = null;
-  const loadFathers = () => fathersP || (fathersP = fetch('fathers.json').then(r => { if (!r.ok) throw new Error('x'); return r.json(); }));
+  const loadFathers = () => fathersP || (fathersP = fetch('fathers.json').then(r => { if (!r.ok) throw new Error('x'); return r.json(); }).catch(e => { fathersP = null; throw e; }));
   const AUTH = { 'John Chrysostom': 'St. John Chrysostom', 'Augustine of Hippo': 'St. Augustine', 'Ambrose of Milan': 'St. Ambrose', 'Jerome': 'St. Jerome', 'Gregory the Dialogist': 'St. Gregory the Great', 'Basil of Caesarea': 'St. Basil', 'Hilary of Poitiers': 'St. Hilary', 'Cyril of Alexandria': 'St. Cyril of Alexandria', 'Athanasius of Alexandria': 'St. Athanasius', 'Bede': 'St. Bede', 'Theophylact of Ohrid': 'Theophylact of Ohrid', 'Origen of Alexandria': 'Origen' };
   function fathersBlock(cite) {
     const g = gospelRef(cite); if (!g) return '';
@@ -225,6 +233,7 @@
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${alsoHTML(r.also)}</section>`;
   }
   function byzSaintHTML(iso, r) {
+    if (S.byzChurch === 'ruthenian') return ''; // This supplemental dataset is Ukrainian, not a Ruthenian ordo.
     const B = LITDATA.byzSaints; if (!B) return '';
     const d = L.add(P(iso), S.byzOldCal ? -13 : 0), t = B[(d.getUTCMonth() + 1) + '/' + d.getUTCDate()];
     if (!t) return '';
@@ -237,9 +246,9 @@
     const r = v.byz, u = v.ugcc;
     const words = t => new Set(t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 4));
     const known = [r.title, ...r.also.map(x => x.title)].map(words);
-    const ev = u.day.filter(e => { const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
+    const ev = S.byzChurch === 'ruthenian' ? [] : u.day.filter(e => { const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine</span>${speakBtn(spokenCard(r))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${r.fast ? chip(r.fast, 'fast') : ''}</div>
+      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>
       ${byzSaintHTML(v.iso, r)}${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
   }
@@ -253,7 +262,8 @@
   function cardSarum(v) {
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
+      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
+      ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
       ${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
   }
   function keptHTML(k) {
@@ -281,6 +291,7 @@
     const big = sa && (k === 'saint' || /^(S|F|FL)$/.test(r.kind || ''));
     const first = big && sa.r ? sa : sea, second = sa || sea;
     const cite = (lab, val) => `<div style="margin:8px 0 2px"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${lab}</div><div>${val}</div></div>`;
+    const textDetails = entry => entry && entry.t ? `<details class="oortx" style="margin:2px 0 8px"><summary class="muted" style="font-size:.82rem">Read it here</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
     let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(r.title)}</p>`;
     if (first && first.r) {
       h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
@@ -288,13 +299,13 @@
     }
     if (second && second.a) {
       h += cite('Second reading', `<span style="font-family:var(--serif);font-size:1.02rem">${esc(second.a)}</span> <span class="muted">· <i>${esc(second.w)}</i></span>`);
-      if (second.t) h += `<details class="oortx" style="margin:2px 0 8px"><summary class="muted" style="font-size:.82rem">Read it here</summary><div class="oortx-slot" data-k="${esc(second.a + '|' + second.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>`;
+      h += textDetails(second);
     }
-    if (opt) h += `<p class="muted" style="font-size:.78rem;margin:2px 0">If ${esc(opt.n)} is kept today, the second reading is from ${esc(opt.a)}, <i>${esc(opt.w)}</i>.</p>`;
+    if (opt) h += `<p class="muted" style="font-size:.78rem;margin:2px 0">If ${esc(opt.n)} is kept today, the second reading is from ${esc(opt.a)}, <i>${esc(opt.w)}</i>.</p>` + textDetails(opt);
     if (!(first && first.r) && !(second && second.a)) h += `<p class="muted">This day is not in the table of readings Ora uses${k === 'asc-thu' ? ' (Thursday of the 6th week of Easter, where the Ascension is kept on Sunday)' : ''}. Universalis has the full office.</p>`;
     else if (!(second && second.a)) h += `<p class="muted" style="font-size:.78rem">The second reading for this day is not in the table Ora uses; Universalis has it.</p>`;
     h += `<div class="row"><a class="btn sm fill" target="_blank" rel="noopener" href="https://universalis.com/${iso.replace(/-/g, '')}/readings.htm">Full office (Universalis)</a></div>`;
-    h += `<p class="muted" style="font-size:.74rem">From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture in the Douay-Rheims. The psalms and the second readings are under copyright, so the full office is on Universalis.</p>`;
+    h += `<p class="muted" style="font-size:.74rem">From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture in the Douay-Rheims. Bundled second readings use public-domain translations; the complete official office is on Universalis.</p>`;
     return h;
   }
   function sarumMassHTML(v) {
@@ -314,14 +325,15 @@
     const rk = r.rank || '';
     const alsoFeast = (r.also || []).find(x => FEASTRANK.test(x.note || ''));
     const major = /Solemnity|Principal|Great Feast|Feast of the Lord|Holy Day/.test(rk);
-    const feast = (FEASTRANK.test(rk) && !/Holy Week/.test(rk)) || !!alsoFeast;
+    const feast = r.isFeast || (FEASTRANK.test(rk) && !/Holy Week/.test(rk)) || !!alsoFeast;
     let fast = r.fast || (r.ember ? 'Ember Day — fast and abstinence' : '');
     if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';  // ordinary weekly fast is lifted on a great feast
-    const minor = /Memorial|Saint|Commemoration|Octave/.test(rk);
+    const minor = /Memorial|Saint|Commemoration|Octave|lessons|Memory/.test(rk);
     const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : 'plain';
-    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : minor ? (/Octave/.test(rk) ? 'Octave' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : 'Ordinary day';
+    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : 'Ordinary day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
-    return { kind, badge, detail: [name, fast].filter(Boolean).join(' · ') };
+    const observance = r.historicalObservance;
+    return { kind, badge, detail: [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean).join(' · ') };
   }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
@@ -731,10 +743,9 @@
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    const fel = S.rite === 'sarum' && felireHTML(st.date) ? `<section class="card">${felireHTML(st.date, 1)}</section>` : '';
     const saints = `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return glanceHTML(v) + fel + saints + `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
+    return glanceHTML(v) + (S.rite === 'sarum' ? cardSarum(v) : S.rite === 'byz' ? cardByz(v) : cardRoman(v)) + saints + `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
   }
 
 
@@ -875,14 +886,15 @@
   function viewCalendar() {
     if (!st.month) { const d = P(st.date); st.month = { y: d.getUTCFullYear(), m: d.getUTCMonth() }; }
     const { y, m } = st.month, first = L.D(y, m + 1, 1), start = L.add(first, -first.getUTCDay()), today = todayISO();
-    let h = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button class="ib" data-act="mprev">‹</button><h2 style="flex:1;text-align:center;margin:0">${L.MN[m]} ${y}</h2><button class="ib" data-act="mnext">›</button></div>
+    let h = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button class="ib" data-act="mprev" aria-label="Previous month">‹</button><h2 style="flex:1;text-align:center;margin:0">${L.MN[m]} ${y}</h2><button class="ib" data-act="mnext" aria-label="Next month">›</button></div>
       <div class="legend">${['roman', 'byz', 'sarum'].map(k => `<button data-act="layer" data-v="${k}" class="${st.layers[k] ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div><div class="grid">`;
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
       const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(v[k].color)}"></span>`).join('');
-      const f = (st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && !/^(Wednesday|Friday)/.test(v.byz.fast));
-      h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}"><span>${d.getUTCDate()}</span>${f ? '<span class="f">ƒ</span>' : ''}<span class="dots">${dots}</span></button>`;
+      const f = (st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && (v.byz.fastSeason || /Strict|^Fast and/.test(v.byz.fast)));
+      const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
+      h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
     h += '</div><p class="muted">Dot colours are each calendar’s liturgical colour; a gold ring marks a solemnity, principal or great feast; ƒ marks a fast day beyond ordinary Friday/Wednesday abstinence.</p>';
     const v = dayInfo(st.date);
@@ -903,7 +915,7 @@
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
-      <p><b>Byzantine</b> — Byzantine Catholic cycle on the Gregorian calendar (the same dates as the Roman), with the saints of each day from the Ukrainian Catholic calendar and entries from your own UGCC calendar (2026–27).</p>
+      <p><b>Byzantine</b> — Gregorian Pascha and fixed feasts, with a choice of U.S. Ukrainian Greek Catholic or Ruthenian practice in Settings. The supplemental saints and imported events are from Ukrainian calendars. The reading cycle is an unofficial Slavic table; check your parish ordo for local adjustments.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <details class="card credits"><summary><h3 style="margin:0">Credits &amp; sources</h3></summary><div style="margin-top:8px">
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
@@ -973,7 +985,7 @@
     loadOorText().then(d => {
       const x = d[slot.dataset.k]; slot.dataset.done = '1';
       if (!x) { slot.innerHTML = '<p class="muted" style="font-size:.8rem">Text not found.</p>'; return; }
-      slot.innerHTML = x.p.map(p => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:.5em 0">${p.replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
+      slot.innerHTML = x.p.map(p => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:.5em 0">${esc(p).replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
     }).catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">The text could not be loaded. Ora needs to be online the first time you open it.</p>'; });
   }, true);
   /* ---------- Sarum Matins: the texts (matins.json) are loaded the first time Matins is opened ---------- */
@@ -991,7 +1003,7 @@
   new MutationObserver(() => { hydrateAsv(); hydrateDo(); }).observe(document.getElementById('app'), { childList: true, subtree: true });
 
   function renderHeader() {
-    $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button>`;
+    $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" aria-label="Choose date" min="1000-01-01" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button>`;
   }
   function setLitColour() {
     try {
@@ -1000,11 +1012,22 @@
       document.documentElement.style.setProperty('--lit', col(c));
     } catch (e) { /* keep the default */ }
   }
+  let renderedView = '';
+  const detailKey = d => [d.closest('.step')?.id || '', d.className, d.querySelector(':scope > summary')?.textContent || '', d.dataset.cite || '', d.dataset.d || ''].join('|');
   function render() {
+    const view = JSON.stringify([st.tab, st.date, S.rite, st.kind, st.shour, st.readRite, st.jtab]);
+    const opened = new Map(view === renderedView ? [...document.querySelectorAll('#app details')].map(d => [detailKey(d), d.open]) : []);
+    const active = document.activeElement;
+    const activeDetail = active && active.matches('summary') ? detailKey(active.parentElement) : '';
+    const focusSelector = active && active.matches('[data-act]') ? '[data-act="' + CSS.escape(active.dataset.act) + '"]' + ['v', 'd', 'i'].filter(k => active.dataset[k] != null).map(k => '[data-' + k + '="' + CSS.escape(active.dataset[k]) + '"]').join('') : '';
     setLitColour();
     renderHeader();
-    document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.tab === st.tab));
+    document.querySelectorAll('#nav button').forEach(b => { b.classList.toggle('on', b.dataset.tab === st.tab); if (b.dataset.tab === st.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
+    document.querySelectorAll('.seg button[data-act], .legend button[data-act]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
+    document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
+    if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
+    renderedView = view;
   }
 
   /* ---------- audio (Web Speech API) ---------- */
@@ -1048,11 +1071,12 @@
   function openSettings() {
     const d = $('#dlg'), vs = hasTTS ? speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang)) : [];
     const sel = (id, label, opts, cur) => `<label for="${id}">${label}</label><select id="${id}">${opts.map(([v, t]) => `<option value="${v}" ${cur === v ? 'selected' : ''}>${t}</option>`).join('')}</select>`;
-    d.innerHTML = `<h3>Settings</h3>
+    d.innerHTML = `<h3 id="settings-title">Settings</h3>
       ${sel('s_rite', 'Primary rite (prayer, quotes, hours)', Object.entries(RITES), S.rite)}
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
+      ${sel('s_byz_church', 'Byzantine practice (United States)', [['ukrainian', 'Ukrainian Greek Catholic'], ['ruthenian', 'Ruthenian Byzantine Catholic']], S.byzChurch)}
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
@@ -1061,7 +1085,7 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
     save(); infoCache.clear(); $('#dlg').close(); render();
   }
