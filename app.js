@@ -879,7 +879,7 @@
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)} · ${esc(fmtLong(st.date))}</h2>
       <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
       <p class="muted">Available readings and propers are displayed below. The complete Mass or Divine Liturgy text has not yet been incorporated.</p>
-      ${note}${body}</section>`;
+      ${note}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Roman Mass planning resources</summary><p class="muted">Supplementary seasonal planning guide; not a source of complete daily Missal propers.</p><p><a href="https://www.pewmissal.com/brand_new/index.php/planning-guide/" target="_blank" rel="noopener">Ignatius Pew Missal planning guide</a></p></details>' : ''}</section>`;
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
