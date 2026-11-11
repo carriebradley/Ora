@@ -253,8 +253,8 @@
   function cardSarum(v) {
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
-      ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.colorNote ? `<p class="muted" style="font-size:.78rem">${esc(r.colorNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
+      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
+      ${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
   }
   function keptHTML(k) {
     if (!k || !k.length) return '';
@@ -300,7 +300,7 @@
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
     if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
-    let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3><p class="muted">${esc(m.note)}</p>`;
+    let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="cite"><span><b>${esc(p.k)}</b></span><span class="muted" style="text-align:right;font-size:.74rem">${esc(p.pr)}</span></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
       else h += `<div class="cite"><span><b>${esc(p.k)}</b></span></div><p style="white-space:pre-line;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${esc(p.tx)}</p>`;
@@ -339,7 +339,7 @@
   function popeCard(iso) {
     const p = POPE[iso.slice(0, 7)], mo = L.MN[+iso.slice(5, 7) - 1], Q = C.POPEQ || [];
     const n = Math.round(P(iso).getTime() / 864e5), q = Q.length ? Q[(((n + st.popeShift) % Q.length) + Q.length) % Q.length] : null;
-    let h = `<section class="card"><div class="lab"><span class="grow">From the Holy Father</span></div>`;
+    let h = `<section class="card"><div class="lab"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" style="flex:none;margin:-4px 0"><g fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g stroke="#a9aeb6" transform='matrix(-1 0 0 1 32 0)'><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#a9aeb6" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g><g stroke="#c9a227"><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#c9a227" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g></g></svg><span class="grow">From the Holy Father</span></div>`;
     if (q) h += `<div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · <a target="_blank" rel="noopener" href="${esc(q.u)}">${esc(q.w)}</a></small></div><div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="pnext">Another</button></div>`;
     const ag = angelus, agAge = ag && ag.date ? (P(iso) - P(ag.date)) / 864e5 : 99;
     if (ag && ag.pray && ag.pray.length && agAge >= 0 && agAge < 14)
@@ -726,7 +726,7 @@
     if (!best || bestGap > 3) return '';
     const when = bestGap === 0 ? '' : `${L.MN[best[0] - 1]} ${best[1]} · `;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
-    return `<section class="card"><div class="lab"><span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span></div><p style="margin:6px 0 2px;font-family:var(--serif)"><b>${esc(when)}${esc(yr)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
+    return `<section class="card"><div class="lab"><span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span><span style="letter-spacing:.04em">${esc(when)}${esc(yr)}</span></div><p style="margin:8px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
   }
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -787,7 +787,7 @@
     const rr = st.readRite === 'byz' ? 'byz' : st.readRite === 'sarum' ? 'sarum' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional Mass')}</div>${body}</section>`;
+    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -823,7 +823,7 @@
   function charitySaints(d) {
     const S = window.JUSTICE_SAINTS || []; if (!S.length) return '';
     const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), today = S.filter(x => x.m === m && x.d === dd);
-    return today.map(x => `<section class="card"><div class="lab"><span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:.2em 0"><b>${esc(x.name)}</b></p><p style="margin:.3em 0">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
+    return today.map(x => `<section class="card"><div class="lab"><span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:6px 0 2px"><b>${esc(x.name)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem;line-height:1.5">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
   }
   /* typographic quotes in text (not inside tags): "x" -> “x”, it's -> it’s */
   const curly = html => html.replace(/(^|>)([^<]+)/g, (m, a, t) => a + t
@@ -902,12 +902,12 @@
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
       <p><b>Byzantine</b> — Byzantine Catholic cycle on the Gregorian calendar (the same dates as the Roman), with the saints of each day from the Ukrainian Catholic calendar and entries from your own UGCC calendar (2026–27).</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
-    <section class="card"><h3>Credits &amp; sources</h3>
+    <details class="card credits"><summary><h3 style="margin:0">Credits &amp; sources</h3></summary><div style="margin-top:8px">
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
       <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Byzantine saints of the day: Ukrainian Catholic calendar of the Archeparchy of Winnipeg. Audio of the Roman hours: the free daily recordings of <a href="https://divineoffice.org" target="_blank" rel="noopener">Divine Office</a> (DivineOffice.org), streamed from their podcast.</p>
       <p class="muted">Papal quotations and the Sunday Angelus: the official English texts on <a href="https://www.vatican.va" target="_blank" rel="noopener">vatican.va</a> © Dicastero per la Comunicazione – Libreria Editrice Vaticana; only short excerpts are shown, with links to the full text.</p>
-      <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></section>`;
+      <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></div></details>`;
   }
   function hoursHTML() {
     const rite = S.rite, hrs = C.HOURS[rite], now = new Date().getHours() + new Date().getMinutes() / 60;
