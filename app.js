@@ -148,7 +148,7 @@
     let h = '';
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
-      if (r.full.title) h += `<p class="muted">${esc(r.full.title)}</p>`;
+      if (r.full.title) h += `<h3 class="reading-main-title">${esc(r.full.title)}</h3>`;
       if (/^\d+$/.test(String(r.full.audio || ''))) h += `<iframe title="USCCB audio of the readings" width="100%" height="120" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
       for (const s of r.full.sections) {
         h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
@@ -176,7 +176,7 @@
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
   function byzReadingsHTML(v) {
     const t = v.byz;
-    let h = `<p>${esc(t.title)}${t.tone ? ` · Tone ${t.tone}` : ''}</p>`, day = null;
+    let h = `<h3 class="reading-main-title">${esc(t.title)}</h3>${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
     try { day = byzDay(v.iso); } catch (e) { day = null; }
     if (day && day.sets.length) {
       for (const s of day.sets) {
@@ -343,7 +343,7 @@
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
     if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
-    let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
+    let h = `<h3 class="reading-main-title">${esc(m.title)}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="reading-heading"><div class="reading-label">${esc(p.k)}</div><div class="reading-reference">${esc(p.pr)}</div></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
       else h += `<div class="reading-heading"><div class="reading-label">${esc(p.k)}</div></div><p style="white-space:pre-line;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${esc(p.tx)}</p>`;
