@@ -335,8 +335,10 @@
     if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';  // ordinary weekly fast is lifted on a great feast
     const minor = /Memorial|Saint|Commemoration|Octave|lessons|Memory/.test(rk);
     const martin = rite === 'sarum' && r.historicalObservance && r.historicalObservance.name === "St. Martin's Lent";
-    const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : 'plain';
-    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary day';
+    // A Byzantine fasting season is visible even on days without a specific abstinence rule.
+    const seasonalFast = rite === 'byz' && !!r.fastSeason;
+    const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : seasonalFast ? 'season' : 'plain';
+    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : kind === 'season' ? 'Fasting season' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
     const observance = r.historicalObservance;
     const historical = rite === 'sarum' && observance && observance.name === "St. Martin's Lent";
@@ -347,7 +349,7 @@
   function observanceColor(r, rite) {
     const x = status(r, rite);
     const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
-    return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
+    return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' || x.kind === 'season' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
   }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
