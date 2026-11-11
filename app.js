@@ -1062,8 +1062,10 @@
   }
   function setLitColour() {
     try {
-      const v = dayInfo(st.date), r = S.rite === 'sarum' ? v.sarum : S.rite === 'byz' ? v.byz : v.roman;
-      const c = observanceColor(r, S.rite);
+      const v = dayInfo(st.date);
+      const rite = st.tab === 'readings' ? st.readRite : st.tab === 'pray' && st.prayView === 'mass' ? (st.liturgyView === 'byz' ? 'byz' : S.rite === 'sarum' ? 'sarum' : 'roman') : S.rite;
+      const r = rite === 'sarum' ? v.sarum : rite === 'byz' ? v.byz : v.roman;
+      const c = observanceColor(r, rite);
       document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c));
     } catch (e) { /* keep the default */ }
   }
