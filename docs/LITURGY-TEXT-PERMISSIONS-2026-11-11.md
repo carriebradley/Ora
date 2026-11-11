@@ -47,3 +47,5 @@ For ICEL/USCCB: Does ICEL's noncommercial-website grant cover a free publicly ac
 For Newton: Which English edition of the Divine Liturgy of St John Chrysostom is currently prescribed? May Ora reproduce that edition verbatim on its free devotional website with personal offline caching, and what attribution, approval or license is required? If the linked 2009 draft remains prescribed, is there a later decree confirming it?
 
 No inquiry has been sent to any organization, and no affirmative answer has been invented. Ora remains public. Full Mass and Melkite liturgy imports remain incomplete while these questions are unresolved; official source access and the verified dated reading references remain available.
+
+Verification of the source-access change: 25 Node regressions and the 21-view browser audit passed, with no JavaScript errors or detected accessibility violations. [Verified run](https://github.com/carriebradley/Ora/actions/runs/43106892584). This checks app behavior, not a publisher's approval.
