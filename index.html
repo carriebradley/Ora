@@ -107,13 +107,13 @@ a{color:var(--accent)}
 .note{background:var(--line);border-radius:10px;padding:8px 10px;font-size:.84rem;margin:8px 0}
 .glance .gl{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:10px;align-items:center;padding:15px 0;border-top:1px solid var(--line);font-size:.9rem}
 .glance .gl:first-of-type,.glance .lab+.gl{border-top:0}
-.glance .lab{margin-bottom:10px}
+.glance .lab{margin-bottom:5px}
 .glance .gl[role="button"]{cursor:pointer;border-radius:10px;padding-left:10px;padding-right:10px;margin-left:-10px;margin-right:-10px;transition:background .15s}
-.glance .gl.selected{background:color-mix(in srgb,var(--lit) 4%,transparent);box-shadow:inset 3px 0 0 var(--lit),inset -3px 0 0 var(--lit)}
+.glance .gl.selected{background:color-mix(in srgb,var(--lit) 5%,transparent);box-shadow:inset 3px 0 0 var(--lit),inset -3px 0 0 var(--lit)}
 .glance .gl[role="button"]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .glance .gn{color:var(--ink);font-weight:700;font-size:.96rem;letter-spacing:.01em}
-.glance .gb{justify-self:end;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line);white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(0,0,0,.23),0 0 0 2px var(--card),0 0 0 3px color-mix(in srgb,var(--badge-color,var(--line)) 55%,var(--line))}
-.glance .gl.selected .gb{box-shadow:inset 0 0 0 1px rgba(0,0,0,.25),0 0 0 2px var(--card),0 0 0 3px var(--badge-color,var(--line))}
+.glance .gb{justify-self:end;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line);white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(0,0,0,.16),0 0 0 1px color-mix(in srgb,var(--badge-color,var(--line)) 50%,var(--line))}
+.glance .gl.selected .gb{box-shadow:inset 0 0 0 1px rgba(0,0,0,.2),0 0 0 1.5px var(--badge-color,var(--line))}
 /* Badges use each rite's liturgical colour; the label retains feast/fast status. */
 .glance .gd{grid-column:1/-1;color:var(--ink);min-width:0;font-family:var(--serif);font-size:.99rem;line-height:1.5}
 @media (max-width:420px){.glance .gl{column-gap:10px}.glance .gb{font-size:.86rem}}
