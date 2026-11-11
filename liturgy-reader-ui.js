@@ -5,7 +5,7 @@
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function card(id){
     if(!labels[id])return '<p class="muted">No service book is selected for this date. Consult the monthly directions above.</p>';
-    return `<section class="liturgical-text" data-text-id="${id}" aria-label="Liturgical Text"><h3>Liturgical Text</h3><p class="muted">${escape(labels[id])} · a PDF saved privately on this device. Daily readings update with the date; the PDF retains its own pages.</p><p class="reader-status" role="status">Checking saved text…</p><div class="reader-inline-text" aria-label="Saved liturgical text preview" hidden style="white-space:pre-wrap;line-height:1.7;max-height:55vh;overflow:auto"></div><div class="row"><button class="btn fill" data-reader="open" disabled>Open Text</button></div><details><summary>Choose or replace text</summary><label for="liturgical-file">PDF for ${escape(labels[id])}</label><input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,.pdf"><p class="muted">Up to 100 MB. A new file replaces only this service’s book. Browser storage can be cleared; keep your original PDF.</p><button class="btn" data-reader="remove" disabled>Remove saved text</button></details><details><summary>Source texts</summary>${id==='roman'?'<p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener">Order of Mass · England and Wales</a></p><p class="muted">Official 2011 leaflet of the fixed prayers and responses, with copyright notices. It is not the complete Missal or the daily propers. Save the PDF to Files, then choose it above.</p>':`${['chrysostom','basil'].includes(id)?'<p><a class="btn" href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener">Official Pittsburgh service book · Chrysostom and Basil</a></p><p class="muted">English people’s book with prayers, responses and hymns. Save the original PDF to Files, then choose it above for this service. The same book covers both liturgies; it does not contain every clergy prayer. Keep its copyright notices.</p>':''}${id==='presanctified'?'<p class="muted">MCI does not currently offer the official Pittsburgh Presanctified book electronically. <a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener">Publication information</a>. You may select your own permitted PDF above.</p>':''}`}</details></section>`;
+    return `<section class="liturgical-text" data-text-id="${id}" aria-label="Liturgical Text"><h3>Liturgical Text</h3><p class="muted">${escape(labels[id])} · a PDF saved privately on this device. Daily readings update with the date; the PDF retains its own pages.</p><p class="reader-status" role="status">Checking saved text…</p><div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous page</button><span class="reader-inline-page muted" aria-live="polite"></span><button class="btn" data-reader="inline-next">Next page</button></div><div class="reader-inline-text" aria-label="Saved liturgical text preview" hidden style="white-space:pre-wrap;line-height:1.7;max-height:55vh;overflow:auto"></div><div class="row"><button class="btn fill" data-reader="open" disabled>Open Text</button></div><details><summary>Choose or replace text</summary><label for="liturgical-file">PDF for ${escape(labels[id])}</label><input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,.pdf"><p class="muted">Up to 100 MB. A new file replaces only this service’s book. Browser storage can be cleared; keep your original PDF.</p><button class="btn" data-reader="remove" disabled>Remove saved text</button></details><details><summary>Source texts</summary>${id==='roman'?'<p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener">Order of Mass · England and Wales</a></p><p class="muted">Official 2011 leaflet of the fixed prayers and responses, with copyright notices. It is not the complete Missal or the daily propers. Save the PDF to Files, then choose it above.</p>':`${['chrysostom','basil'].includes(id)?'<p><a class="btn" href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener">Official Pittsburgh service book · Chrysostom and Basil</a></p><p class="muted">English people’s book with prayers, responses and hymns. Save the original PDF to Files, then choose it above for this service. The same book covers both liturgies; it does not contain every clergy prayer. Keep its copyright notices.</p>':''}${id==='presanctified'?'<p class="muted">MCI does not currently offer the official Pittsburgh Presanctified book electronically. <a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener">Publication information</a>. You may select your own permitted PDF above.</p>':''}`}</details></section>`;
   }
   async function hydrate(){
     const section=document.querySelector('.liturgical-text');if(!section)return;
@@ -13,20 +13,21 @@
     try{const record=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected)return;
       status.textContent=record?`${record.name} · ${record.pages} pages · saved on this device`:'No PDF saved for this service yet.';
       section.querySelector('[data-reader="open"]').disabled=!record;section.querySelector('[data-reader="remove"]').disabled=!record;
-      const preview=section.querySelector('.reader-inline-text');
+      const preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls');
       if(record){
         try{
           const pdf=await LiturgyReader.load(record.blob);
           try{
-            const page=await pdf.getPage(Math.max(1,Math.min(pdf.numPages,record.page||1)));
+            const selected=Math.max(1,Math.min(pdf.numPages,Number(section.dataset.inlinePage)||record.page||1));section.dataset.inlinePage=selected;
+            const page=await pdf.getPage(selected);
             const content=await page.getTextContent();
             if(!section.isConnected)return;
             const value=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim();
             preview.textContent=value||'This page has no selectable text. Use Open Text for the original page.';
-            preview.hidden=false;
+            preview.hidden=false;controls.hidden=false;controls.querySelector('.reader-inline-page').textContent=`Page ${selected} of ${pdf.numPages}`;controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;controls.querySelector('[data-reader="inline-next"]').disabled=selected>=pdf.numPages;
           }finally{await pdf.destroy();}
         }catch(_){if(section.isConnected){preview.textContent='Preview unavailable. Use Open Text to view the saved PDF.';preview.hidden=false;}}
-      }else{preview.hidden=true;preview.textContent='';}
+      }else{preview.hidden=true;preview.textContent='';controls.hidden=true;}
     }catch(_){if(section.isConnected)status.textContent='Device storage is unavailable. You can still open the source links.';}
   }
   let doc=null,task=null,session=0,pageVersion=0,pageNumber=1,record=null,objectURL=null,returnFocus=null,textMode=false;
@@ -72,6 +73,7 @@
   document.addEventListener('click',async e=>{
     const b=e.target.closest('[data-reader]');if(!b)return;
     const action=b.dataset.reader,section=b.closest('.liturgical-text'),id=section?.dataset.textId;
+    if(action==='inline-prev'||action==='inline-next'){if(!section)return;const current=Number(section.dataset.inlinePage)||1;section.dataset.inlinePage=Math.max(1,current+(action==='inline-next'?1:-1));section.querySelector('.reader-inline-text').textContent='Loading page…';await LiturgyReader.bookmark(id,Number(section.dataset.inlinePage));await hydrate();return;}
     if(action==='open'){await open(id,b);return;}
     if(action==='remove'){
       if(!confirm('Remove this service’s saved PDF from this device?'))return;
