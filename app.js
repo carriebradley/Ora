@@ -345,7 +345,7 @@
       const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
       const lit = r.color || 'gold';
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}${lit === 'w' ? ';box-shadow:inset 0 0 0 1px #b8aa99' : ''}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}${lit === 'w' ? ';box-shadow:inset 0 0 0 1px #b8aa99' : ''}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -1110,7 +1110,7 @@
       case 'datepick': { const dp = $('#dp'); if (dp.showPicker) dp.showPicker(); else dp.click(); return; }
       case 'rr': st.readRite = v; break;
       case 'jtab': st.jtab = v; break;
-      case 'rite': S.rite = v; save(); break;
+      case 'rite': if (!Object.hasOwn(RITES, v)) return; S.rite = v; st.readRite = v; save(); break;
       case 'kind': st.kind = v; break;
       case 'shour': st.shour = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
@@ -1132,6 +1132,7 @@
     }
     render();
   });
+  document.addEventListener('keydown', e => { const el = e.target.closest('.glance .gl[role="button"]'); if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); el.click(); } });
   document.addEventListener('change', e => { if (e.target.id === 'dp' && e.target.value) { st.date = e.target.value; st.month = null; render(); } });
   if (hasTTS) speechSynthesis.onvoiceschanged = () => { };
 
