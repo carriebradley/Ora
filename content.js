@@ -115,7 +115,7 @@ const CONTENT = (() => {
         P('Intercessions', 'Lord, I offer you this day: my work, my words, my joys and my sufferings. Bless those I love. Remember the sick, the dying and the lonely, and those who have asked for my prayers.'),
         P('Our Father', T.our), P('Blessing', T.blessing)],
       evening: [P('Sign of the Cross', T.cross), P('Opening', T.help + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
-        { type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' }, { type: 'art', title: 'Sacred Art' },
+        { type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' },
         { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Mary (Magnificat)', T.magnificat),
         P('Examen', 'Where was God in this day? For what am I most grateful? Where did I fall short, and where did I feel most alive? What do I ask for tomorrow?'),
         P('Our Father', T.our), P('Hail Mary', T.hail), P('Blessing', T.blessing)]
@@ -125,7 +125,7 @@ const CONTENT = (() => {
         P('Morning Troparion', T.morningTrop), { type: 'hourlink', title: 'Orthros (Matins) and the Hours', hour: 'orthros' }, 
         { type: 'quote', title: 'From the Fathers' }, { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Dismissal', T.dismissal)],
       evening: [P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
-        P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe), { type: 'art', title: 'Icon' },
+        P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe),
         { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)]
     },
     sarum: {
@@ -138,7 +138,7 @@ const CONTENT = (() => {
       LH: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' },
         { type: 'little', title: 'Prime, Terce, Sext and None' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']] },
         P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail)],
-      V: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' }, { type: 'art', title: 'Sacred Art' },
+      V: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' },
         { type: 'office', title: 'Vespers', which: 'V' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['V', 'Vespers']] },
         P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
       C: [P('Sign of the Cross', T.cross), { type: 'office', title: 'Compline', which: 'C' }, { type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: [['C', 'Compline']] },
