@@ -39,12 +39,19 @@
     prayView: 'office', liturgyView: 'byz', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
 
   {
+    // Restore the current navigation after a refresh, without persisting the
+    // selected calendar date or overriding explicit links to a tab.
+    const remembered = store.get('ora.navigation', {});
+    const validTabs = ['today', 'pray', 'readings', 'liturgy', 'justice', 'calendar', 'more'];
+    if (validTabs.includes(remembered.tab)) st.tab = remembered.tab;
+    if (['roman', 'byz', 'sarum'].includes(remembered.readRite)) st.readRite = remembered.readRite;
+    if (['mass', 'byz'].includes(remembered.liturgyView)) st.liturgyView = remembered.liturgyView;
     const q = new URLSearchParams(location.search), date = q.get('date');
     if (['today', 'pray', 'readings', 'liturgy', 'justice', 'calendar', 'more'].includes(q.get('tab'))) st.tab = q.get('tab');
     if (/^\d{4}-\d\d-\d\d$/.test(date || '') && +date.slice(0, 4) >= 1000 && L.iso(P(date)) === date) st.date = date;
     if (['morning', 'evening'].includes(q.get('kind'))) st.kind = q.get('kind');
     if (Object.hasOwn(RITES, q.get('rite'))) S.rite = q.get('rite');
-    st.readRite = S.rite;
+    if (Object.hasOwn(RITES, q.get('rite'))) st.readRite = S.rite;
   }
 
   /* ---------- calendar data ---------- */
@@ -1125,6 +1132,7 @@
     document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
     if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
     renderedView = view;
+    store.set('ora.navigation', { tab: st.tab, readRite: st.readRite, liturgyView: st.liturgyView });
   }
 
   /* ---------- audio (Web Speech API) ---------- */
