@@ -35,7 +35,7 @@
   applyReadingSize();
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
-    kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
+    prayView: 'office', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
 
   {
     const q = new URLSearchParams(location.search), date = q.get('date');
@@ -849,6 +849,12 @@
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
+    let header = `<div class="seg"><button data-act="prayview" data-v="office" class="${st.prayView === 'office' ? 'on' : ''}">Daily Prayers</button><button data-act="prayview" data-v="mass" class="${st.prayView === 'mass' ? 'on' : ''}">Daily Mass</button></div>`;
+    if (st.prayView === 'mass') {
+      const name = rite === 'byz' ? 'Divine Liturgy' : rite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
+      const body = rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
+      return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><p class="muted">${esc(rite === 'byz' ? v.byz.title : rite === 'sarum' ? v.sarum.title : v.roman.title)}</p><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${body}</section>`;
+    }
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`}`;
     h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps · ${esc(fmtLong(st.date))}</span></div>`;
@@ -869,7 +875,7 @@
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
     });
-    return h;
+    return header + h;
   }
 
   const QS = 'font-family:var(--serif);font-size:1.05rem;line-height:1.55;margin:.3em 0';
@@ -1152,6 +1158,7 @@
       case 'jtab': st.jtab = v; break;
       case 'rite': if (!Object.hasOwn(RITES, v)) return; S.rite = v; st.readRite = v; save(); break;
       case 'kind': st.kind = v; break;
+      case 'prayview': st.prayView = v === 'mass' ? 'mass' : 'office'; break;
       case 'shour': st.shour = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
       case 'qnext': st.quoteShift++; break;
