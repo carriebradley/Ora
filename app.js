@@ -405,7 +405,7 @@
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const seasonLine = glanceSeason(r, k, v.iso);
-      const cycles = k === 'roman' ? `<div class="muted" style="font-size:.8rem">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
+      const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
       return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${col(lit)};background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${seasonLine || x.detail || cycles ? `<div class="gd">${esc(x.detail)}<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>${cycles}</div>` : ''}</div>`;
@@ -1248,7 +1248,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v141';
+  const APP_BUILD = 'ora-v142';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
