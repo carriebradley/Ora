@@ -343,7 +343,9 @@
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
-      const lit = r.color || 'gold';
+      // Badges show observance type; the header retains the rite's liturgical colour.
+      const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
+      const lit = martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Sunday' ? 'g' : 'w';
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
       return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}${lit === 'w' ? ';box-shadow:inset 0 0 0 1px #b8aa99' : ''}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
