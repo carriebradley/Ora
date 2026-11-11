@@ -27,7 +27,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=readings&rite=byz&date=2026-11-11`);
  assert.equal(await page.locator('.reading-main-title').count(),1);
  assert.equal(await page.locator('.reading-day-title').count(),0);
- assert.doesNotMatch(await page.locator('#app').innerText(),/Wednesday.*(?:Pentecost|week)/);
+ assert.equal(await page.locator('.reading-main-title').innerText(),'Wednesday after the 24th Sunday after Pentecost');
+ assert.doesNotMatch(await page.locator('#app').innerText(),/Wednesday of the 25th week/);
  assert.match(await page.locator('#app').innerText(),/Ruthenian Byzantine Catholic practice of Pittsburgh/);
  assert.equal(await page.locator('a[href*="melkite.org"]').count(),0);
  assert.deepEqual(await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));return [s.byzChurch,s.byzLiturgyChurch,s.byzAnna]}),['ruthenian','ruthenian','default']);
