@@ -36,7 +36,7 @@
   applyReadingSize();
   const save = () => store.set('ora.settings', S);
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
-    prayView: 'office', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
+    prayView: 'office', liturgyView: 'byz', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
 
   {
     const q = new URLSearchParams(location.search), date = q.get('date');
@@ -850,12 +850,14 @@
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
-    let header = `<div class="seg"><button data-act="prayview" data-v="office" class="${st.prayView === 'office' ? 'on' : ''}">Daily Prayers</button><button data-act="prayview" data-v="mass" class="${st.prayView === 'mass' ? 'on' : ''}">Daily Mass</button></div>`;
+    let header = `<div class="seg"><button data-act="prayview" data-v="office" class="${st.prayView === 'office' ? 'on' : ''}">Daily Prayers</button><button data-act="prayview" data-v="mass" class="${st.prayView === 'mass' ? 'on' : ''}">Liturgy</button></div>`;
     if (st.prayView === 'mass') {
-      const name = rite === 'byz' ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy') : rite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
-      const body = rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-      const sourceNote = rite === 'byz' && S.byzLiturgyChurch === 'melkite' ? '<p class="note">Melkite liturgy is selected. Melkite-specific calendar propers and full liturgy texts have not yet been added; the readings below currently follow the Ukrainian Byzantine calendar and should not be presented as verified Melkite propers.</p>' : '';
-      return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(rite === 'byz' ? v.byz.title : rite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(rite === 'byz' ? v.byz.season : rite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${sourceNote}${body}</section>`;
+      header += `<div class="seg"><button data-act="liturgyview" data-v="mass" class="${st.liturgyView === 'mass' ? 'on' : ''}">Mass</button><button data-act="liturgyview" data-v="byz" class="${st.liturgyView === 'byz' ? 'on' : ''}">Divine Liturgy</button></div>`;
+      const litRite = st.liturgyView === 'byz' ? 'byz' : (rite === 'sarum' ? 'sarum' : 'roman');
+      const name = litRite === 'byz' ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy') : litRite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
+      const body = litRite === 'byz' ? byzReadingsHTML(v) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
+      const sourceNote = litRite === 'byz' && S.byzLiturgyChurch === 'melkite' ? '<p class="note">Melkite liturgy is selected. Melkite-specific calendar propers and full liturgy texts have not yet been added; the readings below currently follow the Ukrainian Byzantine calendar and should not be presented as verified Melkite propers.</p>' : '';
+      return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(litRite === 'byz' ? v.byz.title : litRite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(litRite === 'byz' ? v.byz.season : litRite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${sourceNote}${body}</section>`;
     }
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`}`;
@@ -1162,6 +1164,7 @@
       case 'rite': if (!Object.hasOwn(RITES, v)) return; S.rite = v; st.readRite = v; save(); break;
       case 'kind': st.kind = v; break;
       case 'prayview': st.prayView = v === 'mass' ? 'mass' : 'office'; break;
+      case 'liturgyview': st.liturgyView = v === 'byz' ? 'byz' : 'mass'; break;
       case 'shour': st.shour = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
       case 'qnext': st.quoteShift++; break;
