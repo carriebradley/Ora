@@ -67,3 +67,9 @@ The Mass choice now always follows the current Roman calendar and USCCB daily re
 The view explicitly distinguishes the current daily lectionary from the complete Roman Missal prayers, which are not yet bundled. The browser check reproduces the reported November 11 case with Traditional selected, verifies Roman Mass and Saint Martin of Tours, and rejects Sarum/Martinmas/After Trinity headings. Cache version: ora-v146.
 
 Current Roman Mass verification passed: 25 Node tests plus the 21-view browser audit and the specific Traditional-selected Mass regression, with no JavaScript errors or detected accessibility violations. [Verified run](https://github.com/carriebradley/Ora/actions/runs/43105541737).
+
+## Follow-up: text permissions and approved Roman sources
+
+See [the text permissions/source review](LITURGY-TEXT-PERMISSIONS-2026-11-11.md), which supersedes any earlier blanket claim that every ICEL text needs separate permission. ICEL publishes a conditional noncommercial-website grant. The newer USCCB guidelines enter into force on November 29, 2026, and their interaction with that grant for this devotional PWA needs clarification. The review separates confirmed terms, retrieval limits, future effective dates and unresolved questions; no external inquiries have been sent.
+
+Added official USCCB fixed-prayer/response and Order of Mass resources to Liturgy → Mass. These are accurately labeled selections of current texts, rather than a complete imported Missal. The Melkite edition/reuse questions remain separate. Cache version: ora-v147.

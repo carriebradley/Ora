@@ -52,6 +52,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.match(await page.locator('#app').innerText(),/Saint Martin of Tours, Bishop/);
  assert.doesNotMatch(await page.locator('#app').innerText(),/Sarum Mass|Martinmas|After Trinity|Confessor/);
  assert.match(await page.locator('#app').innerText(),/current Roman Catholic lectionary/);
+ assert.equal(await page.locator('a[href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts"]').count(),1);
+ assert.equal(await page.locator('a[href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass"]').count(),1);
  await page.screenshot({path:path.join(artifacts,'current-roman-mass-mobile.png'),fullPage:true});
  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
  const massAudit=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));

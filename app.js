@@ -890,7 +890,7 @@
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
       <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
       <p class="muted">${byzantine ? 'Melkite readings and official liturgical resources are displayed below. The complete Divine Liturgy text has not yet been incorporated.' : 'Daily readings follow the current Roman Catholic lectionary. The complete Roman Missal prayers have not yet been incorporated.'}</p>
-      ${note}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Roman Mass planning resources</summary><p class="muted">Supplementary seasonal planning guide; not a source of complete daily Missal propers.</p><p><a href="https://www.pewmissal.com/brand_new/index.php/planning-guide/" target="_blank" rel="noopener">Ignatius Pew Missal planning guide</a></p></details>' : ''}</section>`;
+      ${note}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
   }
   function romanNightHTML() {
     const ps = Hours.H.ps['90'].map(row => esc(row[2]).replace(/\s*\*\s*/g, ' ')).join('<br>');
@@ -1259,7 +1259,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v146';
+  const APP_BUILD = 'ora-v147';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
