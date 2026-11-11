@@ -1246,6 +1246,36 @@
     const t = todayISO();
     if (t !== shownToday) { if (st.date === shownToday) { st.date = t; st.month = null; render(); } shownToday = t; }
   });
+  // Check the published build, not the GitHub commit: Pages can lag behind.
+  // A visible notice avoids interrupting someone halfway through a prayer.
+  const APP_BUILD = 'ora-v140';
+  let updateShown = false;
+  async function checkForPublishedUpdate() {
+    if (document.visibilityState !== 'visible' || updateShown) return;
+    try {
+      const response = await fetch('sw.js?update-check=' + Date.now(), { cache: 'no-store' });
+      if (!response.ok) return;
+      const match = (await response.text()).match(/const V = ['"](ora-v\\d+)['"]/);
+      if (!match || match[1] === APP_BUILD) return;
+      updateShown = true;
+      const notice = document.createElement('div');
+      notice.setAttribute('role', 'status');
+      notice.style.cssText = 'position:fixed;left:12px;right:12px;bottom:calc(86px + env(safe-area-inset-bottom, 0px));z-index:1000;background:var(--card);color:var(--ink);border:1px solid var(--lit);border-radius:12px;padding:12px 14px;box-shadow:0 4px 22px #0007;display:flex;align-items:center;justify-content:space-between;gap:12px';
+      notice.innerHTML = '<span>New Ora update available</span><button type="button" class="btn fill">Update now</button>';
+      notice.querySelector('button').addEventListener('click', async () => {
+        store.set('ora.navigation', { tab: st.tab, readRite: st.readRite, liturgyView: st.liturgyView });
+        try {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) await reg.update();
+        } catch (_) { /* reload can still fetch online */ }
+        location.reload();
+      });
+      document.body.appendChild(notice);
+    } catch (_) { /* offline */ }
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkForPublishedUpdate(); });
+  setInterval(checkForPublishedUpdate, 60000);
+  setTimeout(checkForPublishedUpdate, 12000);
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => { });
 })();
