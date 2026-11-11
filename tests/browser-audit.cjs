@@ -33,7 +33,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.waitForFunction(()=>document.querySelector('.oortx-slot[data-k^="Church of Smyrna|"]')?.textContent.includes('costly spices'));
  await page.screenshot({path:path.join(artifacts,'polycarp-mobile.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=pray&rite=roman`);await page.locator('[data-act="rite"][data-v="sarum"]').click();
- await page.goto(`${base}index.html`);assert.match(await page.locator('#app').innerText(),/Félire/,'tradition persists');
+ await page.goto(`${base}index.html?tab=pray`);assert.equal(await page.locator('[data-act="rite"].on').getAttribute('data-v'),'sarum','tradition persists');
  await page.goto(`${base}index.html?tab=pray&rite=bogus&kind=bogus&date=2026-99-99`);assert.ok((await page.locator('#app').innerText()).length>100);
  await page.goto(`${base}index.html?tab=calendar&date=2026-11-15`);
  const next=page.locator('[data-act="mnext"]');await next.focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement?.dataset.act),'mnext');
