@@ -129,13 +129,13 @@ const CONTENT = (() => {
         { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)]
     },
     sarum: {
-      morning: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church (Sarum)' },
+      morning: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' },
         { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 },
-        { type: 'office', title: 'Lauds (Sarum)', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
-      evening: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church (Sarum)' },
-        { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers (Sarum)', which: 'V' }, P('Kyrie', T.kyrie),
+        { type: 'office', title: 'Lauds', which: 'L' }, P('Kyrie', T.kyrie), P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing)],
+      evening: [P('Sign of the Cross', T.cross), { type: 'calendar', title: 'Today in the Church' },
+        { type: 'silence', title: 'Silence', seconds: 120 }, { type: 'office', title: 'Vespers', which: 'V' }, P('Kyrie', T.kyrie),
         P('Pater noster (Our Father)', T.our), P('Ave Maria (Hail Mary)', T.hail), P('Blessing', T.blessing),
-        { type: 'office', title: 'Compline (Sarum) · before sleep', which: 'C' }]
+        { type: 'office', title: 'Compline · before sleep', which: 'C' }]
     }
   };
 

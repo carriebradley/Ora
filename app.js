@@ -22,7 +22,7 @@
   const COLORS = { y: '#d4a017', w: '#f4efe0', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
   const col = c => COLORS[c] || COLORS.g;
   const MAJOR = /Solemnity|Principal|Great Feast|Triduum|Holy Week|Class I$/;
-  const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Sarum (traditional)' };
+  const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
 
   /* ---------- settings & state ---------- */
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '' }, store.get('ora.settings', {}));
@@ -64,11 +64,14 @@
     if (/virgin mary|mother of god|theotokos|lady day|annunciation|immaculate|our lady|nativity of the virgin/.test(title)) t.add('marian');
     return t;
   }
+  /* day-by-day rotation: key starts with the ISO date, so each day moves one step through the list (no repeats until it wraps) */
+  const mix = s => { let h = hash(s); h ^= h >>> 16; h = Math.imul(h, 0x45d9f3b) >>> 0; h ^= h >>> 16; return h >>> 0; };
   function pick(list, key, shift, tags, rite) {
+    const day = Math.round(P(key.slice(0, 10)).getTime() / 864e5), salt = mix(key.slice(10));
     let pool = list.filter(x => x.tags && x.tags.some(g => g !== 'general' && tags.has(g)));
-    if (!pool.length || hash(key) % 3 === 0) pool = list.filter(x => !x.tags || x.tags.includes('general') || x.tags.some(g => tags.has(g)));
-    if (rite) { const pref = rite === 'byz' ? 'East' : null; if (pref) { const e = pool.filter(x => x.tr === pref); if (e.length && hash(key + 'x') % 3 !== 0) pool = e; } }
-    return pool[(hash(key) + shift) % pool.length];
+    if (!pool.length || mix(key) % 3 === 0) pool = list.filter(x => !x.tags || x.tags.includes('general') || x.tags.some(g => tags.has(g)));
+    if (rite) { const pref = rite === 'byz' ? 'East' : null; if (pref) { const e = pool.filter(x => x.tr === pref); if (e.length && mix(key + 'x') % 3 !== 0) pool = e; } }
+    return pool[(((day + salt + shift) % pool.length) + pool.length) % pool.length];
   }
   const quoteFor = (v, rite) => pick(C.QUOTES.filter(q => !q.tags || q.tags.some(g => tagsFor(v).has(g))), v.iso + rite, st.quoteShift, tagsFor(v), rite);
   const artFor = (v, rite) => pick(C.ART.map(a => a), v.iso + 'art' + rite, st.artShift, tagsFor(v), rite);
@@ -249,7 +252,7 @@
   }
   function cardSarum(v) {
     const r = v.sarum;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Sarum · traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.srcText, r.src === 'I' ? 'fast' : '')}</div>
       ${r.srcNote ? `<p class="muted">${esc(r.srcNote)}</p>` : ''}${r.rankNote ? `<p class="muted" style="font-size:.78rem">${esc(r.rankNote)}</p>` : ''}${r.colorNote ? `<p class="muted" style="font-size:.78rem">${esc(r.colorNote)}</p>` : ''}${r.notes ? `<p class="muted">${esc(r.notes)}</p>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
   }
@@ -296,7 +299,7 @@
   }
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
-    if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No Sarum Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
+    if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
     let h = `<h3 style="font-family:var(--serif);margin:10px 0 4px">${esc(m.title)}</h3><p class="muted">${esc(m.note)}</p>`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="cite"><span><b>${esc(p.k)}</b></span><span class="muted" style="text-align:right;font-size:.74rem">${esc(p.pr)}</span></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
@@ -321,7 +324,7 @@
     return { kind, badge, detail: [name, fast].filter(Boolean).join(' · ') };
   }
   function glanceHTML(v) {
-    const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Sarum', v.sarum, 'sarum']];
+    const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab"><span class="grow">Today: feast or fast?</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span>${x.detail ? `<span class="gd">${esc(x.detail)}</span>` : ''}</div>`;
@@ -746,6 +749,12 @@
       if (s.type === 'hourlink') x.text = `${s.title}. Open the full office to pray the psalms.`;
       if (s.type === 'prayer') { x.body = s.text; x.text = `${s.title}. ${s.text}`; }
       out.push(x);
+      /* Sarum morning: Matins and the little hours, each folded, after Lauds */
+      if (rite === 'sarum' && s.type === 'office' && s.which === 'L' && window.Hours)
+        out.push({ type: 'sarumhours', title: 'Matins and the little hours', text: 'Matins, Prime, Terce, Sext and None. Open each hour to pray it.' });
+      /* Saturdays in Sarum: the Commemoration of Our Lady after Lauds (morning) or Vespers (evening) */
+      if (rite === 'sarum' && s.type === 'office' && (s.which === 'L' || s.which === 'V') && P(v.iso).getUTCDay() === 6 && window.Hours && Hours.sarumBVM)
+        out.push({ type: 'bvm', title: 'Commemoration of Our Lady · Saturday', hrs: s.which === 'L' ? [['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']] : [['V', 'Vespers'], ['C', 'Compline']], text: 'The Commemoration of Our Lady. Open each hour to pray it.' });
     }
     return out;
   }
@@ -768,12 +777,12 @@
     const rr = st.readRite === 'byz' ? 'byz' : st.readRite === 'sarum' ? 'sarum' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Sarum Mass')}</div>${body}</section>`;
+    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional Mass')}</div>${body}</section>`;
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, st.kind, v);
-    let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div>
+    let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       <div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`;
     h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps · ${esc(fmtLong(st.date))}</span></div>`;
     steps.forEach((s, i) => {
@@ -783,7 +792,9 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (rite === 'roman' ? doSlot(st.date, { L: 'Morning Prayer', V: 'Evening Prayer', C: 'Night Prayer' }[s.which] || '') : '') + (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Matins, Prime, Terce, Sext and None are under More → Hours of the day. Other English Sarum resources:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'office') h += (rite === 'roman' ? doSlot(st.date, { L: 'Morning Prayer', V: 'Evening Prayer', C: 'Night Prayer' }[s.which] || '') : '') + (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? Hours.modern(L, P(st.date), s.which) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Matins, Prime, Terce, Sext and None are in the next step. Other English resources for this office:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'sarumhours') h += `<div class="muted" style="font-size:.82rem">Matins at night; Prime, Terce, Sext and None at about 6, 9, noon and 3.</div>${Hours.sarumMatins ? `<details class="matins-d" style="margin:4px 0"><summary class="muted">Matins</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : ''}${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
+      else if (s.type === 'bvm') h += `<div class="muted" style="font-size:.82rem">A short office of Mary, said on free days, chiefly Saturdays. Optional.</div>${s.hrs.map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'oor') h += doSlot(st.date, 'Office of Readings') + `<details><summary class="muted">Show</summary>${oorHTML(st.date)}</details>`;
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
@@ -852,7 +863,7 @@
     if (!st.month) { const d = P(st.date); st.month = { y: d.getUTCFullYear(), m: d.getUTCMonth() }; }
     const { y, m } = st.month, first = L.D(y, m + 1, 1), start = L.add(first, -first.getUTCDay()), today = todayISO();
     let h = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button class="ib" data-act="mprev">‹</button><h2 style="flex:1;text-align:center;margin:0">${L.MN[m]} ${y}</h2><button class="ib" data-act="mnext">›</button></div>
-      <div class="legend">${['roman', 'byz', 'sarum'].map(k => `<button data-act="layer" data-v="${k}" class="${st.layers[k] ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div><div class="grid">`;
+      <div class="legend">${['roman', 'byz', 'sarum'].map(k => `<button data-act="layer" data-v="${k}" class="${st.layers[k] ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div><div class="grid">`;
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
@@ -869,19 +880,18 @@
   function felireMore() {
     if (!window.FELIRE_PRO) return '';
     const v = a => a.map(t => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:0 0 10px">${esc(t)}</p>`).join('');
-    return `<section class="card"><h3>Félire Óengusso</h3><p class="muted">The Calendar of Óengus the Culdee, a monk of Tallaght, written about 800: a verse for every day of the year naming the saints kept on it, with a long prologue and epilogue. Today’s verse is on the Today page when Sarum is chosen.</p>
+    return `<section class="card"><h3>Félire Óengusso</h3><p class="muted">The Calendar of Óengus the Culdee, a monk of Tallaght, written about 800: a verse for every day of the year naming the saints kept on it, with a long prologue and epilogue. Today’s verse is on the Today page when Traditional is chosen.</p>
       <details style="margin:8px 0"><summary><b>The Prologue</b> <span class="muted" style="font-size:.8rem">· the saints outlast the kings</span></summary><div style="margin-top:10px">${v(window.FELIRE_PRO)}</div></details>
       <details style="margin:8px 0"><summary><b>The Epilogue</b> <span class="muted" style="font-size:.8rem">· the troops of heaven, and “Mayst Thou save me, O Jesus”</span></summary><div style="margin-top:10px">${v(window.FELIRE_EPI)}</div></details>
       <p class="muted" style="font-size:.74rem">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (Henry Bradshaw Society, 1905). Read from a scan of the printed book, so a letter here and there may be misread; brackets and question marks are Stokes’s own.</p></section>`;
   }
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
-    <section class="card"><h3>Hours of the day</h3>${hoursHTML()}</section>
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
       <p><b>Byzantine</b> — Byzantine Catholic cycle on the Gregorian calendar (the same dates as the Roman), with the saints of each day from the Ukrainian Catholic calendar and entries from your own UGCC calendar (2026–27).</p>
-      <p><b>Sarum (traditional)</b> — Sarum temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
+      <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <section class="card"><h3>Credits &amp; sources</h3>
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
@@ -892,7 +902,7 @@
     const rite = S.rite, hrs = C.HOURS[rite], now = new Date().getHours() + new Date().getMinutes() / 60;
     let cur = -1; hrs.forEach((x, i) => { if (x.start != null && x.start <= now) cur = i; });
     if (rite === 'byz' && now >= 0 && cur < 0) cur = 0;
-    let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Sarum'}</button>`).join('')}</div>`;
+    let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>`;
     hrs.forEach((x, i) => { h += `<div class="cite" style="${i === cur ? 'background:var(--line);border-radius:8px;padding:7px 8px' : ''}"><span><b style="color:var(--ink)">${esc(x.n)}</b> <span class="muted">· ${esc(x.alt)}</span><br><span class="muted">${esc(x.d)}</span></span><span>${esc(x.at)}${i === cur ? '<br><b>now</b>' : ''}</span></div>`; if (rite === 'roman') h += doSlot(st.date, x.n, true); if (rite === 'roman' && x.oor) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray the Office of Readings for ${esc(fmtShort(st.date))}</summary>${oorHTML(st.date)}</details>`; else if (rite === 'roman' && /^(lauds|vespers)$/.test(x.hour || '') && window.Hours && Hours.modern) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.modern(L, P(st.date), x.hour === 'lauds' ? 'L' : 'V')}</details>`; else if (rite === 'sarum' && x.w === 'M' && window.Hours && Hours.sarumMatins) h += `<details class="matins-d" style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray Matins for ${esc(fmtShort(st.date))}</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>`; else if (rite === 'sarum' && x.w && window.Hours && Hours.sarum) h += `<details style="margin:0 0 8px"><summary class="muted" style="font-size:.82rem">Pray ${esc(x.n)} for ${esc(fmtShort(st.date))}</summary>${Hours.sarum(L, P(st.date), x.w, window.Sarum) || ''}</details>`; });
     if (rite === 'sarum' && window.Hours && Hours.sarumBVM) h += `<details style="margin:10px 0 8px"><summary><b>The Commemoration of Our Lady</b> <span class="muted" style="font-size:.8rem">· a short office of Mary, said on free days, chiefly Saturdays</span></summary>${[['L', 'Lauds'], ['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None'], ['V', 'Vespers'], ['C', 'Compline']].map(([w, n]) => `<details style="margin:4px 0 4px 10px"><summary class="muted" style="font-size:.82rem">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}</details>`;
     h += `<div class="row">${linksHTML(rite, 'any')}</div>`;
@@ -1029,7 +1039,7 @@
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
-      <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Sarum: move Lady Day out of Holy Week/Easter Octave</label></div>
+      <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
     d.showModal();
@@ -1078,6 +1088,13 @@
   document.addEventListener('change', e => { if (e.target.id === 'dp' && e.target.value) { st.date = e.target.value; st.month = null; render(); } });
   if (hasTTS) speechSynthesis.onvoiceschanged = () => { };
 
+  /* If Ora was left open on today's date, move it to the new day when it is reopened after midnight. */
+  let shownToday = todayISO();
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    const t = todayISO();
+    if (t !== shownToday) { if (st.date === shownToday) { st.date = t; st.month = null; render(); } shownToday = t; }
+  });
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => { });
 })();
