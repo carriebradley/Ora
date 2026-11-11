@@ -100,7 +100,17 @@
     const eligible = C.QUOTES.filter(q => quoteEligible(q, rite));
     return pick(eligible, v.iso + rite, st.quoteShift, tagsFor(v), null);
   };
-  const artFor = (v, rite) => pick(C.ART.map(a => a), v.iso + 'art' + rite, st.artShift, tagsFor(v), rite);
+  // Select art by tradition and period, retaining seasonal rotation.
+  const PRE1500_WEST_ART = new Set([
+    'The Last Supper', 'Pietà', 'The Annunciation', 'Ghent Altarpiece',
+    'Adoration of the Magi', 'The Baptism of Christ',
+    'The Descent from the Cross', 'The Resurrection', 'Holy Trinity'
+  ]);
+  const artEligible = (a, rite) => rite === 'byz' ? a.tr === 'East'
+    : rite === 'sarum' ? a.tr === 'West' && PRE1500_WEST_ART.has(a.t)
+    : a.tr === 'West';
+  const artFor = (v, rite) => pick(C.ART.filter(a => artEligible(a, rite)),
+    v.iso + 'art' + rite, st.artShift, tagsFor(v), null);
 
   /* ---------- readings ---------- */
   /* Roman readings come from readings.json, built daily from the official USCCB RSS feed by tools/fetch_readings.py.
