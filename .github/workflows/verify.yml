@@ -2,6 +2,7 @@ name: Verify Ora
 on: [push, pull_request]
 permissions:
   contents: read
+  checks: write
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -26,9 +27,19 @@ jobs:
           NODE_PATH: /tmp/ora-tools/node_modules
           ORA_ARTIFACT_DIR: /tmp/ora-browser-audit
         run: |
+          mkdir -p /tmp/ora-browser-audit
           python3 -m http.server 8765 >/tmp/ora-server.log 2>&1 &
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
-          node tests/browser-audit.cjs
+          node tests/browser-audit.cjs 2>&1 | tee /tmp/ora-browser-audit/browser-log.txt
+      - name: Record browser diagnostics
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = '/tmp/ora-browser-audit/browser-log.txt';
+            const text = fs.existsSync(path) ? fs.readFileSync(path, 'utf8').slice(-20000) : 'Browser step did not start.';
+            await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Browser diagnostics', status: 'completed', conclusion: 'neutral', output: {title: 'Ora browser audit output', summary: '```text\n' + text + '\n```'}});
       - uses: actions/upload-artifact@v4
         if: always()
         with:
