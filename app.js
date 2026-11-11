@@ -29,6 +29,7 @@
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
   if (!['ukrainian', 'ruthenian'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
+  if (!['melkite', 'ukrainian', 'ruthenian'].includes(S.byzLiturgyChurch)) S.byzLiturgyChurch = 'melkite';
   if (!['default', '8', '9'].includes(S.byzAnna)) S.byzAnna = 'default';
   if (!['compact', 'comfortable', 'large'].includes(S.readingSize)) S.readingSize = 'comfortable';
   const applyReadingSize = () => document.documentElement.style.setProperty('--reading-scale', { compact: .94, comfortable: 1, large: 1.18 }[S.readingSize]);
@@ -851,9 +852,10 @@
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
     let header = `<div class="seg"><button data-act="prayview" data-v="office" class="${st.prayView === 'office' ? 'on' : ''}">Daily Prayers</button><button data-act="prayview" data-v="mass" class="${st.prayView === 'mass' ? 'on' : ''}">Daily Mass</button></div>`;
     if (st.prayView === 'mass') {
-      const name = rite === 'byz' ? 'Divine Liturgy' : rite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
+      const name = rite === 'byz' ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy') : rite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
       const body = rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-      return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(rite === 'byz' ? v.byz.title : rite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(rite === 'byz' ? v.byz.season : rite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${body}</section>`;
+      const sourceNote = rite === 'byz' && S.byzLiturgyChurch === 'melkite' ? '<p class="note">Melkite liturgy is selected. Melkite-specific calendar propers and full liturgy texts have not yet been added; the readings below currently follow the Ukrainian Byzantine calendar and should not be presented as verified Melkite propers.</p>' : '';
+      return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(rite === 'byz' ? v.byz.title : rite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(rite === 'byz' ? v.byz.season : rite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${sourceNote}${body}</section>`;
     }
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`}`;
@@ -1129,6 +1131,7 @@
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
       ${sel('s_byz_church', 'Byzantine practice (United States)', [['ukrainian', 'Ukrainian Greek Catholic'], ['ruthenian', 'Ruthenian Byzantine Catholic']], S.byzChurch)}
+      ${sel('s_byz_liturgy', 'Byzantine Divine Liturgy tradition (separate from Today calendar)', [['melkite', 'Melkite Greek Catholic'], ['ukrainian', 'Ukrainian Greek Catholic'], ['ruthenian', 'Ruthenian Byzantine Catholic']], S.byzLiturgyChurch)}
       ${sel('s_byz_anna', 'Saint Anna’s feast — follow your parish', [['default', 'Default (Ukrainian: Dec 9; Ruthenian: Dec 8)'], ['8', 'December 8'], ['9', 'December 9']], S.byzAnna)}
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
@@ -1138,7 +1141,7 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzAnna: g('s_byz_anna'), readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzLiturgyChurch: g('s_byz_liturgy'), byzAnna: g('s_byz_anna'), readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
     applyReadingSize(); save(); infoCache.clear(); $('#dlg').close(); render();
   }
