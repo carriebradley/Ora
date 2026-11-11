@@ -191,14 +191,14 @@
   /* ---------- art (live from Wikipedia, cached) ---------- */
   function loadArt(a) {   // exact Wikipedia article for the work; the image is used only if its file name matches the work (a.fm)
     const k = 'ora.art2.' + a.q; if (st.art[a.q] !== undefined) return;
-    const c = store.get(k, null); if (c) { st.art[a.q] = c; return; }
+    const c = store.get(k, null); if (c && (c.img || (c.at && Date.now() - c.at < 3 * 864e5))) { st.art[a.q] = c; return; }   // a missing image is looked up again after 3 days
     st.art[a.q] = 'loading';
     const u = 'https://en.wikipedia.org/w/api.php?action=query&redirects=1&titles=' + encodeURIComponent(a.wt || a.t) + '&prop=pageimages|info&piprop=thumbnail|name&pithumbsize=1100&inprop=url&format=json&origin=*';
     fetch(u).then(r => r.json()).then(j => {
       const p = j.query && j.query.pages && Object.values(j.query.pages)[0];
       const ok = p && !p.missing && p.pageimage && p.thumbnail && (!a.fm || new RegExp(a.fm, 'i').test(decodeURIComponent(p.pageimage).replace(/_/g, ' ')));
       const out = p && !p.missing ? { img: ok ? p.thumbnail.source : '', url: p.fullurl } : { img: '', url: 'https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(a.q) };
-      st.art[a.q] = out; store.set(k, out); render();
+      out.at = Date.now(); st.art[a.q] = out; store.set(k, out); render();
     }).catch(() => { st.art[a.q] = null; render(); });
   }
   function artHTML(a, big) {

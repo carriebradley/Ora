@@ -6,7 +6,7 @@ const CONTENT = (() => {
   /* ---------- artworks (image + metadata fetched live from Wikipedia by search query) ---------- */
   // tags: advent christmas epiphany lent holyweek easter pentecost marian transfiguration dormition michaelmas nicholas general
   const ART = [
-    { t: 'Christ Pantocrator', a: 'Icon, St Catherine’s Monastery, Sinai · 6th c.', tr: 'East', tags: ['general', 'epiphany'], q: 'Christ Pantocrator Sinai icon', wt: 'Christ Pantocrator (Sinai)', fm: 'pantocrator|sinai', p: 'Notice the two faces — one gentle, one severe. Which one is looking at you today?' },
+    { t: 'Christ Pantocrator', a: 'Icon, St Catherine’s Monastery, Sinai · 6th c.', tr: 'East', tags: ['general', 'epiphany'], q: 'Christ Pantocrator Sinai icon', wt: 'Christ Pantocrator (Sinai)', fm: 'pantocrator|sinai|sinay|vsederzhitel|pantokrator', p: 'Notice the two faces — one gentle, one severe. Which one is looking at you today?' },
     { t: 'The Holy Trinity', a: 'Andrei Rublev · c. 1411', tr: 'East', tags: ['general', 'pentecost'], q: 'Trinity Andrei Rublev icon', wt: 'Trinity (Andrei Rublev)', fm: 'rublev|trinity|troitsa', p: 'One chair is empty at the table. Sit in it, and receive the cup.' },
     { t: 'Theotokos of Vladimir', a: 'Byzantine icon · c. 1131', tr: 'East', tags: ['marian', 'advent', 'christmas'], q: 'Theotokos of Vladimir icon', wt: 'Theotokos of Vladimir', fm: 'vladimir', p: 'Cheek to cheek: tenderness as theology. What does the Child ask of her — and of you?' },
     { t: 'Our Lady of Częstochowa', a: 'Icon, Jasna Góra, Poland', tr: 'East', tags: ['marian'], q: 'Our Lady of Czestochowa icon', wt: 'Black Madonna of Częstochowa', fm: 'cz[eę]stochow|madonna|jasna', p: 'The scars on her cheek remain. Bring one of your own wounds to her gaze.' },

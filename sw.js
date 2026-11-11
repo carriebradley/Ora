@@ -1,4 +1,4 @@
-const V='ora-v103',FILES=['./','index.html','app.js','calendar.js','sarummass.js','sarum.js','data.js','content.js','byzlect.js','justice.js','felire.js', 'oor.js','hours.js','manifest.webmanifest','icon.svg'];
+const V='ora-v104',FILES=['./','index.html','app.js','calendar.js','sarummass.js','sarum.js','data.js','content.js','byzlect.js','justice.js','felire.js', 'oor.js','hours.js','manifest.webmanifest','icon.svg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(FILES)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))));self.clients.claim()});
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(u.origin!==location.origin)return;if((u.pathname.endsWith('/readings.json')||u.pathname.endsWith('/fathers.json'))){e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(V).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)));return}if(u.pathname.endsWith('/office_audio.json')||u.pathname.endsWith('/angelus.json'))return;
