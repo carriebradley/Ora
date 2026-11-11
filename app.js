@@ -745,7 +745,7 @@
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
     const saints = `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return glanceHTML(v) + (S.rite === 'sarum' ? cardSarum(v) : S.rite === 'byz' ? cardByz(v) : cardRoman(v)) + saints + `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
+    return glanceHTML(v) + (S.rite === 'sarum' ? cardSarum(v) : S.rite === 'byz' ? cardByz(v) : '') + saints + `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
   }
 
 
