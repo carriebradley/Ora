@@ -23,10 +23,12 @@ jobs:
             /tmp/ora-tools/node_modules/.bin/playwright install chromium
           fi
       - name: Mobile and desktop browser audit
+        shell: bash
         env:
           NODE_PATH: /tmp/ora-tools/node_modules
           ORA_ARTIFACT_DIR: /tmp/ora-browser-audit
         run: |
+          set -o pipefail
           mkdir -p /tmp/ora-browser-audit
           python3 -m http.server 8765 >/tmp/ora-server.log 2>&1 &
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done

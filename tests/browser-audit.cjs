@@ -5,7 +5,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  const browser=await chromium.launch({...(process.env.ORA_CHROMIUM ? {executablePath:process.env.ORA_CHROMIUM} : fs.existsSync('/usr/bin/chromium') ? {executablePath:'/usr/bin/chromium'} : {}),headless:true,args:['--no-sandbox']});
  const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'allow'});
  const page=await context.newPage();const errors=[],results=[],violations=[];
- page.on('pageerror',e=>errors.push(e.message));
+ page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR:',e.message)});
  await context.route('**/*',route=>route.request().url().startsWith(process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/')?route.continue():route.abort());
  const base=process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/';
  for (const rite of ['roman','byz','sarum']) for(const tab of ['today','pray','readings','liturgy','justice','calendar','more']) {
@@ -26,7 +26,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=justice&date=2026-11-11`);
  const intro=page.locator('.justice-intro');
  assert.equal(await intro.locator('h2').innerText(),'Faith in action');
- assert.ok((await intro.boundingBox()).height < 110,'compact Justice heading');
+ await page.waitForFunction(()=>{const el=document.querySelector('.justice-intro');if(!el)return false;const h=el.getBoundingClientRect().height;return h>0 && h<110;});
  await page.screenshot({path:path.join(artifacts,'justice-simple-mobile.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);
  assert.match(await page.locator('#app').innerText(),/EIGHTH SUNDAY/);
