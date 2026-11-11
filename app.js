@@ -40,7 +40,7 @@
 
   {
     const q = new URLSearchParams(location.search), date = q.get('date');
-    if (['today', 'pray', 'readings', 'justice', 'calendar', 'more'].includes(q.get('tab'))) st.tab = q.get('tab');
+    if (['today', 'pray', 'readings', 'liturgy', 'justice', 'calendar', 'more'].includes(q.get('tab'))) st.tab = q.get('tab');
     if (/^\d{4}-\d\d-\d\d$/.test(date || '') && +date.slice(0, 4) >= 1000 && L.iso(P(date)) === date) st.date = date;
     if (['morning', 'evening'].includes(q.get('kind'))) st.kind = q.get('kind');
     if (Object.hasOwn(RITES, q.get('rite'))) S.rite = q.get('rite');
@@ -863,11 +863,11 @@
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
     return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
-  function viewPray() {
+  function viewLiturgy() {
     const v = dayInfo(st.date); loadReadings(st.date);
-    const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
-    let header = `<div class="seg"><button data-act="prayview" data-v="office" class="${st.prayView === 'office' ? 'on' : ''}">Daily Prayers</button><button data-act="prayview" data-v="mass" class="${st.prayView === 'mass' ? 'on' : ''}">Liturgy</button></div>`;
-    if (st.prayView === 'mass') {
+    const rite = S.rite;
+    let header = '';
+    {
       header += `<div class="seg"><button data-act="liturgyview" data-v="mass" class="${st.liturgyView === 'mass' ? 'on' : ''}">Mass</button><button data-act="liturgyview" data-v="byz" class="${st.liturgyView === 'byz' ? 'on' : ''}">Divine Liturgy</button></div>`;
       const litRite = st.liturgyView === 'byz' ? 'byz' : (rite === 'sarum' ? 'sarum' : 'roman');
       const name = litRite === 'byz' ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy') : litRite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
@@ -875,6 +875,10 @@
       const sourceNote = litRite === 'byz' && S.byzLiturgyChurch === 'melkite' ? '<p class="note">Melkite liturgy is selected. Melkite-specific calendar propers and full liturgy texts have not yet been added; the readings below currently follow the Ukrainian Byzantine calendar and should not be presented as verified Melkite propers.</p>' : '';
       return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(litRite === 'byz' ? v.byz.title : litRite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(litRite === 'byz' ? v.byz.season : litRite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${sourceNote}${body}</section>`;
     }
+  }
+  function viewPray() {
+    const v = dayInfo(st.date); loadReadings(st.date);
+    const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button></div>`}`;
     h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps · ${esc(fmtLong(st.date))}</span></div>`;
@@ -993,6 +997,7 @@
   }
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
+    <details class="card"><summary><b>Calendar</b></summary>${viewCalendar()}</details>
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
@@ -1092,7 +1097,7 @@
       // Use the same calendar and observanceColor() as each tradition's Today card.
       // Reading and liturgy selections take precedence over the primary prayer rite.
       const rite = st.tab === 'readings' ? st.readRite
-        : st.tab === 'pray' && st.prayView === 'mass' ? (st.liturgyView === 'byz' ? 'byz' : S.rite === 'sarum' ? 'sarum' : 'roman')
+        : st.tab === 'liturgy' ? (st.liturgyView === 'byz' ? 'byz' : S.rite === 'sarum' ? 'sarum' : 'roman')
         : S.rite;
       const r = rite === 'sarum' ? v.sarum : rite === 'byz' ? v.byz : v.roman;
       const c = observanceColor(r, rite);
@@ -1110,7 +1115,7 @@
     setLitColour();
     renderHeader();
     document.querySelectorAll('#nav button').forEach(b => { b.classList.toggle('on', b.dataset.tab === st.tab); if (b.dataset.tab === st.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
-    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
+    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'liturgy' ? viewLiturgy() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
     document.querySelectorAll('.seg button[data-act], .legend button[data-act]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
     document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
     if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
