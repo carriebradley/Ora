@@ -339,7 +339,10 @@
     const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
     const observance = r.historicalObservance;
-    return { kind, badge, detail: [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean).join(' · ') };
+    const historical = rite === 'sarum' && observance && observance.name === "St. Martin's Lent";
+    const shortName = historical ? name.replace(/\s*\/\s*Saint Martin's Lent/i, '') : name;
+    const summary = historical ? [shortName, fast, observance.name].filter(Boolean) : [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean);
+    return { kind, badge, detail: [...new Set(summary)].join(' · ') };
   }
   function observanceColor(r, rite) {
     const x = status(r, rite);
