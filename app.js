@@ -28,8 +28,8 @@
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable' }, store.get('ora.settings', {}));
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
-  if (!['melkite', 'ukrainian', 'ruthenian'].includes(S.byzChurch)) S.byzChurch = 'melkite';
-  if (!['melkite', 'ukrainian', 'ruthenian'].includes(S.byzLiturgyChurch)) S.byzLiturgyChurch = 'melkite';
+  S.byzChurch = 'melkite';
+  S.byzLiturgyChurch = 'melkite';
   if (!['default', '8', '9'].includes(S.byzAnna)) S.byzAnna = 'default';
   if (!['compact', 'comfortable', 'large'].includes(S.readingSize)) S.readingSize = 'comfortable';
   const applyReadingSize = () => document.documentElement.style.setProperty('--reading-scale', { compact: .94, comfortable: 1, large: 1.18 }[S.readingSize]);
@@ -181,15 +181,15 @@
   }
   const bible = c => `https://www.biblegateway.com/passage/?search=${encodeURIComponent(c.replace(/\s*\([^)]*\)/g, '').trim())}&version=RSVCE`;
   const citeLinks = txt => String(txt).split(' · ').map(c => `<a href="${bible(c)}" target="_blank" rel="noopener">${esc(c)}</a>`).join(' · ');
-  const byzDay = (iso, church = S.byzChurch) => church === 'melkite' && Melkite.entry(iso) ? Melkite.read(iso) : ByzLect.read(P(iso), S.byzOldCal ? 13 : 0, y => S.byzPascha === 'julian' ? L.julianEaster(y) : L.westernEaster(y), church === 'melkite' ? 'ukrainian' : church, L.byzAnnaDay({...S, byzChurch:church}));
+  const byzDay = iso => Melkite.read(iso) || {sets:[], notes:['Verified Melkite readings are not available for this year. Use the diocesan resources below.']};
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
-  function byzReadingsHTML(v, church = S.byzChurch) {
+  function byzReadingsHTML(v, church = S.byzChurch, showDay = true) {
     const t = church === S.byzChurch ? v.byz : L.byzantine(P(v.iso), {...S,byzChurch:church});
-    let h = `<h3 class="reading-main-title">${esc(t.title)}</h3>${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
+    let h = `${showDay ? `<h3 class="reading-main-title">${esc(t.title)}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
     try { day = byzDay(v.iso, church); } catch (e) { day = null; }
     if (day && day.sets.length) {
       for (const s of day.sets) {
-        h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-day-title">${esc(s.t)}</div>`;
+        h += `<div class="step reading-group" style="margin-top:10px">${day.sets.length > 1 ? `<div class="reading-day-title">${esc(s.t)}</div>` : ''}`;
         for (const [lab, cs] of s.r) h += `<div class="reading-heading"><div class="reading-label">${esc(lab)}</div><div class="reading-reference">${esc(cs)}</div></div>` + String(cs).split(' · ').map(c => `<div class="asv" data-ref="${esc(c.replace(/\s*\([^)]*\)/g, '').trim())}"></div>`).join('');
         for (const [lab, cs] of (s.a || [])) h += `<div class="reading-heading"><div class="reading-label">${esc(lab)}</div><div class="reading-reference">${esc(cs)}</div></div>`;
         if (s.chk) h += `<p class="note">Check this one: ${esc(s.chk)}</p>`;
@@ -199,8 +199,8 @@
       for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
     h += `<p class="muted" style="font-size:.8rem">Scripture passages are shown above in the public-domain American Standard Version when available. For a Catholic translation or when the text cannot load, use the reference links below.</p>`;
-    h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step"><b>${esc(s.t)}</b>${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
-    if (church === 'melkite') h += `<p class="muted">${Melkite.entry(v.iso) ? 'Melkite readings from the Diocese of Newton’s 2026 calendar.' : 'Melkite readings are unavailable for this year. Ukrainian fallback references are shown.'} <a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Diocesan calendar and monthly propers</a></p>`;
+    h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step">${day.sets.length > 1 ? `<b>${esc(s.t)}</b>` : ''}${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
+    if (church === 'melkite') h += `<p class="muted">${Melkite.entry(v.iso) ? 'Melkite readings from the Diocese of Newton’s 2026 calendar.' : 'Verified Melkite readings are unavailable for this year. Use the diocesan resources below.'} <a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Diocesan calendar and monthly propers</a></p>`;
     else h += `<p class="muted" style="font-size:.8rem">Based on the Slavic lectionary table on byzcath.org, with selected corrections checked against the <a href="https://mci.archpitt.org/Lectionary.html" target="_blank" rel="noopener">Metropolitan Cantor Institute</a> and Stamford's Ukrainian Catholic propers. Tap a reference to read it in the RSV-CE. This is not a complete eparchial ordo; check local combinations and the cycle around Christmas against your parish book.</p>`;
     if (church === 'melkite') h += `<div class="row"><a class="btn fill" href="https://melkite.org/daily-readings" target="_blank" rel="noopener">Official daily Gospel (today)</a>${v.iso.startsWith('2026-') ? `<a class="btn" href="https://melkite.org/wp-content/uploads/2025/12/${L.MN[P(v.iso).getUTCMonth()]}-2026.docx" target="_blank" rel="noopener">${L.MN[P(v.iso).getUTCMonth()]} hymns &amp; readings · Word document</a>` : ''}</div><p class="muted">The live daily Gospel page follows today. The calendar references above follow the selected date.</p>`;
     if (church !== 'melkite') h += `<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://ecpubs.gumroad.com/l/jTBr">ECPubs Daily Office</a><a class="btn" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Stamford propers</a><a class="btn" target="_blank" rel="noopener" href="https://www.oca.org/readings/daily/${ocaDate(v.iso)}">OCA (Orthodox) check</a></div>`;
@@ -881,7 +881,7 @@
     const name = byzantine
       ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy')
       : litRite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
-    const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date, false);
+    const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date, false);
     const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
     const note = byzantine && S.byzLiturgyChurch === 'melkite'
       ? '<div class="row"><a class="btn fill" href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener">Open Divine Liturgy text</a><a class="btn" href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Monthly hymns and propers</a></div><p class="muted">The diocese-hosted Liturgy PDF is the supplied 2009 draft. Use your parish book for the currently prescribed text.</p>'
@@ -1021,7 +1021,7 @@
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
-      <p><b>Byzantine</b> — Gregorian Pascha and fixed feasts, with the Diocese of Newton’s dated Melkite calendar for 2026 and Ukrainian or Ruthenian alternatives in Settings. The supplemental saints and imported events are from Ukrainian calendars. The Ukrainian/Ruthenian fallback cycle uses an unofficial Slavic table. Check your parish ordo for full service combinations.</p>
+      <p><b>Byzantine</b> — Gregorian Pascha and fixed feasts, following the Melkite Catholic Diocese of Newton’s dated calendar for 2026. Dates beyond the verified source are marked unavailable. Ukrainian heritage remains separate. Check your parish ordo for full service combinations.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <details class="card credits"><summary><h3 style="margin:0">Credits &amp; sources</h3></summary><div style="margin-top:8px">
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
@@ -1190,9 +1190,7 @@
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
-      ${sel('s_byz_church', 'Byzantine practice (United States)', [['melkite', 'Melkite Greek Catholic (Newton · 2026)'], ['ukrainian', 'Ukrainian Greek Catholic'], ['ruthenian', 'Ruthenian Byzantine Catholic']], S.byzChurch)}
-      ${sel('s_byz_liturgy', 'Byzantine Divine Liturgy tradition (separate from Today calendar)', [['melkite', 'Melkite Greek Catholic'], ['ukrainian', 'Ukrainian Greek Catholic'], ['ruthenian', 'Ruthenian Byzantine Catholic']], S.byzLiturgyChurch)}
-      ${sel('s_byz_anna', 'Saint Anna’s feast — follow your parish', [['default', 'Default (Ukrainian: Dec 9; Ruthenian: Dec 8)'], ['8', 'December 8'], ['9', 'December 9']], S.byzAnna)}
+      <p class="muted">Byzantine calendar and Divine Liturgy: Melkite Catholic Diocese of Newton.</p>
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
@@ -1201,7 +1199,7 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byz_church'), byzLiturgyChurch: g('s_byz_liturgy'), byzAnna: g('s_byz_anna'), readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: 'melkite', byzLiturgyChurch: 'melkite', byzAnna: 'default', readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
     applyReadingSize(); save(); infoCache.clear(); $('#dlg').close(); render();
   }
@@ -1256,7 +1254,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v143';
+  const APP_BUILD = 'ora-v144';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

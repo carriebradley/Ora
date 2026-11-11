@@ -15,7 +15,7 @@ Run locally with `python3 -m http.server 8765`, then open `http://localhost:8765
 
 ## Calendar settings
 
-Roman Ascension, Corpus Christi and Epiphany transfers and Sarum Lady-Day transfer are configurable. The UI uses Gregorian Byzantine Pascha and fixed feasts. Melkite practice follows the supplied Diocese of Newton calendar for **2026 only**. Ukrainian and Ruthenian alternatives are retained. Other years explicitly fall back to Ukrainian data until an annual Melkite source is verified.
+Roman Ascension, Corpus Christi and Epiphany transfers and Sarum Lady-Day transfer are configurable. The UI uses Gregorian Byzantine Pascha and fixed feasts. Melkite practice follows the supplied Diocese of Newton calendar for **2026 only**. All Byzantine views use Melkite. Other years are marked unavailable until an annual Melkite source is verified; a different church’s readings are not substituted. Ukrainian heritage remains a separate collection.
 
 ## Important files
 

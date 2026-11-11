@@ -8,10 +8,10 @@
   const reference = text => text.replace(/\b[A-Z]{2,5}\b/g, s => books[s] || s).replace(/\s*\(\d+\)/g,'');
   function read(date) {
     const e = entry(date); if (!e) return null;
-    return {sets:[{t:e.observance || e.saints || 'Daily Scripture readings',r:e.references.map((r,i)=>[/\(\d+\)/.test(r) ? 'Orthros Gospel' : 'Scripture reading '+(i+1),reference(r)])}],notes:[`Diocese of Newton · 2026 calendar · PDF page ${e.page}. References follow the printed calendar, including its unusual entries. Holy Week references are not a complete list of every service reading.`]};
+    return {sets:[{t:e.observance || e.saints || 'Daily Scripture readings',r:e.references.map((r,i)=>[/\(\d+\)/.test(r) ? 'Orthros Gospel' : /^(MT|MK|LK|JN) /.test(r) ? 'Gospel' : /^(?:[123] )?(?:ACTS|ROM|COR|GAL|EPH|PHIL|COL|THES|TIM|TI|HEB|JAS|PT|JN|JUDE) /.test(r) ? 'Epistle' : 'Scripture reading '+(i+1),reference(r)])}],notes:[`Diocese of Newton · 2026 calendar · PDF page ${e.page}. References follow the printed calendar, including its unusual entries. Holy Week references are not a complete list of every service reading.`]};
   }
   function calendar(date, fallback) {
-    const e = entry(date); if (!e) return {...fallback, fastingNote:'Melkite calendar unavailable for this year. Showing the Ukrainian fallback; verify with the Diocese of Newton.'};
+    const e = entry(date); if (!e) return {...fallback,title:'Melkite calendar unavailable',rank:'',season:'',tone:0,also:[],fast:'',fastSeason:'',fastingNote:'A verified Melkite calendar is unavailable for this year. Consult the Diocese of Newton’s annual calendar.'};
     const iso = date.toISOString().slice(0,10), md = iso.slice(5);
     let fastSeason = md >= '02-16' && md <= '03-27' ? 'Great Fast' : md >= '03-30' && md <= '04-04' ? 'Great and Holy Week' : md >= '06-01' && md <= '06-28' ? 'Apostles’ Fast' : md >= '08-01' && md <= '08-14' ? 'Theotokos’ Fast' : md >= '11-15' && md <= '12-24' ? 'Nativity Fast (Philip’s Fast)' : '';
     let fast = iso === '2026-02-16' || (md >= '04-02' && md <= '04-04') ? 'Fast — Newton Lenten discipline' : '';

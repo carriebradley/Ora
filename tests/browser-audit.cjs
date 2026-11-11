@@ -18,6 +18,13 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   violations.push(...axe.violations.map(v=>({rite,tab,id:v.id,impact:v.impact,examples:v.nodes.slice(0,3).map(n=>({html:n.html,summary:n.failureSummary}))})));
   results.push(`${rite}/${tab}`);
  }
+ await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='ukrainian';s.byzLiturgyChurch='ruthenian';localStorage.setItem('ora.settings',JSON.stringify(s));});
+ await page.goto(`${base}index.html?tab=readings&rite=byz&date=2026-11-11`);
+ assert.equal(await page.locator('.reading-main-title').count(),1);
+ assert.equal(await page.locator('.reading-day-title').count(),0);
+ assert.doesNotMatch(await page.locator('#app').innerText(),/Wednesday.*(?:Pentecost|week)/);
+ assert.match(await page.locator('#app').innerText(),/Martyrs Menas/);
+ assert.match(await page.locator('#app').innerText(),/Luke 12:48-59/);
  for(const rite of ['roman','byz']) {
   await page.goto(`${base}index.html?tab=pray&date=2026-11-15&rite=${rite}&kind=night`);
   assert.match(await page.locator('#app').innerText(), /Night Prayer|Song of Simeon/);
@@ -61,8 +68,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=pray&rite=bogus&kind=bogus&date=2026-99-99`);assert.ok((await page.locator('#app').innerText()).length>100);
  await page.goto(`${base}index.html?tab=calendar&date=2026-11-15`);
  const next=page.locator('[data-act="mnext"]');await next.focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement?.dataset.act),'mnext');
- await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();await page.selectOption('#s_byz_church','ruthenian');await page.locator('[data-act="savesettings"]').click();
- await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-12-08`);assert.match(await page.locator('#app').innerText(),/Conception/);
+ await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();assert.equal(await page.locator('#s_byz_church').count(),0);await page.locator('[data-act="savesettings"]').click();
+ await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-12-09`);assert.match(await page.locator('#app').innerText(),/MATERNITY/);
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(r=>navigator.serviceWorker.addEventListener('controllerchange',r,{once:true}));});
  // Store the large texts once, then verify deep links and prayer data with the network disabled.
  await page.evaluate(async()=>{for(const file of ['matins.json','fathers.json','oortext.json']){const r=await fetch(file);if(!r.ok)throw new Error(file);await r.json();}});

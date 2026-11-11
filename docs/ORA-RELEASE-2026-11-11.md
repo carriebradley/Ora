@@ -45,3 +45,9 @@ All 25 Node calendar, reading-preservation and offline tests pass locally. Brows
 Added the [official daily Gospel](https://melkite.org/daily-readings) and direct links to the twelve 2026 monthly Word documents listed by the diocese. The correct month follows the selected date; the live Gospel link is explicitly labeled “today” so it cannot be mistaken for historical readings. The retrieved daily page contains the unresolved `[sc_daily_readings]` shortcode rather than dated reading content. Automatic text ingestion is therefore blocked by the source response; Ora keeps the verified dated references and official link instead of inventing a feed or a date parameter.
 
 The final browser review also identified and corrected low contrast in selected navigation icons on Traditional feast days.
+
+## Follow-up: one Melkite calendar and one reading heading
+
+The user's subsequent instruction supersedes the earlier profile/fallback policy above. All Byzantine app views now use the Melkite calendar, including installations that had saved Ukrainian or Ruthenian selections. Removed the competing calendar selectors and automatic substitution of another church's readings for unsupported years. The other calendar engines remain internally available for regression checks, and Ukrainian heritage remains separate.
+
+Removed the redundant set title from single-set readings and the extra day title inside Divine Liturgy. Combined celebrations can retain distinct set titles when necessary. Scripture sections use Gospel/Epistle labels where identifiable. The browser regression specifically checks November 11 with old saved settings: only one source heading, no conflicting Pentecost weekday titles, and the Melkite Luke 12:48–59 reference. Cache version: ora-v144.
