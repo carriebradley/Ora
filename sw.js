@@ -1,4 +1,4 @@
-const V = 'ora-v128', DATA = 'ora-data-v1';
+const V = 'ora-v129', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'calendar.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzlect.js', 'justice.js', 'felire.js', 'oor.js', 'hours.js', 'oortext.json', 'manifest.webmanifest', 'icon.svg'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json']);
 
@@ -50,12 +50,15 @@ self.addEventListener('fetch', e => {
   }
   e.respondWith((async () => {
     const shell = await caches.open(V);
+    if (e.request.mode === 'navigate') {
+      try {
+        const fresh = await fetch(e.request, { cache: 'no-store' });
+        if (fresh.ok) return fresh;
+      } catch (_) { /* offline: use installed shell */ }
+      return await shell.match('index.html') || new Response('Ora is unavailable offline.', { status: 503 });
+    }
     const cached = await shell.match(e.request);
     if (cached) return cached;
-    if (e.request.mode === 'navigate') {
-      try { return await fetch(e.request); }
-      catch (_) { return await shell.match('index.html') || new Response('Ora is unavailable offline.', { status: 503 }); }
-    }
     return fetch(e.request);
   })());
 });
