@@ -343,7 +343,9 @@
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
-      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
+      const lit = r.color === 'w' || !r.color ? 'gold' : r.color;
+      const ink = ['gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
+      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
