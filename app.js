@@ -338,14 +338,17 @@
     const observance = r.historicalObservance;
     return { kind, badge, detail: [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean).join(' · ') };
   }
+  function observanceColor(r, rite) {
+    const x = status(r, rite);
+    const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
+    return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Sunday' ? 'g' : 'w';
+  }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
-      // Badges show observance type; the header retains the rite's liturgical colour.
-      const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
-      const lit = martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Sunday' ? 'g' : 'w';
+      const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
       return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}${lit === 'w' ? ';box-shadow:inset 0 0 0 1px #b8aa99' : ''}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
@@ -1016,8 +1019,8 @@
   function setLitColour() {
     try {
       const v = dayInfo(st.date), r = S.rite === 'sarum' ? v.sarum : S.rite === 'byz' ? v.byz : v.roman;
-      const c = r && r.color;
-      document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c || 'gold'));
+      const c = observanceColor(r, S.rite);
+      document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c));
     } catch (e) { /* keep the default */ }
   }
   let renderedView = '';
