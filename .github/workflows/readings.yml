@@ -1,7 +1,9 @@
-# Keeps readings.json fresh when the app is hosted on GitHub Pages. Runs daily; commits only on change.
+# Keeps readings.json (USCCB Mass readings) and office_audio.json (links to the Divine Office
+# recordings) fresh. Runs in the morning and again in the evening, because Divine Office
+# posts the next day's hours the evening before. Commits only on change.
 name: update-readings
 on:
-  schedule: [{ cron: '15 9 * * *' }]
+  schedule: [{ cron: '15 9 * * *' }, { cron: '40 1 * * *' }]
   workflow_dispatch:
 permissions: { contents: write }
 jobs:
@@ -10,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 fetch_readings.py
+        continue-on-error: true
+      - run: python3 fetch_divineoffice.py
+        continue-on-error: true
       - run: |
           git config user.name "ora-bot"; git config user.email "ora-bot@users.noreply.github.com"
-          git add readings.json; git diff --cached --quiet || (git commit -m "Update readings" && git push)
+          git add readings.json office_audio.json; git diff --cached --quiet || (git commit -m "Update readings and office audio" && git push)
