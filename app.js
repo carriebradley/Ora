@@ -143,13 +143,13 @@
   const readingsSpeech = r => r.full
     ? r.full.sections.map(s => `${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`).join('\n\n')
     : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}Gospel, ${r.gospel || ''}.`;
-  function romanReadingsHTML(iso) {
+  function romanReadingsHTML(iso, showAudio = true) {
     const r = st.readings[iso];
     let h = '';
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
       if (r.full.title) h += `<h3 class="reading-main-title">${esc(r.full.title)}</h3>`;
-      if (/^\d+$/.test(String(r.full.audio || ''))) h += `<iframe title="USCCB audio of the readings" width="100%" height="120" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
+      if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe title="USCCB audio of the readings" width="100%" height="120" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
       for (const s of r.full.sections) {
         h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
       }
@@ -855,7 +855,7 @@
       header += `<div class="seg"><button data-act="liturgyview" data-v="mass" class="${st.liturgyView === 'mass' ? 'on' : ''}">Mass</button><button data-act="liturgyview" data-v="byz" class="${st.liturgyView === 'byz' ? 'on' : ''}">Divine Liturgy</button></div>`;
       const litRite = st.liturgyView === 'byz' ? 'byz' : (rite === 'sarum' ? 'sarum' : 'roman');
       const name = litRite === 'byz' ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy') : litRite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
-      const body = litRite === 'byz' ? byzReadingsHTML(v) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
+      const body = litRite === 'byz' ? byzReadingsHTML(v) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date, false);
       const sourceNote = litRite === 'byz' && S.byzLiturgyChurch === 'melkite' ? '<p class="note">Melkite liturgy is selected. Melkite-specific calendar propers and full liturgy texts have not yet been added; the readings below currently follow the Ukrainian Byzantine calendar and should not be presented as verified Melkite propers.</p>' : '';
       return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(litRite === 'byz' ? v.byz.title : litRite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(litRite === 'byz' ? v.byz.season : litRite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${sourceNote}${body}</section>`;
     }
@@ -1063,7 +1063,11 @@
   function setLitColour() {
     try {
       const v = dayInfo(st.date);
-      const rite = st.tab === 'readings' ? st.readRite : st.tab === 'pray' && st.prayView === 'mass' ? (st.liturgyView === 'byz' ? 'byz' : S.rite === 'sarum' ? 'sarum' : 'roman') : S.rite;
+      // Use the same calendar and observanceColor() as each tradition's Today card.
+      // Reading and liturgy selections take precedence over the primary prayer rite.
+      const rite = st.tab === 'readings' ? st.readRite
+        : st.tab === 'pray' && st.prayView === 'mass' ? (st.liturgyView === 'byz' ? 'byz' : S.rite === 'sarum' ? 'sarum' : 'roman')
+        : S.rite;
       const r = rite === 'sarum' ? v.sarum : rite === 'byz' ? v.byz : v.roman;
       const c = observanceColor(r, rite);
       document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c));
