@@ -378,14 +378,30 @@
     const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
     return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' || x.kind === 'season' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
   }
+  function glanceSeason(r, rite, iso) {
+    if (rite === 'byz') return [r.title, r.fastSeason, r.fast].filter(Boolean).join(' · ');
+    if (rite === 'sarum') return [r.title, r.historicalObservance?.name, r.historicalObservance?.day, r.fast].filter(Boolean).join(' · ');
+    // Memorials and feasts can hide the underlying Ordinary Time week.
+    // Find the nearest ordinary weekday in the same calendar week.
+    if (r.season === 'Ordinary Time' && !/Ordinary Time/i.test(r.title)) {
+      const d = P(iso), wd = d.getUTCDay();
+      for (let offset = -((wd + 6) % 7); offset <= 6 - ((wd + 6) % 7); offset++) {
+        const candidate = L.roman(L.add(d, offset), S);
+        const match = candidate.title.match(/(?:of the |the )(\d+(?:st|nd|rd|th)) Week in Ordinary Time/i);
+        if (match) return match[1] + ' Week in Ordinary Time';
+      }
+    }
+    return r.title;
+  }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
+      const seasonLine = glanceSeason(r, k, v.iso);
+      const cycles = k === 'roman' ? `<div class="muted" style="font-size:.8rem">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${col(lit)};background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${col(lit)};background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${seasonLine || x.detail || cycles ? `<div class="gd">${esc(x.detail)}<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
