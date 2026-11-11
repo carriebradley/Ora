@@ -331,8 +331,9 @@
     let fast = r.fast || (r.ember ? 'Ember Day — fast and abstinence' : '');
     if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';  // ordinary weekly fast is lifted on a great feast
     const minor = /Memorial|Saint|Commemoration|Octave|lessons|Memory/.test(rk);
+    const martin = rite === 'sarum' && r.historicalObservance && r.historicalObservance.name === "St. Martin's Lent";
     const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : 'plain';
-    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : 'Ordinary day';
+    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : 'Ordinary day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
     const observance = r.historicalObservance;
     return { kind, badge, detail: [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean).join(' · ') };
@@ -342,7 +343,9 @@
     return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const cycles = k === 'roman' ? `<div class="muted">Sunday cycle ${esc(r.sundayCycle)} · Weekday cycle ${esc(r.weekdayCycle)}</div>` : '';
-      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
+      const lit = r.color === 'w' || !r.color ? 'gold' : r.color;
+      const ink = ['gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
+      return `<div class="gl ${x.kind}"><span class="gn">${n}</span><span class="gb" style="background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${x.detail || cycles ? `<div class="gd">${esc(x.detail)}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
