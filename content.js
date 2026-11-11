@@ -118,7 +118,8 @@ const CONTENT = (() => {
         { type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' },
         { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Mary (Magnificat)', T.magnificat),
         P('Examen', 'Where was God in this day? For what am I most grateful? Where did I fall short, and where did I feel most alive? What do I ask for tomorrow?'),
-        P('Our Father', T.our), P('Hail Mary', T.hail), P('Blessing', T.blessing)]
+        P('Our Father', T.our), P('Hail Mary', T.hail), P('Blessing', T.blessing)],
+      night: [P('Sign of the Cross', T.cross), P('Examination of conscience', 'In silence, review the day before God. Give thanks for what was good, ask forgiveness for your sins, and entrust tomorrow to his care.'), { type: 'office', title: 'Night Prayer (Compline)', which: 'C', hour: 'compline' }]
     },
     byz: {
       morning: [P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
@@ -126,7 +127,8 @@ const CONTENT = (() => {
         { type: 'quote', title: 'From the Fathers' }, { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Dismissal', T.dismissal)],
       evening: [P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
         P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe),
-        { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)]
+        { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)],
+      night: [P('Blessing', T.bwg), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), P('Song of Simeon', T.nunc), P('Prayer before sleep', 'Into your hands, O Lord, I commend my spirit. Protect me through this night and grant me peaceful rest.'), { type: 'hourlink', title: 'Full Byzantine Compline (Horologion)', hour: 'compline' }]
     },
     sarum: {
       // the Traditional tab is laid out by hour: Matins, Lauds, the Little Hours, Vespers, Compline
