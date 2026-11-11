@@ -16,6 +16,11 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
   const axe=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
   violations.push(...axe.violations.map(v=>({rite,tab,id:v.id,impact:v.impact,examples:v.nodes.slice(0,3).map(n=>({html:n.html,summary:n.failureSummary}))})));
+  const heading = page.locator('#app > .tab-heading');
+  assert.equal(await heading.count(),1,`${tab} has one page heading`);
+  assert.equal(await heading.locator('h1').innerText(),tab[0].toUpperCase()+tab.slice(1));
+  const metrics = await heading.locator('h1').evaluate(el=>{const s=getComputedStyle(el);return [s.fontFamily,s.fontSize,s.fontWeight,s.textAlign]});
+  assert.equal(metrics[1],'24px');assert.equal(metrics[3],'start');
   results.push(`${rite}/${tab}`);
  }
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='ukrainian';s.byzLiturgyChurch='ruthenian';localStorage.setItem('ora.settings',JSON.stringify(s));});
@@ -31,9 +36,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.equal(await page.locator('[data-act="kind"].on').getAttribute('data-v'),'night');
  }
  await page.goto(`${base}index.html?tab=justice&date=2026-11-11`);
- const intro=page.locator('.justice-intro');
- assert.equal(await intro.locator('h2').innerText(),'Faith in action');
- await page.waitForFunction(()=>{const el=document.querySelector('.justice-intro');if(!el)return false;const h=el.getBoundingClientRect().height;return h>0 && h<110;});
+ const intro=page.locator('.tab-heading');
+ assert.equal(await intro.locator('h1').innerText(),'Justice');
+ await page.waitForFunction(()=>{const el=document.querySelector('.tab-heading');if(!el)return false;const h=el.getBoundingClientRect().height;return h>0 && h<110;});
  await page.screenshot({path:path.join(artifacts,'justice-simple-mobile.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);
  assert.match(await page.locator('#app').innerText(),/EIGHTH SUNDAY/);

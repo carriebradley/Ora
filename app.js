@@ -406,7 +406,7 @@
   }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
-    return `<section class="card glance"><div class="lab"><span class="grow">Today</span></div>` + rows.map(([n, r, k]) => {
+    return `<section class="card glance">` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
@@ -872,7 +872,7 @@
     const rr = st.readRite === 'byz' ? 'byz' : st.readRite === 'sarum' ? 'sarum' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<h2 style="font-family:var(--serif)">Readings of the day</h2><section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
+    return `<section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
   function viewLiturgy() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -887,7 +887,7 @@
       ? '<div class="row"><a class="btn fill" href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener">Open Divine Liturgy text</a><a class="btn" href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Monthly hymns and propers</a></div><p class="muted">The diocese-hosted Liturgy PDF is the supplied 2009 draft. Use your parish book for the currently prescribed text.</p>'
       : '';
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
-      <section class="card"><h2 style="font-family:var(--serif)">${esc(name)} · ${esc(fmtLong(st.date))}</h2>
+      <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
       <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
       <p class="muted">Available readings and propers are displayed below. The complete Mass or Divine Liturgy text has not yet been incorporated.</p>
       ${note}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Roman Mass planning resources</summary><p class="muted">Supplementary seasonal planning guide; not a source of complete daily Missal propers.</p><p><a href="https://www.pewmissal.com/brand_new/index.php/planning-guide/" target="_blank" rel="noopener">Ignatius Pew Missal planning guide</a></p></details>' : ''}</section>`;
@@ -901,7 +901,7 @@
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
     let h = `<div class="seg">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">☀ Morning</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">☾ Evening</button><button data-act="kind" data-v="night" class="${st.kind === 'night' ? 'on' : ''}">☾ Night</button></div>`}`;
-    h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps · ${esc(fmtLong(st.date))}</span></div>`;
+    h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps</span></div>`;
     steps.forEach((s, i) => {
       h += `<div class="step ${st.active === i ? 'on' : ''}" id="st${i}"><div class="t">${esc(s.title)}</div>`;
       if (s.type === 'prayer') h += `<div class="tx">${esc(s.body)}</div>${speakBtn(s.text)}`;
@@ -945,7 +945,7 @@
     const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
-    let h = `<section class="justice-intro"><h2>Faith in action</h2><p>Catholic social teaching for daily life.</p></section>`;
+    let h = '';
     // Today: one quotation and one short piece, so the material lasts across many days
     h += justiceCard(f);
     const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
@@ -1126,6 +1126,10 @@
   }
   let renderedView = '';
   const detailKey = d => [d.closest('.step')?.id || '', d.className, d.querySelector(':scope > summary')?.textContent || '', d.dataset.cite || '', d.dataset.d || ''].join('|');
+  function tabHeading() {
+    const titles = {today:'Today', pray:'Pray', readings:'Readings', liturgy:'Liturgy', justice:'Justice', more:'More', calendar:'Calendar'};
+    return `<section class="tab-heading"><h1>${titles[st.tab]}</h1>${st.tab === 'justice' ? '<p>Faith in action</p>' : ''}</section>`;
+  }
   function render() {
     const view = JSON.stringify([st.tab, st.date, S.rite, st.kind, st.shour, st.readRite, st.jtab]);
     const opened = new Map(view === renderedView ? [...document.querySelectorAll('#app details')].map(d => [detailKey(d), d.open]) : []);
@@ -1135,7 +1139,8 @@
     setLitColour();
     renderHeader();
     document.querySelectorAll('#nav button').forEach(b => { b.classList.toggle('on', b.dataset.tab === st.tab); if (b.dataset.tab === st.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
-    $('#app').innerHTML = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'liturgy' ? viewLiturgy() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
+    const content = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'liturgy' ? viewLiturgy() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
+    $('#app').innerHTML = tabHeading() + content;
     document.querySelectorAll('.seg button[data-act], .legend button[data-act]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
     document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
     if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
@@ -1254,7 +1259,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v144';
+  const APP_BUILD = 'ora-v145';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

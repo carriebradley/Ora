@@ -51,3 +51,9 @@ The final browser review also identified and corrected low contrast in selected 
 The user's subsequent instruction supersedes the earlier profile/fallback policy above. All Byzantine app views now use the Melkite calendar, including installations that had saved Ukrainian or Ruthenian selections. Removed the competing calendar selectors and automatic substitution of another church's readings for unsupported years. The other calendar engines remain internally available for regression checks, and Ukrainian heritage remains separate.
 
 Removed the redundant set title from single-set readings and the extra day title inside Divine Liturgy. Combined celebrations can retain distinct set titles when necessary. Scripture sections use Gospel/Epistle labels where identifiable. The browser regression specifically checks November 11 with old saved settings: only one source heading, no conflicting Pentecost weekday titles, and the Melkite Luke 12:48–59 reference. Cache version: ora-v144.
+
+## Follow-up: consistent tab headings
+
+All six navigation tabs now share one left-aligned serif page-heading component: Today, Pray, Readings, Justice, Liturgy and More. Justice uses “Faith in action” as its short subtitle. Titles sit above cards and selectors with identical type size, weight and spacing. The nested Calendar view uses the same heading style. Removed the extra Today label, the separate Readings title, the former Justice heading, and repeated dates in Pray and Liturgy. The shared top date bar remains the date control. App cache version: ora-v145.
+
+Browser checks assert one page heading and consistent typography across all 21 tab/tradition views, in addition to the existing functional, offline and accessibility checks.
