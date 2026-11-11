@@ -954,6 +954,16 @@
     return curly(h);
   }
 
+  // Ukrainian Catholic commemorations: curated, not a fabricated daily sanctoral.
+  const UKRAINIAN_SAINTS = {
+    '11-12': { name: 'Saint Josaphat Kuntsevych', bio: 'A seventeenth-century archbishop of Polotsk, born in the lands of present-day Ukraine. He worked for communion between Eastern Christians and Rome and was killed in Vitebsk in 1623. His feast is observed on November 12 in the Roman calendar; Byzantine commemorations may differ.' },
+    '06-27': { name: 'Blessed Mykola Charnetsky and Companions', bio: 'Bishop Mykola Charnetsky and fellow Ukrainian Greek Catholic martyrs suffered persecution under Soviet rule. They were beatified by Pope John Paul II in Lviv in 2001.' },
+    '09-17': { name: 'Saint Sophia of Kyiv: Ukrainian Christian heritage', bio: 'The cathedral of Holy Wisdom in Kyiv was built in the eleventh century and preserves the artistic and spiritual heritage of Kyivan Christianity. This is a heritage feature, not a feast of a canonized person.' }
+  };
+  function ukrainianSaintCard(iso) {
+    const key = iso.slice(5), saint = UKRAINIAN_SAINTS[key];
+    return `<section class="card"><div class="lab"><span class="grow">Ukrainian saint of the day</span></div>${saint ? `<h3 style="font-family:var(--serif)">${esc(saint.name)}</h3><p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${esc(saint.bio)}</p>` : '<p class="muted">No verified Ukrainian saint is listed for this date yet. This collection is being expanded; no commemoration is invented for dates without a verified entry.</p>'}<p class="muted" style="font-size:.75rem">Ukrainian heritage collection · commemorations may follow different dates in Ukrainian liturgical calendars.</p></section>`;
+  }
   function viewCalendar() {
     if (!st.month) { const d = P(st.date); st.month = { y: d.getUTCFullYear(), m: d.getUTCMonth() }; }
     const { y, m } = st.month, first = L.D(y, m + 1, 1), start = L.add(first, -first.getUTCDay()), today = todayISO();
@@ -970,7 +980,7 @@
     h += '</div><p class="muted">Dot colours are each calendar’s liturgical colour; a gold ring marks a solemnity, principal or great feast; ƒ marks a fast day beyond ordinary Friday/Wednesday abstinence.</p>';
     const v = dayInfo(st.date);
     h += `<h3 style="margin-top:14px">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
-    return h;
+    return h + ukrainianSaintCard(st.date);
   }
 
   function felireMore() {
