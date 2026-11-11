@@ -1,0 +1,298 @@
+{
+  "sourceIndex": "https://www.stamforddio.org/liturgical-propers",
+  "description": "Scripture citations only, transcribed from the 48 available 2026 English Divine Liturgy propers through November 22. Two heading/text discrepancies are recorded individually.",
+  "cases": [
+    {
+      "date": "2026-01-04",
+      "epistle": "2 Timothy 4:5-8",
+      "gospel": "Mark 1:1-8",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/52ba7ffd0f4041f9b89ff9e689393875/January%204%202026%20-%20SUNDAY%20BEFORE%20THEOPHANY.pdf"
+    },
+    {
+      "date": "2026-01-11",
+      "epistle": "Ephesians 4:7-13",
+      "gospel": "Matthew 4:12-17",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/ee6b181e892d4fc0a5547fa30ff60a28/January%2011%202026%20-%20SUNDAY%20AFTER%20THE%20THEOPHANY.pdf"
+    },
+    {
+      "date": "2026-01-18",
+      "epistle": "1 Timothy 4:9-15",
+      "gospel": "Luke 19:1-10",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/9b6c0779792b46f5b05af22455b1b333/January%2018%202026%20-%20SUNDAY%20OF%20ZACCHAEUS.pdf"
+    },
+    {
+      "date": "2026-01-25",
+      "epistle": "2 Timothy 3:10-15",
+      "gospel": "Luke 18:10-14",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/fc3ceed359af4e92b5c7d4f2252e3b67/January%2025%202026%20-%20SUNDAY%20OF%20THE%20PUBLICAN%20AND%20PHARISEE.pdf"
+    },
+    {
+      "date": "2026-02-01",
+      "epistle": "1 Corinthians 6:12-20",
+      "gospel": "Luke 15:11-32",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/d499720eb6294d28bb89d3d5bedb9481/February%201%202026%20-%20SUNDAY%20OF%20THE%20PRODIGAL%20SON.pdf"
+    },
+    {
+      "date": "2026-02-08",
+      "epistle": "1 Corinthians 8:8-9:2",
+      "gospel": "Matthew 25:31-46",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/de979939504f4643a4d2345d5166df4c/February%208%202026%20-%20SUNDAY%20OF%20MEATFARE.pdf"
+    },
+    {
+      "date": "2026-02-15",
+      "epistle": "Romans 13:11-14:4",
+      "gospel": "Matthew 6:14-21",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/4e441dd87b24448eb30c8a44353652ac/February%2015%202026%20-%20SUNDAY%20OF%20CHEESEFARE.pdf"
+    },
+    {
+      "date": "2026-02-22",
+      "epistle": "Hebrews 11:24-26,32-12:2",
+      "gospel": "John 1:43-51",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/64713fea8b9a4779a4a72188aef7a2f2/February%2022%202026%20-%20FIRST%20SUNDAY%20OF%20GREAT%20LENT.pdf",
+      "printedEpistle": "Hebrews 11:24-40;12:1-2",
+      "note": "The printed heading gives 11:24-40; the actual text skips verses 27-31, proceeding from Moses to \"What more shall I say?\" (verse 32)."
+    },
+    {
+      "date": "2026-03-01",
+      "epistle": "Hebrews 1:10-2:3",
+      "gospel": "Mark 2:1-12",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/1894accdb7e04862a86baf9b6a2a1bd0/March%201%202026%20-%20SECOND%20SUNDAY%20OF%20GREAT%20LENT.pdf"
+    },
+    {
+      "date": "2026-03-08",
+      "epistle": "Hebrews 4:14-5:6",
+      "gospel": "Mark 8:34-9:1",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/1f16b356463f48c4aeb6803005ec25b0/March%208%202026%20-%20THIRD%20SUNDAY%20OF%20THE%20GREAT%20LENT.pdf"
+    },
+    {
+      "date": "2026-03-15",
+      "epistle": "Hebrews 6:13-20",
+      "gospel": "Mark 9:17-31",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/17ad23a2ae624a1dbf07b403d41ff030/March%2015%202026%20-%20FOURTH%20SUNDAY%20OF%20GREAT%20LENT.pdf"
+    },
+    {
+      "date": "2026-03-22",
+      "epistle": "Hebrews 9:11-14",
+      "gospel": "Mark 10:32-45",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/afb2fbc9394c47bf878a7078f43a87ea/March%2022%202026%20-%20FIFTH%20SUNDAY%20OF%20GREAT%20LENT.pdf"
+    },
+    {
+      "date": "2026-03-29",
+      "epistle": "Philippians 4:4-9",
+      "gospel": "John 12:1-18",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/50ef69d62e784aec94e12955f64c47c5/March%2029%202026%20-%20PALM%20SUNDAY.pdf"
+    },
+    {
+      "date": "2026-04-05",
+      "epistle": "Acts 1:1-8",
+      "gospel": "John 1:1-17",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/6e91651c05494f39ac9cb7ae82829544/April%205%202026%20-%20THE%20RESURRECTION%20OF%20OUR%20LORD%20JESUS%20CHRIST.pdf"
+    },
+    {
+      "date": "2026-04-12",
+      "epistle": "Acts 5:12-20",
+      "gospel": "John 20:19-31",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/99af1d7a4bd846de90310ef78019fe29/April%2012%202026%20-%20SUNDAY%20OF%20ST.%20THOMAS.pdf"
+    },
+    {
+      "date": "2026-04-19",
+      "epistle": "Acts 6:1-7",
+      "gospel": "Mark 15:43-16:8",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/34193063c92847e7ab2a542634265d2b/April%2019%202026%20-%20SUNDAY%20OF%20THE%20OINTMENT-BEARING%20WOMEN.pdf"
+    },
+    {
+      "date": "2026-04-26",
+      "epistle": "Acts 9:32-42",
+      "gospel": "John 5:1-15",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/41b97c6e844c464ba287ec434f3f891d/April%2026%202026%20-%20SUNDAY%20OF%20THE%20PARALYTIC.pdf"
+    },
+    {
+      "date": "2026-05-03",
+      "epistle": "Acts 11:19-26, 29-30",
+      "gospel": "John 4:5-42",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/49cf240135fc46d4a0f99452d278b260/May%203%202026%20-%20SUNDAY%20OF%20THE%20SAMARITAN%20WOMEN.pdf"
+    },
+    {
+      "date": "2026-05-10",
+      "epistle": "Acts 16:16-34",
+      "gospel": "John 9:1-38",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/8a5b810d1fcc40449cc577f324c4a4c9/May%2010%202026%20-%20SUNDAY%20OF%20THE%20MAN%20BORN%20BLIND.pdf"
+    },
+    {
+      "date": "2026-05-14",
+      "epistle": "Acts 1:1-12",
+      "gospel": "Luke 24:36-53",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/9d8c7328d7b7464ab71e1cad028bb201/May%2014%202026%20-%20THE%20ASCENSION%20OF%20OUR%20LORD%20JESUS%20CHRIST.pdf",
+      "printedGospel": "Luke 24:35-53",
+      "note": "The printed heading begins at 35; the actual text starts with Jesus standing among the disciples (verse 36)."
+    },
+    {
+      "date": "2026-05-17",
+      "epistle": "Acts 20:16-18;28-36",
+      "gospel": "John 17:1-13",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/88e81eda00fc459a940f62de57c36714/May%2017%202026%20-%20SUNDAY%20OF%20THE%20HOLY%20FATHERS%20OF%20THE%20NICENE%20COUNCIL.pdf"
+    },
+    {
+      "date": "2026-05-24",
+      "epistle": "Acts 2:1-11",
+      "gospel": "John 7:37-52; 8:12",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/0ca9484e1fa1466484cf58ccb4c30a8b/May%2024%202026%20-%20FEAST%20OF%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-05-31",
+      "epistle": "Hebrews 11:33-12:2",
+      "gospel": "Matthew 10:32-33;37-38;19:27-30",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/cd161d08826e4293a8d00353c805d0aa/May%2031%202026%20-%20FIRST%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-06-07",
+      "epistle": "Romans 2:10-16",
+      "gospel": "Matthew 4:18-23",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/cbdcf7b5efaf4b15a347ea20e172ad12/June%2007%202026%20-%20SECOND%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-06-14",
+      "epistle": "Romans 5:1-10",
+      "gospel": "Matthew 6:22-33",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/642d1c40f1b74827aef050b584dd79ee/June%2014%202026%20-%20THIRD%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-06-21",
+      "epistle": "Romans 6:18-23",
+      "gospel": "Matthew 8:5-13",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/dc55a3283dea48098fa891d1802a11a9/June%2021%202026%20-%20FOURTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-06-28",
+      "epistle": "Romans 10:1-10",
+      "gospel": "Matthew 8:28-9:1",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/359d5554a88c489898e4ea9746c70461/June%2028%202026%20-%20FIFTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-07-05",
+      "epistle": "Romans 12:6-14",
+      "gospel": "Matthew 9:1-8",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/b7d223d7c65a4c528f44f1c6dc789142/July%205%202026%20-%20SIXTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-07-12",
+      "epistle": "Romans 15:1-7",
+      "gospel": "Matthew 9:27-35",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/f20d5d87bea84e4498008f7e20293edf/July%2012%202026%20-%20SEVENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-07-19",
+      "epistle": "1 Corinthians 1:10-18",
+      "gospel": "Matthew 14:14-22",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/7823e3493c94492ab46d8538b422fab7/July%2019%202026%20-%20EIGHTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-07-26",
+      "epistle": "1 Corinthians 3:9-17",
+      "gospel": "Matthew 14:22-34",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/8e1ab6c693a84042bf9d433870017fc2/July%2026%202026%20-%20NINTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-08-02",
+      "epistle": "1 Corinthians 4:9-16",
+      "gospel": "Matthew 17:14-22",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/7b68aa1c572a4d1b92743dd68d3f664e/August%202%202026%20-%20TENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-08-09",
+      "epistle": "1 Corinthians 9:2-12",
+      "gospel": "Matthew 18:23-35",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/fd912224b09b4bd39c3cccf0ba46ac83/August%209%202026%20-%20ELEVENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-08-16",
+      "epistle": "1 Corinthians 15:1-11",
+      "gospel": "Matthew 19:16-26",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/670fbc1268d54dfdadf5102a33c2b3d1/August%2016%202026%20-%20TWELFTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-08-23",
+      "epistle": "1 Corinthians 16:13-24",
+      "gospel": "Matthew 21:33-42",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/741b4178b1cd47e8ad0dfac97e2071b4/August%2023%202026%20-%20THIRTEENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-08-30",
+      "epistle": "2 Corinthians 1:21-2:4",
+      "gospel": "Matthew 22:2-14",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/691a136b5c384c45be6b382007ae69e8/August%2030%202026%20-%20FOURTEENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-09-06",
+      "epistle": "2 Corinthians 4:6-15",
+      "gospel": "Matthew 22:35-46",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/edd8ebcd5ca440979184d875a53acb0d/Septenber%206%202026%20-%20FIFTEENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-09-13",
+      "epistle": "Galatians 6:11-18",
+      "gospel": "John 3:13-17",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/29836ccb8ef748fca8ecb93a793eedb5/Septenber%2013%202026%20-%20SUNDAY%20BEFORE%20THE%20EXALTATION%20OF%20THE%20HOLY%20CROSS.pdf"
+    },
+    {
+      "date": "2026-09-20",
+      "epistle": "Galatians 2:16-20",
+      "gospel": "Mark 8:34-9:1",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/4a27901d3b024bb6a8cde79333114951/Septenber%2020%202026%20-%20SUNDAY%20AFTER%20THE%20EXALTATION%20OF%20THE%20HOLY%20CROSS.pdf"
+    },
+    {
+      "date": "2026-09-27",
+      "epistle": "2 Corinthians 9:6-11",
+      "gospel": "Luke 5:1-11",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/093196968388465786e5a791085e36dd/Septenber%2027%202026%20-%20EIGHTEENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-10-04",
+      "epistle": "2 Corinthians 11:31-12:9",
+      "gospel": "Luke 6:31-36",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/bfa7a8c685bc497ab96acd410cfcc877/October%204%202026%20-%20NINETEENTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-10-11",
+      "epistle": "Galatians 1:11-19",
+      "gospel": "Luke 7:11-16",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/2581502ac6e84047a7d5aadd0eae0fd5/October%2011%202026%20-%20TWENTIETH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-10-18",
+      "epistle": "Galatians 2:16-20",
+      "gospel": "Luke 8:5-15",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/7584bfe5f8bd417189f4d9dfdb0b882f/October%2018%202026%20-%20TWENTY-FIRST%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-10-25",
+      "epistle": "Galatians 6:11-18",
+      "gospel": "Luke 16:19-31",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/9cf32755cec64af0a1590d111a4ff5dd/October%2025%202026%20-%20TWENTY-SECOND%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-11-01",
+      "epistle": "Ephesians 2:4-10",
+      "gospel": "Luke 8:26-39",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/546f29fd768944d5891c2ab6774af88a/November%201%202026%20-%20TWENTY-THIRD%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-11-08",
+      "epistle": "Ephesians 2:14-22",
+      "gospel": "Luke 8:41-56",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/b1ba6d2d944d4d30b61c95857cf18a24/November%208%202026%20-%20TWENTY-FOURTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-11-15",
+      "epistle": "Ephesians 4:1-6",
+      "gospel": "Luke 10:25-37",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/e7bd3f0f7e6b434eb9e294ce8ab11a11/November%2015%202026%20-%20TWENTY-FIFTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    },
+    {
+      "date": "2026-11-22",
+      "epistle": "Ephesians 5:9-19",
+      "gospel": "Luke 12:16-21",
+      "source": "https://storage.googleapis.com/wzukusers/user-27115622/documents/a85f8641a8d74426ab999b6a057be4ea/November%2022%202026%20-%20TWENTY-SIXTH%20SUNDAY%20AFTER%20PENTECOST.pdf"
+    }
+  ]
+}

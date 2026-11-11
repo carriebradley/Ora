@@ -69,7 +69,7 @@ test('Byzantine movable feasts, Soul Saturdays and fasting boundaries', () => {
 test('Ukrainian and Ruthenian St Anna dates stay aligned with the readings', () => {
   for (const [church, d] of [['ukrainian', '2026-12-09'], ['ruthenian', '2026-12-08']]) {
     assert.match(byz(d, church).title, /Conception/);
-    assert.ok(B.read(date(d), 0, L.westernEaster, church).notes.some(s => /proper readings.*Saint Anna/.test(s)));
+    assert.ok(B.read(date(d), 0, L.westernEaster, church).sets.some(s => s.r.some(([,c]) => c === 'Galatians 4:22-31')));
   }
   assert.doesNotMatch(byz('2026-12-09', 'ruthenian').title, /Conception/);
   const allTitles = r => [r.title, ...r.also.map(a => a.title)].join(' ');
