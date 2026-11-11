@@ -4,7 +4,7 @@
   else root.Melkite = factory(root.MELKITE_2026);
 })(typeof self !== 'undefined' ? self : this, function(data) {
   const entry = date => data.days[typeof date === 'string' ? date : date.toISOString().slice(0,10)] || null;
-  const books = {JN:'John',LK:'Luke',MK:'Mark',MT:'Matthew',COL:'Colossians',HEB:'Hebrews',TIM:'Timothy',COR:'Corinthians',ROM:'Romans',EPH:'Ephesians',PT:'Peter',JAS:'James',TI:'Titus',ACTS:'Acts',PHIL:'Philippians',THES:'Thessalonians',JN:'John',GAL:'Galatians',IS:'Isaiah',GEN:'Genesis',PROV:'Proverbs',JOEL:'Joel',ZECH:'Zechariah',JUDE:'Jude'};
+  const books = {JN:'John',LK:'Luke',MK:'Mark',MT:'Matthew',COL:'Colossians',HEB:'Hebrews',TIM:'Timothy',COR:'Corinthians',ROM:'Romans',EPH:'Ephesians',PT:'Peter',JAS:'James',TI:'Titus',ACTS:'Acts',PHIL:'Philippians',THES:'Thessalonians',GAL:'Galatians',IS:'Isaiah',GEN:'Genesis',PROV:'Proverbs',JOEL:'Joel',ZECH:'Zechariah',JUDE:'Jude'};
   const reference = text => text.replace(/\b[A-Z]{2,5}\b/g, s => books[s] || s).replace(/\s*\(\d+\)/g,'');
   function read(date) {
     const e = entry(date); if (!e) return null;

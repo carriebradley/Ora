@@ -49,7 +49,7 @@
     },
     "2026-01-05": {
       "page": 3,
-      "observance": "",
+      "observance": "Paramony of the Theophany",
       "saints": "Martyrs Theopemptos and Theonas - Mother Syncletica",
       "references": [
         "1 COR 9:19-27",

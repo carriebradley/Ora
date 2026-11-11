@@ -33,7 +33,7 @@ for month in range(1, 13):
                 else:
                     assert references, (date, t)
                     references[-1] += ' ' + t
-            elif 'Medium' in s['font'] or ('Bold' in s['font'] and s['size'] < 10): primary.append(t)
+            elif 'Medium' in s['font'] or 'Regular' in s['font'] or ('Bold' in s['font'] and s['size'] < 10): primary.append(t)
             elif s['size'] < 7: saints.append(t)
         assert references, date
         days[str(date)] = dict(page=month + 2, observance=' '.join(primary), saints=' '.join(saints), references=references, tone=tone)

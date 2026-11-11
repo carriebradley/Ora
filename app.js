@@ -1020,7 +1020,7 @@
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
-      <p><b>Byzantine</b> — Gregorian Pascha and fixed feasts, with the Diocese of Newton’s dated Melkite calendar for 2026 and Ukrainian or Ruthenian alternatives in Settings. The supplemental saints and imported events are from Ukrainian calendars. The reading cycle is an unofficial Slavic table; check your parish ordo for local adjustments.</p>
+      <p><b>Byzantine</b> — Gregorian Pascha and fixed feasts, with the Diocese of Newton’s dated Melkite calendar for 2026 and Ukrainian or Ruthenian alternatives in Settings. The supplemental saints and imported events are from Ukrainian calendars. The Ukrainian/Ruthenian fallback cycle uses an unofficial Slavic table. Check your parish ordo for full service combinations.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <details class="card credits"><summary><h3 style="margin:0">Credits &amp; sources</h3></summary><div style="margin-top:8px">
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office, Metropolitan Cantor Institute, Stamford Eparchy, Divine Praises.</p>
@@ -1255,7 +1255,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v142';
+  const APP_BUILD = 'ora-v143';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
