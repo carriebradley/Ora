@@ -85,7 +85,21 @@
     if (rite) { const pref = rite === 'byz' ? 'East' : null; if (pref) { const e = pool.filter(x => x.tr === pref); if (e.length && mix(key + 'x') % 3 !== 0) pool = e; } }
     return pool[(((day + salt + shift) % pool.length) + pool.length) % pool.length];
   }
-  const quoteFor = (v, rite) => pick(C.QUOTES.filter(q => !q.tags || q.tags.some(g => tagsFor(v).has(g))), v.iso + rite, st.quoteShift, tagsFor(v), rite);
+  // Restrict saint quotations to the chosen tradition; seasonal tags rank within that pool.
+  // Roman includes the full Catholic collection; Byzantine uses early Eastern Fathers;
+  // Traditional uses Western saints whose lives ended before AD 1500.
+  const EARLY_WEST = new Set([
+    'St. Augustine of Hippo', 'St. Thomas Aquinas', 'St. Benedict of Nursia',
+    'St. Bernard of Clairvaux', 'St. Jerome', 'St. Irenaeus of Lyons',
+    'St. Francis of Assisi', 'St. Clare of Assisi'
+  ]);
+  const quoteEligible = (q, rite) => rite === 'byz' ? q.tr === 'East'
+    : rite === 'sarum' ? q.tr === 'West' && EARLY_WEST.has(q.s)
+    : q.tr === 'West' || q.tr === 'East';
+  const quoteFor = (v, rite) => {
+    const eligible = C.QUOTES.filter(q => quoteEligible(q, rite));
+    return pick(eligible, v.iso + rite, st.quoteShift, tagsFor(v), null);
+  };
   const artFor = (v, rite) => pick(C.ART.map(a => a), v.iso + 'art' + rite, st.artShift, tagsFor(v), rite);
 
   /* ---------- readings ---------- */
