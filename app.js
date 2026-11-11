@@ -180,14 +180,16 @@
     if (day && day.sets.length) {
       for (const s of day.sets) {
         h += `<div class="step" style="margin-top:10px"><div class="t">${esc(s.t)}</div>`;
-        for (const [lab, cs] of s.r) h += `<div class="cite"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>` + String(cs).split(' · ').map(c => `<div class="asv" data-ref="${esc(c.replace(/\s*\([^)]*\)/g, '').trim())}"></div>`).join('');
-        for (const [lab, cs] of (s.a || [])) h += `<div class="cite muted"><span>${esc(lab)}</span><span style="text-align:right">${citeLinks(cs)}</span></div>`;
+        for (const [lab, cs] of s.r) h += `<div class="cite"><span>${esc(lab)}</span><span style="text-align:right">${esc(cs)}</span></div>` + String(cs).split(' · ').map(c => `<div class="asv" data-ref="${esc(c.replace(/\s*\([^)]*\)/g, '').trim())}"></div>`).join('');
+        for (const [lab, cs] of (s.a || [])) h += `<div class="cite muted"><span>${esc(lab)}</span><span style="text-align:right">${esc(cs)}</span></div>`;
         if (s.chk) h += `<p class="note">Check this one: ${esc(s.chk)}</p>`;
         h += '</div>';
       }
       for (const n of day.notes) h += `<p class="muted">${esc(n)}</p>`;
       for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
+    h += `<p class="muted" style="font-size:.8rem">Scripture passages are shown above in the public-domain American Standard Version when available. For a Catholic translation or when the text cannot load, use the reference links below.</p>`;
+    h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step"><b>${esc(s.t)}</b>${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
     h += `<p class="muted" style="font-size:.8rem">Based on the Slavic lectionary table on byzcath.org, with selected corrections checked against the <a href="https://mci.archpitt.org/Lectionary.html" target="_blank" rel="noopener">Metropolitan Cantor Institute</a> and Stamford's Ukrainian Catholic propers. Tap a reference to read it in the RSV-CE. This is not a complete eparchial ordo; check local combinations and the cycle around Christmas against your parish book.</p>`;
     h += `<div class="row"><a class="btn" target="_blank" rel="noopener" href="https://ecpubs.gumroad.com/l/jTBr">ECPubs Daily Office</a><a class="btn" target="_blank" rel="noopener" href="https://www.stamforddio.org/liturgical-propers">Stamford propers</a><a class="btn" target="_blank" rel="noopener" href="https://www.oca.org/readings/daily/${ocaDate(v.iso)}">OCA (Orthodox) check</a></div>`;
     return h;
