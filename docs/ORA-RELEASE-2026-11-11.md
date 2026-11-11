@@ -65,3 +65,5 @@ Final heading verification: all 25 Node regressions and 21 browser tab/tradition
 The Mass choice now always follows the current Roman calendar and USCCB daily readings, independently of the selected prayer tradition. Selecting Traditional for prayer no longer turns this view into Sarum Mass. The Liturgy accent color also follows the Roman day. Divine Liturgy continues to use Melkite. Traditional/Sarum content remains available in its existing Prayer and Readings views.
 
 The view explicitly distinguishes the current daily lectionary from the complete Roman Missal prayers, which are not yet bundled. The browser check reproduces the reported November 11 case with Traditional selected, verifies Roman Mass and Saint Martin of Tours, and rejects Sarum/Martinmas/After Trinity headings. Cache version: ora-v146.
+
+Current Roman Mass verification passed: 25 Node tests plus the 21-view browser audit and the specific Traditional-selected Mass regression, with no JavaScript errors or detected accessibility violations. [Verified run](https://github.com/carriebradley/Ora/actions/runs/43105541737).
