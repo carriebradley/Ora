@@ -15,7 +15,7 @@ Run locally with `python3 -m http.server 8765`, then open `http://localhost:8765
 
 ## Calendar settings
 
-Roman Ascension, Corpus Christi and Epiphany transfers and Sarum Lady-Day transfer are configurable. The UI uses Gregorian Byzantine Pascha and fixed feasts. Melkite practice follows the supplied Diocese of Newton calendar for **2026 only**. All Byzantine views use Melkite. Other years are marked unavailable until an annual Melkite source is verified; a different church’s readings are not substituted. Ukrainian heritage remains a separate collection.
+Roman Ascension, Corpus Christi and Epiphany transfers and Sarum Lady-Day transfer are configurable. All Byzantine views follow the **Ruthenian Byzantine Catholic tradition of Pittsburgh**, with Gregorian Pascha and fixed feasts. The computed calendar, fasting guidance and lectionary use the Ruthenian options, with selected checks against Metropolitan Cantor Institute sources. Service selection is verified for 2026; other years explicitly lack a service calendar. Ukrainian heritage and the retained Newton source dataset are separate. The local **Liturgical Text** PDF reader supports Mass, Chrysostom, Basil and Presanctified, without uploading documents. See [the release review](docs/RUTHENIAN-READER-2026-11-11.md).
 
 ## Important files
 

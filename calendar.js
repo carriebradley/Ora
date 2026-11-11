@@ -31,7 +31,7 @@
     epiphany: 'jan6',        // 'jan6' (universal) | 'sunday' (USA)
     byzPascha: 'gregorian',  // 'gregorian' (same date as Western Easter) | 'julian' (Orthodox date)
     byzOldCal: false,        // true: Menaion dates follow the Julian calendar (+13 days)
-    byzChurch: 'melkite',  // 'ukrainian' | 'ruthenian' (U.S. practice)
+    byzChurch: 'ruthenian',  // Pittsburgh; explicit Ukrainian/Melkite engines remain available for source checks
     byzAnna: 'default'       // 'default' | '8' | '9': follow the parish's observance
   };
   const opts = o => Object.assign({}, DEFAULTS, o || {});
@@ -643,10 +643,10 @@
 
     // temporal cycle
     let anchor;
-    if (d >= add(P, -70) && d < P) {
+    if (d >= add(P, -77) && d < P) {
       const k = diff(P, d);
       season = k > 48 ? 'Triodion — preparation for the Great Fast' : k < 7 ? 'Great and Holy Week' : k <= 8 ? 'Lazarus Saturday and Palm Sunday' : 'Triodion — Great Fast';
-      const sundays = { 70: 'Sunday of the Publican and the Pharisee', 63: 'Sunday of the Prodigal Son', 56: 'Meatfare Sunday — the Last Judgment', 49: 'Cheesefare Sunday — Forgiveness Sunday',
+      const sundays = { 77: 'Zacchaeus Sunday (32nd Sunday after Pentecost)', 70: 'Sunday of the Publican and the Pharisee', 63: 'Sunday of the Prodigal Son', 56: 'Meatfare Sunday — the Last Judgment', 49: 'Cheesefare Sunday — Forgiveness Sunday',
         42: '1st Sunday of Great Lent — Triumph of Orthodoxy', 35: '2nd Sunday of Great Lent — Saint Gregory Palamas', 28: '3rd Sunday of Great Lent — Veneration of the Holy Cross',
         21: '4th Sunday of Great Lent — Saint John Climacus', 14: '5th Sunday of Great Lent — Saint Mary of Egypt', 7: 'Palm Sunday — Entry of the Lord into Jerusalem' };
       if (sun) { if (k === 7) tone = 0; push(sundays[k], k === 7 ? 90 : 50, k === 7 ? 'Great Feast' : 'Sunday', k === 7 ? 'g' : 'v', season); }
@@ -656,7 +656,7 @@
       else if (k === 2) push('Great and Holy Friday', 95, 'Holy Week', 'k', season);
       else if (k === 1) push('Great and Holy Saturday', 95, 'Holy Week', 'w', season);
       else if (k > 3 && k < 7) push(`Great and Holy ${wd}`, 90, 'Holy Week', 'v', season);
-      else if (k > 48) push(`${wd} of ${k > 62 ? 'the Publican and Pharisee' : k > 55 ? 'the Prodigal Son' : k > 49 ? 'Meatfare Week' : 'Cheesefare Week'}`, 5, 'Weekday', 'g', season);
+      else if (k > 48) push(`${wd} of ${k > 70 ? 'Zacchaeus' : k > 62 ? 'the Publican and Pharisee' : k > 55 ? 'the Prodigal Son' : k > 49 ? 'Meatfare Week' : 'Cheesefare Week'}`, 5, 'Weekday', 'g', season);
       else { const wk = Math.floor((48 - k) / 7) + 1; push(`${wd} of the ${ORD(wk)} Week of Great Lent`, 20, 'Weekday', 'v', season); }
     } else if (d >= P && d <= add(P, 56)) {
       season = 'Pentecostarion'; const k = diff(d, P);
@@ -710,6 +710,11 @@
       if (dow(hours) === 0) hours = add(hours, -2);
       else if (dow(hours) === 6) hours = add(hours, -1);
       if (same(d, hours)) push(`Royal Hours of the ${name}`, 44, 'Observance', 'v', season);
+    }
+    if (o.byzChurch === 'ruthenian' && y === 2026) {
+      // Annual MCI calendar supersedes older Menaion dates for these local feasts.
+      if (mm === 10 && md === 31) push('Holy Martyr Theodore Romzha, Bishop of Mukachevo', 40, 'Feast', 'r', season);
+      if (mm === 12 && md === 12) push('The Theotokos of Guadalupe', 40, 'Feast', 'w', season);
     }
     items.sort((a, b) => b.score - a.score);
     const w = items[0], also = items.slice(1).filter(i => i.score >= 20).map(i => ({ title: i.title, note: i.rank }));

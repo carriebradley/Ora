@@ -23,12 +23,14 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.equal(metrics[1],'24px');assert.equal(metrics[3],'start');
   results.push(`${rite}/${tab}`);
  }
- await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='ukrainian';s.byzLiturgyChurch='ruthenian';localStorage.setItem('ora.settings',JSON.stringify(s));});
+ await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='melkite';s.byzLiturgyChurch='melkite';s.byzAnna='9';delete s.ruthenian2026;localStorage.setItem('ora.settings',JSON.stringify(s));});
  await page.goto(`${base}index.html?tab=readings&rite=byz&date=2026-11-11`);
  assert.equal(await page.locator('.reading-main-title').count(),1);
  assert.equal(await page.locator('.reading-day-title').count(),0);
  assert.doesNotMatch(await page.locator('#app').innerText(),/Wednesday.*(?:Pentecost|week)/);
- assert.match(await page.locator('#app').innerText(),/Martyrs Menas/);
+ assert.match(await page.locator('#app').innerText(),/Ruthenian Byzantine Catholic practice of Pittsburgh/);
+ assert.equal(await page.locator('a[href*="melkite.org"]').count(),0);
+ assert.deepEqual(await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));return [s.byzChurch,s.byzLiturgyChurch,s.byzAnna]}),['ruthenian','ruthenian','default']);
  assert.match(await page.locator('#app').innerText(),/Luke 12:48-59/);
  for(const rite of ['roman','byz']) {
   await page.goto(`${base}index.html?tab=pray&date=2026-11-15&rite=${rite}&kind=night`);
@@ -41,11 +43,11 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.waitForFunction(()=>{const el=document.querySelector('.tab-heading');if(!el)return false;const h=el.getBoundingClientRect().height;return h>0 && h<110;});
  await page.screenshot({path:path.join(artifacts,'justice-simple-mobile.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);
- assert.match(await page.locator('#app').innerText(),/EIGHTH SUNDAY/);
+ assert.match(await page.locator('#app').innerText(),/25th Sunday after Pentecost/);
  assert.match(await page.locator('#app').innerText(),/Luke 10:25-37/);
- assert.equal(await page.locator('a[href$="LITURGY2009.pdf"]').count(),1);
- assert.equal(await page.locator('a[href="https://melkite.org/daily-readings"]').count(),1);
- assert.equal(await page.locator('a[href$="November-2026.docx"]').count(),1);
+ assert.equal(await page.locator('a[href$="DivineLiturgies.pdf"]').count(),1);
+ assert.equal(await page.locator('a[href*="melkite.org"]').count(),0);
+ assert.equal(await page.locator('a[href$="Menaion_November.pdf"]').count(),1);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11&rite=sarum`);
  await page.locator('[data-act="liturgyview"][data-v="mass"]').click();
  assert.equal(await page.locator('#app .card > h2').innerText(),'Roman Mass');
@@ -89,7 +91,13 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=calendar&date=2026-11-15`);
  const next=page.locator('[data-act="mnext"]');await next.focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement?.dataset.act),'mnext');
  await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();assert.equal(await page.locator('#s_byz_church').count(),0);await page.locator('[data-act="savesettings"]').click();
- await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-12-09`);assert.match(await page.locator('#app').innerText(),/MATERNITY/);
+ for (const tab of ['today','pray','readings','calendar','liturgy']) {
+  await page.goto(`${base}index.html?tab=${tab}&rite=byz&date=2026-12-08`);
+  if(tab==='liturgy') await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+  assert.match(await page.locator('#app').innerText(),/Conception of the Mother of God by Saint Anna/,tab+' follows Pittsburgh December 8');
+  assert.equal(await page.locator('a[href*="melkite.org"]').count(),0,tab+' has no Melkite service links');
+ }
+ await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-01-18`);assert.match(await page.locator('#app').innerText(),/Zacchaeus/);
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(r=>navigator.serviceWorker.addEventListener('controllerchange',r,{once:true}));});
  // Store the large texts once, then verify deep links and prayer data with the network disabled.
  await page.evaluate(async()=>{for(const file of ['matins.json','fathers.json','oortext.json']){const r=await fetch(file);if(!r.ok)throw new Error(file);await r.json();}});

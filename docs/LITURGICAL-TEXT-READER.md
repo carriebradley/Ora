@@ -1,3 +1,5 @@
+> Current configuration: the user subsequently chose Pittsburgh’s Ruthenian tradition. See [the current release review](RUTHENIAN-READER-2026-11-11.md). The source-search notes below document the earlier Melkite implementation; the local reader architecture remains the same.
+
 # Liturgical Text and service selection — 11 November 2026
 
 Ora v148 adds a local PDF reader. Each browser can save separate files for Roman Mass, Chrysostom, Basil and Presanctified. PDFs are validated with the vendored Apache-2.0 PDF.js 5.6.205 before an atomic IndexedDB replacement. No upload endpoint, external viewer or document fetch is used. Page bookmarks persist separately per service. The installed shell caches the reader and worker for offline reading. PDF scripting, XFA and evaluation are disabled. Text extraction is displayed with textContent; PDF links and actions are not executed.
