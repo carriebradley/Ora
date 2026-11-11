@@ -1,4 +1,4 @@
-const V = 'ora-v135', DATA = 'ora-data-v1';
+const V = 'ora-v136', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'calendar.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzlect.js', 'justice.js', 'felire.js', 'oor.js', 'hours.js', 'oortext.json', 'manifest.webmanifest', 'icon.svg'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json']);
 
@@ -57,8 +57,15 @@ self.addEventListener('fetch', e => {
       } catch (_) { /* offline: use installed shell */ }
       return await shell.match('index.html') || new Response('Ora is unavailable offline.', { status: 503 });
     }
-    const cached = await shell.match(e.request);
-    if (cached) return cached;
-    return fetch(e.request);
+    // Fetch updated application scripts/styles when online; retain cached
+    // copies for offline use. Avoid a new HTML shell loading stale app.js.
+    try {
+      const fresh = await fetch(e.request, { cache: 'no-store' });
+      if (fresh.ok) {
+        try { await shell.put(e.request, fresh.clone()); } catch (_) { /* storage full */ }
+        return fresh;
+      }
+    } catch (_) { /* offline */ }
+    return await shell.match(e.request) || new Response('Offline: app resource unavailable.', { status: 503 });
   })());
 });

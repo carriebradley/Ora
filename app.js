@@ -865,16 +865,21 @@
   }
   function viewLiturgy() {
     const v = dayInfo(st.date); loadReadings(st.date);
-    const rite = S.rite;
-    let header = '';
-    {
-      header += `<div class="seg"><button data-act="liturgyview" data-v="mass" class="${st.liturgyView === 'mass' ? 'on' : ''}">Mass</button><button data-act="liturgyview" data-v="byz" class="${st.liturgyView === 'byz' ? 'on' : ''}">Divine Liturgy</button></div>`;
-      const litRite = st.liturgyView === 'byz' ? 'byz' : (rite === 'sarum' ? 'sarum' : 'roman');
-      const name = litRite === 'byz' ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy') : litRite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
-      const body = litRite === 'byz' ? byzReadingsHTML(v) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date, false);
-      const sourceNote = litRite === 'byz' && S.byzLiturgyChurch === 'melkite' ? '<p class="note">Melkite liturgy is selected. Melkite-specific calendar propers and full liturgy texts have not yet been added; the readings below currently follow the Ukrainian Byzantine calendar and should not be presented as verified Melkite propers.</p>' : '';
-      return header + `<section class="card"><h2 style="font-family:var(--serif)">${name} · ${esc(fmtLong(st.date))}</h2><div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(litRite === 'byz' ? v.byz.title : litRite === 'sarum' ? v.sarum.title : v.roman.title)}</div><p class="muted">${esc(litRite === 'byz' ? v.byz.season : litRite === 'sarum' ? v.sarum.season : v.roman.season)}</p></div><p class="muted">Available readings and liturgical propers are shown below. This is not yet a complete Mass or Divine Liturgy text; missing prayers are not substituted or invented.</p>${sourceNote}${body}</section>`;
-    }
+    const byzantine = st.liturgyView === 'byz';
+    const litRite = byzantine ? 'byz' : (S.rite === 'sarum' ? 'sarum' : 'roman');
+    const name = byzantine
+      ? (S.byzLiturgyChurch === 'melkite' ? 'Melkite Divine Liturgy' : S.byzLiturgyChurch === 'ruthenian' ? 'Ruthenian Divine Liturgy' : 'Ukrainian Divine Liturgy')
+      : litRite === 'sarum' ? 'Traditional / Sarum Mass' : 'Roman Mass';
+    const body = byzantine ? byzReadingsHTML(v) : litRite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date, false);
+    const day = v[litRite];
+    const note = byzantine && S.byzLiturgyChurch === 'melkite'
+      ? '<p class="note">Melkite is selected. Until the diocesan calendar and liturgical texts are incorporated, the readings below use the Ukrainian Byzantine calendar; these are not verified Melkite propers.</p>'
+      : '';
+    return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
+      <section class="card"><h2 style="font-family:var(--serif)">${esc(name)} · ${esc(fmtLong(st.date))}</h2>
+      <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
+      <p class="muted">Available readings and propers are displayed below. The complete Mass or Divine Liturgy text has not yet been incorporated.</p>
+      ${note}${body}</section>`;
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
