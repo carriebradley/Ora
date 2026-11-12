@@ -52,5 +52,19 @@
   const {s,i}=embedded[0],ending=s.blocks.findIndex((b,j)=>j>i&&/^h[1-6]$/.test(b.tag)&&/^(?:the )?(?:eucharistic prayer|gloria|creed|profession of faith|communion rite|concluding rites)\b/i.test(b.text));
   return {title:s.blocks[i].text,blocks:s.blocks.slice(i+1,ending<0?undefined:ending)};
  }
- return {match,order,key,prayers,ordinary,fixed};
+
+ function propers(part){
+  const out={entrance:[],collect:[],offerings:[],communion:[],after:[]};
+  const heads=[['entrance',/^entrance antiphon\b/i],['collect',/^(?:collect|opening prayer)\b/i],['offerings',/^prayer over the offerings\b/i],['communion',/^communion antiphon\b/i],['after',/^prayer after communion\b/i]];
+  let active=null;
+  for(const block of prayers(part).blocks){
+    const v=block.text.trim(),h=heads.find(([,re])=>re.test(v));
+    if(h){active=h[0];const rest=v.replace(h[1],'').replace(/^[\s|:;·-]+/,'').trim();if(rest&&!/^(?:mt|mk|lk|jn|ps|cf|rev|rom|heb)\s*[.:]?\s*\d/i.test(rest))out[active].push({tag:'p',text:rest});continue;}
+    if(!active)continue;
+    if(/^(?:preface\b|liturgy of the|introductory rites\b|penitential act\b|>>|the order of mass\b|copyright|all rights reserved)/i.test(v))continue;
+    out[active].push(block);
+  }
+  return out;
+ }
+ return {match,order,key,prayers,ordinary,fixed,propers};
 });

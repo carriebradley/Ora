@@ -4,7 +4,7 @@
   const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom',basil:'St. Basil the Great',presanctified:'Presanctified Gifts'};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const previewBooks=new Map();let hydrateVersion=0;
-  function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'<div class="roman-fixed-prayers" hidden><div class="roman-gloria"></div><div class="roman-creed"></div><section class="roman-eucharistic"><h3>Eucharistic Prayer</h3><div class="roman-eucharistic-options" role="group" aria-label="Choose Eucharistic Prayer"><button class="btn on" data-reader="eucharistic" data-choice="1" aria-pressed="true">I</button><button class="btn" data-reader="eucharistic" data-choice="2" aria-pressed="false">II</button><button class="btn" data-reader="eucharistic" data-choice="3" aria-pressed="false">III</button><button class="btn" data-reader="eucharistic" data-choice="4" aria-pressed="false">IV</button></div><div class="roman-eucharistic-text" aria-live="polite"></div></section></div>':''}${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
+  function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
   function card(id,{church='ukrainian',date='',dayTitle=''}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
     const roman=id==='roman';
@@ -30,22 +30,37 @@
     for(const block of part.blocks){const el=document.createElement(block.tag);el.textContent=block.text;target.append(el);}
     if(showLinks&&part.links?.length){const links=document.createElement('div');links.className='row reader-book-links';for(const link of part.links){const button=document.createElement('button');button.type='button';button.className='btn';button.dataset.reader=action;button.dataset.page=link.page;button.textContent=link.title;links.append(button);}target.append(links);}
   }
-  function renderFixed(section,book){
-    const fixed=section.querySelector('.roman-fixed-prayers');if(!fixed)return;
-    fixed.hidden=false;
-    for(const [type,selector,label] of [['gloria','.roman-gloria','Gloria'],['creed','.roman-creed','Nicene Creed']]){
-      const target=fixed.querySelector(selector),part=RomanMissal.fixed(book.sections,type);
-      target.replaceChildren();
-      const h=document.createElement('h3');h.textContent=label;target.append(h);
-      if(part)for(const block of RomanMissal.prayers(part).blocks){const el=document.createElement(block.tag);el.textContent=block.text;target.append(el);}
-      else{const p=document.createElement('p');p.className='muted';p.textContent='Not found as a separate prayer in the saved Missal.';target.append(p);}
-    }
-    const choice=section.dataset.eucharisticChoice||'1';
-    section.querySelectorAll('[data-reader="eucharistic"]').forEach(b=>{const active=b.dataset.choice===choice;b.classList.toggle('on',active);b.setAttribute('aria-pressed',String(active));});
-    const target=fixed.querySelector('.roman-eucharistic-text');target.replaceChildren();
-    const part=RomanMissal.fixed(book.sections,choice);
-    if(part)for(const block of RomanMissal.prayers(part).blocks){const el=document.createElement(block.tag);el.textContent=block.text;target.append(el);}
-    else target.textContent='Eucharistic Prayer '+choice+' was not found as a separate section in the saved Missal.';
+  function appendMassPart(target,label,blocks){
+    if(!blocks?.length)return;
+    const wrapper=document.createElement('section');wrapper.className='roman-mass-part';
+    const h=document.createElement('h3');h.textContent=label;wrapper.append(h);
+    for(const block of blocks){const el=document.createElement(['p','h4','pre','blockquote'].includes(block.tag)?block.tag:'p');el.textContent=block.text;wrapper.append(el);}
+    target.append(wrapper);
+  }
+  function renderEucharistic(section,book){
+    const choice=section.dataset.eucharisticChoice||'1',target=section.querySelector('.roman-eucharistic-text');if(!target)return;
+    section.querySelectorAll('[data-reader="eucharistic"]').forEach(b=>{const on=b.dataset.choice===choice;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
+    target.replaceChildren();const part=RomanMissal.fixed(book.sections,choice);
+    if(part){for(const block of RomanMissal.prayers(part).blocks){const el=document.createElement(['p','h4','pre'].includes(block.tag)?block.tag:'p');el.textContent=block.text;target.append(el);}}
+    else target.textContent='This Eucharistic Prayer was not found in your saved Missal.';
+  }
+  function renderRoman(section,book,part){
+    const target=section.querySelector('.reader-inline-text');target.replaceChildren();
+    const proper=RomanMissal.propers(part),fixed=type=>{const s=RomanMissal.fixed(book.sections,type);return s?RomanMissal.prayers(s).blocks:null;};
+    appendMassPart(target,'Entrance Antiphon',proper.entrance);
+    appendMassPart(target,'Gloria',fixed('gloria'));
+    appendMassPart(target,'Collect',proper.collect);
+    // Readings are available in their own tab.
+    appendMassPart(target,'Nicene Creed',fixed('creed'));
+    appendMassPart(target,'Prayer over the Offerings',proper.offerings);
+    const sectionEp=document.createElement('section');sectionEp.className='roman-mass-part roman-eucharistic';
+    const heading=document.createElement('h3');heading.textContent='Eucharistic Prayer';sectionEp.append(heading);
+    const opts=document.createElement('div');opts.className='roman-eucharistic-options';opts.setAttribute('role','group');opts.setAttribute('aria-label','Choose Eucharistic Prayer');
+    for(const n of ['1','2','3','4']){const button=document.createElement('button');button.type='button';button.className='btn';button.dataset.reader='eucharistic';button.dataset.choice=n;button.textContent=['I','II','III','IV'][Number(n)-1];opts.append(button);}
+    sectionEp.append(opts);const text=document.createElement('div');text.className='roman-eucharistic-text';text.setAttribute('aria-live','polite');sectionEp.append(text);target.append(sectionEp);
+    renderEucharistic(section,book);
+    appendMassPart(target,'Communion Antiphon',proper.communion);
+    appendMassPart(target,'Prayer after Communion',proper.after);
   }
   async function hydrate(){
     const token=++hydrateVersion,section=document.querySelector('.liturgical-text');if(!section)return;
@@ -53,7 +68,7 @@
     try{const saved=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected||token!==hydrateVersion)return;
       status.textContent=saved?`${saved.name} · ${saved.pages} ${saved.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
       section.querySelector('[data-reader="open"]').disabled=!saved;section.querySelector('[data-reader="remove"]').disabled=!saved;
-      if(!saved){const fixed=section.querySelector('.roman-fixed-prayers');if(fixed)fixed.hidden=true;previewBooks.delete(section.dataset.textId);preview.hidden=true;preview.replaceChildren();if(controls)controls.hidden=true;return;}
+      if(!saved){previewBooks.delete(section.dataset.textId);preview.hidden=true;preview.replaceChildren();if(controls)controls.hidden=true;return;}
       let book;
       try{
         if(saved.format==='epub'){
@@ -70,9 +85,7 @@
         if(roman){
           preview.replaceChildren();
           if(matches.length){
-            const part=RomanMissal.prayers(book.sections[selected-1]);
-            bookText(preview,part,'inline-jump',false,false);
-            renderFixed(section,book);
+            renderRoman(section,book,book.sections[matches[0]-1]);
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';
           }
@@ -146,7 +159,7 @@
   document.addEventListener('click',async e=>{
     const b=e.target.closest('[data-reader]');if(!b)return;
     const action=b.dataset.reader,section=b.closest('.liturgical-text'),id=section?.dataset.textId;
-    if(action==='eucharistic'){section.dataset.eucharisticChoice=b.dataset.choice;const cached=previewBooks.get('roman');if(cached){const book=await cached.promise;renderFixed(section,book);}return;}
+    if(action==='eucharistic'){section.dataset.eucharisticChoice=b.dataset.choice;const cached=previewBooks.get('roman');if(cached){const book=await cached.promise;renderEucharistic(section,book);}return;}
     if(action==='jump'){await showPage(b.dataset.page);return;}
     if(action==='inline-jump'){if(!section)return;section.dataset.inlinePage=b.dataset.page;await LiturgyReader.bookmark(id,Number(b.dataset.page));await hydrate();return;}
     if(action==='inline-prev'||action==='inline-next'){if(!section)return;const current=Number(section.dataset.inlinePage)||1;section.dataset.inlinePage=Math.max(1,current+(action==='inline-next'?1:-1));section.querySelector('.reader-inline-text').textContent='Loading page…';await LiturgyReader.bookmark(id,Number(section.dataset.inlinePage));await hydrate();return;}
