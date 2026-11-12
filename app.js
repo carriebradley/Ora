@@ -1000,7 +1000,7 @@
     if (!best || bestGap > (rite === 'byz' ? 12 : 3)) return '';
     const when = `${L.MN[best[0] - 1]} ${best[1]}`;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
-    const heading = bestGap ? 'Nearby in Church history' : 'This day in Church history';
+    const heading = 'This day in Church history';
     return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">${heading}</span></div><p class="muted" style="font-size:.82rem;font-weight:600;margin:12px 0 3px">${esc(when)} · ${esc(yr)}</p><p style="margin:0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.75rem;margin:8px 0 0">Some historical dates are traditional or approximate.</p></section>`;
   }
   // Small original Catholic-inspired line icons; decorative, with labels retained.
