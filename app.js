@@ -515,7 +515,8 @@
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${col(lit)};background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${seasonLine || detail || cycles ? `<div class="gd">${esc(detail)}${seasonLine ? `<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>` : ''}${cycles}</div>` : ''}</div>`;
+      const badgeColor = lit === 'w' ? 'var(--lit-white)' : col(lit);
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${seasonLine || detail || cycles ? `<div class="gd">${esc(detail)}${seasonLine ? `<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>` : ''}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
