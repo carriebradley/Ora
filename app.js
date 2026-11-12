@@ -841,7 +841,7 @@
 [11, 8, 1308, "Blessed John Duns Scotus dies at Cologne."],
 [11, 9, 324, "The Lateran Basilica, mother church of Rome, is dedicated (traditional date)."],
 [11, 10, 461, "Pope St Leo the Great dies."],
-[11, 11, 397, "St Martin of Tours dies."],
+[11, 11, 397, "St Martin of Tours is buried at Tours; November 11 becomes his feast day (he died November 8)."],
 [11, 12, 1623, "St Josaphat Kuntsevych is martyred in Vitebsk."],
 [11, 13, 354, "St Augustine is born at Thagaste."],
 [11, 14, 1180, "St Laurence O'Toole, archbishop of Dublin, dies at Eu in Normandy."],
@@ -957,14 +957,17 @@
     let best = null, bestGap = 99;
     const source = rite === 'byz' ? EAST_HIST : rite === 'sarum' ? HIST.filter(e => e[2] < 1500) : HIST;
     for (const e of source) {
+      // Keep Eastern history distinct from the Roman event on the same date.
+      if (rite === 'byz' && HIST.some(w => w[0] === e[0] && w[1] === e[1] && w[2] === e[2])) continue;
       // distance in days, wrapping the year
       const t = Date.UTC(2001, e[0] - 1, e[1]), n = Date.UTC(2001, m - 1, d), gap = Math.round(Math.abs(t - n) / 864e5), g = Math.min(gap, 365 - gap);
       if (g < bestGap || (g === bestGap && key(e[0], e[1]) <= today)) { best = e; bestGap = g; }
     }
     if (!best || bestGap > (rite === 'byz' ? 12 : 3)) return '';
-    const when = bestGap === 0 ? '' : `${L.MN[best[0] - 1]} ${best[1]} · `;
+    const when = `${L.MN[best[0] - 1]} ${best[1]}`;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
-    return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">This day in Church history</span></div><p style="margin:12px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:10px 0 0">${esc(when)}${esc(yr)}${bestGap ? " · A nearby date in Church history" : ""}</p><p class="muted" style="font-size:.75rem;margin:4px 0 0">Some historical dates are traditional or approximate.</p></section>`;
+    const heading = bestGap ? 'Nearby in Church history' : 'This day in Church history';
+    return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">${heading}</span></div><p class="muted" style="font-size:.82rem;font-weight:600;margin:12px 0 3px">${esc(when)} · ${esc(yr)}</p><p style="margin:0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.75rem;margin:8px 0 0">Some historical dates are traditional or approximate.</p></section>`;
   }
   // Small original Catholic-inspired line icons; decorative, with labels retained.
   function todayAccent(kind) {
