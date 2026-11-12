@@ -530,7 +530,7 @@
   }
   function byzantineCommemorations(title) {
     return String(title || '')
-      .split(/;\s*|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)/i)
+      .split(/;\s*|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)|\s+[-–—]\s+(?=(?:Father|Our|The Holy|Saint|Saints|St\.|Blessed)\b)/i)
       .map(item => item.trim().replace(/[;.]+$/, '').trim()).filter(Boolean);
   }
   function byzantineCommemorationsHTML(title) {
