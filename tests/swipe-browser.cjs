@@ -31,7 +31,18 @@ module.exports=async(browser,base)=>{
   assert.equal(await page.evaluate(()=>document.activeElement.id),'app','content receives focus');
   let box=await page.locator('#app').boundingBox(),y=box.y+25;
   await drag(220,y,-25,0);assert.equal(await active(),'today','small drags do not navigate');
-  await drag(12,y,190,0);assert.equal(await active(),'today','browser back edge stays available');
+  // A trusted edge swipe may correctly invoke Chrome's own Back navigation
+  // to about:blank. Test that Ora leaves the gesture uncancelled without
+  // requiring the browser to stay on this page. Other swipes remain native.
+  const edge=await page.evaluate(()=>{
+   const el=document.querySelector('.tab-heading');
+   const touch=x=>new Touch({identifier:1,target:el,clientX:x,clientY:el.getBoundingClientRect().top+10});
+   const start=new TouchEvent('touchstart',{bubbles:true,cancelable:true,touches:[touch(12)],changedTouches:[touch(12)]});el.dispatchEvent(start);
+   const move=new TouchEvent('touchmove',{bubbles:true,cancelable:true,touches:[touch(202)],changedTouches:[touch(202)]});el.dispatchEvent(move);
+   const end=new TouchEvent('touchend',{bubbles:true,cancelable:true,touches:[],changedTouches:[touch(202)]});el.dispatchEvent(end);
+   return {cancelled:start.defaultPrevented||move.defaultPrevented||end.defaultPrevented,tab:document.querySelector('#nav [aria-current="page"]').dataset.tab};
+  });
+  assert.deepEqual(edge,{cancelled:false,tab:'today'},'browser back edge stays available');
   await drag(378,y,-190,0);assert.equal(await active(),'pray','left swipe can start near the right edge');
   await swipe(false);assert.equal(await active(),'today');
   await page.locator('#nav [data-tab="justice"]').click();
