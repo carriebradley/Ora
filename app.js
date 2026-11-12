@@ -994,8 +994,31 @@
       ${note}${reader}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
   }
   function romanNightHTML() {
-    const ps = Hours.H.ps['90'].map(row => esc(row[2]).replace(/\s*\*\s*/g, ' ')).join('<br>');
-    return `<p class="muted">Night Prayer · devotional adaptation with the Douay Psalm 90 (91). For the complete official Compline, use the links below.</p><div class="sec"><b>Opening</b><p>O God, come to my assistance. O Lord, make haste to help me.</p></div><div class="sec"><b>Psalm 90 (91)</b><p class="tx">${ps}</p></div><div class="sec"><b>Into your hands</b><p>Into thy hands, O Lord, I commend my spirit.</p></div><div class="sec"><b>Canticle of Simeon</b><p>${esc(C.TEXTS.nunc)}</p></div><div class="sec"><b>Conclusion</b><p>May the almighty Lord grant us a quiet night and a perfect end. Amen.</p></div>`;
+    // Modern Roman Night Prayer's ordinary weekday psalm assignments (Vulgate numbering).
+    // Text remains the public-domain Douay translation, not the official ICEL edition.
+    const days = [
+      {refs:['90'],note:'Sunday night after Evening Prayer II'},
+      {refs:['85'],note:'Monday'},
+      {refs:['142'],note:'Tuesday'},
+      {refs:['30','129'],note:'Wednesday'},
+      {refs:['15'],note:'Thursday'},
+      {refs:['87'],note:'Friday'},
+      {refs:['4','133'],note:'Saturday night after Evening Prayer I'}
+    ];
+    const dow=P(st.date).getUTCDay(), chosen=days[dow];
+    const psalms=chosen.refs.map(num=>{
+      const verses=Hours.H.ps[num];
+      if(!verses)return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate)</b><p class="muted">Text not available in Ora's current psalter.</p></div>`;
+      const label=+num+1;
+      return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate; approximately Psalm ${label} in modern numbering)</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\\s*\\*\\s*/g,' ')).join('<br>')}</p></div>`;
+    }).join('');
+    return `<p class="muted" style="font-size:.8rem">Night Prayer · ${chosen.note}. Weekday psalm selection follows the modern Roman pattern; Douay-Rheims wording is used for personal prayer. Proper antiphons, readings, responsories and concluding prayers still require verification against the approved edition.</p>
+      <div class="sec"><b>Introduction and examination of conscience</b><p>O God, come to my assistance. O Lord, make haste to help me.</p><p class="muted">Review the day in silence, giving thanks and asking forgiveness.</p></div>
+      <div class="sec"><b>Hymn</b><p class="muted">Use the appointed hymn from the authorized daily office.</p></div>
+      ${psalms}
+      <div class="sec"><b>Short reading and responsory</b><p class="muted">Consult the authorized text linked below for the appointed reading and responsory.</p></div>
+      <div class="sec"><b>Canticle of Simeon (Nunc Dimittis)</b><p>${esc(C.TEXTS.nunc)}</p></div>
+      <div class="sec"><b>Concluding prayer and blessing</b><p class="muted">Use the appointed concluding prayer from the authorized office.</p><p>May the all-powerful Lord grant us a restful night and a peaceful death. Amen.</p></div>`;
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
