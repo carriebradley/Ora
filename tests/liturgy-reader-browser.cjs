@@ -40,6 +40,13 @@ module.exports=async(page,context,base,artifacts,violations)=>{
   for(const id of ['melkite-basil','melkite-presanctified'])await LiturgyReader.save(id,new File([new Uint8Array(bytes)],id+'.pdf',{type:'application/pdf'}));
  },Array.from(pdf()));
  assert.equal(await page.evaluate(async()=>!!await LiturgyReader.get('basil')&&!!await LiturgyReader.get('melkite-basil')&&!!await LiturgyReader.get('melkite-presanctified')),true,'Melkite slots preserve Ukrainian books');
+ await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));});
+ for(const [date,id] of [['2026-04-02','melkite-basil'],['2026-04-01','melkite-presanctified']]){
+  await page.goto(`${base}index.html?tab=liturgy&date=${date}`);
+  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),id,'calendar selects the matching church’s book');
+  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
+ }
+ await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-03`);
  assert.match(await page.locator('.service-summary').innerText(),/No Divine Liturgy/);assert.equal(await page.locator('[data-reader="open"]').count(),0);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-01`);

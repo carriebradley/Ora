@@ -60,6 +60,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  violations.push(...massAudit.violations.map(v=>({tab:'liturgy-mass',id:v.id})));
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  assert.match(await page.locator('.service-summary').innerText(),/Divine Liturgy of St. John Chrysostom/);
+ await require('./liturgical-format-browser.cjs')(page,base,artifacts,violations);
  await require('./liturgy-reader-browser.cjs')(page,context,base,artifacts,violations);
  await require('./epub-reader-browser.cjs')(page,context,base,artifacts,violations);
  await require('./roman-missal-browser.cjs')(page,context,base,artifacts,violations);

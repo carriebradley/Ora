@@ -1,5 +1,6 @@
-/* Service selection for the Pittsburgh 2026 calendar and MCI service rules, Gregorian Pascha.
- * Rules and limits: docs/LITURGICAL-TEXT-READER.md. Not a parish timetable. */
+/* Gregorian 2026 common service cycle. Ukrainian/Melkite appointments are
+ * calculated, with explicit source conflicts; Ruthenian reference rules remain
+ * separate. Sources and limits: docs/ORA-AUDIT-2026-11-12.md. Not a parish timetable. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgySchedule=factory();})(typeof self!=='undefined'?self:this,function(){
   const basil=new Set(['2026-01-01','2026-01-05','2026-02-22','2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-02','2026-04-04','2026-12-24']);
   const names={chrysostom:'Divine Liturgy of St. John Chrysostom',basil:'Divine Liturgy of St. Basil the Great',presanctified:'Liturgy of the Presanctified Gifts',none:'No Divine Liturgy prescribed',unknown:'Divine Liturgy · calendar unavailable'};

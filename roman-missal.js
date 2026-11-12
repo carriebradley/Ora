@@ -27,7 +27,7 @@
   const blocks=part.blocks;let start=blocks.findIndex(b=>prayerHeading.test(b.text.trim()));
   if(start<0)start=0; // Never discard a section without recognized labels.
   const kept=blocks.slice(start).filter(b=>!direction.test(b.text.trim())&&!/^\[Image:/.test(b.text.trim())&&!/^>>|^preface (?:of|i\b|ii\b)|^\[sample\]/i.test(b.text.trim())&&!/^(?:and all pray in silence|let us pray\.|the priest says|the priest continues)/i.test(b.text.trim()));
-  return {...part,blocks:kept.filter(b=>b.kind!=='instruction')};
+  return {...part,blocks:kept.filter(b=>b.kind!=='instruction'&&!/^(?:the )?(?:gloria(?: in excelsis)?|creed)\b.*\b(?:is|are) (?:not )?said\b/i.test(b.text.trim()))};
  }
  function ordinary(sections){
   const wanted=[['Gloria',/^(?:gloria|glory to god in the highest)$/i],['Creed',/^(?:nicene creed|apostles.? creed|profession of faith|the creed)$/i]];

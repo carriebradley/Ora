@@ -1,4 +1,4 @@
-> Current configuration: the user subsequently chose Pittsburgh’s Ruthenian tradition. See [the current release review](RUTHENIAN-READER-2026-11-11.md). The source-search notes below document the earlier Melkite implementation; the local reader architecture remains the same.
+> Historical implementation notes. Current configuration and known limits are recorded in [the November 12 audit](ORA-AUDIT-2026-11-12.md). The live app offers distinct Edmonton Ukrainian and Newton Melkite calendars; Pittsburgh remains a separate reference.
 
 # Liturgical Text and service selection — 11 November 2026
 
