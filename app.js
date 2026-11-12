@@ -387,7 +387,7 @@
   function cardRoman(v) {
     const r = v.roman;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
+      <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
   function cardByz(v) {
@@ -407,7 +407,7 @@
   function cardSarum(v) {
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
+      <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
       ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
       ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
   }
@@ -540,12 +540,28 @@
       '<div class="byz-commemoration' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
     ).join('') + '</div>';
   }
+  // Only split explicit multi-observance punctuation; keep joint feasts,
+  // descriptive commas, and titles such as "Saints Peter and Paul" intact.
+  function westernCommemorations(title) {
+    return String(title || '').split(/\s*[;•·]\s*|\s+\/\s+(?=(?:St\.|Saint|Saints|Blessed|Feast|Commemoration)\b)/i)
+      .map(part => part.trim().replace(/[;.]+$/, '').trim()).filter(Boolean);
+  }
+  function calendarCommemorationsHTML(title) {
+    const entries = westernCommemorations(title);
+    if (entries.length < 2) return esc(title || '');
+    return '<div class="calendar-observances">' + entries.map((item,index) =>
+      '<div class="calendar-observance' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
+    ).join('') + '</div>';
+  }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
-      const detailHTML = esc(k === 'byz' ? (byzantineCommemorations(detail)[0] || detail) : detail);
+      const shown = k === 'byz' ? (byzantineCommemorations(detail)[0] || detail) :
+        k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
+        westernCommemorations(detail)[0] || detail;
+      const detailHTML = esc(shown);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
       const lit = observanceColor(r, k);

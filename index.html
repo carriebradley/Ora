@@ -327,6 +327,13 @@ nav button.on b{color:inherit}
 .calendar-byz-saints .byz-commemoration{position:relative}
 .calendar-byz-saints .byz-commemoration.subsequent{padding-left:18px}
 .calendar-byz-saints .byz-commemoration.subsequent::before{content:"";position:absolute;left:3px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+/* Multiple Roman and Traditional calendar observances use the Byzantine separator system. */
+.calendar-western-title{font-family:var(--serif);font-size:var(--ora-section-heading-size,1.2rem);font-weight:600;line-height:1.42;margin:8px 0 12px;overflow-wrap:break-word}
+.calendar-western-title .calendar-observances{display:flex;flex-direction:column;gap:9px}
+.calendar-western-title .calendar-observance{position:relative}
+.calendar-western-title .calendar-observance.subsequent{padding-left:18px}
+.calendar-western-title .calendar-observance.subsequent::before{content:"";position:absolute;left:3px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 </style>
 </head>
 <body>
