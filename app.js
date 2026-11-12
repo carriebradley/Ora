@@ -1144,7 +1144,7 @@
   function viewCalendar() {
     if (!st.month) { const d = P(st.date); st.month = { y: d.getUTCFullYear(), m: d.getUTCMonth() }; }
     const { y, m } = st.month, first = L.D(y, m + 1, 1), start = L.add(first, -first.getUTCDay()), today = todayISO();
-    let h = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button class="ib" data-act="mprev" aria-label="Previous month">‹</button><h2 style="flex:1;text-align:center;margin:0">${L.MN[m]} ${y}</h2><button class="ib" data-act="mnext" aria-label="Next month">›</button></div>
+    let h = `<section class="card calendar-overview"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button class="ib" data-act="mprev" aria-label="Previous month">‹</button><h2 style="flex:1;text-align:center;margin:0">${L.MN[m]} ${y}</h2><button class="ib" data-act="mnext" aria-label="Next month">›</button></div>
       <div class="legend">${['roman', 'byz', 'sarum'].map(k => `<button data-act="layer" data-v="${k}" class="${st.layers[k] ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div><div class="grid">`;
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
@@ -1155,8 +1155,9 @@
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
     h += '</div><p class="muted">Dot colours are each calendar’s liturgical colour; a gold ring marks a solemnity, principal or great feast; ƒ marks a fast day beyond ordinary Friday/Wednesday abstinence.</p>';
+    h += '</section>';
     const v = dayInfo(st.date);
-    h += `<h3 style="margin-top:14px">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
+    h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
     return h + ukrainianSaintCard(st.date);
   }
 
@@ -1170,7 +1171,7 @@
   }
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
-    <details class="card"><summary><b>Calendar</b></summary>${viewCalendar()}</details>
+    <details class="card more-liturgy"><summary><b>Sacred Liturgy</b> <span class="muted">· work in progress</span></summary><div class="more-liturgy-content">${viewLiturgy()}</div></details>
     <details class="card"><summary><b>Resources · liturgical documents</b></summary><div style="margin-top:12px"><p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ruthenian Byzantine</h3><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p></div></details>
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>

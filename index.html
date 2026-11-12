@@ -205,6 +205,19 @@ nav button.on b{color:var(--lit)}
 @media(max-width:480px){.divine-office-card{padding:16px 15px 21px}.divine-office-card>.prayer-major{margin-top:0!important}}
 .pope-reflection-heading{font-family:var(--sans);font-size:.82rem;letter-spacing:.065em;text-transform:uppercase;font-weight:650;color:var(--ink);margin:15px 0 10px}.pope-card .pope-reflection-heading+.quote{margin-top:0}
 .justice-economic{border-left:3px solid #9c83a7;border-right:3px solid #9c83a7}.justice-economic .lab,.justice-ecology .lab{margin-bottom:12px}.justice-economic .lab svg{color:#b79ac3!important}
+/* Shared section rhythm and responsive calendar/liturgy surfaces. */
+#app>.tab-heading{padding:6px 4px 16px}
+#app>.calendar-overview{margin-top:0}
+.calendar-overview{padding:16px}
+.calendar-overview .legend{display:flex;flex-wrap:wrap;gap:7px}
+.calendar-overview .grid{min-width:0}
+.calendar-selected-heading{font-family:var(--serif);font-size:1.17rem;line-height:1.35;margin:20px 4px 13px}
+.more-liturgy>summary{font-family:var(--serif);font-size:1.08rem;line-height:1.4}
+.more-liturgy>summary .muted{font-family:var(--sans);font-size:.78rem;font-weight:400}
+.more-liturgy-content{padding-top:16px}
+.more-liturgy-content>.seg{margin-top:0!important}
+.more-liturgy-content>.card{box-shadow:none;margin-top:12px}
+@media(max-width:420px){.calendar-overview{padding:12px}.calendar-overview .cell{min-width:0}}
 </style>
 </head>
 <body>
@@ -217,7 +230,7 @@ nav button.on b{color:var(--lit)}
   <button data-tab="pray"><b>☩︎</b>Pray</button>
   <button data-tab="readings"><b><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true" style="display:block"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5z"/><path d="M12 6.5v13"/></svg></b>Readings</button>
   <button data-tab="justice"><b>⚖︎</b>Justice</button>
-  <button data-tab="liturgy"><b>☩</b>Liturgy</button>
+  <button data-tab="calendar"><b>▦</b>Calendar</button>
   <button data-tab="more"><b>☰︎</b>More</button>
 </nav>
 <dialog id="source-reader" aria-label="Official source reader"><div class="source-reader-head"><strong id="source-reader-title">Official source</strong><button type="button" id="source-reader-close" class="btn">Close</button></div><p class="muted" id="source-reader-note">Reading from the official publisher.</p><div class="row" id="source-reader-controls"><button class="btn" id="source-font-minus" aria-label="Decrease text size">A−</button><span id="source-font-size">18px</span><button class="btn" id="source-font-plus" aria-label="Increase text size">A+</button><span id="source-reader-pages" hidden><button class="btn" id="source-prev" aria-label="Previous page">‹</button><span id="source-page-label"></span><button class="btn" id="source-next" aria-label="Next page">›</button></span></div><div id="source-reader-text" role="document" tabindex="0"></div><iframe id="source-reader-frame" title="Official liturgical source" referrerpolicy="no-referrer" loading="lazy"></iframe><div class="row"><a id="source-reader-original" class="btn" target="_blank" rel="noopener noreferrer">Open original</a></div></dialog>
