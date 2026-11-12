@@ -19,7 +19,7 @@ module.exports=async(browser,base)=>{
   await drag(left?290:100,box.y+25,left?-190:190,0);
  };
  try{
-  await page.goto(`${base}index.html?tab=today&date=2026-11-12&rite=roman`);
+  await page.goto(`${base}index.html?date=2026-11-12&rite=roman`);
   await page.waitForTimeout(200);
   await swipe(false);assert.equal(await active(),'today','first page does not wrap');
   for(const tab of ['pray','readings','justice','calendar','more']){
