@@ -987,18 +987,49 @@
   function todayAccent(kind) {
     const shapes = {
       calendar: '<rect x="3" y="5" width="18" height="16" rx="2" stroke="#c9a227"/><path d="M7 3v4M17 3v4M3 10h18" stroke="#c9a227"/><path d="M12 12v6M9 15h6" stroke="#9d6b72"/>',
+      bio: '<circle cx="12" cy="8" r="4" stroke="#c9a227"/><path d="M6 21v-3c0-3 2.5-5 6-5s6 2 6 5v3M9 4l3-2 3 2" stroke="#c9a227"/><path d="M8 21h8" stroke="#9d6b72"/>',
       saint: '<circle cx="12" cy="6.5" r="4.5" stroke="#c9a227"/><circle cx="12" cy="11" r="2.7"/><path d="M6 20c.5-3.5 2.5-5 6-5s5.5 1.5 6 5"/>',
       art: '<rect x="3" y="4" width="18" height="16" rx="1.5" stroke="#c9a227"/><rect x="5.5" y="6.5" width="13" height="11" stroke="#7393a5"/><circle cx="9" cy="10" r="1.5" fill="#c9a227" stroke="none"/><path d="m6 16 4-4 3 2 2-3 3 5" stroke="#7393a5"/>',
       history: '<path d="M3 21h18M5 21V11l7-5 7 5v10M9 21v-6h6v6M12 6V2M9.5 4h5" stroke="#c9a227"/><path d="M7 12h2m6 0h2" stroke="#c9a227"/>'
     };
     return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;flex:none;margin:0">'+shapes[kind]+'</svg>';
   }
+  // Curated, sourced examples. A missing or mismatched feast never receives an invented bio.
+  const TODAY_SAINT_BIOS = {
+    roman: {
+      '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
+    },
+    ukrainian: {
+      '11-12': { match:/Josaphat/i, name:'Holy Hieromartyr Josaphat', meta:'c. 1580–1623 · Archbishop of Polotsk', bio:'Josaphat was an Eastern Catholic bishop who worked for ecclesial unity while preserving Byzantine Christian worship. Killed in Vitebsk in 1623, he remains an important figure in the history of the Ukrainian Greek Catholic Church.', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
+    },
+    melkite: {
+      '11-12': { match:/John the Merciful/i, name:'Saint John the Merciful', meta:'d. c. 619 · Patriarch of Alexandria', bio:'John served as Patriarch of Alexandria and became renowned for his care of people in poverty. His generous almsgiving reflected his conviction that service to the needy was central to Christian life.', source:'https://www.oca.org/saints/lives/2026/11/12/103286-saint-john-the-merciful-patriarch-of-alexandria' },
+      '11-13': { match:/John Chrysostom/i, name:'Saint John Chrysostom', meta:'c. 347–407 · Archbishop of Constantinople', bio:'John Chrysostom was celebrated for his preaching, biblical teaching, and concern for the poor. The Byzantine liturgical tradition especially remembers him through the Divine Liturgy bearing his name.', source:'https://www.britannica.com/biography/Saint-John-Chrysostom' }
+    },
+    sarum: {
+      '11-12': { match:/Begnet/i, name:'Saint Begnet', meta:'Early Irish saint · Patron of Dalkey', bio:'Little is known with certainty about Begnet’s life. She is remembered in the Christian heritage of Dalkey, Ireland, where churches and local traditions preserve her name.', source:'https://www.dalkeyheritage.com/' }
+    }
+  };
+  function todaySaintBio(v) {
+    const tradition = S.rite === 'byz' ? S.byzChurch : S.rite;
+    const calendar = S.rite === 'byz' ? v.byz : S.rite === 'sarum' ? v.sarum : v.roman;
+    const entry = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
+    if (!entry || !entry.match.test(String(calendar?.title || ''))) return '';
+    const label = tradition === 'ukrainian' ? 'Ukrainian' : tradition === 'melkite' ? 'Melkite' : tradition === 'sarum' ? 'Traditional' : 'Roman';
+    return `<section class="card today-saint-bio">
+      <div class="lab">${todayAccent('bio')}<span class="grow">Saint of the Day</span><span class="saint-bio-rite">${label}</span></div>
+      <h2 class="saint-bio-name">${esc(entry.name)}</h2>
+      <p class="saint-bio-meta">${esc(entry.meta)}</p>
+      <p class="saint-bio-copy">${esc(entry.bio)}</p>
+      <a class="saint-bio-source" target="_blank" rel="noopener noreferrer" href="${esc(entry.source)}">Learn more about this saint</a>
+    </section>`;
+  }
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
     const saints = `<section class="card"><div class="lab">${todayAccent("saint")}<span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return glanceHTML(v) + saints + `<section class="card"><div class="lab"><span class="art-heading-icon">${todayAccent("art")}</span><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso, S.rite) + popeCard(v.iso);
+    return glanceHTML(v) + todaySaintBio(v) + saints + `<section class="card"><div class="lab"><span class="art-heading-icon">${todayAccent("art")}</span><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso, S.rite) + popeCard(v.iso);
   }
 
 
