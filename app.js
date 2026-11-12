@@ -478,7 +478,7 @@
     return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' || x.kind === 'season' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
   }
   function glanceSeason(r, rite, iso) {
-    if (rite === 'byz') return [r.title, r.fastSeason, r.fast].filter(Boolean).join(' · ');
+    if (rite === 'byz') return [...new Set([r.season, r.tone ? 'Tone ' + r.tone : '', /Vigil|Polyeleos|Doxology|Stichera|Great Feast|Holy Week/.test(r.rank || '') ? r.rank : '', r.fastSeason, r.fast].filter(Boolean))].join(' · ');
     if (rite === 'sarum') return [r.title, r.historicalObservance?.name, r.historicalObservance?.day, r.fast].filter(Boolean).join(' · ');
     // Memorials and feasts can hide the underlying Ordinary Time week.
     // Find the nearest ordinary weekday in the same calendar week.
@@ -496,11 +496,12 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
+      const detail = k === 'byz' ? r.title : x.detail;
       const seasonLine = glanceSeason(r, k, v.iso) + (k === 'byz' && r.sourceKind === 'menaion-calculated' ? ' · New Westminster / calculated cycle' : '');
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${col(lit)};background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${seasonLine || x.detail || cycles ? `<div class="gd">${esc(x.detail)}<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>${cycles}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${col(lit)};background:${col(lit)};color:${ink}">${esc(x.badge)}</span>${seasonLine || detail || cycles ? `<div class="gd">${esc(detail)}${seasonLine ? `<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>` : ''}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -1535,7 +1536,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v213';
+  const APP_BUILD = 'ora-v214';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
