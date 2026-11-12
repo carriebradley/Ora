@@ -395,7 +395,7 @@
     const big = sa && (k === 'saint' || /^(S|F|FL)$/.test(r.kind || ''));
     const first = big && sa.r ? sa : sea, second = sa || sea;
     const cite = (lab, val) => `<div style="margin:8px 0 2px"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${lab}</div><div>${val}</div></div>`;
-    const textDetails = entry => entry && entry.t ? `<details class="oortx" open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">Second reading text</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
+    const textDetails = entry => entry && entry.a && entry.w ? `<details class="oortx" open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">Second reading text</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
     let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(r.title)}</p>`;
     if (first && first.r) {
       h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
@@ -1229,7 +1229,13 @@
     const slot = det.querySelector('.oortx-slot'); if (!slot || slot.dataset.done) return;
     loadOorText().then(d => {
       const x = d[slot.dataset.k]; slot.dataset.done = '1';
-      if (!x) { slot.innerHTML = '<p class="muted" style="font-size:.8rem">Text not found.</p>'; return; }
+      if (!x) {
+        const [author,work] = slot.dataset.k.split('|');
+        const martin = /Sulpicius Severus/i.test(author) && /^Letter 3$/i.test(work);
+        const url = martin ? 'https://www.newadvent.org/fathers/3502.htm' : 'https://www.ccel.org/fathers';
+        slot.innerHTML = '<p class="muted" style="font-size:.88rem;line-height:1.55">A verified public-domain translation of this appointed excerpt has not yet been bundled. The reference above is preserved; no substitute text is shown.</p><p><a target="_blank" rel="noopener noreferrer" href="'+url+'">'+(martin ? 'Read Sulpicius Severus, Letter III (1894 translation)' : 'Browse public-domain Church Fathers translations')+'</a></p>';
+        return;
+      }
       slot.innerHTML = x.p.map(p => `<p style="font-family:var(--serif);font-size:1.1rem;line-height:1.7;margin:.65em 0">${esc(p).replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
     }).catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">The text could not be loaded. Ora needs to be online the first time you open it.</p>'; });
   }, true);
