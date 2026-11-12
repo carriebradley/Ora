@@ -843,7 +843,7 @@
     if (!best || bestGap > (rite === 'byz' ? 12 : 3)) return '';
     const when = bestGap === 0 ? '' : `${L.MN[best[0] - 1]} ${best[1]} · `;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
-    return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span><span style="letter-spacing:.04em">${esc(when)}${esc(yr)}</span></div><p style="margin:8px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
+    return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">This day in Church history</span></div><p style="margin:12px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:10px 0 0">${esc(when)}${esc(yr)}${bestGap ? " · A nearby date in Church history" : ""}</p><p class="muted" style="font-size:.75rem;margin:4px 0 0">Some historical dates are traditional or approximate.</p></section>`;
   }
   // Small original Catholic-inspired line icons; decorative, with labels retained.
   function todayAccent(kind) {
