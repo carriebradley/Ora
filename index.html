@@ -258,6 +258,20 @@ nav button.on b{color:inherit}
 .justice-library .seg{flex-wrap:wrap}.justice-library .seg button{flex:1 1 auto}
 .charity-saint+.charity-saint{margin-top:17px;padding-top:14px;border-top:1px solid var(--line)}
 .justice-teaching-text li{margin:10px 0}.justice-full-reading{border-top:1px solid var(--line);padding:12px 0}.justice-full-reading>summary{font-weight:600;line-height:1.5}
+/* Shared type hierarchy across Today, Pray, Readings, Justice and Calendar.
+   Page titles remain 1.5rem; primary card headings use one 1.2rem scale. */
+:root{--ora-section-heading-size:1.2rem}
+.reading-main-title,
+.divine-office-card .roman-office-player h3,
+.divine-office-card .prayer-rite-title,
+.simple-liturgy-title,
+.calendar-selected-heading,
+.reading-day-title{font-family:var(--serif);font-size:var(--ora-section-heading-size);font-weight:600;line-height:1.38}
+.reading-main-title{margin:12px 0 16px}
+.divine-office-card .roman-office-player h3,
+.divine-office-card .prayer-rite-title{margin:0 0 11px}
+.calendar-selected-heading{margin:20px 4px 13px}
+.card>h2:not(.simple-liturgy-title){font-size:var(--ora-section-heading-size);line-height:1.38}
 </style>
 </head>
 <body>
