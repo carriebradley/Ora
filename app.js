@@ -201,7 +201,10 @@
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
   function byzReadingsHTML(v, church = S.byzChurch, showDay = true, simple = false) {
     const t = church === S.byzChurch ? v.byz : L.byzantine(P(v.iso), {...S,byzChurch:church});
-    let h = `${showDay ? `<h3 class="reading-main-title">${esc(String(t.title || '').replace(/\s+[-–—]\s+(?=(?:Father|Saint|St\.|Blessed|Our)\b)/gi, ' · '))}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
+    // Reading titles show only the principal (first listed) commemoration.
+    // The Today card retains the complete list of saints.
+    const primaryCommemoration = String(t.title || '').split(/;\s*|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)|\s+[-–—]\s+(?=(?:Father|Saint|St\.|Blessed|Our)\b)/i)[0].trim().replace(/[;.]+$/, '');
+    let h = `${showDay ? `<h3 class="reading-main-title">${esc(primaryCommemoration)}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
     try { day = byzDay(v.iso, church); } catch (e) { day = null; }
     if (day && day.sets.length) {
       for (const s of day.sets) {
