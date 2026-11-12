@@ -441,8 +441,8 @@
   }
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
-    if (!m) return `<p style="margin-top:10px"><b>${esc(v.sarum.title)}</b></p><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
-    let h = `<h3 class="reading-main-title">${esc(m.title)}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
+    if (!m) return `<h3 class="reading-main-title traditional-reading-title">${esc(v.sarum.title)}</h3><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
+    let h = `<h3 class="reading-main-title traditional-reading-title">${esc(m.title)}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="reading-heading"><div class="reading-label">${esc(p.k)}</div><div class="reading-reference">${esc(p.pr)}</div></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
       else h += `<div class="reading-heading"><div class="reading-label">${esc(p.k)}</div></div><p style="white-space:pre-line;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${esc(p.tx)}</p>`;
