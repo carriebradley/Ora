@@ -1064,7 +1064,7 @@
       h += `<div class="roman-office-player"><h3>${esc(officeName)}</h3>${doSlot(st.date,audioName)}</div>`;
     }
     if (rite === 'byz') h += '<h3 class="prayer-rite-title">'+esc(({morning:'Orthros',evening:'Vespers',night:'Compline'}[st.kind] || 'Orthros'))+'</h3>';
-    if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
+    if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
     if (hasTTS) h += '<div class="row" style="margin:0 0 14px"><button class="btn fill" data-act="play">▶ Play session aloud</button></div>';
     steps.forEach((s, i) => {
       h += `<div class="step ${st.active === i ? 'on' : ''}" id="st${i}">${rite === "roman" && (s.type === "office" || s.type === "oor") ? "" : `<div class="t">${esc(s.title)}</div>`}`;
