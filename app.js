@@ -201,7 +201,7 @@
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
   function byzReadingsHTML(v, church = S.byzChurch, showDay = true, simple = false) {
     const t = church === S.byzChurch ? v.byz : L.byzantine(P(v.iso), {...S,byzChurch:church});
-    let h = `${showDay ? `<h3 class="reading-main-title">${esc(t.title)}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
+    let h = `${showDay ? `<h3 class="reading-main-title">${esc(String(t.title || '').replace(/\s+[-–—]\s+(?=(?:Father|Saint|St\.|Blessed|Our)\b)/gi, ' · '))}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
     try { day = byzDay(v.iso, church); } catch (e) { day = null; }
     if (day && day.sets.length) {
       for (const s of day.sets) {
@@ -1291,7 +1291,17 @@
       const tr = el.dataset.tr || 'asv';
       try {
         const parts = [];
-        for (const r of el.dataset.ref.split('|')) parts.push(await asvText(r, tr));
+        for (const reference of el.dataset.ref.split('|')) {
+          // bible-api.com needs a book name repeated for references in multiple chapters.
+          // E.g. "2 Thessalonians 2:13-17; 3:1-5".
+          const segments = reference.split(/\s*;\s*/);
+          const first = segments[0].trim();
+          const book = first.match(/^(.+?)\s+\d+:\d+/)?.[1] || '';
+          for (const [index, segment] of segments.entries()) {
+            const normalized = index && /^\d+:\d+/.test(segment) && book ? book + ' ' + segment : segment;
+            parts.push(await asvText(normalized.trim(), tr));
+          }
+        }
         el.innerHTML = parts.join(' ') + `<div class="muted" style="font-size:.74rem;margin-top:4px">${tr === 'dra' ? 'Douay-Rheims (public domain). Verse numbers can differ slightly from the Liturgy of the Hours.' : 'American Standard Version (1901, public domain) — close to the RSV but not identical.'}</div>`;
       } catch (e) { el.innerHTML = '<span class="muted">Text unavailable offline — it loads and is saved the first time you open this day online.</span>'; }
     }
