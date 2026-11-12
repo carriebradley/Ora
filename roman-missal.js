@@ -27,7 +27,7 @@
   const blocks=part.blocks;let start=blocks.findIndex(b=>prayerHeading.test(b.text.trim()));
   if(start<0)start=0; // Never discard a section without recognized labels.
   const kept=blocks.slice(start).filter(b=>!direction.test(b.text.trim())&&!/^\[Image:/.test(b.text.trim())&&!/^>>|^preface (?:of|i\b|ii\b)|^\[sample\]/i.test(b.text.trim())&&!/^(?:and all pray in silence|let us pray\.|the priest says|the priest continues)/i.test(b.text.trim()));
-  return {...part,blocks:kept.length?kept:blocks};
+  return {...part,blocks:kept.filter(b=>b.kind!=='instruction')};
  }
  function ordinary(sections){
   const wanted=[['Gloria',/^(?:gloria|glory to god in the highest)$/i],['Creed',/^(?:nicene creed|apostles.? creed|profession of faith|the creed)$/i]];
@@ -38,6 +38,7 @@
   const patterns={
    gloria:/^(?:the )?(?:gloria|glory to god(?: in the highest)?|gloria in excelsis(?: deo)?)\b/i,
    creed:/^(?:the )?(?:nicene(?:[- ]constantinopolitan)? creed|profession of faith|the creed|creed)\b/i,
+   apostles:/^(?:the )?apostles[’']? creed$/i,
    1:/^(?:the )?eucharistic prayer (?:i|1)(?:\b|$)/i,
    2:/^(?:the )?eucharistic prayer (?:ii|2)(?:\b|$)/i,
    3:/^(?:the )?eucharistic prayer (?:iii|3)(?:\b|$)/i,
@@ -45,6 +46,13 @@
   };
   const re=patterns[type];if(!re)return null;
   const headings=sections.map((s,i)=>({s,i})).filter(x=>re.test(x.s.title.trim()));
+  if(/^[1-4]$/.test(String(type))){
+   const number=['I','II','III','IV'][Number(type)-1];
+   const plain=new RegExp('^(?:the )?eucharistic prayer (?:'+number+'|'+type+')(?: \\(the roman canon\\))?$','i');
+   const canonical=headings.filter(x=>plain.test(x.s.title.trim()));
+   if(canonical.length===1)return canonical[0].s;
+   if(headings.length)return null;
+  }
   if(headings.length===1)return headings[0].s;
   // Some EPUBs place the title within a larger Order of Mass section.
   const embedded=sections.flatMap(s=>s.blocks.flatMap((b,i)=>re.test(b.text.trim())?[{s,i}]:[]));
@@ -61,6 +69,7 @@
     const v=block.text.trim(),h=heads.find(([,re])=>re.test(v));
     if(h){active=h[0];const rest=v.replace(h[1],'').replace(/^[\s|:;·-]+/,'').trim();if(rest&&!/^(?:mt|mk|lk|jn|ps|cf|rev|rom|heb)\s*[.:]?\s*\d/i.test(rest))out[active].push({tag:'p',text:rest});continue;}
     if(!active)continue;
+    if(/^a reading from\b|^(?:a reading from )?the holy gospel according to\b/i.test(v))active=null;
     // A new Mass heading closes the previous proper. Without this guard,
     // subsequent rites and copyright notes can leak into a daily prayer.
     if(/^(?:preface\b|liturgy of the|introductory rites\b|penitential act\b|the order of mass\b|eucharistic prayer\b|responsorial psalm\b|first reading\b|second reading\b|gospel\b|alleluia\b|offertory\b|communion rite\b|concluding rites\b|blessing\b|dismissal\b|copyright\b|all rights reserved)/i.test(v))active=null;
@@ -71,3 +80,4 @@
  }
  return {match,order,key,prayers,ordinary,fixed,propers};
 });
+

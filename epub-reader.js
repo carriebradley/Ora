@@ -118,7 +118,11 @@
           flush();current=section(title);references(node);return;
         }
         if(['p','pre','blockquote','li','dt','dd','h3','h4','h5','h6'].includes(tag)){
-          const text=words(node).trim();if(text)current.blocks.push({tag:/^h\d$/.test(tag)?'h4':tag==='pre'?'pre':'p',text});references(node);return;
+          const text=words(node).trim();
+          // Preserve only explicit source semantics; private markup stays inert.
+          const classes=Array.from(node.classList||[]),kind=classes.some(c=>/^(?:rubric|instruction|stage-direction)$/i.test(c))?'instruction':undefined;
+          const role=classes.some(c=>/^(?:all|people|response)$/i.test(c))?'all':undefined;
+          if(text)current.blocks.push({tag:/^h\d$/.test(tag)?'h4':tag==='pre'?'pre':'p',text,...(kind?{kind}:{}),...(role?{role}:{})});references(node);return;
         }
         for(const child of node.childNodes)visit(child);
       }

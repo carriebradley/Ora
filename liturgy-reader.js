@@ -37,7 +37,7 @@
     return task.promise;
   }
   async function save(id,file) {
-    if (!['roman','chrysostom','melkite-chrysostom','basil','presanctified'].includes(id)) throw new Error('Unknown liturgical text.');
+    if (!['roman','chrysostom','melkite-chrysostom','basil','presanctified','melkite-basil','melkite-presanctified'].includes(id)) throw new Error('Unknown liturgical text.');
     if (!file || !file.size || file.size>MAX) throw new Error('Choose a PDF or EPUB smaller than 100 MB.');
     const head=new TextDecoder().decode(await file.slice(0,1024).arrayBuffer());
     const format=head.includes('%PDF-')?'pdf':head.startsWith('PK\x03\x04')?'epub':null;
@@ -55,4 +55,5 @@
   }
   root.LiturgyReader={all,get,save,remove,bookmark,load,MAX};
 })(typeof window !== 'undefined' ? window : globalThis);
+
 

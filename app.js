@@ -1112,17 +1112,16 @@
   function viewLiturgy() {
     const v=dayInfo(st.date);loadReadings(st.date);
     const byzantine=st.liturgyView==='byz';
-    const service=LiturgySchedule.service(st.date,S.byzChurch);
+    const service=LiturgySchedule.service(st.date,S.byzLiturgyChurch);
     const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
-    const bookId=byzantine&&service.id==='chrysostom'&&S.byzLiturgyChurch==='melkite'?'melkite-chrysostom':byzantine?service.id:'roman';
+    const bookId=byzantine&&['chrysostom','basil','presanctified'].includes(service.id)&&S.byzLiturgyChurch==='melkite'?'melkite-'+service.id:byzantine?service.id:'roman';
     const reader=LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:v.roman.title});
-    const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false,true):'';
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
       ${byzantine?`<p class="service-summary"><strong>${esc(service.title)}</strong>${service.verification==='calculated'?'<span class="muted"> · calculated service cycle</span>':''}</p>${service.verification==='source-conflict'?`<p class="note">${esc(service.note)}</p>`:''}`:''}
       ${reader}
-      ${byzantine?`<section class="simple-liturgy-readings" aria-label="Readings"><h3>Readings</h3>${readings}</section>`:""}
+      <button class="btn sm" data-act="goReadings" data-v="${byzantine?'byz':'roman'}">Open the day’s readings</button>
     </section>`;
   }
   function romanNightHTML() {
@@ -1627,6 +1626,7 @@
       case 'datepick': { const dp = $('#dp'); if (dp.showPicker) dp.showPicker(); else dp.click(); return; }
       case 'byzchoice': if (!['ukrainian','melkite'].includes(v)) return; S.byzChurch = v; S.byzLiturgyChurch = v; save(); infoCache.clear(); break;
       case 'rr': st.readRite = v; break;
+      case 'goReadings': st.readRite=v==='byz'?'byz':'roman'; openTab('readings'); return;
       case 'jtab': st.jtab = v; break;
       case 'rite': if (!Object.hasOwn(RITES, v)) return; S.rite = v; st.readRite = v; save(); break;
       case 'kind': st.kind = v; break;

@@ -46,24 +46,20 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.screenshot({path:path.join(artifacts,'justice-simple-mobile.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);
  assert.match(await page.locator('#app').innerText(),/Twenty-fifth Sunday after Pentecost/);
+ assert.equal(await page.locator('.simple-liturgy-readings').count(),0,'Scripture stays in Readings');
+ await page.locator('[data-act="goReadings"]').click();
  assert.match(await page.locator('#app').innerText(),/Luke 10:25-37/);
- assert.ok(await page.locator('a[href="https://eeparchy.com/calendar/2026-11-15"]').count());
- assert.equal(await page.locator('a[href*="melkite.org"]').count(),0);
- assert.ok(await page.locator('a[href="https://nweparchy.ca/menaion/"]').count());
+ assert.equal(await page.locator('#nav [data-tab="readings"]').getAttribute('aria-current'),'page');
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11&rite=sarum`);
  await page.locator('[data-act="liturgyview"][data-v="mass"]').click();
- assert.equal(await page.locator('#app .card > h2').innerText(),'Roman Mass');
- assert.match(await page.locator('#app').innerText(),/Saint Martin of Tours, Bishop/);
- assert.doesNotMatch(await page.locator('#app').innerText(),/Sarum Mass|Martinmas|After Trinity|Confessor/);
- assert.match(await page.locator('#app').innerText(),/current Roman Catholic lectionary/);
- assert.equal(await page.locator('a[href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts"]').count(),1);
- assert.equal(await page.locator('a[href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass"]').count(),1);
+ assert.match(await page.locator('#app .card > h2').innerText(),/Saint Martin of Tours, Bishop/);
+ assert.doesNotMatch(await page.locator('.simple-liturgy').innerText(),/Sarum Mass|Martinmas|After Trinity|Confessor/);
  await page.screenshot({path:path.join(artifacts,'current-roman-mass-mobile.png'),fullPage:true});
  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
  const massAudit=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
  violations.push(...massAudit.violations.map(v=>({tab:'liturgy-mass',id:v.id})));
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
- assert.equal(await page.locator('#app .card > h2').innerText(),'Divine Liturgy of St. John Chrysostom');
+ assert.match(await page.locator('.service-summary').innerText(),/Divine Liturgy of St. John Chrysostom/);
  await require('./liturgy-reader-browser.cjs')(page,context,base,artifacts,violations);
  await require('./epub-reader-browser.cjs')(page,context,base,artifacts,violations);
  await require('./roman-missal-browser.cjs')(page,context,base,artifacts,violations);
@@ -110,12 +106,11 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.locator('.reader-offline > summary').click();
  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
  assert.equal(await page.locator('#nav [data-tab="calendar"]').count(),1);
- await context.route('https://eeparchy.com/calendar/2026-11-12',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Source fixture</title><p>Official-source reader test</p>'}));
- await page.locator('.liturgical-text a[href="https://eeparchy.com/calendar/2026-11-12"]').click();
- await page.waitForFunction(()=>document.querySelector('#source-reader').open);
- assert.equal(await page.locator('#source-reader-frame').isVisible(),true);
- assert.equal(await page.locator('#source-reader-original').getAttribute('href'),'https://eeparchy.com/calendar/2026-11-12');
- await page.locator('#source-reader-close').click();
+ // Publisher sources are consolidated under More, separate from personal books.
+ await page.locator('.more-sources > summary').click();
+ assert.ok(await page.locator('a[href="https://eeparchy.com/calendar"]').count());
+ assert.ok(await page.locator('a[href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass"]').count());
+ assert.equal(await page.locator('.simple-liturgy-readings').count(),0);
 
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(r=>navigator.serviceWorker.addEventListener('controllerchange',r,{once:true}));});
  // Store the large texts once, then verify deep links and prayer data with the network disabled.

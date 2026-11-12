@@ -1,9 +1,14 @@
 /* Documents stay in IndexedDB on this device. No upload or remote PDF viewer. */
 (function(){
   'use strict';
-  const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom · Edmonton', 'melkite-chrysostom':'St. John Chrysostom · Melkite',basil:'St. Basil the Great',presanctified:'Presanctified Gifts'};
+  const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom · Edmonton', 'melkite-chrysostom':'St. John Chrysostom · Melkite',basil:'St. Basil the Great',presanctified:'Presanctified Gifts · Ukrainian','melkite-basil':'St. Basil the Great · Melkite','melkite-presanctified':'Presanctified Gifts · Melkite'};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const previewBooks=new Map();let hydrateVersion=0;
+  const previewBooks=new Map(),prayerPreviews=new Map();let hydrateVersion=0;
+  async function prayerPreview(saved,book,parser){
+    const cached=prayerPreviews.get(saved.id);
+    if(!cached||cached.updated!==saved.updated)prayerPreviews.set(saved.id,{updated:saved.updated,promise:parser(book)});
+    return prayerPreviews.get(saved.id).promise;
+  }
   function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
   function card(id,{church='ukrainian',date='',dayTitle=''}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
@@ -35,14 +40,14 @@
     if(!blocks?.length)return;
     const wrapper=document.createElement('section');wrapper.className='roman-mass-part';
     const h=document.createElement('h3');h.textContent=label;wrapper.append(h);
-    for(const block of blocks){const el=document.createElement(['p','h4','pre','blockquote'].includes(block.tag)?block.tag:'p');el.textContent=block.text;wrapper.append(el);}
+    for(const block of blocks){const el=document.createElement(['p','h4','pre','blockquote'].includes(block.tag)?block.tag:'p');el.textContent=block.text;if(block.role==='all')el.classList.add('roman-response');wrapper.append(el);}
     target.append(wrapper);
   }
   function renderEucharistic(section,book){
     const choice=section.dataset.eucharisticChoice||'1',target=section.querySelector('.roman-eucharistic-text');if(!target)return;
     section.querySelectorAll('[data-reader="eucharistic"]').forEach(b=>{const on=b.dataset.choice===choice;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
     target.replaceChildren();const part=RomanMissal.fixed(book.sections,choice);
-    if(part){for(const block of RomanMissal.prayers(part).blocks){const el=document.createElement(['p','h4','pre'].includes(block.tag)?block.tag:'p');el.textContent=block.text;target.append(el);}}
+    if(part){for(const block of RomanMissal.prayers(part).blocks){const el=document.createElement(['p','h4','pre'].includes(block.tag)?block.tag:'p');el.textContent=block.text;if(block.role==='all')el.classList.add('roman-response');target.append(el);}}
     else target.textContent='This Eucharistic Prayer was not found in your saved Missal.';
   }
   function renderRoman(section,book,part){
@@ -52,7 +57,9 @@
     appendMassPart(target,'Gloria',fixed('gloria'));
     appendMassPart(target,'Collect',proper.collect);
     // Readings are available in their own tab.
-    appendMassPart(target,'Nicene Creed',fixed('creed'));
+    appendMassPart(target,'Apostles’ Creed',fixed('apostles'));
+    if(!fixed('apostles'))appendMassPart(target,'Nicene Creed',fixed('creed'));
+    const note=document.createElement('p');note.className='muted roman-devotional-note';note.textContent='Gloria and creed are included for private prayer; their liturgical use varies by day.';target.append(note);
     appendMassPart(target,'Prayer over the Offerings',proper.offerings);
     const sectionEp=document.createElement('section');sectionEp.className='roman-mass-part roman-eucharistic';
     const heading=document.createElement('h3');heading.textContent='Eucharistic Prayer';sectionEp.append(heading);
@@ -68,31 +75,7 @@
   // Process only a device-local copy, and never package or transmit its content.
   // Combine physical PDF lines without joining distinct responses. Tracking
   // spaces and soft hyphenation are artifacts of the PDF, not prayer text.
-  function normalizePdfLine(text){
-    return String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();
-  }
-  function isPdfHeading(line){
-    const s=normalizePdfLine(line);
-    if(/^(?:Liturgy of(?: the)?(?: Word| Eucharist)|Blessing|Great Litany|Small Litany|Cherubic Hymn|Trisagion Hymn|First Antiphon|Second Antiphon|Third Antiphon|Anaphora|Holy Communion|Dismissal|The Kairos Service|Prayers Before the Holy Doors)$/i.test(s))return true;
-    return /^[A-Z][a-z]+(?:\s+(?:of|the|and|[A-Z][a-z]+)){0,4}$/.test(s) && s.length<48;
-  }
-  function combinePdfLines(lines){
-    const out=[];let current='',currentRole=false;
-    const roleStart=/^(?:PRIEST(?:\s*\d+)?|BISHOP|CELEBRANT|DCN(?:\s*\d+)?|DEACON|PROTODEACON|ALL|PEOPLE|CHOIR|CLERGY|READER|LECTOR|CANTOR|FAITHFUL)\s*:/i;
-    const instructionStart=/^(?:When the time comes|The first protopresbyter|Having received|The (?:priest|deacon|bishop|protodeacon|celebrant|choir|people|reader|server|faithful)|Then (?:the|they)|During (?:the|this)|After (?:the|this)|Before (?:the|this)|Meanwhile|At this point|On Sundays|On weekdays)\b/i;
-    const flush=()=>{if(current)out.push(current);current='';currentRole=false;};
-    for(const raw of lines){
-      let line=normalizePdfLine(raw);
-      if(!line)continue;
-      const heading=isPdfHeading(line),role=roleStart.test(line),rubric=instructionStart.test(line);
-      if(heading||role||rubric)flush();
-      if(!current){current=line;currentRole=role;}
-      else if(/[-\u2010\u00ad]$/.test(current)&&/^[a-z]/.test(line))current=current.slice(0,-1)+line;
-      else current+=' '+line;
-      if(heading)flush();
-    }
-    flush();return out;
-  }
+  const normalizePdfLine=LiturgicalFormat.normalize,isPdfHeading=LiturgicalFormat.heading,combinePdfLines=LiturgicalFormat.combine;
   async function edmontonPrayerText(book){
     if(book.numPages!==140)return null;
     const marker=await book.getPage(4);
@@ -114,9 +97,9 @@
         if(!rows.has(rowKey))rows.set(rowKey,[]);
         rows.get(rowKey).push({x,text:value});
       }
-      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,fragments])=>{
+      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([y,fragments])=>{
         fragments.sort((a,b)=>a.x-b.x);
-        return fragments.map(item=>item.text.trim()).filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+        return {text:fragments.map(item=>item.text.trim()).filter(Boolean).join(' ').replace(/\s+/g,' ').trim(),y,page:number};
       }).filter(Boolean);
       const clean=combinePdfLines(lines).filter(line=>{
         if(/^\d{1,3}$/.test(line))return false;
@@ -141,44 +124,28 @@
         const x=Number(item.transform?.[4]||0),y=Number(item.transform?.[5]||0),key=Math.round(y*2)/2;
         if(!rows.has(key))rows.set(key,[]);rows.get(key).push({x,text:txt});
       }
-      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,parts])=>parts.sort((a,b)=>a.x-b.x).map(x=>x.text).join(' ').replace(/\s+/g,' ').trim()).filter(Boolean);
+      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([y,parts])=>({text:parts.sort((a,b)=>a.x-b.x).map(x=>x.text).join(' ').replace(/\s+/g,' ').trim(),y,page:number})).filter(row=>row.text);
       if(!lines.length)continue;
-      const full=lines.join(' ');
+      const full=lines.map(row=>row.text).join(' ');
       if(!foundLiturgy){
         // Avoid a table-of-contents match: liturgy must also have actual prayers.
         if(/(?:divine liturgy of (?:our father among the saints )?(?:saint|st\.?) john chrysostom|the divine liturgy)/i.test(full)&&/(?:blessed is the kingdom|in peace let us pray|lord, have mercy)/i.test(full))foundLiturgy=true;
-        else if(number>12&&/(?:blessed is the kingdom|in peace let us pray to the lord)/i.test(full))foundLiturgy=true;
+        else if(/(?:blessed is the kingdom|(?:deacon|priest):\s*in peace let us pray to the lord)/i.test(full))foundLiturgy=true;
         else continue;
       }
-      const clean=lines.filter(line=>{
+      const end=lines.findIndex(line=>/^(?:appendix|appendices|glossary|acknowledg(?:e)?ments|prayers (?:before|after) (?:the )?(?:divine liturgy|liturgy)|private prayers|about (?:this|the) (?:book|translation))$/i.test(line.text));
+      const clean=combinePdfLines(end<0?lines:lines.slice(0,end)).filter(line=>{
         if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
         return true;
       });
       if(clean.length)sections.push({heading:null,lines:clean});
+      if(end>=0)break;
     }
     return foundLiturgy&&sections.length?sections:null;
   }
   // Visual call-and-response cues, inferred only from labels printed in the
   // saved booklet. Do not invent speaker assignments for unlabelled lines.
-  function roleLine(text){
-    const m=String(text).match(/^\s*(PRIEST(?:\s*\d+)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)\s*:\s*(.*)$/i);
-    if(!m)return null;
-    const role=m[1].toUpperCase(),kind=/^(?:PRIEST|CELEBRANT|BISHOP)/.test(role)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(role)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL)$/.test(role)?'all':'other';
-    const name=kind==='priest'?(/BISHOP/.test(role)?'Bishop':'Priest'):kind==='deacon'?'Deacon':kind==='all'?'All':role[0]+role.slice(1).toLowerCase();
-    return {name,kind,words:m[2].trim()};
-  }
-  // Distinguish unspoken rubrics from spoken liturgy. Uncertain lines remain
-  // visible as prayers rather than silently discarding sacred text.
-  function liturgicalInstruction(text){
-    const s=String(text||'').trim();
-    if(!s)return false;
-    if(/^(?:\(|\[)[^)\]]+(?:\)|\])$/.test(s))return true;
-    if(/^(?:rubric|instructions?|note):/i.test(s))return true;
-    if(/^(?:the |a |an )?(?:priest|deacon|protodeacon|bishop|celebrant|server|reader|cantor|choir|people|faithful|congregation|clergy|concelebrants|subdeacon|acolyte)\s+(?:then\s+|now\s+)?(?:stands?|sits?|kneels?|bows?|turns?|takes?|makes?|offers?|sings?|chants?|says?|prays?|recites?|enters?|exits?|proceeds?|raises?|continues?|responds?|places?|opens?|closes?|incenses?|censes?|blesses?|kisses?|holds?|lifts?|moves?|faces?|approaches?|departs?|receives?|distributes?|reads?|begins?|repeats?|goes?|comes?|removes?|puts?|washes?|covers?|uncovers?|pours?|carries?|gives?|hands?|returns?|walks?|crosses?|makes the sign)\b/i.test(s))return true;
-    if(/^(?:during|after|before|while|when|then|meanwhile|at this point|at the conclusion|as the|following the|if the|once the)\s+(?:the |this |these |a |an )?(?:priest|deacon|bishop|celebrant|litany|hymn|prayer|entrance|gospel|people|choir|faithful|clergy|singing|chanting|reading|communion|gifts|service|troparion|antiphon|procession|holy doors|royal doors)\b/i.test(s))return true;
-    if(/^(?:on Sundays|on weekdays|on feast days|on great feasts|for the|if there is|according to|instead of|the royal doors|the holy doors|the iconostasis|the following prayer is|this prayer is)\b/i.test(s))return true;
-    return false;
-  }
+  const roleLine=LiturgicalFormat.role,liturgicalInstruction=LiturgicalFormat.instruction;
   function renderEdmontonPrayerText(target,sections){
     target.replaceChildren();
     target.classList.add('reader-byzantine-prayers');
@@ -254,8 +221,8 @@
     try{const saved=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected||token!==hydrateVersion)return;
       status.textContent=saved?`${saved.name} · ${saved.pages} ${saved.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
       section.querySelector('[data-reader="open"]').disabled=!saved;section.querySelector('[data-reader="remove"]').disabled=!saved;
-      if(!saved){previewBooks.delete(section.dataset.textId);preview.hidden=true;preview.replaceChildren();if(controls)controls.hidden=true;return;}
-      let book;
+      if(!saved){previewBooks.delete(section.dataset.textId);prayerPreviews.delete(section.dataset.textId);preview.hidden=true;preview.replaceChildren();if(controls)controls.hidden=true;return;}
+      let book,continuous=false;
       try{
         if(saved.format==='epub'){
           const cached=previewBooks.get(saved.id);
@@ -276,28 +243,28 @@
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';
           }
-        }else if(section.dataset.textId==='melkite-chrysostom'&&book.kind!=='epub'){
-          status.textContent='Preparing your saved Melkite prayers…';
-          const liturgy=await melkitePrayerText(book);
+        }else if((section.dataset.textId.startsWith('melkite-')||['basil','presanctified'].includes(section.dataset.textId))&&book.kind!=='epub'){
+          status.textContent='Preparing your saved prayers…';
+          const liturgy=await prayerPreview(saved,book,melkitePrayerText);
           if(!section.isConnected||token!==hydrateVersion)return;
           if(liturgy){
-            renderEdmontonPrayerText(preview,liturgy);
-            status.textContent='Melkite Divine Liturgy · saved privately on this device';
+            renderEdmontonPrayerText(preview,liturgy);continuous=true;
+            status.textContent=labels[section.dataset.textId]+' · saved privately on this device';
           }else preview.textContent='The prayers could not be identified in this PDF. Open the original book below to read it.';
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
           status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
-          const liturgy=await edmontonPrayerText(book);
+          const liturgy=await prayerPreview(saved,book,edmontonPrayerText);
           if(!section.isConnected||token!==hydrateVersion)return;
           if(liturgy){
-            renderEdmontonPrayerText(preview,liturgy);
+            renderEdmontonPrayerText(preview,liturgy);continuous=true;
             status.textContent='Edmonton Divine Liturgy · saved privately on this device';
           }else{
             const page=await book.getPage(selected),content=await page.getTextContent();
             preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'No selectable text on this page.';
           }
-        }else if(book.kind==='epub'){const part=book.sections[selected-1];preview.textContent=part.title+'\n\n'+part.blocks.map(b=>b.text).join('\n\n');}
+        }else if(book.kind==='epub'){const part=book.sections[selected-1];renderEdmontonPrayerText(preview,[{heading:part.title,lines:part.blocks.map(b=>b.kind==='instruction'?'Instruction: '+b.text:b.role==='all'?'ALL: '+b.text:b.text)}]);}
         else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}
-        preview.hidden=false;if(controls)controls.hidden=false;if(controls)controls.querySelector('.reader-inline-page').textContent=`${book.kind==='epub'?'Section':'Page'} ${selected} of ${book.numPages}`;if(controls)controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;if(controls)controls.querySelector('[data-reader="inline-next"]').disabled=selected>=book.numPages;
+        preview.hidden=false;if(controls)controls.hidden=continuous;if(controls)controls.querySelector('.reader-inline-page').textContent=`${book.kind==='epub'?'Section':'Page'} ${selected} of ${book.numPages}`;if(controls)controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;if(controls)controls.querySelector('[data-reader="inline-next"]').disabled=selected>=book.numPages;
       }catch(_){if(section.isConnected&&token===hydrateVersion){preview.textContent='Preview unavailable. Use Open saved text to view this book.';preview.hidden=false;}}
       finally{if(book&&book.kind!=='epub')await book.destroy();}
     }catch(_){if(section.isConnected)status.textContent='Device storage is unavailable. You can still open the source links.';}
@@ -396,4 +363,5 @@
   });
   window.LiturgicalText={card,hydrate};
 })();
+
 

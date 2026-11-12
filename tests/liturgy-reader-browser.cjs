@@ -32,14 +32,18 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.querySelector('#liturgical-reader').open);
  // Date selection chooses a different slot, rather than relabelling Chrysostom's PDF.
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-02`);
- assert.match(await page.locator('#app .card > h2').innerText(),/Basil the Great/);
+ assert.match(await page.locator('.service-summary').innerText(),/Basil the Great/);
  await page.waitForFunction(()=>document.querySelector('.reader-status')?.textContent.includes('No text saved'));
  await choose('Basil-test.pdf');
  assert.deepEqual(await page.evaluate(async()=>{const records=await LiturgyReader.all();return records.map(r=>r.id).sort();}),['basil','chrysostom']);
+ await page.evaluate(async bytes=>{
+  for(const id of ['melkite-basil','melkite-presanctified'])await LiturgyReader.save(id,new File([new Uint8Array(bytes)],id+'.pdf',{type:'application/pdf'}));
+ },Array.from(pdf()));
+ assert.equal(await page.evaluate(async()=>!!await LiturgyReader.get('basil')&&!!await LiturgyReader.get('melkite-basil')&&!!await LiturgyReader.get('melkite-presanctified')),true,'Melkite slots preserve Ukrainian books');
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-03`);
- assert.match(await page.locator('#app .card > h2').innerText(),/No Divine Liturgy/);assert.equal(await page.locator('[data-reader="open"]').count(),0);
+ assert.match(await page.locator('.service-summary').innerText(),/No Divine Liturgy/);assert.equal(await page.locator('[data-reader="open"]').count(),0);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-01`);
- assert.match(await page.locator('#app .card > h2').innerText(),/Presanctified/);
+ assert.match(await page.locator('.service-summary').innerText(),/Presanctified/);
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(r=>navigator.serviceWorker.addEventListener('controllerchange',r,{once:true}));});
  await context.setOffline(true);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11`);
