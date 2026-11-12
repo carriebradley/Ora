@@ -133,17 +133,42 @@
     }
     return foundLiturgy&&sections.length?sections:null;
   }
+  // Visual call-and-response cues, inferred only from labels printed in the
+  // saved booklet. Do not invent speaker assignments for unlabelled lines.
+  function roleLine(text){
+    const m=String(text).match(/^\s*(PRIEST|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)\s*:\s*(.*)$/i);
+    if(!m)return null;
+    const role=m[1].toUpperCase(),kind=/^(?:PRIEST|CELEBRANT|BISHOP)$/.test(role)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(role)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL)$/.test(role)?'all':'other';
+    const name=kind==='priest'?'Priest':kind==='deacon'?'Deacon':kind==='all'?'All':role[0]+role.slice(1).toLowerCase();
+    return {name,kind,words:m[2].trim()};
+  }
   function renderEdmontonPrayerText(target,sections){
     target.replaceChildren();
     target.classList.add('reader-byzantine-prayers');
+    const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
+    let lastLine=null,lastRole=null;
     for(const section of sections){
-      if(section.heading){const heading=document.createElement('h3');heading.textContent=section.heading;target.append(heading);}
-      for(const text of section.lines){
-        if(/^(?:LITURGY OF THE WORD|LITURGY OF THE EUCHARIST|THE ANAPHORA|HOLY COMMUNION)$/i.test(text))continue;
-        const heading=/^(?:Great Litany|First Antiphon|Small Litany|Entrance Antiphon|Prayer of Entrance|Trisagion Hymn|Prayer of the Trisagion|Prayer Before the Gospel|Prayer for the Faithful|Cherubic Hymn|Litany for the Gifts|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Prayer Before Holy Communion|Blessing with the Holy Gifts|Dismissal)$/i.test(text);
-        const el=document.createElement(heading?'h4':'p');
-        el.textContent=text.replace(/^(?:BISHOP|PRIEST|DCN ?\d?|DEACON|ALL|CHOIR|CLERGY|LECTOR|VERSE):\s*/i,'');
-        target.append(el);
+      if(section.heading){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;target.append(h);lastLine=null;lastRole=null;}
+      for(const raw of section.lines){
+        const text=String(raw||'').trim();
+        if(!text||/^(?:LITURGY OF THE WORD|LITURGY OF THE EUCHARIST|THE ANAPHORA|HOLY COMMUNION)$/i.test(text))continue;
+        if(headingPattern.test(text)){
+          const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=text;target.append(h);lastLine=null;lastRole=null;continue;
+        }
+        const role=roleLine(text);
+        const p=document.createElement('p');
+        p.className='byz-prayer-line';
+        if(role){
+          p.classList.add('byz-role-'+role.kind);
+          const speaker=document.createElement('span');
+          speaker.className='byz-speaker';speaker.textContent=role.name;
+          p.append(speaker);
+          const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=role.words;p.append(words);
+          lastRole=role.kind;
+        }else{
+          p.textContent=text;lastRole=null;
+        }
+        target.append(p);lastLine=p;
       }
     }
   }

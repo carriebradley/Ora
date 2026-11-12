@@ -237,6 +237,19 @@ nav button.on b{color:inherit}
 .simple-liturgical-text .reader-inline-text.reader-byzantine-prayers{display:block;width:100%;max-width:100%;height:auto;max-height:none;overflow:visible;white-space:normal;overflow-wrap:break-word;word-break:normal;position:static;contain:none}.reader-byzantine-prayers p{display:block;width:100%;margin:.55em 0;line-height:1.7;white-space:normal}.reader-byzantine-prayers h3,.reader-byzantine-prayers h4{position:static;break-after:avoid;line-height:1.4}
 .reader-byzantine-prayers{font-family:var(--serif);font-size:1.06rem;line-height:1.68;white-space:normal!important}.reader-byzantine-prayers h3{font-size:1.25rem;margin:24px 0 12px}.reader-byzantine-prayers h4{font-size:1.1rem;margin:18px 0 7px}.reader-byzantine-prayers p{margin:.45em 0;white-space:normal}
 .reader-byzantine-prayers{min-width:0;overflow-wrap:break-word}.reader-byzantine-prayers p{hyphens:auto}.simple-liturgical-text .reader-inline-panel{min-width:0;width:100%}
+/* Divine Liturgy: restrained, stable prayer-book typography and speaker cues. */
+.simple-liturgical-text .reader-byzantine-prayers{font-family:var(--serif);font-size:calc(1.1rem * var(--reading-scale,1));line-height:1.72;letter-spacing:normal;font-variant-ligatures:common-ligatures}
+.simple-liturgical-text .reader-byzantine-prayers .byz-major-heading{font-family:var(--serif);font-size:1.28em;font-weight:650;color:var(--ink);border-bottom:1px solid var(--line);padding:0 0 10px;margin:32px 0 18px}
+.simple-liturgical-text .reader-byzantine-prayers .byz-major-heading::before{content:"✝";display:inline-block;color:var(--gold);font-size:.82em;margin-right:.5em}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-heading{font-family:var(--serif);font-size:1.13em;line-height:1.4;font-weight:650;color:var(--ink);margin:25px 0 11px;letter-spacing:.01em}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line{line-height:1.72;margin:0 0 11px;overflow-wrap:break-word;hyphens:none}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line[class*="byz-role-"]{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;margin:14px 0 15px;padding-left:12px;border-left:2px solid var(--line);min-width:0}
+.simple-liturgical-text .reader-byzantine-prayers .byz-role-all{border-left-color:var(--gold)!important}
+.simple-liturgical-text .reader-byzantine-prayers .byz-speaker{font-family:var(--sans,system-ui,sans-serif);font-size:.68rem;line-height:1.35;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.simple-liturgical-text .reader-byzantine-prayers .byz-role-all .byz-speaker{color:var(--rubric,var(--gold))}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-words{display:block;min-width:0}
+.simple-liturgical-text .reader-byzantine-prayers .byz-role-all .byz-prayer-words{font-weight:600}
+@media(max-width:420px){.simple-liturgical-text .reader-byzantine-prayers{font-size:calc(1.07rem * var(--reading-scale,1))}.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line[class*="byz-role-"]{padding-left:10px}}
 /* Each Social Teaching category has its own matching border and icon. */
 .justice-daily>.card{--justice-accent:#b88b25}.justice-ecology{--justice-accent:#648c69}.justice-economic{--justice-accent:#6191b4}.justice-voice{--justice-accent:#b57a91}.justice-charity{--justice-accent:#559b9a}.justice-teaching{--justice-accent:#bd8057}.justice-reading{--justice-accent:#9c82ba}.justice-library{--justice-accent:#788494}
 .justice-daily>.card,.justice-ecology,.justice-economic,.justice-voice,.justice-charity,.justice-teaching,.justice-reading,.justice-library{border-left:3px solid var(--justice-accent);border-right:3px solid var(--justice-accent)}
