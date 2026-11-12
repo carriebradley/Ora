@@ -111,9 +111,10 @@ const CONTENT = (() => {
     roman: {
       morning: [P('Sign of the Cross', T.cross), P('Opening', T.lips + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
         { type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }, 
-        { type: 'oor', title: 'Office of Readings' }, { type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
+{ type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
         P('Intercessions', 'Lord, I offer you this day: my work, my words, my joys and my sufferings. Bless those I love. Remember the sick, the dying and the lonely, and those who have asked for my prayers.'),
         P('Our Father', T.our), P('Blessing', T.blessing)],
+      readings: [{ type: 'oor', title: 'Office of Readings' }],
       evening: [P('Sign of the Cross', T.cross), P('Opening', T.help + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
         { type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' },
         { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Mary (Magnificat)', T.magnificat),

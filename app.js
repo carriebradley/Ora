@@ -926,7 +926,7 @@
 
 
   const SHOURS = [['M', 'Matins'], ['L', 'Lauds'], ['LH', 'Little Hrs'], ['V', 'Vespers'], ['C', 'Compline']];
-  const kindOf = rite => rite === 'sarum' ? st.shour : st.kind;
+  const kindOf = rite => rite === 'sarum' ? st.shour : rite === 'byz' && st.kind === 'readings' ? 'morning' : st.kind;
   function stepsFor(rite, kind, v) {
     const tpl = C.FLOWS[rite][kind], r = v[rite === 'sarum' ? 'sarum' : rite === 'byz' ? 'byz' : 'roman'];
     const out = [];
@@ -1024,8 +1024,7 @@
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
     let h = `<div class="seg prayer-major" role="group" aria-label="Prayer tradition">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
-      ${rite === 'sarum' ? `<div class="seg hrs prayer-minor" role="group" aria-label="Prayer hour">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg prayer-minor" role="group" aria-label="Prayer hour"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">${rite === 'byz' ? 'Orthros' : 'Lauds'}</button><button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">${rite === 'byz' ? 'Vespers' : 'Vespers'}</button><button data-act="kind" data-v="night" class="${st.kind === 'night' ? 'on' : ''}">${rite === 'byz' ? 'Compline' : 'Compline'}</button></div>`}`;
-    if (rite === 'roman') h += '<p class="muted prayer-note">Lauds (Morning Prayer) · Vespers (Evening Prayer) · Compline (Night Prayer). Ora’s current prayer sequences are devotional adaptations, not the complete official Liturgy of the Hours.</p>';
+      ${rite === 'sarum' ? `<div class="seg hrs prayer-minor" role="group" aria-label="Prayer hour">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg prayer-minor" role="group" aria-label="Prayer hour"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">${rite === 'byz' ? 'Orthros' : 'Lauds'}</button> ${rite === 'roman' ? `<button data-act="kind" data-v="readings" class="${st.kind === 'readings' ? 'on' : ''}">Office of Readings</button>` : ''}<button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">${rite === 'byz' ? 'Vespers' : 'Vespers'}</button><button data-act="kind" data-v="night" class="${st.kind === 'night' ? 'on' : ''}">${rite === 'byz' ? 'Compline' : 'Compline'}</button></div>`}`;
     if (rite === 'byz') h += '<p class="muted prayer-note">Ruthenian calendar · devotional prayer sequence. For the full liturgical offices, use the <a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener">Pittsburgh prayer books</a>.</p>';
     h += `<div class="row" style="margin:0 0 14px">${hasTTS ? '<button class="btn fill" data-act="play">▶ Play session aloud</button>' : ''}<span class="muted" style="align-self:center">${steps.length} steps</span></div>`;
     steps.forEach((s, i) => {
@@ -1040,7 +1039,7 @@
       else if (s.type === 'little') h += `<div class="muted" style="font-size:.82rem">Prime at about 6, Terce at 9, Sext at noon, None at 3. Open each hour to pray it.</div>${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'sarumhours') h += `<div class="muted" style="font-size:.82rem">Matins at night; Prime, Terce, Sext and None at about 6, 9, noon and 3.</div>${Hours.sarumMatins ? `<details class="matins-d" style="margin:4px 0"><summary class="muted">Matins</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : ''}${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'bvm') h += `<div class="muted" style="font-size:.82rem">A short office of Mary, said on free days, chiefly Saturdays. Optional.</div>${s.hrs.map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
-      else if (s.type === 'oor') h += doSlot(st.date, 'Office of Readings') + `<details><summary class="muted">Show</summary>${oorHTML(st.date)}</details>`;
+      else if (s.type === 'oor') h += doSlot(st.date, 'Office of Readings') + `<div class="office-readings-text">${oorHTML(st.date)}</div>`;
       else if (s.type === 'hourlink') h += `<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
