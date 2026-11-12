@@ -492,8 +492,16 @@
     return x.badge === 'Ordinary Day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
   }
   function glanceSeason(r, rite, iso) {
-    if (rite === 'byz') return [...new Set([r.season, r.tone ? 'Tone ' + r.tone : '', /Vigil|Polyeleos|Doxology|Stichera|Great Feast|Holy Week/.test(r.rank || '') ? r.rank : '', r.fastSeason, r.fast].filter(Boolean))].join(' · ');
-    if (rite === 'sarum') return [r.title, r.historicalObservance?.name, r.historicalObservance?.day, r.fast].filter(Boolean).join(' · ');
+    if (rite === 'byz') {
+      const fasting = String(r.fast || '').replace(/\s*[—–-]\s*Edmonton guidance\b/gi, '').replace(/\bEdmonton guidance\b/gi, '').trim();
+      const parts = [r.season, r.tone ? 'Tone ' + r.tone : '', /Vigil|Polyeleos|Doxology|Stichera|Great Feast|Holy Week/.test(r.rank || '') ? r.rank : '', r.fastSeason, fasting].filter(Boolean);
+      return [...new Set(parts)].join(' · ') + ' · ' + (S.byzChurch === 'melkite' ? 'Melkite' : 'Ukrainian');
+    }
+    if (rite === 'sarum') {
+      const historical = r.historicalObservance;
+      if (historical?.name === "St. Martin's Lent") return [...new Set([historical.name, historical.day, r.fast].filter(Boolean))].join(' · ');
+      return [...new Set([historical?.name, historical?.day, r.fast].filter(Boolean))].join(' · ');
+    }
     // Memorials and feasts can hide the underlying Ordinary Time week.
     // Find the nearest ordinary weekday in the same calendar week.
     if (r.season === 'Ordinary Time' && !/Ordinary Time/i.test(r.title)) {
@@ -510,8 +518,8 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const detail = k === 'byz' ? r.title : x.detail;
-      const seasonLine = glanceSeason(r, k, v.iso) + (k === 'byz' && r.sourceKind === 'menaion-calculated' ? ' · New Westminster / calculated cycle' : '');
+      const detail = k === 'byz' ? r.title : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
+      const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
