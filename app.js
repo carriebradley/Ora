@@ -1084,15 +1084,18 @@
     const paths = {
       scales:'<path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7h6L5 7zm14 0-3 7h6l-3-7z"/>',
       leaf:'<path d="M20 4C10 4 4 8 4 15c0 3 2 5 5 5 7 0 11-6 11-16zM5 19c3-5 7-8 12-10"/>',
-      book:'<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1zM12 6v14"/>',
+      quote:'<path d="M4 6h6v7H6c0 3 1 4 3 5l-2 2c-3-2-4-4-4-7V6zm11 0h6v7h-4c0 3 1 4 3 5l-2 2c-3-2-4-4-4-7V6z"/>',
+      quill:'<path d="M4 21 19 6M7 18c-3-8 4-14 14-15-1 10-7 17-15 14M11 13l6 1M13 11l-1-6"/>',
+      scroll:'<path d="M7 4h11a3 3 0 0 1 3 3v2h-5V7a3 3 0 0 0-6 0v10a3 3 0 0 1-6 0v-2h6M7 20h11a3 3 0 0 0 3-3v-2h-5M12 11h6M12 14h3"/>',
+      archive:'<path d="M3 4h18v5H3zM5 9v12h14V9M9 13h6M10 16h4"/>',
       hands:'<path d="M3 14l4-4 4 4M21 14l-4-4-4 4M7 10V6m10 4V6M7 17c2 2 4 3 5 3s3-1 5-3M9 13l3 3 3-3"/>',
       flame:'<path d="M12 22c4.4 0 7-3.1 7-7.2 0-3.5-2.1-6.1-4.1-8.2.2 3-1 4.5-2 5.1C13 8.3 11.4 5.5 9 2c.2 4.3-4 7.5-4 12.8C5 18.9 7.7 22 12 22z"/>',
       heart:'<path d="M12 20s-9-5.7-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.3-9 11-9 11z"/>'
     };
-    return '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:var(--gold)">'+(paths[kind]||paths.book)+'</svg>';
+    return '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-justice-icon="'+kind+'" style="flex:none;color:var(--justice-accent,var(--gold))">'+(paths[kind]||paths.quote)+'</svg>';
   }
   function justiceCard(j) {
-    return `<section class="card"><div class="lab">${justiceIcon(j.tag === "Creation" ? "leaf" : /catechism/i.test(j.tag) ? "book" : "scales")}<span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
+    return `<section class="card"><div class="lab">${justiceIcon("quote")}<span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
   }
   function jRow(text, who, extra, url) {
     return `<div style="padding:10px 0;border-top:1px solid var(--line)"><p style="${QS}">“${esc(text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(who)}${url ? ` · <a target="_blank" rel="noopener" href="${esc(url)}">source</a>` : ''}</p>${extra ? `<p class="muted" style="margin:.2em 0;font-size:.76rem">${esc(extra)}</p>` : ''}</div>`;
@@ -1100,7 +1103,8 @@
   function charitySaints(d) {
     const S = window.JUSTICE_SAINTS || []; if (!S.length) return '';
     const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), today = S.filter(x => x.m === m && x.d === dd);
-    return today.map(x => `<section class="card justice-charity"><div class="lab">${justiceIcon("heart")}<span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:6px 0 2px"><b>${esc(x.name)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem;line-height:1.5">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
+    if(!today.length)return '';
+    return `<section class="card justice-charity"><div class="lab">${justiceIcon("heart")}<span class="grow">${today.length>1?'Saints':'Saint'} of charity · today</span></div>${today.map(x=>`<div class="charity-saint"><p style="font-family:var(--serif);font-size:1.1rem;margin:6px 0 2px"><b>${esc(x.name)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem;line-height:1.55">${esc(x.why)}</p>${x.cal?`<p class="muted" style="font-size:.78rem;margin:5px 0">${esc(x.cal)}</p>`:''}</div>`).join('')}</section>`;
   }
   /* typographic quotes in text (not inside tags): "x" -> “x”, it's -> it’s */
   const curly = html => html.replace(/(^|>)([^<]+)/g, (m, a, t) => a + t
@@ -1110,7 +1114,8 @@
   function viewJustice() {
     const J = window.JUSTICE || [];
     if (!J.length) return '<p class="muted">No excerpts loaded.</p>';
-    const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
+    const daily = J.filter(j=>j.tag!=='Creation'), pool=daily.length?daily:J;
+    const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = pool[((n % pool.length) + pool.length) % pool.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
     let h = '';
@@ -1121,7 +1126,7 @@
       const e = creation[((n % creation.length) + creation.length) % creation.length];
       h += `<section class="card justice-ecology"><div class="lab">${justiceIcon("leaf")}<span class="grow">Care for Creation</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? ' · '+esc(e.note) : ''}${e.url ? ` · <a target="_blank" rel="noopener noreferrer" href="${esc(e.url)}">source</a>` : ''}</p></section>`;
     }
-    const economic = J.filter(j => j.tag !== 'Creation' && /poor|poverty|wealth|rich|wages|workers|labor|labour|property|goods|economic|money|possess|common good|distribution|destitute|hungry|hunger|deprive them|share in our/i.test(j.text));
+    const economic = J.filter(j => j !== f && j.tag !== 'Creation' && /poor|poverty|wealth|rich|wages|workers|labor|labour|property|goods|economic|money|possess|common good|distribution|destitute|hungry|hunger|deprive them|share in our/i.test(j.text));
     if (economic.length) {
       const e = economic[((n % economic.length) + economic.length) % economic.length];
       h += `<section class="card justice-economic"><div class="lab">${justiceIcon("scales")}<span class="grow">Economic Justice</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? ' · '+esc(e.note) : ''}${e.url ? ` · <a target="_blank" rel="noopener noreferrer" href="${esc(e.url)}">source</a>` : ''}</p></section>`;
@@ -1132,22 +1137,27 @@
       h += `<section class="card justice-voice"><div class="lab">${justiceIcon("flame")}<span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
     }
     h += charitySaints(d);
-    const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
-    const rch = []; items.forEach(it => { let cur = [], w = 0; const flush = () => { if (cur.length) rch.push({ it, paras: cur }); cur = []; w = 0; }; it.paras.forEach(p => { const pw = p.split(/\s+/).length; if (w && w + pw > 230) flush(); cur.push(p); w += pw; }); flush(); });
-    const kinds = [rch.length ? 'r' : 't', 't'], kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
+    const readings = JusticeReadings.combine(items);
+    // Saved parts stay together. Longer readings can be expanded in this card;
+    // no continuation is scheduled for a later date.
+    const dailyReadings = readings.filter(r=>r.complete);
+    const kinds = [dailyReadings.length ? 'r' : 't', 't'], kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
     if (kind === 'r') {
-      const c = rch[((m3 % rch.length) + rch.length) % rch.length], parts = rch.filter(x => x.it === c.it), at = parts.indexOf(c) + 1;
-      h += `<section class="card justice-reading"><div class="lab">${justiceIcon("book")}<span class="grow">Reading · ${esc(c.it.author)}</span></div>${c.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.6">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem;margin:0">${esc(c.it.work)}${parts.length > 1 ? ` · ${at} of ${parts.length}, continued on later days` : ''} · <a target="_blank" rel="noopener" href="${esc(c.it.url)}">full text</a></p></section>`;
-    } else if (kind === 't' && tch.length) {
-      const c = tch[((m3 % tch.length) + tch.length) % tch.length];
-      h += `<section class="card justice-teaching"><div class="lab">${justiceIcon("book")}<span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${c.p}</div></section>`;
+      const c = dailyReadings[((m3 % dailyReadings.length) + dailyReadings.length) % dailyReadings.length];
+      const para=p=>`<p style="${QS}">${esc(p)}</p>`;
+      const passage=c.words>1200&&c.paras.length>1?para(c.paras[0])+`<details class="justice-reading-rest"><summary>Continue reading · the rest of this passage</summary>${c.paras.slice(1).map(para).join('')}</details>`:c.paras.map(para).join('');
+      h += `<section class="card justice-reading"><div class="lab">${justiceIcon("scroll")}<span class="grow">Reading · ${esc(c.author)}</span></div>${passage}<p class="muted" style="font-size:.85rem">${esc(c.work)} · <a target="_blank" rel="noopener noreferrer" href="${esc(c.url)}">source</a></p></section>`;
+    } else if (T.length) {
+      const c = T[((m3 % T.length) + T.length) % T.length];
+      h += `<section class="card justice-teaching"><div class="lab">${justiceIcon("quill")}<span class="grow">Teaching · ${esc(c.t)}</span></div><div class="justice-teaching-text" style="font-family:var(--serif);font-size:1.02rem;line-height:1.65">${c.h}</div></section>`;
     }
 
-    // Library: one card, four tabs
-    const tabs = [['teach', 'Teaching'], ['saints', 'Saints'], ['quotes', 'Quotations'], ['voices', 'Voices']];
+    // Library: complete pieces, with every saved reading part kept together.
+    const tabs = [['teach', 'Teaching'], ['readings', 'Readings'], ['saints', 'Saints'], ['quotes', 'Quotations'], ['voices', 'Voices']];
     const jt = st.jtab || 'teach';
     let body = '';
     if (jt === 'teach') body = T.map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(t.t)}</summary><div style="margin-top:8px;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${t.h}</div></details>`).join('');
+    else if (jt === 'readings') body = readings.length ? readings.map(r=>`<details class="justice-full-reading"><summary>${esc(r.author)} · ${esc(r.work)}</summary>${r.complete?r.paras.map(p=>`<p style="${QS}">${esc(p)}</p>`).join(''):'<p class="muted">Some saved sections are missing. Use the source for the complete reading.</p>'}<p><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">Read the source</a></p></details>`).join('') : '<p class="muted">No complete readings are saved yet. Teaching and quotations remain available.</p>';
     else if (jt === 'saints') body = `<p class="muted" style="font-size:.82rem">${S.length} saints who gave their lives to the poor, through the year.</p>` + S.slice().sort((a, b) => a.m * 100 + a.d - b.m * 100 - b.d).map(x => `<div style="padding:9px 0;border-top:1px solid var(--line)"><b>${esc(x.name)}</b> <span class="muted" style="font-size:.8rem">· ${esc(L.MN[x.m - 1].slice(0, 3))} ${x.d}</span><br><span style="font-size:.92rem">${esc(x.why)}</span></div>`).join('');
     else if (jt === 'quotes') {
       const order = ['Scripture', 'Church Father', 'Doctor of the Church', 'Saint', 'Council', 'Pope', 'Encyclical', 'Catechism', 'Creation'], groups = {};
@@ -1155,7 +1165,7 @@
       const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture', Creation: 'Care for creation' };
       body = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99).map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(label[t] || t)} <span class="muted" style="font-weight:400">· ${groups[t].length}</span></summary>${groups[t].map(j => jRow(j.text, j.who + (j.note ? ' — ' + j.note : ''), '', j.url)).join('')}</details>`).join('');
     } else body = `<p class="muted" style="font-size:.82rem">Catholic Workers, liberation theologians, Catholic socialists, labour leaders and peacemakers, in their own words. Some of their views were debated in the Church in their time.</p>` + R.map(x => jRow(x.text, x.who + ' · ' + x.src, x.bio, x.url)).join('');
-    h += `<details class="card justice-library" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
+    h += `<details class="card justice-library" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">${justiceIcon("archive")} Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
     return curly(h);
   }
 
@@ -1525,7 +1535,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v212';
+  const APP_BUILD = 'ora-v213';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
