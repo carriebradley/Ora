@@ -1072,7 +1072,7 @@
   function charitySaints(d) {
     const S = window.JUSTICE_SAINTS || []; if (!S.length) return '';
     const m = d.getUTCMonth() + 1, dd = d.getUTCDate(), today = S.filter(x => x.m === m && x.d === dd);
-    return today.map(x => `<section class="card"><div class="lab"><span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:6px 0 2px"><b>${esc(x.name)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem;line-height:1.5">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
+    return today.map(x => `<section class="card justice-charity"><div class="lab">${justiceIcon("heart")}<span class="grow">Saint of charity · today</span></div><p style="font-family:var(--serif);font-size:1.1rem;margin:6px 0 2px"><b>${esc(x.name)}</b></p><p style="margin:0;font-family:var(--serif);font-size:1.05rem;line-height:1.5">${esc(x.why)}</p>${x.cal ? `<p class="muted" style="font-size:.76rem;margin:0">${esc(x.cal)}</p>` : ''}</section>`).join('');
   }
   /* typographic quotes in text (not inside tags): "x" -> “x”, it's -> it’s */
   const curly = html => html.replace(/(^|>)([^<]+)/g, (m, a, t) => a + t
