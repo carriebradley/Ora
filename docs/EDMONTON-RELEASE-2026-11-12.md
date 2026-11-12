@@ -1,6 +1,6 @@
 # Edmonton calendar and private text reader
 
-The Ukrainian option now uses Edmonton's dated calendar facts and Scripture references throughout Ora. The Ukrainian/Melkite choices in More and Settings remain available, and Melkite continues to use Newton's verified 2026 dataset. This release preserves the current navigation, typography and More layout, including Sacred Liturgy inside More.
+The Ukrainian option now uses Edmonton's dated calendar facts and Scripture references throughout Ora. The Ukrainian/Melkite choices in More and Settings remain available, and Melkite continues to use Newton's verified 2026 dataset. This release preserves the current navigation, typography and More layout, including Sacred Liturgy inside More. The primary Byzantine calendar card no longer mixes in the older Winnipeg and undated UGCC supplemental lists.
 
 ## Sources and coverage
 

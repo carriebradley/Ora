@@ -376,25 +376,11 @@
       <h2>${esc(r.title)}</h2><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
-  function byzSaintHTML(iso, r) {
-    if (S.byzChurch !== 'ukrainian') return ''; // This supplemental dataset is Ukrainian, not a Ruthenian ordo.
-    const B = LITDATA.byzSaints; if (!B) return '';
-    const d = L.add(P(iso), S.byzOldCal ? -13 : 0), t = B[(d.getUTCMonth() + 1) + '/' + d.getUTCDate()];
-    if (L.byzAnnaDay(S) === 8 && d.getUTCMonth() === 11 && d.getUTCDate() === 9) return ''; // Supplemental Ukrainian list uses December 9.
-    if (!t) return '';
-    const wk = x => new Set(x.toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter(w => w.length > 4 && !/^(saint|great|feast|which|their|those|father|mother|venerable|martyr|martyrs|after|sunday|monday|tuesday|wednesday|thursday|friday|saturday|week)$/.test(w)));
-    const tw = wk(r.title), sw = wk(t);
-    if ([...sw].filter(x => tw.has(x)).length >= 2) return '';
-    return `<div style="margin:10px 0 4px;padding:8px 10px;border-left:3px solid var(--lit);background:var(--line);border-radius:6px"><div class="muted" style="font-size:.74rem;text-transform:uppercase;letter-spacing:.04em">Saints of the day</div><div style="font-family:var(--serif);font-size:1.02rem;margin-top:2px">${esc(t)}</div><div class="muted" style="font-size:.7rem;margin-top:3px">Ukrainian Catholic calendar (Archeparchy of Winnipeg)</div></div>`;
-  }
   function cardByz(v) {
-    const r = v.byz, u = v.ugcc;
-    const words = t => new Set(t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 4));
-    const known = [r.title, ...r.also.map(x => x.title)].map(words);
-    const ev = S.byzChurch !== 'ukrainian' ? [] : u.day.filter(e => { if (L.byzAnnaDay(S) === 8 && v.iso.endsWith('-12-09') && /anna|anne|conception/i.test(e.n)) return false; const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
+    const r = v.byz;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
-      ${byzSaintHTML(v.iso, r)}${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
+      ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
   }
   const FMON = ['January','February','March','April','May','June','July','August','September','October','November','December'];

@@ -96,6 +96,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  }
  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-12-08`);
  assert.match(await page.locator('#app').innerText(),/Patapius/);
+ assert.doesNotMatch(await page.locator('#app').innerText(),/Archeparchy of Winnipeg|your UGCC calendar/);
  await page.goto(`${base}index.html?tab=readings&rite=byz&date=2026-05-02`);
  assert.match(await page.locator('#app').innerText(),/source conflict and was withheld/);
  await page.goto(`${base}index.html?tab=more&rite=byz&date=2026-11-12`);
