@@ -52,7 +52,7 @@
     const q = new URLSearchParams(location.search), date = q.get('date');
     if (['today', 'pray', 'readings', 'liturgy', 'justice', 'calendar', 'more'].includes(q.get('tab'))) st.tab = q.get('tab');
     if (/^\d{4}-\d\d-\d\d$/.test(date || '') && +date.slice(0, 4) >= 1000 && L.iso(P(date)) === date) st.date = date;
-    if (['morning', 'evening', 'night'].includes(q.get('kind'))) st.kind = q.get('kind');
+    if (['morning', 'readings', 'evening', 'night'].includes(q.get('kind'))) st.kind = q.get('kind');
     if (Object.hasOwn(RITES, q.get('rite'))) S.rite = q.get('rite');
     if (Object.hasOwn(RITES, q.get('rite'))) st.readRite = S.rite;
   }
