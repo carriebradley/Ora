@@ -19,10 +19,10 @@ async function open(a,url){
  await reset();const current=token;restore=a;page=1;const d=$('source-reader');
  $('source-reader-title').textContent=a.textContent.trim()||'Official source';
  $('source-reader-original').href=url.href;
- $('source-reader-text').hidden=false;$('source-reader-frame').hidden=true;
+ $('source-reader-text').hidden=false;$('source-reader-frame').hidden=true;$('source-reader-frame').removeAttribute('src');
  $('source-reader-text').textContent='Loading readable text…';$('source-reader-note').textContent='Single-column reading · official publisher source.';
  $('source-reader-pages').hidden=true;update();d.showModal();
- if(!/\.pdf$/i.test(url.pathname)){ $('source-reader-text').hidden=true;$('source-reader-frame').hidden=false;$('source-reader-frame').src=url.href;return;}
+ if(!/\.pdf$/i.test(url.pathname)){ $('source-reader-text').textContent='This source is a web page. Use Open original to view it on the publisher’s website.';return;}
  try{
    const lib=await import('./vendor/pdfjs/pdf.mjs');lib.GlobalWorkerOptions.workerSrc='./vendor/pdfjs/pdf.worker.mjs';
    const task=lib.getDocument({url:url.href,isEvalSupported:false,enableXfa:false});const loaded=await task.promise;
