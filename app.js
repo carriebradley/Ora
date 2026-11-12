@@ -1188,7 +1188,7 @@
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    h += '</div><div class="calendar-key" aria-label="Calendar legend"><span><i class="key-ring" aria-hidden="true"></i> Feast day</span><span><i class="key-fast" aria-hidden="true">ƒ</i> Fast day</span><span><i class="key-colors" aria-hidden="true"><i></i><i></i><i></i></i> Liturgical colors</span></div>';
+    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitential seasons</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyrs / Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> White · Festive celebrations</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Major feasts</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Joyful Sundays</span></div>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
