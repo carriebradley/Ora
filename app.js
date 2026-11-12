@@ -486,7 +486,7 @@
     const p = POPE[iso.slice(0, 7)], mo = L.MN[+iso.slice(5, 7) - 1], Q = C.POPEQ || [];
     const n = Math.round(P(iso).getTime() / 864e5), q = Q.length ? Q[(((n + st.popeShift) % Q.length) + Q.length) % Q.length] : null;
     let h = `<section class="card pope-card"><div class="lab"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" style="flex:none;display:block;margin:0"><g fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g stroke="#a9aeb6" transform='matrix(-1 0 0 1 32 0)'><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#a9aeb6" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g><g stroke="#c9a227"><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#c9a227" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g></g></svg><span class="grow">From the Holy Father</span></div>`;
-    if (q) h += `<div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · <a target="_blank" rel="noopener" href="${esc(q.u)}">${esc(q.w)}</a></small></div><div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="pnext">Another</button></div>`;
+    if (q) h += `<div class="pope-reflection-heading">Papal reflection</div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · <a target="_blank" rel="noopener" href="${esc(q.u)}">${esc(q.w)}</a></small></div><div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="pnext">Another</button></div>`;
     h += `<div class="pope-subsection"><div class="pope-subheading">Monthly prayer intention <span class="muted">· ${esc(mo)}</span></div>${p ? `<p class="pope-intention-title">${esc(p[0])}</p><p class="muted pope-intention-text">${esc(p[1])}</p>` : '<p class="muted">This month’s intention is available from the official source.</p>'}<a class="pope-source-link" target="_blank" rel="noopener" href="https://www.popesprayer.va/praywiththepope/">Pray with the Pope</a></div>`;
     const ag = angelus, agAge = ag && ag.date ? (P(iso) - P(ag.date)) / 864e5 : 99;
     if (ag && Array.isArray(ag.pray) && ag.pray.length && agAge >= 0 && agAge < 14) {
@@ -1059,6 +1059,7 @@
       leaf:'<path d="M20 4C10 4 4 8 4 15c0 3 2 5 5 5 7 0 11-6 11-16zM5 19c3-5 7-8 12-10"/>',
       book:'<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1zM12 6v14"/>',
       hands:'<path d="M3 14l4-4 4 4M21 14l-4-4-4 4M7 10V6m10 4V6M7 17c2 2 4 3 5 3s3-1 5-3M9 13l3 3 3-3"/>',
+      flame:'<path d="M12 22c4.4 0 7-3.1 7-7.2 0-3.5-2.1-6.1-4.1-8.2.2 3-1 4.5-2 5.1C13 8.3 11.4 5.5 9 2c.2 4.3-4 7.5-4 12.8C5 18.9 7.7 22 12 22z"/>',
       heart:'<path d="M12 20s-9-5.7-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.3-9 11-9 11z"/>'
     };
     return '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:var(--gold)">'+(paths[kind]||paths.book)+'</svg>';
@@ -1088,20 +1089,19 @@
     let h = '';
     // Today: one quotation and one short piece, so the material lasts across many days
     h += `<div class="justice-daily">${justiceCard(f)}</div>`;
-    const ecology = J.filter(j => j.tag === "Creation");
-    if (ecology.length) { const e = ecology[((n % ecology.length) + ecology.length) % ecology.length]; h += `<section class="card justice-ecology"><div class="lab">${justiceIcon("leaf")}<span class="grow">Care for creation · Integral ecology</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? " · "+esc(e.note) : ""}${e.url ? ` · <a target="_blank" rel="noopener" href="${esc(e.url)}">source</a>` : ""}</p></section>`; }
     const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
     const rch = []; items.forEach(it => { let cur = [], w = 0; const flush = () => { if (cur.length) rch.push({ it, paras: cur }); cur = []; w = 0; }; it.paras.forEach(p => { const pw = p.split(/\s+/).length; if (w && w + pw > 230) flush(); cur.push(p); w += pw; }); flush(); });
-    const kinds = [rch.length ? 'r' : 't', 't', 'v'].filter(k => k !== 'v' || R.length), kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
+    const kinds = [rch.length ? 'r' : 't', 't'], kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
     if (kind === 'r') {
       const c = rch[((m3 % rch.length) + rch.length) % rch.length], parts = rch.filter(x => x.it === c.it), at = parts.indexOf(c) + 1;
       h += `<section class="card justice-reading"><div class="lab">${justiceIcon("book")}<span class="grow">Reading · ${esc(c.it.author)}</span></div>${c.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.6">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem;margin:0">${esc(c.it.work)}${parts.length > 1 ? ` · ${at} of ${parts.length}, continued on later days` : ''} · <a target="_blank" rel="noopener" href="${esc(c.it.url)}">full text</a></p></section>`;
     } else if (kind === 't' && tch.length) {
       const c = tch[((m3 % tch.length) + tch.length) % tch.length];
       h += `<section class="card justice-teaching"><div class="lab">${justiceIcon("book")}<span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${c.p}</div></section>`;
-    } else if (R.length) {
-      const x = R[((m3 % R.length) + R.length) % R.length];
-      h += `<section class="card justice-voice"><div class="lab">${justiceIcon("heart")}<span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
+    }
+    if (R.length) {
+      const x = R[((n % R.length) + R.length) % R.length];
+      h += `<section class="card justice-voice"><div class="lab">${justiceIcon("flame")}<span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
     }
     h += charitySaints(d);
     // Library: one card, four tabs
