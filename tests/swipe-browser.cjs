@@ -15,11 +15,12 @@ module.exports=async(browser,base)=>{
  };
  const swipe=async(left=true)=>{
   await page.locator('.tab-heading').waitFor({state:'visible'}).catch(async e=>{console.error('Swipe startup:',{url:page.url(),errors,body:(await page.locator('body').innerText()).slice(0,2000)});throw e;});
-  const box=await page.locator('.tab-heading').boundingBox();
-  await drag(left?290:100,box.y+box.height/2,left?-190:190,0);
+  const box=await page.locator('#app').boundingBox();
+  await drag(left?290:100,box.y+25,left?-190:190,0);
  };
  try{
   await page.goto(`${base}index.html?tab=today&date=2026-11-12&rite=roman`);
+  await page.waitForTimeout(200);
   await swipe(false);assert.equal(await active(),'today','first page does not wrap');
   for(const tab of ['pray','readings','justice','calendar','more']){
    await swipe();assert.equal(await active(),tab,'native swipe advances to '+tab);
@@ -28,7 +29,7 @@ module.exports=async(browser,base)=>{
   await swipe();assert.equal(await active(),'more','last page does not wrap');
   for(const tab of ['calendar','justice','readings','pray','today']){await swipe(false);assert.equal(await active(),tab);}
   assert.equal(await page.evaluate(()=>document.activeElement.id),'app','content receives focus');
-  let box=await page.locator('.tab-heading').boundingBox(),y=box.y+box.height/2;
+  let box=await page.locator('#app').boundingBox(),y=box.y+25;
   await drag(220,y,-25,0);assert.equal(await active(),'today','small drags do not navigate');
   await drag(12,y,190,0);assert.equal(await active(),'today','browser edge gestures stay available');
   await page.locator('#nav [data-tab="justice"]').click();
