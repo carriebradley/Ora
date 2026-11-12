@@ -211,9 +211,9 @@
         if (s.chk) h += `<p class="note">Check this one: ${esc(s.chk)}</p>`;
         h += '</div>';
       }
-      for (const n of day.notes) h += `<p class="muted">${esc(n)}</p>`;
       for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
+    if(day)for(const n of day.notes || [])h += `<p class="muted">${esc(n)}</p>`;
     h += `<p class="muted" style="font-size:.8rem">Scripture passages are shown above in the public-domain American Standard Version when available. For a Catholic translation or when the text cannot load, use the reference links below.</p>`;
     h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step">${day.sets.length > 1 ? `<b>${esc(s.t)}</b>` : ''}${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
     if (church === 'melkite') {

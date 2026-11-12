@@ -16,6 +16,7 @@ async function showPage(){
  }catch(_){if(current===token)$('source-reader-text').textContent='Unable to extract this page. Open the original document.';}
 }
 function showOriginal(url){
+ $('source-reader-controls').hidden=true;
  $('source-reader-text').hidden=true;const frame=$('source-reader-frame');frame.hidden=false;frame.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups');frame.src=url.href;
  $('source-reader-note').textContent='Original publisher document. If it cannot display here, use Open original. Personal files can also be opened in Optional offline text.';
 }
@@ -25,7 +26,7 @@ async function open(a,url){
  $('source-reader-original').href=url.href;
  $('source-reader-text').hidden=false;$('source-reader-frame').hidden=true;$('source-reader-frame').removeAttribute('src');
  $('source-reader-text').textContent='Loading readable text…';$('source-reader-note').textContent='Single-column reading · official publisher source.';
- $('source-reader-pages').hidden=true;update();d.showModal();
+ $('source-reader-pages').hidden=true;$('source-reader-controls').hidden=false;update();d.showModal();
  if(!/\.pdf$/i.test(url.pathname)){ showOriginal(url);return;}
  try{
    const lib=await import('./vendor/pdfjs/pdf.mjs');lib.GlobalWorkerOptions.workerSrc='./vendor/pdfjs/pdf.worker.mjs';
