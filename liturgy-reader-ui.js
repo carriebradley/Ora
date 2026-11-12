@@ -76,14 +76,20 @@
     for(let number=33;number<=113;number+=2){
       const page=await book.getPage(number);
       const items=(await page.getTextContent()).items;
-      const lines=[],current=[];
-      const push=()=>{const t=current.join(' ').replace(/\s+/g,' ').trim();if(t)lines.push(t);current.length=0;};
+      // Reconstruct fixed-position PDF text by physical line instead of
+      // relying on fragment order or the inconsistent hasEOL flags.
+      const rows=new Map();
       for(const item of items){
-        const t=String(item.str||'').trim();
-        if(t)current.push(t);
-        if(item.hasEOL)push();
+        const value=String(item.str||'');if(!value.trim())continue;
+        const x=Number(item.transform?.[4]||0),y=Number(item.transform?.[5]||0);
+        const rowKey=Math.round(y*2)/2;
+        if(!rows.has(rowKey))rows.set(rowKey,[]);
+        rows.get(rowKey).push({x,text:value});
       }
-      push();
+      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,fragments])=>{
+        fragments.sort((a,b)=>a.x-b.x);
+        return fragments.map(item=>item.text.trim()).filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
+      }).filter(Boolean);
       const clean=lines.filter(line=>{
         if(/^\d{1,3}$/.test(line))return false;
         if(/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(line))return false;
