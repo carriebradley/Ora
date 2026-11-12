@@ -1089,6 +1089,17 @@
     let h = '';
     // Today: one quotation and one short piece, so the material lasts across many days
     h += `<div class="justice-daily">${justiceCard(f)}</div>`;
+    const creation = J.filter(j => j.tag === 'Creation');
+    if (creation.length) {
+      const e = creation[((n % creation.length) + creation.length) % creation.length];
+      h += `<section class="card justice-ecology"><div class="lab">${justiceIcon("leaf")}<span class="grow">Care for Creation</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? ' · '+esc(e.note) : ''}${e.url ? ` · <a target="_blank" rel="noopener noreferrer" href="${esc(e.url)}">source</a>` : ''}</p></section>`;
+    }
+    const economic = J.filter(j => j.tag !== 'Creation' && /poor|poverty|wealth|rich|wages|workers|labor|labour|property|goods|economic|money|possess|common good|distribution|destitute|hungry|hunger|deprive them|share in our/i.test(j.text));
+    if (economic.length) {
+      const e = economic[((n % economic.length) + economic.length) % economic.length];
+      h += `<section class="card justice-economic"><div class="lab">${justiceIcon("scales")}<span class="grow">Economic Justice</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? ' · '+esc(e.note) : ''}${e.url ? ` · <a target="_blank" rel="noopener noreferrer" href="${esc(e.url)}">source</a>` : ''}</p></section>`;
+    }
+
     const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
     const rch = []; items.forEach(it => { let cur = [], w = 0; const flush = () => { if (cur.length) rch.push({ it, paras: cur }); cur = []; w = 0; }; it.paras.forEach(p => { const pw = p.split(/\s+/).length; if (w && w + pw > 230) flush(); cur.push(p); w += pw; }); flush(); });
     const kinds = [rch.length ? 'r' : 't', 't'], kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
