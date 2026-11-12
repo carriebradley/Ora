@@ -28,8 +28,8 @@
   const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable' }, store.get('ora.settings', {}));
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
-  S.byzChurch = 'ruthenian';
-  S.byzLiturgyChurch = 'ruthenian';
+  if (!['ukrainian', 'melkite'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
+  S.byzLiturgyChurch = S.byzChurch;
   S.byzAnna = 'default'; // Pittsburgh observes the Maternity of Holy Anna on December 8.
   if (!['compact', 'comfortable', 'large'].includes(S.readingSize)) S.readingSize = 'comfortable';
   const applyReadingSize = () => document.documentElement.style.setProperty('--reading-scale', { compact: .94, comfortable: 1, large: 1.18 }[S.readingSize]);
@@ -384,7 +384,7 @@
     const words = t => new Set(t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 4));
     const known = [r.title, ...r.also.map(x => x.title)].map(words);
     const ev = S.byzChurch !== 'ukrainian' ? [] : u.day.filter(e => { if (L.byzAnnaDay(S) === 8 && v.iso.endsWith('-12-09') && /anna|anne|conception/i.test(e.n)) return false; const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${byzSaintHTML(v.iso, r)}${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
@@ -1018,7 +1018,7 @@
     const name = byzantine ? service.title : 'Roman Mass';
     const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : romanReadingsHTML(st.date, false);
     const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
-    const note = byzantine ? `<p class="muted">${esc(service.note)} Ruthenian Byzantine Catholic tradition of Pittsburgh; parish schedules may differ.</p>` : '';
+    const note = byzantine ? `<p class="muted">${esc(service.note)} ${S.byzChurch === 'melkite' ? 'Melkite Greek Catholic Diocese of Newton (2026 calendar)' : 'Ukrainian Greek Catholic tradition in the United States'}; parish schedules may differ.</p>` : '';
     const reader = LiturgicalText.card(byzantine ? service.id : 'roman');
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
@@ -1206,8 +1206,9 @@
   }
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
+    <section class="card"><div class="lab"><span class="grow">Byzantine Calendar · United States</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This choice controls Byzantine commemorations, calendar information, and readings throughout Ora. Melkite dates follow the Diocese of Newton's verified 2026 calendar. Outside 2026, unverified dates are identified rather than invented.</p></section>
     <details class="card more-liturgy"><summary><b>Sacred Liturgy</b> <span class="muted">· work in progress</span></summary><div class="more-liturgy-content">${viewLiturgy()}</div></details>
-    <details class="card"><summary><b>About the Divine Office texts</b></summary><p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For the full Ruthenian offices, consult the <a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Pittsburgh prayer books</a>. Roman and Traditional texts also identify their sources within the prayers.</p></details>
+    <details class="card"><summary><b>About the Divine Office texts</b></summary><p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For additional Ruthenian resources, consult the <a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Pittsburgh prayer books</a>. Roman and Traditional texts also identify their sources within the prayers.</p></details>
     <details class="card"><summary><b>Fasting &amp; abstinence · guidance</b></summary><div class="fasting-guidance"><p>The small crossed-food symbols describe restrictions identified in Ora's calendar entries; they are not a complete statement of binding obligations.</p><p><b>Roman:</b> Current Latin Catholic fasting and abstinence are governed by canon law and applicable bishops' conference rules. <a href="https://www.usccb.org/prayer-and-worship/liturgical-year/lent" target="_blank" rel="noopener noreferrer">USCCB guidance</a>.</p><p><b>Byzantine:</b> Ukrainian Greek Catholic fasting discipline varies by eparchy and applicable particular law. The Byzantine calendar in Ora may follow a different tradition; consult your eparchy for binding rules. Oil restrictions are not automatically implied by a fasting season.</p><p><b>Traditional:</b> Sarum fasting marks historical observances, not present-day universal Catholic obligations. Personal fasting may be adapted for health and pastoral reasons.</p></div></details>
     <details class="card"><summary><b>Resources · liturgical documents</b></summary><div style="margin-top:12px"><p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ruthenian Byzantine</h3><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p></div></details>
     ${felireMore()}
@@ -1395,7 +1396,7 @@
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
-      <p class="muted">Byzantine calendar and Divine Liturgy: Ruthenian Byzantine Catholic tradition of Pittsburgh.</p>
+      ${sel('s_byzchurch', 'Byzantine Catholic calendar (USA)', [['ukrainian','Ukrainian Greek Catholic'],['melkite','Melkite Greek Catholic · Newton (2026 verified)']], S.byzChurch)}<p class="muted">Melkite dates are verified for 2026 only. Ukrainian commemorations use the available U.S. Ukrainian sources; local eparchial calendars may differ.</p>
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
@@ -1404,7 +1405,7 @@
   }
   function saveSettings() {
     const g = id => { const e = $('#' + id); return e ? e.value : null; };
-    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: 'ruthenian', byzLiturgyChurch: 'ruthenian', byzAnna: 'default', readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
+    Object.assign(S, { rite: g('s_rite'), ascension: g('s_asc'), corpus: g('s_corp'), epiphany: g('s_epi'), byzChurch: g('s_byzchurch') || S.byzChurch, byzLiturgyChurch: g('s_byzchurch') || S.byzChurch, byzAnna: 'default', readingSize: g('s_reading'), byzPascha: 'gregorian', byzOldCal: false, ladyDayTransfer: $('#s_lady').checked });
     if ($('#s_voice')) { S.voice = g('s_voice'); S.rate = +g('s_rate'); }
     applyReadingSize(); save(); infoCache.clear(); $('#dlg').close(); render();
   }
@@ -1420,6 +1421,7 @@
       case 'next': st.date = addISO(st.date, 1); st.month = null; break;
       case 'today': st.date = todayISO(); st.month = null; break;
       case 'datepick': { const dp = $('#dp'); if (dp.showPicker) dp.showPicker(); else dp.click(); return; }
+      case 'byzchoice': if (!['ukrainian','melkite'].includes(v)) return; S.byzChurch = v; S.byzLiturgyChurch = v; save(); infoCache.clear(); break;
       case 'rr': st.readRite = v; break;
       case 'jtab': st.jtab = v; break;
       case 'rite': if (!Object.hasOwn(RITES, v)) return; S.rite = v; st.readRite = v; save(); break;
