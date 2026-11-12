@@ -16,7 +16,7 @@
     return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" aria-label="Prayers of the day">
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
-        ${id==='melkite-chrysostom'?'<p class="muted">Select your personal copy of the English Melkite Divine Liturgy of St. John Chrysostom. <a href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener noreferrer">Melkite PDF source</a></p>':''}
+        ${id==='melkite-chrysostom'?'<p class="muted">Select your personal English Melkite copy. <a href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener noreferrer">Publisher-hosted 2009 draft</a> · this source has not been verified as the current approved edition.</p>':''}
         <p class="reader-status" role="status">Checking saved book…</p>
         <button class="btn" data-reader="open" disabled>Open original book</button>
         <label for="liturgical-file">Choose a PDF or EPUB</label>
@@ -114,7 +114,7 @@
 
   // Generic PDF reading view for a user's private Melkite copy. Unlike the
   // alternating-language Edmonton booklet, do not assume fixed page numbers.
-  async function melkitePrayerText(book){
+  async function standardPrayerText(book,id){
     const sections=[];let foundLiturgy=false;
     for(let number=1;number<=book.numPages;number++){
       const page=await book.getPage(number),items=(await page.getTextContent()).items;
@@ -131,6 +131,7 @@
         // Avoid a table-of-contents match: liturgy must also have actual prayers.
         if(/(?:divine liturgy of (?:our father among the saints )?(?:saint|st\.?) john chrysostom|the divine liturgy)/i.test(full)&&/(?:blessed is the kingdom|in peace let us pray|lord, have mercy)/i.test(full))foundLiturgy=true;
         else if(/(?:blessed is the kingdom|(?:deacon|priest):\s*in peace let us pray to the lord)/i.test(full))foundLiturgy=true;
+        else if(id.endsWith('presanctified')&&/blessed is our God/i.test(full))foundLiturgy=true;
         else continue;
       }
       const end=lines.findIndex(line=>/^(?:appendix|appendices|glossary|acknowledg(?:e)?ments|prayers (?:before|after) (?:the )?(?:divine liturgy|liturgy)|private prayers|about (?:this|the) (?:book|translation))$/i.test(line.text));
@@ -249,7 +250,7 @@
           }
         }else if((section.dataset.textId.startsWith('melkite-')||['basil','presanctified'].includes(section.dataset.textId))&&book.kind!=='epub'){
           status.textContent='Preparing your saved prayers…';
-          const liturgy=await prayerPreview(saved,book,melkitePrayerText);
+          const liturgy=await prayerPreview(saved,book,b=>standardPrayerText(b,section.dataset.textId));
           if(!section.isConnected||token!==hydrateVersion)return;
           if(liturgy){
             renderEdmontonPrayerText(preview,liturgy);continuous=true;

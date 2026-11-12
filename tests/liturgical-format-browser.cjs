@@ -31,6 +31,14 @@ module.exports=async(page,base,artifacts,violations)=>{
   await page.screenshot({path:path.join(artifacts,`private-liturgy-${colorScheme}.png`),fullPage:true});
  }
  await page.emulateMedia({colorScheme:'light'});
+ await page.evaluate(async()=>{
+  const originalGet=LiturgyReader.get,originalLoad=LiturgyReader.load;
+  document.querySelector('.liturgical-text').dataset.textId='melkite-presanctified';
+  LiturgyReader.get=async id=>({id,name:'fictional-presanctified.pdf',format:'pdf',pages:1,page:1,updated:2,blob:new Blob()});
+  LiturgyReader.load=async()=>({numPages:1,getPage:async()=>({getTextContent:async()=>({items:[{str:'PRIEST: Blessed is our God. Fixture Presanctified opening.',transform:[1,0,0,12,20,700]}]})}),destroy:async()=>{}});
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=originalGet;LiturgyReader.load=originalLoad;}
+ });
+ assert.match(await page.locator('.reader-inline-text').innerText(),/Fixture Presanctified opening/,'Presanctified has a distinct opening boundary');
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };
