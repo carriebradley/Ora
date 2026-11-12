@@ -224,6 +224,13 @@ nav button.on b{color:var(--lit)}
 .calendar-key{display:flex;align-items:center;flex-wrap:wrap;gap:9px 16px;margin:14px 0 3px;color:var(--muted);font-size:.78rem;line-height:1.4}.calendar-key>span{display:inline-flex;align-items:center;gap:7px}.key-ring{display:inline-block;width:13px;height:13px;border:2px solid #c9a227;border-radius:50%}.key-fast{display:inline-grid;place-items:center;width:15px;height:15px;color:#a38abf;font-size:1rem;font-style:normal}.key-colors{display:inline-flex;gap:3px}.key-colors i{width:8px;height:8px;border-radius:50%;background:#59805d}.key-colors i:nth-child(2){background:#8a6ba4}.key-colors i:nth-child(3){background:#b23e3e}.kept-entry{margin:12px 0;border-top:1px solid var(--line);padding-top:10px}.kept-entry>p{font-size:.92rem;line-height:1.5;margin:8px 0}.kept-source{font-size:.84rem;color:var(--muted)}.kept-source>summary{cursor:pointer}.kept-source p{line-height:1.5;margin:7px 0}
 .calendar-key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin-top:14px}.calendar-key>span{min-width:0;font-size:.72rem;line-height:1.35}.key-dot{width:10px;height:10px;min-width:10px;border-radius:50%;background:var(--key);border:1px solid rgba(180,170,160,.35)}@media(max-width:370px){.calendar-key{grid-template-columns:1fr}}\n.tab-heading h1{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.page-heading-icon{flex:none;color:var(--gold)}.calendar-key .key-dot[style*="#c9899e"]{box-shadow:0 0 0 1px rgba(201,137,158,.15)}
 .office-card-eyebrow{display:flex;align-items:center;gap:11px;margin:0 0 15px 3px;color:var(--muted);font-family:var(--sans);font-size:.78rem;font-weight:650;letter-spacing:.095em;text-transform:uppercase;line-height:1.35}.office-card-eyebrow svg{width:19px;height:19px;flex:none;fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.tab-heading h1{gap:0}
+/* Uniform page-title rhythm on all primary Ora pages. */
+#app > .tab-heading{padding:6px 4px 0;margin:0 0 22px}
+#app > .tab-heading h1{font-family:var(--serif);font-size:1.5rem;line-height:1.2;font-weight:600;margin:0}
+#app > .tab-heading + .card,
+#app > .tab-heading + section.card,
+#app > .tab-heading + .calendar-overview{margin-top:0}
+@media(max-width:480px){#app > .tab-heading{margin-bottom:22px}}
 </style>
 </head>
 <body>
