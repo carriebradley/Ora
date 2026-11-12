@@ -30,13 +30,14 @@
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
   if (!['ukrainian', 'melkite'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
   S.byzLiturgyChurch = S.byzChurch;
-  S.byzAnna = 'default'; // Pittsburgh observes the Maternity of Holy Anna on December 8.
+  S.byzAnna = 'default'; // Ukrainian and Melkite calendars observe Saint Anna on December 9.
+  S.byzSource = 'edmonton';
   if (!['compact', 'comfortable', 'large'].includes(S.readingSize)) S.readingSize = 'comfortable';
   const applyReadingSize = () => document.documentElement.style.setProperty('--reading-scale', { compact: .94, comfortable: 1, large: 1.18 }[S.readingSize]);
   applyReadingSize();
   const save = () => store.set('ora.settings', S);
-  // User-requested migration keeps every Byzantine view in the Pittsburgh tradition.
-  if (!S.ruthenian2026) { S.ruthenian2026 = true; save(); }
+  // Preserve the Ukrainian/Melkite choice and move Ukrainian sources to Edmonton.
+  if (!S.edmonton2026) { S.edmonton2026 = true; save(); }
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
     prayView: 'office', liturgyView: 'byz', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
 
@@ -190,8 +191,11 @@
   const bible = c => `https://www.biblegateway.com/passage/?search=${encodeURIComponent(c.replace(/\s*\([^)]*\)/g, '').trim())}&version=RSVCE`;
   const citeLinks = txt => String(txt).split(' · ').map(c => `<a href="${bible(c)}" target="_blank" rel="noopener">${esc(c)}</a>`).join(' · ');
   const byzDay = (iso, church = S.byzChurch) => {
-    const day = ByzLect.read(P(iso), 0, L.westernEaster, church, L.byzAnnaDay(S));
-    day.notes = day.notes.map(note => note.startsWith('Saint Anna’s feast') ? 'Pittsburgh observes the Maternity of Holy Anna on December 8.' : note);
+    if (church === 'melkite') return Melkite.read(iso) || {sets:[],notes:['Verified Melkite readings are unavailable for this year.']};
+    const dated = Edmonton.read(iso); if (dated) return dated;
+    const day = ByzLect.read(P(iso), 0, L.westernEaster, 'ukrainian', 9);
+    day.notes = day.notes.filter(note => !note.startsWith('Saint Anna’s feast'));
+    day.notes.unshift(Edmonton.source.withheld[iso] ? 'Calculated Ukrainian reading cycle: Edmonton’s dated entry has a source conflict and was withheld.' : 'Calculated Ukrainian reading cycle: a verified Edmonton entry is not bundled for this date.');
     return day;
   };
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
@@ -212,8 +216,12 @@
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
     h += `<p class="muted" style="font-size:.8rem">Scripture passages are shown above in the public-domain American Standard Version when available. For a Catholic translation or when the text cannot load, use the reference links below.</p>`;
     h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step">${day.sets.length > 1 ? `<b>${esc(s.t)}</b>` : ''}${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
-    h += `<p class="muted" style="font-size:.8rem">Ruthenian Byzantine Catholic practice of Pittsburgh. Reading references use the Slavic lectionary, with selected corrections checked against the <a href="https://mci.archpitt.org/Lectionary.html" target="_blank" rel="noopener">Metropolitan Cantor Institute</a>. This is a computed cycle; consult the parish Typikon for feast combinations.</p>`;
-    h += `<div class="row"><a class="btn" href="https://mci.archpitt.org/Lectionary.html" target="_blank" rel="noopener">Ruthenian lectionary</a><a class="btn" href="https://mci.archpitt.org/sheetmusic/general/Menaion_${L.MN[P(v.iso).getUTCMonth()]}.pdf" target="_blank" rel="noopener">${L.MN[P(v.iso).getUTCMonth()]} hymns and saints</a>${v.iso.startsWith('2026-') ? '<a class="btn" href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener">2026 Pittsburgh calendar</a>' : ''}</div>`;
+    if (church === 'melkite') {
+      h += `<p class="muted">Melkite Catholic Diocese of Newton · ${Melkite.entry(v.iso) ? 'dated 2026 calendar' : 'verified calendar unavailable for this year'}.</p><div class="row"><a class="btn" href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Melkite calendar and propers</a></div>`;
+    } else {
+      const e=Edmonton.entry(v.iso);
+      h += `<p class="muted">${e ? 'Ukrainian Catholic Eparchy of Edmonton · dated reading references.' : 'New Westminster fixed commemorations and a calculated Ukrainian cycle; Edmonton verification is unavailable for this date.'}</p><div class="row">${e ? `<a class="btn" href="${e.source}" target="_blank" rel="noopener">Edmonton · ${L.MN[P(v.iso).getUTCMonth()]} ${P(v.iso).getUTCDate()} texts</a>` : '<a class="btn" href="https://eeparchy.com/calendar" target="_blank" rel="noopener">Edmonton calendar</a>'}<a class="btn" href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener">Fixed saints · New Westminster</a></div>`;
+    }
     return h;
   }
 
@@ -502,7 +510,7 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const seasonLine = glanceSeason(r, k, v.iso);
+      const seasonLine = glanceSeason(r, k, v.iso) + (k === 'byz' && r.sourceKind === 'menaion-calculated' ? ' · New Westminster / calculated cycle' : '');
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
@@ -995,10 +1003,9 @@
     sarum: { any: ['Breviary Offices — Sarum hours in English (1880)', 'https://commons.ptsem.edu/id/breviaryofficesf00cath'], more: [['Sarum Office with chant, English edition', 'https://www.sarum-chant.ca/'], ['Lesser Hours of the Sarum Breviary', 'https://archive.org/details/lesserhoursofsar00cathuoft']] }
   };
   function linksHTML(rite, hour) {
-    const m = HOURLINKS[rite], a = m[hour] || m.any, b = m.any;
+    const m = rite === 'byz' ? {any: S.byzChurch === 'melkite' ? ['Melkite prayer resources', 'https://melkite.org/liturgical-resources'] : ['Edmonton calendar and services', 'https://eeparchy.com/calendar']} : HOURLINKS[rite], a = m[hour] || m.any, b = m.any;
     let h = `<a class="btn sm" target="_blank" rel="noopener" href="${a[1]}">${esc(a[0])}</a>`;
     if (b[1] !== a[1]) h += `<a class="btn sm" target="_blank" rel="noopener" href="${b[1]}">${esc(b[0])}</a>`;
-    if (rite === 'byz') h += '<a class="btn sm" target="_blank" rel="noopener" href="https://mci.archpitt.org/Publications.html">Ruthenian prayer books</a>';
     for (const [t, u] of (m.more || [])) h += `<a class="btn sm" target="_blank" rel="noopener" href="${u}">${esc(t)}</a>`;
     return h;
   }
@@ -1014,16 +1021,16 @@
     const v = dayInfo(st.date); loadReadings(st.date);
     const byzantine = st.liturgyView === 'byz';
     const litRite = byzantine ? 'byz' : 'roman';
-    const service = LiturgySchedule.service(st.date);
+    const service = LiturgySchedule.service(st.date,S.byzChurch);
     const name = byzantine ? service.title : 'Roman Mass';
     const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : romanReadingsHTML(st.date, false);
     const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
-    const note = byzantine ? `<p class="muted">${esc(service.note)} ${S.byzChurch === 'melkite' ? 'Melkite Greek Catholic Diocese of Newton (2026 calendar)' : 'Ukrainian Greek Catholic tradition in the United States'}; parish schedules may differ.</p>` : '';
-    const reader = LiturgicalText.card(byzantine ? service.id : 'roman');
+    const note = byzantine ? `<p class="muted">${esc(service.note)} ${S.byzChurch === 'melkite' ? 'Melkite Greek Catholic Diocese of Newton (2026 calendar)' : 'Ukrainian Catholic Eparchy of Edmonton; Canadian local directions'}; parish schedules may differ.</p>` : '';
+    const reader = LiturgicalText.card(byzantine ? service.id : 'roman', {church:S.byzChurch,date:st.date});
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
       <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
-      <p class="muted">${byzantine ? 'Ruthenian readings and resources for the selected date appear below. Open a saved service book in Liturgical Text.' : 'Daily readings follow the current Roman Catholic lectionary. The complete Roman Missal prayers have not yet been incorporated.'}</p>
+      <p class="muted">${byzantine ? 'The selected Byzantine calendar supplies the day’s readings and resources below. Personal prayer books can be read in Liturgical Text.' : 'Daily readings follow the current Roman Catholic lectionary. The complete Roman Missal prayers have not yet been incorporated.'}</p>
       ${note}${reader}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
   }
   function romanNightHTML() {
@@ -1063,7 +1070,6 @@
       const audioName = {morning:'Morning Prayer',readings:'Office of Readings',evening:'Evening Prayer',night:'Night Prayer'}[st.kind] || 'Morning Prayer';
       h += `<div class="roman-office-player"><h3>${esc(officeName)}</h3>${doSlot(st.date,audioName)}</div>`;
     }
-    if (rite === 'byz') h += '<h3 class="prayer-rite-title">'+esc(({morning:'Orthros',evening:'Vespers',night:'Compline'}[st.kind] || 'Orthros'))+'</h3>';
     if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
     if (hasTTS) h += '<div class="row" style="margin:0 0 14px"><button class="btn fill" data-act="play">▶ Play session aloud</button></div>';
     steps.forEach((s, i) => {
@@ -1206,21 +1212,21 @@
   }
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
-    <section class="card"><div class="lab"><span class="grow">Byzantine Calendar · United States</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This choice controls Byzantine commemorations, calendar information, and readings throughout Ora. Melkite dates follow the Diocese of Newton's verified 2026 calendar. Outside 2026, unverified dates are identified rather than invented.</p></section>
+    <section class="card"><div class="lab"><span class="grow">Byzantine Calendar</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian · Edmonton</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This choice controls Byzantine commemorations and readings throughout Ora. Ukrainian follows Edmonton’s verified dates, with New Westminster fixed saints and a labelled calculated cycle where dates are missing. Melkite follows Newton’s verified 2026 calendar.</p></section>
     <details class="card more-liturgy"><summary><b>Sacred Liturgy</b> <span class="muted">· work in progress</span></summary><div class="more-liturgy-content">${viewLiturgy()}</div></details>
-    <details class="card"><summary><b>About the Divine Office texts</b></summary><p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For additional Ruthenian resources, consult the <a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Pittsburgh prayer books</a>. Roman and Traditional texts also identify their sources within the prayers.</p></details>
+    <details class="card"><summary><b>About the Divine Office texts</b></summary><p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For the selected date’s Ukrainian Hours and Vespers, consult the <a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton liturgical calendar</a>. Roman and Traditional texts also identify their sources within the prayers.</p></details>
     <details class="card"><summary><b>Fasting &amp; abstinence · guidance</b></summary><div class="fasting-guidance"><p>The small crossed-food symbols describe restrictions identified in Ora's calendar entries; they are not a complete statement of binding obligations.</p><p><b>Roman:</b> Current Latin Catholic fasting and abstinence are governed by canon law and applicable bishops' conference rules. <a href="https://www.usccb.org/prayer-and-worship/liturgical-year/lent" target="_blank" rel="noopener noreferrer">USCCB guidance</a>.</p><p><b>Byzantine:</b> Ukrainian Greek Catholic fasting discipline varies by eparchy and applicable particular law. The Byzantine calendar in Ora may follow a different tradition; consult your eparchy for binding rules. Oil restrictions are not automatically implied by a fasting season.</p><p><b>Traditional:</b> Sarum fasting marks historical observances, not present-day universal Catholic obligations. Personal fasting may be adapted for health and pastoral reasons.</p></div></details>
-    <details class="card"><summary><b>Resources · liturgical documents</b></summary><div style="margin-top:12px"><p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ruthenian Byzantine</h3><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p></div></details>
+    <details class="card"><summary><b>Resources · liturgical documents</b></summary><div style="margin-top:12px"><p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ukrainian Catholic</h3><p><a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton · calendar and daily liturgical texts</a></p><p><a href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener noreferrer">New Westminster · fixed Menaion</a></p><h3>Melkite Catholic</h3><p><a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Melkite liturgical resources</a></p><h3>Additional Ruthenian references</h3><p class="muted">A separate local calendar and translation; these do not supply the selected Edmonton calendar.</p><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p></div></details>
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
-      <p><b>Byzantine</b> — Ruthenian Byzantine Catholic tradition of Pittsburgh, with Gregorian Pascha and fixed feasts. The computed calendar and lectionary are checked against selected Metropolitan Cantor Institute sources; 2026 service selection follows the published rules. A complete parish Typikon and future annual service calendars are not included. Ukrainian heritage remains separate.</p>
+      <p><b>Byzantine</b> — The Ukrainian option follows the Eparchy of Edmonton’s checked 2026 daily entries, using Gregorian Pascha and fixed feasts. New Westminster supplies fixed commemorations when Edmonton has no verified date; seasonal calculations and reading-cycle fallbacks are labelled. Inconsistent source dates are withheld. The Melkite option follows Newton’s dated 2026 calendar. Canada-specific obligations are not applied as U.S. obligations; consult your own eparchy.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p></section>
     <details class="card credits"><summary><h3 style="margin:0">Credits &amp; sources</h3></summary><div style="margin-top:8px">
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office and the Metropolitan Cantor Institute of Pittsburgh.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
       <p class="muted"><b>Roman Liturgy of the Hours:</b> Ora’s current Lauds, Vespers, Compline, and Office of Readings combine date-dependent selections with devotional adaptations. They are not yet complete reproductions of the approved modern Roman office. Where available, Ora uses public-domain Douay-Rheims Scripture and historical prayers; the official antiphons, readings, responsories, intercessions, and concluding prayers may differ. Consult the linked authorized editions for the complete appointed texts.</p>
-      <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Full texts of the second readings, where public domain: Kirsopp Lake, <i>The Apostolic Fathers</i> (1912); A. Roberts &amp; J. Donaldson, <i>Ante-Nicene Fathers</i> vol. 1 (1885). Byzantine calendar: Ruthenian fixed feasts and the Paschal cycle, checked against selected MCI 2026 dates. Ukrainian heritage data from Winnipeg remains separate. Audio of the Roman hours: the free daily recordings of <a href="https://divineoffice.org" target="_blank" rel="noopener">Divine Office</a> (DivineOffice.org), streamed from their podcast.</p>
+      <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Full texts of the second readings, where public domain: Kirsopp Lake, <i>The Apostolic Fathers</i> (1912); A. Roberts &amp; J. Donaldson, <i>Ante-Nicene Fathers</i> vol. 1 (1885). Byzantine calendar: Edmonton daily facts and reading citations; New Westminster fixed Menaion; separately labelled computed cycles. Ukrainian heritage data from Winnipeg remains separate. Audio of the Roman hours: the free daily recordings of <a href="https://divineoffice.org" target="_blank" rel="noopener">Divine Office</a> (DivineOffice.org), streamed from their podcast.</p>
       <p class="muted">Papal quotations and the Sunday Angelus: the official English texts on <a href="https://www.vatican.va" target="_blank" rel="noopener">vatican.va</a> © Dicastero per la Comunicazione – Libreria Editrice Vaticana; only short excerpts are shown, with links to the full text.</p>
       <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p></div></details>`;
   }
@@ -1341,7 +1347,7 @@
     document.querySelectorAll('#nav button').forEach(b => { b.classList.toggle('on', b.dataset.tab === st.tab); if (b.dataset.tab === st.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     const content = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'liturgy' ? viewLiturgy() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
     $('#app').innerHTML = tabHeading() + content;
-    if (st.tab === 'liturgy') LiturgicalText.hydrate();
+    if (st.tab === 'liturgy' || st.tab === 'more') LiturgicalText.hydrate();
     document.querySelectorAll('.seg button[data-act], .legend button[data-act]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
     document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
     if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
@@ -1396,7 +1402,7 @@
       ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
-      ${sel('s_byzchurch', 'Byzantine Catholic calendar (USA)', [['ukrainian','Ukrainian Greek Catholic'],['melkite','Melkite Greek Catholic · Newton (2026 verified)']], S.byzChurch)}<p class="muted">Melkite dates are verified for 2026 only. Ukrainian commemorations use the available U.S. Ukrainian sources; local eparchial calendars may differ.</p>
+      ${sel('s_byzchurch', 'Byzantine Catholic calendar', [['ukrainian','Ukrainian Greek Catholic · Edmonton'],['melkite','Melkite Greek Catholic · Newton (2026 verified)']], S.byzChurch)}<p class="muted">Melkite dates are verified for 2026 only. Ukrainian uses verified Edmonton dates with a labelled New Westminster/calculated fallback. Canadian local obligations are identified separately from U.S. practice.</p>
       <div class="check"><input type="checkbox" id="s_lady" ${S.ladyDayTransfer ? 'checked' : ''}><label for="s_lady" style="margin:0;color:var(--ink)">Traditional calendar: move Lady Day out of Holy Week/Easter Octave</label></div>
       ${hasTTS ? `${sel('s_voice', 'Voice', [['', 'Automatic'], ...vs.map(v => [v.voiceURI, v.name + ' (' + v.lang + ')'])], S.voice)}<label for="s_rate">Speech speed: <span id="s_rv">${S.rate}</span></label><input type="range" id="s_rate" min="0.6" max="1.3" step="0.05" value="${S.rate}">` : ''}
       <div class="row" style="margin-top:14px"><button class="btn fill" data-act="savesettings">Save</button><button class="btn" data-act="closedlg">Cancel</button></div>`;
@@ -1461,7 +1467,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v149';
+  const APP_BUILD = 'ora-v208';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
@@ -1492,4 +1498,5 @@
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => { });
 })();
+
 

@@ -31,7 +31,8 @@
     epiphany: 'jan6',        // 'jan6' (universal) | 'sunday' (USA)
     byzPascha: 'gregorian',  // 'gregorian' (same date as Western Easter) | 'julian' (Orthodox date)
     byzOldCal: false,        // true: Menaion dates follow the Julian calendar (+13 days)
-    byzChurch: 'ruthenian',  // Pittsburgh; explicit Ukrainian/Melkite engines remain available for source checks
+    byzChurch: 'ukrainian',  // Edmonton source for Ora; explicit church engines remain available for comparisons
+    byzSource: 'computed',  // Ora opts into dated Edmonton facts; generic cycle callers remain independent
     byzAnna: 'default'       // 'default' | '8' | '9': follow the parish's observance
   };
   const opts = o => Object.assign({}, DEFAULTS, o || {});
@@ -628,9 +629,13 @@
 
   function byzantine(d, o) {
     o = opts(o);
+    if (o.byzChurch === 'ukrainian' && o.byzSource === 'edmonton') {
+      const E = typeof module === 'object' && module.exports ? require('./edmonton.js') : globalThis.Edmonton;
+      return E.calendar(d, byzantine(d, {...o, byzSource:'computed'}));
+    }
     if (o && o.byzChurch === 'melkite') {
       const M = typeof module === 'object' && module.exports ? require('./melkite.js') : globalThis.Melkite;
-      return M.calendar(d, byzantine(d, {...o, byzChurch:'ukrainian'}));
+      return M.calendar(d, byzantine(d, {...o, byzChurch:'ukrainian',byzSource:'computed'}));
     }
     o = opts(o);
     const y = d.getUTCFullYear(), P = pascha(y, o), Pn = pascha(y + 1, o), Pp = pascha(y - 1, o), wd = DN[dow(d)], sun = dow(d) === 0;
@@ -750,4 +755,5 @@
 
   return { day, roman, oorKey, extraordinary, byzantine, byzAnnaDay, westernEaster, julianEaster, advent, setData, DEFAULTS, D, add, iso, DN, MN, ORD };
 });
+
 

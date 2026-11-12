@@ -1,4 +1,4 @@
-/* Private, device-local PDF library. No document upload or third-party viewer. */
+/* Private, device-local PDF/EPUB library. No document upload or third-party viewer. */
 (function(root) {
   'use strict';
   const DB = 'ora-liturgical-texts', VERSION = 1, MAX = 100 * 1024 * 1024;
@@ -29,7 +29,8 @@
     if (!pdfLibrary) pdfLibrary=import('./vendor/pdfjs/pdf.mjs').then(p=>{p.GlobalWorkerOptions.workerSrc=new URL('./vendor/pdfjs/pdf.worker.mjs',location.href).href;return p;}).catch(e=>{pdfLibrary=null;throw e;});
     return pdfLibrary;
   }
-  async function load(blob) {
+  async function load(blob,format='pdf') {
+    if(format==='epub')return EpubReader.load(blob);
     const p=await library();
     const task=p.getDocument({data:new Uint8Array(await blob.arrayBuffer()),isEvalSupported:false,enableXfa:false,useSystemFonts:true,useWasm:false});
     task.onPassword=()=>{task.destroy();};
@@ -37,11 +38,12 @@
   }
   async function save(id,file) {
     if (!['roman','chrysostom','basil','presanctified'].includes(id)) throw new Error('Unknown liturgical text.');
-    if (!file || !file.size || file.size>MAX) throw new Error('Choose a PDF smaller than 100 MB.');
+    if (!file || !file.size || file.size>MAX) throw new Error('Choose a PDF or EPUB smaller than 100 MB.');
     const head=new TextDecoder().decode(await file.slice(0,1024).arrayBuffer());
-    if (!head.includes('%PDF-')) throw new Error('This file is not a PDF.');
-    const doc=await load(file);const pages=doc.numPages;await doc.destroy();
-    const record={id,name:file.name || 'Liturgical text.pdf',size:file.size,pages,page:1,blob:file,updated:new Date().toISOString()};
+    const format=head.includes('%PDF-')?'pdf':head.startsWith('PK\x03\x04')?'epub':null;
+    if(!format)throw new Error('This file is not a PDF or EPUB.');
+    const doc=await load(file,format);const pages=doc.numPages;await doc.destroy();
+    const record={id,format,name:file.name || 'Liturgical text.'+format,size:file.size,pages,page:1,blob:file,updated:new Date().toISOString()};
     await request('readwrite',s=>s.put(record));return record;
   }
   async function bookmark(id,page) {
@@ -53,3 +55,4 @@
   }
   root.LiturgyReader={all,get,save,remove,bookmark,load,MAX};
 })(typeof window !== 'undefined' ? window : globalThis);
+

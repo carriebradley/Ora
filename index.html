@@ -149,6 +149,8 @@ nav button.on b{color:var(--lit)}
 #reader-text{white-space:pre-wrap;font-family:var(--serif);line-height:1.65;overflow-wrap:anywhere}
 .reader-file{max-width:100%;font:inherit;color:var(--ink)}
 .reader-status{overflow-wrap:anywhere}
+#reader-chapters input,#reader-chapters select{width:100%;max-width:100%;min-height:44px;font:inherit;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:8px}
+#reader-text pre{white-space:pre-wrap;overflow-wrap:anywhere}
 #source-reader{width:min(960px,96vw);max-width:96vw;height:90dvh;max-height:90dvh;padding:12px;overflow:hidden}#source-reader[open]{display:flex;flex-direction:column;gap:10px}#source-reader .source-reader-head{display:flex;justify-content:space-between;align-items:center;gap:12px}#source-reader-frame{width:100%;flex:1;min-height:0;border:1px solid var(--line);border-radius:8px;background:white}#source-reader .row{flex-shrink:0}#source-reader-text{flex:1;min-height:0;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-family:var(--serif);font-size:var(--reader-font,18px);line-height:1.7;padding:12px 8px}#source-reader [hidden]{display:none!important}#source-reader-frame[hidden]{display:none!important}#source-reader-text:not([hidden])+#source-reader-frame{display:none!important}#source-reader-controls{align-items:center;flex-wrap:wrap;gap:8px}#source-reader-controls .btn{padding:7px 12px}
 .art-heading-icon{display:inline-flex;align-items:center;justify-content:center;flex:none;transform:translateY(-1px)}
 .art-heading-icon svg{margin-right:8px}
@@ -251,6 +253,8 @@ nav button.on b{color:var(--lit)}
 <dialog id="dlg" aria-labelledby="settings-title"></dialog>
 <script src="melkite-2026.js"></script>
 <script src="melkite.js"></script>
+<script src="edmonton-2026.js"></script>
+<script src="edmonton.js"></script>
 <script src="calendar.js"></script>
 <script src="sarummass.js"></script>
 <script src="sarum.js"></script>
@@ -261,10 +265,12 @@ nav button.on b{color:var(--lit)}
 <script src="felire.js"></script><script src="oor.js"></script>
 <script src="hours.js"></script>
 <script src="liturgy-schedule.js"></script>
+<script src="epub-reader.js"></script>
 <script src="liturgy-reader.js"></script>
 <script src="liturgy-reader-ui.js"></script>
 <script src="source-reader.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
+
 

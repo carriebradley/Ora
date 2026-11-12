@@ -1,6 +1,6 @@
 /* Mobile-first official-source reader. Remote PDF extraction requires publisher CORS permission. */
 (function(){'use strict';
-const allowed=new Set(['mci.archpitt.org','www.liturgyoffice.org.uk','www.usccb.org']);
+const allowed=new Set(['mci.archpitt.org','www.liturgyoffice.org.uk','www.usccb.org','eeparchy.com','melkite.org']);
 const $=id=>document.getElementById(id);
 let pdf=null,token=0,page=1,font=18,restore=null;
 async function reset(){token++;const old=pdf;pdf=null;if(old)try{await old.destroy();}catch(_){}}
@@ -15,6 +15,10 @@ async function showPage(){
  $('source-reader-text').scrollTop=0;
  }catch(_){if(current===token)$('source-reader-text').textContent='Unable to extract this page. Open the original document.';}
 }
+function showOriginal(url){
+ $('source-reader-text').hidden=true;const frame=$('source-reader-frame');frame.hidden=false;frame.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups');frame.src=url.href;
+ $('source-reader-note').textContent='Original publisher document. If it cannot display here, use Open original. Personal files can also be opened in Optional offline text.';
+}
 async function open(a,url){
  await reset();const current=token;restore=a;page=1;const d=$('source-reader');
  $('source-reader-title').textContent=a.textContent.trim()||'Official source';
@@ -22,12 +26,12 @@ async function open(a,url){
  $('source-reader-text').hidden=false;$('source-reader-frame').hidden=true;$('source-reader-frame').removeAttribute('src');
  $('source-reader-text').textContent='Loading readable text…';$('source-reader-note').textContent='Single-column reading · official publisher source.';
  $('source-reader-pages').hidden=true;update();d.showModal();
- if(!/\.pdf$/i.test(url.pathname)){ $('source-reader-text').textContent='This source is a web page. Use Open original to view it on the publisher’s website.';return;}
+ if(!/\.pdf$/i.test(url.pathname)){ showOriginal(url);return;}
  try{
    const lib=await import('./vendor/pdfjs/pdf.mjs');lib.GlobalWorkerOptions.workerSrc='./vendor/pdfjs/pdf.worker.mjs';
    const task=lib.getDocument({url:url.href,isEvalSupported:false,enableXfa:false});const loaded=await task.promise;
    if(current!==token){await loaded.destroy();return;}pdf=loaded;$('source-reader-pages').hidden=false;await showPage();
- }catch(_){if(current!==token)return;$('source-reader-text').textContent='This publisher does not allow direct text extraction, or the document could not be loaded. Use Open original to read it on the publisher’s site.';$('source-reader-note').textContent='The original PDF is still available. Ora does not bypass publisher restrictions.';}
+ }catch(_){if(current!==token)return;showOriginal(url);}
 }
 document.addEventListener('click',e=>{
  const button=e.target.closest('button');
@@ -37,7 +41,7 @@ document.addEventListener('click',e=>{
  if(button?.id==='source-font-minus'){font=Math.max(14,font-2);update();return;}
  if(button?.id==='source-font-plus'){font=Math.min(30,font+2);update();return;}
  const a=e.target.closest('a[href]');if(!a||!a.closest('#app'))return;
- if(!document.querySelector('nav [data-tab="liturgy"][aria-current="page"]'))return;
+ if(!a.closest('.liturgical-text,.more-liturgy'))return;
  let url;try{url=new URL(a.href,location.href);}catch(_){return;}
  if(url.protocol!=='https:'||!allowed.has(url.hostname))return;
  e.preventDefault();open(a,url);

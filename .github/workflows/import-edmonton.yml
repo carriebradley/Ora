@@ -1,34 +1,31 @@
 name: Import Edmonton calendar facts
 on:
-  push:
-    branches: [dev/edmonton-source-import]
-    paths: ['tools/import_edmonton_calendar.py', '.github/workflows/import-edmonton.yml']
   workflow_dispatch:
 permissions:
   contents: write
-  checks: write
+concurrency:
+  group: ora-calendar-import
+  cancel-in-progress: false
 jobs:
-  import-calendar:
+  import:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install beautifulsoup4
-      - name: Import factual calendar metadata
-        run: python tools/import_edmonton_calendar.py --year 2026 --repair-missing > /tmp/edmonton-import.json
-      - name: Commit source-checked facts
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add edmonton-2026.js
-          git diff --cached --quiet || (git commit -m "Import verified Edmonton calendar facts and New Westminster fixed commemorations" && git push)
-      - uses: actions/github-script@v7
-        if: always()
+      - run: python tools/import_edmonton_calendar.py --year 2026
+      - uses: actions/setup-node@v4
         with:
-          script: |
-            const fs=require('fs'),p='/tmp/edmonton-import.json';
-            const summary=fs.existsSync(p)?fs.readFileSync(p,'utf8').slice(0,55000):'Import did not produce a report.';
-            await github.rest.checks.create({owner:context.repo.owner,repo:context.repo.repo,head_sha:context.sha,name:'Edmonton import evidence',status:'completed',conclusion:'neutral',output:{title:'Dated calendar coverage',summary:'```json\n'+summary+'\n```'}});
+          node-version: '24'
+      - run: node --test --test-isolation=none tests/*.test.cjs
+      - name: Commit verified factual source update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add edmonton-2026.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh Edmonton calendar facts and citations'
+            git push
+          fi

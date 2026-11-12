@@ -89,6 +89,8 @@ def build(year):
     for iso,summary in published.items():
         if int(iso[5:7]) in rejected_months:
             withheld[iso]='Source month has repeated Sunday/weekday date conflicts; import withheld.'
+        elif iso.endswith('-04-01'):
+            withheld[iso]='Great Wednesday source says no Divine Liturgy while the common service cycle appoints Presanctified; import withheld pending review.'
         elif iso.endswith('-04-30') and re.search('Jeremiah',summary,re.I):
             withheld[iso]='Jeremiah appears one day early compared with the fixed Menaion; import withheld.'
         elif 'Sunday' in summary.split(';')[0] and dt.date.fromisoformat(iso).weekday()!=6:
@@ -121,3 +123,4 @@ if __name__=='__main__':
     content='/* Official dated calendar facts and Scripture references; no prayer translations. */\n(function(root,factory){if(typeof module===\'object\'&&module.exports)module.exports=factory();else root.EDMONTON_2026=factory();})(typeof self!==\'undefined\'?self:this,function(){return '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';});\n'
     out.write_text(content,encoding='utf-8')
     print(json.dumps({'year':args.year,'imported_days':len(data['days']),'withheld_days':len(data['withheld']),'fixed_dates':len(data['fixed']),'published_months':data['publishedMonths'],'anchors':{iso:data['days'][iso] for iso in [f'{args.year}-11-11',f'{args.year}-11-12',f'{args.year}-11-15',f'{args.year}-12-09']}},ensure_ascii=False,indent=2))
+

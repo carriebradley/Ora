@@ -8,7 +8,7 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const requests=[];const watch=r=>{if(['POST','PUT','PATCH'].includes(r.method()))requests.push(r.url());};page.on('request',watch);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11`);
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
- const choose=async(name)=>{await page.locator('.liturgical-text details').first().locator('summary').click();await page.locator('#liturgical-file').setInputFiles({name,mimeType:'application/pdf',buffer:pdf()});await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);};
+ const choose=async(name)=>{await page.locator('.liturgical-text .reader-offline').first().locator('summary').click();await page.locator('#liturgical-file').setInputFiles({name,mimeType:'application/pdf',buffer:pdf()});await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);};
  await choose('<reader-test>.pdf');
  assert.equal(await page.locator('.reader-status img').count(),0);
  await page.locator('[data-reader="open"]').click();
@@ -32,7 +32,7 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  // Date selection chooses a different slot, rather than relabelling Chrysostom's PDF.
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-02`);
  assert.match(await page.locator('#app .card > h2').innerText(),/Basil the Great/);
- await page.waitForFunction(()=>document.querySelector('.reader-status')?.textContent.includes('No PDF saved'));
+ await page.waitForFunction(()=>document.querySelector('.reader-status')?.textContent.includes('No text saved'));
  await choose('Basil-test.pdf');
  assert.deepEqual(await page.evaluate(async()=>{const records=await LiturgyReader.all();return records.map(r=>r.id).sort();}),['basil','chrysostom']);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-03`);
@@ -46,7 +46,7 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
  await page.locator('[data-reader="mode"]').click();await page.waitForFunction(()=>document.querySelector('#reader-text')?.textContent.includes('page two'));
  await page.locator('[data-reader="close"]').click();await context.setOffline(false);
- await page.locator('.liturgical-text details').first().locator('summary').click();page.once('dialog',d=>d.accept());await page.locator('[data-reader="remove"]').click();
+ await page.locator('.liturgical-text .reader-offline').first().locator('summary').click();page.once('dialog',d=>d.accept());await page.locator('[data-reader="remove"]').click();
  await page.waitForFunction(()=>document.querySelector('[data-reader="open"]').disabled);
  assert.equal(await page.evaluate(async()=>!!await LiturgyReader.get('basil')),true,'removal leaves the other service book intact');
  assert.deepEqual(requests,[],'private documents generate no upload requests');page.off('request',watch);

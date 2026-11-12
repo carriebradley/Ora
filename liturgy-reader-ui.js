@@ -3,32 +3,34 @@
   'use strict';
   const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom',basil:'St. Basil the Great',presanctified:'Presanctified Gifts'};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function card(id){
+  function card(id,{church='ukrainian',date=''}={}){
     if(!labels[id])return '<p class="muted">No service book is selected for this date. Consult the calendar directions.</p>';
-    const source=id==='roman'?'https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf':id==='presanctified'?'https://mci.archpitt.org/Publications.html':'https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf';
-    const title=id==='roman'?'Read Order of Mass':id==='presanctified'?'View official service resources':'Read Divine Liturgy';
-    return `<section class="liturgical-text" data-text-id="${id}" aria-label="Liturgical Text"><h3>Liturgical Text</h3><p class="muted">Official source · ${escape(labels[id])}</p><div class="row"><a class="btn fill" href="${source}" target="_blank" rel="noopener noreferrer">${title}</a></div><p class="muted">Opens in Ora where the publisher allows embedded viewing. Otherwise use Open original.</p><details><summary>Optional offline PDF</summary><p class="reader-status" role="status">Checking saved text…</p><div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous page</button><span class="reader-inline-page muted" aria-live="polite"></span><button class="btn" data-reader="inline-next">Next page</button></div><div class="reader-inline-text" aria-label="Saved liturgical text preview" hidden style="white-space:pre-wrap;line-height:1.7;max-height:55vh;overflow:auto"></div><div class="row"><button class="btn" data-reader="open" disabled>Open saved text</button></div><label for="liturgical-file">Choose a PDF from this device</label><input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,.pdf"><p class="muted">Optional, up to 100 MB. Keep your original file.</p><button class="btn" data-reader="remove" disabled>Remove saved text</button></details></section>`;
+    const dated=church==='ukrainian'&&window.Edmonton?Edmonton.entry(date):null;
+    const source=id==='roman'?'https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf':church==='ukrainian'?(dated?.source||'https://eeparchy.com/calendar'):id==='chrysostom'?'https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf':'https://melkite.org/liturgical-resources';
+    const title=id==='roman'?'Read Order of Mass':church==='ukrainian'?'Read day’s liturgical texts':id==='chrysostom'?'Read Divine Liturgy':'Read Melkite service resources';
+    const sourceNote=id==='roman'?'Fixed prayers and responses; daily Missal propers are separate.':church==='ukrainian'?'Edmonton’s day-specific prayers, hymns and readings. The complete fixed service book is separate.':id==='chrysostom'?'Diocese-hosted 2009 draft; consult your parish for its current edition.':'Monthly directions and source texts for the selected Melkite service.';
+    return `<section class="liturgical-text" data-text-id="${id}" aria-label="Liturgical Text"><h3>Liturgical Text</h3><p class="muted">${escape(labels[id])} · private devotional reading</p><div class="row"><a class="btn fill" href="${source}" target="_blank" rel="noopener noreferrer">${title}</a></div><p class="muted">${sourceNote} Use Open original if the source cannot display inside Ora.</p>${id==='roman'?'<details><summary>Complete Roman Missal source</summary><p><a href="https://liturgy.au/product/roman-emissal-usa-epub/" target="_blank" rel="noopener noreferrer">U.S. Roman eMissal · EPUB</a></p><p class="muted">Independent digital edition listed free by its provider. Its downloadable edition still needs checking. A permitted EPUB can be chosen below for private reading; automatic daily prayer selection has not been verified.</p></details>':''}<details class="reader-offline"><summary>Optional offline text</summary><p class="reader-status" role="status">Checking saved text…</p><div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted" aria-live="polite"></span><button class="btn" data-reader="inline-next">Next</button></div><div class="reader-inline-text" aria-label="Saved liturgical text preview" hidden style="white-space:pre-wrap;line-height:1.7;max-height:55vh;overflow:auto"></div><div class="row"><button class="btn" data-reader="open" disabled>Open saved text</button></div><label for="liturgical-file">Choose a PDF or EPUB from this device</label><input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub"><p class="muted">Private devotional use only. Your file stays on this device. Up to 100 MB; keep the original. The date selects the service’s book; it opens at your bookmarked page or section.</p><button class="btn" data-reader="remove" disabled>Remove saved text</button></details></section>`;
   }
   async function hydrate(){
     const section=document.querySelector('.liturgical-text');if(!section)return;
     const status=section.querySelector('.reader-status');
     try{const record=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected)return;
-      status.textContent=record?`${record.name} · ${record.pages} pages · saved on this device`:'No PDF saved for this service yet.';
+      status.textContent=record?`${record.name} · ${record.pages} ${record.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
       section.querySelector('[data-reader="open"]').disabled=!record;section.querySelector('[data-reader="remove"]').disabled=!record;
       const preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls');
       if(record){
         try{
-          const pdf=await LiturgyReader.load(record.blob);
+          const pdf=await LiturgyReader.load(record.blob,record.format);
           try{
             const selected=Math.max(1,Math.min(pdf.numPages,Number(section.dataset.inlinePage)||record.page||1));section.dataset.inlinePage=selected;
-            const page=await pdf.getPage(selected);
-            const content=await page.getTextContent();
+            let value;
+            if(pdf.kind==='epub'){const part=pdf.sections[selected-1];value=part.title+'\n\n'+part.blocks.map(b=>b.text).join('\n\n');}
+            else{const page=await pdf.getPage(selected);const content=await page.getTextContent();value=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim();}
             if(!section.isConnected)return;
-            const value=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim();
             preview.textContent=value||'This page has no selectable text. Use Open Text for the original page.';
-            preview.hidden=false;controls.hidden=false;controls.querySelector('.reader-inline-page').textContent=`Page ${selected} of ${pdf.numPages}`;controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;controls.querySelector('[data-reader="inline-next"]').disabled=selected>=pdf.numPages;
+            preview.hidden=false;controls.hidden=false;controls.querySelector('.reader-inline-page').textContent=`${pdf.kind==='epub'?'Section':'Page'} ${selected} of ${pdf.numPages}`;controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;controls.querySelector('[data-reader="inline-next"]').disabled=selected>=pdf.numPages;
           }finally{await pdf.destroy();}
-        }catch(_){if(section.isConnected){preview.textContent='Preview unavailable. Use Open Text to view the saved PDF.';preview.hidden=false;}}
+        }catch(_){if(section.isConnected){preview.textContent='Preview unavailable. Use Open saved text to view this book.';preview.hidden=false;}}
       }else{preview.hidden=true;preview.textContent='';controls.hidden=true;}
     }catch(_){if(section.isConnected)status.textContent='Device storage is unavailable. You can still open the source links.';}
   }
@@ -47,6 +49,15 @@
     input.value=pageNumber;d.querySelector('[data-reader="previous"]').disabled=pageNumber===1;d.querySelector('[data-reader="next"]').disabled=pageNumber===doc.numPages;
     status.textContent='Loading page…';
     try{
+      if(myDoc.kind==='epub'){
+        const part=myDoc.sections[pageNumber-1],text=d.querySelector('#reader-text');
+        d.querySelector('canvas').hidden=true;text.hidden=false;text.replaceChildren();
+        const heading=document.createElement('h3');heading.textContent=part.title;text.append(heading);
+        for(const block of part.blocks){const el=document.createElement(block.tag);el.textContent=block.text;text.append(el);}
+        d.querySelector('#reader-section').value=String(pageNumber);
+        status.textContent=`Section ${pageNumber} of ${myDoc.numPages}`;d.scrollTop=0;
+        await LiturgyReader.bookmark(myRecord.id,pageNumber);return;
+      }
       const p=await myDoc.getPage(pageNumber);if(version!==pageVersion)return;
       const canvas=d.querySelector('canvas'),text=d.querySelector('#reader-text');canvas.hidden=textMode;text.hidden=!textMode;
       if(textMode){const content=await p.getTextContent();if(version!==pageVersion)return;text.textContent=content.items.map(i=>i.str+(i.hasEOL?'\n':' ')).join('');if(!text.textContent.trim())text.textContent='This page is an image without selectable text. Use Page view.';}
@@ -62,23 +73,35 @@
   }
   async function open(id,button){
     await cleanup();const token=++session;returnFocus=button;textMode=false;
-    const d=dialog();d.innerHTML='<h2 id="reader-title">Liturgical Text</h2><div class="reader-tools"><div class="row"><button class="btn" data-reader="close">Close</button><button class="btn" data-reader="previous" disabled aria-label="Previous page">‹</button><label for="reader-number" style="margin:0">Page <input id="reader-number" type="number" min="1" value="1" step="1"></label><button class="btn" data-reader="next" disabled aria-label="Next page">›</button><button class="btn" data-reader="mode" aria-pressed="false">Text view</button></div><p id="reader-status" role="status">Opening text…</p><a id="reader-original" class="btn" hidden target="_blank" rel="noopener">Open original PDF</a></div><canvas id="reader-page" role="img" aria-label="Liturgical text page" hidden></canvas><div id="reader-text" hidden></div>';
+    const d=dialog();d.innerHTML='<h2 id="reader-title">Liturgical Text</h2><div class="reader-tools"><div class="row"><button class="btn" data-reader="close">Close</button><button class="btn" data-reader="previous" disabled aria-label="Previous page">‹</button><label for="reader-number" style="margin:0"><span id="reader-unit">Page</span> <input id="reader-number" type="number" min="1" value="1" step="1"></label><button class="btn" data-reader="next" disabled aria-label="Next page">›</button><button class="btn" data-reader="mode" aria-pressed="false">Text view</button></div><div id="reader-chapters" hidden><label for="reader-search">Find a prayer or section</label><input id="reader-search" type="search" placeholder="Search saved book"><label for="reader-section">Section</label><select id="reader-section"></select><p id="reader-search-status" role="status"></p></div><p id="reader-status" role="status">Opening text…</p><a id="reader-original" class="btn" hidden target="_blank" rel="noopener">Open original PDF</a></div><canvas id="reader-page" role="img" aria-label="Liturgical text page" hidden></canvas><div id="reader-text" hidden></div>';
     d.showModal();
     try{
       const saved=await LiturgyReader.get(id);if(token!==session)return;if(!saved)throw new Error('No saved text.');
-      const loaded=await LiturgyReader.load(saved.blob);if(token!==session){await loaded.destroy();return;}
+      const loaded=await LiturgyReader.load(saved.blob,saved.format);if(token!==session){await loaded.destroy();return;}
       doc=loaded;record=saved;d.querySelector('h2').textContent='Liturgical Text · '+labels[id];
       d.querySelector('#reader-number').max=loaded.numPages;objectURL=URL.createObjectURL(saved.blob);const original=d.querySelector('#reader-original');original.href=objectURL;original.hidden=false;
+      if(loaded.kind==='epub'){d.querySelector('[data-reader="mode"]').hidden=true;d.querySelector('#reader-unit').textContent='Section';d.querySelector('#reader-chapters').hidden=false;original.textContent='Download original EPUB';original.download=saved.name;fillSections();}
       await showPage(saved.page||1);
-    }catch(_){if(token===session)d.querySelector('#reader-status').textContent='The PDF could not be opened. Encrypted or damaged PDFs are not supported.';}
+    }catch(_){if(token===session)d.querySelector('#reader-status').textContent='This book could not be opened. Use an unencrypted PDF or EPUB with readable text.';}
   }
+  function fillSections(query=''){
+    if(!doc||doc.kind!=='epub')return;
+    const select=dialog().querySelector('#reader-section');select.replaceChildren();
+    const term=query.trim().toLocaleLowerCase();let found=0;
+    doc.sections.forEach((section,i)=>{
+      if(term&&!([section.title,...section.blocks.map(b=>b.text)].join(' ').toLocaleLowerCase().includes(term)))return;
+      const option=document.createElement('option');option.value=i+1;option.textContent=(i+1)+'. '+section.title;select.append(option);found++;
+    });
+    select.value=String(pageNumber);dialog().querySelector('#reader-search-status').textContent=term?found+' matching sections':'';
+  }
+  document.addEventListener('input',e=>{if(e.target.id==='reader-search')fillSections(e.target.value);});
   document.addEventListener('click',async e=>{
     const b=e.target.closest('[data-reader]');if(!b)return;
     const action=b.dataset.reader,section=b.closest('.liturgical-text'),id=section?.dataset.textId;
     if(action==='inline-prev'||action==='inline-next'){if(!section)return;const current=Number(section.dataset.inlinePage)||1;section.dataset.inlinePage=Math.max(1,current+(action==='inline-next'?1:-1));section.querySelector('.reader-inline-text').textContent='Loading page…';await LiturgyReader.bookmark(id,Number(section.dataset.inlinePage));await hydrate();return;}
     if(action==='open'){await open(id,b);return;}
     if(action==='remove'){
-      if(!confirm('Remove this service’s saved PDF from this device?'))return;
+      if(!confirm('Remove this service’s saved book from this device?'))return;
       try{await LiturgyReader.remove(id);await hydrate();}catch(_){section.querySelector('.reader-status').textContent='The text could not be removed. Please try again.';}return;
     }
     if(action==='close'){dialog().close();return;}
@@ -87,13 +110,14 @@
     if(action==='mode'){textMode=!textMode;b.textContent=textMode?'Page view':'Text view';b.setAttribute('aria-pressed',String(textMode));await showPage(pageNumber);}
   });
   document.addEventListener('change',async e=>{
+    if(e.target.id==='reader-section'){await showPage(e.target.value);return;}
     if(e.target.id==='reader-number'){await showPage(e.target.value);return;}
     if(e.target.id!=='liturgical-file')return;
     const file=e.target.files[0],section=e.target.closest('.liturgical-text');if(!file||!section)return;
     const id=section.dataset.textId,status=section.querySelector('.reader-status');e.target.disabled=true;
-    try{const previous=await LiturgyReader.get(id);if(previous&&!confirm('Replace the saved PDF for '+labels[id]+'?'))return;
-      status.textContent='Checking and saving PDF…';await LiturgyReader.save(id,file);await hydrate();
-    }catch(error){if(section.isConnected)status.textContent='PDF was not saved. '+(error.name==='QuotaExceededError'?'Device storage is full.':error.message==='This file is not a PDF.'?error.message:'Choose an unencrypted, valid PDF smaller than 100 MB.')+' Your previous text is unchanged.';
+    try{const previous=await LiturgyReader.get(id);if(previous&&!confirm('Replace the saved book for '+labels[id]+'?'))return;
+      status.textContent='Checking and saving text…';await LiturgyReader.save(id,file);delete section.dataset.inlinePage;await hydrate();
+    }catch(error){if(section.isConnected)status.textContent='Text was not saved. '+(error.name==='QuotaExceededError'?'Device storage is full.':error.message==='This file is not a PDF or EPUB.'?error.message:'Choose an unencrypted PDF or EPUB with readable text, smaller than 100 MB.')+' Your previous text is unchanged.';
     }finally{e.target.disabled=false;e.target.value='';}
   });
   document.addEventListener('DOMContentLoaded',()=>{
@@ -101,3 +125,4 @@
   });
   window.LiturgicalText={card,hydrate};
 })();
+
