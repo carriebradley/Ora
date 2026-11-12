@@ -1403,9 +1403,60 @@
   }
 
   /* ---------- events ---------- */
+  function openTab(tab, fromSwipe = false) {
+    st.tab = tab; render(); window.scrollTo(0, 0);
+    if (fromSwipe) $('#app').focus({preventScroll:true});
+  }
+  // One-finger horizontal swipes follow the visible navigation. Vertical
+  // scrolling, selection, pinch zoom, controls and nested scrollers keep theirs.
+  {
+    const surface = $('#app');
+    let gesture = null;
+    const selecting = () => !!window.getSelection()?.toString();
+    const blocked = target => {
+      if (target.closest('a,button,input,select,textarea,label,summary,audio,video,iframe,canvas,[role="button"],[contenteditable]:not([contenteditable="false"]),[data-no-swipe]')) return true;
+      for (let el = target; el && el !== surface; el = el.parentElement) {
+        const style = getComputedStyle(el);
+        if ((el.scrollWidth > el.clientWidth + 2 && /auto|scroll/.test(style.overflowX)) ||
+            (el.scrollHeight > el.clientHeight + 2 && /auto|scroll/.test(style.overflowY))) return true;
+      }
+      return false;
+    };
+    surface.addEventListener('touchstart', e => {
+      gesture = null;
+      if (e.touches.length !== 1 || document.querySelector('dialog[open]') || selecting() || blocked(e.target)) return;
+      const t = e.touches[0];
+      if (t.clientX < 24 || t.clientX > innerWidth - 24) return; // Leave browser edge gestures alone.
+      gesture = {id:t.identifier,x:t.clientX,y:t.clientY,time:performance.now(),tab:st.tab,horizontal:false};
+    }, {passive:true});
+    surface.addEventListener('touchmove', e => {
+      if (!gesture) return;
+      const t = [...e.touches].find(t => t.identifier === gesture.id);
+      if (e.touches.length !== 1 || !t || selecting() || performance.now() - gesture.time > 800) { gesture = null; return; }
+      const dx = Math.abs(t.clientX - gesture.x), dy = Math.abs(t.clientY - gesture.y);
+      if (!gesture.horizontal && Math.max(dx,dy) > 12) {
+        if (dx < dy * 1.5) { gesture = null; return; }
+        gesture.horizontal = true;
+      }
+      if (gesture.horizontal && e.cancelable) e.preventDefault();
+    }, {passive:false});
+    surface.addEventListener('touchend', e => {
+      const start = gesture; gesture = null;
+      if (!start || e.touches.length || start.tab !== st.tab || selecting() || document.querySelector('dialog[open]') || performance.now() - start.time > 800) return;
+      const t = [...e.changedTouches].find(t => t.identifier === start.id); if (!t) return;
+      const dx = t.clientX - start.x, dy = t.clientY - start.y;
+      if (Math.abs(dx) < Math.max(60,Math.min(90,innerWidth * .18)) || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      const tabs = [...document.querySelectorAll('#nav [data-tab]')].map(b => b.dataset.tab);
+      const i = tabs.indexOf(st.tab), next = i + (dx < 0 ? 1 : -1);
+      if (i < 0 || next < 0 || next >= tabs.length) return;
+      if (e.cancelable) e.preventDefault();
+      openTab(tabs[next], true);
+    }, {passive:false});
+    surface.addEventListener('touchcancel', () => { gesture = null; }, {passive:true});
+  }
   let timer = null;
   document.addEventListener('click', e => {
-    const tb = e.target.closest('[data-tab]'); if (tb) { st.tab = tb.dataset.tab; render(); window.scrollTo(0, 0); return; }
+    const tb = e.target.closest('[data-tab]'); if (tb) { openTab(tb.dataset.tab); return; }
     const b = e.target.closest('[data-act]'); if (!b) return;
     const a = b.dataset.act, v = b.dataset.v;
     switch (a) {
@@ -1453,7 +1504,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v208';
+  const APP_BUILD = 'ora-v209';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
