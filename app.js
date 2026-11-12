@@ -1307,10 +1307,10 @@
   function felireMore() {
     if (!window.FELIRE_PRO) return '';
     const v = a => a.map(t => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:0 0 10px">${esc(t)}</p>`).join('');
-    return `<section class="card"><h3>Félire Óengusso</h3><p class="muted">The Calendar of Óengus the Culdee, a monk of Tallaght, written about 800: a verse for every day of the year naming the saints kept on it, with a long prologue and epilogue. Today’s verse is on the Today page when Traditional is chosen.</p>
+    return `<details class="more-source-sub more-felire"><summary>Félire Óengusso</summary><div class="more-source-content"><p class="muted">The Calendar of Óengus the Culdee, a monk of Tallaght, written about 800: a verse for every day of the year naming the saints kept on it, with a long prologue and epilogue. Today’s verse is on the Today page when Traditional is chosen.</p>
       <details style="margin:8px 0"><summary><b>The Prologue</b> <span class="muted" style="font-size:.8rem">· the saints outlast the kings</span></summary><div style="margin-top:10px">${v(window.FELIRE_PRO)}</div></details>
       <details style="margin:8px 0"><summary><b>The Epilogue</b> <span class="muted" style="font-size:.8rem">· the troops of heaven, and “Mayst Thou save me, O Jesus”</span></summary><div style="margin-top:10px">${v(window.FELIRE_EPI)}</div></details>
-      <p class="muted" style="font-size:.74rem">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (Henry Bradshaw Society, 1905). Read from a scan of the printed book, so a letter here and there may be misread; brackets and question marks are Stokes’s own.</p></section>`;
+      <p class="muted" style="font-size:.74rem">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (Henry Bradshaw Society, 1905). Read from a scan of the printed book, so a letter here and there may be misread; brackets and question marks are Stokes’s own.</p></div></details>`;
   }
   function viewMore() {
     return `<div class="more-section-heading">Preferences</div>
@@ -1318,8 +1318,6 @@
     <section class="card"><div class="lab"><span class="grow">Byzantine Calendar</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian · Edmonton</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This setting controls Byzantine dates and readings throughout Ora.</p></section>
     <div class="more-section-heading">Prayer books</div>
     <details class="card more-liturgy"><summary><b>Sacred Liturgy</b></summary><div class="more-liturgy-content">${viewLiturgy()}</div></details>
-    <div class="more-section-heading">History</div>
-    ${felireMore()}
     <div class="more-section-heading">Sources</div>
     <details class="card more-sources"><summary><b>Sources &amp; References</b></summary>
       <p class="muted more-sources-intro">Calendars, official liturgical texts, reading sources, and acknowledgments.</p>
@@ -1327,6 +1325,7 @@
         <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
       <p><b>Byzantine</b> — The Ukrainian option follows the Eparchy of Edmonton’s checked 2026 daily entries, using Gregorian Pascha and fixed feasts. New Westminster supplies fixed commemorations when Edmonton has no verified date; seasonal calculations and reading-cycle fallbacks are labelled. Inconsistent source dates are withheld. The Melkite option follows Newton’s dated 2026 calendar. Canada-specific obligations are not applied as U.S. obligations; consult your own eparchy.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p>
+        ${felireMore()}
       </div></details>
       <details class="more-source-sub"><summary>Liturgical documents</summary><div class="more-source-content">
         <p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ukrainian Catholic</h3><p><a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton · calendar and daily liturgical texts</a></p><p><a href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener noreferrer">New Westminster · fixed Menaion</a></p><h3>Melkite Catholic</h3><p><a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Melkite liturgical resources</a></p><h3>Additional Ruthenian references</h3><p class="muted">A separate local calendar and translation; these do not supply the selected Edmonton calendar.</p><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p>
