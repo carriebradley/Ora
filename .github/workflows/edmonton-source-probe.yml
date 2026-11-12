@@ -1,0 +1,24 @@
+name: Inspect Edmonton source
+on:
+  push:
+    branches: [dev/edmonton-source-import]
+    paths: ['tools/inspect_edmonton_source.py', '.github/workflows/edmonton-source-probe.yml']
+permissions:
+  contents: read
+  checks: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install beautifulsoup4
+      - run: python tools/inspect_edmonton_source.py > /tmp/edmonton-probe.json
+      - uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            const p = '/tmp/edmonton-probe.json';
+            const summary = fs.existsSync(p) ? fs.readFileSync(p, 'utf8').slice(0,55000) : 'Probe failed.';
+            await github.rest.checks.create({owner:context.repo.owner,repo:context.repo.repo,head_sha:context.sha,name:'Edmonton source structure',status:'completed',conclusion:'neutral',output:{title:'Edmonton source facts and structure',summary:'```json\n'+summary+'\n```'}});
