@@ -391,7 +391,7 @@
   function keptHTML(k) {
     if (!k || !k.length) return '';
     const TAG = { I: ['Ireland · documented', ''], E: ['Sarum / England · documented', ''], F: ['Later folklore', 'fast'], U: ['Uncertain', 'fast'], N: ['When it entered the calendar', ''], O: ['Older Gaelic custom · before Sarum', 'fast'] };
-    return `<details style="margin-top:8px" open><summary><b>How it was kept</b></summary>${k.map(e => `<div style="margin:8px 0">${chip(TAG[e.tag][0], TAG[e.tag][1])}<p style="margin:4px 0">${esc(e.text)}</p>${e.src.length ? `<p class="muted" style="font-size:.74rem;margin:0">${esc(e.src.join(' · '))}</p>` : ''}</div>`).join('')}</details>`;
+    return `<details class="kept-summary" style="margin-top:10px"><summary><b>How it was kept</b></summary>${k.map(e => { const full = String(e.text || '').trim(); const first = full.match(/^.*?[.!?](?=\\s|$)/)?.[0] || full; const brief = first.length > 190 ? first.slice(0,187).replace(/\\s+\\S*$/, '') + '…' : first; return `<div class="kept-entry">${chip(TAG[e.tag][0], TAG[e.tag][1])}<p>${esc(brief)}</p>${full !== brief || e.src.length ? `<details class="kept-source"><summary>Details &amp; sources</summary>${full !== brief ? `<p>${esc(full)}</p>` : ''}${e.src.length ? `<p class="muted">${esc(e.src.join(' · '))}</p>` : ''}</details>` : ''}</div>`; }).join('')}</details>`;
   }
   /* Sarum Mass propers (Warren's Sarum Missal in English). Scripture is hydrated live from the Douay text; prayers not yet transcribed are shown as summaries only. */
   /* ---------- Office of Readings (modern Liturgy of the Hours): the table of readings, with the Scripture in the Douay-Rheims ---------- */
@@ -1173,7 +1173,7 @@
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    h += '</div><p class="muted">Dot colours are each calendar’s liturgical colour; a gold ring marks a solemnity, principal or great feast; ƒ marks a fast day beyond ordinary Friday/Wednesday abstinence.</p>';
+    h += '</div><div class="calendar-key" aria-label="Calendar legend"><span><i class="key-ring" aria-hidden="true"></i> Feast day</span><span><i class="key-fast" aria-hidden="true">ƒ</i> Fast day</span><span><i class="key-colors" aria-hidden="true"><i></i><i></i><i></i></i> Liturgical colors</span></div>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
