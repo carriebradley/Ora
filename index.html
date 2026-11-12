@@ -12,7 +12,7 @@
 <title>Ora — Daily Prayer</title>
 <style>
 :root{
-  --bg:#f6f1e7; --card:#fffdf8; --ink:#2a2220; --muted:#655a54; --line:#e4dccd; --accent:#7a2a3d; --accent-ink:#fff; --gold:#b8922a; --lit:#3d7a4a; --lit-white:#f5f0e6; --rubric:#a8232a;
+  --bg:#f6f1e7; --card:#fffdf8; --ink:#2a2220; --muted:#655a54; --line:#e4dccd; --accent:#7a2a3d; --accent-ink:#fff; --gold:#b8922a; --lit:#3d7a4a; --lit-white:#eee4d1; --rubric:#a8232a;
   --shadow:0 1px 2px rgba(60,30,20,.06),0 6px 18px rgba(60,30,20,.06);
   --reading-scale:1; --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
 }
@@ -278,6 +278,20 @@ nav button.on b{color:inherit}
 .glance .byz-commemoration{position:relative}
 .glance .byz-commemoration.subsequent{padding-left:17px}
 .glance .byz-commemoration.subsequent::before{content:"";position:absolute;left:3px;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+
+/* Ivory observance badges: readable distinction from the cream card in light mode. */
+.glance .gb[style*="--lit-white"]{
+  border:1px solid #b5a589;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 1px 2px rgba(63,45,20,.10);
+}
+.glance .gl.selected .gb[style*="--lit-white"]{
+  border-color:#a99879;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 0 0 1px #cbbda3;
+}
+@media (prefers-color-scheme:dark){
+  .glance .gb[style*="--lit-white"]{border-color:#b9a98f;box-shadow:0 0 0 1px rgba(240,232,218,.18)}
+  .glance .gl.selected .gb[style*="--lit-white"]{border-color:#b9a98f;box-shadow:0 0 0 1px rgba(240,232,218,.3)}
+}
 </style>
 </head>
 <body>
