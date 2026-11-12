@@ -10,7 +10,7 @@ self.addEventListener('activate', e => {
     const data = await caches.open(DATA);
     // Retain downloaded texts from the previous version before removing its shell.
     for (const key of await caches.keys()) {
-      if (!/^ora-v\d+$/.test(key) || key === V) continue;
+      if (!/^ora-v157+$/.test(key) || key === V) continue;
       const old = await caches.open(key);
       let migrated = true;
       for (const request of await old.keys()) {

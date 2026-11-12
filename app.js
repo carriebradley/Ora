@@ -802,15 +802,45 @@
     [12, 27, 537, "Justinian's new church of Hagia Sophia in Constantinople is consecrated."],
     [12, 30, 1591, 'Pope Innocent IX dies after two months as pope.']
   ];
-  function histCard(iso) {
+  // Curated Eastern Christian events; dates refer to the historical event, not necessarily a liturgical feast.
+  const EAST_HIST = [
+    [1,1,379,"St Basil the Great, archbishop of Caesarea and father of Eastern monasticism, dies (traditional date)."],
+    [1,11,529,"St Theodosius the Cenobiarch, a founder of Palestinian communal monasticism, dies (traditional date)."],
+    [1,17,356,"St Antony the Great, pioneer of Egyptian monasticism, dies (traditional date)."],
+    [1,25,379,"St Gregory the Theologian begins his ministry in Constantinople around this period (approximate date)."],
+    [2,14,869,"St Cyril, missionary to the Slavs and co-creator of their literary tradition, dies in Rome."],
+    [2,23,155,"St Polycarp, bishop of Smyrna, is martyred (traditional date)."],
+    [3,18,386,"St Cyril of Jerusalem, known for his catechetical lectures, dies (traditional date)."],
+    [4,6,885,"St Methodius, archbishop and missionary to the Slavs, dies."],
+    [4,12,1204,"The Fourth Crusade sacks Constantinople, a devastating event in Eastern Christian history."],
+    [4,24,1646,"The Union of Uzhhorod brings a group of Ruthenian clergy into communion with Rome."],
+    [5,2,373,"St Athanasius, patriarch of Alexandria and defender of Nicaea, dies."],
+    [5,5,553,"The Second Council of Constantinople opens."],
+    [5,9,348,"St Pachomius, a pioneer of communal monasticism in Egypt, dies (traditional date)."],
+    [5,20,325,"The First Council of Nicaea opens (traditional date)."],
+    [6,9,373,"St Ephrem the Syrian, hymnographer and theologian, dies (traditional date)."],
+    [6,27,2001,"Pope John Paul II beatifies Ukrainian Greek Catholic martyrs during his visit to Lviv."],
+    [7,15,1015,"St Vladimir of Kyiv, associated with the Christianization of Rus', dies."],
+    [8,6,843,"The Transfiguration becomes a major feast in the Byzantine tradition (historical development; date is the feast)."],
+    [9,14,407,"St John Chrysostom dies in exile at Comana (traditional date)."],
+    [10,11,787,"The Second Council of Nicaea concludes, affirming the veneration of icons."],
+    [10,31,1947,"Blessed Theodore Romzha, Ruthenian Greek Catholic bishop, dies after persecution."],
+    [11,12,1623,"St Josaphat Kuntsevych, Eastern Catholic archbishop of Polotsk, is killed at Vitebsk."],
+    [11,14,565,"Emperor Justinian I, patron of Hagia Sophia and Byzantine church building, dies."],
+    [11,25,311,"St Peter of Alexandria is martyred (traditional date)."],
+    [12,6,343,"St Nicholas, bishop of Myra, dies according to traditional accounts."],
+    [12,27,537,"Justinian's church of Hagia Sophia is consecrated in Constantinople."]
+  ];
+  function histCard(iso, rite) {
     const m = +iso.slice(5, 7), d = +iso.slice(8, 10), y = +iso.slice(0, 4), key = (a, b) => a * 100 + b, today = key(m, d);
     let best = null, bestGap = 99;
-    for (const e of HIST) {
+    const source = rite === 'byz' ? EAST_HIST : rite === 'sarum' ? HIST.filter(e => e[2] < 1500) : HIST;
+    for (const e of source) {
       // distance in days, wrapping the year
       const t = Date.UTC(2001, e[0] - 1, e[1]), n = Date.UTC(2001, m - 1, d), gap = Math.round(Math.abs(t - n) / 864e5), g = Math.min(gap, 365 - gap);
       if (g < bestGap || (g === bestGap && key(e[0], e[1]) <= today)) { best = e; bestGap = g; }
     }
-    if (!best || bestGap > 3) return '';
+    if (!best || bestGap > (rite === 'byz' ? 12 : 3)) return '';
     const when = bestGap === 0 ? '' : `${L.MN[best[0] - 1]} ${best[1]} · `;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
     return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span><span style="letter-spacing:.04em">${esc(when)}${esc(yr)}</span></div><p style="margin:8px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
@@ -829,7 +859,7 @@
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
     const saints = `<section class="card"><div class="lab">${todayAccent("saint")}<span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return glanceHTML(v) + saints + `<section class="card"><div class="lab">${todayAccent("art")}<span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
+    return glanceHTML(v) + saints + `<section class="card"><div class="lab">${todayAccent("art")}<span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso, S.rite) + popeCard(v.iso);
   }
 
 
