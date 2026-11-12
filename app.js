@@ -1008,7 +1008,7 @@
     const rr = st.readRite === 'byz' ? 'byz' : st.readRite === 'sarum' ? 'sarum' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<section class="card"><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
+    return `<section class="card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
   function viewLiturgy() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -1056,7 +1056,7 @@
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
-    let h = `<section class="card divine-office-card"><div class="seg prayer-major" role="group" aria-label="Prayer tradition">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
+    let h = `<section class="card divine-office-card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 8h12M8 8V5m8 3V5"/></svg><span>Today’s Prayers</span></div><div class="seg prayer-major" role="group" aria-label="Prayer tradition">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs prayer-minor" role="group" aria-label="Prayer hour">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg prayer-minor" role="group" aria-label="Prayer hour"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">${rite === 'byz' ? 'Orthros' : 'Lauds'}</button> ${rite === 'roman' ? `<button data-act="kind" data-v="readings" class="${st.kind === 'readings' ? 'on' : ''}">Office of Readings</button>` : ''}<button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">${rite === 'byz' ? 'Vespers' : 'Vespers'}</button><button data-act="kind" data-v="night" class="${st.kind === 'night' ? 'on' : ''}">${rite === 'byz' ? 'Compline' : 'Compline'}</button></div>`}`;
     if (rite === 'roman') {
       const officeName = {morning:'Morning Prayer (Lauds)',readings:'Office of Readings',evening:'Evening Prayer (Vespers)',night:'Night Prayer (Compline)'}[st.kind] || 'Morning Prayer (Lauds)';
@@ -1325,12 +1325,7 @@
   const detailKey = d => [d.closest('.step')?.id || '', d.className, d.querySelector(':scope > summary')?.textContent || '', d.dataset.cite || '', d.dataset.d || ''].join('|');
   function tabHeading() {
     const titles = {today:'Today', pray:'Divine Office', readings:'Daily Mass Readings', liturgy:'Sacred Liturgy', justice:'Catholic Social Teaching', more:'More', calendar:'Calendar'};
-    const icons = {
-      pray:'<path d="M12 3v18M6 8h12M8 8V5m8 3V5"/>',
-      readings:'<path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/>'
-    };
-    const symbol = icons[st.tab] ? '<svg class="page-heading-icon" viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[st.tab]+'</svg>' : '';
-    return `<section class="tab-heading"><h1>${symbol}${titles[st.tab]}</h1></section>`;
+    return `<section class="tab-heading"><h1>${titles[st.tab]}</h1></section>`;
   }
   function render() {
     const view = JSON.stringify([st.tab, st.date, S.rite, st.kind, st.shour, st.readRite, st.jtab]);
