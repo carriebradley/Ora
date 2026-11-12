@@ -393,7 +393,7 @@
   function cardByz(v) {
     const r = v.byz;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
+      <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
   }
@@ -528,9 +528,13 @@
     }
     return r.title;
   }
-  function byzantineCommemorationsHTML(title) {
-    const entries = String(title || '').split(/;\s+|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)/i)
+  function byzantineCommemorations(title) {
+    return String(title || '')
+      .split(/;\s*|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)/i)
       .map(item => item.trim().replace(/[;.]+$/, '').trim()).filter(Boolean);
+  }
+  function byzantineCommemorationsHTML(title) {
+    const entries = byzantineCommemorations(title);
     if (entries.length < 2) return esc(title || '');
     return '<div class="byz-commemorations">' + entries.map((item, index) =>
       '<div class="byz-commemoration' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
@@ -541,7 +545,7 @@
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
-      const detailHTML = k === 'byz' ? byzantineCommemorationsHTML(detail) : esc(detail);
+      const detailHTML = esc(k === 'byz' ? (byzantineCommemorations(detail)[0] || detail) : detail);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
       const lit = observanceColor(r, k);

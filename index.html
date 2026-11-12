@@ -320,6 +320,13 @@ nav button.on b{color:inherit}
 .today-saint-bio .saint-bio-image{display:block;width:100%;height:auto;aspect-ratio:200 / 278;object-fit:cover;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
 .today-saint-bio .saint-bio-copy{font-size:1rem;line-height:1.55;margin:0;overflow-wrap:break-word}
 @media (max-width:370px){.today-saint-bio .saint-bio-image-link{width:76px;margin-right:11px}}
+
+/* Calendar keeps the full Byzantine sanctoral, separated into clear entries. */
+.calendar-byz-saints{font-family:var(--serif);font-size:var(--ora-section-heading-size,1.2rem);font-weight:600;line-height:1.42;margin:8px 0 12px;overflow-wrap:break-word}
+.calendar-byz-saints .byz-commemorations{display:flex;flex-direction:column;gap:9px}
+.calendar-byz-saints .byz-commemoration{position:relative}
+.calendar-byz-saints .byz-commemoration.subsequent{padding-left:18px}
+.calendar-byz-saints .byz-commemoration.subsequent::before{content:"";position:absolute;left:3px;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 </style>
 </head>
 <body>
