@@ -54,7 +54,6 @@
           preview.replaceChildren();
           if(matches.length){
             const part=RomanMissal.prayers(book.sections[selected-1]);
-            const title=document.createElement('h3');title.textContent='Prayers of the Day';preview.append(title);
             bookText(preview,part,'inline-jump',false,false);
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';

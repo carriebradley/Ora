@@ -199,7 +199,7 @@
     return day;
   };
   const byzSpeech = iso => { try { return byzDay(iso).sets.map(s => s.t + '. ' + s.r.map(x => x[0] + ', ' + x[1]).join('. ')).join(' ') } catch (e) { return ''; } };
-  function byzReadingsHTML(v, church = S.byzChurch, showDay = true) {
+  function byzReadingsHTML(v, church = S.byzChurch, showDay = true, simple = false) {
     const t = church === S.byzChurch ? v.byz : L.byzantine(P(v.iso), {...S,byzChurch:church});
     let h = `${showDay ? `<h3 class="reading-main-title">${esc(t.title)}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
     try { day = byzDay(v.iso, church); } catch (e) { day = null; }
@@ -211,14 +211,14 @@
         if (s.chk) h += `<p class="note">Check this one: ${esc(s.chk)}</p>`;
         h += '</div>';
       }
-      for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
+      for (const s of day.sets) { const gr = s.r.find(x => /gospel/i.test(x[0]) && !/matins/i.test(x[0])); if (gr) { if(!simple) h += fathersBlock(String(gr[1]).split(' · ')[0].replace(/\s*\([^)]*\)/g, '')); break; } }
     } else h += '<p class="muted">No reading found in the table for this day.</p>';
-    if(day)for(const n of day.notes || [])h += `<p class="muted">${esc(n)}</p>`;
-    h += `<p class="muted" style="font-size:.8rem">Scripture passages are shown above in the public-domain American Standard Version when available. For a Catholic translation or when the text cannot load, use the reference links below.</p>`;
-    h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step">${day.sets.length > 1 ? `<b>${esc(s.t)}</b>` : ''}${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
-    if (church === 'melkite') {
+    if(day && !simple)for(const n of day.notes || [])h += `<p class="muted">${esc(n)}</p>`;
+    if (!simple) h += `<p class="muted" style="font-size:.8rem">Scripture passages are shown above in the public-domain American Standard Version when available. For a Catholic translation or when the text cannot load, use the reference links below.</p>`;
+    if (!simple) h += `<details><summary class="muted">Reading references and backup links</summary>${day && day.sets.length ? day.sets.map(s => `<div class="step">${day.sets.length > 1 ? `<b>${esc(s.t)}</b>` : ''}${s.r.map(([lab,cs]) => `<div class="cite"><span>${esc(lab)}</span><span>${citeLinks(cs)}</span></div>`).join('')}</div>`).join('') : ''}</details>`;
+    if (!simple && church === 'melkite') {
       h += `<p class="muted">Melkite Catholic Diocese of Newton · ${Melkite.entry(v.iso) ? 'dated 2026 calendar' : 'verified calendar unavailable for this year'}.</p><div class="row"><a class="btn" href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener">Melkite calendar and propers</a></div>`;
-    } else {
+    } else if (!simple) {
       const e=Edmonton.entry(v.iso);
       h += `<p class="muted">${e ? 'Ukrainian Catholic Eparchy of Edmonton · dated reading references.' : 'New Westminster fixed commemorations and a calculated Ukrainian cycle; Edmonton verification is unavailable for this date.'}</p><div class="row">${e ? `<a class="btn" href="${e.source}" target="_blank" rel="noopener">Edmonton · ${L.MN[P(v.iso).getUTCMonth()]} ${P(v.iso).getUTCDate()} texts</a>` : '<a class="btn" href="https://eeparchy.com/calendar" target="_blank" rel="noopener">Edmonton calendar</a>'}<a class="btn" href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener">Fixed saints · New Westminster</a></div>`;
     }
@@ -1010,7 +1010,7 @@
     const service=LiturgySchedule.service(st.date,S.byzChurch);
     const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
     const reader=LiturgicalText.card(byzantine?service.id:'roman',{church:S.byzChurch,date:st.date,dayTitle:v.roman.title});
-    const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false):romanReadingsHTML(st.date,false,true);
+    const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false,true):romanReadingsHTML(st.date,false,true);
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
