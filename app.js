@@ -1085,7 +1085,7 @@
     const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
-    let h = `<div class="justice-intro">${justiceIcon("hands")}<div><strong>FAITH IN ACTION</strong><p>Catholic teaching on human dignity, solidarity, and care for creation.</p></div></div>`;
+    let h = '';
     // Today: one quotation and one short piece, so the material lasts across many days
     h += `<div class="justice-daily">${justiceCard(f)}</div>`;
     const ecology = J.filter(j => j.tag === "Creation");
