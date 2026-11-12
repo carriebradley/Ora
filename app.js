@@ -1277,7 +1277,7 @@
   let renderedView = '';
   const detailKey = d => [d.closest('.step')?.id || '', d.className, d.querySelector(':scope > summary')?.textContent || '', d.dataset.cite || '', d.dataset.d || ''].join('|');
   function tabHeading() {
-    const titles = {today:'Today', pray:'Pray', readings:'Readings', liturgy:'Liturgy', justice:'Justice', more:'More', calendar:'Calendar'};
+    const titles = {today:'Today', pray:'Divine Office', readings:'Daily Mass Readings', liturgy:'Sacred Liturgy', justice:'Catholic Social Teaching', more:'More', calendar:'Calendar'};
     return `<section class="tab-heading"><h1>${titles[st.tab]}</h1>${st.tab === 'justice' ? '<p>Faith in action</p>' : ''}</section>`;
   }
   function render() {
