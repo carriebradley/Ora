@@ -1,0 +1,25 @@
+name: Import public-domain Office readings
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 6 * * *'
+permissions:
+  contents: write
+jobs:
+  import-readings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import and validate historical reading
+        run: python tools/import_oor_public_domain.py
+      - name: Commit verified text updates
+        run: |
+          if git diff --quiet -- oortext.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add oortext.json
+          git commit -m "Import verified public-domain Office reading text"
+          git push
