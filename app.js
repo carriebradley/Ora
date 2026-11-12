@@ -161,23 +161,23 @@
   const readingsSpeech = r => r.full
     ? r.full.sections.map(s => `${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`).join('\n\n')
     : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}Gospel, ${r.gospel || ''}.`;
-  function romanReadingsHTML(iso, showAudio = true) {
+  function romanReadingsHTML(iso, showAudio = true, simple = false) {
     const r = st.readings[iso];
     let h = '';
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
-      if (r.full.title) h += `<h3 class="reading-main-title">${esc(r.full.title)}</h3>`;
+      if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(r.full.title)}</h3>`;
       if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe title="USCCB audio of the readings" width="100%" height="120" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
       for (const s of r.full.sections) {
-        h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
+        h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${simple ? '' : speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
       }
-      h += `<div class="row">${speakBtn(readingsSpeech(r))}</div>`;
-      const gs = r.full.sections.find(s => /gospel/i.test(s.label) && s.cite); if (gs) h += fathersBlock(gs.cite);
+      if (!simple) h += `<div class="row">${speakBtn(readingsSpeech(r))}</div>`;
+      const gs = r.full.sections.find(s => /gospel/i.test(s.label) && s.cite); if (gs && !simple) h += fathersBlock(gs.cite);
     } else if (r) {
       for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['gospel', 'Gospel']]) if (r[k]) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
-    h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a><a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
-    if (r && r.full) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. Used with permission via the USCCB daily readings feed. All rights reserved.</p>`;
+    if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a><a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
+    if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. Used with permission via the USCCB daily readings feed. All rights reserved.</p>`;
     return h;
   }
   /* OCA lists the same Pascha-based Epistle/Gospel cycle by Orthodox date. For the movable season, map this day to the
@@ -1005,20 +1005,18 @@
     return `<section class="card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
   function viewLiturgy() {
-    const v = dayInfo(st.date); loadReadings(st.date);
-    const byzantine = st.liturgyView === 'byz';
-    const litRite = byzantine ? 'byz' : 'roman';
-    const service = LiturgySchedule.service(st.date,S.byzChurch);
-    const name = byzantine ? service.title : 'Roman Mass';
-    const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : romanReadingsHTML(st.date, false);
-    const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
-    const note = byzantine ? `<p class="muted">${esc(service.note)} ${S.byzChurch === 'melkite' ? 'Melkite Greek Catholic Diocese of Newton (2026 calendar)' : 'Ukrainian Catholic Eparchy of Edmonton; Canadian local directions'}; parish schedules may differ.</p>` : '';
-    const reader = LiturgicalText.card(byzantine ? service.id : 'roman', {church:S.byzChurch,date:st.date,dayTitle:v.roman.title});
-    return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
-      <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
-      <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
-      <p class="muted">${byzantine ? 'The selected Byzantine calendar supplies the day’s readings and resources below. Personal prayer books can be read in Liturgical Text.' : 'Daily readings follow the current Roman Catholic lectionary. Your saved Roman Missal EPUB supplies prayer text directly below.'}</p>
-      ${note}${reader}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
+    const v=dayInfo(st.date);loadReadings(st.date);
+    const byzantine=st.liturgyView==='byz';
+    const service=LiturgySchedule.service(st.date,S.byzChurch);
+    const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
+    const reader=LiturgicalText.card(byzantine?service.id:'roman',{church:S.byzChurch,date:st.date,dayTitle:v.roman.title});
+    const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false):romanReadingsHTML(st.date,false,true);
+    return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
+    <section class="card simple-liturgy">
+      <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
+      ${reader}
+      <section class="simple-liturgy-readings" aria-label="Readings"><h3>Readings</h3>${readings}</section>
+    </section>`;
   }
   function romanNightHTML() {
     // Modern Roman Night Prayer's ordinary weekday psalm assignments (Vulgate numbering).
