@@ -1023,7 +1023,7 @@
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
-    let h = `<div class="seg prayer-major" role="group" aria-label="Prayer tradition">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
+    let h = `<section class="card divine-office-card"><div class="seg prayer-major" role="group" aria-label="Prayer tradition">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs prayer-minor" role="group" aria-label="Prayer hour">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg prayer-minor" role="group" aria-label="Prayer hour"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">${rite === 'byz' ? 'Orthros' : 'Lauds'}</button> ${rite === 'roman' ? `<button data-act="kind" data-v="readings" class="${st.kind === 'readings' ? 'on' : ''}">Office of Readings</button>` : ''}<button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">${rite === 'byz' ? 'Vespers' : 'Vespers'}</button><button data-act="kind" data-v="night" class="${st.kind === 'night' ? 'on' : ''}">${rite === 'byz' ? 'Compline' : 'Compline'}</button></div>`}`;
     if (rite === 'roman') {
       const officeName = {morning:'Morning Prayer (Lauds)',readings:'Office of Readings',evening:'Evening Prayer (Vespers)',night:'Night Prayer (Compline)'}[st.kind] || 'Morning Prayer (Lauds)';
@@ -1049,7 +1049,7 @@
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
     });
-    return h;
+    return h + '</section>';
   }
 
   const QS = 'font-family:var(--serif);font-size:1.05rem;line-height:1.55;margin:.3em 0';
