@@ -884,7 +884,7 @@
     const name = byzantine ? service.title : 'Roman Mass';
     const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : romanReadingsHTML(st.date, false);
     const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
-    const note = byzantine ? `<p class="muted">${esc(service.note)} Ruthenian Byzantine Catholic tradition of Pittsburgh; parish schedules may differ.</p><div class="row"><a class="btn" href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener">Liturgical service books</a></div>` : '';
+    const note = byzantine ? `<p class="muted">${esc(service.note)} Ruthenian Byzantine Catholic tradition of Pittsburgh; parish schedules may differ.</p>` : '';
     const reader = LiturgicalText.card(byzantine ? service.id : 'roman');
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
@@ -1019,6 +1019,7 @@
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
     <details class="card"><summary><b>Calendar</b></summary>${viewCalendar()}</details>
+    <details class="card"><summary><b>Resources · liturgical documents</b></summary><div style="margin-top:12px"><p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ruthenian Byzantine</h3><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p></div></details>
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
       <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
