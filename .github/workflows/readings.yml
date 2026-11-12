@@ -1,8 +1,15 @@
 name: update-readings
 on:
-  schedule: [{ cron: '15 9 * * *' }, { cron: '40 1 * * *' }]
+  # GitHub Actions cron uses UTC. Run just after midnight Eastern in both DST
+  # (04:05 UTC) and standard time (05:05 UTC), then refresh during the day.
+  # The extra midnight-window run is intentional; imports merge by date.
+  schedule:
+    - cron: '5 4,5,10,14,18,22 * * *'
   workflow_dispatch:
 permissions: { contents: write }
+concurrency:
+  group: ora-daily-imports
+  cancel-in-progress: false
 jobs:
   fetch:
     runs-on: ubuntu-latest
