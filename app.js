@@ -1317,13 +1317,17 @@
       document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c));
     } catch (e) { /* keep the default */ }
   }
-  let renderedView = '';
+  let renderedView = '', pageTouchActive = false, pendingTouchRender = false;
   const detailKey = d => [d.closest('.step')?.id || '', d.className, d.querySelector(':scope > summary')?.textContent || '', d.dataset.cite || '', d.dataset.d || ''].join('|');
   function tabHeading() {
     const titles = {today:'Today', pray:'Divine Office', readings:'Daily Mass Readings', liturgy:'Sacred Liturgy', justice:'Catholic Social Teaching', more:'More', calendar:'Calendar'};
     return `<section class="tab-heading"><h1>${titles[st.tab]}</h1></section>`;
   }
   function render() {
+    // Keep the touch target attached until the finger lifts. Replacing it
+    // during an artwork/readings refresh interrupts the remaining touch events.
+    if (pageTouchActive) { pendingTouchRender = true; return; }
+    pendingTouchRender = false;
     const view = JSON.stringify([st.tab, st.date, S.rite, st.kind, st.shour, st.readRite, st.jtab]);
     const opened = new Map(view === renderedView ? [...document.querySelectorAll('#app details')].map(d => [detailKey(d), d.open]) : []);
     const active = document.activeElement;
@@ -1424,6 +1428,7 @@
       return false;
     };
     surface.addEventListener('touchstart', e => {
+      pageTouchActive = true;
       gesture = null;
       if (e.touches.length !== 1 || document.querySelector('dialog[open]') || selecting() || blocked(e.target)) return;
       const t = e.touches[0];
@@ -1454,6 +1459,21 @@
       openTab(tabs[next], true);
     }, {passive:false});
     surface.addEventListener('touchcancel', () => { gesture = null; }, {passive:true});
+    const flushTouchRender = () => {
+      if (!pageTouchActive && pendingTouchRender && !selecting()) render();
+    };
+    const finishTouch = e => {
+      if (e.type === 'touchcancel' || !e.touches.length) {
+        pageTouchActive = false;
+        // Finish the swipe handler first; its navigation render consumes any
+        // pending refresh. Also handle touches ending outside the main area.
+        setTimeout(flushTouchRender, 0);
+      }
+    };
+    document.addEventListener('touchend', finishTouch, {capture:true,passive:true});
+    document.addEventListener('touchcancel', finishTouch, {capture:true,passive:true});
+    document.addEventListener('selectionchange', flushTouchRender);
+    window.addEventListener('blur', () => { gesture = null; pageTouchActive = false; flushTouchRender(); });
   }
   let timer = null;
   document.addEventListener('click', e => {
