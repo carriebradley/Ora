@@ -64,9 +64,12 @@ def daily(iso,summary):
                 sibling=p.find_next_sibling()
                 if sibling:
                     citation=clean(sibling.get_text(' ',strip=True)).replace('–','-').replace('—','-')
-                    if len(citation)<160 and CITATION.fullmatch(citation):
-                        pair=['Gospel' if label.lower().startswith('gospel') else 'Epistle',citation]
-                        if pair not in refs:refs.append(pair)
+                    if len(citation)<200:
+                        parts=re.split(r'\s*[;·]\s*(?=(?:[1-4]\s*)?[A-Z])',citation)
+                        if parts and all(CITATION.fullmatch(part) for part in parts):
+                            for part in parts:
+                                pair=['Gospel' if label.lower().startswith('gospel') else 'Epistle',part]
+                                if pair not in refs:refs.append(pair)
     tone=re.search(r'(?:(?:Octoechos )?Tone)\s+(\d)',title,re.I)
     rank=next((r for r in ['Feast of the Lord','Feast of the Mother of God','All-Night Vigil Feast','Polyeleos Feast','Saint with Great Doxology','Saint with Six Stichera'] if r.lower() in rubric.lower()),'')
     source=f'{BASE}/calendar/{iso}'
@@ -106,8 +109,15 @@ def build(year):
         if iso not in days or not all(w.lower() in days[iso]['title'].lower() for w in words):raise ValueError('Source anchor failed: '+iso)
     return {'year':year,'retrieved':dt.datetime.now(dt.timezone.utc).isoformat(),'calendarSource':BASE+'/calendar','menaionSource':MENAION,'days':dict(sorted(days.items())),'fixed':fixed,'withheld':dict(sorted(withheld.items())),'publishedMonths':{str(i+1):len(m) for i,m in enumerate(months)},'note':'Facts and Scripture citations only. No full liturgical translations are reproduced. Missing and inconsistent source dates use explicitly labelled fixed-Menaion/calculated information.'}
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--year',type=int,default=2026);p.add_argument('--out');args=p.parse_args()
-    data=build(args.year);out=Path(args.out or f'edmonton-{args.year}.js')
+    p=argparse.ArgumentParser();p.add_argument('--year',type=int,default=2026);p.add_argument('--out');p.add_argument('--repair-missing',action='store_true');args=p.parse_args()
+    out=Path(args.out or f'edmonton-{args.year}.js')
+    if args.repair_missing:
+        old=out.read_text(encoding='utf-8');data=json.loads(old.split('function(){return ',1)[1].rsplit(';});',1)[0])
+        for iso,e in data['days'].items():
+            if not e['references']:
+                updated=daily(iso,'');updated.pop('headers',None);data['days'][iso]=updated
+        data['retrieved']=dt.datetime.now(dt.timezone.utc).isoformat()
+    else:data=build(args.year)
     content='/* Official dated calendar facts and Scripture references; no prayer translations. */\n(function(root,factory){if(typeof module===\'object\'&&module.exports)module.exports=factory();else root.EDMONTON_2026=factory();})(typeof self!==\'undefined\'?self:this,function(){return '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+';});\n'
     out.write_text(content,encoding='utf-8')
     print(json.dumps({'year':args.year,'imported_days':len(data['days']),'withheld_days':len(data['withheld']),'fixed_dates':len(data['fixed']),'published_months':data['publishedMonths'],'anchors':{iso:data['days'][iso] for iso in [f'{args.year}-11-11',f'{args.year}-11-12',f'{args.year}-11-15',f'{args.year}-12-09']}},ensure_ascii=False,indent=2))

@@ -18,7 +18,7 @@ jobs:
           python-version: '3.12'
       - run: pip install beautifulsoup4
       - name: Import factual calendar metadata
-        run: python tools/import_edmonton_calendar.py --year 2026 > /tmp/edmonton-import.json
+        run: python tools/import_edmonton_calendar.py --year 2026 --repair-missing > /tmp/edmonton-import.json
       - name: Commit source-checked facts
         run: |
           git config user.name "github-actions[bot]"
