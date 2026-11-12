@@ -329,11 +329,29 @@
   function alsoHTML(a) { return a && a.length ? `<ul class="also">${a.slice(0, 5).map(x => `<li>${esc(x.title)} <i>— ${esc(x.note)}</i></li>`).join('')}</ul>` : ''; }
   function spokenCard(r, extra) { return `${r.title}. ${r.rank || ''}. ${r.season || ''}. ${r.fast || ''} ${extra || ''}`; }
 
+  // Compact fasting markers describe the calendar's stated observance; see More for discipline distinctions.
+  function fastingIcons(r, rite) {
+    const fast = String(r.fast || ''), note = String(r.fastingNote || ''), full = fast + ' ' + note;
+    if (!fast || /no fast|fast[- ]free|dispens|fast is lifted/i.test(full)) return '';
+    const kinds = [];
+    if (/abstinen|no meat|without meat|strict fast|great fast|fast and abstinence/i.test(full)) kinds.push('meat');
+    if (rite === 'byz' && /strict fast|no dairy|without dairy|dairy and eggs|meat, dairy/i.test(full)) kinds.push('dairy','eggs');
+    if (/no oil|without oil|abstain from oil/i.test(full)) kinds.push('oil');
+    if (!kinds.length) return '';
+    const paths = {
+      meat:'<path d="M6 14c-2-2-1-5 1-7s5-3 7-1 3 5 1 7-5 3-7 3l-2 3-2-2 2-3z"/>',
+      dairy:'<path d="M9 3h6v4l2 3v11H7V10l2-3V3zM9 7h6M7 13h10"/>',
+      eggs:'<path d="M12 3c-4 0-7 8-7 12a7 7 0 0 0 14 0c0-4-3-12-7-12z"/>',
+      oil:'<path d="M12 3c-3 5-6 9-6 12a6 6 0 0 0 12 0c0-3-3-7-6-12z"/>'
+    };
+    const labels = {meat:'No meat',dairy:'No dairy',eggs:'No eggs',oil:'No oil'};
+    return '<div class="fasting-icons" aria-label="Fasting guidance">'+kinds.map(k=>'<span class="fasting-symbol" title="'+labels[k]+'"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+paths[k]+'<path d="M3 21L21 3" stroke-width="1.8"/></svg><span>'+labels[k]+'</span></span>').join('')+'</div>';
+  }
   function cardRoman(v) {
     const r = v.roman;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
-      <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${alsoHTML(r.also)}</section>`;
+      <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
   function byzSaintHTML(iso, r) {
     if (S.byzChurch !== 'ukrainian') return ''; // This supplemental dataset is Ukrainian, not a Ruthenian ordo.
@@ -352,7 +370,7 @@
     const known = [r.title, ...r.also.map(x => x.title)].map(words);
     const ev = S.byzChurch !== 'ukrainian' ? [] : u.day.filter(e => { if (L.byzAnnaDay(S) === 8 && v.iso.endsWith('-12-09') && /anna|anne|conception/i.test(e.n)) return false; const w = words(e.n); return !known.some(k => [...w].filter(x => k.has(x)).length >= Math.min(2, w.size)); });
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine</span>${speakBtn(spokenCard(r))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>
+      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${byzSaintHTML(v.iso, r)}${alsoHTML(r.also)}${ev.length ? `<ul class="also">${ev.map(e => `<li>${esc(e.n)} <i>— your UGCC calendar</i></li>`).join('')}</ul>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
   }
@@ -368,7 +386,7 @@
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
       ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
-      ${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
+      ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}${felireHTML(st.date)}</section>`;
   }
   function keptHTML(k) {
     if (!k || !k.length) return '';
@@ -1173,6 +1191,7 @@
   function viewMore() {
     return `<section class="card"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
     <details class="card more-liturgy"><summary><b>Sacred Liturgy</b> <span class="muted">· work in progress</span></summary><div class="more-liturgy-content">${viewLiturgy()}</div></details>
+    <details class="card"><summary><b>Fasting &amp; abstinence · guidance</b></summary><div class="fasting-guidance"><p>The small crossed-food symbols describe restrictions identified in Ora's calendar entries; they are not a complete statement of binding obligations.</p><p><b>Roman:</b> Current Latin Catholic fasting and abstinence are governed by canon law and applicable bishops' conference rules. <a href="https://www.usccb.org/prayer-and-worship/liturgical-year/lent" target="_blank" rel="noopener noreferrer">USCCB guidance</a>.</p><p><b>Byzantine:</b> Ukrainian Greek Catholic fasting discipline varies by eparchy and applicable particular law. The Byzantine calendar in Ora may follow a different tradition; consult your eparchy for binding rules. Oil restrictions are not automatically implied by a fasting season.</p><p><b>Traditional:</b> Sarum fasting marks historical observances, not present-day universal Catholic obligations. Personal fasting may be adapted for health and pastoral reasons.</p></div></details>
     <details class="card"><summary><b>Resources · liturgical documents</b></summary><div style="margin-top:12px"><p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ruthenian Byzantine</h3><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p></div></details>
     ${felireMore()}
     <section class="card"><h3>About the calendars</h3>
