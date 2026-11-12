@@ -2,7 +2,8 @@ const assert=require('node:assert/strict');
 module.exports=async(browser,base)=>{
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  await context.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
- const page=await context.newPage(),cdp=await context.newCDPSession(page);
+ const page=await context.newPage(),cdp=await context.newCDPSession(page),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
  const active=()=>page.locator('#nav [aria-current="page"]').getAttribute('data-tab');
  const drag=async(x,y,dx,dy)=>{
   await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y,id:1}]});
@@ -13,6 +14,7 @@ module.exports=async(browser,base)=>{
   await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
  };
  const swipe=async(left=true)=>{
+  await page.locator('.tab-heading').waitFor({state:'visible'}).catch(async e=>{console.error('Swipe startup:',{url:page.url(),errors,body:(await page.locator('body').innerText()).slice(0,2000)});throw e;});
   const box=await page.locator('.tab-heading').boundingBox();
   await drag(left?290:100,box.y+box.height/2,left?-190:190,0);
  };
