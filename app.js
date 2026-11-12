@@ -119,8 +119,16 @@
   const artEligible = (a, rite) => rite === 'byz' ? a.tr === 'East'
     : rite === 'sarum' ? a.tr === 'West' && PRE1500_WEST_ART.has(a.t)
     : a.tr === 'West';
-  const artFor = (v, rite) => pick(C.ART.filter(a => artEligible(a, rite)),
-    v.iso + 'art' + rite, st.artShift, tagsFor(v), null);
+  const artFor = (v, rite) => {
+    const eligible = C.ART.filter(a => artEligible(a, rite));
+    const selected = pick(eligible, v.iso + 'art' + rite, st.artShift, tagsFor(v), null);
+    if (!selected) return null;
+    const known = st.art[selected.q];
+    if (!known || known === 'loading' || known.img) return selected;
+    // If the selected work has no verified image, try another within the same tradition.
+    const alternates = eligible.filter(x => x.q !== selected.q && !(st.art[x.q] && st.art[x.q] !== 'loading' && !st.art[x.q].img));
+    return alternates.length ? pick(alternates, v.iso + 'art-fallback' + rite, st.artShift, tagsFor(v), null) : selected;
+  };
 
   /* ---------- readings ---------- */
   /* Roman readings come from readings.json, built daily from the official USCCB RSS feed by tools/fetch_readings.py.
@@ -251,10 +259,10 @@
       const ok = p && !p.missing && p.pageimage && p.thumbnail && (!a.fm || new RegExp(a.fm, 'i').test(decodeURIComponent(p.pageimage).replace(/_/g, ' ')));
       const out = p && !p.missing ? { img: ok ? p.thumbnail.source : '', url: p.fullurl } : { img: '', url: 'https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(a.q) };
       out.at = Date.now(); st.art[a.q] = out; store.set(k, out); render();
-    }).catch(() => { st.art[a.q] = null; render(); });
+    }).catch(() => { st.art[a.q] = {img:'',at:Date.now()}; render(); });
   }
   function artHTML(a, big) {
-    loadArt(a); const m = st.art[a.q];
+    if (!a) return '<p class="muted">Artwork unavailable.</p>'; loadArt(a); const m = st.art[a.q];
     let h = '<div class="art">';
     h += m && m.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy">` : `<div class="ph">${m === 'loading' ? 'Loading image…' : m ? 'No verified image of this work — use “About this work”' : 'Image unavailable offline'}</div>`;
     h += `<h3 class="artwork-title">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
