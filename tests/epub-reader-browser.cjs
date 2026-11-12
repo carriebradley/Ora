@@ -1,10 +1,15 @@
 const assert=require('node:assert/strict'),{deflateRawSync}=require('node:zlib');
 function crc32(data){let c=0xffffffff;for(const b of data){c^=b;for(let i=0;i<8;i++)c=(c>>>1)^((c&1)?0xedb88320:0);}return(c^0xffffffff)>>>0;}
-function epub(encrypted=false){
+function epub(encrypted=false,missal=false){
  const files={mimetype:'application/epub+zip','META-INF/container.xml':'<container xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="book/content.opf"/></rootfiles></container>',
  'book/content.opf':'<package xmlns="http://www.idpf.org/2007/opf"><manifest><item id="a" href="one.xhtml" media-type="application/xhtml+xml"/><item id="b" href="two.xhtml" media-type="application/xhtml+xml"/></manifest><spine><itemref idref="a"/><itemref idref="b"/></spine></package>',
  'book/one.xhtml':'<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><title>Book</title></head><body><h1>Opening prayers</h1><p>Original wording&nbsp;and responses.</p><script>window.epubExecuted=true;fetch("https://epub-invalid.example/attack")</script><img src="https://epub-invalid.example/image" alt="Book illustration"/></body></html>',
  'book/two.xhtml':'<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Second</title></head><body><h1>Thanksgiving</h1><p>Searchable prayer after communion.</p></body></html>'};
+ if(missal){
+  files['book/content.opf']=files['book/content.opf'].replace('<manifest>','<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Test Roman Missal</dc:title><dc:publisher>Test fixture</dc:publisher><dc:date>2000-01-01</dc:date><dc:description>Fictional test edition for the conclave.</dc:description></metadata><manifest>');
+  files['book/one.xhtml']='<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Fixture</title></head><body><h2>November 12 Saint Josaphat, Bishop and Martyr Memorial</h2><h3>Collect</h3><p>Fixture collect for private reading.</p><p><a href="two.xhtml#TIR">The Introductory Rites</a></p><h2>THIRTY-THIRD SUNDAY IN ORDINARY TIME</h2><p>Fixture Sunday prayer.</p></body></html>';
+  files['book/two.xhtml']='<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Fixture</title></head><body><h2 id="TIR">The Introductory Rites</h2><p>Fixture fixed Mass responses.</p></body></html>';
+ }
  if(encrypted)files['META-INF/encryption.xml']='<encryption/>';
  const chunks=[],central=[];let offset=0;
  for(const [name,text] of Object.entries(files)){
@@ -50,3 +55,5 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  assert.deepEqual(uploads,[]);assert.deepEqual(remote,[]);page.off('request',watch);
  console.log('Private EPUB: compressed XHTML, search, bookmarks, offline, inert markup, invalid replacement and no uploads passed.');
 };
+
+module.exports.epub=epub;

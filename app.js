@@ -1012,11 +1012,11 @@
     const body = byzantine ? byzReadingsHTML(v, S.byzLiturgyChurch, false) : romanReadingsHTML(st.date, false);
     const day = byzantine ? L.byzantine(P(st.date), {...S, byzChurch:S.byzLiturgyChurch}) : v[litRite];
     const note = byzantine ? `<p class="muted">${esc(service.note)} ${S.byzChurch === 'melkite' ? 'Melkite Greek Catholic Diocese of Newton (2026 calendar)' : 'Ukrainian Catholic Eparchy of Edmonton; Canadian local directions'}; parish schedules may differ.</p>` : '';
-    const reader = LiturgicalText.card(byzantine ? service.id : 'roman', {church:S.byzChurch,date:st.date});
+    const reader = LiturgicalText.card(byzantine ? service.id : 'roman', {church:S.byzChurch,date:st.date,dayTitle:v.roman.title});
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine ? '' : 'on'}">Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine ? 'on' : ''}">Divine Liturgy</button></div>
       <section class="card"><h2 style="font-family:var(--serif)">${esc(name)}</h2>
       <div class="step"><div class="t">Liturgical day</div><div class="tx">${esc(day.title)}</div><p class="muted">${esc(day.season)}</p></div>
-      <p class="muted">${byzantine ? 'The selected Byzantine calendar supplies the day’s readings and resources below. Personal prayer books can be read in Liturgical Text.' : 'Daily readings follow the current Roman Catholic lectionary. The complete Roman Missal prayers have not yet been incorporated.'}</p>
+      <p class="muted">${byzantine ? 'The selected Byzantine calendar supplies the day’s readings and resources below. Personal prayer books can be read in Liturgical Text.' : 'Daily readings follow the current Roman Catholic lectionary. Your saved Roman Missal EPUB supplies prayer text directly below.'}</p>
       ${note}${reader}${body}${!byzantine && litRite === 'roman' ? '<details class="srcd"><summary>Order of Mass · prayers and responses</summary><p class="muted">The Order of Mass contains the fixed parts of the celebration. The Collect, Prayer over the Offerings and Prayer after Communion vary with the day.</p><div class="row"><a class="btn" href="https://www.usccb.org/committees/divine-worship/policies/mass-settings-texts" target="_blank" rel="noopener">Read the fixed prayers and responses · USCCB</a><a class="btn" href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener">Follow the Order of Mass · USCCB</a></div><p class="muted">The first resource includes the Kyrie, Gloria, Nicene Creed, Sanctus, Memorial Acclamations and Lamb of God. It is a selection of official texts, rather than the complete Missal.</p></details>' : ''}</section>`;
   }
   function romanNightHTML() {
@@ -1525,7 +1525,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v211';
+  const APP_BUILD = 'ora-v212';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

@@ -3,35 +3,60 @@
   'use strict';
   const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom',basil:'St. Basil the Great',presanctified:'Presanctified Gifts'};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function card(id,{church='ukrainian',date=''}={}){
+  const previewBooks=new Map();let hydrateVersion=0;
+  function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-missal-tools" hidden><h3>Your Roman Missal</h3><p class="reader-edition muted"></p><p class="reader-match muted" role="status"></p><div class="reader-missal-shortcuts row"></div><label for="inline-book-search">Find a prayer or section</label><input id="inline-book-search" type="search" placeholder="Search your saved Missal"><label for="inline-book-section">Book section</label><select id="inline-book-section"></select></div><div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted" aria-live="polite"></span><button class="btn" data-reader="inline-next">Next</button></div><div class="reader-inline-text" aria-label="Saved liturgical text" hidden></div></div>`;}
+  function card(id,{church='ukrainian',date='',dayTitle=''}={}){
     if(!labels[id])return '<p class="muted">No service book is selected for this date. Consult the calendar directions.</p>';
-    const dated=church==='ukrainian'&&window.Edmonton?Edmonton.entry(date):null;
-    const source=id==='roman'?'https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf':church==='ukrainian'?(dated?.source||'https://eeparchy.com/calendar'):id==='chrysostom'?'https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf':'https://melkite.org/liturgical-resources';
-    const title=id==='roman'?'Read Order of Mass':church==='ukrainian'?'Read day’s liturgical texts':id==='chrysostom'?'Read Divine Liturgy':'Read Melkite service resources';
-    const sourceNote=id==='roman'?'Fixed prayers and responses; daily Missal propers are separate.':church==='ukrainian'?'Edmonton’s day-specific prayers, hymns and readings. The complete fixed service book is separate.':id==='chrysostom'?'Diocese-hosted 2009 draft; consult your parish for its current edition.':'Monthly directions and source texts for the selected Melkite service.';
-    return `<section class="liturgical-text" data-text-id="${id}" aria-label="Liturgical Text"><h3>Liturgical Text</h3><p class="muted">${escape(labels[id])} · private devotional reading</p><div class="row"><a class="btn fill" href="${source}" target="_blank" rel="noopener noreferrer">${title}</a></div><p class="muted">${sourceNote} Use Open original if the source cannot display inside Ora.</p>${id==='roman'?'<details><summary>Complete Roman Missal source</summary><p><a href="https://liturgy.au/product/roman-emissal-usa-epub/" target="_blank" rel="noopener noreferrer">U.S. Roman eMissal · EPUB</a></p><p class="muted">Independent digital edition listed free by its provider. Its downloadable edition still needs checking. A permitted EPUB can be chosen below for private reading; automatic daily prayer selection has not been verified.</p></details>':''}<details class="reader-offline"><summary>Optional offline text</summary><p class="reader-status" role="status">Checking saved text…</p><div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted" aria-live="polite"></span><button class="btn" data-reader="inline-next">Next</button></div><div class="reader-inline-text" aria-label="Saved liturgical text preview" hidden style="white-space:pre-wrap;line-height:1.7;max-height:55vh;overflow:auto"></div><div class="row"><button class="btn" data-reader="open" disabled>Open saved text</button></div><label for="liturgical-file">Choose a PDF or EPUB from this device</label><input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub"><p class="muted">Private devotional use only. Your file stays on this device. Up to 100 MB; keep the original. The date selects the service’s book; it opens at your bookmarked page or section.</p><button class="btn" data-reader="remove" disabled>Remove saved text</button></details></section>`;
+    const roman=id==='roman',dated=church==='ukrainian'&&window.Edmonton?Edmonton.entry(date):null;
+    const source=roman?'https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf':church==='ukrainian'?(dated?.source||'https://eeparchy.com/calendar'):id==='chrysostom'?'https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf':'https://melkite.org/liturgical-resources';
+    const title=roman?'Order of Mass · publisher copy':church==='ukrainian'?'Read day’s liturgical texts':id==='chrysostom'?'Read Divine Liturgy':'Read Melkite service resources';
+    const sourceNote=roman?'Choose your Roman Missal EPUB below once to read its text directly on this page. A unique matching heading opens the day’s prayers; other sections remain available through the book selector.':church==='ukrainian'?'Edmonton’s day-specific prayers, hymns and readings. The complete fixed service book is separate.':id==='chrysostom'?'Diocese-hosted 2009 draft; consult your parish for its current edition.':'Monthly directions and source texts for the selected Melkite service.';
+    return `<section class="liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" aria-label="Liturgical Text"><h3>Liturgical Text</h3><p class="muted">${escape(labels[id])} · private devotional reading</p><p class="muted">${sourceNote}</p>${roman?inlinePanel(true):''}<details class="reader-offline"><summary>${roman?'Add or manage your Roman Missal':'Optional offline text'}</summary><p class="reader-status" role="status">Checking saved text…</p>${roman?'':inlinePanel(false)}<div class="row"><button class="btn" data-reader="open" disabled>Open saved text</button></div><label for="liturgical-file">Choose a PDF or EPUB from this device</label><input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub"><p class="muted">Private devotional use only. Your file stays on this device. Up to 100 MB; keep the original. EPUB prayer text appears inline. PDFs retain page/text preview.</p><button class="btn" data-reader="remove" disabled>Remove saved text</button></details>${roman?'<details><summary>Publisher resources</summary>':''}<a class="btn" href="${source}" target="_blank" rel="noopener noreferrer">${title}</a>${roman?'<p><a href="https://liturgy.au/product/roman-emissal-usa-epub/" target="_blank" rel="noopener noreferrer">U.S. Roman eMissal · source</a></p></details>':''}</section>`;
+  }
+  function bookOptions(section,book,query=''){
+    const select=section.querySelector('#inline-book-section');if(!select)return;select.replaceChildren();
+    const term=query.trim().toLocaleLowerCase();
+    book.sections.forEach((part,i)=>{if(term&&![part.title,...part.blocks.map(b=>b.text)].join(' ').toLocaleLowerCase().includes(term))return;const option=document.createElement('option');option.value=i+1;option.textContent=(i+1)+'. '+part.title;select.append(option);});
+    select.value=section.dataset.inlinePage;
+  }
+  function bookText(target,part,action){
+    target.replaceChildren();const h=document.createElement('h3');h.textContent=part.title;target.append(h);
+    for(const block of part.blocks){const el=document.createElement(block.tag);el.textContent=block.text;target.append(el);}
+    if(part.links?.length){const links=document.createElement('div');links.className='row reader-book-links';for(const link of part.links){const button=document.createElement('button');button.type='button';button.className='btn';button.dataset.reader=action;button.dataset.page=link.page;button.textContent=link.title;links.append(button);}target.append(links);}
   }
   async function hydrate(){
-    const section=document.querySelector('.liturgical-text');if(!section)return;
-    const status=section.querySelector('.reader-status');
-    try{const record=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected)return;
-      status.textContent=record?`${record.name} · ${record.pages} ${record.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
-      section.querySelector('[data-reader="open"]').disabled=!record;section.querySelector('[data-reader="remove"]').disabled=!record;
-      const preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls');
-      if(record){
-        try{
-          const pdf=await LiturgyReader.load(record.blob,record.format);
-          try{
-            const selected=Math.max(1,Math.min(pdf.numPages,Number(section.dataset.inlinePage)||record.page||1));section.dataset.inlinePage=selected;
-            let value;
-            if(pdf.kind==='epub'){const part=pdf.sections[selected-1];value=part.title+'\n\n'+part.blocks.map(b=>b.text).join('\n\n');}
-            else{const page=await pdf.getPage(selected);const content=await page.getTextContent();value=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim();}
-            if(!section.isConnected)return;
-            preview.textContent=value||'This page has no selectable text. Use Open Text for the original page.';
-            preview.hidden=false;controls.hidden=false;controls.querySelector('.reader-inline-page').textContent=`${pdf.kind==='epub'?'Section':'Page'} ${selected} of ${pdf.numPages}`;controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;controls.querySelector('[data-reader="inline-next"]').disabled=selected>=pdf.numPages;
-          }finally{await pdf.destroy();}
-        }catch(_){if(section.isConnected){preview.textContent='Preview unavailable. Use Open saved text to view this book.';preview.hidden=false;}}
-      }else{preview.hidden=true;preview.textContent='';controls.hidden=true;}
+    const token=++hydrateVersion,section=document.querySelector('.liturgical-text');if(!section)return;
+    const status=section.querySelector('.reader-status'),preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls'),tools=section.querySelector('.reader-missal-tools');
+    try{const saved=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected||token!==hydrateVersion)return;
+      status.textContent=saved?`${saved.name} · ${saved.pages} ${saved.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
+      section.querySelector('[data-reader="open"]').disabled=!saved;section.querySelector('[data-reader="remove"]').disabled=!saved;
+      if(!saved){previewBooks.delete(section.dataset.textId);preview.hidden=true;preview.replaceChildren();controls.hidden=true;if(tools)tools.hidden=true;return;}
+      let book;
+      try{
+        if(saved.format==='epub'){
+          const cached=previewBooks.get(saved.id);
+          if(!cached||cached.updated!==saved.updated)previewBooks.set(saved.id,{updated:saved.updated,promise:LiturgyReader.load(saved.blob,saved.format)});
+          book=await previewBooks.get(saved.id).promise;
+        }else book=await LiturgyReader.load(saved.blob,saved.format);
+        if(!section.isConnected||token!==hydrateVersion)return;
+        const roman=section.dataset.textId==='roman'&&book.kind==='epub';
+        const matches=roman?RomanMissal.match(book.sections,section.dataset.dayTitle):[];
+        const selected=Math.max(1,Math.min(book.numPages,Number(section.dataset.inlinePage)||(matches[0])||saved.page||1));section.dataset.inlinePage=selected;
+        if(tools)tools.hidden=!roman;
+        preview.classList.toggle('reader-inline-missal',roman);
+        if(roman){
+          section.querySelector('.reader-edition').textContent=[book.metadata?.title,book.metadata?.publisher,book.metadata?.date?.slice(0,10)].filter(Boolean).join(' · ')+(/conclave|interregnum/i.test(book.metadata?.description||'')?' · This book describes itself as a special edition for the period between popes; check dated references in the Eucharistic prayers.':'');
+          section.querySelector('.reader-match').textContent=matches.length?'Matching prayers for '+section.dataset.dayTitle+'. Follow the book’s directions for Commons, options and other parts of Mass.':'No unique automatic match for this date. Choose a section below; no substitute prayers have been selected.';
+          const shortcuts=section.querySelector('.reader-missal-shortcuts');shortcuts.replaceChildren();
+          const choices=[...(matches.length?[{title:'Day’s prayers',page:matches[0]}]:[]),...RomanMissal.order(book.sections)];
+          for(const item of choices){const button=document.createElement('button');button.className='btn';button.dataset.reader='inline-jump';button.dataset.page=item.page;button.textContent=item.title;shortcuts.append(button);}
+          bookOptions(section,book,section.querySelector('#inline-book-search').value);
+          bookText(preview,book.sections[selected-1],'inline-jump');
+        }else if(book.kind==='epub'){const part=book.sections[selected-1];preview.textContent=part.title+'\n\n'+part.blocks.map(b=>b.text).join('\n\n');}
+        else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}
+        preview.hidden=false;controls.hidden=false;controls.querySelector('.reader-inline-page').textContent=`${book.kind==='epub'?'Section':'Page'} ${selected} of ${book.numPages}`;controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;controls.querySelector('[data-reader="inline-next"]').disabled=selected>=book.numPages;
+      }catch(_){if(section.isConnected&&token===hydrateVersion){preview.textContent='Preview unavailable. Use Open saved text to view this book.';preview.hidden=false;}}
+      finally{if(book&&book.kind!=='epub')await book.destroy();}
     }catch(_){if(section.isConnected)status.textContent='Device storage is unavailable. You can still open the source links.';}
   }
   let doc=null,task=null,session=0,pageVersion=0,pageNumber=1,record=null,objectURL=null,returnFocus=null,textMode=false;
@@ -52,8 +77,7 @@
       if(myDoc.kind==='epub'){
         const part=myDoc.sections[pageNumber-1],text=d.querySelector('#reader-text');
         d.querySelector('canvas').hidden=true;text.hidden=false;text.replaceChildren();
-        const heading=document.createElement('h3');heading.textContent=part.title;text.append(heading);
-        for(const block of part.blocks){const el=document.createElement(block.tag);el.textContent=block.text;text.append(el);}
+        bookText(text,part,'jump');
         d.querySelector('#reader-section').value=String(pageNumber);
         status.textContent=`Section ${pageNumber} of ${myDoc.numPages}`;d.scrollTop=0;
         await LiturgyReader.bookmark(myRecord.id,pageNumber);return;
@@ -94,10 +118,12 @@
     });
     select.value=String(pageNumber);dialog().querySelector('#reader-search-status').textContent=term?found+' matching sections':'';
   }
-  document.addEventListener('input',e=>{if(e.target.id==='reader-search')fillSections(e.target.value);});
+  document.addEventListener('input',async e=>{if(e.target.id==='reader-search')fillSections(e.target.value);if(e.target.id==='inline-book-search'){const section=e.target.closest('.liturgical-text'),cached=previewBooks.get(section.dataset.textId);if(cached)bookOptions(section,await cached.promise,e.target.value);}});
   document.addEventListener('click',async e=>{
     const b=e.target.closest('[data-reader]');if(!b)return;
     const action=b.dataset.reader,section=b.closest('.liturgical-text'),id=section?.dataset.textId;
+    if(action==='jump'){await showPage(b.dataset.page);return;}
+    if(action==='inline-jump'){if(!section)return;section.dataset.inlinePage=b.dataset.page;await LiturgyReader.bookmark(id,Number(b.dataset.page));await hydrate();return;}
     if(action==='inline-prev'||action==='inline-next'){if(!section)return;const current=Number(section.dataset.inlinePage)||1;section.dataset.inlinePage=Math.max(1,current+(action==='inline-next'?1:-1));section.querySelector('.reader-inline-text').textContent='Loading page…';await LiturgyReader.bookmark(id,Number(section.dataset.inlinePage));await hydrate();return;}
     if(action==='open'){await open(id,b);return;}
     if(action==='remove'){
@@ -110,6 +136,7 @@
     if(action==='mode'){textMode=!textMode;b.textContent=textMode?'Page view':'Text view';b.setAttribute('aria-pressed',String(textMode));await showPage(pageNumber);}
   });
   document.addEventListener('change',async e=>{
+    if(e.target.id==='inline-book-section'){const section=e.target.closest('.liturgical-text');section.dataset.inlinePage=e.target.value;await LiturgyReader.bookmark(section.dataset.textId,Number(e.target.value));await hydrate();return;}
     if(e.target.id==='reader-section'){await showPage(e.target.value);return;}
     if(e.target.id==='reader-number'){await showPage(e.target.value);return;}
     if(e.target.id!=='liturgical-file')return;

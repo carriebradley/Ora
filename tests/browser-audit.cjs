@@ -65,6 +65,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.equal(await page.locator('#app .card > h2').innerText(),'Divine Liturgy of St. John Chrysostom');
  await require('./liturgy-reader-browser.cjs')(page,context,base,artifacts,violations);
  await require('./epub-reader-browser.cjs')(page,context,base,artifacts,violations);
+ await require('./roman-missal-browser.cjs')(page,context,base,artifacts,violations);
  await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();
  await page.selectOption('#s_reading','large');await page.locator('[data-act="savesettings"]').click();
  await page.setViewportSize({width:320,height:740});

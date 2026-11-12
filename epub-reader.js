@@ -81,15 +81,33 @@
     const packagePath=elements(container,'rootfile')[0]?.getAttribute('full-path');
     if(!packagePath||!files.has(packagePath))return fail();
     const pkg=xml(await read(packagePath)),manifest=new Map();
+    const metadata={};for(const name of ['title','creator','publisher','date','description'])metadata[name]=elements(pkg,name)[0]?.textContent?.trim()||'';
     for(const item of elements(pkg,'item'))manifest.set(item.getAttribute('id'),item);
+    const contents=new Map(),ncx=[...manifest.values()].find(i=>i.getAttribute('media-type')==='application/x-dtbncx+xml');
+    if(ncx){
+      const tocPath=path(packagePath,ncx.getAttribute('href')),toc=xml(await read(tocPath));
+      for(const point of elements(toc,'navPoint')){
+        const href=elements(point,'content')[0]?.getAttribute('src'),label=elements(point,'navLabel')[0]?.textContent?.trim();
+        if(href&&label)try{const file=path(tocPath,href);let parent=point.parentElement;while(parent&&parent.localName!=='navPoint')parent=parent.parentElement;const context=parent?elements(parent,'navLabel')[0]?.textContent?.trim()||'':'';if(!contents.has(file))contents.set(file,{title:label,context});}catch(_){}
+      }
+    }
     const sections=[];
     for(const ref of elements(pkg,'itemref')){
       const item=manifest.get(ref.getAttribute('idref'));if(!item)return fail();
       if(item.getAttribute('media-type')!=='application/xhtml+xml')continue;
-      const doc=xml(await read(path(packagePath,item.getAttribute('href'))));
+      const source=path(packagePath,item.getAttribute('href'));
+      const doc=xml(await read(source));
       const body=elements(doc,'body')[0];if(!body)return fail();
-      let current={title:elements(doc,'title')[0]?.textContent?.trim()||'Section '+(sections.length+1),blocks:[]};
+      const section=title=>({title,source,context:contents.get(source)?.context||'',ids:[],links:[],blocks:[]});
+      let current=section(contents.get(source)?.title||elements(doc,'title')[0]?.textContent?.trim()||'Section '+(sections.length+1));
       function flush(){if(current.blocks.length){sections.push(current);if(sections.length>COUNT_MAX)return fail();}}
+      function references(node){
+        for(const el of [node,...node.querySelectorAll('[id]')])if(el.id)current.ids.push(el.id);
+        for(const a of elements(node,'a')){
+          const href=a.getAttribute('href'),title=words(a).trim();if(!href||!title||/^[a-z][a-z\d+.-]*:|^\/|\\/i.test(href))continue;
+          try{const [file,anchor]=href.split('#');current.links.push({title,source:file?path(source,file):source,anchor:anchor?decodeURIComponent(anchor):''});}catch(_){}
+        }
+      }
       function visit(node){
         if(node.nodeType===3){if(node.nodeValue.trim())current.blocks.push({tag:'p',text:node.nodeValue.trim()});return;}
         if(node.nodeType!==1||blocked.has(node.localName))return;
@@ -97,17 +115,22 @@
         if(tag==='img'){current.blocks.push({tag:'p',text:'[Image: '+(node.getAttribute('alt')||'see original book')+']'});return;}
         if(['h1','h2'].includes(tag)){
           const title=words(node).trim();if(!title)return;
-          flush();current={title,blocks:[]};return;
+          flush();current=section(title);references(node);return;
         }
         if(['p','pre','blockquote','li','dt','dd','h3','h4','h5','h6'].includes(tag)){
-          const text=words(node).trim();if(text)current.blocks.push({tag:/^h\d$/.test(tag)?'h4':tag==='pre'?'pre':'p',text});return;
+          const text=words(node).trim();if(text)current.blocks.push({tag:/^h\d$/.test(tag)?'h4':tag==='pre'?'pre':'p',text});references(node);return;
         }
         for(const child of node.childNodes)visit(child);
       }
       visit(body);flush();
     }
     if(!sections.length)return fail();
-    return {kind:'epub',numPages:sections.length,sections,destroy:async()=>{}};
+    const targets=new Map();sections.forEach((s,i)=>{if(!targets.has(s.source))targets.set(s.source,i+1);for(const id of s.ids)targets.set(s.source+'#'+id,i+1);});
+    sections.forEach((s,i)=>{const seen=new Set();s.links=s.links.flatMap(link=>{
+      const page=targets.get(link.source+'#'+link.anchor)||targets.get(link.source);
+      if(!page||page===i+1||seen.has(page))return [];seen.add(page);return [{title:link.title,page}];
+    }).slice(0,40);});
+    return {kind:'epub',numPages:sections.length,metadata,sections,destroy:async()=>{}};
   }
   root.EpubReader={load};
 })(typeof window!=='undefined'?window:globalThis);

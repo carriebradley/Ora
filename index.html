@@ -233,6 +233,12 @@ nav button.on b{color:inherit}
 #app > .tab-heading + section.card,
 #app > .tab-heading + .calendar-overview{margin-top:0}
 @media(max-width:480px){#app > .tab-heading{margin-bottom:22px}}
+.reader-inline-panel [hidden]{display:none!important}
+.reader-inline-text{white-space:pre-wrap;line-height:1.7;max-height:55vh;overflow:auto}
+.reader-inline-text.reader-inline-missal{white-space:normal;max-height:none;overflow:visible;font-family:var(--serif);font-size:1.08rem;line-height:1.7}
+.reader-inline-missal p{white-space:pre-line;margin:.8em 0}.reader-inline-missal pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.reader-missal-tools input,.reader-missal-tools select{display:block;width:100%;max-width:100%;min-height:44px;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:7px;padding:8px;margin:5px 0 12px}
+.reader-book-links{font-family:var(--sans);margin:18px 0}.reader-book-links button{max-width:100%;overflow-wrap:anywhere;text-align:left}
 </style>
 </head>
 <body>
@@ -266,6 +272,7 @@ nav button.on b{color:inherit}
 <script src="hours.js"></script>
 <script src="liturgy-schedule.js"></script>
 <script src="epub-reader.js"></script>
+<script src="roman-missal.js"></script>
 <script src="liturgy-reader.js"></script>
 <script src="liturgy-reader-ui.js"></script>
 <script src="source-reader.js"></script>
