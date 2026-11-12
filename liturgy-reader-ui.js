@@ -172,10 +172,26 @@
     let lastLine=null,lastRole=null;
     for(const section of sections){
       if(section.heading){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;target.append(h);lastLine=null;lastRole=null;}
-      for(const raw of section.lines){
-        const text=String(raw||'').trim();
+      for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
+        const raw=section.lines[lineIndex];
+        let text=String(raw||'').trim();
+        // Some PDFs extract tracked uppercase display headings as isolated
+        // letters and break a heading mid-word across physical lines.
+        // Repair only known headings; never alter the wording of prayers.
+        const compactHeading=s=>String(s).replace(/[^A-Za-z]/g,'').toUpperCase();
+        const knownHeadings={
+          THEKAIROSSERVICE:'The Kairos Service',
+          PRAYERSBEFORETHEHOLYDOORS:'Prayers Before the Holy Doors'
+        };
+        let heading=knownHeadings[compactHeading(text)];
+        if(!heading&&lineIndex+1<section.lines.length){
+          const joined=compactHeading(text+' '+section.lines[lineIndex+1]);
+          heading=knownHeadings[joined];
+          if(heading)lineIndex++;
+        }
+        if(heading)text=heading;
         if(!text||/^(?:LITURGY OF THE WORD|LITURGY OF THE EUCHARIST|THE ANAPHORA|HOLY COMMUNION)$/i.test(text))continue;
-        if(headingPattern.test(text)){
+        if(heading || headingPattern.test(text)){
           const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=text;target.append(h);lastLine=null;lastRole=null;continue;
         }
         const role=roleLine(text);
