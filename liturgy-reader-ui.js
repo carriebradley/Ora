@@ -62,6 +62,53 @@
     appendMassPart(target,'Communion Antiphon',proper.communion);
     appendMassPart(target,'Prayer after Communion',proper.after);
   }
+
+  // The 2012 Edmonton episcopal booklet alternates Ukrainian and English pages.
+  // Process only a device-local copy, and never package or transmit its content.
+  async function edmontonPrayerText(book){
+    if(book.numPages!==140)return null;
+    const marker=await book.getPage(4);
+    const meta=(await marker.getTextContent()).items.map(x=>x.str).join(' ').replace(/\s+/g,' ');
+    if(!/official translation of the Ukrainian Greek/i.test(meta)||!/Chrysostom/i.test(meta))return null;
+    const sections=[];
+    // PDF pages 33-113 (one-based, odd pages) are the English liturgy proper.
+    // Page 115 starts additional personal prayers and page 31 episcopal preparation.
+    for(let number=33;number<=113;number+=2){
+      const page=await book.getPage(number);
+      const items=(await page.getTextContent()).items;
+      const lines=[],current=[];
+      const push=()=>{const t=current.join(' ').replace(/\s+/g,' ').trim();if(t)lines.push(t);current.length=0;};
+      for(const item of items){
+        const t=String(item.str||'').trim();
+        if(t)current.push(t);
+        if(item.hasEOL)push();
+      }
+      push();
+      const clean=lines.filter(line=>{
+        if(/^\d{1,3}$/.test(line))return false;
+        if(/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(line))return false;
+        if(/^(?:The bishop|The deacon|The protodeacon|The priest|The clergy|The servers|The concelebrants|The reader|The faithful|During this|At this point|After this|Meanwhile|Then the|When the|The following|The holy doors|The royal doors|On Sundays|On weekdays|Major Feast Days:|Sundays:|Weekdays:|See propers|It is customary|A reading from \.\.\.)\b/i.test(line))return false;
+        return true;
+      });
+      const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
+      sections.push({heading,lines:clean});
+    }
+    return sections;
+  }
+  function renderEdmontonPrayerText(target,sections){
+    target.replaceChildren();
+    target.classList.add('reader-byzantine-prayers');
+    for(const section of sections){
+      if(section.heading){const heading=document.createElement('h3');heading.textContent=section.heading;target.append(heading);}
+      for(const text of section.lines){
+        if(/^(?:LITURGY OF THE WORD|LITURGY OF THE EUCHARIST|THE ANAPHORA|HOLY COMMUNION)$/i.test(text))continue;
+        const heading=/^(?:Great Litany|First Antiphon|Small Litany|Entrance Antiphon|Prayer of Entrance|Trisagion Hymn|Prayer of the Trisagion|Prayer Before the Gospel|Prayer for the Faithful|Cherubic Hymn|Litany for the Gifts|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Prayer Before Holy Communion|Blessing with the Holy Gifts|Dismissal)$/i.test(text);
+        const el=document.createElement(heading?'h4':'p');
+        el.textContent=text.replace(/^(?:BISHOP|PRIEST|DCN ?\d?|DEACON|ALL|CHOIR|CLERGY|LECTOR|VERSE):\s*/i,'');
+        target.append(el);
+      }
+    }
+  }
   async function hydrate(){
     const token=++hydrateVersion,section=document.querySelector('.liturgical-text');if(!section)return;
     const status=section.querySelector('.reader-status'),preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls'),tools=null;
@@ -82,12 +129,24 @@
         const selected=Math.max(1,Math.min(book.numPages,Number(section.dataset.inlinePage)||(matches[0])||saved.page||1));section.dataset.inlinePage=selected;
         
         preview.classList.toggle('reader-inline-missal',roman);
+        preview.classList.remove('reader-byzantine-prayers');
         if(roman){
           preview.replaceChildren();
           if(matches.length){
             renderRoman(section,book,book.sections[matches[0]-1]);
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';
+          }
+        }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
+          status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
+          const liturgy=await edmontonPrayerText(book);
+          if(!section.isConnected||token!==hydrateVersion)return;
+          if(liturgy){
+            renderEdmontonPrayerText(preview,liturgy);
+            status.textContent='Edmonton Divine Liturgy · saved privately on this device';
+          }else{
+            const page=await book.getPage(selected),content=await page.getTextContent();
+            preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'No selectable text on this page.';
           }
         }else if(book.kind==='epub'){const part=book.sections[selected-1];preview.textContent=part.title+'\n\n'+part.blocks.map(b=>b.text).join('\n\n');}
         else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}
