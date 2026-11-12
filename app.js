@@ -257,7 +257,7 @@
     loadArt(a); const m = st.art[a.q];
     let h = '<div class="art">';
     h += m && m.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy">` : `<div class="ph">${m === 'loading' ? 'Loading image…' : m ? 'No verified image of this work — use “About this work”' : 'Image unavailable offline'}</div>`;
-    h += `<h3 class="artwork-title" style="margin-top:10px">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
+    h += `<h3 class="artwork-title">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
     h += `<div class="row"><button class="btn sm" data-act="artnext">Another</button>${m && m.url ? `<a class="btn sm" target="_blank" rel="noopener" href="${esc(m.url)}">About this work</a>` : ''}${speakBtn(`${a.t}. ${a.a}. ${a.p}`)}</div></div>`;
     return h;
   }
