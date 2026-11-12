@@ -1009,7 +1009,8 @@
     const byzantine=st.liturgyView==='byz';
     const service=LiturgySchedule.service(st.date,S.byzChurch);
     const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
-    const reader=LiturgicalText.card(byzantine?service.id:'roman',{church:S.byzChurch,date:st.date,dayTitle:v.roman.title});
+    const bookId=byzantine&&service.id==='chrysostom'&&S.byzLiturgyChurch==='melkite'?'melkite-chrysostom':byzantine?service.id:'roman';
+    const reader=LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:v.roman.title});
     const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false,true):'';
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">

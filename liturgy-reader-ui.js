@@ -1,7 +1,7 @@
 /* Documents stay in IndexedDB on this device. No upload or remote PDF viewer. */
 (function(){
   'use strict';
-  const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom',basil:'St. Basil the Great',presanctified:'Presanctified Gifts'};
+  const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom · Edmonton', 'melkite-chrysostom':'St. John Chrysostom · Melkite',basil:'St. Basil the Great',presanctified:'Presanctified Gifts'};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const previewBooks=new Map();let hydrateVersion=0;
   function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
@@ -10,7 +10,8 @@
     const roman=id==='roman';
     return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" aria-label="Prayers of the day">
       ${inlinePanel(roman)}
-      <details class="reader-offline"><summary>${roman?'Manage saved Missal':'Manage saved Divine Liturgy book'}</summary>
+      <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
+        ${id==='melkite-chrysostom'?'<p class="muted">Select your personal copy of the English Melkite Divine Liturgy of St. John Chrysostom. <a href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener noreferrer">Melkite PDF source</a></p>':''}
         <p class="reader-status" role="status">Checking saved book…</p>
         <button class="btn" data-reader="open" disabled>Open original book</button>
         <label for="liturgical-file">Choose a PDF or EPUB</label>
@@ -101,6 +102,37 @@
     }
     return sections;
   }
+
+  // Generic PDF reading view for a user's private Melkite copy. Unlike the
+  // alternating-language Edmonton booklet, do not assume fixed page numbers.
+  async function melkitePrayerText(book){
+    const sections=[];let foundLiturgy=false;
+    for(let number=1;number<=book.numPages;number++){
+      const page=await book.getPage(number),items=(await page.getTextContent()).items;
+      const rows=new Map();
+      for(const item of items){
+        const txt=String(item.str||'').trim();if(!txt)continue;
+        const x=Number(item.transform?.[4]||0),y=Number(item.transform?.[5]||0),key=Math.round(y*2)/2;
+        if(!rows.has(key))rows.set(key,[]);rows.get(key).push({x,text:txt});
+      }
+      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,parts])=>parts.sort((a,b)=>a.x-b.x).map(x=>x.text).join(' ').replace(/\s+/g,' ').trim()).filter(Boolean);
+      if(!lines.length)continue;
+      const full=lines.join(' ');
+      if(!foundLiturgy){
+        // Avoid a table-of-contents match: liturgy must also have actual prayers.
+        if(/(?:divine liturgy of (?:our father among the saints )?(?:saint|st\.?) john chrysostom|the divine liturgy)/i.test(full)&&/(?:blessed is the kingdom|in peace let us pray|lord, have mercy)/i.test(full))foundLiturgy=true;
+        else if(number>12&&/(?:blessed is the kingdom|in peace let us pray to the lord)/i.test(full))foundLiturgy=true;
+        else continue;
+      }
+      const clean=lines.filter(line=>{
+        if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
+        if(/^(?:the priest|the deacon|the celebrant|the clergy|the bishop|the people|the choir|at this point|at the conclusion|while the|during the|then the|after the|before the|if the|when the)\s+(?:stands|sits|bows|turns|takes|makes|offers|sings|chants|says|prays|recites|enters|exits|proceeds|raises|continues|responds|places|opens|closes|is |are )/i.test(line))return false;
+        return true;
+      });
+      if(clean.length)sections.push({heading:null,lines:clean});
+    }
+    return foundLiturgy&&sections.length?sections:null;
+  }
   function renderEdmontonPrayerText(target,sections){
     target.replaceChildren();
     target.classList.add('reader-byzantine-prayers');
@@ -143,6 +175,14 @@
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';
           }
+        }else if(section.dataset.textId==='melkite-chrysostom'&&book.kind!=='epub'){
+          status.textContent='Preparing your saved Melkite prayers…';
+          const liturgy=await melkitePrayerText(book);
+          if(!section.isConnected||token!==hydrateVersion)return;
+          if(liturgy){
+            renderEdmontonPrayerText(preview,liturgy);
+            status.textContent='Melkite Divine Liturgy · saved privately on this device';
+          }else preview.textContent='The prayers could not be identified in this PDF. Open the original book below to read it.';
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
           status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
           const liturgy=await edmontonPrayerText(book);
