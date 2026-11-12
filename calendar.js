@@ -228,7 +228,7 @@
     if (d <= pent) {                                            // Easter Time
       const k = diff(d, E), wk = Math.floor(k / 7) + 1;
       if (k === 0) return T('Easter Sunday of the Resurrection of the Lord', 1, 'Solemnity', 'w', 'Easter Time');
-      if (k < 7) return T(`${wd} within the Octave of Easter`, 2, 'Weekday', 'w', 'Easter Time');
+      if (k < 7) return T(`${wd} within the Octave of Easter`, 2, 'Solemnity', 'w', 'Easter Time');
       if (k === 7) return T('Second Sunday of Easter (Sunday of Divine Mercy)', 2, 'Sunday', 'w', 'Easter Time');
       if (k === 49) return T('Pentecost Sunday', 2, 'Solemnity', 'r', 'Easter Time');
       if (k === 42 && o.ascension === 'sunday') return T('The Ascension of the Lord', 2, 'Solemnity', 'w', 'Easter Time');

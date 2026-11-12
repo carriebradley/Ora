@@ -347,10 +347,25 @@
     const labels = {meat:'No meat',dairy:'No dairy',eggs:'No eggs',oil:'No oil'};
     return '<div class="fasting-icons" aria-label="Fasting guidance">'+kinds.map(k=>'<span class="fasting-symbol" title="'+labels[k]+'"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+paths[k]+'<path d="M3 21L21 3" stroke-width="1.8"/></svg><span>'+labels[k]+'</span></span>').join('')+'</div>';
   }
+  function romanSeasonBadges(r, iso) {
+    const d = P(iso), E = L.westernEaster ? L.westernEaster(d.getUTCFullYear()) : null;
+    const day = E ? Math.round((d-E)/864e5) : -1;
+    const christmasOctave = (d.getUTCMonth() === 11 && d.getUTCDate() >= 25) || (d.getUTCMonth() === 0 && d.getUTCDate() === 1);
+    let rank = r.rank || '';
+    if (day >= 1 && day <= 6 && r.temporal) rank = 'Easter Octave · Solemnity';
+    else if (day === 7 && r.temporal) rank = 'Easter Octave · Sunday';
+    else if (christmasOctave && r.temporal && !/Solemnity|Feast/.test(rank)) rank = 'Christmas Octave';
+    else if (rank === 'Weekday' && r.season === 'Ordinary Time' && r.color === 'g') rank = 'Ordinary';
+    else if (rank === 'Weekday' && r.season === 'Advent') rank = 'Advent Weekday';
+    else if (rank === 'Weekday' && r.season === 'Lent') rank = 'Lenten Weekday';
+    else if (rank === 'Weekday' && r.season === 'Christmas Time') rank = 'Christmas Season';
+    else if (rank === 'Weekday' && r.season === 'Easter Time') rank = 'Easter Season';
+    return chip(rank, /Solemnity|Octave|Feast/.test(rank) ? 'major' : '') + (r.season && r.season !== rank ? chip(r.season) : '');
+  }
   function cardRoman(v) {
     const r = v.roman;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
-      <h2>${esc(r.title)}</h2><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
+      <h2>${esc(r.title)}</h2><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
   function byzSaintHTML(iso, r) {
