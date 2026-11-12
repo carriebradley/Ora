@@ -257,7 +257,7 @@
     loadArt(a); const m = st.art[a.q];
     let h = '<div class="art">';
     h += m && m.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy">` : `<div class="ph">${m === 'loading' ? 'Loading image…' : m ? 'No verified image of this work — use “About this work”' : 'Image unavailable offline'}</div>`;
-    h += `<h3 style="margin-top:10px">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
+    h += `<h3 class="artwork-title" style="margin-top:10px">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
     h += `<div class="row"><button class="btn sm" data-act="artnext">Another</button>${m && m.url ? `<a class="btn sm" target="_blank" rel="noopener" href="${esc(m.url)}">About this work</a>` : ''}${speakBtn(`${a.t}. ${a.a}. ${a.p}`)}</div></div>`;
     return h;
   }
@@ -859,7 +859,7 @@
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
     const saints = `<section class="card"><div class="lab">${todayAccent("saint")}<span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return glanceHTML(v) + saints + `<section class="card"><div class="lab">${todayAccent("art")}<span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso, S.rite) + popeCard(v.iso);
+    return glanceHTML(v) + saints + `<section class="card"><div class="lab"><span class="art-heading-icon">${todayAccent("art")}</span><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso, S.rite) + popeCard(v.iso);
   }
 
 
