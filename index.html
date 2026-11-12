@@ -313,6 +313,13 @@ nav button.on b{color:inherit}
 .saint-bio-meta{font-size:.81rem;color:var(--muted);margin:0 0 10px}
 .saint-bio-copy{font-family:var(--serif);font-size:1.02rem;line-height:1.6;margin:0 0 11px}
 .saint-bio-source{font-size:.8rem;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+
+/* Small licensed sacred portrait, with the biography filling available card width. */
+.today-saint-bio .saint-bio-body{display:flow-root;margin:0 0 11px}
+.today-saint-bio .saint-bio-image-link{display:block;float:left;width:88px;margin:3px 14px 7px 0}
+.today-saint-bio .saint-bio-image{display:block;width:100%;height:auto;aspect-ratio:200 / 278;object-fit:cover;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.today-saint-bio .saint-bio-copy{font-size:1rem;line-height:1.55;margin:0;overflow-wrap:break-word}
+@media (max-width:370px){.today-saint-bio .saint-bio-image-link{width:76px;margin-right:11px}}
 </style>
 </head>
 <body>

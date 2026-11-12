@@ -997,10 +997,10 @@
   // Curated, sourced examples. A missing or mismatched feast never receives an invented bio.
   const TODAY_SAINT_BIOS = {
     roman: {
-      '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
+      '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     ukrainian: {
-      '11-12': { match:/Josaphat/i, name:'Holy Hieromartyr Josaphat', meta:'c. 1580–1623 · Archbishop of Polotsk', bio:'Josaphat was an Eastern Catholic bishop who worked for ecclesial unity while preserving Byzantine Christian worship. Killed in Vitebsk in 1623, he remains an important figure in the history of the Ukrainian Greek Catholic Church.', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
+      '11-12': { match:/Josaphat/i, name:'Holy Hieromartyr Josaphat', meta:'c. 1580–1623 · Archbishop of Polotsk', bio:'Josaphat was an Eastern Catholic bishop who worked for ecclesial unity while preserving Byzantine Christian worship. Killed in Vitebsk in 1623, he remains an important figure in the history of the Ukrainian Greek Catholic Church.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     melkite: {
       '11-12': { match:/John the Merciful/i, name:'Saint John the Merciful', meta:'d. c. 619 · Patriarch of Alexandria', bio:'John served as Patriarch of Alexandria and became renowned for his care of people in poverty. His generous almsgiving reflected his conviction that service to the needy was central to Christian life.', source:'https://www.oca.org/saints/lives/2026/11/12/103286-saint-john-the-merciful-patriarch-of-alexandria' },
@@ -1020,7 +1020,10 @@
       <div class="lab">${todayAccent('bio')}<span class="grow">Saint of the Day</span><span class="saint-bio-rite">${label}</span></div>
       <h2 class="saint-bio-name">${esc(entry.name)}</h2>
       <p class="saint-bio-meta">${esc(entry.meta)}</p>
-      <p class="saint-bio-copy">${esc(entry.bio)}</p>
+      <div class="saint-bio-body">
+        ${entry.image ? `<a class="saint-bio-image-link" href="${esc(entry.imageCredit || entry.source)}" target="_blank" rel="noopener noreferrer" aria-label="View image source for ${esc(entry.name)}"><img class="saint-bio-image" src="${esc(entry.image)}" alt="Traditional sacred portrait of ${esc(entry.name)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
+        <p class="saint-bio-copy">${esc(entry.bio)}</p>
+      </div>
       <a class="saint-bio-source" target="_blank" rel="noopener noreferrer" href="${esc(entry.source)}">Learn more about this saint</a>
     </section>`;
   }
