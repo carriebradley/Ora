@@ -458,24 +458,38 @@
     const major = /Solemnity|Principal|Great Feast|Feast of the Lord|Holy Day/.test(rk);
     const feast = r.isFeast || (FEASTRANK.test(rk) && !/Holy Week/.test(rk)) || !!alsoFeast;
     let fast = r.fast || (r.ember ? 'Ember Day — fast and abstinence' : '');
-    if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';  // ordinary weekly fast is lifted on a great feast
+    if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';
     const minor = /Memorial|Saint|Commemoration|Octave|lessons|Memory/.test(rk);
     const martin = rite === 'sarum' && r.historicalObservance && r.historicalObservance.name === "St. Martin's Lent";
-    // A Byzantine fasting season is visible even on days without a specific abstinence rule.
     const seasonalFast = rite === 'byz' && !!r.fastSeason;
     const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : seasonalFast ? 'season' : 'plain';
-    const badge = kind === 'both' ? 'Feast + fast' : kind === 'feast' ? 'Feast day' : kind === 'fast' ? 'Fast day' : kind === 'season' ? 'Fasting season' : martin ? "St. Martin's Lent" : minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast day' : 'Memorial') : rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary day';
+    const title = String(r.title || '');
+    // A red color does not, by itself, establish martyrdom: e.g. Pentecost.
+    const holySpirit = /pentecost|descent of the holy spirit|holy spirit|holy ghost/i.test(title) && /pentecost|descent|holy spirit|holy ghost/i.test(title);
+    const martyr = /\b(?:martyr|martyrs|hieromartyr|protomartyr|great.martyr)\b/i.test(title);
+    const roseSunday = r.color === 'rose' && /Sunday/i.test(rk + ' ' + title);
+    const rankLabel = /Solemnity/i.test(rk) ? 'Solemnity' : /Great Feast|Principal/i.test(rk) ? 'Major Feast' : feast ? 'Feast' : '';
+    const badge = holySpirit ? 'Holy Spirit' : martyr ? 'Martyr' : roseSunday ? 'Sunday' :
+      feast ? rankLabel : kind === 'fast' ? (/strict/i.test(fast) ? 'Strict Fast' : 'Fast Day') :
+      kind === 'season' ? 'Fasting Season' : martin ? "St. Martin's Lent" :
+      minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast' : 'Memorial') :
+      rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary Day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
     const observance = r.historicalObservance;
     const historical = rite === 'sarum' && observance && observance.name === "St. Martin's Lent";
     const shortName = historical ? name.replace(/\s*\/\s*Saint Martin's Lent/i, '') : name;
     const summary = historical ? [shortName, fast, observance.name].filter(Boolean) : [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean);
-    return { kind, badge, detail: [...new Set(summary)].join(' · ') };
+    return {kind, badge, detail:[...new Set(summary)].join(' · '), martyr, holySpirit, roseSunday, feast, minor, fast};
   }
   function observanceColor(r, rite) {
     const x = status(r, rite);
-    const martyr = /martyr|hieromartyr|protomartyr|passion of (?:the lord|christ)|good friday/i.test(r.title || '');
-    return martyr ? 'r' : x.kind === 'fast' || x.kind === 'both' || x.kind === 'season' ? 'v' : x.kind === 'feast' ? 'gold' : x.badge === 'Ordinary day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
+    if (x.holySpirit || x.martyr) return 'r';
+    if (x.roseSunday) return 'rose';
+    if (x.feast) return 'gold';
+    if (x.minor && !x.fast) return 'w';
+    if (x.fast || x.kind === 'season' || /Advent|Lent|Penitential/i.test(r.season || '')) return 'v';
+    if (r.color === 'v' || r.color === 'rose') return r.color;
+    return x.badge === 'Ordinary Day' || x.badge === 'Weekday' || x.badge === 'Sunday' ? 'g' : 'w';
   }
   function glanceSeason(r, rite, iso) {
     if (rite === 'byz') return [...new Set([r.season, r.tone ? 'Tone ' + r.tone : '', /Vigil|Polyeleos|Doxology|Stichera|Great Feast|Holy Week/.test(r.rank || '') ? r.rank : '', r.fastSeason, r.fast].filter(Boolean))].join(' · ');
@@ -1192,7 +1206,7 @@
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitential seasons</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyrs / Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> White · Festive celebrations</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Major feasts</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Joyful Sundays</span></div>';
+    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitence and fasting</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyr or Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> Off-white · Memorials</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Feasts and solemnities</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Joyful Sundays</span></div>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
