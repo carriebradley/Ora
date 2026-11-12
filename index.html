@@ -149,6 +149,7 @@ nav button.on b{color:var(--accent)}
 #reader-text{white-space:pre-wrap;font-family:var(--serif);line-height:1.65;overflow-wrap:anywhere}
 .reader-file{max-width:100%;font:inherit;color:var(--ink)}
 .reader-status{overflow-wrap:anywhere}
+#source-reader{width:min(960px,96vw);max-width:96vw;height:90dvh;max-height:90dvh;padding:12px;overflow:hidden}#source-reader[open]{display:flex;flex-direction:column;gap:10px}#source-reader .source-reader-head{display:flex;justify-content:space-between;align-items:center;gap:12px}#source-reader-frame{width:100%;flex:1;min-height:0;border:1px solid var(--line);border-radius:8px;background:white}#source-reader .row{flex-shrink:0}
 </style>
 </head>
 <body>
@@ -164,6 +165,7 @@ nav button.on b{color:var(--accent)}
   <button data-tab="liturgy"><b>☩</b>Liturgy</button>
   <button data-tab="more"><b>☰︎</b>More</button>
 </nav>
+<dialog id="source-reader" aria-label="Official source reader"><div class="source-reader-head"><strong id="source-reader-title">Official source</strong><button type="button" id="source-reader-close" class="btn">Close</button></div><p class="muted" id="source-reader-note">If the publisher blocks embedded viewing, use Open original.</p><iframe id="source-reader-frame" title="Official liturgical source" referrerpolicy="no-referrer" loading="lazy"></iframe><div class="row"><a id="source-reader-original" class="btn" target="_blank" rel="noopener noreferrer">Open original</a></div></dialog>
 <dialog id="liturgical-reader" aria-labelledby="reader-title"></dialog>
 <dialog id="dlg" aria-labelledby="settings-title"></dialog>
 <script src="melkite-2026.js"></script>
@@ -180,6 +182,7 @@ nav button.on b{color:var(--accent)}
 <script src="liturgy-schedule.js"></script>
 <script src="liturgy-reader.js"></script>
 <script src="liturgy-reader-ui.js"></script>
+<script src="source-reader.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
