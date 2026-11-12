@@ -15,8 +15,8 @@ module.exports=async(browser,base)=>{
  };
  const swipe=async(left=true)=>{
   await page.locator('.tab-heading').waitFor({state:'visible'}).catch(async e=>{console.error('Swipe startup:',{url:page.url(),errors,body:(await page.locator('body').innerText()).slice(0,2000)});throw e;});
-  const box=await page.locator('#app').boundingBox();
-  await drag(left?290:100,box.y+25,left?-190:190,0);
+  const y=await page.evaluate(()=>Math.max(document.querySelector('#hdr').getBoundingClientRect().bottom,document.querySelector('#app').getBoundingClientRect().top)+25);
+  await drag(left?290:100,y,left?-190:190,0);
  };
  try{
   await page.goto(`${base}index.html?date=2026-11-12&rite=roman`);
