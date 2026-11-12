@@ -67,6 +67,12 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=more`);await page.locator('[data-act="settings"]').click();
  await page.selectOption('#s_reading','large');await page.locator('[data-act="savesettings"]').click();
  await page.setViewportSize({width:320,height:740});
+ await page.goto(`${base}index.html?tab=liturgy&rite=roman&date=2026-11-12`);
+ await page.locator('[data-act="liturgyview"][data-v="mass"]').click();
+ await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture collect'));
+ const romanFont=await page.locator('.reader-inline-text').evaluate(el=>parseFloat(getComputedStyle(el).fontSize));
+ assert.ok(romanFont>20,'Roman Mass respects the large reading-size setting');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'large Roman prayers at 320px');
  await page.goto(`${base}index.html?tab=justice`);
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'large text at 320px');
  await page.emulateMedia({colorScheme:'dark'});
