@@ -7,6 +7,17 @@
   /* ---------- helpers ---------- */
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Normalize source-calendar headings only when substantially ALL CAPS.
+  // Do not alter Scripture, prayers, acronyms or mixed-case source titles.
+  const displayTitle = input => {
+    const title = String(input || '');
+    const letters = title.match(/[A-Za-z]/g) || [];
+    if (letters.length < 5 || (title.match(/[A-Z]/g) || []).length / letters.length < .85) return title;
+    const small = new Set(['of','the','and','in','on','at','to','for','from','with','by']);
+    return title.toLocaleLowerCase('en').replace(/\b[a-z]+(?:['’][a-z]+)?\b/g, (word, offset) =>
+      offset && small.has(word) ? word : word.charAt(0).toLocaleUpperCase('en') + word.slice(1)
+    ).replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii)\b/g, x => x.toUpperCase());
+  };
   const pad = n => String(n).padStart(2, '0');
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
@@ -203,7 +214,7 @@
     const t = church === S.byzChurch ? v.byz : L.byzantine(P(v.iso), {...S,byzChurch:church});
     // Reading titles show only the principal (first listed) commemoration.
     // The Today card retains the complete list of saints.
-    const primaryCommemoration = String(t.title || '').split(/;\s*|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)|\s+[-–—]\s+(?=(?:Father|Saint|St\.|Blessed|Our)\b)/i)[0].trim().replace(/[;.]+$/, '');
+    const primaryCommemoration = displayTitle(t.title).split(/;\s*|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)|\s+[-–—]\s+(?=(?:Father|Saint|St\.|Blessed|Our)\b)/i)[0].trim().replace(/[;.]+$/, '');
     let h = `${showDay ? `<h3 class="reading-main-title">${esc(primaryCommemoration)}</h3>` : ''}${t.tone ? `<p class="muted">Tone ${t.tone}</p>` : ''}`, day = null;
     try { day = byzDay(v.iso, church); } catch (e) { day = null; }
     if (day && day.sets.length) {
@@ -529,7 +540,7 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const detail = k === 'byz' ? (S.byzChurch === 'melkite' ? String(r.title || '').replace(/\b[A-Z][A-Z]+(?:[\s,.'’—-]+[A-Z][A-Z]+)*\b/g, word => word.toLocaleLowerCase('en').replace(/\b\p{L}/gu, c => c.toLocaleUpperCase('en'))) : r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
+      const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
       const detailHTML = k === 'byz' ? byzantineCommemorationsHTML(detail) : esc(detail);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
