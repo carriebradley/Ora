@@ -1100,6 +1100,11 @@
       h += `<section class="card justice-economic"><div class="lab">${justiceIcon("scales")}<span class="grow">Economic Justice</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? ' · '+esc(e.note) : ''}${e.url ? ` · <a target="_blank" rel="noopener noreferrer" href="${esc(e.url)}">source</a>` : ''}</p></section>`;
     }
 
+    if (R.length) {
+      const x = R[((n % R.length) + R.length) % R.length];
+      h += `<section class="card justice-voice"><div class="lab">${justiceIcon("flame")}<span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
+    }
+    h += charitySaints(d);
     const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
     const rch = []; items.forEach(it => { let cur = [], w = 0; const flush = () => { if (cur.length) rch.push({ it, paras: cur }); cur = []; w = 0; }; it.paras.forEach(p => { const pw = p.split(/\s+/).length; if (w && w + pw > 230) flush(); cur.push(p); w += pw; }); flush(); });
     const kinds = [rch.length ? 'r' : 't', 't'], kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
@@ -1110,11 +1115,7 @@
       const c = tch[((m3 % tch.length) + tch.length) % tch.length];
       h += `<section class="card justice-teaching"><div class="lab">${justiceIcon("book")}<span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${c.p}</div></section>`;
     }
-    if (R.length) {
-      const x = R[((n % R.length) + R.length) % R.length];
-      h += `<section class="card justice-voice"><div class="lab">${justiceIcon("flame")}<span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
-    }
-    h += charitySaints(d);
+
     // Library: one card, four tabs
     const tabs = [['teach', 'Teaching'], ['saints', 'Saints'], ['quotes', 'Quotations'], ['voices', 'Voices']];
     const jt = st.jtab || 'teach';
