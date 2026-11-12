@@ -1056,6 +1056,7 @@
       const audioName = {morning:'Morning Prayer',readings:'Office of Readings',evening:'Evening Prayer',night:'Night Prayer'}[st.kind] || 'Morning Prayer';
       h += `<div class="roman-office-player"><h3>${esc(officeName)}</h3>${doSlot(st.date,audioName)}</div>`;
     }
+    if (rite === 'byz') h += `<h3 class="prayer-rite-title">${{morning:'Orthros',evening:'Vespers',night:'Compline'}[kindOf(rite)]}</h3>`;
     if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
     if (hasTTS) h += '<div class="row" style="margin:0 0 14px"><button class="btn fill" data-act="play">▶ Play session aloud</button></div>';
     steps.forEach((s, i) => {
@@ -1504,7 +1505,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v209';
+  const APP_BUILD = 'ora-v210';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
