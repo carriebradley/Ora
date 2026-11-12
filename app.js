@@ -1325,7 +1325,12 @@
   const detailKey = d => [d.closest('.step')?.id || '', d.className, d.querySelector(':scope > summary')?.textContent || '', d.dataset.cite || '', d.dataset.d || ''].join('|');
   function tabHeading() {
     const titles = {today:'Today', pray:'Divine Office', readings:'Daily Mass Readings', liturgy:'Sacred Liturgy', justice:'Catholic Social Teaching', more:'More', calendar:'Calendar'};
-    return `<section class="tab-heading"><h1>${titles[st.tab]}</h1></section>`;
+    const icons = {
+      pray:'<path d="M12 3v18M6 8h12M8 8V5m8 3V5"/>',
+      readings:'<path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/>'
+    };
+    const symbol = icons[st.tab] ? '<svg class="page-heading-icon" viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[st.tab]+'</svg>' : '';
+    return `<section class="tab-heading"><h1>${symbol}${titles[st.tab]}</h1></section>`;
   }
   function render() {
     const view = JSON.stringify([st.tab, st.date, S.rite, st.kind, st.shour, st.readRite, st.jtab]);
