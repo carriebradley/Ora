@@ -14,6 +14,8 @@ document.addEventListener('click',event=>{
  event.preventDefault();const d=dialog();document.getElementById('source-reader-title').textContent=a.textContent.trim()||'Official source';
  document.getElementById('source-reader-original').href=url.href;
  document.getElementById('source-reader-note').textContent='Viewing the publisher’s current source. If it does not load here, select Open original.';
+ const isPdf=/\\.pdf$/i.test(url.pathname);
+ if(isPdf){url.hash='view=FitH&zoom=page-width';document.getElementById('source-reader-note').textContent='Fit-to-width requested. If Safari ignores PDF zoom settings, use Open original for its native PDF controls.';}
  frame().src=url.href;d.showModal();
 });
 document.addEventListener('DOMContentLoaded',()=>{dialog().addEventListener('close',()=>frame().removeAttribute('src'));});
