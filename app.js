@@ -408,7 +408,7 @@
   }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
-    return `<section class="card glance">` + rows.map(([n, r, k]) => {
+    return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
@@ -848,6 +848,7 @@
   // Small original Catholic-inspired line icons; decorative, with labels retained.
   function todayAccent(kind) {
     const shapes = {
+      calendar: '<rect x="3" y="5" width="18" height="16" rx="2" stroke="#c9a227"/><path d="M7 3v4M17 3v4M3 10h18" stroke="#c9a227"/><path d="M12 12v6M9 15h6" stroke="#9d6b72"/>',
       saint: '<circle cx="12" cy="6.5" r="4.5" stroke="#c9a227"/><circle cx="12" cy="11" r="2.7"/><path d="M6 20c.5-3.5 2.5-5 6-5s5.5 1.5 6 5"/>',
       art: '<rect x="3" y="4" width="18" height="16" rx="1.5" stroke="#c9a227"/><rect x="5.5" y="6.5" width="13" height="11" stroke="#7393a5"/><circle cx="9" cy="10" r="1.5" fill="#c9a227" stroke="none"/><path d="m6 16 4-4 3 2 2-3 3 5" stroke="#7393a5"/>',
       history: '<path d="M3 21h18M5 21V11l7-5 7 5v10M9 21v-6h6v6M12 6V2M9.5 4h5" stroke="#c9a227"/><path d="M7 12h2m6 0h2" stroke="#c9a227"/>'
