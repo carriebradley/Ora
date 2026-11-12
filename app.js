@@ -1053,12 +1053,13 @@
       scales:'<path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7h6L5 7zm14 0-3 7h6l-3-7z"/>',
       leaf:'<path d="M20 4C10 4 4 8 4 15c0 3 2 5 5 5 7 0 11-6 11-16zM5 19c3-5 7-8 12-10"/>',
       book:'<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1zM12 6v14"/>',
+      hands:'<path d="M3 14l4-4 4 4M21 14l-4-4-4 4M7 10V6m10 4V6M7 17c2 2 4 3 5 3s3-1 5-3M9 13l3 3 3-3"/>',
       heart:'<path d="M12 20s-9-5.7-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.3-9 11-9 11z"/>'
     };
     return '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:var(--gold)">'+(paths[kind]||paths.book)+'</svg>';
   }
   function justiceCard(j) {
-    return `<section class="card"><div class="lab">${justiceIcon(j.tag === "Creation" ? "leaf" : "scales")}<span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
+    return `<section class="card"><div class="lab">${justiceIcon(j.tag === "Creation" ? "leaf" : /catechism/i.test(j.tag) ? "book" : "scales")}<span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
   }
   function jRow(text, who, extra, url) {
     return `<div style="padding:10px 0;border-top:1px solid var(--line)"><p style="${QS}">“${esc(text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(who)}${url ? ` · <a target="_blank" rel="noopener" href="${esc(url)}">source</a>` : ''}</p>${extra ? `<p class="muted" style="margin:.2em 0;font-size:.76rem">${esc(extra)}</p>` : ''}</div>`;
@@ -1079,7 +1080,7 @@
     const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
-    let h = `<div class="justice-intro">${justiceIcon("scales")}<div><strong>FAITH IN ACTION</strong><p>Catholic teaching on human dignity, solidarity, and care for creation.</p></div></div>`;
+    let h = `<div class="justice-intro">${justiceIcon("hands")}<div><strong>FAITH IN ACTION</strong><p>Catholic teaching on human dignity, solidarity, and care for creation.</p></div></div>`;
     // Today: one quotation and one short piece, so the material lasts across many days
     h += `<div class="justice-daily">${justiceCard(f)}</div>`;
     const ecology = J.filter(j => j.tag === "Creation");
@@ -1089,13 +1090,13 @@
     const kinds = [rch.length ? 'r' : 't', 't', 'v'].filter(k => k !== 'v' || R.length), kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
     if (kind === 'r') {
       const c = rch[((m3 % rch.length) + rch.length) % rch.length], parts = rch.filter(x => x.it === c.it), at = parts.indexOf(c) + 1;
-      h += `<section class="card"><div class="lab"><span class="grow">Reading · ${esc(c.it.author)}</span></div>${c.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.6">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem;margin:0">${esc(c.it.work)}${parts.length > 1 ? ` · ${at} of ${parts.length}, continued on later days` : ''} · <a target="_blank" rel="noopener" href="${esc(c.it.url)}">full text</a></p></section>`;
+      h += `<section class="card justice-reading"><div class="lab">${justiceIcon("book")}<span class="grow">Reading · ${esc(c.it.author)}</span></div>${c.paras.map(p => `<p style="font-family:var(--serif);font-size:1.05rem;line-height:1.6">${esc(p)}</p>`).join('')}<p class="muted" style="font-size:.78rem;margin:0">${esc(c.it.work)}${parts.length > 1 ? ` · ${at} of ${parts.length}, continued on later days` : ''} · <a target="_blank" rel="noopener" href="${esc(c.it.url)}">full text</a></p></section>`;
     } else if (kind === 't' && tch.length) {
       const c = tch[((m3 % tch.length) + tch.length) % tch.length];
-      h += `<section class="card"><div class="lab"><span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${c.p}</div></section>`;
+      h += `<section class="card justice-teaching"><div class="lab">${justiceIcon("book")}<span class="grow">Teaching · ${esc(c.t)}${c.of > 1 ? ` · ${c.k} of ${c.of}` : ''}</span></div><div style="font-family:var(--serif);font-size:1.02rem;line-height:1.55">${c.p}</div></section>`;
     } else if (R.length) {
       const x = R[((m3 % R.length) + R.length) % R.length];
-      h += `<section class="card"><div class="lab"><span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
+      h += `<section class="card justice-voice"><div class="lab">${justiceIcon("heart")}<span class="grow">A radical voice · ${esc(x.who)}</span></div><p style="${QS}">“${esc(x.text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(x.src)}${x.url ? ` · <a target="_blank" rel="noopener" href="${esc(x.url)}">source</a>` : ''}</p><p class="muted" style="font-size:.78rem;margin:.3em 0 0">${esc(x.bio)}</p></section>`;
     }
     h += charitySaints(d);
     // Library: one card, four tabs
