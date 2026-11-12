@@ -1,4 +1,4 @@
-const V = 'ora-v214', DATA = 'ora-data-v1';
+const V = 'ora-v215', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'liturgy-schedule.js', 'epub-reader.js', 'roman-missal.js', 'liturgy-reader.js', 'liturgy-reader-ui.js', 'source-reader.js', 'vendor/pdfjs/pdf.mjs', 'vendor/pdfjs/pdf.worker.mjs', 'edmonton-2026.js', 'edmonton.js', 'calendar.js', 'melkite.js', 'melkite-2026.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzlect.js', 'justice.js', 'justice-readings.js', 'felire.js', 'oor.js', 'hours.js', 'oortext.json', 'manifest.webmanifest', 'icon.svg'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json']);
 

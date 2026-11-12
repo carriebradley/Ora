@@ -18,5 +18,20 @@
   return hits.length===1?hits:[]; // Never silently choose between alternative Masses.
  }
  function order(sections){return sections.flatMap((s,i)=>/^the introductory rites$/i.test(s.title.trim())?[{title:s.title,page:i+1}]:[]).slice(0,1);}
- return {match,order,key};
+
+ // Display-only filtering: saved personal documents remain intact.
+ const prayerHeading=/^(?:entrance antiphon|collect|prayer over the offerings|prayer after communion|communion antiphon|responsorial psalm|psalm \d+|first reading|second reading|gospel|alleluia|gloria|glory to god|apostles.? creed|nicene creed|profession of faith|kyrie|holy holy|sanctus|agnus dei|lamb of god|preface|eucharistic prayer|the introductory rites|the liturgy of the word|the liturgy of the eucharist|the concluding rites)\b/i;
+ const direction=/^(?:rubric|instructions?\b|note to (?:the )?(?:priest|reader|celebrant)|the (?:priest|deacon|celebrant|reader) (?:then |now )?(?:says|takes|bows|stands|extends|raises|places|turns|invites|continues|joins|makes|returns|approaches)|(?:all |the people )?(?:stand|sit|kneel)\b|if (?:there is|appropriate|the)|when (?:the|all)|on (?:sundays|weekdays)|for (?:the|a) (?:optional|memorial)|see (?:page|the|also)|turn to |from the common of )/i;
+ function prayers(part){
+  if(!part||!Array.isArray(part.blocks))return part;
+  const blocks=part.blocks;let start=blocks.findIndex(b=>prayerHeading.test(b.text.trim()));
+  if(start<0)start=0; // Never discard a section without recognized labels.
+  const kept=blocks.slice(start).filter(b=>!direction.test(b.text.trim())&&!/^\[Image:/.test(b.text.trim()));
+  return {...part,blocks:kept.length?kept:blocks};
+ }
+ function ordinary(sections){
+  const wanted=[['Gloria',/^(?:gloria|glory to god in the highest)$/i],['Creed',/^(?:nicene creed|apostles.? creed|profession of faith|the creed)$/i]];
+  return wanted.flatMap(([title,re])=>{const i=sections.findIndex(s=>re.test(s.title.trim()));return i<0?[]:[{title,page:i+1}];});
+ }
+ return {match,order,key,prayers,ordinary};
 });
