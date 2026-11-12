@@ -89,8 +89,6 @@ def build(year):
     for iso,summary in published.items():
         if int(iso[5:7]) in rejected_months:
             withheld[iso]='Source month has repeated Sunday/weekday date conflicts; import withheld.'
-        elif iso.endswith('-04-01'):
-            withheld[iso]='Great Wednesday source says no Divine Liturgy while the common service cycle appoints Presanctified; import withheld pending review.'
         elif iso.endswith('-04-30') and re.search('Jeremiah',summary,re.I):
             withheld[iso]='Jeremiah appears one day early compared with the fixed Menaion; import withheld.'
         elif 'Sunday' in summary.split(';')[0] and dt.date.fromisoformat(iso).weekday()!=6:

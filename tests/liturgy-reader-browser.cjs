@@ -8,10 +8,11 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const requests=[];const watch=r=>{if(['POST','PUT','PATCH'].includes(r.method()))requests.push(r.url());};page.on('request',watch);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11`);
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
- const choose=async(name)=>{await page.locator('.liturgical-text .reader-offline').first().locator('summary').click();await page.locator('#liturgical-file').setInputFiles({name,mimeType:'application/pdf',buffer:pdf()});await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);};
+ const ensureOffline=async()=>{if(!await page.locator('.reader-offline').evaluate(el=>el.open))await page.locator('.reader-offline > summary').click();};
+ const choose=async(name)=>{await ensureOffline();await page.locator('#liturgical-file').setInputFiles({name,mimeType:'application/pdf',buffer:pdf()});await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);};
  await choose('<reader-test>.pdf');
  assert.equal(await page.locator('.reader-status img').count(),0);
- await page.locator('[data-reader="open"]').click();
+ await ensureOffline();await page.locator('[data-reader="open"]').click();
  await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 1 of 2');
  assert.equal(await page.locator('#reader-page').isVisible(),true);
  await page.locator('[data-reader="next"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
@@ -27,7 +28,7 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.locator('#liturgical-file').setInputFiles({name:'invalid.pdf',mimeType:'application/pdf',buffer:Buffer.from('not a PDF')});
  await page.waitForFunction(()=>document.querySelector('.reader-status')?.textContent.includes('previous text is unchanged'));
  await page.reload();await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
- await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
+ await ensureOffline();await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
  await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.querySelector('#liturgical-reader').open);
  // Date selection chooses a different slot, rather than relabelling Chrysostom's PDF.
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-02`);
@@ -43,10 +44,10 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await context.setOffline(true);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11`);
  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
- await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
+ await ensureOffline();await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
  await page.locator('[data-reader="mode"]').click();await page.waitForFunction(()=>document.querySelector('#reader-text')?.textContent.includes('page two'));
  await page.locator('[data-reader="close"]').click();await context.setOffline(false);
- await page.locator('.liturgical-text .reader-offline').first().locator('summary').click();page.once('dialog',d=>d.accept());await page.locator('[data-reader="remove"]').click();
+ await ensureOffline();page.once('dialog',d=>d.accept());await page.locator('[data-reader="remove"]').click();
  await page.waitForFunction(()=>document.querySelector('[data-reader="open"]').disabled);
  assert.equal(await page.evaluate(async()=>!!await LiturgyReader.get('basil')),true,'removal leaves the other service book intact');
  assert.deepEqual(requests,[],'private documents generate no upload requests');page.off('request',watch);

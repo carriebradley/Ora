@@ -3,7 +3,7 @@ const E=require('../edmonton.js'),L=require('../calendar.js'),S=require('../litu
 const d=s=>new Date(s+'T00:00:00Z');
 const day=s=>L.byzantine(d(s),{byzChurch:'ukrainian',byzSource:'edmonton'});
 test('Edmonton imports bounded facts and citations, with a full fixed Menaion',()=>{
- assert.equal(Object.keys(E.source.days).length,182);
+ assert.equal(Object.keys(E.source.days).length,183);
  assert.equal(Object.keys(E.source.fixed).length,366);
  for(const [date,e] of Object.entries(E.source.days)){
   assert.equal(e.source,'https://eeparchy.com/calendar/'+date);
@@ -21,7 +21,7 @@ test('Edmonton imports bounded facts and citations, with a full fixed Menaion',(
  const copy=E.read('2026-11-12');copy.sets[0].r[0][1]='changed';assert.notEqual(E.read('2026-11-12').sets[0].r[0][1],'changed');
 });
 test('missing and conflicting dates are explicit; no Canadian obligation is imposed as U.S. fasting',()=>{
- for(const date of ['2026-01-18','2026-04-01','2026-05-02','2026-06-06','2026-07-01','2026-12-30','2027-11-12']){
+ for(const date of ['2026-01-18','2026-05-02','2026-06-06','2026-07-01','2026-12-30','2027-11-12']){
   assert.equal(E.entry(date),null);assert.equal(day(date).sourceKind,'menaion-calculated');assert.match(day(date).fastingNote,/No verified Edmonton/);assert.equal(day(date).fast,'');
  }
  assert.match(day('2026-05-02').sourceNote,/conflict/);
@@ -32,12 +32,10 @@ test('missing and conflicting dates are explicit; no Canadian obligation is impo
  assert.doesNotMatch(L.byzantine(d('2026-12-08'),{byzChurch:'melkite',byzSource:'edmonton'}).title,/Patapius/);
  for(let x=d('2026-01-01');x<d('2027-01-01');x=L.add(x,1)){const r=day(x.toISOString().slice(0,10));assert.ok(r.title&&r.rank&&r.sourceUrl);}
 });
-test('Pittsburgh-only extra Presanctified feasts do not enter other selected calendars',()=>{
- for(const date of ['2026-02-24','2026-03-09','2026-03-19']){
-  assert.equal(S.service(date,'ruthenian').id,'presanctified');
-  assert.equal(S.service(date,'ukrainian').id,'none');
-  assert.match(S.service(date,'ukrainian').note,/Calculated common Byzantine/);
+test('calculated service schedules state their limits and do not repeat in other years',()=>{
+ for(const church of ['ukrainian','melkite'])for(const date of ['2026-02-24','2026-03-09','2026-03-19','2026-04-01']){
+  assert.equal(S.service(date,church).id,'presanctified');
+  assert.match(S.service(date,church).note,/Calculated common Byzantine/);
  }
- assert.equal(S.service('2026-04-01','ukrainian').id,'presanctified');
  assert.equal(S.service('2027-04-01','ukrainian').id,'unknown');
 });

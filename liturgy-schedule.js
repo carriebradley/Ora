@@ -15,7 +15,7 @@
       else if(iso>='2026-02-16'&&iso<='2026-03-27'&&w!==0&&w!==6&&iso!=='2026-03-25'){
         id=[3,5].includes(w)?'presanctified':'none';
         note=id==='presanctified'?'Usual Wednesday or Friday service of the Great Fast.':'Lenten weekday: no Eucharistic Divine Liturgy. Presanctified services may be celebrated according to parish directions.';
-        if(church==='ruthenian'&&['2026-02-24','2026-03-09','2026-03-19'].includes(iso)){id='presanctified';note=iso==='2026-03-19'?'Thursday of the Great Canon: Presanctified Gifts; consult parish directions.':'Presanctified Gifts for this Lenten feast, as listed in the MCI 2026 calendar.';}
+        if(['2026-02-24','2026-03-09','2026-03-19'].includes(iso)){id='presanctified';note=iso==='2026-03-19'?'Thursday of the Great Canon: Presanctified Gifts; consult parish directions.':'Presanctified Gifts for this Lenten feast; confirm local directions.';}
       }
       else if(iso==='2026-03-25')note='Annunciation: St. John Chrysostom, including when joined to Vespers.';
     }

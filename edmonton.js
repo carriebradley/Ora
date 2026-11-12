@@ -6,7 +6,7 @@
   const iso=d=>typeof d==='string'?d:d.toISOString().slice(0,10);
   const entry=d=>data.days[iso(d)]||null;
   const displayTitle=s=>s.replace(/;?\s*(?:Octoechos\s+)?Tone\s+[1-8]\s*;?/gi,';').replace(/;\s*;/g,';').replace(/;\s*$/,'').trim();
-  const rankFor=(e,d)=>/Feast of the (Lord|Mother of God)/i.test(e.rank)?'Great Feast':e.rank||(d.getUTCDay()===0?'Sunday':'Commemoration');
+  const rankFor=(e,d,fallback)=>/Feast of the (Lord|Mother of God)/i.test(e.rank)?'Great Feast':e.rank||(/Holy Week/.test(fallback.rank)?fallback.rank:d.getUTCDay()===0?'Sunday':'Commemoration');
   function read(d){
     const day=entry(d);if(!day)return null;
     return {sets:day.references.length?[{t:displayTitle(day.title),r:day.references.map(pair=>pair.slice())}]:[],notes:[day.references.length?'Reading references from the Ukrainian Catholic Eparchy of Edmonton’s dated page.':'Edmonton has not supplied usable reading references for this date. Consult its source page.']};
@@ -31,7 +31,7 @@
     else if(/Dormition Fast/i.test(rubric))fastSeason='Dormition Fast';
     else if(/Apostle[’']?s?[’']? Fast/i.test(rubric))fastSeason='Apostles’ Fast';
     else if(/Great Fast/i.test(rubric))fastSeason='Great Fast';
-    return {...fallback,title:displayTitle(e.title),rank:rankFor(e,d),tone:e.tone,also:[],fast,fastSeason,
+    return {...fallback,title:displayTitle(e.title),rank:rankFor(e,d,fallback),tone:e.tone,also:[],fast,fastSeason,
       sourceKind:'edmonton',sourceUrl:e.source,sourceNote:'Ukrainian Catholic Eparchy of Edmonton · dated calendar.',
       fastingNote:'Edmonton’s calendar describes Canadian practice. For binding U.S. obligations, follow your own eparchy’s directions and personal exemptions.',
       canadianObligation:/Holy Day of obligation/i.test(rubric)};
