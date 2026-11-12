@@ -1010,12 +1010,12 @@
     const service=LiturgySchedule.service(st.date,S.byzChurch);
     const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
     const reader=LiturgicalText.card(byzantine?service.id:'roman',{church:S.byzChurch,date:st.date,dayTitle:v.roman.title});
-    const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false,true):romanReadingsHTML(st.date,false,true);
+    const readings=byzantine?byzReadingsHTML(v,S.byzLiturgyChurch,false,true):'';
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
       ${reader}
-      <section class="simple-liturgy-readings" aria-label="Readings"><h3>Readings</h3>${readings}</section>
+      ${byzantine?`<section class="simple-liturgy-readings" aria-label="Readings"><h3>Readings</h3>${readings}</section>`:""}
     </section>`;
   }
   function romanNightHTML() {

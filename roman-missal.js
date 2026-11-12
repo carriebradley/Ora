@@ -33,5 +33,24 @@
   const wanted=[['Gloria',/^(?:gloria|glory to god in the highest)$/i],['Creed',/^(?:nicene creed|apostles.? creed|profession of faith|the creed)$/i]];
   return wanted.flatMap(([title,re])=>{const i=sections.findIndex(s=>re.test(s.title.trim()));return i<0?[]:[{title,page:i+1}];});
  }
- return {match,order,key,prayers,ordinary};
+
+ function fixed(sections,type){
+  const patterns={
+   gloria:/^(?:the )?(?:gloria|glory to god(?: in the highest)?|gloria in excelsis(?: deo)?)\b/i,
+   creed:/^(?:the )?(?:nicene(?:[- ]constantinopolitan)? creed|profession of faith|the creed|creed)\b/i,
+   1:/^(?:the )?eucharistic prayer (?:i|1)(?:\b|$)/i,
+   2:/^(?:the )?eucharistic prayer (?:ii|2)(?:\b|$)/i,
+   3:/^(?:the )?eucharistic prayer (?:iii|3)(?:\b|$)/i,
+   4:/^(?:the )?eucharistic prayer (?:iv|4)(?:\b|$)/i
+  };
+  const re=patterns[type];if(!re)return null;
+  const headings=sections.map((s,i)=>({s,i})).filter(x=>re.test(x.s.title.trim()));
+  if(headings.length===1)return headings[0].s;
+  // Some EPUBs place the title within a larger Order of Mass section.
+  const embedded=sections.flatMap(s=>s.blocks.flatMap((b,i)=>re.test(b.text.trim())?[{s,i}]:[]));
+  if(embedded.length!==1)return null;
+  const {s,i}=embedded[0],ending=s.blocks.findIndex((b,j)=>j>i&&/^h[1-6]$/.test(b.tag)&&/^(?:the )?(?:eucharistic prayer|gloria|creed|profession of faith|communion rite|concluding rites)\b/i.test(b.text));
+  return {title:s.blocks[i].text,blocks:s.blocks.slice(i+1,ending<0?undefined:ending)};
+ }
+ return {match,order,key,prayers,ordinary,fixed};
 });
