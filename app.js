@@ -483,8 +483,9 @@
     const martyr = /\b(?:martyr|martyrs|hieromartyr|protomartyr|great.martyr)\b/i.test(title);
     const roseSunday = r.color === 'rose' && /Sunday/i.test(rk + ' ' + title);
     const rankLabel = /Solemnity/i.test(rk) ? 'Solemnity' : /Great Feast|Principal/i.test(rk) ? 'Major Feast' : feast ? 'Feast' : '';
+    const melkiteCommemoration = rite === 'byz' && S.byzChurch === 'melkite' && rk === 'Diocesan calendar' && title !== 'Weekday' && !feast;
     const badge = holySpirit ? 'Holy Spirit' : martyr ? 'Martyr' : roseSunday ? 'Sunday' :
-      feast ? rankLabel : kind === 'fast' ? (/strict/i.test(fast) ? 'Strict Fast' : 'Fast Day') :
+      feast ? rankLabel : melkiteCommemoration ? 'Commemoration' : kind === 'fast' ? (/strict/i.test(fast) ? 'Strict Fast' : 'Fast Day') :
       kind === 'season' ? 'Fasting Season' : martin ? "St. Martin's Lent" :
       minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast' : 'Memorial') :
       rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary Day';
@@ -493,13 +494,14 @@
     const historical = rite === 'sarum' && observance && observance.name === "St. Martin's Lent";
     const shortName = historical ? name.replace(/\s*\/\s*Saint Martin's Lent/i, '') : name;
     const summary = historical ? [shortName, fast, observance.name].filter(Boolean) : [name, fast, r.fastSeason, observance && observance.name, observance && observance.day].filter(Boolean);
-    return {kind, badge, detail:[...new Set(summary)].join(' · '), martyr, holySpirit, roseSunday, feast, minor, fast};
+    return {kind, badge, detail:[...new Set(summary)].join(' · '), martyr, holySpirit, roseSunday, feast, minor, fast, melkiteCommemoration};
   }
   function observanceColor(r, rite) {
     const x = status(r, rite);
     if (x.holySpirit || x.martyr) return 'r';
     if (x.roseSunday) return 'rose';
     if (x.feast) return 'gold';
+    if (x.melkiteCommemoration) return 'w';
     if (x.minor && !x.fast) return 'w';
     if (x.fast || x.kind === 'season' || /Advent|Lent|Penitential/i.test(r.season || '')) return 'v';
     if (r.color === 'v' || r.color === 'rose') return r.color;
