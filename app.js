@@ -36,7 +36,7 @@
   const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
 
   /* ---------- settings & state ---------- */
-  const S = Object.assign({}, L.DEFAULTS, { ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable' }, store.get('ora.settings', {}));
+  const S = Object.assign({}, L.DEFAULTS, { ascension:'sunday', corpus:'sunday', epiphany:'sunday', ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable' }, store.get('ora.settings', {}));
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
   if (!['ukrainian', 'melkite'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
@@ -1120,6 +1120,7 @@
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
+      ${byzantine?`<p class="service-summary"><strong>${esc(service.title)}</strong>${service.verification==='calculated'?'<span class="muted"> · calculated service cycle</span>':''}</p>${service.verification==='source-conflict'?`<p class="note">${esc(service.note)}</p>`:''}`:''}
       ${reader}
       ${byzantine?`<section class="simple-liturgy-readings" aria-label="Readings"><h3>Readings</h3>${readings}</section>`:""}
     </section>`;
@@ -1322,7 +1323,8 @@
     <details class="card more-sources"><summary><b>Sources &amp; References</b></summary>
       <p class="muted more-sources-intro">Calendars, official liturgical texts, reading sources, and acknowledgments.</p>
       <details class="more-source-sub"><summary>Calendar sources</summary><div class="more-source-content">
-        <p><b>Roman (modern)</b> — General Roman Calendar with cycles; Ascension, Corpus Christi and Epiphany follow your settings.</p>
+        <p><b>Roman (modern)</b> — General Roman Calendar with U.S. additions checked against the <a href="https://www.usccb.org/resources/2026cal.pdf" target="_blank" rel="noopener noreferrer">USCCB 2026 calendar</a>. Ascension, Corpus Christi and Epiphany follow your saved settings. New installations use Sunday transfers; retain Thursday Ascension where observed locally.</p>
+        <p><b>Divine Liturgy appointments</b> — Ukrainian and Melkite service selections use a labelled calculated Byzantine cycle. <a href="https://eeparchy.com/wp-content/uploads/2020/09/ugcc-catechism-english-20200924-2nd-ed-final-for-print.pdf" target="_blank" rel="noopener noreferrer">Ukrainian catechism, §§393–394</a>; <a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Newton calendar and monthly typika</a>. Dated source conflicts are shown in the Liturgy view. Calculated service appointments are not a verified parish timetable.</p>
       <p><b>Byzantine</b> — The Ukrainian option follows the Eparchy of Edmonton’s checked 2026 daily entries, using Gregorian Pascha and fixed feasts. New Westminster supplies fixed commemorations when Edmonton has no verified date; seasonal calculations and reading-cycle fallbacks are labelled. Inconsistent source dates are withheld. The Melkite option follows Newton’s dated 2026 calendar. Canada-specific obligations are not applied as U.S. obligations; consult your own eparchy.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p>
         ${felireMore()}
@@ -1663,14 +1665,14 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v214';
+  const APP_BUILD = 'ora-v234';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
     try {
       const response = await fetch('sw.js?update-check=' + Date.now(), { cache: 'no-store' });
       if (!response.ok) return;
-      const match = (await response.text()).match(/const V = ['"](ora-v\\d+)['"]/);
+      const match = (await response.text()).match(/const V = ['"](ora-v\d+)['"]/);
       if (!match || match[1] === APP_BUILD) return;
       updateShown = true;
       const notice = document.createElement('div');
@@ -1694,5 +1696,6 @@
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => { });
 })();
+
 
 

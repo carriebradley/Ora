@@ -31,7 +31,7 @@ test('Monthly image-checked anchors retain the Melkite calendar facts',()=>{
 test('Melkite data never silently repeats in 2027 and the other traditions remain separate',()=>{
  assert.equal(M.entry('2027-04-05'),null);assert.equal(M.read('2027-04-05'),null);
  assert.match(L.byzantine(new Date('2027-04-05'),{byzChurch:'melkite'}).fastingNote,/unavailable/);
- assert.match(L.byzantine(new Date('2026-12-09'),{byzChurch:'melkite'}).title,/MATERNITY/);
+ assert.match(L.byzantine(new Date('2026-12-09'),{byzChurch:'melkite'}).title,/Maternity of Ann/);
  assert.match(L.byzantine(new Date('2026-12-08'),{byzChurch:'ruthenian'}).title,/Conception/);
  assert.equal(L.byzantine(new Date('2026-04-05'),{byzChurch:'melkite'}).fast,'','dagger is not a fasting rule');
 });

@@ -92,6 +92,7 @@
 6/1|Saint Justin, Martyr|M|r
 6/3|Saint Charles Lwanga and Companions, Martyrs|M|r
 6/11|Saint Barnabas, Apostle|M|r
+6/13|Saint Anthony of Padua, Priest and Doctor of the Church|M|w
 6/13|Saint Anthony of Padua, Priest and Doctor|M|w
 6/24|Nativity of Saint John the Baptist|S|w
 6/29|Saints Peter and Paul, Apostles|S|r
@@ -117,6 +118,7 @@
 8/28|Saint Augustine, Bishop and Doctor|M|w
 8/29|Passion of Saint John the Baptist|M|r
 9/3|Saint Gregory the Great, Pope and Doctor|M|w
+9/5|Saint Teresa of Calcutta, Virgin|O|w|2025
 9/8|Nativity of the Blessed Virgin Mary|F|w
 9/9|Saint Peter Claver, Priest|M|w
 9/14|Exaltation of the Holy Cross|FL|r
@@ -130,6 +132,9 @@
 10/2|Guardian Angels|M|w
 10/4|Saint Francis of Assisi|M|w
 10/7|Our Lady of the Rosary|M|w
+10/9|Saint Denis, Bishop, and Companions, Martyrs|O|r
+10/9|Saint John Leonardi, Priest|O|w
+10/9|Saint John Henry Newman, Priest and Doctor of the Church|O|w|2026
 10/15|Saint Teresa of Jesus, Virgin and Doctor|M|w
 10/17|Saint Ignatius of Antioch, Bishop and Martyr|M|r
 10/18|Saint Luke, Evangelist|F|r
@@ -155,12 +160,12 @@
 12/26|Saint Stephen, First Martyr|F|r
 12/27|Saint John, Apostle and Evangelist|F|w
 12/28|Holy Innocents, Martyrs|F|r`;
-  const OF_P = { S: 3, FL: 5, F: 7, M: 10, O: 11 };
+  const OF_P = { S: 3, FL: 5, F: 7, M: 10, O: 12 };
   const OF_RANK = { S: 'Solemnity', FL: 'Feast of the Lord', F: 'Feast', M: 'Memorial', O: 'Optional Memorial' };
   let ofCache = null;
   function ofTable() {
     if (ofCache) return ofCache;
-    const t = OF_SEED.split('\n').map(l => { const [md, name, kind, color] = l.split('|'); const [m, d] = md.split('/').map(Number); return { m, d, name, kind, color }; });
+    const t = OF_SEED.split('\n').map(l => { const [md, name, kind, color, since] = l.split('|'); const [m, d] = md.split('/').map(Number); return { m, d, name, kind, color, since:Number(since)||0 }; });
     const have = new Set(t.map(e => e.m + '/' + e.d));
     for (const [m, d, name, kind] of EXTRA) {
       if (have.has(m + '/' + d)) continue;
@@ -242,7 +247,7 @@
     if (k === 7) return T('The Most Holy Trinity', 3, 'Solemnity', 'w', 'Ordinary Time');
     if (o.corpus === 'sunday' ? k === 14 : k === 11) return T('The Most Holy Body and Blood of Christ (Corpus Christi)', 3, 'Solemnity', 'w', 'Ordinary Time');
     if (k === 19) return T('The Most Sacred Heart of Jesus', 3, 'Solemnity', 'w', 'Ordinary Time');
-    if (k === 20) return T('Immaculate Heart of the Blessed Virgin Mary', 10, 'Memorial', 'w', 'Ordinary Time');
+    if (k === 20 && !o.omitImmaculateHeart) return T('Immaculate Heart of the Blessed Virgin Mary', 10, 'Memorial', 'w', 'Ordinary Time');
     if (k === 1) return T('Blessed Virgin Mary, Mother of the Church', 10, 'Memorial', 'w', 'Ordinary Time');
     if (same(d, ck)) return T('Our Lord Jesus Christ, King of the Universe', 3, 'Solemnity', 'w', 'Ordinary Time');
     return sun ? T(`${ORD(n)} Sunday in Ordinary Time`, 6, 'Sunday', 'g', 'Ordinary Time')
@@ -321,14 +326,21 @@
 
   function roman(d, o) {
     o = opts(o);
-    const y = d.getUTCFullYear(), t = ofTemporal(d, o), cands = [t];
+    const y = d.getUTCFullYear();
+    let t = ofTemporal(d, o);
+    const heartCollision = /^Immaculate Heart/.test(t.title) && ofTable().some(e=>e.kind==='M'&&same(ofTransfer(e,y,o),d));
+    const heart = heartCollision ? {...t,p:OF_P.O,rank:OF_RANK.O,kind:'O'} : null;
+    if(heartCollision)t=ofTemporal(d,{...o,omitImmaculateHeart:true});
+    const cands = heart ? [t,heart] : [t];
     for (const e of ofTable()) {
+      if(e.since && y<e.since)continue;
       if (!same(ofTransfer(e, y, o), d)) continue;
-      cands.push({ title: e.name, p: OF_P[e.kind], rank: OF_RANK[e.kind], color: e.color, season: t.season, kind: e.kind, transferred: e.m !== d.getUTCMonth() + 1 || e.d !== d.getUTCDate() });
+      const kind=heartCollision&&e.kind==='M'?'O':e.kind;
+      cands.push({ title: e.name, p: OF_P[kind], rank: OF_RANK[kind], color: e.color, season: t.season, kind, transferred: e.m !== d.getUTCMonth() + 1 || e.d !== d.getUTCDate() });
     }
     cands.sort((a, b) => a.p - b.p || (b.temporal ? 1 : 0) - (a.temporal ? 1 : 0));
     const w = cands[0], also = [];
-    for (const c of cands.slice(1)) if (c.p <= 11)
+    for (const c of cands.slice(1)) if (c.p <= 11 || c.kind==='O')
       also.push({ title: c.title, note: (w.p >= 9 && c.p >= 10) ? 'Optional commemoration' : 'Outranked — not observed this year' });
     const fast = [];
     if (w.title === 'Ash Wednesday' || /^Good Friday/.test(w.title)) fast.push('Day of fast and abstinence');
