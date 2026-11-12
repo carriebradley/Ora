@@ -78,7 +78,7 @@ ul.also li{padding:2px 0}
 nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--card);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
 nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.75rem;color:var(--muted);padding:4px 0;border-radius:10px}
 nav button b{font-size:1.25rem;font-weight:400;line-height:1}
-nav button.on{color:var(--accent);font-weight:600}
+nav button.on{color:var(--lit);font-weight:600}
 /* player */
 #player{position:fixed;left:8px;right:8px;bottom:calc(68px + env(safe-area-inset-bottom));z-index:7;background:var(--accent);color:var(--accent-ink);border-radius:16px;padding:8px 12px;display:none;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
 #player.show{display:flex}
@@ -134,7 +134,7 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:13px;b
 main>.card:first-child,main>section.card:first-of-type{border-top:3px solid var(--lit)}
 h3{display:flex;align-items:center;gap:8px}
 h3::before{content:"";width:4px;height:1em;border-radius:2px;background:var(--lit);opacity:.85;flex:none}
-nav button.on b{color:var(--accent)}
+nav button.on b{color:var(--lit)}
 .sec b,.sec>div>b{color:var(--rubric)}
 .sec>b{color:var(--muted)}
 .cell.today{border-color:var(--lit);box-shadow:inset 0 0 0 1px var(--lit)}
