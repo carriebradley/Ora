@@ -16,6 +16,17 @@
     let fastSeason = md >= '02-16' && md <= '03-27' ? 'Great Fast' : md >= '03-30' && md <= '04-04' ? 'Great and Holy Week' : md >= '06-01' && md <= '06-28' ? 'Apostles’ Fast' : md >= '08-01' && md <= '08-14' ? 'Theotokos’ Fast' : md >= '11-15' && md <= '12-24' ? 'Nativity Fast (Philip’s Fast)' : '';
     let fast = iso === '2026-02-16' || (md >= '04-02' && md <= '04-04') ? 'Fast — Newton Lenten discipline' : '';
     if (date.getUTCDay() === 5 && md >= '02-16' && md <= '04-03') fast += (fast ? '; ' : '') + 'abstinence from meat';
+    // The diocesan minimum specifically requires Lenten Friday abstinence.
+    // The wider Melkite tradition also observes Wednesdays and Fridays outside Lent.
+    // Present the latter as traditional practice, not an additional legal obligation.
+    const weekday = date.getUTCDay();
+    const fastFree = (md >= '12-25' || md <= '01-06') ||
+      (iso >= '2026-02-02' && iso <= '2026-02-08') ||
+      (iso >= '2026-04-05' && iso <= '2026-04-11') ||
+      (iso >= '2026-05-31' && iso <= '2026-06-06');
+    if (!fastFree && !fast && (weekday === 3 || weekday === 5)) {
+      fast = 'Traditional ' + (weekday === 5 ? 'Friday' : 'Wednesday') + ' abstinence — feast allowances may apply';
+    }
     const notes = ['Melkite Catholic Diocese of Newton · 2026 calendar · page '+e.page+'. Seasonal fasts describe the observance; follow your parish’s directions and personal exemptions.'];
     if (md >= '06-20' && md <= '06-28') notes.push('The calendar also marks the shorter Apostles’ Fast from June 20.');
     if (md >= '12-10' && md <= '12-24') notes.push('The calendar also marks the shorter Nativity Fast from December 10.');

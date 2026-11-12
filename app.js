@@ -526,7 +526,7 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const detail = k === 'byz' ? r.title : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
+      const detail = k === 'byz' ? (S.byzChurch === 'melkite' ? String(r.title || '').replace(/\b[A-Z][A-Z]+(?:[\s,.'’—-]+[A-Z][A-Z]+)*\b/g, word => word.toLocaleLowerCase('en').replace(/\b\p{L}/gu, c => c.toLocaleUpperCase('en'))) : r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
       const detailHTML = k === 'byz' ? byzantineCommemorationsHTML(detail) : esc(detail);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
