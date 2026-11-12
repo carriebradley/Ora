@@ -426,7 +426,7 @@
   function popeCard(iso) {
     const p = POPE[iso.slice(0, 7)], mo = L.MN[+iso.slice(5, 7) - 1], Q = C.POPEQ || [];
     const n = Math.round(P(iso).getTime() / 864e5), q = Q.length ? Q[(((n + st.popeShift) % Q.length) + Q.length) % Q.length] : null;
-    let h = `<section class="card"><div class="lab"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" style="flex:none;margin:-4px 0"><g fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g stroke="#a9aeb6" transform='matrix(-1 0 0 1 32 0)'><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#a9aeb6" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g><g stroke="#c9a227"><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#c9a227" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g></g></svg><span class="grow">From the Holy Father</span></div>`;
+    let h = `<section class="card pope-card"><div class="lab"><svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" style="flex:none;display:block;margin:0"><g fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g stroke="#a9aeb6" transform='matrix(-1 0 0 1 32 0)'><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#a9aeb6" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g><g stroke="#c9a227"><path d="M9.6 22.4 25.5 6.5"/><circle cx="7.2" cy="24.8" r="3.3"/><circle cx="7.2" cy="24.8" r=".9" fill="#c9a227" stroke="none"/><path d="M22.3 9.7l3 3 1.6-1.6-1.4-1.4 1.2-1.2-1.6-1.6" /><path d="M10.6 21.4l1.4 1.4M12 20l1 1"/></g></g></svg><span class="grow">From the Holy Father</span></div>`;
     if (q) h += `<div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · <a target="_blank" rel="noopener" href="${esc(q.u)}">${esc(q.w)}</a></small></div><div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="pnext">Another</button></div>`;
     const ag = angelus, agAge = ag && ag.date ? (P(iso) - P(ag.date)) / 864e5 : 99;
     if (ag && ag.pray && ag.pray.length && agAge >= 0 && agAge < 14)
@@ -852,7 +852,7 @@
       art: '<rect x="3" y="4" width="18" height="16" rx="1.5" stroke="#c9a227"/><rect x="5.5" y="6.5" width="13" height="11" stroke="#7393a5"/><circle cx="9" cy="10" r="1.5" fill="#c9a227" stroke="none"/><path d="m6 16 4-4 3 2 2-3 3 5" stroke="#7393a5"/>',
       history: '<path d="M3 21h18M5 21V11l7-5 7 5v10M9 21v-6h6v6M12 6V2M9.5 4h5" stroke="#c9a227"/><path d="M7 12h2m6 0h2" stroke="#c9a227"/>'
     };
-    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;flex:none;margin-right:8px">'+shapes[kind]+'</svg>';
+    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;flex:none;margin:0">'+shapes[kind]+'</svg>';
   }
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
