@@ -249,24 +249,75 @@
   }, true);
 
   /* ---------- art (live from Wikipedia, cached) ---------- */
-  function loadArt(a) {   // exact Wikipedia article for the work; the image is used only if its file name matches the work (a.fm)
-    const k = 'ora.art2.' + a.q; if (st.art[a.q] !== undefined) return;
-    const c = store.get(k, null); if (c && (c.img || (c.at && Date.now() - c.at < 3 * 864e5))) { st.art[a.q] = c; return; }   // a missing image is looked up again after 3 days
-    st.art[a.q] = 'loading';
+  /* Multi-source sacred art lookup. Never display a different work under the selected metadata. */
+  const artMatch = (a, name) => {
+    const title = String(name || '').replace(/[_–—-]/g, ' ').toLowerCase();
+    const pattern = a.fm ? new RegExp(a.fm, 'i') : null;
+    return pattern ? pattern.test(title) : title.includes(a.t.toLowerCase());
+  };
+  async function wikipediaArt(a) {
     const u = 'https://en.wikipedia.org/w/api.php?action=query&redirects=1&titles=' + encodeURIComponent(a.wt || a.t) + '&prop=pageimages|info&piprop=thumbnail|name&pithumbsize=1100&inprop=url&format=json&origin=*';
-    fetch(u).then(r => r.json()).then(j => {
-      const p = j.query && j.query.pages && Object.values(j.query.pages)[0];
-      const ok = p && !p.missing && p.pageimage && p.thumbnail && (!a.fm || new RegExp(a.fm, 'i').test(decodeURIComponent(p.pageimage).replace(/_/g, ' ')));
-      const out = p && !p.missing ? { img: ok ? p.thumbnail.source : '', url: p.fullurl } : { img: '', url: 'https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(a.q) };
-      out.at = Date.now(); st.art[a.q] = out; store.set(k, out); render();
-    }).catch(() => { st.art[a.q] = {img:'',at:Date.now()}; render(); });
+    const r = await fetch(u); if (!r.ok) return null;
+    const j = await r.json(), p = j.query && j.query.pages && Object.values(j.query.pages)[0];
+    return p && !p.missing && p.thumbnail && artMatch(a, decodeURIComponent(p.pageimage || '')) ? {img:p.thumbnail.source,url:p.fullurl,source:'Wikipedia'} : null;
   }
-  function artHTML(a, big) {
-    if (!a) return '<p class="muted">Artwork unavailable.</p>'; loadArt(a); const m = st.art[a.q];
-    let h = '<div class="art">';
-    h += m && m.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy">` : `<div class="ph">${m === 'loading' ? 'Loading image…' : m ? 'No verified image of this work — use “About this work”' : 'Image unavailable offline'}</div>`;
-    h += `<h3 class="artwork-title">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr === 'East' ? 'Eastern' : 'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
-    h += `<div class="row"><button class="btn sm" data-act="artnext">Another</button>${m && m.url ? `<a class="btn sm" target="_blank" rel="noopener" href="${esc(m.url)}">About this work</a>` : ''}${speakBtn(`${a.t}. ${a.a}. ${a.p}`)}</div></div>`;
+  async function commonsArt(a) {
+    const query = a.q || a.t;
+    const u = 'https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrlimit=15&gsrsearch=' + encodeURIComponent(query) + '&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=1100&format=json&origin=*';
+    const r = await fetch(u); if (!r.ok) return null;
+    const j = await r.json(), pages = Object.values(j.query?.pages || {});
+    for (const p of pages) {
+      const info = p.imageinfo?.[0], meta = info?.extmetadata || {};
+      if (!info || !artMatch(a, p.title)) continue;
+      const license = (meta.LicenseShortName?.value || '').toLowerCase();
+      if (!(/public domain|^pd|cc0|cc by/.test(license))) continue;
+      return {img:info.thumburl || info.url,url:info.descriptionurl,source:'Wikimedia Commons',license:meta.LicenseShortName?.value || ''};
+    }
+    return null;
+  }
+  async function metArt(a) {
+    const search = await fetch('https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q='+encodeURIComponent(a.t));
+    if (!search.ok) return null;
+    const ids = (await search.json()).objectIDs || [];
+    for (const id of ids.slice(0,8)) {
+      const r = await fetch('https://collectionapi.metmuseum.org/public/collection/v1/objects/'+id);
+      if (!r.ok) continue;
+      const o = await r.json();
+      if (!o.isPublicDomain || !o.primaryImageSmall || !artMatch(a,o.title)) continue;
+      return {img:o.primaryImageSmall,url:o.objectURL,source:'The Metropolitan Museum of Art',license:'Public domain'};
+    }
+    return null;
+  }
+  async function chicagoArt(a) {
+    const u='https://api.artic.edu/api/v1/artworks/search?q='+encodeURIComponent(a.t)+'&limit=10&fields=id,title,artist_title,is_public_domain,image_id';
+    const r=await fetch(u);if(!r.ok)return null;
+    const j=await r.json();
+    for(const o of j.data || []){
+      if(!o.is_public_domain || !o.image_id || !artMatch(a,o.title))continue;
+      return {img:'https://www.artic.edu/iiif/2/'+encodeURIComponent(o.image_id)+'/full/843,/0/default.jpg',url:'https://www.artic.edu/artworks/'+o.id,source:'Art Institute of Chicago',license:'Public domain'};
+    }
+    return null;
+  }
+  async function loadArt(a) {
+    if (!a || st.art[a.q] !== undefined) return;
+    const k='ora.art3.'+a.q, cached=store.get(k,null);
+    if(cached && (cached.img || (cached.at && Date.now()-cached.at<864e5))){st.art[a.q]=cached;return;}
+    st.art[a.q]='loading';
+    let result=null;
+    for(const lookup of [wikipediaArt,commonsArt,metArt,chicagoArt]){
+      try{result=await lookup(a);if(result?.img)break;}catch(_){}
+    }
+    const out=result || {img:'',url:'https://commons.wikimedia.org/w/index.php?search='+encodeURIComponent(a.q),source:'No verified image'};
+    out.at=Date.now();st.art[a.q]=out;store.set(k,out);render();
+  }
+  function artHTML(a,big){
+    if(!a)return '<p class="muted">Artwork unavailable.</p>';
+    loadArt(a);const m=st.art[a.q];
+    let h='<div class="art">';
+    h+=m?.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="ph" hidden>Image unavailable. Choose Another to view a different work.</div>` : `<div class="ph">${m==='loading'?'Finding a verified artwork…':'No verified image available. Choose Another.'}</div>`;
+    h+=`<h3 class="artwork-title">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr==='East'?'Eastern':'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
+    if(m?.source && m.img)h+=`<p class="muted" style="font-size:.73rem;margin:3px 0">Image: ${esc(m.source)}${m.license?' · '+esc(m.license):''}</p>`;
+    h+=`<div class="row"><button class="btn sm" data-act="artnext">Another</button>${m?.url?`<a class="btn sm" target="_blank" rel="noopener noreferrer" href="${esc(m.url)}">About this work</a>`:''}${speakBtn(`${a.t}. ${a.a}. ${a.p}`)}</div></div>`;
     return h;
   }
 
