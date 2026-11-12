@@ -66,6 +66,33 @@
 
   // The 2012 Edmonton episcopal booklet alternates Ukrainian and English pages.
   // Process only a device-local copy, and never package or transmit its content.
+  // Combine physical PDF lines without joining distinct responses. Tracking
+  // spaces and soft hyphenation are artifacts of the PDF, not prayer text.
+  function normalizePdfLine(text){
+    return String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();
+  }
+  function isPdfHeading(line){
+    const s=normalizePdfLine(line);
+    if(/^(?:Liturgy of(?: the)?(?: Word| Eucharist)|Blessing|Great Litany|Small Litany|Cherubic Hymn|Trisagion Hymn|First Antiphon|Second Antiphon|Third Antiphon|Anaphora|Holy Communion|Dismissal|The Kairos Service|Prayers Before the Holy Doors)$/i.test(s))return true;
+    return /^[A-Z][a-z]+(?:\s+(?:of|the|and|[A-Z][a-z]+)){0,4}$/.test(s) && s.length<48;
+  }
+  function combinePdfLines(lines){
+    const out=[];let current='',currentRole=false;
+    const roleStart=/^(?:PRIEST(?:\s*\d+)?|BISHOP|CELEBRANT|DCN(?:\s*\d+)?|DEACON|PROTODEACON|ALL|PEOPLE|CHOIR|CLERGY|READER|LECTOR|CANTOR|FAITHFUL)\s*:/i;
+    const instructionStart=/^(?:When the time comes|The first protopresbyter|Having received|The (?:priest|deacon|bishop|protodeacon|celebrant|choir|people|reader|server|faithful)|Then (?:the|they)|During (?:the|this)|After (?:the|this)|Before (?:the|this)|Meanwhile|At this point|On Sundays|On weekdays)\b/i;
+    const flush=()=>{if(current)out.push(current);current='';currentRole=false;};
+    for(const raw of lines){
+      let line=normalizePdfLine(raw);
+      if(!line)continue;
+      const heading=isPdfHeading(line),role=roleStart.test(line),rubric=instructionStart.test(line);
+      if(heading||role||rubric)flush();
+      if(!current){current=line;currentRole=role;}
+      else if(/[-\u2010\u00ad]$/.test(current)&&/^[a-z]/.test(line))current=current.slice(0,-1)+line;
+      else current+=' '+line;
+      if(heading)flush();
+    }
+    flush();return out;
+  }
   async function edmontonPrayerText(book){
     if(book.numPages!==140)return null;
     const marker=await book.getPage(4);
@@ -91,7 +118,7 @@
         fragments.sort((a,b)=>a.x-b.x);
         return fragments.map(item=>item.text.trim()).filter(Boolean).join(' ').replace(/\s+/g,' ').trim();
       }).filter(Boolean);
-      const clean=lines.filter(line=>{
+      const clean=combinePdfLines(lines).filter(line=>{
         if(/^\d{1,3}$/.test(line))return false;
         if(/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(line))return false;
         return true;
@@ -134,10 +161,10 @@
   // Visual call-and-response cues, inferred only from labels printed in the
   // saved booklet. Do not invent speaker assignments for unlabelled lines.
   function roleLine(text){
-    const m=String(text).match(/^\s*(PRIEST|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)\s*:\s*(.*)$/i);
+    const m=String(text).match(/^\s*(PRIEST(?:\s*\d+)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)\s*:\s*(.*)$/i);
     if(!m)return null;
-    const role=m[1].toUpperCase(),kind=/^(?:PRIEST|CELEBRANT|BISHOP)$/.test(role)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(role)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL)$/.test(role)?'all':'other';
-    const name=kind==='priest'?'Priest':kind==='deacon'?'Deacon':kind==='all'?'All':role[0]+role.slice(1).toLowerCase();
+    const role=m[1].toUpperCase(),kind=/^(?:PRIEST|CELEBRANT|BISHOP)/.test(role)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(role)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL)$/.test(role)?'all':'other';
+    const name=kind==='priest'?(/BISHOP/.test(role)?'Bishop':'Priest'):kind==='deacon'?'Deacon':kind==='all'?'All':role[0]+role.slice(1).toLowerCase();
     return {name,kind,words:m[2].trim()};
   }
   // Distinguish unspoken rubrics from spoken liturgy. Uncertain lines remain
@@ -181,7 +208,9 @@
         const compactHeading=s=>String(s).replace(/[^A-Za-z]/g,'').toUpperCase();
         const knownHeadings={
           THEKAIROSSERVICE:'The Kairos Service',
-          PRAYERSBEFORETHEHOLYDOORS:'Prayers Before the Holy Doors'
+          PRAYERSBEFORETHEHOLYDOORS:'Prayers Before the Holy Doors',
+          LITURGYOFTHEWORD:'Liturgy of the Word',
+          LITURGYOFTHEEUCHARIST:'Liturgy of the Eucharist'
         };
         let heading=knownHeadings[compactHeading(text)];
         if(!heading&&lineIndex+1<section.lines.length){
@@ -191,7 +220,7 @@
         }
         if(heading)text=heading;
         if(!text||/^(?:LITURGY OF THE WORD|LITURGY OF THE EUCHARIST|THE ANAPHORA|HOLY COMMUNION)$/i.test(text))continue;
-        if(heading || headingPattern.test(text)){
+        if(heading || headingPattern.test(text) || isPdfHeading(text)) {
           const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=text;target.append(h);lastLine=null;lastRole=null;continue;
         }
         const role=roleLine(text);

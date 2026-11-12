@@ -61,7 +61,10 @@
     const v=block.text.trim(),h=heads.find(([,re])=>re.test(v));
     if(h){active=h[0];const rest=v.replace(h[1],'').replace(/^[\s|:;·-]+/,'').trim();if(rest&&!/^(?:mt|mk|lk|jn|ps|cf|rev|rom|heb)\s*[.:]?\s*\d/i.test(rest))out[active].push({tag:'p',text:rest});continue;}
     if(!active)continue;
-    if(/^(?:preface\b|liturgy of the|introductory rites\b|penitential act\b|>>|the order of mass\b|copyright|all rights reserved)/i.test(v))continue;
+    // A new Mass heading closes the previous proper. Without this guard,
+    // subsequent rites and copyright notes can leak into a daily prayer.
+    if(/^(?:preface\b|liturgy of the|introductory rites\b|penitential act\b|the order of mass\b|eucharistic prayer\b|responsorial psalm\b|first reading\b|second reading\b|gospel\b|alleluia\b|offertory\b|communion rite\b|concluding rites\b|blessing\b|dismissal\b|copyright\b|all rights reserved)/i.test(v))active=null;
+    if(!active || /^(?:>>|\[Image:)/.test(v))continue;
     out[active].push(block);
   }
   return out;
