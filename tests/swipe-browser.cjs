@@ -44,7 +44,10 @@ module.exports=async(browser,base)=>{
   assert.equal(await active(),'pray','left swipe over a tappable card changes pages');
   await swipe(false);assert.equal(await active(),'today');
   await page.locator('.gl[data-v="byz"]').tap();
-  await swipe();assert.equal(await active(),'pray');
+  await page.evaluate(()=>{window.swipeTrace=[];for(const type of ['touchstart','touchmove','touchend','touchcancel'])document.addEventListener(type,e=>swipeTrace.push({type,selection:getSelection()?.toString(),scroll:scrollY,target:e.target.outerHTML?.slice(0,120),points:[...e.changedTouches].map(t=>[t.clientX,t.clientY])}),{capture:true,passive:true});});
+  await swipe();
+  if(await active()!=='pray')console.error('Post-tap swipe trace:',await page.evaluate(()=>({events:swipeTrace,header:document.querySelector('#hdr').getBoundingClientRect().toJSON(),app:document.querySelector('#app').getBoundingClientRect().toJSON()})));
+  assert.equal(await active(),'pray');
   assert.equal(await page.locator('[data-act="rite"].on').getAttribute('data-v'),'byz','card taps still select a tradition');
   await swipe(false);assert.equal(await active(),'today');
   // A natural swipe can start at a slight angle, then flatten out.
