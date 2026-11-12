@@ -31,7 +31,9 @@ module.exports=async(browser,base)=>{
   assert.equal(await page.evaluate(()=>document.activeElement.id),'app','content receives focus');
   let box=await page.locator('#app').boundingBox(),y=box.y+25;
   await drag(220,y,-25,0);assert.equal(await active(),'today','small drags do not navigate');
-  await drag(12,y,190,0);assert.equal(await active(),'today','browser edge gestures stay available');
+  await drag(12,y,190,0);assert.equal(await active(),'today','browser back edge stays available');
+  await drag(378,y,-190,0);assert.equal(await active(),'pray','left swipe can start near the right edge');
+  await swipe(false);assert.equal(await active(),'today');
   await page.locator('#nav [data-tab="justice"]').click();
   await drag(200,540,4,-230);
   assert.equal(await active(),'justice','vertical scroll does not change tabs');
@@ -39,7 +41,21 @@ module.exports=async(browser,base)=>{
   await page.locator('#nav [data-tab="today"]').click();
   box=await page.locator('.gl[role="button"]').first().boundingBox();
   await drag(280,box.y+box.height/2,-170,0);
-  assert.equal(await active(),'today','interactive cards retain their gestures');
+  assert.equal(await active(),'pray','left swipe over a tappable card changes pages');
+  await swipe(false);assert.equal(await active(),'today');
+  await page.locator('.gl[data-v="byz"]').tap();
+  await swipe();assert.equal(await active(),'pray');
+  assert.equal(await page.locator('[data-act="rite"].on').getAttribute('data-v'),'byz','card taps still select a tradition');
+  await swipe(false);assert.equal(await active(),'today');
+  // A natural swipe can start at a slight angle, then flatten out.
+  box=await page.locator('#app').boundingBox();y=box.y+25;
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:300,y,id:1}]});
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:284,y:y+12,id:1}]});
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:250,y:y+16,id:1}]});
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:130,y:y+20,id:1}]});
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+  assert.equal(await active(),'pray','small initial vertical drift does not cancel a left swipe');
+  await swipe(false);assert.equal(await active(),'today');
   // Exercise cancellation, pinch and selection without browser default actions
   // changing the selection or touch target before the listener sees them.
   const ignored=await page.evaluate(()=>{
@@ -57,6 +73,6 @@ module.exports=async(browser,base)=>{
   await swipe();assert.equal(await active(),'pray');
   await page.reload();assert.equal(await active(),'pray','swiped tab persists on refresh');
   await page.locator('#nav [data-tab="calendar"]').click();assert.equal(await active(),'calendar','tap navigation still works');
-  console.log('Swipes: native touch in both directions, boundaries, scroll, controls, selection, cancellation, pinch, dialogs and persistence passed.');
+  console.log('Swipes: native touch in both directions, boundaries, right-edge/card starts, angled gestures, scroll, taps, selection, cancellation, pinch, dialogs and persistence passed.');
  }finally{await context.close();}
 };

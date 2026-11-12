@@ -1415,7 +1415,7 @@
     let gesture = null;
     const selecting = () => !!window.getSelection()?.toString();
     const blocked = target => {
-      if (target.closest('a,button,input,select,textarea,label,summary,audio,video,iframe,canvas,[role="button"],[contenteditable]:not([contenteditable="false"]),[data-no-swipe]')) return true;
+      if (target.closest('input,select,textarea,label,audio,video,iframe,canvas,[contenteditable]:not([contenteditable="false"]),[data-no-swipe]')) return true;
       for (let el = target; el && el !== surface; el = el.parentElement) {
         const style = getComputedStyle(el);
         if ((el.scrollWidth > el.clientWidth + 2 && /auto|scroll/.test(style.overflowX)) ||
@@ -1427,26 +1427,26 @@
       gesture = null;
       if (e.touches.length !== 1 || document.querySelector('dialog[open]') || selecting() || blocked(e.target)) return;
       const t = e.touches[0];
-      if (t.clientX < 24 || t.clientX > innerWidth - 24) return; // Leave browser edge gestures alone.
+      if (t.clientX < 24) return; // Reserve the browser's back edge; allow left swipes from the right edge.
       gesture = {id:t.identifier,x:t.clientX,y:t.clientY,time:performance.now(),tab:st.tab,horizontal:false};
     }, {passive:true});
     surface.addEventListener('touchmove', e => {
       if (!gesture) return;
       const t = [...e.touches].find(t => t.identifier === gesture.id);
-      if (e.touches.length !== 1 || !t || selecting() || performance.now() - gesture.time > 800) { gesture = null; return; }
+      if (e.touches.length !== 1 || !t || selecting() || performance.now() - gesture.time > 1000) { gesture = null; return; }
       const dx = Math.abs(t.clientX - gesture.x), dy = Math.abs(t.clientY - gesture.y);
-      if (!gesture.horizontal && Math.max(dx,dy) > 12) {
-        if (dx < dy * 1.5) { gesture = null; return; }
-        gesture.horizontal = true;
+      if (!gesture.horizontal) {
+        if (dy > 20 && dy > dx * 1.3) { gesture = null; return; }
+        if (dx >= 16 && dx >= dy * 1.15) gesture.horizontal = true;
       }
       if (gesture.horizontal && e.cancelable) e.preventDefault();
     }, {passive:false});
     surface.addEventListener('touchend', e => {
       const start = gesture; gesture = null;
-      if (!start || e.touches.length || start.tab !== st.tab || selecting() || document.querySelector('dialog[open]') || performance.now() - start.time > 800) return;
+      if (!start || e.touches.length || start.tab !== st.tab || selecting() || document.querySelector('dialog[open]') || performance.now() - start.time > 1000) return;
       const t = [...e.changedTouches].find(t => t.identifier === start.id); if (!t) return;
       const dx = t.clientX - start.x, dy = t.clientY - start.y;
-      if (Math.abs(dx) < Math.max(60,Math.min(90,innerWidth * .18)) || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+      if (Math.abs(dx) < Math.max(56,Math.min(80,innerWidth * .16)) || Math.abs(dx) < Math.abs(dy) * 1.25) return;
       const tabs = [...document.querySelectorAll('#nav [data-tab]')].map(b => b.dataset.tab);
       const i = tabs.indexOf(st.tab), next = i + (dx < 0 ? 1 : -1);
       if (i < 0 || next < 0 || next >= tabs.length) return;
@@ -1505,7 +1505,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v210';
+  const APP_BUILD = 'ora-v211';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
