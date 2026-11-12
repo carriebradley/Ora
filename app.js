@@ -813,14 +813,23 @@
     if (!best || bestGap > 3) return '';
     const when = bestGap === 0 ? '' : `${L.MN[best[0] - 1]} ${best[1]} · `;
     const yr = best[2] < 300 ? `AD ${best[2]}` : String(best[2]);
-    return `<section class="card"><div class="lab"><span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span><span style="letter-spacing:.04em">${esc(when)}${esc(yr)}</span></div><p style="margin:8px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
+    return `<section class="card"><div class="lab">${todayAccent("history")}<span class="grow">This day in Church history${bestGap ? ' (nearby)' : ''}</span><span style="letter-spacing:.04em">${esc(when)}${esc(yr)}</span></div><p style="margin:8px 0 0;font-family:var(--serif);font-size:1.08rem;line-height:1.5">${esc(best[3])}</p><p class="muted" style="font-size:.78rem;margin:6px 0 0">Early dates are traditional and some sources differ.</p></section>`;
+  }
+  // Small original Catholic-inspired line icons; decorative, with labels retained.
+  function todayAccent(kind) {
+    const shapes = {
+      saint: '<circle cx="12" cy="6.5" r="4.5" stroke="#c9a227"/><circle cx="12" cy="11" r="2.7"/><path d="M6 20c.5-3.5 2.5-5 6-5s5.5 1.5 6 5"/>',
+      art: '<rect x="3" y="4" width="18" height="16" rx="1.5" stroke="#c9a227"/><rect x="5.5" y="6.5" width="13" height="11" stroke="#7393a5"/><circle cx="9" cy="10" r="1.5" fill="#c9a227" stroke="none"/><path d="m6 16 4-4 3 2 2-3 3 5" stroke="#7393a5"/>',
+      history: '<path d="M3 21h18M5 21V11l7-5 7 5v10M9 21v-6h6v6M12 6V2M9.5 4h5" stroke="#c9a227"/><path d="M7 12h2m6 0h2" stroke="#c9a227"/>'
+    };
+    return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle;flex:none;margin-right:8px">'+shapes[kind]+'</svg>';
   }
   function viewToday() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const q = quoteFor(v, S.rite), a = artFor(v, S.rite);
-    const saints = `<section class="card"><div class="lab"><span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
+    const saints = `<section class="card"><div class="lab">${todayAccent("saint")}<span class="grow">From the saints</span></div><div class="quote">“${esc(q.t)}”<small>${esc(q.s)} · ${esc(q.w)}</small></div>
       <div class="row">${speakBtn(`${q.t} — ${q.s}, ${q.w}`)}<button class="btn sm" data-act="qnext">Another</button></div></section>`;
-    return glanceHTML(v) + saints + `<section class="card"><div class="lab"><span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
+    return glanceHTML(v) + saints + `<section class="card"><div class="lab">${todayAccent("art")}<span class="grow">Sacred art</span></div>${artHTML(a)}</section>` + histCard(v.iso) + popeCard(v.iso);
   }
 
 
