@@ -395,11 +395,11 @@
     const big = sa && (k === 'saint' || /^(S|F|FL)$/.test(r.kind || ''));
     const first = big && sa.r ? sa : sea, second = sa || sea;
     const cite = (lab, val) => `<div style="margin:8px 0 2px"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${lab}</div><div>${val}</div></div>`;
-    const textDetails = entry => entry && entry.t ? `<details class="oortx" style="margin:2px 0 8px"><summary class="muted" style="font-size:.82rem">Read it here</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
+    const textDetails = entry => entry && entry.t ? `<details class="oortx" open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">Second reading text</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
     let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(r.title)}</p>`;
     if (first && first.r) {
       h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
-      h += `<details style="margin:2px 0 8px"><summary class="muted" style="font-size:.82rem">Read it here</summary><div class="asv" data-tr="dra" data-ref="${esc(first.q)}" style="font-family:var(--serif);font-size:1.02rem;line-height:1.55"></div></details>`;
+      h += `<details open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">First reading text</summary><div class="asv" data-tr="dra" data-ref="${esc(first.q)}" style="font-family:var(--serif);font-size:1.02rem;line-height:1.55"></div></details>`;
     }
     if (second && second.a) {
       h += cite('Second reading', `<span style="font-family:var(--serif);font-size:1.02rem">${esc(second.a)}</span> <span class="muted">· <i>${esc(second.w)}</i></span>`);
@@ -1229,7 +1229,7 @@
     loadOorText().then(d => {
       const x = d[slot.dataset.k]; slot.dataset.done = '1';
       if (!x) { slot.innerHTML = '<p class="muted" style="font-size:.8rem">Text not found.</p>'; return; }
-      slot.innerHTML = x.p.map(p => `<p style="font-family:var(--serif);font-size:1.02rem;line-height:1.55;margin:.5em 0">${esc(p).replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
+      slot.innerHTML = x.p.map(p => `<p style="font-family:var(--serif);font-size:1.1rem;line-height:1.7;margin:.65em 0">${esc(p).replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
     }).catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">The text could not be loaded. Ora needs to be online the first time you open it.</p>'; });
   }, true);
   /* ---------- Sarum Matins: the texts (matins.json) are loaded the first time Matins is opened ---------- */
@@ -1244,7 +1244,7 @@
     loadMatins().then(() => { slot.dataset.done = '1'; slot.innerHTML = Hours.sarumMatins(L, P(slot.dataset.d), window.Sarum); hydrateAsv(); })
       .catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">Matins could not be loaded. Ora needs to be online the first time you open Matins; please try again when you have a connection.</p>'; });
   }, true);
-  new MutationObserver(() => { hydrateAsv(); hydrateDo(); }).observe(document.getElementById('app'), { childList: true, subtree: true });
+  new MutationObserver(() => { hydrateAsv(); hydrateDo(); document.querySelectorAll('.office-readings-text details.oortx[open]:not([data-requested])').forEach(el => { el.dataset.requested='1'; el.dispatchEvent(new Event('toggle', {bubbles:true})); }); }).observe(document.getElementById('app'), { childList: true, subtree: true });
 
   function renderHeader() {
     $('#hdr').innerHTML = `<button class="ib" data-act="prev" aria-label="Previous day">‹</button><button class="date" data-act="datepick" style="flex:1;text-align:center"><b>${esc(fmtShort(st.date))}</b><span class="muted" style="font-size:.74rem">${st.date === todayISO() ? 'Today' : 'Tap to choose date'}</span></button><input type="date" id="dp" aria-label="Choose date" min="1000-01-01" value="${st.date}"><button class="ib" data-act="next" aria-label="Next day">›</button>`;
