@@ -1026,8 +1026,17 @@
   }
 
   const QS = 'font-family:var(--serif);font-size:1.05rem;line-height:1.55;margin:.3em 0';
+  function justiceIcon(kind) {
+    const paths = {
+      scales:'<path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7h6L5 7zm14 0-3 7h6l-3-7z"/>',
+      leaf:'<path d="M20 4C10 4 4 8 4 15c0 3 2 5 5 5 7 0 11-6 11-16zM5 19c3-5 7-8 12-10"/>',
+      book:'<path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1zM12 6v14"/>',
+      heart:'<path d="M12 20s-9-5.7-9-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.3-9 11-9 11z"/>'
+    };
+    return '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:var(--gold)">'+(paths[kind]||paths.book)+'</svg>';
+  }
   function justiceCard(j) {
-    return `<section class="card"><div class="lab"><span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
+    return `<section class="card"><div class="lab">${justiceIcon(j.tag === "Creation" ? "leaf" : "scales")}<span class="grow">${esc(j.tag === "Creation" ? "Care for creation" : j.tag)}</span></div><p style="${QS}">“${esc(j.text)}”</p><p class="muted" style="margin:.2em 0">${esc(j.who)}${j.note ? ' — ' + esc(j.note) : ''}${j.url ? ` · <a target="_blank" rel="noopener" href="${esc(j.url)}">full text</a>` : ''}</p></section>`;
   }
   function jRow(text, who, extra, url) {
     return `<div style="padding:10px 0;border-top:1px solid var(--line)"><p style="${QS}">“${esc(text)}”</p><p class="muted" style="margin:.2em 0;font-size:.85rem">${esc(who)}${url ? ` · <a target="_blank" rel="noopener" href="${esc(url)}">source</a>` : ''}</p>${extra ? `<p class="muted" style="margin:.2em 0;font-size:.76rem">${esc(extra)}</p>` : ''}</div>`;
@@ -1048,9 +1057,11 @@
     const d = P(st.date), n = Math.floor(d.getTime() / 864e5), f = J[((n % J.length) + J.length) % J.length];
     const items = (feed && feed._justice && feed._justice.items) || [];
     const R = window.JUSTICE_RADICAL || [], T = window.JUSTICE_TEACH || [], S = window.JUSTICE_SAINTS || [];
-    let h = '';
+    let h = `<div class="justice-intro">${justiceIcon("scales")}<div><strong>FAITH IN ACTION</strong><p>Catholic teaching on human dignity, solidarity, and care for creation.</p></div></div>`;
     // Today: one quotation and one short piece, so the material lasts across many days
-    h += justiceCard(f);
+    h += `<div class="justice-daily">${justiceCard(f)}</div>`;
+    const ecology = J.filter(j => j.tag === "Creation");
+    if (ecology.length) { const e = ecology[((n % ecology.length) + ecology.length) % ecology.length]; h += `<section class="card justice-ecology"><div class="lab">${justiceIcon("leaf")}<span class="grow">Care for creation · Integral ecology</span></div><p style="${QS}">“${esc(e.text)}”</p><p class="muted" style="font-size:.85rem">${esc(e.who)}${e.note ? " · "+esc(e.note) : ""}${e.url ? ` · <a target="_blank" rel="noopener" href="${esc(e.url)}">source</a>` : ""}</p></section>`; }
     const tch = []; T.forEach(t => { const ps = t.h.split(/<\/p>\s*/).map(x => x.trim()).filter(Boolean).map(x => x + '</p>'); ps.forEach((p, k) => tch.push({ t: t.t, p, k: k + 1, of: ps.length })); });
     const rch = []; items.forEach(it => { let cur = [], w = 0; const flush = () => { if (cur.length) rch.push({ it, paras: cur }); cur = []; w = 0; }; it.paras.forEach(p => { const pw = p.split(/\s+/).length; if (w && w + pw > 230) flush(); cur.push(p); w += pw; }); flush(); });
     const kinds = [rch.length ? 'r' : 't', 't', 'v'].filter(k => k !== 'v' || R.length), kind = kinds[((n % kinds.length) + kinds.length) % kinds.length], m3 = Math.floor(n / kinds.length);
@@ -1077,7 +1088,7 @@
       const label = { 'Church Father': 'The Fathers', 'Doctor of the Church': 'Doctors of the Church', Saint: 'Saints', Council: 'Councils', Pope: 'Popes', Encyclical: 'Encyclicals', Catechism: 'The Catechism', Scripture: 'Scripture', Creation: 'Care for creation' };
       body = Object.keys(groups).sort((a, b) => (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99).map(t => `<details style="border-top:1px solid var(--line);padding:10px 0"><summary style="font-weight:600;cursor:pointer">${esc(label[t] || t)} <span class="muted" style="font-weight:400">· ${groups[t].length}</span></summary>${groups[t].map(j => jRow(j.text, j.who + (j.note ? ' — ' + j.note : ''), '', j.url)).join('')}</details>`).join('');
     } else body = `<p class="muted" style="font-size:.82rem">Catholic Workers, liberation theologians, Catholic socialists, labour leaders and peacemakers, in their own words. Some of their views were debated in the Church in their time.</p>` + R.map(x => jRow(x.text, x.who + ' · ' + x.src, x.bio, x.url)).join('');
-    h += `<details class="card" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
+    h += `<details class="card justice-library" ${st.jtab ? 'open' : ''}><summary style="font-weight:600;cursor:pointer">Library <span class="muted" style="font-weight:400;font-size:.85rem">· everything, to browse at your own pace</span></summary><div class="seg" style="margin-top:10px">${tabs.map(([k, t]) => `<button data-act="jtab" data-v="${k}" class="${jt === k ? 'on' : ''}">${t}</button>`).join('')}</div>${body}</details>`;
     return curly(h);
   }
 
