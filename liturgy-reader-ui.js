@@ -94,7 +94,6 @@
       const clean=lines.filter(line=>{
         if(/^\d{1,3}$/.test(line))return false;
         if(/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(line))return false;
-        if(/^(?:The bishop|The deacon|The protodeacon|The priest|The clergy|The servers|The concelebrants|The reader|The faithful|During this|At this point|After this|Meanwhile|Then the|When the|The following|The holy doors|The royal doors|On Sundays|On weekdays|Major Feast Days:|Sundays:|Weekdays:|See propers|It is customary|A reading from \.\.\.)\b/i.test(line))return false;
         return true;
       });
       const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
@@ -126,7 +125,6 @@
       }
       const clean=lines.filter(line=>{
         if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
-        if(/^(?:the priest|the deacon|the celebrant|the clergy|the bishop|the people|the choir|at this point|at the conclusion|while the|during the|then the|after the|before the|if the|when the)\s+(?:stands|sits|bows|turns|takes|makes|offers|sings|chants|says|prays|recites|enters|exits|proceeds|raises|continues|responds|places|opens|closes|is |are )/i.test(line))return false;
         return true;
       });
       if(clean.length)sections.push({heading:null,lines:clean});
@@ -142,9 +140,34 @@
     const name=kind==='priest'?'Priest':kind==='deacon'?'Deacon':kind==='all'?'All':role[0]+role.slice(1).toLowerCase();
     return {name,kind,words:m[2].trim()};
   }
+  // Distinguish unspoken rubrics from spoken liturgy. Uncertain lines remain
+  // visible as prayers rather than silently discarding sacred text.
+  function liturgicalInstruction(text){
+    const s=String(text||'').trim();
+    if(!s)return false;
+    if(/^(?:\(|\[)[^)\]]+(?:\)|\])$/.test(s))return true;
+    if(/^(?:rubric|instructions?|note):/i.test(s))return true;
+    if(/^(?:the |a |an )?(?:priest|deacon|protodeacon|bishop|celebrant|server|reader|cantor|choir|people|faithful|congregation|clergy|concelebrants|subdeacon|acolyte)\s+(?:then\s+|now\s+)?(?:stands?|sits?|kneels?|bows?|turns?|takes?|makes?|offers?|sings?|chants?|says?|prays?|recites?|enters?|exits?|proceeds?|raises?|continues?|responds?|places?|opens?|closes?|incenses?|censes?|blesses?|kisses?|holds?|lifts?|moves?|faces?|approaches?|departs?|receives?|distributes?|reads?|begins?|repeats?|goes?|comes?|removes?|puts?|washes?|covers?|uncovers?|pours?|carries?|gives?|hands?|returns?|walks?|crosses?|makes the sign)\b/i.test(s))return true;
+    if(/^(?:during|after|before|while|when|then|meanwhile|at this point|at the conclusion|as the|following the|if the|once the)\s+(?:the |this |these |a |an )?(?:priest|deacon|bishop|celebrant|litany|hymn|prayer|entrance|gospel|people|choir|faithful|clergy|singing|chanting|reading|communion|gifts|service|troparion|antiphon|procession|holy doors|royal doors)\b/i.test(s))return true;
+    if(/^(?:on Sundays|on weekdays|on feast days|on great feasts|for the|if there is|according to|instead of|the royal doors|the holy doors|the iconostasis|the following prayer is|this prayer is)\b/i.test(s))return true;
+    return false;
+  }
   function renderEdmontonPrayerText(target,sections){
     target.replaceChildren();
     target.classList.add('reader-byzantine-prayers');
+    target.classList.remove('byz-show-rubrics');
+    const toolbar=document.createElement('div');
+    toolbar.className='byz-reader-preferences';
+    const toggle=document.createElement('button');
+    toggle.type='button';toggle.className='byz-rubrics-toggle';
+    toggle.textContent='Show liturgical instructions';
+    toggle.setAttribute('aria-pressed','false');
+    toggle.addEventListener('click',()=>{
+      const visible=target.classList.toggle('byz-show-rubrics');
+      toggle.setAttribute('aria-pressed',String(visible));
+      toggle.textContent=visible?'Hide liturgical instructions':'Show liturgical instructions';
+    });
+    toolbar.append(toggle);target.append(toolbar);
     const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
     let lastLine=null,lastRole=null;
     for(const section of sections){
@@ -156,6 +179,14 @@
           const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=text;target.append(h);lastLine=null;lastRole=null;continue;
         }
         const role=roleLine(text);
+        if(!role && liturgicalInstruction(text)){
+          const rubric=document.createElement('p');
+          rubric.className='byz-rubric';
+          const flag=document.createElement('span');flag.className='byz-rubric-label';flag.textContent='Instruction';
+          const words=document.createElement('span');words.textContent=text;
+          rubric.append(flag,words);target.append(rubric);
+          lastLine=null;lastRole=null;continue;
+        }
         const p=document.createElement('p');
         p.className='byz-prayer-line';
         if(role){

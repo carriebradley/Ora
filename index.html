@@ -251,6 +251,13 @@ nav button.on b{color:inherit}
 .simple-liturgical-text .reader-byzantine-prayers .byz-prayer-words{display:block;min-width:0}
 .simple-liturgical-text .reader-byzantine-prayers .byz-role-all .byz-prayer-words{font-weight:600}
 @media(max-width:420px){.simple-liturgical-text .reader-byzantine-prayers{font-size:calc(1.07rem * var(--reading-scale,1))}.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line[class*="byz-role-"]{padding-left:10px}}
+/* Liturgical rubrics remain on-device, visually separate and hidden by default. */
+.simple-liturgical-text .reader-byzantine-prayers .byz-reader-preferences{display:flex;justify-content:flex-end;margin:0 0 15px}
+.simple-liturgical-text .reader-byzantine-prayers .byz-rubrics-toggle{appearance:none;background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-family:var(--sans,system-ui,sans-serif);font-size:.78rem;line-height:1.3;cursor:pointer}
+.simple-liturgical-text .reader-byzantine-prayers .byz-rubrics-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.simple-liturgical-text .reader-byzantine-prayers .byz-rubric{display:none;border-left:2px solid var(--line);padding:7px 0 7px 11px;margin:12px 0!important;color:var(--muted);font-family:var(--sans,system-ui,sans-serif);font-size:.8em;line-height:1.55;font-style:italic}
+.simple-liturgical-text .reader-byzantine-prayers.byz-show-rubrics .byz-rubric{display:block}
+.simple-liturgical-text .reader-byzantine-prayers .byz-rubric-label{display:block;font-size:.72em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-style:normal;margin-bottom:3px}
 /* Each Social Teaching category has its own matching border and icon. */
 .justice-daily>.card{--justice-accent:#b88b25}.justice-ecology{--justice-accent:#648c69}.justice-economic{--justice-accent:#6191b4}.justice-voice{--justice-accent:#b57a91}.justice-charity{--justice-accent:#559b9a}.justice-teaching{--justice-accent:#bd8057}.justice-reading{--justice-accent:#9c82ba}.justice-library{--justice-accent:#788494}
 .justice-daily>.card,.justice-ecology,.justice-economic,.justice-voice,.justice-charity,.justice-teaching,.justice-reading,.justice-library{border-left:3px solid var(--justice-accent);border-right:3px solid var(--justice-accent)}
