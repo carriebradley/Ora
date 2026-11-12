@@ -272,6 +272,12 @@ nav button.on b{color:inherit}
 .divine-office-card .prayer-rite-title{margin:0 0 11px}
 .calendar-selected-heading{margin:20px 4px 13px}
 .card>h2:not(.simple-liturgy-title){font-size:var(--ora-section-heading-size);line-height:1.38}
+
+/* Separate Byzantine commemorations without changing the source text or feast metadata. */
+.glance .byz-commemorations{display:flex;flex-direction:column;gap:7px}
+.glance .byz-commemoration{position:relative}
+.glance .byz-commemoration.subsequent{padding-left:17px}
+.glance .byz-commemoration.subsequent::before{content:"";position:absolute;left:3px;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--gold)}
 </style>
 </head>
 <body>

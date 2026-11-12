@@ -514,17 +514,26 @@
     }
     return r.title;
   }
+  function byzantineCommemorationsHTML(title) {
+    const entries = String(title || '').split(/;\s+|\.\s+(?=(?:Our|The Holy|Blessed|Saint|Saints|St\.)\b)/i)
+      .map(item => item.trim().replace(/[;.]+$/, '').trim()).filter(Boolean);
+    if (entries.length < 2) return esc(title || '');
+    return '<div class="byz-commemorations">' + entries.map((item, index) =>
+      '<div class="byz-commemoration' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
+    ).join('') + '</div>';
+  }
   function glanceHTML(v) {
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
       const detail = k === 'byz' ? r.title : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
+      const detailHTML = k === 'byz' ? byzantineCommemorationsHTML(detail) : esc(detail);
       const seasonLine = glanceSeason(r, k, v.iso);
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
       const badgeColor = lit === 'w' ? 'var(--lit-white)' : col(lit);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${seasonLine || detail || cycles ? `<div class="gd">${esc(detail)}${seasonLine ? `<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>` : ''}${cycles}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${seasonLine || detail || cycles ? `<div class="gd">${detailHTML}${seasonLine ? `<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>` : ''}${cycles}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
