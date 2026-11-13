@@ -17,6 +17,11 @@
         "We praise your glorious name, O Lord, our God.",
         "Adore the Lord in his holy court."
       ],
+      "psalmodyRefs": [
+        "Psalm 5",
+        "Canticle: 1 Chronicles 29:10-13",
+        "Psalm 29"
+      ],
       "psalmPrayers": {
         "0": "Lord, all justice and all goodness come from you; you hate evil and abhor lies. Lead us, your servants, in the path of your justice, so that all who hope in you may rejoice with the Church and in Christ.",
         "2": "You live for ever, Lord and King. All things of the earth justly sing your glory and honor. Strengthen your people against evil that we may rejoice in your peace and trust in your eternal promise."
@@ -34,6 +39,11 @@
         "The Lord looks tenderly on those who are poor.",
         "Blessed are the pure of heart, for they shall see God.",
         "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 11",
+        "Psalm 15",
+        "Canticle — Ephesians 1:3-10"
       ],
       "psalmPrayers": {
         "0": "Lord God, you search the hearts of all, both the good and the wicked. May those who are in danger for love of you, find security in you now, and, in the day of judgment, may they rejoice in seeing you face to face.",
@@ -53,6 +63,11 @@
         "Praise the eternal King in all your deeds.",
         "The loyal heart must praise the Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 24",
+        "Canticle – Tobit 13:1-8",
+        "Psalm 33"
+      ],
       "psalmPrayers": {
         "0": "King of glory, Lord of power and might, cleanse our hearts from all sin, preserve the innocence of our hands, and keep our minds from vanity, so that we may deserve your blessing in your holy place.",
         "2": "Nourish your people, Lord, for we hunger for your word. Rescue us from the death of sin and fill us with your mercy, that we may share your presence and the joys of all the saints."
@@ -70,6 +85,11 @@
         "God has crowned his Christ with victory.",
         "We celebrate your mighty works with songs of praise, O Lord.",
         "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 20",
+        "Psalm 21",
+        "Canticle — Revelation 4:11; 5:9, 10, 12"
       ],
       "psalmPrayers": {
         "0": "Lord, you accepted the perfect sacrifice of your Son upon the cross. Hear us during times of trouble and protect us by the power of his name, that we who share his struggle on earth may merit a share in his victory.",
@@ -89,6 +109,11 @@
         "O God, you are great and glorious; we marvel at your power.",
         "Exult in God’s presence with hymns of praise."
       ],
+      "psalmodyRefs": [
+        "Psalm 36",
+        "Canticle — Judith 16:2-3a, 13-15",
+        "Psalm 47"
+      ],
       "psalmPrayers": {
         "0": "Lord, you are the source of unfailing light. Give us true knowledge of your mercy so that we may renounce our pride and be filled with the riches of your house.",
         "2": "God, King of all peoples and all ages, it is your victory we celebrate as we sing with all the skill at our command. Help us always to overcome evil by good, that we may rejoice in your triumph for ever."
@@ -107,6 +132,11 @@
         "I long to look on you, O Lord; do not turn your face from me.",
         "He is the first-born of all creation; in every way the primacy is his."
       ],
+      "psalmodyRefs": [
+        "Psalm 27",
+        "Psalm 27",
+        "Canticle — Colossians 1:12-20"
+      ],
       "psalmPrayers": {
         "1": "Father, you protect and strengthen those who hope in you; you heard the cry of your Son and kept him safe in your tent in the day of evil. Grant that your servants who seek your face in times of trouble may see your goodness in the land of the living."
       },
@@ -123,6 +153,11 @@
         "Awake, lyre and harp, with praise let us awake the dawn.",
         "My people, says the Lord, will be filled with my blessings.",
         "The Lord is great and worthy to be praised in the city of our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 57",
+        "Canticle – Jeremiah 31:10-14",
+        "Psalm 48"
       ],
       "psalmPrayers": {
         "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and we will praise you among the peoples and proclaim you to the nations, happy to be known as companions of your Son.",
@@ -142,6 +177,11 @@
         "The one who is sinless in the eyes of God is blessed indeed.",
         "The Father has given Christ all power, honor and kingship; all people will obey him."
       ],
+      "psalmodyRefs": [
+        "Psalm 30",
+        "Psalm 32",
+        "Canticle — Revelation 11:17-18; 12:10b-12a"
+      ],
       "psalmPrayers": {
         "0": "God our Father, glorious in giving life, and even more glorious in restoring it, when his last night on earth came, your Son shed tears of blood, but dawn brought incomparable gladness. Do not turn away from us, or we shall fall back into dust, but rather turn our mourning into joy by raising us up with Christ.",
         "1": "You desired, Lord, to keep from us your indignation and so did not spare Jesus Christ, who was wounded for our sins. We are your prodigal children, but confessing our sins we come back to you. Embrace us that we may rejoice in your mercy together with Christ your beloved Son."
@@ -159,6 +199,11 @@
         "Lord, you will accept the true sacrifice offered on your altar.",
         "All the descendants of Israel will glory in the Lord’s gift of victory.",
         "Let us go into God’s presence singing for joy."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle — Isaiah 45:15-25",
+        "Psalm 100"
       ],
       "psalmPrayers": {
         "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
@@ -178,6 +223,11 @@
         "The mighty Lord is with us; the God of Jacob is our stronghold.",
         "All nations will come and worship before you, O Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 41",
+        "Psalm 46",
+        "Canticle – Revelation 15:3-4"
+      ],
       "psalmPrayers": {
         "0": "Lord Jesus, healer of soul and body, you said: Blessed are the merciful, they will obtain mercy. Teach us to come to the aid of the needy in a spirit of brotherly love, that we in turn may be received and strengthened by you.",
         "1": "All-powerful Father, the refuge and strength of your people, you protect in adversity and defend in prosperity those who put their trust in you. May they persevere in seeking your will and find their way to you through obedience."
@@ -195,6 +245,11 @@
         "Dawn finds me ready to welcome you, my God.",
         "The Lord is my strength, and I shall sing his praise, for he has become my Savior.",
         "O praise the Lord, all you nations."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Exodus 15:1-4a, 8-13, 17-18",
+        "Psalm 117"
       ],
       "psalmPrayers": {
         "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
@@ -214,6 +269,11 @@
         "Lord, show us the radiance of your mercy.",
         "The vaults of heaven ring with your praise, O Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 42",
+        "Canticle – Sirach 36:1-5, 10-13",
+        "Psalm 19"
+      ],
       "psalmPrayers": {
         "0": "Father in heaven, when your strength takes possession of us we no longer say: Why are you cast down, my soul? So now that the surging waves of your indignation have passed over us, let us feel the healing calm of your forgiveness. Inspire us to yearn for you always, like the deer for running streams, until you satisfy every longing in heaven.",
         "2": "To enlighten the world, Father, you sent to us your Word as the sun of truth and justice shining upon mankind. Illumine our eyes that we may discern your glory in the many works of your hand."
@@ -232,6 +292,11 @@
         "The Bridegroom is here; go out and welcome him.",
         "God planned in the fullness of time to restore all things in Christ."
       ],
+      "psalmodyRefs": [
+        "Psalm 45",
+        "Psalm 45",
+        "Canticle – Ephesians 1:3-10"
+      ],
       "psalmPrayers": {
         "1": "When you took on flesh, Lord Jesus, you made a marriage of mankind with God. Help us to be faithful to your word and endure our exile bravely, until we are called to the heavenly marriage feast, to which the Virgin Mary, exemplar of your Church, has preceded us."
       },
@@ -248,6 +313,11 @@
         "Lord, send forth your light and your truth.",
         "Lord, keep us safe all the days of our life.",
         "To you, O God, our praise is due in Zion."
+      ],
+      "psalmodyRefs": [
+        "Psalm 43",
+        "Canticle – Isaiah 38:10-14, 17-20",
+        "Psalm 65"
       ],
       "psalmPrayers": {
         "0": "Almighty Father, source of everlasting light, send forth your truth into our hearts and pour over us the brightness of your light.",
@@ -267,6 +337,11 @@
         "Store up for yourselves treasure in heaven, says the Lord.",
         "Adoration and glory belong by right to the Lamb who was slain."
       ],
+      "psalmodyRefs": [
+        "Psalm 49",
+        "Psalm 49",
+        "Canticle — Revelation 4:11; 5:9, 10, 12"
+      ],
       "psalmPrayers": {
         "1": "Make our mouths speak your wisdom, Lord Jesus, and help us to remember that you became man and redeemed us from death that we might merit the beauty of your light."
       },
@@ -283,6 +358,11 @@
         "O God, all your ways are holy; what god can compare with our God?",
         "My heart leaps up with joy to the Lord, for he humbles only to exalt us.",
         "The Lord is king, let the earth rejoice."
+      ],
+      "psalmodyRefs": [
+        "Psalm 77",
+        "Canticle – 1 Samuel 2:1-10",
+        "Psalm 97"
       ],
       "psalmPrayers": {
         "0": "Father, you established your ancient covenant by signs and wonders, but more wondrously you confirmed the new one through the sacrifice of your Son. Guide your Church through the pathways of life, that we may be led to the land of promise and celebrate your name with lasting praise.",
@@ -302,6 +382,11 @@
         "May God turn his radiant face toward us and fill us with his blessings.",
         "Through him all things were made; he holds all creation together in himself."
       ],
+      "psalmodyRefs": [
+        "Psalm 62",
+        "Psalm 67",
+        "Canticle – Colossians 1:12-20"
+      ],
       "psalmPrayers": {
         "0": "Lord God, you reward each one according to his works. Hear us as we pour out our hearts to you seeking your grace and secure protection. We look to you for our stable hope in a constantly changing world.",
         "1": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence: and bring forth a harvest of justice."
@@ -319,6 +404,11 @@
         "Stir up your mighty power, Lord; come to our aid.",
         "The Lord has worked marvels for us; make it known to the ends of the world.",
         "Ring out your joy to God our strength."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle — Isaiah 12:1-6",
+        "Psalm 81"
       ],
       "psalmPrayers": {
         "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine, that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
@@ -338,6 +428,11 @@
         "The Lord will save the children of the poor and rescue them from slavery.",
         "Now the victorious reign of our God has begun."
       ],
+      "psalmodyRefs": [
+        "Psalm 72",
+        "Psalm 72",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
       "psalmPrayers": {
         "1": "We call upon your name, Father, and pronounce it blessed above the earth. Give your people the fullness of peace and justice in your kingdom."
       },
@@ -354,6 +449,11 @@
         "A humble, contrite heart, O God, you will not spurn.",
         "Even in your anger, Lord, you will remember compassion.",
         "O praise the Lord, Jerusalem!"
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Habakkuk 3:2-4, 13a, 15-19",
+        "Psalm 147"
       ],
       "psalmPrayers": {
         "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
@@ -373,6 +473,11 @@
         "My help comes from the Lord, who made heaven and earth.",
         "King of all the ages, your ways are perfect and true."
       ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 121",
+        "Canticle – Revelation 15:3-4"
+      ],
       "psalmPrayers": {
         "0": "God of power and mercy, through your Son’s passion and resurrection you have freed us from the bonds of death and the anguish of separation from you. Be ever with us on our pilgrimage; then we shall sing rather than weep. Keep our feet from stumbling, so that we may be able to follow you until we come to eternal rest.",
         "1": "Lord Jesus Christ, you have prepared a quiet place for us in your Father’s eternal home. Watch over our welfare on this perilous journey, shade us from the burning heat of day, and keep our lives free of evil until the end."
@@ -390,6 +495,11 @@
         "As morning breaks we sing of your mercy, Lord, and night will find us proclaiming your fidelity.",
         "Extol the greatness of our God.",
         "How wonderful is your name, O Lord, in all creation."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Deuteronomy 32:1-12",
+        "Psalm 8"
       ],
       "psalmPrayers": {
         "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
@@ -409,6 +519,11 @@
         "Come, let us climb the mountain of the Lord.",
         "Sing to the Lord and bless his name."
       ],
+      "psalmodyRefs": [
+        "Psalm 84",
+        "Canticle — Isaiah 2:2-5",
+        "Psalm 96"
+      ],
       "psalmPrayers": {
         "0": "Bless your people, Lord. You have given us the law that we may walk from strength to strength and raise our minds to you from this valley of tears. May we receive the gifts you have gained for us.",
         "2": "Lord, you have renewed the face of the earth. Your Church throughout the world sings you a new song, announcing your wonders to all. Through a virgin, you have brought forth a new birth in our world; through your miracles, a new power; through your suffering, a new patience; in your resurrection, a new hope, and in your ascension, new majesty."
@@ -426,6 +541,11 @@
         "Our eyes are fixed intently on the Lord, waiting for his merciful help.",
         "Our help is in the name of the Lord who made heaven and earth.",
         "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 123",
+        "Psalm 124",
+        "Canticle — Ephesians 1:3-10"
       ],
       "psalmPrayers": {
         "0": "Father in heaven, we lift our eyes to you and pray: confound the scorn of the proud and graciously show us your mercy.",
@@ -445,6 +565,11 @@
         "My soul has yearned for you in the night, and as morning breaks I watch for your coming.",
         "Lord, let the light of your face shine upon us."
       ],
+      "psalmodyRefs": [
+        "Psalm 85",
+        "Canticle – Isaiah 26:1-4, 7-9, 12",
+        "Psalm 67"
+      ],
       "psalmPrayers": {
         "0": "Show us your mercy, Lord; our misery is known to us. May no evil desires prevail over us, for your glory and love dwell in our hearts.",
         "2": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
@@ -462,6 +587,11 @@
         "The Lord surrounds his people with his strength.",
         "Unless you acquire the heart of a child, you cannot enter the kingdom of God.",
         "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 125",
+        "Psalm 131",
+        "Canticle — Revelation 4:11; 5:9, 10, 12"
       ],
       "psalmPrayers": {
         "0": "Surround your people, Lord, within the safety of your Church, which you preserve on its rock foundation. Do not let us stretch out our hands to evil deeds, nor be destroyed by the insidious snares of the enemy, but bring us to share the lot of the saints in light.",
@@ -481,6 +611,11 @@
         "Blessed is the upright man, who speaks the truth.",
         "Let us celebrate with joy in the presence of our Lord and King."
       ],
+      "psalmodyRefs": [
+        "Psalm 86",
+        "Canticle – Isaiah 33:13-16",
+        "Psalm 98"
+      ],
       "psalmPrayers": {
         "0": "God of mercy and goodness, when Christ called out to you in torment, you heard him and gave him victory over death because of his love for you. We already know the affection you have for us; fill us with a greater love of your name, and we will proclaim you more boldly before men and happily lead them to celebrate your glory.",
         "2": "Lord Jesus, you have revealed your justice to all nations. We stood condemned and you came to be judged in our place. Send your saving power on us and when you come in glory bring your mercy to those for whom you were condemned."
@@ -498,6 +633,11 @@
         "Those who sow in tears will reap in joy.",
         "May the Lord build our house and guard our city.",
         "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 126",
+        "Psalm 127",
+        "Canticle – Colossians 1:12-20"
       ],
       "psalmPrayers": {
         "0": "Lord, you have raised us from the earth; may you let the seeds of justice, which we have sown in tears, grow and increase in your sight. May we reap in joy the harvest we hope for patiently.",
@@ -517,6 +657,11 @@
         "The Lord, the mighty conqueror, will come; he will bring with him the prize of victory.",
         "Give praise to the Lord our God, bow down before his holy mountain."
       ],
+      "psalmodyRefs": [
+        "Psalm 87",
+        "Canticle – Isaiah 40:10-17",
+        "Psalm 99"
+      ],
       "psalmPrayers": {
         "0": "Lord God, your only son wept over ancient Jerusalem, soon to be destroyed for its lack of faith. He established the new Jerusalem firmly upon rock and made it the mother of the faithful. Make us rejoice in your Church and grant that all people may be reborn into the freedom of your Spirit.",
         "2": "God, you are the source of all holiness. Though no one can see you and live, you give life most generously and in an even greater way restore it. Sanctify your priests through your life-giving Word and consecrate your people in his blood until our eyes see your face."
@@ -535,6 +680,11 @@
         "The Lord has chosen Zion as his sanctuary.",
         "The Father has given Christ all power, honor and kingship; all people will obey him."
       ],
+      "psalmodyRefs": [
+        "Psalm 132",
+        "Psalm 132",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
       "psalmPrayers": {
         "1": "Lord Jesus Christ, you chose to suffer and be overwhelmed by death in order to open the gates of death in triumph. Stay with us to help us on our pilgrimage; free us from all evil by the power of your resurrection. In the company of your saints, and constantly remembering your love for us, may we sing of your wonders in our Father’s house."
       },
@@ -551,6 +701,11 @@
         "You alone, I have grieved by my sin; have pity on me, O Lord.",
         "Truly we know our offenses, Lord, for we have sinned against you.",
         "The Lord is God; we are his people, the flock he shepherds."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Jeremiah 14:17-21",
+        "Psalm 100"
       ],
       "psalmPrayers": {
         "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
@@ -570,6 +725,11 @@
         "House of Israel, bless the Lord! Sing psalms to him, for he is merciful.",
         "All nations will come and worship before you, O Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 135",
+        "Psalm 135",
+        "Canticle – Revelation 15:3-4"
+      ],
       "psalmPrayers": {
         "1": "Father, your name and your memory last forever. We stand to pray in your house and praise you with psalms of joy. We ask you in your kindness to have mercy on us in our lowliness."
       },
@@ -586,6 +746,11 @@
         "Lord, you are near to us, and all your ways are true.",
         "Wisdom of God, be with me, always at work in me.",
         "The Lord remains faithful to his promise for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Wisdom 9:1-6, 9-11",
+        "Psalm 117"
       ],
       "psalmPrayers": {
         "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
@@ -605,6 +770,11 @@
         "From the farthest bounds of earth, may God be praised!",
         "You who stand in his sanctuary, praise the name of the Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 90",
+        "Canticle – Isaiah 42:10-16",
+        "Psalm 135"
+      ],
       "psalmPrayers": {
         "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and, happy to be known as companions of your Son, we will praise you among the peoples and proclaim you to the nations.",
         "2": "Where two or three gather in your name, Lord, you promised to be with them and share their fellowship. Look down upon your family gathered here in your name, and graciously pour out your blessing upon us."
@@ -623,6 +793,11 @@
         "Great and wonderful are your deeds, Lord God the Almighty.",
         "God planned in the fullness of time to restore all things in Christ."
       ],
+      "psalmodyRefs": [
+        "Psalm 136",
+        "Psalm 136",
+        "Canticle – Ephesians 1:3-10"
+      ],
       "psalmPrayers": {
         "1": "Almighty God, remember our lowliness and have mercy. Once you gave our fathers a foreign land to inherit. Free us today from sin and give us a share in your inheritance."
       },
@@ -639,6 +814,11 @@
         "I will sing to you, O Lord; I will learn from you the way of perfection.",
         "Lord, do not withhold your compassion from us.",
         "O God, I will sing to you a new song."
+      ],
+      "psalmodyRefs": [
+        "Psalm 101",
+        "Canticle: Daniel 3:26, 27, 29, 34-41",
+        "Psalm 144"
       ],
       "psalmPrayers": {
         "0": "So that your people may walk in innocence, you came to us, Lord Jesus, and told us to be holy as your Father is holy. Help your children to love what is truly perfect, so that we may neither speak what is evil nor do what is wrong. Let us stand in your sight and celebrate with you the Father’s love and justice.",
@@ -658,6 +838,11 @@
         "In the presence of the angels I will sing to you, my God.",
         "Adoration and glory belong by right to the Lamb who was slain."
       ],
+      "psalmodyRefs": [
+        "Psalm 137",
+        "Psalm 138",
+        "Canticle – Revelation 4:11;5-9,10,12"
+      ],
       "psalmPrayers": {
         "0": "Lord, remember your pilgrim Church. We sit weeping at the streams of Babylon. Do not let us be drawn into the current of the passing world, but free us from every evil and raise our thoughts to the heavenly Jerusalem.",
         "1": "Listen to the prayers of your Church, Lord God. In the presence of the angels we praise your name. You keep the proud at a distance and look upon the lowly with favor. Stretch out your hand to us in our suffering. Perfect in us the work of your love and bring us to life."
@@ -675,6 +860,11 @@
         "My heart is ready, O God, my heart is ready.",
         "The Lord has robed me with grace and salvation.",
         "I will praise my God all the days of my life."
+      ],
+      "psalmodyRefs": [
+        "Psalm 108",
+        "Canticle – Isaiah 61:10 – 62:5",
+        "Psalm 146"
       ],
       "psalmPrayers": {
         "0": "Accept the prayers of your servants, Lord, and prepare our hearts to praise your holy name. Come to our aid in time of trouble and make us worthy to sing you songs of thanksgiving.",
@@ -694,6 +884,11 @@
         "I am the Lord: I search the mind and probe the heart; I give to each one as his deeds deserve.",
         "Through him all things were made; he holds all creation together in himself."
       ],
+      "psalmodyRefs": [
+        "Psalm 139",
+        "Psalm 139",
+        "Canticle – Colossians 1:12-20"
+      ],
       "psalmPrayers": {
         "1": "You watch over heaven and earth, Lord Jesus. Your death brought light to the dead; your resurrection gave joy to the saints; your ascension made the angels rejoice. Your power exceeds all power. Lead us to life eternal, and watch over us with your love. May your friends be filled with honour and join you in heaven."
       },
@@ -710,6 +905,11 @@
         "At daybreak, be merciful to me, O Lord.",
         "The Lord will make a river of peace flow through Jerusalem.",
         "Let us joyfully praise the Lord our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
       ],
       "psalmPrayers": {
         "0": "Lord Jesus, early in the morning of your resurrection, you made your love known and brought the first light of dawn to those who dwell in darkness. Your death has opened a path for us. Do not enter into judgment with your servants; let your Holy Spirit guide us together into the land of justice.",
@@ -729,6 +929,11 @@
         "Blessed are the people whose God is the Lord.",
         "Now the victorious reign of our God has begun."
       ],
+      "psalmodyRefs": [
+        "Psalm 144",
+        "Psalm 144",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
       "psalmPrayers": {
         "1": "Lord, God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in this world. Clothe us with the weapons of light and unite us under one banner of love, that we may receive our eternal reward after the battle of earthly life."
       },
@@ -745,6 +950,11 @@
         "Create a clean heart in me, O God; renew in me a steadfast spirit.",
         "Rejoice, Jerusalem, for through you all men will be gathered to the Lord.",
         "Zion, praise your God, who sent his Word to renew the earth."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Tobit 13:8-11, 13-15",
+        "Psalm 147"
       ],
       "psalmPrayers": {
         "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
@@ -764,6 +974,11 @@
         "To you alone, Lord, we look with confidence; you are ever close to those who call upon you.",
         "King of all the ages, your ways are perfect and true."
       ],
+      "psalmodyRefs": [
+        "Psalm 145",
+        "Psalm 145",
+        "Canticle – Revelation 15:3-4"
+      ],
       "psalmPrayers": {
         "1": "Lord, be near to all who call upon you in truth and increase the dedication of those who revere you. Hear their prayers and save them that they may always love you and praise your holy name."
       },
@@ -780,6 +995,11 @@
         "We do well to sing to your name, Most High, and proclaim your mercy at daybreak.",
         "I will create a new heart in you, and breathe into you a new spirit.",
         "On the lips of children and infants you have found perfect praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Ezekiel 36:24-28",
+        "Psalm 8"
       ],
       "psalmPrayers": {
         "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
@@ -799,6 +1019,11 @@
         "From the midst of the flames the three young men cried out with one voice: Blessed be God, alleluia.",
         "Let the people of Zion rejoice in their King, alleluia."
       ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
       "psalmPrayers": {
         "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
         "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
@@ -816,6 +1041,11 @@
         "Like burning incense, Lord, let my prayer rise up to you.",
         "You are my refuge, Lord; you are all that I desire in life.",
         "The Lord Jesus humbled himself, and God exalted him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
       ],
       "psalmPrayers": {
         "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
@@ -835,6 +1065,11 @@
         "The earth is shaken to its depths before the glory of your face.",
         "All power is yours, Lord God, our mighty King, alleluia."
       ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle — See Revelation 19:1-7"
+      ],
       "psalmPrayers": {
         "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
         "1": "Almighty God, ever-living mystery of unity and trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
@@ -852,6 +1087,11 @@
         "Blessed is he who comes in the name of the Lord, alleluia.",
         "Let us sing a hymn of praise to our God, alleluia.",
         "Praise the Lord for his infinite greatness, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
       ],
       "psalmPrayers": {
         "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
@@ -871,6 +1111,11 @@
         "When I see your face, O Lord, I shall know the fullness of joy, alleluia.",
         "Let everything in heaven and on earth bend the knee at the name of Jesus, alleluia."
       ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
       "psalmPrayers": {
         "0": "Let your Word, Father, be a lamp for our feet and a light to our path, so that we may understand what you wish to teach us and follow the path your light marks out for us.",
         "1": "Lord Jesus, uphold those who hope in you and give us your counsel, so that we may know the joy of your resurrection and deserve to be among the saints at your right hand."
@@ -888,6 +1133,11 @@
         "Christ our Lord is a priest for ever, like Melchizedek of old, alleluia.",
         "God dwells in highest heaven; he has power to do all he wills, alleluia.",
         "Praise God, all you who serve him, both great and small, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – See Revelation 19:1-7"
       ],
       "psalmPrayers": {
         "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name and make all nations a holy people for you.",
@@ -907,6 +1157,11 @@
         "To you, Lord, be highest glory and praise for ever, alleluia.",
         "Praise the Lord from the heavens, alleluia."
       ],
+      "psalmodyRefs": [
+        "Psalm 93",
+        "Canticle – Daniel 3:57-88,56",
+        "Psalm 148"
+      ],
       "psalmPrayers": {
         "0": "All power and all authority in heaven and earth have been given to you, Lord Jesus; you rule with decrees that are firm and trustworthy. Be with us always so that we may make disciples whose holiness will be worthy of your house.",
         "2": "Lord, extolled in the heights by angelic powers, you are also praised by all earth’s creatures, each in its own way. With all the splendor of heavenly worship, you still delight in such tokens of love as earth can offer. May heaven and earth together acclaim you as King. May the praise that is sung in heaven resound in the heart of every creature on earth."
@@ -924,6 +1179,11 @@
         "From the rising of the sun to its setting, may the name of the Lord be praised.",
         "I shall take into my hand the saving chalice and invoke the name of the Lord.",
         "The Lord Jesus humbled himself, and God exalted him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 116",
+        "Canticle – Philippians 2:6-11"
       ],
       "psalmPrayers": {
         "0": "Lord Jesus, Word of God, surrendering the brightness of your glory you became man so that we may be raised from the dust to share your very being. May there be innumerable children of the Church to offer homage to your name from the rising of the sun to its setting.",
@@ -943,6 +1203,11 @@
         "Our compassionate Lord has left us a memorial of his wonderful work, alleluia.",
         "All power is yours, Lord God, our mighty King, alleluia."
       ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – See Revelation 19:1-7"
+      ],
       "psalmPrayers": {
         "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
         "1": "Merciful and gentle Lord, you are the crowning glory of all the saints. Give us, your children, the gift of obedience which is the beginning of wisdom, so that we may do what you command and be filled with your mercy."
@@ -960,6 +1225,11 @@
         "Praise the Lord, for his loving kindness will never fail, alleluia.",
         "Alleluia! Bless the Lord, all you works of the Lord, alleluia!",
         "Let everything that breathes give praise to the Lord, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
       ],
       "psalmPrayers": {
         "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
@@ -979,6 +1249,11 @@
         "From the morning watch until night, I have waited trustingly for the Lord.",
         "Let everything in heaven and on earth bend the knee at the name of Jesus."
       ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 130",
+        "Canticle – Philippians 2:6-11"
+      ],
       "psalmPrayers": {
         "0": "When you rose from the dead, Lord Jesus, you formed the Church into your new body, and made of it the new Jerusalem, united in your Spirit. Give us peace in our day. Make all nations come to your Church to share in the gifts in fellowship, that they may render you thanks without end and come to your eternal city.",
         "1": "Listen with compassion to our prayers, Lord. The forgiveness of sins is yours. Do not look on the wrong we have done, but grant us your merciful kindness."
@@ -997,6 +1272,11 @@
         "Blessed are they who hunger and thirst for holiness; they will be satisfied.",
         "Praise God, all you who serve him, both great and small, alleluia."
       ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle — See Revelation 19:1-7"
+      ],
       "psalmPrayers": {
         "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
         "1": "Lord God, you are the eternal light which illumines the hearts of good people. Help us to love you, to rejoice in your glory, and so to live in this world as to avoid harsh judgment in the next. May we come to see the light of your countenance."
@@ -1013,6 +1293,9 @@
       "antiphons": [
         "O Lord, our God, unwearied is your love for us."
       ],
+      "psalmodyRefs": [
+        "Psalm 86"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "Lord,\ngive our bodies restful sleep\nand let the work we have done today\nbear fruit in eternal life.\nWe ask this through Christ our Lord.\n— Amen.",
@@ -1023,6 +1306,9 @@
       "edition": "first",
       "antiphons": [
         "Do not hide your face from me; in you I put my trust."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143"
       ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
@@ -1036,6 +1322,10 @@
         "Lord God, be my refuge and my strength.",
         "Out of the depths I cry to you, Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 31",
+        "Psalm 130"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "Lord Jesus Christ,\nyou have given your followers\nan example of gentleness and humility,\na task that is easy, a burden that is light.\nAccept the prayers and work of this day,\nand give us the rest that will strengthen us\nto render more faithful service to you\nwho live and reign for ever and ever.\n— Amen.",
@@ -1046,6 +1336,9 @@
       "edition": "first",
       "antiphons": [
         "In you, my God, my body will rest in hope."
+      ],
+      "psalmodyRefs": [
+        "Psalm 16"
       ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
@@ -1058,6 +1351,9 @@
       "antiphons": [
         "Day and night I cry to you, my God."
       ],
+      "psalmodyRefs": [
+        "Psalm 88"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "All-powerful God\nkeep us united with your Son\nin his death and burial\nso that we may rise to new life with him,\nwho lives and reigns for ever and ever.\n— Amen.",
@@ -1069,6 +1365,9 @@
       "antiphons": [
         "Night holds no terrors for me sleeping under God’s wings."
       ],
+      "psalmodyRefs": [
+        "Psalm 91"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "Lord,\nwe have celebrated today\nthe mystery of the rising of Christ to new life.\nMay we now rest in your peace,\nsafe from all that could harm us,\nand rise again refreshed and joyful,\nto praise you throughout another day.\nWe ask this through Christ our Lord.\n— Amen.",
@@ -1079,6 +1378,9 @@
       "edition": "first",
       "antiphons": [
         "Alleluia, alleluia, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 91"
       ],
       "responsory": "Into your hands, Lord, I commend my spirit, alleluia, alleluia.\n— Into your hands, Lord, I commend my spirit, alleluia, alleluia.\n\nYou have redeemed us, Lord God of truth.\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit, alleluia, alleluia.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace (alleluia).",
@@ -1092,6 +1394,10 @@
         "Have mercy, Lord, and hear my prayer.",
         "In the silent hours of night, bless the Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 4",
+        "Psalm 134"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "Lord,\nbe with us throughout this night.\nWhen day comes may we rise from sleep\nto rejoice in the resurrection of your Christ,\nwho lives and reigns for ever and ever.\n— Amen.",
@@ -1104,6 +1410,10 @@
         "Have mercy, Lord, and hear my prayer.",
         "In the silent hours of night, bless the Lord."
       ],
+      "psalmodyRefs": [
+        "Psalm 4",
+        "Psalm 134"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "Lord,\nwe beg you to visit this house\nand banish from it\nall the deadly power of the enemy.\nMay your holy angels dwell here\nto keep us in peace,\nand may your blessing be upon us always.\nWe ask this through Christ our Lord.\n— Amen.",
@@ -1115,10 +1425,6871 @@
       "antiphons": [
         "Night holds no terrors for me sleeping under God’s wings."
       ],
+      "psalmodyRefs": [
+        "Psalm 91"
+      ],
       "responsory": "Into your hands, Lord, I commend my spirit.\n— Into your hands, Lord, I commend my spirit.\n\nYou have redeemed us, Lord God of truth.\n— I commend my spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Into your hands, Lord, I commend my spirit.",
       "gospelAntiphon": "Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.",
       "collect": "Lord,\nwe beg you to visit this house\nand banish from it\nall the deadly power of the enemy\nMay your holy angels dwell here\nto keep us in peace,\nand may your blessing be upon us always.\nWe ask this through Christ our Lord.\n— Amen.",
       "readingRef": "Revelation 22:4-5"
+    },
+    "1112-mp": {
+      "source": "https://divineoffice.org/1112-mp/",
+      "edition": "first",
+      "antiphons": [
+        "At daybreak, be merciful to me, O Lord.",
+        "The Lord will make a river of peace flow through Jerusalem.",
+        "Let us joyfully praise the Lord our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, early in the morning of your resurrection, you made your love known and brought the first light of dawn to those who dwell in darkness. Your death has opened a path for us. Do not enter into judgment with your servants; let your Holy Spirit guide us together into the land of justice.",
+        "2": "God our Father, great builder of the heavenly Jerusalem, you know the number of the stars and call each of them by name. Heal hearts that are broken, gather together those who have been scattered, and enrich us all from the plenitude of your eternal wisdom."
+      },
+      "responsory": "The Lord is my strength, and I shall sing his praise.\n— The Lord is my strength, and I shall sing his praise.\n\nThe Lord is my savior,\n— and I shall sing his praise.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is my strength, and I shall sing his praise.",
+      "gospelAntiphon": "Whoever hates his life in this world keeps it safe for life everlasting.",
+      "intercessions": "Our Savior’s faithfulness is mirrored in the fidelity of his witnesses who shed their blood for the word of God. Let us praise him in remembrance of them:\nYou redeemed us by your blood.\n\nYour martyrs freely embraced death in bearing witness to the faith,\n— give us the true freedom of the Spirit, O Lord.\nYou redeemed us by your blood.\nYour martyrs professed their faith by shedding their blood,\n— give us a faith, O Lord, that is constant and pure.\nYou redeemed us by your blood.\n\nYour martyrs followed in your footsteps by carrying the cross,\n— help us to endure courageously the misfortunes of life.\nYou redeemed us by your blood.\n\nYour martyrs washed their garments in the blood of the Lamb,\n— help us to avoid the weaknesses of the flesh and worldly allurements.\nYou redeemed us by your blood.",
+      "collect": "Stir up in your Church,\nwe pray, O Lord,\nthe Spirit that filled Saint Josaphat\nas he laid down his life for the sheep,\nso that through his intercession we, too,\nmay be strengthened by the same Spirit\nand not be afraid to lay down our life for others.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-5"
+    },
+    "1112-ep2": {
+      "source": "https://divineoffice.org/1112-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "He is my comfort and my refuge. In him I put my trust.",
+        "Blessed are the people whose God is the Lord.",
+        "Now the victorious reign of our God has begun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 144",
+        "Psalm 144",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in this world. Clothe us with the weapons of light and unite us under one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "You have tried us by fire, O God, then led us to a place of refreshment.\n— You have tried us by fire, O God, then led us to a place of refreshment.\n\nYou refined us as silver in the furnace,\n— then led us to a place of refreshment.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— You have tried us by fire, O God, then led us to a place of refreshment.",
+      "gospelAntiphon": "The saints find their home in the kingdom of heaven; their life is eternal peace.",
+      "intercessions": "This is the hour when the King of martyrs offered his life in the upper room and laid it down on the cross. Let us thank him and say:\nWe praise you, O Lord.\n\nWe praise you, O Lord, our Savior, inspiration and example for every martyr, for loving us to the end:\nWe praise you, O Lord.\n\nFor calling all repentant sinners to the rewards of life:\nWe praise you, O Lord.\n\nFor entrusting to your Church the blood of the new and everlasting covenant poured out for the remission of sin:\nWe praise you, O Lord.\nFor our perseverance in your grace today:\nWe praise you, O Lord.\n\nFor incorporating our dead brothers and sisters into your own death today:\nWe praise you, O Lord.",
+      "collect": "Stir up in your Church,\nwe pray, O Lord,\nthe Spirit that filled Saint Josaphat\nas he laid down his life for the sheep,\nso that through his intercession we, too,\nmay be strengthened by the same Spirit\nand not be afraid to lay down our life for others.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 4:13-14"
+    },
+    "1113-mp": {
+      "source": "https://divineoffice.org/1113-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Create a clean heart in me, O God; renew in me a steadfast spirit.",
+        "Rejoice, Jerusalem, for through you all men will be gathered to the Lord.",
+        "Zion, praise your God, who sent his Word to renew the earth."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Tobit 13:8-11, 13-15",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "All powerful God, it is through your Church, generously endowed with gifts of grace and fortified by the Holy Spirit, that you send out your word to all nations. Strengthen your Church with the best of all food and make it dauntless in faith. Multiply its children to celebrate with one accord the mysteries of your love at the altar on high."
+      },
+      "responsory": "My heart is ever pleading, show me your face.\n— My heart is ever pleading, show me your face.\nI long to gaze upon you, Lord.\n— Show me your face.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— My heart is ever pleading, show me your face.",
+      "gospelAntiphon": "Now this wise virgin has gone to Christ. Among the choirs of virgins she is radiant as the sun in the heavens.",
+      "intercessions": "Christ is the spouse and crowning glory of virgins. Let us praise him with joy in our voices and pray to him with sincerity in our hearts:\nJesus, crown of virgins, hear us.\n\nChrist, the holy virgins loved you as their one true spouse,\n— grant that nothing may separate us from your love.\nJesus, crown of virgins, hear us.\nYou crowned Mary, your mother, queen of virgins,\n— through her intercession, let us continually serve you with pure hearts.\nJesus, crown of virgins, hear us.\n\nYour handmaids were always careful to love you with whole and\nundivided attention, that they might be holy in body and spirit,\n— through their intercession grant that the lure of this passing world may not distract our attention from you.\nJesus, crown of virgins, hear us.\nLord Jesus, you are the spouse whose coming was anticipated by the wise virgins,\n— grant that we may wait for you in hope and expectation.\nJesus, crown of virgins, hear us.\n\nThrough the intercession of this saint and virgin we commemorate today,\nwho was one of the wise and prudent virgins,\n— grant us wisdom and innocence of life.\nJesus, crown of virgins, hear us.",
+      "collect": "God our Father,\nwho called Saint Frances Xavier Cabrini\nfrom Italy to serve the immigrants of America,\nby her example, teach us to have concern\nfor the stranger, the sick, and all those in need,\nand by her prayers help us to see Christ\nin all the men and women we meet.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Song of Songs 8:7"
+    },
+    "1113-ep2": {
+      "source": "https://divineoffice.org/1113-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Day after day I will bless you, Lord; I will tell of your marvelous deeds.",
+        "To you alone, Lord, we look with confidence; you are ever close to those who call upon you.",
+        "King of all the ages, your ways are perfect and true."
+      ],
+      "psalmodyRefs": [
+        "Psalm 145",
+        "Psalm 145",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, be near to all who call upon you in truth and increase the dedication of those who revere you. Hear their prayers and save them that they may always love you and praise your holy name."
+      },
+      "responsory": "The virgins are led into the presence of the King, amid gladness and joy.\n— The virgins are led into the presence of the King, amid gladness and joy.\n\nThey are brought into the King’s dwelling-place,\n— amid gladness and joy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The virgins are led into the presence of the King, amid gladness and joy.",
+      "gospelAntiphon": "Come, spouse of Christ, receive the crown the Lord has prepared for you from all eternity.",
+      "intercessions": "Christ extolled those who practiced virginity for the sake of the kingdom. Let us praise him joyfully and pray to him:\nJesus, example of virgins, hear us.\n\nChrist, you presented the Church to yourself as a chaste virgin to her spouse,\n— keep her holy and inviolate.\nJesus, example of virgins, hear us.\n\nChrist, the holy virgins went out to meet you with their lamps alight,\n— keep the fidelity of your consecrated handmaids burning brightly.\nJesus, example of virgins, hear us.\nLord, your virgin Church has always kept its faith whole and untarnished,\n— grant all Christians a whole and untarnished faith.\nJesus, example of virgins, hear us.\n\nYou have given your people joy in celebrating the feast of your holy virgin,\n— give us constant joy through her intercession.\nJesus, example of virgins, hear us.\n\nYou have admitted the holy virgins to your marriage banquet,\n— in your mercy lead the dead to your heavenly feast.\nJesus, example of virgins, hear us.",
+      "collect": "God our Father,\nwho called Saint Frances Xavier Cabrini\nfrom Italy to serve the immigrants of America,\nby her example, teach us to have concern\nfor the stranger, the sick, and all those in need,\nand by her prayers help us to see Christ\nin all the men and women we meet.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 7:32b, 34"
+    },
+    "ord-w33-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w33-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Like burning incense, Lord, let my prayer rise up to you.",
+        "You are my refuge, Lord; you are all that I desire in life.",
+        "The Lord Jesus humbled himself, and God exalted him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
+        "1": "Lord, we humbly ask for your goodness. May you help us to hope in you, and give us a share with your chosen ones in the land of the living."
+      },
+      "responsory": "Our hearts are filled with wonder as we contemplate your works, O Lord.\n— Our hearts are filled with wonder as we contemplate your works, O Lord.\n\nWe praise the wisdom which wrought them all,\n— as we contemplate your works, O Lord.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our hearts are filled with wonder as we contemplate your works, O Lord.",
+      "gospelAntiphon": "Well done, my good and faithful servant, you have been trustworthy in small things. Now share your master’s joy.",
+      "intercessions": "We give glory to the one God — Father, Son and Holy Spirit — and in our weakness we pray:\nLord, be with your people.\n\nHoly Lord, Father all-powerful, let justice spring up on the earth,\n— then your people will dwell in the beauty of peace.\nLord, be with your people.\n\nLet every nation come into your kingdom,\n— so that all peoples will be saved.\nLord, be with your people.\n\nLet married couples live in your peace,\n— and grow in mutual love.\nLord, be with your people.\nReward all who have done good to us, Lord,\n— and grant them eternal life.\nLord, be with your people.\n\nLook with compassion on victims of hatred and war,\n— grant them heavenly peace.\nLord, be with your people.",
+      "collect": "Grant us,\nwe pray, O Lord our God,\nthe constant gladness of being devoted to you,\nfor it is full and lasting happiness\nto serve with constancy the author of all that is good.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 11:25-36"
+    },
+    "ord-w33-sun-mp": {
+      "source": "https://divineoffice.org/ord-w33-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "As morning breaks I look to you, O God, to be my strength this day, alleluia.",
+        "From the midst of the flames the three young men cried out with one voice: Blessed be God, alleluia.",
+        "Let the people of Zion rejoice in their King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are seated at the right hand of the Father,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "They will see the Son of Man coming in the clouds with great glory and majesty.",
+      "intercessions": "Christ is the sun that never sets, the true light that shines on every man. Let us call out to him in praise:\nLord, you are our life and our salvation.\n\nCreator of the stars, we thank you for your gift, the first rays of the dawn,\n— and we commemorate your resurrection.\nLord, you are our life and our salvation.\nMay your Holy Spirit teach us to do your will today,\n— and may your Wisdom guide us always.\nLord, you are our life and our salvation.\n\nEach Sunday give us the joy of gathering as your people,\n— around the table of your Word and your Body.\nLord, you are our life and our salvation.\n\nFrom our hearts we thank you,\n— for your countless blessings.\nLord, you are our life and our salvation.",
+      "collect": "Grant us,\nwe pray, O Lord our God,\nthe constant gladness of being devoted to you,\nfor it is full and lasting happiness\nto serve with constancy the author of all that is good.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Revelation 7:10, 12"
+    },
+    "ord-w33-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w33-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will stretch forth his mighty scepter from Zion, and he will reign for ever, alleluia.",
+        "The earth is shaken to its depths before the glory of your face.",
+        "All power is yours, Lord God, our mighty King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Almighty God, ever-living mystery of unity and Trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
+      },
+      "responsory": "The whole creation proclaims the greatness of your glory.\n— The whole creation proclaims the greatness of your glory.\n\nEternal ages praise\n— the greatness of your glory.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The whole creation proclaims the greatness of your glory.",
+      "gospelAntiphon": "By your trusting acceptance of trials, you will gain your life, says the Lord.",
+      "intercessions": "Christ the Lord is our head; we are his members. In joy let us call out to him:\nLord, may your kingdom come.\nChrist our Savior, make your Church a more vivid symbol of the unity of all mankind,\n— make it more effectively the sacrament of salvation for all peoples.\nLord, may your kingdom come.\n\nThrough your presence, guide the college of bishops in union with the Pope,\n— give them the gifts of unity, love and peace.\nLord, may your kingdom come.\n\nBind all Christians more closely to yourself, their divine Head,\n— lead them to proclaim your kingdom by the witness of their lives.\nLord, may your kingdom come.\nGrant peace to the world,\n— let every land flourish in justice and security.\nLord, may your kingdom come.\n\nGrant to the dead the glory of resurrection,\n— and give us a share in their happiness.\nLord, may your kingdom come.",
+      "collect": "Grant us,\nwe pray, O Lord our God,\nthe constant gladness of being devoted to you,\nfor it is full and lasting happiness\nto serve with constancy the author of all that is good.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-4"
+    },
+    "1121-mp": {
+      "source": "https://divineoffice.org/1121-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you will accept the true sacrifice offered on your altar.",
+        "All the descendants of Israel will glory in the Lord’s gift of victory.",
+        "Let us go into God’s presence singing for joy."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle — Isaiah 45:15-25",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "With joy and gladness we cry out to you, Lord, and ask you: open our hearts to sing your praises and announce your goodness and truth."
+      },
+      "responsory": "The Lord has chosen her, his loved one from the beginning.\n— The Lord has chosen her, his loved one from the beginning.\n\nHe has taken her to live with him,\n— his loved one from the beginning.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord has chosen her, his loved one from the beginning.",
+      "gospelAntiphon": "Blessed are you, Mary, because you believed that the Lord’s words to you would be fulfilled, alleluia.",
+      "intercessions": "Let us glorify our Savior, who chose the Virgin Mary for his mother. Let us ask him:\nMay your mother intercede for us, Lord.\n\nSon of Justice, the immaculate Virgin was the white dawn announcing your rising,\n— grant that we may always live in the light of your coming.\nMay your mother intercede for us, Lord.\n\nEternal Word, you chose Mary as the uncorrupted ark of your dwelling place,\n— free us from the corruption of sin.\nMay your mother intercede for us, Lord.\nSavior of Mankind, your mother stood at the foot of your cross,\n— grant through her intercession, that we may rejoice to share in your passion.\nMay your mother intercede for us, Lord.\n\nWith ultimate generosity and love, you gave Mary as a mother to your beloved disciple,\n— help us to live as worthy sons of so noble a mother.\nMay your mother intercede for us, Lord.",
+      "collect": "As we venerate\nthe glorious memory\nof the most holy Virgin Mary,\ngrant, we pray, O Lord,\nthrough her intercession,\nthat we, too, may merit to receive\nfrom the fullness of your grace.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 61:10"
+    },
+    "ord-w34-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w34-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "We will call him the peacemaker, and his throne shall stand firm for ever.",
+        "His kingdom will endure for ever, and all the kings of the earth will serve and obey him.",
+        "The authority and honor of a king has been given to Christ; all peoples, tribes and nations will serve him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 117",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "responsory": "Yours is the splendor and the power; yours is the kingdom, O Lord.\n— Yours is the splendor and the power; yours is the kingdom, O Lord.\n\nYou will rule over all.\n— Yours is the kingdom, O Lord.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Yours is the splendor and the power; yours is the kingdom, O Lord.",
+      "gospelAntiphon": "The Lord God will give him the throne of David, his ancestor; he will rule in the house of Jacob for ever and his kingdom will have no end, alleluia.",
+      "intercessions": "Let us pray to Christ the King. He is the firstborn of all creation; all things exist in him.\nMay your kingdom come, O Lord.\n\nChrist, our king and shepherd, gather your sheep from every land,\n— give them pasture in green and fertile meadows.\nMay your kingdom come, O Lord.\nChrist, our leader and savior, form all men into your own people, heal the sick, seek out the lost, guard the strong,\n— call back those who have wandered far away, strengthen those who waver, gather all your sheep into one flock.\nMay your kingdom come, O Lord.\n\nJudge of all ages, when you hand over your kingdom to the Father, place us at your right hand,\n— so that we may inherit the kingdom prepared for us from the beginning of the world.\nMay your kingdom come, O Lord.\nPrince of peace, break the weapons of war,\n— and inspire the nations with your peace.\nMay your kingdom come, O Lord.\n\nChrist, heir of all nations, gather humanity and all the good things of your creation into the kingdom of your Church which your Father bestowed on you,\n— so that the whole body of your people, united in the Holy Spirit, may acknowledge you as their head.\nMay your kingdom come, O Lord.\nChrist, firstborn of the dead and firstfruits of those who have fallen asleep in death,\n— bring all who have died to the glory of the resurrection.\nMay your kingdom come, O Lord.",
+      "collect": "Almighty ever-living God,\nwhose will is to restore all things in your beloved Son,\nthe King of the universe, grant, we pray,\nthat the whole creation, set free from slavery,\nmay render your majesty service and ceaselessly proclaim your praise.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 1:20-23"
+    },
+    "ord-w34-sun-mp": {
+      "source": "https://divineoffice.org/ord-w34-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "A man will come whose name is the Dayspring; from his throne he will rule over all; he will speak of peace to the nations.",
+        "They will sing his praises to the ends of the earth, and he will be their peace.",
+        "The Lord will give him power and honor and kingship; all peoples, tribes and nations will serve him."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "Your saints, O Lord, will tell of the glory of your kingdom.\n— Your saints, O Lord, will tell of the glory of your kingdom.\n\nThey will proclaim your power.\n— They will tell of the glory of your kingdom.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your saints, O Lord, will tell of the glory of your kingdom.",
+      "gospelAntiphon": "He fashioned us into a kingdom for the glory of his God and Father; he is the firstborn of the dead and the leader of all the kings of the earth, alleluia.",
+      "intercessions": "Let us pray to Christ the King. He is the firstborn of all creation; all things exist in him.\nMay your kingdom come, O Lord.\n\nChrist, you are our savior and our God, our shepherd and our king,\n— lead your people to life-giving pastures.\nMay your kingdom come, O Lord.\nGood Shepherd, you laid down your life for your sheep,\n— rule over us, and in your care we shall want for nothing.\nMay your kingdom come, O Lord.\n\nChrist, our redeemer, you have been made king over all the earth,\n— restore all creation in yourself.\nMay your kingdom come, O Lord.\n\nKing of all creation, you came into the world to bear witness to the truth,\n— may all men come to acknowledge your primacy in all things.\nMay your kingdom come, O Lord.\nChrist, our model and master, you have brought us into your kingdom,\n— grant that we may be holy and blameless before you this day.\nMay your kingdom come, O Lord.",
+      "collect": "Almighty ever-living God,\nwhose will is to restore all things in your beloved Son,\nthe King of the universe, grant, we pray,\nthat the whole creation, set free from slavery,\nmay render your majesty service and ceaselessly proclaim your praise.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 4:15-16"
+    },
+    "ord-w34-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w34-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "He shall sit upon the throne of David and rule over his kingdom for ever, alleluia.",
+        "Your kingdom shall be an everlasting kingdom, and you shall rule from generation to generation.",
+        "On his cloak and on his thigh a name was written: King of kings, and Lord of lords. To him be glory and power for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 145",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "Your throne, O God, shall stand for ever.\n— Your throne, O God, shall stand for ever.\n\nThe scepter of your kingdom is a scepter of justice.\n— It shall stand for ever.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your throne, O God, shall stand for ever.",
+      "gospelAntiphon": "All authority in heaven and on earth has been given to me, says the Lord.",
+      "intercessions": "Let us pray to Christ the King. He is the firstborn of all creation; all things exist in him.\nMay your kingdom come, O Lord.\n\nChrist, our king and shepherd, gather your sheep from every land,\n— give them pasture in green and fertile meadows.\nMay your kingdom come, O Lord.\nChrist, our leader and savior, form all men into your own people, heal the sick, seek out the lost, guard the strong,\n— call back those who have wandered far away, strengthen those who waver, gather all your sheep into one flock.\nMay your kingdom come, O Lord.\n\nJudge of all ages, when you hand over your kingdom to the Father, place us at your right hand,\n— so that we may inherit the kingdom prepared for us from the beginning of the world.\nMay your kingdom come, O Lord.\nPrince of peace, break the weapons of war,\n— and inspire the nations with your peace.\nMay your kingdom come, O Lord.\n\nChrist, heir of all nations, gather humanity and all the good things of your creation into the kingdom of your Church which your Father bestowed on you,\n— so that the whole body of your people, united in the Holy Spirit, may acknowledge you as their head.\nMay your kingdom come, O Lord.\nChrist, firstborn of the dead and firstfruits of those who have fallen asleep in death,\n— bring all who have died to the glory of the resurrection.\nMay your kingdom come, O Lord.",
+      "collect": "Almighty ever-living God,\nwhose will is to restore all things in your beloved Son,\nthe King of the universe, grant, we pray,\nthat the whole creation, set free from slavery,\nmay render your majesty service and ceaselessly proclaim your praise.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 15:25-28"
+    },
+    "adv-w01-sun-ep1": {
+      "source": "https://divineoffice.org/adv-w01-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Proclaim the good news among the nations: Our God will come to save us.",
+        "Know that the Lord is coming and with him all his saints; that day will dawn with a wonderful light, alleluia.",
+        "The Lord will come with mighty power; all mortal eyes shall see him."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle — Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
+        "1": "Lord, we humbly ask for your goodness. May you help us to hope in you, and give us a share with your chosen ones in the land of the living."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "See the Lord coming from afar. His splendor fills the earth.",
+      "intercessions": "Jesus Christ is the joy and happiness of all who look forward to his coming. Let us call upon him and say:\nCome, Lord, and do not delay!\n\nIn joy, we wait for your coming;\n— come, Lord Jesus.\nCome, Lord, and do not delay!\n\nBefore time began, you shared life with the Father;\n— come now and save us.\nCome, Lord, and do not delay!\nYou created the world and all who live in it;\n— come to redeem the work of your hands.\nCome, Lord, and do not delay!\n\nYou did not hesitate to become man, subject to death;\n— come to free us from the power of death.\nCome, Lord, and do not delay!\n\nYou came to give us life to the full;\n— come and give us your unending life.\nCome, Lord, and do not delay!\n\nYou desire all people to live in love in your kingdom;\n— come and bring together those who long to see you face to face.\nCome, Lord, and do not delay!",
+      "collect": "Grant your faithful,\nwe pray, almighty God,\nthe resolve to run forth\nto meet your Christ with righteous deeds at his coming,\nso that, gathered at his right hand,\nthey may be worthy to possess the heavenly Kingdom.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Thessalonians 5:23-24"
+    },
+    "adv-w01-sun-mp": {
+      "source": "https://divineoffice.org/adv-w01-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "On that day sweet wine will flow from the mountains, milk and honey from the hills, alleluia.",
+        "The mountains and hills will sing praise to God; all the trees of the forest will clap their hands, for he is coming, the Lord of a kingdom that lasts for ever, alleluia.",
+        "A great prophet will come to Jerusalem; of that people he will make a new creation."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle — Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are the one who is to come,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "The Holy Spirit will come upon you, Mary; you have no need to be afraid. You will carry in your womb the Son of God, alleluia.",
+      "intercessions": "To God our Father, who has given us the grace to wait in joyful hope for the revelation of our Lord Jesus Christ, let us make our prayer:\nShow us your mercy, Lord.\n\nSanctify us in mind and body,\n— keep us without sin until the coming of your Son.\nShow us your mercy, Lord.\nMake us walk this day in holiness,\n— and live upright and devout lives in this world.\nShow us your mercy, Lord.\n\nMay we be clothed in our Lord Jesus Christ,\n— and filled with the Holy Spirit.\nShow us your mercy, Lord.\n\nLord, help us to stand watchful and ready,\n— until your Son is revealed in all his glory.\nShow us your mercy, Lord.",
+      "collect": "Grant your faithful,\nwe pray, almighty God,\nthe resolve to run forth\nto meet your Christ with righteous deeds at his coming,\nso that, gathered at his right hand,\nthey may be worthy to possess the heavenly Kingdom.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 13:11-12"
+    },
+    "adv-w01-sun-ep2": {
+      "source": "https://divineoffice.org/adv-w01-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Rejoice, daughter of Zion; shout for joy, daughter of Jerusalem, alleluia.",
+        "Christ our King will come to us, the Lamb of God foretold by John.",
+        "I am coming soon, says the Lord; I will give to everyone the reward his deeds deserve."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Almighty God, ever-living mystery of unity and trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "Do not be afraid, Mary, you have found favor with God; you will conceive and give birth to a Son, alleluia.",
+      "intercessions": "To Jesus Christ, our Redeemer, the way, the truth, and the life, let us make our humble prayer:\nCome and stay with us, Lord.\nSon of the Most High, your coming was announced to the Virgin Mary by Gabriel,\n— come and rule over your people for ever.\nCome and stay with us, Lord.\n\nHoly One of God, in your presence John the Baptist leapt in Elizabeth’s womb,\n— bring the joy of salvation to all the earth.\nCome and stay with us, Lord.\n\nJesus the Savior, the angel revealed your name to Joseph the just man,\n— come and save your people from their sins.\nCome and stay with us, Lord.\nLight of the world, for whom Simeon and all the just waited,\n— come and comfort us.\nCome and stay with us, Lord.\n\nO Rising Sun that never sets, Zechariah foretold that you would visit us from above,\n— come and shine on those who dwell in darkness and the shadow of death.\nCome and stay with us, Lord.",
+      "collect": "Grant your faithful,\nwe pray, almighty God,\nthe resolve to run forth\nto meet your Christ with righteous deeds at his coming,\nso that, gathered at his right hand,\nthey may be worthy to possess the heavenly Kingdom.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 4:4-7"
+    },
+    "1130-mp": {
+      "source": "https://divineoffice.org/1130-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Two men followed the Lord from the beginning; one of these was Andrew, the brother of Simon Peter.",
+        "The Lord loved Andrew and cherished his friendship.",
+        "Andrew said to his brother Simon: We have found the Messiah, and he brought him to Jesus."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "You have made them rulers over all the earth.\n— You have made them rulers over all the earth.\n\nThey will always remember your name, O Lord,\n— over all the earth.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— You have made them rulers over all the earth.",
+      "gospelAntiphon": "I bow before the cross made precious by Christ, my Master. I embrace it as his disciple.",
+      "intercessions": "Beloved friends, we have inherited heaven along with the apostles. Let us voice our thanks to the Father for all his gifts:\nThe company of apostles praises you, O Lord.\n\nPraise be to you, Lord, for the banquet of Christ’s body and blood given us through the apostles,\n— which refreshes us and gives us life.\nThe company of apostles praises you, O Lord.\nPraise be to you, Lord, for the feast of your word prepared for us by the apostles,\n— giving us light and joy.\nThe company of apostles praises you, O Lord.\n\nPraise be to you, Lord, for your holy Church, founded on the apostles,\n— where we are gathered together into your community.\nThe company of apostles praises you, O Lord.\nPraise be to you, Lord, for the cleansing power of baptism and penance that you have entrusted to your apostles,\n— through which we are cleansed of our sins.\nThe company of apostles praises you, O Lord.",
+      "collect": "We humbly implore your majesty,\nO Lord, that, just as the blessed Apostle Andrew\nwas for your Church a preacher and pastor,\nso he may be for us a constant intercessor before you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 2:19-22"
+    },
+    "1130-ep2": {
+      "source": "https://divineoffice.org/1130-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord saw Peter and Andrew; he called them to follow him.",
+        "Come, follow me, said the Lord. I will make you fishers of men.",
+        "They left their nets to follow Christ, their Lord and Redeemer."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 126",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "Tell all the nations how glorious God is.\n— Tell all the nations how glorious God is.\n\nMake known his wonders to every people.\n— How glorious God is.\n\nGlory to the Father, and to the Son, and to the Holy Spirit.\n— Tell all the nations how glorious God is.",
+      "gospelAntiphon": "Andrew served Christ and loyally preached the Gospel; with his brother Peter, he laid down his life for God.",
+      "intercessions": "My brothers, we build on the foundation of the apostles. Let us pray to our almighty Father for his holy people and say:\nBe mindful of your Church, O Lord.\nFather, you wanted your Son to be seen first by the apostles after the resurrection from the dead,\n— we ask you to make us his witnesses to the farthest corners of the world.\nBe mindful of your Church, O Lord.\n\nYou sent your Son to preach the good news to the poor,\n— help us to preach this Gospel to every creature.\nBe mindful of your Church, O Lord.\nYou sent your Son to sow the seed of unending life,\n— grant that we who work at sowing the seed may share the joy of the harvest.\nBe mindful of your Church, O Lord.\n\nYou sent your Son to reconcile all men to you through his blood,\n— help us all to work toward achieving this reconciliation.\nBe mindful of your Church, O Lord.\n\nYour Son sits at your right hand in heaven,\n— let the dead enter your kingdom of joy.\nBe mindful of your Church, O Lord.",
+      "collect": "We humbly implore your majesty,\nO Lord, that, just as the blessed Apostle Andrew\nwas for your Church a preacher and pastor,\nso he may be for us a constant intercessor before you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 4:11-13"
+    },
+    "adv-w01-tue-mp": {
+      "source": "https://divineoffice.org/adv-w01-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The man whose deeds are blameless and whose heart is pure will climb the mountain of the Lord.",
+        "Praise the eternal king in all your deeds.",
+        "The loyal heart must praise the Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 24",
+        "Canticle – Tobit 13:1b-8",
+        "Psalm 33"
+      ],
+      "psalmPrayers": {
+        "0": "King of glory, Lord of power and might, cleanse our hearts from all sin, preserve the innocence of our hands, and keep our minds from vanity, so that we may deserve your blessing in your holy place.",
+        "2": "Nourish your people, Lord, for we hunger for your word. Rescue us from the death of sin and fill us with your mercy, that we may share your presence and the joys of all the saints."
+      },
+      "responsory": "Your light will come, Jerusalem;\nthe Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem;\nthe Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem;\nthe Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "From the root of Jesse a flower will blossom, the glory of the Lord will fill the earth, and all creation shall see the saving power of God.",
+      "intercessions": "God the almighty Father stretches forth his hand again to take possession of the remnant of his people. Let us make our prayer to him:\nLord, may your kingdom come.\n\nLord, grant that our works of penance may please you,\n— and that we may be ready for your kingdom which is so near.\nLord, may your kingdom come.\n\nPrepare a path in our hearts for the coming of your Word,\n— and let his glory be revealed among us.\nLord, may your kingdom come.\nBring low the mountains of our pride,\n— and fill up the valleys of our weakness.\nLord, may your kingdom come.\n\nBreak down the wall of hatred that divides the nations,\n— and make level for mankind the paths to peace.\nLord, may your kingdom come.",
+      "collect": "Look with favor, Lord God, on our petitions,\nand in our trials grant us your compassionate help,\nthat, consoled by the presence of your Son,\nwhose coming we now await,\nwe may be tainted no longer\nby the corruption of former ways.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Genesis 49: 10"
+    },
+    "adv-w01-tue-ep": {
+      "source": "https://divineoffice.org/adv-w01-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "God has crowned his Christ with victory.",
+        "We celebrate your mighty works with songs of praise, O God.",
+        "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 20",
+        "Psalm 21",
+        "Canticle — Revelation 4:11;5-9,10,12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you accepted the perfect sacrifice of your Son upon the cross. Hear us during times of trouble and protect us by the power of his name, that we who share his struggle on earth may merit a share in his victory.",
+        "1": "Father you have given us life on this earth and have met us with the grace of redemption. Bestow your greatest blessing on us, the fullness of eternal life."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "Seek the Lord while he may be found; call on him while he is near, alleluia.",
+      "intercessions": "To the eternal Word who became man to reveal to us the new and living way, let us make our humble prayer:\nCome, Lord, and save us.\n\nGod, in whom we live and move and have our being,\n— come and teach us that you have made us your own.\nCome, Lord, and save us.\nYou are not far from each of us,\n— show yourself to all who search for you.\nCome, Lord, and save us.\n\nFather of the poor and consoler of the afflicted,\n— set captives free, give joy to those who mourn.\nCome, Lord, and save us.\n\nYou hate death and love life,\n— free all mankind from eternal death.\nCome, Lord, and save us.",
+      "collect": "Look with favor, Lord God, on our petitions,\nand in our trials grant us your compassionate help,\nthat, consoled by the presence of your Son,\nwhose coming we now await,\nwe may be tainted no longer\nby the corruption of former ways.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See 1 Corinthians 1:7b-9"
+    },
+    "adv-w01-wed-mp": {
+      "source": "https://divineoffice.org/adv-w01-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Lord, in your light we see light itself.",
+        "O God, you are great and glorious; we marvel at your power.",
+        "Exult in God’s presence with hymns of praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 36",
+        "Canticle – Judith 16:1,13-15",
+        "Psalm 47"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you are the source of unfailing light. Give us true knowledge of your mercy so that we may renounce our pride and be filled with the riches of your house.",
+        "2": "God, King of all peoples and all ages, it is your victory we celebrate as we sing with all the skill at our command. Help us always to overcome evil by good, that we may rejoice in your triumph for ever."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "The One who is coming after me is greater than I; I am not worthy to untie the strap of his sandals.",
+      "intercessions": "The Word of God humbled himself to dwell with us so that we might see his glory. Rejoicing in hope, let us call upon him:\nEmmanuel, be with us.\n\nRuler, just and righteous,\n— bring justice to the poor and the oppressed.\nEmmanuel, be with us.\nKing of peace, you beat swords into plowshares and spears into pruning hooks,\n— turn hatred into love and our grievances into forgiveness.\nEmmanuel, be with us.\n\nYou do not judge by appearances,\n— recognize those who are your own.\nEmmanuel, be with us.\n\nWhen you come with power and might upon the clouds,\n— grant that we may come before you without shame.\nEmmanuel, be with us.",
+      "collect": "Prepare our hearts,\nwe pray, O Lord our God,\nby your divine power,\nso that at the coming of Christ your Son\nwe may be found worthy of the banquet of eternal life\nand merit to receive heavenly nourishment from his hands.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 7:14b-15"
+    },
+    "adv-w01-wed-ep": {
+      "source": "https://divineoffice.org/adv-w01-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is my light and my help; whom shall I fear?",
+        "I long to look on you, O Lord; do not turn your face from me.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 27",
+        "Psalm 27",
+        "Canticle — Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "Father, you protect and strengthen those who hope in you; you heard the cry of your Son and kept him safe in your tent in the day of evil. Grant that your servants who seek your face in time of trouble may see your goodness in the land of the living."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "The law will go forth from Zion; the word of the Lord from Jerusalem.",
+      "intercessions": "Let us pray to God the Father, who sent his Son to bring us endless peace:\nLord, your kingdom come.\n\nFather most holy, look kindly on your Church,\n— come and visit this vine which your own right hand has planted.\nLord, your kingdom come.\nBe mindful, Lord, of all the sons of Abraham,\n— fulfill the promises you made to their fathers.\nLord, your kingdom come.\n\nMerciful God, look kindly upon men and women of every race,\n— may they honor you for your goodness.\nLord, your kingdom come.\n\nEternal Shepherd, visit the sheep of your flock,\n— and gather them together into one fold.\nLord, your kingdom come.\n\nRemember those who have gone forth from this world in your peace,\n— lead them into glory with your Son.\nLord, your kingdom come.",
+      "collect": "Prepare our hearts,\nwe pray, O Lord our God,\nby your divine power,\nso that at the coming of Christ your Son\nwe may be found worthy of the banquet of eternal life\nand merit to receive heavenly nourishment from his hands.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 4:5"
+    },
+    "1203-mp": {
+      "source": "https://divineoffice.org/1203-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Lord, in your light we see light itself.",
+        "O God, you are great and glorious; we marvel at your power.",
+        "Exult in God’s presence with hymns of praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 36",
+        "Canticle – Judith 16:1,13-15",
+        "Psalm 47"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you are the source of unfailing light. Give us true knowledge of your mercy so that we may renounce our pride and be filled with the riches of your house.",
+        "2": "God, King of all peoples and all ages, it is your victory we celebrate as we sing with all the skill at our command. Help us always to overcome evil by good, that we may rejoice in your triumph for ever."
+      },
+      "responsory": "On your walls, Jerusalem, I have set my watchmen to guard you.\n— On your walls, Jerusalem, I have set my watchmen to guard you.\n\nDay or night, they will not cease to proclaim the name of the Lord.\n— I have set my watchmen to guard you.\n\nGlory to the Father, and to the Son, and to the Holy Spirit.\n— On your walls, Jerusalem, I have set my watchmen to guard you.",
+      "gospelAntiphon": "What you say of me does not come from yourselves; it is the Spirit of my Father speaking in you.",
+      "intercessions": "Christ is the Good Shepherd who laid down his life for his sheep. Let us praise and thank him as we pray:\nNourish your people, Lord.\n\nChrist, you decided to show your merciful love through your holy shepherds,\n— let your mercy always reach us through them.\nNourish your people, Lord.\n\nThrough your vicars you continue to perform the ministry of shepherd of souls,\n— direct us always through our leaders.\nNourish your people, Lord.\nThrough your holy ones, the leaders of your people, you served as physician of our bodies and our spirits,\n— continue to fulfill your ministry of life and holiness in us.\nNourish your people, Lord.\n\nYou taught your flock through the prudence and love of your saints,\n— grant us continual growth in holiness under the direction of our pastors.\nNourish your people, Lord.",
+      "collect": "O God,\nwho through the preaching of Saint Francis Xavier\nwon many peoples to yourself,\ngrant that the hearts of the faithful\nmay burn with the same zeal for the faith\nand that Holy Church may everywhere rejoice\nin an abundance of offspring.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 13:7-9a"
+    },
+    "1203-ep2": {
+      "source": "https://divineoffice.org/1203-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is my light and my help; whom shall I fear?",
+        "I long to look on you, O Lord; do not turn your face from me.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 27",
+        "Psalm 27",
+        "Canticle — Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "Father, you protect and strengthen those who hope in you; you heard the cry of your Son and kept him safe in your tent in the day of evil. Grant that your servants who seek your face in time of trouble may see your goodness in the land of the living."
+      },
+      "responsory": "This is a man who loved his brethren and ever prayed for them.\n— This is a man who loved his brethren and ever prayed for them.\n\nHe spent himself in their service,\n— and ever prayed for them.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— This is a man who loved his brethren and ever prayed for them.",
+      "gospelAntiphon": "This is a faithful and wise steward: the Lord entrusted the care of his household to him, so that he might give them their portion of food at the proper season.",
+      "intercessions": "Jesus Christ is worthy of all praise, for he was appointed high priest among men and their representative before God. We honor him and in our weakness we pray:\nBring salvation to your people, Lord.\n\nYou marvelously illuminated your Church through distinguished leaders and holy men and women,\n— let Christians rejoice always in such splendor.\nBring salvation to your people, Lord.\nYou forgave the sins of your people when their holy leaders like Moses sought your compassion,\n— through their intercession continue to purify and sanctify your holy people.\nBring salvation to your people, Lord.\n\nIn the midst of their brothers and sisters you anointed your holy ones and filled them with the Holy Spirit,\n— fill all the leaders of your people with the same Spirit.\nBring salvation to your people, Lord.\nYou yourself are the only visible possession of our holy pastors,\n— let none of them, won at the price of your blood, remain far from you.\nBring salvation to your people, Lord.\n\nThe shepherds of your Church keep your flock from being snatched out of your hand. Through them you give your flock eternal life,\n— save those who have died, those for whom you gave up your life.\nBring salvation to your people, Lord.",
+      "collect": "O God,\nwho through the preaching of Saint Francis Xavier\nwon many peoples to yourself,\ngrant that the hearts of the faithful\nmay burn with the same zeal for the faith\nand that Holy Church may everywhere rejoice\nin an abundance of offspring.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 5:1-4"
+    },
+    "adv-w01-fri-mp": {
+      "source": "https://divineoffice.org/adv-w01-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you will accept the true sacrifice offered on your altar.",
+        "All the descendants of Israel will glory in the Lord’s gift of victory.",
+        "Let us go into God’s presence singing for joy."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle — Isaiah 45:15-25",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "With joy and gladness we cry out to you, Lord, and ask you: open our hearts to sing your praises and announce your goodness and truth."
+      },
+      "responsory": "Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Our God comes, born as a man of David’s line, enthroned as king for ever, alleluia.",
+      "intercessions": "Through his Son, God the Father revealed his glory to men and women. Therefore, let our joyful cry resound:\nLord, may your name be glorified.\n\nTeach us, Lord, to love each other,\n— as Christ loved us for God’s glory.\nLord, may your name be glorified.\n\nFill us with all joy and peace in faith,\n— that we may walk in the hope and strength of the Holy Spirit.\nLord, may your name be glorified.\nHelp all mankind, Lord, in your loving mercy,\n— be near to those who seek you without knowing it.\nLord, may your name be glorified.\n\nYou call and sanctify the elect,\n— though we are sinners, crown us with eternal happiness.\nLord, may your name be glorified.",
+      "collect": "Stir up your power, we pray, O Lord, and come,\nthat with you to protect us,\nwe may find rescue\nfrom the pressing dangers of our sins,\nand with you to set us free,\nwe may be found worthy of salvation.\nWho live and reign with God the Father\nin the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 30:21, 22"
+    },
+    "adv-w01-fri-ep": {
+      "source": "https://divineoffice.org/adv-w01-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, lay your healing hand upon me, for I have sinned.",
+        "The mighty Lord is with us; the God of Jacob is our stronghold.",
+        "All nations will come and worship before you, O Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 41",
+        "Psalm 46",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, healer of soul and body, You said: Blessed are the merciful, they will obtain mercy. Teach us to come to the aid of the needy in a spirit of love, that we in turn may be received and strengthened by you.",
+        "1": "All-powerful Father, the refuge and strength of your people, you protect in adversity and defend in prosperity those who put their trust in you. May they persevere in seeking your will and find their way to you through obedience."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "Out of Egypt I have called my Son; he will come to save his people.",
+      "intercessions": "With confidence let us call upon Christ, the shepherd and guardian of our souls:\nLord, have mercy on us.\n\nGood shepherd of God’s flock,\n— gather all into your Church.\nLord, have mercy on us.\n\nLord Jesus, help the shepherds of your pilgrim people,\n— until you come again may they zealously feed your flock.\nLord, have mercy on us.\n\nChoose from among us heralds of your word,\n— to proclaim your Gospel to the ends of the earth.\nLord, have mercy on us.\nTake pity on all who struggle and fall along the way,\n— may they find a friend to help them.\nLord, have mercy on us.\n\nShow your glory in heaven,\n— to those who listen to your voice on earth.\nLord, have mercy on us.",
+      "collect": "Stir up your power,\nwe pray, O Lord, and come,\nthat with you to protect us,\nwe may find rescue\nfrom the pressing dangers of our sins,\nand with you to set us free,\nwe may be found worthy of salvation.\nWho live and reign with God the Father\nin the unity of the Holy Spirit,\nGod, for ever and ever\n— Amen.",
+      "readingRef": "2 Peter 3:8b-9"
+    },
+    "adv-w01-sat-mp": {
+      "source": "https://divineoffice.org/adv-w01-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Dawn finds me ready to welcome you, my God.",
+        "The Lord is my strength, and I shall sing his praise, for he has become my Savior.",
+        "O praise the Lord, all you nations."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Exodus 15:1-4a, 8-13, 17-18",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Banish your fears, O people of Zion; God, your own God, is coming to you, alleluia.",
+      "intercessions": "Let us pray to God our Father, who from of old has called his people to salvation:\nLord, protect your people.\n\nYou promised to plant the seed of justice among your people,\n— protect the holiness of your Church.\nLord, protect your people.\n\nLord, teach all men and women to listen to your word,\n— and help believers to persevere in holiness.\nLord, protect your people.\nKeep us in the love of your Spirit,\n— that we may receive the mercy of your Son who is to come.\nLord, protect your people.\n\nFather most merciful, strengthen us to the last,\n— until the day of the coming of Jesus Christ our Lord.\nLord, protect your people.",
+      "collect": "O God, who sent your Only Begotten Son into this world\nto free the human race from its ancient enslavement,\nbestow on those who devoutly await him\nthe grace of your compassion from on high,\nthat we may attain the prize of true freedom.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 11:1-5"
+    },
+    "adv-w02-sun-ep1": {
+      "source": "https://divineoffice.org/adv-w02-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "New city of Zion, let your heart sing for joy; see how humbly your King comes to save you.",
+        "Have courage, all of you, lost and fearful; take heart and say: Our God will come to save us, alleluia.",
+        "The law was given to Moses, but grace and truth come through Jesus Christ."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "Come to us, Lord, and may your presence be our peace; with hearts made perfect we shall rejoice in your companionship for ever.",
+      "intercessions": "Jesus is Lord, born of the Virgin Mary. Let us pray to him with joyful hearts:\nCome, Lord Jesus!\n\nSon of God, you will come again as the true messenger of the covenant,\n— help the world to recognize and accept you.\nCome, Lord Jesus!\nBorn in your Father’s heart, you became man in the womb of the Virgin Mary,\n— free us from the tyranny of change and decay.\nCome, Lord Jesus!\n\nIn your life on earth, you came to die as a man,\n— save us from everlasting death.\nCome, Lord Jesus!\n\nWhen you come to judge, show us your loving mercy,\n— and forgive us our weaknesses.\nCome, Lord Jesus!\n\nLord Jesus, by your death you have given hope to those who have died,\n— be merciful to those for whom we now pray.\nCome, Lord Jesus!",
+      "collect": "Almighty and merciful God,\nmay no earthly undertaking hinder those\nwho set out in haste to meet your Son,\nbut may our learning of heavenly wisdom\ngain us admittance to his company.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Thessalonians 5:23-24"
+    },
+    "adv-w02-sun-mp": {
+      "source": "https://divineoffice.org/adv-w02-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Zion is our mighty citadel, our saving Lord its wall and its defense; throw open the gates, for our God is here among us, alleluia.",
+        "Come to the waters, all you who thirst; seek the Lord while he can be found, alleluia.",
+        "Our God will come with great power to enlighten the eyes of his servants, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle — Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are the one who is to come,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "I am sending my angel before me to prepare the way for my coming.",
+      "intercessions": "To the Lord Jesus Christ, judge of the living and the dead, let us pray:\nCome, Lord Jesus!\n\nLord Jesus, you came to save sinners,\n— protect us in times of temptation.\nCome, Lord Jesus!\n\nYou will come in glory to be our judge,\n— show in us your power to save.\nCome, Lord Jesus!\n\nHelp us to keep the precepts of your law with the strength of the Spirit,\n— and to look forward in love to your coming.\nCome, Lord Jesus!\nYou are praised throughout the ages; in your mercy help us to live devoutly and temperately in this life,\n— as we wait in joyful hope for the revelation of your glory.\nCome, Lord Jesus!",
+      "collect": "Almighty and merciful God,\nmay no earthly undertaking hinder those\nwho set out in haste to meet your Son,\nbut may our learning of heavenly wisdom\ngain us admittance to his company.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 13:11-12"
+    },
+    "adv-w02-sun-ep2": {
+      "source": "https://divineoffice.org/adv-w02-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will come on the clouds of heaven with great power and might, alleluia.",
+        "The Lord will come; he is true to his word. If he seems to delay, keep watch for him, for he will surely come, alleluia.",
+        "The Lord our king and lawgiver will come to save us."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name and make all nations a holy people for you.",
+        "1": "Father, creator and ruler of heaven and earth, you made man in your likeness to subdue the earth and master it, and to recognize the work of your hands in created beauty. Grant that your children, thus surrounded on all sides by signs of your presence, may live continually in Christ, praising you through him and with him."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "Blessed are you, O Virgin Mary, for your great faith; all that the Lord promised you will come to pass through you, alleluia.",
+      "intercessions": "To Christ the Lord, who was born of the Virgin Mary, let us pray with joyful hearts:\nCome, Lord Jesus!\nLord Jesus, in the mystery of your incarnation, you revealed your glory to the world,\n— give us new life by your coming.\nCome, Lord Jesus!\n\nYou have taken our weakness upon yourself,\n— grant us your mercy.\nCome, Lord Jesus!\n\nYou redeemed the world from sin by your first coming in humility,\n— free us from all guilt when you come again in glory.\nCome, Lord Jesus!\n\nYou live and rule over all,\n— in your goodness bring us to our eternal inheritance.\nCome, Lord Jesus!\nYou sit at the right hand of the father,\n— gladden the souls of the dead with your light.\nCome, Lord Jesus!",
+      "collect": "Almighty and merciful God,\nmay no earthly undertaking hinder those\nwho set out in haste to meet your Son,\nbut may our learning of heavenly wisdom\ngain us admittance to his company.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 4:4-7"
+    },
+    "1208-mp": {
+      "source": "https://divineoffice.org/1208-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Mother, how pure you are, you are untouched by sin; yours was the privilege to carry God within you.",
+        "The Lord God Most High has blessed you, Virgin Mary, above all the women of the earth.",
+        "Sinless Virgin, let us follow joyfully in your footsteps; draw us after you in the fragrance of your holiness."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "The God of power has given me his strength.\n— The God of power has given me his strength.\n\nHe has kept me in the way of holiness.\n— And has given me his strength.\nGlory to the Father, and to the Son, and to the Holy Spirit.\n— The God of power has given me his strength.",
+      "gospelAntiphon": "The Lord God said to the serpent: I will make you enemies, you and the woman, your offspring and her offspring; she will crush your head, alleluia.",
+      "intercessions": "Let us glorify our Savior, who chose the Virgin Mary for his mother. Let us ask him:\nMay your mother intercede for us, Lord.\n\nSun of Justice, the Immaculate Virgin was the white dawn announcing your rising,\n— grant that we may always live in the light of your coming.\nMay your mother intercede for us, Lord.\nSavior of the world, by your redeeming might you preserved your mother beforehand from all stain of sin,\n— keep watch over us, lest we sin.\nMay your mother intercede for us, Lord.\n\nYou are our redeemer, who made the Immaculate Virgin Mary your purest home and the sanctuary of the Holy Spirit,\n— make us temples of your Spirit for ever.\nMay your mother intercede for us, Lord.\nKing of kings, you lifted up your mother, body and soul, into heaven;\n— help us to fix our thoughts on things above.\nMay your mother intercede for us, Lord.",
+      "collect": "O God,\nwho by the Immaculate Conception of the Blessed Virgin\nprepared a worthy dwelling for your Son,\ngrant, we pray, that, as you preserved her\nfrom every stain by virtue of the Death of your Son,\nwhich you foresaw, so, through her intercession,\nwe, too, may be cleansed and admitted to your presence.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 43:1"
+    },
+    "1208-ep2": {
+      "source": "https://divineoffice.org/1208-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "You are all beautiful, O Mary; in you there is no trace of original sin.",
+        "You are the glory of Jerusalem, the joy of Israel; you are the fairest honor of our race.",
+        "The robe you wear is white as spotless snow; your face is radiant like the sun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 127",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "By this I know you have chosen me.\n— By this I know you have chosen me.\nYou have not let my enemy triumph over me.\n— You have chosen me.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— By this I know you have chosen me.",
+      "gospelAntiphon": "Hail Mary, full of grace; the Lord is with you; blessed are you among women, and blessed is the fruit of your womb, alleluia.",
+      "intercessions": "Let us praise God our almighty Father, who wished that Mary, his Son’s mother, be celebrated by each generation. Now in need we ask:\nMary, full of grace, intercede for us.\n\nO God, worker of miracles, you made the immaculate Virgin Mary share, body and soul, in your Son’s glory in heaven, — direct the hearts of your children to that same glory.\nMary, full of grace, intercede for us.\nYou made Mary our mother. Through her intercession grant strength to the weak, comfort to the sorrowing, pardon to sinners,\n— salvation and peace to all.\nMary, full of grace, intercede for us.\n\nYou made Mary full of grace,\n— grant all men the joyful abundance of your grace.\nMary, full of grace, intercede for us.\n\nMake your Church of one mind and one heart in love,\n— and help all those who believe to be one in prayer with Mary, the mother of Jesus.\nMary, full of grace, intercede for us.\nYou crowned Mary queen of heaven,\n— may all the dead rejoice in your kingdom with the saints for ever.\nMary, full of grace, intercede for us.",
+      "collect": "O God,\nwho by the Immaculate Conception of the Blessed Virgin\nprepared a worthy dwelling for your Son,\ngrant, we pray, that, as you preserved her\nfrom every stain by virtue of the Death of your Son,\nwhich you foresaw, so, through her intercession,\nwe, too, may be cleansed and admitted to your presence.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 5:20-21"
+    },
+    "adv-w02-wed-mp": {
+      "source": "https://divineoffice.org/adv-w02-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O God, all your ways are holy; what god can compare with our God!",
+        "My heart leaps up with joy to the Lord, for he humbles only to exalt us.",
+        "The Lord is king, let the earth rejoice."
+      ],
+      "psalmodyRefs": [
+        "Psalm 77",
+        "Canticle – 1 Samuel 2:1-10",
+        "Psalm 97"
+      ],
+      "psalmPrayers": {
+        "0": "Father, you established your ancient covenant by signs and wonders, but more wondrously you confirmed the new one through the sacrifice of your Son. Guide your Church through the pathways of life, that we may be led to the land of promise and celebrate your name with lasting praise.",
+        "2": "Father, you clothe the sky with light and the depths of the ocean with darkness. Among the sons of men you work wonders, and rain terror upon the enemy. Look upon your servants. Do not try us by fire but bring us rejoicing to the shelter of your home."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "He will be enthroned in David’s place to be king for ever, Alleluia.",
+      "intercessions": "To Jesus Christ our Lord, who came among us in his mercy,\nlet us constantly cry out with joy:\nCome, Lord Jesus!\n\nYou came from the Father to take on our human nature,\n— now set free what was harmed in us by sin.\nCome, Lord Jesus!\n\nOne day you will come again in glory to your chosen people,\n— come to us today and help us sinners to recognize your mercy and tender love.\nCome, Lord Jesus!\n\nWe glory in praising you, Lord Jesus,\n— come and bring us your salvation.\nCome, Lord Jesus!\nThrough faith you lead us into light,\n— may we reveal your justice through our deeds.\nCome, Lord Jesus!",
+      "collect": "Almighty God, who command us\nto prepare the way for Christ the Lord,\ngrant in your kindness, we pray,\nthat no infirmity may weary us\nas we long for the comforting presence\nof our heavenly physician.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 7:14b-15"
+    },
+    "adv-w02-wed-ep": {
+      "source": "https://divineoffice.org/adv-w02-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Eagerly we await the fulfillment of our hope, the glorious coming of our Savior.",
+        "May God turn his radiant face toward us and fill us with his blessings.",
+        "Through him all things were made; he holds all creation together in himself."
+      ],
+      "psalmodyRefs": [
+        "Psalm 62",
+        "Psalm 67",
+        "Canticle — Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you reward each one according to his works. Hear us as we pour out our hearts to you seeking your grace and secure protection. We look to you for our stable hope in a constantly, changing world.",
+        "1": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence: and bring forth a harvest of justice."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "Zion, you will be renewed, and you will see the Just One who is coming to you.",
+      "intercessions": "We humbly pray to Jesus Christ, who rescues us from the darkness of sin, and in faith we cry out:\nCome, Lord Jesus!\n\nLord, gather together all the people of the earth,\n— and establish with them your everlasting covenant.\nCome, Lord Jesus!\n\nLamb of God, you came of old to take away the sin of the world,\n— purge us from the dregs of our guilt.\nCome, Lord Jesus!\n\nYou came to recover what was lost,\n— come once again in your mercy lest you punish what you have recovered.\nCome, Lord Jesus!\nOur faith seeks you out,\n— let us find everlasting joy with you when you come.\nCome, Lord Jesus!\n\nYou will judge the living and the dead,\n— graciously gather the dead into the ranks of the blessed.\nCome, Lord Jesus!",
+      "collect": "Almighty God, who command us\nto prepare the way for Christ the Lord,\ngrant in your kindness, we pray,\nthat no infirmity may weary us\nas we long for the comforting presence\nof our heavenly physician.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 4:5"
+    },
+    "adv-w02-thu-mp": {
+      "source": "https://divineoffice.org/adv-w02-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Stir up your mighty power, Lord; come to our aid.",
+        "The Lord has worked marvels for us; make it known to the ends of the world.",
+        "Ring out your joy to God our strength."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle — Isaiah 12:1-6",
+        "Psalm 81"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
+        "2": "Lord God, open our mouths to proclaim your glory. Help us to leave sin behind and to rejoice in professing your name."
+      },
+      "responsory": "Your light will come, Jerusalem;\nthe Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem;\nthe Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem;\nthe Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "I will help you, says the Lord. I am your Savior, the Holy One of Israel.",
+      "intercessions": "Let us pray to God our Father who sent his Son to save mankind:\nShow us your mercy, Lord!\n\nFather most merciful, we confess our faith in your Christ with our words,\n— keep us from denying him in our actions.\nShow us your mercy, Lord!\n\nYou have sent your Son to rescue us,\n— remove every sorrow from the face of the earth and from our country.\nShow us your mercy, Lord!\nOur land looks forward with delight to the approach of your Son,\n— let it experience the fullness of your joy.\nShow us your mercy, Lord!\n\nThrough your mercy make us live holy and chaste lives in this world,\n— eagerly awaiting the blessed hope and coming of Christ in glory.\nShow us your mercy, Lord!",
+      "collect": "Stir up our hearts, O Lord,\nto make ready the paths\nof your Only Begotten Son,\nthat through his coming,\nwe may be found worthy to serve you\nwith minds made pure.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 45:8"
+    },
+    "adv-w02-thu-ep": {
+      "source": "https://divineoffice.org/adv-w02-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "I have made you the light of all nations to carry my salvation to the ends of the earth.",
+        "The Lord will save the children of the poor and rescue them from slavery.",
+        "Now the victorious reign of our God has begun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 72",
+        "Psalm 72",
+        "Canticle — Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "We call upon your name, Father, and pronounce it blessed above the earth. Give your people the fullness of peace and justice in your kingdom."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "The one who is coming after me existed before me; I am not worthy to untie his sandals.",
+      "intercessions": "To Christ our Lord, who humbled himself for our sake, we joyfully say:\nCome, Lord Jesus.\nLord Jesus, by your coming you rescued the world from sin,\n— cleanse our souls and bodies from guilt.\nCome, Lord Jesus.\n\nBy the mystery of your incarnation we are made your brothers and sisters,\n— do not let us become estranged from you.\nCome, Lord Jesus.\n\nDo not judge harshly,\n— those you redeemed with such great cost.\nCome, Lord Jesus.\n\nNo age, O Christ, is without your goodness and holy riches,\n— enable us to merit the unfading crown of glory.\nCome, Lord Jesus.\nLord, to you we commend the souls of your departed servants,\n— having died to the world, may they be alive in you for ever.\nCome, Lord Jesus.",
+      "collect": "Stir up our hearts, O Lord,\nto make ready the paths\nof your Only Begotten Son,\nthat through his coming,\nwe may be found worthy to serve you\nwith minds made pure.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:7-8, 9b"
+    },
+    "adv-w02-fri-mp": {
+      "source": "https://divineoffice.org/adv-w02-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "A humble, contrite heart, O God, you will not spurn.",
+        "Even in your anger, Lord, you will remember compassion.",
+        "O praise the Lord, Jerusalem!"
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Habakkuk 3:2-4, 13a, 15-19",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "Lord, you established peace within the borders of Jerusalem. Give the fullness of peace now to your faithful people. May peace rule us in this life and possess us in eternal life. You are about to fill us with the best of wheat: grant that what we see dimly now as in a mirror, we may come to perceive clearly in the brightness of your truth."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Say to the fainthearted: Take courage! The Lord our God is coming to save us.",
+      "intercessions": "To Christ our Redeemer, who comes to save us from our sins, let us cry out with joy:\nCome, Lord Jesus!\n\nThe prophets of old foretold your birth among us,\n— now make virtue come to life in us.\nCome, Lord Jesus!\n\nWe proclaim your saving work,\n— now grant us your salvation.\nCome, Lord Jesus!\n\nYou came to heal the contrite,\n— heal the weaknesses of your people.\nCome, Lord Jesus!\nYou came and saw fit to reconcile the world, when you come again in judgment,\n— free us from the torments of punishment.\nCome, Lord Jesus!",
+      "collect": "Grant that your people,\nwe pray, almighty God,\nmay be ever watchful for the coming of your Only Begotten Son,\nthat as the author of our salvation himself has taught us,\nwe may hasten alert and with lighted lamps\nto meet him when he comes.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 30:21, 22"
+    },
+    "adv-w02-fri-ep": {
+      "source": "https://divineoffice.org/adv-w02-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, keep my soul from death, never let me stumble.",
+        "My help comes from the Lord, who made heaven and earth.",
+        "King of all the ages, your ways are perfect and true."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 121",
+        "Canticle — Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "0": "God of power and mercy, through your Son’s passion and resurrection you have freed us from the bonds of death and the anguish of separation from you. Be ever with us on our pilgrimage; then we shall sing rather than weep. Keep our feet from stumbling, so that we may be able to follow you until we come to eternal rest.",
+        "1": "Lord Jesus Christ, you have prepared a quiet place for us in your Father’s eternal home. Watch over our welfare on this perilous journey, shade us from the burning heat of day, and keep our lives free of evil until the end."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "Rejoicing you shall draw water from the wellsprings of the Saviour.",
+      "intercessions": "To our Redeemer who came to bring good news to the poor, let us earnestly pray:\nLet all men see your glory!\n\nShow yourself to those who have never known you,\n— let them see your saving work.\nLet all men see your glory!\nLet your name be preached to the ends of the earth,\n— that all may find the way to you.\nLet all men see your glory!\n\nYou first came to save the world,\n— now come again and save those who believe in you.\nLet all men see your glory!\n\nYou brought freedom to us by saving us,\n— continue to save us and make us free.\nLet all men see your glory!\n\nYou came once as a man; you will return in judgment,\n— bring eternal reward to those who have died.\nLet all men see your glory!",
+      "collect": "Grant that your people,\nwe pray, almighty God,\nmay be ever watchful for the coming of your Only Begotten Son,\nthat as the author of our salvation himself has taught us,\nwe may hasten alert and with lighted lamps\nto meet him when he comes.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Peter 3:8b-9"
+    },
+    "1212-mp": {
+      "source": "https://divineoffice.org/1212-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Who is this that comes forth like the dawn, as beautiful as the moon, as resplendent as the sun?",
+        "You are the glory of Jerusalem, the joy of Israel; you are the fairest honor of our race.",
+        "O Virgin Mary, how great your cause for joy; God found you worthy to bear Christ our Savior."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "I lift up my eyes toward the mountains, from where shall help come to me?\n— I lift up my eyes toward the mountains, from where shall help come to me?\n\nLord, for you I rise early, give me a sign of your favor.\n— From where shall help come to me?\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— I lift up my eyes toward the mountains, from where shall help come to me?",
+      "gospelAntiphon": "Go up onto a high mountain, Jerusalem, herald of good news! Say to the cities of Judah: Here is your God! Like a shepherd he feeds his flock.",
+      "intercessions": "Let us praise God, our all-powerful Father, and say:\nLord, Creator of life, hear us.\n\nBlessed are you, Lord of the universe. In your great goodness you sent us the Mother of your Son,\n— to call us to faith and make us members of your holy people.\nLord, Creator of life, hear us.\nWe bless you, Lord, because you have hidden your message from those who are wise and prudent in the ways of this world,\n— and have revealed it to the lowly and the poor.\nLord, Creator of life, hear us.\n\nYou call us to be your worthy and trusted messengers,\n— may we carry to all peoples and nations your words of love and peace.\nLord, Creator of life, hear us.\nBy the presence of Mary, you made the desert bloom with flowers,\n— may the Blessed Virgin Mary’s love transform us into the image of Christ.\nLord, Creator of life, hear us.\n\nMake us attentive to the message of Our Lady of Guadalupe,\n— so that we may deserve to meet Mary along the path of our lives.\nLord, Creator of life, hear us.",
+      "collect": "O God,\nFather of mercies,\nwho placed your people\nunder the singular protection\nof your Son’s most holy Mother,\ngrant that all who invoke\nthe Blessed Virgin of Guadalupe,\nmay seek with ever more lively faith\nthe progress of peoples\nin the ways of justice and of peace.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Zechariah 2:14-17"
+    },
+    "adv-w03-sun-ep1": {
+      "source": "https://divineoffice.org/adv-w03-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Rejoice, Jerusalem, let your joy overflow; your Savior will come to you, alleluia.",
+        "I, the Lord, am coming to save you; already I am near; soon I will free you from your sins.",
+        "Lord, send the Lamb, the ruler of the earth, from the rock in the desert to the mountain of the daughter of Zion."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 116",
+        "Canticle — Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, Word of God, surrendering the brightness of your glory you became man so that we may be raised from the dust to share your very being. May there be innumerable children of the Church to offer homage to your name from the rising of the sun to its setting.",
+        "1": "Father, precious in your sight is the death of the saints, but precious above all is the love with which Christ suffered to redeem us. In this life we will fill up in our own flesh what is still lacking in the sufferings of Christ; accept this as our sacrifice of praise, and we shall even now taste the joy of the new Jerusalem."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "There was no god before me and after me there will be none; every knee shall bend in worship, and every tongue shall praise me.",
+      "intercessions": "Jesus Christ is the joy and happiness of all who look forward to his coming. Let us call upon him and say:\nCome, Lord, and do not delay!\n\nIn joy, we wait for your coming,\n— come, Lord Jesus.\nCome, Lord, and do not delay!\nBefore time began, you shared life with the Father,\n— come now and save us.\nCome, Lord, and do not delay!\n\nYou created the world and all who live in it,\n— come to redeem the work of your hands.\nCome, Lord, and do not delay!\n\nYou did not hesitate to become man, subject to death,\n— come to free us from the power of death.\nCome, Lord, and do not delay!\n\nYou came to give us life to the full,\n— come and give us your unending life.\nCome, Lord, and do not delay!\nYou desire all people to live in love in your kingdom,\n— come and bring together those who long to see you face to face.\nCome, Lord, and do not delay!",
+      "collect": "O God, who see how your people\nfaithfully await the feast of the Lord’s Nativity,\nenable us, we pray,\nto attain the joys of so great a salvation,\nand to celebrate them always\nwith solemn worship and glad rejoicing.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Thessalonians 5:23-24"
+    },
+    "adv-w03-sun-mp": {
+      "source": "https://divineoffice.org/adv-w03-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is coming without delay. He will reveal things kept hidden and show himself to all mankind, alleluia.",
+        "Mountains and hills shall be level, crooked paths straight, rough ways smooth. Come, Lord, do not delay, alleluia.",
+        "I shall enfold Zion with my salvation and shed my glory around Jerusalem, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 93",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 148"
+      ],
+      "psalmPrayers": {
+        "0": "All power and all authority in heaven and on earth have been given to you, Lord Jesus; you rule with decrees that are firm and trustworthy. Be with us always so that we may make disciples whose holiness will be worthy of your house.",
+        "2": "Lord, extolled in the heights by angelic powers, you are also praised by all earth’s creatures, each in its own way. With all the splendor of heavenly worship, you still delight in such tokens of love as earth can offer. May heaven and earth together acclaim you as King. May the praise that is sung in heaven resound in the heart of every creature on earth."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are the one who is to come,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "When John, in prison, heard of the works of Christ, he sent two of his disciples with this question: Are you the One whose coming was foretold, or should we look for another?",
+      "intercessions": "To God our Father, who has given us the grace to wait in joyful hope for the revelation of our Lord Jesus Christ, let us make our prayer:\nShow us your mercy, Lord.\n\nSanctify us, in mind and body,\n— keep us without reproach until the coming of your Son:\nShow us your mercy, Lord.\n\nMake us walk this day in holiness,\n— and live upright and devout lives in this world:\nShow us your mercy, Lord.\n\nMay we be clothed in our Lord Jesus Christ,\n— and filled with the Holy Spirit:\nShow us your mercy, Lord.\nLord, help us to stand watchful and ready,\n— until your Son is revealed in all his glory:\nShow us your mercy, Lord.",
+      "collect": "O God, who see how your people\nfaithfully await the feast of the Lord’s Nativity,\nenable us, we pray,\nto attain the joys of so great a salvation,\nand to celebrate them always\nwith solemn worship and glad rejoicing.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 13:11-12"
+    },
+    "adv-w03-sun-ep2": {
+      "source": "https://divineoffice.org/adv-w03-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Our Lord will come to claim his glorious throne in the assembly of the princes.",
+        "Let the mountains break out with joy and the hills with answering gladness, for the world’s true light, the Lord, comes with power and might.",
+        "Let us live in holiness and love as we patiently await our blessed hope, the coming of our Savior."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Merciful and gentle Lord, you are the crowning glory of all the saints. Give us, your children, the gift of obedience which is the beginning of wisdom, so that we may do what you command and be filled with your mercy."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation.\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "Are you the One whose coming was foretold, or should we look for another? Tell John what you see: the blind have their sight restored, the dead are raised to life, the poor have the good news preached to them, alleluia.",
+      "intercessions": "To Jesus Christ, our Redeemer, the way, the truth, and the life, let us make our humble prayer:\nCome and stay with us, Lord.\nSon of the Most High, your coming was announced to the Virgin Mary by Gabriel,\n— come and rule over your people for ever:\nCome and stay with us, Lord.\n\nHoly One of God, in your presence John the Baptist leapt in Elizabeth’s womb,\n— bring the joy of salvation to all the earth:\nCome and stay with us, Lord.\n\nJesus the Savior, the angel revealed your name to Joseph the just man,\n— come and save your people from their sins:\nCome and stay with us, Lord.\nLight of the world, for whom Simeon and all the just waited,\n— come and comfort us:\nCome and stay with us, Lord.\n\nO Rising Sun that never sets, Zechariah foretold that you would visit us from above,\n— come and shine on those who dwell in darkness and the shadow of death:\nCome and stay with us, Lord.",
+      "collect": "O God, who see how your people\nfaithfully await the feast of the Lord’s Nativity,\nenable us, we pray,\nto attain the joys of so great a salvation,\nand to celebrate them always\nwith solemn worship and glad rejoicing.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 4:4-5"
+    },
+    "1214-mp": {
+      "source": "https://divineoffice.org/1214-mp/",
+      "edition": "first",
+      "antiphons": [
+        "As morning breaks, we sing of your mercy, Lord, and night will find us proclaiming your fidelity.",
+        "Extol the greatness of our God.",
+        "How wonderful is your name, O Lord, in all creation."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Deuteronomy 32:1-12",
+        "Psalm 8"
+      ],
+      "psalmPrayers": {
+        "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
+        "2": "Almighty Lord, how wonderful is your name. You have made every creature subject to you; make us worthy to give you service."
+      },
+      "responsory": "Let the peoples proclaim the wisdom of the saints.\n— Let the peoples proclaim the wisdom of the saints.\n\nWith joyful praise let the Church tell forth\n— the wisdom of the saints.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Let the peoples proclaim the wisdom of the saints.",
+      "gospelAntiphon": "Those who are learned will be as radiant as the sky in all its beauty; those who instruct the people in goodness will shine like the stars for all eternity.",
+      "intercessions": "Christ is the Good Shepherd who laid down his life for his sheep. Let us praise and thank him as we pray:\nNourish your people, Lord.\n\nChrist, you decided to show your merciful love through your holy shepherds,\n— let your mercy always reach us through them.\nNourish your people, Lord.\n\nThrough your vicars you continue to perform the ministry of shepherd of souls,\n— direct us always through our leaders.\nNourish your people, Lord.\nThrough your holy ones, the leaders of your people, you served as physician of our bodies and our spirits,\n— continue to fulfill your ministry of life and holiness in us.\nNourish your people, Lord.\n\nYou taught your flock through the prudence and love of your saints,\n— grant us continual growth in holiness under the direction of our pastors.\nNourish your people, Lord.",
+      "collect": "O God,\nwho gave the Priest Saint John\nan outstanding dedication\nto perfect self-denial and love of the Cross,\ngrant that, by imitating him closely at all times,\nwe may come to contemplate eternally your glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Wisdom 7:13-14"
+    },
+    "1214-ep2": {
+      "source": "https://divineoffice.org/1214-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Our eyes are fixed intently on the Lord, waiting for his merciful help.",
+        "Our help is in the name of the Lord who made heaven and earth.",
+        "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 123",
+        "Psalm 124",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, we lift our eyes to you and pray: confound the scorn of the proud and graciously show us your mercy.",
+        "1": "Lord Jesus, you foretold that your disciples would be despised on account of your name, but that not a hair of their heads is ever forgotten. In times of persecution, defend and revive us by the power and comfort of the Holy Spirit, so that we can be freed from our enemies and praise your saving help."
+      },
+      "responsory": "In the midst of the Church he spoke with eloquence.\n— In the midst of the Church he spoke with eloquence.\n\nThe Lord filled him with the spirit of wisdom and understanding.\n— He spoke with eloquence.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— In the midst of the Church he spoke with eloquence.",
+      "gospelAntiphon": "O blessed doctor, Saint John, light of holy Church and lover of God’s law, pray to the Son of God for us.",
+      "intercessions": "Jesus Christ is worthy of all praise, for he was appointed high priest among men and their representative before God. We honor him and in our weakness we pray:\nBring salvation to your people, Lord.\n\nYou marvelously illuminated your Church through distinguished leaders and holy men and women,\n— let Christians rejoice always in such splendor.\nBring salvation to your people, Lord.\nYou forgave the sins of your people when their holy leaders like Moses sought your compassion,\n— through their intercession continue to purify and sanctify your holy people.\nBring salvation to your people, Lord.\n\nIn the midst of their brothers and sisters you anointed your holy ones and filled them with the Holy Spirit,\n— fill all the leaders of your people with the same Spirit.\nBring salvation to your people, Lord.\nYou yourself are the only visible possession of our holy pastors,\n— let none of them, won at the price of your blood, remain far from you.\nBring salvation to your people, Lord.\n\nThe shepherds of your Church keep your flock from being snatched out of your hand. Through them you give your flock eternal life,\n— save those who have died, those for whom you gave up your life.\nBring salvation to your people, Lord.",
+      "collect": "O God,\nwho gave the Priest Saint John\nan outstanding dedication\nto perfect self-denial and love of the Cross,\ngrant that, by imitating him closely at all times,\nwe may come to contemplate eternally your glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 3:17-18"
+    },
+    "adv-w03-tue-mp": {
+      "source": "https://divineoffice.org/adv-w03-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you have blessed your land; you have forgiven the sins of your people.",
+        "My soul has yearned for you in the night, and as morning breaks I watch for your coming.",
+        "Lord, let the light of your face shine upon us."
+      ],
+      "psalmodyRefs": [
+        "Psalm 85",
+        "Canticle – Isaiah 26:1-4, 7-9, 12",
+        "Psalm 67"
+      ],
+      "psalmPrayers": {
+        "0": "Show us your mercy, Lord; our misery is known to us. May no evil desires prevail over us, for your glory and love dwell in our hearts.",
+        "2": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Arise, arise! Wake from your slumber, Jerusalem; shake the chain from your neck, captive daughter Zion.",
+      "intercessions": "God the almighty Father stretches forth his hand again to take possession of the remnant of his people. Let us make our prayer to him:\nLord, may your kingdom come.\n\nLord, grant that our works of penance may please you,\n— and that we may be ready for your kingdom which is so near.\nLord, may your kingdom come.\nPrepare a path in our hearts for the coming of your Word,\n— and let his glory be revealed among us.\nLord, may your kingdom come.\n\nBring low the mountains of our pride,\n— and fill up the valleys of our weakness.\nLord, may your kingdom come.\n\nBreak down the wall of hatred that divides the nations,\n— and make level for mankind the paths to peace.\nLord, may your kingdom come.",
+      "collect": "O God,\nwho through your Only Begotten Son\nhave made us a new creation,\nlook kindly, we pray,\non the handiwork of your mercy,\nand at your Son’s coming\ncleanse us from every stain of the old way of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Genesis 49-10"
+    },
+    "adv-w03-tue-ep": {
+      "source": "https://divineoffice.org/adv-w03-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord surrounds his people with his strength.",
+        "Unless you acquire the heart of a child, you cannot enter the kingdom of God.",
+        "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 125",
+        "Psalm 131",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Surround your people, Lord, within the safety of your Church, which you preserve on its rock foundation. Do not let us stretch out our hands to evil deeds, nor be destroyed by the insidious snares of the enemy, but bring us to share the lot of the saints in light.",
+        "1": "Lord Jesus, gentle and humble of heart, you declared that whoever receives a little child in your name receives you, and you promised your kingdom to those who are like children. Never let pride reign in our hearts, but may the Father’s compassion reward and embrace all who willingly bear your gentle yoke."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "Before Mary and Joseph had come together, they learned that Mary was with child by the power of the Holy Spirit, alleluia.",
+      "intercessions": "To the eternal Word who became man to reveal to us the new and living way, let us make our humble prayer:\nCome, Lord, and save us.\n\nGod, in whom we live and move and have our being,\n— come and teach us that you have made us your own.\nCome, Lord, and save us.\n\nYou are not far from each of us,\n— show yourself to all who search for you.\nCome, Lord, and save us.\n\nFather of the poor and consoler of the afflicted,\n— set captives free, give joy to those who mourn.\nCome, Lord, and save us.\nYou hate death and love life,\n— free all mankind from eternal death.\nCome, Lord, and save us.",
+      "collect": "O God,\nwho through your Only Begotten Son\nhave made us a new creation,\nlook kindly, we pray,\non the handiwork of your mercy,\nand at your Son’s coming\ncleanse us from every stain of the old way of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See 1 Corinthians 1:4-9"
+    },
+    "adv-w03-wed-mp": {
+      "source": "https://divineoffice.org/adv-w03-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Give joy to your servant, Lord, to you I lift up my heart.",
+        "Blessed is the upright man, who speaks the truth.",
+        "Let us celebrate with joy in the presence of our Lord and King."
+      ],
+      "psalmodyRefs": [
+        "Psalm 86",
+        "Canticle – Isaiah 33:13-16",
+        "Psalm 98"
+      ],
+      "psalmPrayers": {
+        "0": "God of mercy and goodness, when Christ called out to you in torment, you heard him and gave him victory over death because of his love for you. We already know the affection you have for us; fill us with a great love of your name, and we will proclaim you more boldly before men and happily lead them to celebrate your glory.",
+        "2": "Lord Jesus, you have revealed your justice to all nations. We stood condemned and you came to be judged in our place. Send your saving power on us and when you come in glory bring your mercy to those for whom you were condemned."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Be comforted, my people; be comforted, says the Lord your God.",
+      "intercessions": "The Word of God humbled himself to dwell with us so that we might see his glory. Rejoicing in hope, let us call upon him:\nEmmanuel, be with us.\n\nRuler, just and righteous,\n— bring justice to the poor and the oppressed.\nEmmanuel, be with us.\n\nKing of peace, you beat swords into plowshares and spears into pruning hooks,\n— turn hatred into love and our grievances into forgiveness.\nEmmanuel, be with us.\nYou do not judge by appearances,\n— recognize those who are your own.\nEmmanuel, be with us.\n\nWhen you come with power and might upon the clouds,\n— grant that we may come before you without shame.\nEmmanuel, be with us.",
+      "collect": "Grant, we pray, almighty God,\nthat the coming solemnity of your Son\nmay bestow healing upon us in this present life\nand bring us the rewards of life eternal.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 7:14b-15"
+    },
+    "adv-w03-wed-ep": {
+      "source": "https://divineoffice.org/adv-w03-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Those who sow in tears will reap in joy.",
+        "May the Lord build our house and guard our city.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 126",
+        "Psalm 127",
+        "Canticle — Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you have raised us from the earth; may you let the seeds of justice, which we have sown in tears, grow and increase in your sight. May we reap in joy the harvest we hope for patiently.",
+        "1": "You command the seed to rise, Lord God, though the farmer is unaware. Grant that those who labor for you may trust not in their own work but in your help. Remembering that the land is brought to flower not with human tears but with those of your Son, may the Church rely only upon your gifts."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\n\nGlory to the Father, and to the Son, and to the Holy Spirit.\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "You, O Lord, are the One whose coming was foretold; we long for you to come and set your people free.",
+      "intercessions": "Let us pray to God the Father, who sent his Son to bring us endless peace:\nLord, your kingdom come.\n\nFather most holy, look kindly on your Church,\n— come and visit this vine which your own right hand has planted.\nLord, your kingdom come.\n\nBe mindful, Lord, of all the sons of Abraham,\n— fulfill the promises you made to their fathers.\nLord, your kingdom come.\n\nMerciful God, look kindly upon men and women of every race,\n— may they honor you for your goodness.\nLord, your kingdom come.\nEternal Shepherd, visit the sheep of your flock,\n— and gather them together into one fold.\nLord, your kingdom come.\n\nRemember those who have gone forth from this world in your peace,\n— lead them into glory with your Son.\nLord, your kingdom come.",
+      "collect": "Grant, we pray, almighty God,\nthat the coming solemnity of your Son\nmay bestow healing upon us in this present life\nand bring us the rewards of life eternal.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 4:5"
+    },
+    "1217-adv-w03-thu-mp": {
+      "source": "https://divineoffice.org/1217-adv-w03-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "To you, O Lord, I lift up my soul; come and rescue me, for you are my refuge and my strength.",
+        "Bless those, O Lord, who have waited for your coming; let your prophets prove to be true.",
+        "Turn to us, O Lord, make haste to help your people."
+      ],
+      "psalmodyRefs": [
+        "Psalm 87",
+        "Canticle – Isaiah 40:10-17",
+        "Psalm 99"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, your only Son wept over ancient Jerusalem, soon to be destroyed for its lack of faith. He established the new Jerusalem firmly upon the rock and made it the mother of the faithful. Make us rejoice in your Church, and grant that all people may be reborn into the freedom of your Spirit.",
+        "2": "God, you are the source of all holiness. Though no one can see you and live, you give life most generously, and in an even greater way restore it. Sanctify your priests through your life-giving Word, and consecrate your people in his blood until our eyes see your face."
+      },
+      "responsory": "Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Believe me, the kingdom of God is at hand; I tell you solemnly, your Savior will not delay his coming.",
+      "intercessions": "Let us pray to God our Father, who from of old has called his people to salvation:\nLord, protect your people.\n\nYou promised to plant the seed of justice among your people,\n— protect the holiness of your Church.\nLord, protect your people.\n\nLord, teach all men and women to listen to your word,\n— and help believers to persevere in holiness.\nLord, protect your people.\nKeep us in the love of your Spirit,\n— that we may know the mercy of your Son who is to come.\nLord, protect your people.\n\nFather most merciful, strengthen us to the last,\n— until the day of the coming of Jesus Christ our Lord.\nLord, protect your people.",
+      "collect": "O God, Creator and Redeemer of human nature,\nwho willed that your Word should take flesh\nin an ever-virgin womb,\nlook with favor on our prayers,\nthat your Only Begotten Son,\nhaving taken to himself our humanity,\nmay be pleased to grant us a share in his divinity.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 11:1-3a"
+    },
+    "1218-adv-w03-fri-mp": {
+      "source": "https://divineoffice.org/1218-adv-w03-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Our King will come from Zion; the Lord, God-is-with-us, is his mighty name.",
+        "Wait for the Lord and he will come to you with his saving power.",
+        "Eagerly I watch for the Lord; I wait in joyful hope for the coming of God my Savior."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Jeremiah 14:17-21",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "God, devoted to us as a Father, you created us as a sign of your power and elected us your people to show your goodness, accept the thanks your children offer that all people may enter your courts praising you in song."
+      },
+      "responsory": "Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Let everything within you watch and wait for the Lord our God draws near.",
+      "intercessions": "To the Lord Jesus Christ, judge of the living and the dead, let us pray:\nCome, Lord Jesus!\nLord Jesus, you came to save sinners,\n— protect us in times of temptation.\nCome, Lord Jesus!\n\nYou will come in glory to be our judge,\n— show in us your power to save.\nCome, Lord Jesus!\n\nHelp us to keep the precepts of your law with the strength of the Spirit,\n— and to look forward in love to your coming.\nCome, Lord Jesus!\n\nYou are praised throughout the ages; in your mercy help us to live devoutly and temperately in this life,\n— as we wait in joyful hope for the revelation of your glory.\nCome, Lord Jesus!",
+      "collect": "Grant,\nwe pray, almighty God,\nthat we, who are weighed down from of old\nby slavery beneath the yoke of sin,\nmay be set free by the newness\nof the long-awaited Nativity\nof your Only Begotten Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 13:11-12"
+    },
+    "1218-adv-w03-fri-ep": {
+      "source": "https://divineoffice.org/1218-adv-w03-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Our King will come from Zion; the Lord, God-is-with-us, is his mighty name.",
+        "Wait for the Lord and he will come to you with his saving power.",
+        "Eagerly I watch for the Lord; I wait in joyful hope for the coming of God my Savior."
+      ],
+      "psalmodyRefs": [
+        "Psalm 135",
+        "Psalm 135",
+        "Canticle — Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "1": "Father, your name and your memory last forever. We stand to pray and praise you with psalms of joy. We ask you in your kindness to have mercy on us in our lowliness."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "O sacred Lord of ancient Israel, who showed yourself to Moses in the burning bush, who gave him the holy law on Sinai mountain: come, stretch out your mighty hand to set us free.",
+      "intercessions": "To Christ the Lord, who was born of the Virgin Mary, let us pray with joyful hearts:\nCome, Lord Jesus!\n\nLord Jesus, in the mystery of your incarnation, you revealed your glory to the world,\n— give us new life by your coming.\nCome, Lord Jesus!\nYou have taken our weakness upon yourself,\n— grant us your mercy.\nCome, Lord Jesus!\n\nYou redeemed the world from sin by your first coming in humility,\n— free us from all guilt when you come again in glory.\nCome, Lord Jesus!\n\nYou live and rule over all,\n— in your goodness bring us to our eternal inheritance.\nCome, Lord Jesus!\n\nYou sit at the right hand of the father,\n— gladden the souls of the dead with your light.\nCome, Lord Jesus!",
+      "collect": "Grant,\nwe pray, almighty God,\nthat we, who are weighed down from of old\nby slavery beneath the yoke of sin,\nmay be set free by the newness\nof the long-awaited Nativity\nof your Only Begotten Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 4:4-5"
+    },
+    "1219-adv-w03-sat-mp": {
+      "source": "https://divineoffice.org/1219-adv-w03-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Our God will come from Lebanon; he shall be as brilliant as the sun.",
+        "May the Holy One from heaven come down like gentle rain; may the earth burst into blossom and bear the tender Savior.",
+        "Israel, prepare yourself to meet the Lord, for he is coming."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Wisdom 9:1-6,9-11",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come, Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "Like the sun in the morning sky, the Savior of the world will dawn; like rain on the meadows he will descend to rest in the womb of the Virgin, alleluia.",
+      "intercessions": "To Christ our Redeemer, who will come again to free from the power of death all those who return to him, let us humbly pray:\nCome, Lord Jesus!\n\nAs we proclaim your coming, Lord,\n— cleanse our hearts of every vain desire.\nCome, Lord Jesus!\n\nLord, may the Church which you founded,\n— proclaim your greatness to all peoples.\nCome, Lord Jesus!\n\nYour law is a light to our eyes,\n— let it protect those who trust in you.\nCome, Lord Jesus!\nYou allow the joys of your coming to be foretold to us by your Church,\n— may we receive you with eager devotion.\nCome, Lord Jesus!",
+      "collect": "O God,\nwho through the child-bearing of the holy Virgin\ngraciously revealed the radiance of your glory to the world,\ngrant, we pray,\nthat we may venerate with integrity of faith\nthe mystery of so wondrous an Incarnation\nand always celebrate it with due reverence.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 2:3b"
+    },
+    "1220-adv-w04-sun-ep1": {
+      "source": "https://divineoffice.org/1220-adv-w04-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "He comes, the desire of all human hearts; his dwelling place shall be resplendent with glory, alleluia.",
+        "Come, Lord, do not delay; free your people from their sinfulness.",
+        "The fullness of time has come upon us at last; God sends his Son into the world."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 130",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "When you rose from the dead, Lord Jesus, you formed the Church into your new body, and made of it the new Jerusalem, united in your Spirit. Give us peace in our day. Make all nations come to your Church to share in the gifts in fellowship, that they may render you thanks without end and come to your eternal city.",
+        "1": "Listen with compassion to our prayers, Lord. The forgiveness of sins is yours. Do not look on the wrong we have done, but grant us your merciful kindness."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "O Key of David, O royal Power of Israel, controlling at your will the gate of heaven: Come, break down the prison walls of death for those who dwell in darkness and the shadow of death; and lead your captive people into freedom.",
+      "intercessions": "Jesus is Lord, born of the Virgin Mary. Let us pray to him with joyful hearts:\nCome, Lord Jesus!\n\nSon of God, you will come again as the true messenger of the covenant.\n— help the world to recognize and accept you.\nCome, Lord Jesus!\nBorn in your Father’s heart, you became man in the womb of the Virgin Mary,\n— free us from the tyranny of change and decay.\nCome, Lord Jesus!\n\nIn your life on earth, you came to die as a man,\n— save us from everlasting death.\nCome, Lord Jesus!\n\nWhen you come to judge, show us your loving mercy,\n— and forgive us our weaknesses.\nCome, Lord Jesus!\n\nLord Jesus, by your death you have given hope to those who have died,\n— be merciful to those for whom we now pray.\nCome, Lord Jesus!",
+      "collect": "Pour forth,\nwe beseech you, O Lord,\nyour grace into our hearts,\nthat we, to whom the Incarnation of Christ your Son\nwas made known by the message of an Angel,\nmay by his Passion and Cross\nbe brought to the glory of his Resurrection.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Thessalonians 5:23-24"
+    },
+    "1220-adv-w04-sun-mp": {
+      "source": "https://divineoffice.org/1220-adv-w04-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Sound the trumpet in Zion; the day of the Lord is near; he comes to save us, alleluia.",
+        "The Lord is here; go out to meet him, saying: Great his birth, eternal his kingdom: Strong God, Ruler of all, Prince of Peace, alleluia.",
+        "Your all-powerful Word, O Lord will come to earth from his throne of glory, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are the one who is to come,\n— have mercy on us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "The angel Gabriel was sent to the Virgin Mary, who was engaged to be married to Joseph.",
+      "intercessions": "To the Lord Jesus Christ, judge of the living and the dead, let us pray:\nCome, Lord Jesus!\n\nLord Jesus, you came to save sinners,\n— protect us in times of temptation.\nCome, Lord Jesus!\n\nYou will come in glory to be our judge,\n— show in us your power to save.\nCome, Lord Jesus!\n\nHelp us to keep the precepts of your law with the strength of the Spirit,\n— and to look forward in love to your coming.\nCome, Lord Jesus!\nYou are praised throughout the ages; in your mercy help us to love devoutly and temperately in this life,\n— as we wait in joyful hope for the revelation of your glory.\nCome, Lord Jesus!",
+      "collect": "Pour forth,\nwe beseech you, O Lord,\nyour grace into our hearts,\nthat we, to whom the Incarnation of Christ your Son\nwas made known by the message of an Angel,\nmay by his Passion and Cross\nbe brought to the glory of his Resurrection.\nWho lives and reigns with you in the unity of the Holy Spirit,\none God, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 13:11-12"
+    },
+    "1220-adv-w04-sun-ep2": {
+      "source": "https://divineoffice.org/1220-adv-w04-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "See how glorious he is, coming forth as Savior of all peoples!",
+        "Crooked paths will be straightened, and rough ways made smooth. Come, O Lord, do not delay, alleluia.",
+        "Ever wider will his kingdom spread, eternally at peace, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Lord God, you are the eternal light which illumines the hearts of good people. Help us to love you, to rejoice in your glory, and so to live in this world as to avoid harsh judgment in the next. May we come to see the light of your countenance."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "O Key of David, O royal Power of Israel, controlling at your will the gate of heaven: Come, break down the prison walls of death for those who dwell in darkness and the shadow of death; and lead your captive people into freedom.",
+      "intercessions": "To Christ the Lord, who was born of the Virgin Mary, let us pray with joyful hearts:\nCome, Lord Jesus!\n\nLord Jesus, in the mystery of your incarnation you revealed your glory to the world,\n— give us new life by your coming.\nCome, Lord Jesus!\nYou have taken our weakness upon yourself,\n— grant us your mercy.\nCome, Lord Jesus!\n\nYou redeemed the world from sin by your first coming in humility,\n— free us from all guilt when you come again in glory.\nCome, Lord Jesus!\n\nYou live and rule over all,\n— in your goodness bring us to our eternal inheritance.\nCome, Lord Jesus!\n\nYou sit at the right hand of the Father,\n— gladden the souls of the dead with your light.\nCome, Lord Jesus!",
+      "collect": "Pour forth,\nwe beseech you, O Lord,\nyour grace into our hearts,\nthat we, to whom the Incarnation of Christ your Son\nwas made known by the message of an Angel,\nmay by his Passion and Cross\nbe brought to the glory of his Resurrection.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 4:4-5"
+    },
+    "1221-adv-w04-mon-mp": {
+      "source": "https://divineoffice.org/1221-adv-w04-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord, the ruler over the kings of the earth, will come; blessed are they who are ready to go and welcome him.",
+        "Sing a new song to the Lord, proclaim his praises to the ends of the earth.",
+        "When the Son of Man comes to earth, do you think he will find faith in men’s hearts?"
+      ],
+      "psalmodyRefs": [
+        "Psalm 90",
+        "Canticle – Isaiah 42:10-16",
+        "Psalm 135"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and, happy to be known as companions of your Son, we will praise you among the peoples and proclaim you to the nations.",
+        "2": "Where two or three gather in your name, Lord, you promised to be with them and share their fellowship. Look down upon your family gathered here in your name, and graciously pour out your blessing upon us."
+      },
+      "responsory": "Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "There is no need to be afraid; in five days our Lord will come to us.",
+      "intercessions": "To Jesus Christ our Lord, who came among us in his mercy, let us constantly cry out with joy:\nCome, Lord Jesus!\n\nYou came from the Father to take on our human nature,\n—now set free what was harmed in us by sin.\nCome, Lord Jesus!\n\nOne day you will come again in glory to your chosen people,\n—come to us today and help us sinners to recognize your mercy and tender love.\nCome, Lord Jesus!\nWe glory in praising you, Lord Jesus,\n—come and bring us your salvation.\nCome, Lord Jesus!\n\nThrough faith you lead us into light,\n—may we reveal your justice through our deeds.\nCome, Lord Jesus!",
+      "collect": "Hear in kindness, O Lord,\nthe prayers of your people,\nthat those who rejoice\nat the coming of your Only Begotten Son in our flesh\nmay, when at last he comes in glory,\ngain the reward of eternal life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 7:14b-15"
+    },
+    "1221-adv-w04-mon-ep": {
+      "source": "https://divineoffice.org/1221-adv-w04-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord, the ruler over the kings of the earth, will come; blessed are they who are ready to go and welcome him.",
+        "Sing a new song to the Lord, proclaim his praises to the ends of the earth.",
+        "When the Son of Man comes to earth, do you think he will find faith in men’s hearts?"
+      ],
+      "psalmodyRefs": [
+        "Psalm 136",
+        "Psalm 136",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "1": "Almighty God, remember our lowliness and have mercy. Once you gave our fathers a foreign land to inherit. Free us today from sin and give us a share in your inheritance."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "O Radiant Dawn, splendor of eternal light, sun of justice: come, shine on those who dwell in darkness and the shadow of death.",
+      "intercessions": "We humbly pray to Jesus Christ, who rescues us from the darkness of sin, and in faith we cry out:\nCome, Lord Jesus!\n\nLord, gather together all the people of the earth,\n— and establish with them your everlasting covenant.\nCome, Lord Jesus!\n\nLamb of God, you came of old to take away the sin of the world,\n— purge us from the dregs of our guilt.\nCome, Lord Jesus!\n\nYou came to recover what was lost,\n— come once again in your mercy lest you punish what you have recovered.\nCome, Lord Jesus!\nOur faith seeks you out,\n— let us find everlasting joy with you when you come.\nCome, Lord Jesus!\n\nYou will judge the living and the dead,\n— graciously gather the dead into the ranks of the blessed.\nCome, Lord Jesus!",
+      "collect": "Hear in kindness, O Lord,\nthe prayers of your people,\nthat those who rejoice\nat the coming of your Only Begotten Son in our flesh\nmay, when at last he comes in glory,\ngain the reward of eternal life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 4:5"
+    },
+    "1222-adv-w04-tue-mp": {
+      "source": "https://divineoffice.org/1222-adv-w04-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will come from his holy place to save his people.",
+        "Zion is our mighty citadel, our saving Lord its wall and its defense; throw open the gates, for our God is here among us, alleluia.",
+        "Lord, make known your will throughout the earth; proclaim your salvation to every nation."
+      ],
+      "psalmodyRefs": [
+        "Psalm 101",
+        "Canticle – Daniel 3: 26,27, 29, 34-41",
+        "Psalm 144"
+      ],
+      "psalmPrayers": {
+        "0": "So that your people may walk in innocence, you came to us, Lord Jesus, and told us to be holy as your Father is holy. Help your children to love what is truly perfect, so that we may neither speak what is evil nor do what is wrong. Let us stand in your sight and celebrate with you the Father’s love and justice.",
+        "2": "Lord God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in the world. Clothe us with the weapons of light and unite us under the one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come Jerusalem; the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "The moment that your greeting reached my ears, the child within my womb leapt for joy.",
+      "intercessions": "To Christ our Redeemer, who comes to save us from our sins, let us cry out with joy:\nCome, Lord Jesus!\n\nThe prophets of old foretold your birth among us,\n— now make virtue come to life in us.\nCome, Lord Jesus!\n\nWe proclaim your saving work,\n— now grant us your salvation.\nCome, Lord Jesus!\n\nYou came to heal the contrite of heart,\n— heal the weaknesses of your people.\nCome, Lord Jesus!\nYou came and saw fit to reconcile the world,\n— when you come again in judgment, free us from the torments of punishment.\nCome, Lord Jesus!",
+      "collect": "O God, who,\nseeing the human race fallen into death,\nwilled to redeem it by the coming of your Only Begotten Son,\ngrant, we pray, that those who confess his Incarnation\nwith humble fervor may merit his company as their Redeemer.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 45:8"
+    },
+    "1222-adv-w04-tue-ep": {
+      "source": "https://divineoffice.org/1222-adv-w04-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will come from his holy place to save his people.",
+        "Zion is our mighty citadel, our saving Lord its wall and its defense; throw open the gates, for our God is here among us, alleluia.",
+        "Lord, make known your will throughout the earth; proclaim your salvation to every nation."
+      ],
+      "psalmodyRefs": [
+        "Psalm 137",
+        "Psalm 138",
+        "Canticle – Revelation 4:11;5-9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, remember your pilgrim Church. We sit weeping at the streams of Babylon. Do not let us be drawn into the current of the passing world, but free us from every evil and raise our thoughts to the heavenly Jerusalem.",
+        "1": "Listen to the prayers of your Church, Lord God. In the presence of the angels we praise your name. You keep the proud at a distance and look upon the lowly with favor. Stretch out your hand to us in our suffering. Perfect in us the work of your love and bring us to life."
+      },
+      "responsory": "Come and set us free, Lord God of power and might.\n— Come and set us free, Lord God of power and might.\n\nLet your face shine upon us and we shall be saved,\n— Lord God of power and might.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Come and set us free, Lord God of power and might.",
+      "gospelAntiphon": "O King of all the nations, the only joy of every human heart; O Keystone of the mighty arch of man, come and save the creature you fashioned from the dust.",
+      "intercessions": "To Christ our Lord, who humbled himself for our sake, we joyfully say:\nCome, Lord Jesus!\n\nLord Jesus, by your coming you rescued the world from sin,\n— cleanse our souls and bodies from guilt.\nCome, Lord Jesus!\nBy the mystery of your incarnation we are made your brothers and sisters,\n— do not let us become estranged from you.\nCome, Lord Jesus!\n\nDo not judge harshly,\n— those you redeemed with such great cost.\nCome, Lord Jesus!\n\nNo age, O Christ, is without your goodness and holy riches,\n— enable us to merit the unfading crown of glory.\nCome, Lord Jesus!\n\nLord, to you we commend the souls of your departed servants,\n— having died to the world, may they be alive in you for ever.\nCome, Lord Jesus!",
+      "collect": "O God, who,\nseeing the human race fallen into death,\nwilled to redeem it by the coming of your Only Begotten Son,\ngrant, we pray, that those who confess his Incarnation\nwith humble fervor may merit his company as their Redeemer.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:7-8, 9b"
+    },
+    "1223-adv-w04-wed-mp": {
+      "source": "https://divineoffice.org/1223-adv-w04-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord, the mighty God, will come forth from Zion to set his people free.",
+        "I shall not cease to plead with God for Zion until he sends his Holy One in all his radiant beauty.",
+        "The Spirit of the Lord rests upon me; he has sent me to preach his joyful message to the poor."
+      ],
+      "psalmodyRefs": [
+        "Psalm 108",
+        "Canticle – Isaiah 61:10-62:5",
+        "Psalm 146"
+      ],
+      "psalmPrayers": {
+        "0": "Accept the prayers of your servants, Lord, and prepare our hearts to praise your holy name. Come to our aid in time of trouble and make us worthy to sing you songs of thanksgiving.",
+        "2": "God of glory and power, those who have put all their trust in you are happy indeed. Shine the brightness of your light on us, that we may love you always with a pure heart."
+      },
+      "responsory": "Your light will come Jerusalem, the Lord will dawn on you in radiant beauty.\n— Your light will come Jerusalem, the Lord will dawn on you in radiant beauty.\n\nYou will see his glory within you;\n— the Lord will dawn on you in radiant beauty.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Your light will come Jerusalem, the Lord will dawn on you in radiant beauty.",
+      "gospelAntiphon": "All that God promised to the virgin through the message of the angel has been accomplished.",
+      "intercessions": "Let us pray to God our Father who sent his Son to save mankind:\nShow us your mercy, Lord.\n\nFather most merciful, we confess our faith in your Christ with our words,\n— keep us from denying him in our actions.\nShow us your mercy, Lord.\n\nYou have sent your Son to rescue us,\n— remove every sorrow from the face of the earth and from our country.\nShow us your mercy, Lord.\nOur land looks forward with delight to the approach of your Son,\n— let it experience the fullness of your joy.\nShow us your mercy, Lord.\n\nThrough your mercy make us live holy and chaste lives in this world,\n— eagerly awaiting the blessed hope and coming of Christ in glory.\nShow us your mercy, Lord.",
+      "collect": "Almighty ever-living God,\nas we see how the Nativity of your Son\naccording to the flesh draws near,\nwe pray that to us, your unworthy servants,\nmercy may flow from your Word,\nwho chose to become flesh of the Virgin Mary\nand establish among us his dwelling,\nJesus Christ our Lord.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 30:21, 22"
+    },
+    "1224-adv-w04-thu-mp": {
+      "source": "https://divineoffice.org/1224-adv-w04-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Bethlehem in Judah’s land, how glorious your future! The king who will rule my people comes from you.",
+        "Lift up your heads and see; your redemption is now at hand.",
+        "The day has come at last when Mary will bring forth her first-born Son."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, early in the morning of your resurrection, you made your love known and brought the first light of dawn to those who dwell in darkness. Your death has opened a path for us. Do not enter into judgment with your servants; let your Holy Spirit guide us together into the land of justice.",
+        "2": "God our Father, great builder of the heavenly Jerusalem, you know the number of the stars and call each of them by name. Heal hearts that are broken, gather together those who have been scattered, and enrich us all from the plenitude of your eternal wisdom."
+      },
+      "responsory": "Tomorrow will be the day of your salvation,\nthe sinfulness of earth will be destroyed.\n— Tomorrow will be the day of your salvation,\nthe sinfulness of earth will be destroyed.\nThe Savior of the world will be our king;\n— the sinfulness of earth will be destroyed.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Tomorrow will be the day of your salvation,\nthe sinfulness of earth will be destroyed.",
+      "gospelAntiphon": "The time has come for Mary to give birth to her firstborn Son.",
+      "intercessions": "To Jesus Christ, our Redeemer, who will come again in glory with great power, let us make our humble prayer:\nCome, Lord Jesus!\n\nLord Jesus, you will come with great power,\n— look on our lowliness and make us worthy of your gifts.\nCome, Lord Jesus!\n\nYou came to be the good news for mankind,\n— may we always proclaim your saving work.\nCome, Lord Jesus!\n\nYou are worthy of praise, for you have life and rule all things,\n— help us to wait in joyful hope for the coming of your glory.\nCome, Lord Jesus!\nWe long for the grace of your coming,\n— console us with the gift of your own divine life.\nCome, Lord Jesus!",
+      "collect": "Come quickly,\nwe pray, Lord Jesus, and do not delay,\nthat those who trust in your compassion\nmay find solace and relief in your coming.\nWho live and reign with God the Father\nin the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 11:1-3a"
+    },
+    "1225-ep1": {
+      "source": "https://divineoffice.org/1225-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "He comes in splendor, the King who is our peace; the whole world longs to see him.",
+        "He sends forth his word to the earth, and his command spreads",
+        "The eternal Word, born of the Father before time began, today emptied himself for our sake and became man."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 147",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "Today you will know the Lord is coming.\n— Today you will know the Lord is coming.\n\nAnd in the morning you will see his glory.\n— The Lord is coming.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Today you will know the Lord is coming.",
+      "gospelAntiphon": "When the sun rises in the morning sky, you will see the King of kings coming forth from the Father like a radiant bridegroom from the bridal chamber.",
+      "intercessions": "Christ Jesus emptied himself and took the form of a slave. He was tested like us in all things and did not sin. Now let us worship him and pray to him with deep faith:\nBy the power of your birth, comfort those who are saved.\n\nYou came into the world heralding the new age foretold by the prophets,\n— give your holy people the gift of renewal in every generation.\nBy the power of your birth, comfort those who are saved.\nYou once took on the weakness of our human condition,\n— be light now for those who do not see, strength for the wavering and comfort for the troubled of heart.\nBy the power of your birth, comfort those who are saved.\n\nYou were born into poverty and lowliness,\n— look with favor on the poor and comfort them.\nBy the power of your birth, comfort those who are saved.\nBy your birth bring joy to all peoples with the promise of unending life,\n— give joy to the dying through the hope of heavenly birth.\nBy the power of your birth, comfort those who are saved.\n\nYou came to earth to lead everyone into the kingdom,\n— share your life of glory with those who have died.\nBy the power of your birth, comfort those who are saved.",
+      "collect": "O God,\nwho have made this most sacred night\nradiant with the splendor of the true Light,\ngrant, we pray, that we\nwho have known the mysteries of his light on earth\nmay also delight in his gladness in heaven.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Galatians 4:4-5"
+    },
+    "1225-mp": {
+      "source": "https://divineoffice.org/1225-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Tell us, shepherds, what have you seen? Who has appeared on earth? We have seen a newborn infant and a choir of angels praising the Lord, alleluia.",
+        "The angel said to the shepherds: I proclaim to you a great joy; today the Savior of the world is born for you, alleluia.",
+        "A little child is born for us today; little and yet called the mighty God, alleluia, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "The Lord has made known, alleluia, alleluia.\n— The Lord has made known, alleluia, alleluia.\n\nHis saving power.\n— Alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord has made known, alleluia, alleluia.",
+      "gospelAntiphon": "Glory to God in the highest, and peace to his people on earth, alleluia.",
+      "intercessions": "The Word of God existed before the creation of the universe yet was born among us in time. We praise and worship him as we cry out in joy:\nLet the earth ring out with joy for you have come.\n\nYou are the eternal Word of God who flooded the world with joy at your birth,\n— fill us with joy by the continuous gift of your life.\nLet the earth ring out with joy for you have come.\nYou saved us and by your birth revealed to us the covenant faithfulness of the Lord,\n— help us to be faithful to the promises of our baptism.\nLet the earth ring out with joy for you have come.\n\nYou are the King of heaven and earth who sent messengers to announce peace to all,\n— let our lives be filled with your peace.\nLet the earth ring out with joy for you have come.\nYou are the true vine that brings forth the fruit of life,\n— make us branches of the vine, bearing much fruit.\nLet the earth ring out with joy for you have come.",
+      "collect": "Grant, we pray, almighty God,\nthat, as we are bathed in the new radiance of\nyour incarnate Word,\nthe light of faith, which illumines our minds,\nmay also shine through in our deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever\n— Amen.",
+      "readingRef": "Hebrews 1:1-4"
+    },
+    "1225-ep2": {
+      "source": "https://divineoffice.org/1225-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "You have been endowed from your birth with princely gifts; in eternal splendor, before the dawn of light on earth, I have begotten you.",
+        "With the Lord is unfailing love; great is his power to save.",
+        "In the beginning, before time began, the Word was God; today he is born, the Savior of the world."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 130",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "responsory": "The Word was made man, alleluia, alleluia.\n— The Word was made man, alleluia, alleluia.\n\nHe lived among us.\n— Alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Word was made man, alleluia, alleluia.",
+      "gospelAntiphon": "Christ the Lord is born today; today, the Savior has appeared. Earth echoes songs of angel choirs, archangels’ joyful praise. Today on earth his friends exult: Glory to God in the highest, alleluia.",
+      "intercessions": "At the birth of Jesus, angels proclaimed peace to the world. We worship him now with joy, and we pray with hearts full of faith:\nMay your birth bring peace to all.\nLord, fill your holy people with whatever good they need,\n— let the mystery of your birth be the source of our peace.\nMay your birth bring peace to all.\n\nYou came as chief shepherd and guardian of our lives,\n— let the pope and bishops be faithful channels of your many gifts of grace.\nMay your birth bring peace to all.\nKing from all eternity, you desired to be born within time and to experience the day-to-day life of men and women,\n— share your gift of unending life with us, weak people, doomed to death.\nMay your birth bring peace to all.\n\nAwaited from the beginning of the world, you came only in the fullness of time,\n— now reveal your presence to those who are still expecting you.\nMay your birth bring peace to all.\nYou became man and gave new life to our human condition in the grip of death,\n— now give the fullness of life to all who have died.\nMay your birth bring peace to all.",
+      "collect": "Grant, we pray, almighty God,\nthat, as we are bathed in the new radiance of your incarnate Word,\nthe light of faith, which illumines our minds,\nmay also shine through in our deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 John 1:1-3"
+    },
+    "1226-mp": {
+      "source": "https://divineoffice.org/1226-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My soul has held fast to you, my God; for your sake I suffered death by stoning.",
+        "Stephen saw the heavens open; he saw and entered in. Happy the man to whom the heavens opened.",
+        "Behold I see the heavens open, and Jesus standing at the right hand of the almighty God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "The Lord is my strength, and I shall sing his praise.\n— The Lord is my strength, and I shall sing his praise.\n\nThe Lord is my savior,\n— and I shall sing his praise.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is my strength, and I shall sing his praise.",
+      "gospelAntiphon": "The gates of heaven opened out to blessed Stephen, and he was crowned first of martyrs.",
+      "intercessions": "Our Savior’s faithfulness is mirrored in the fidelity of his witnesses who shed their blood for the word of God. Let us praise him in remembrance of them:\nYou redeemed us by your blood.\nYour martyrs freely embraced death in bearing witness to the faith,\n— give us the true freedom of the Spirit, O Lord.\nYou redeemed us by your blood.\n\nYour martyrs professed their faith by shedding their blood,\n— give us a faith, O Lord, that is constant and pure.\nYou redeemed us by your blood.\n\nYour martyrs followed in your footsteps by carrying the cross,\n— help us to endure courageously the misfortunes of life.\nYou redeemed us by your blood.\nYour martyrs washed their garments in the blood of the Lamb,\n— help us to avoid the weaknesses of the flesh and worldly allurements.\nYou redeemed us by your blood.",
+      "collect": "Grant,\nLord, we pray,\nthat we may imitate what we worship,\nand so learn to love even our enemies,\nfor we celebrate the heavenly birthday of a man\nwho knew how to pray even for his persecutors.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 6:2b-5a"
+    },
+    "holy-family-ep1": {
+      "source": "https://divineoffice.org/holy-family-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Jacob was the father of Joseph, the husband of Mary; Mary gave birth to Jesus who is called the Christ.",
+        "Joseph, son of David, do not be afraid to take Mary as your wife; the child in her womb is conceived by the Holy Spirit.",
+        "The shepherds went in haste and found Mary and Joseph, with the child cradled in a manger."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 147",
+        "Canticle — Ephesians 1:3-10"
+      ],
+      "responsory": "The Word was made man; he lived among us.\n— The Word was made man; he lived among us.\n\nFrom his fullness we have all received.\n— He lived among us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Word was made man; he lived among us.",
+      "gospelAntiphon": "The child Jesus remained in Jerusalem and, his parents did not know it. They thought he was in the group of travelers and looked for him among their relatives and friends.",
+      "intercessions": "Let us adore the Son of the living God who humbled himself to become a son of a human family, and let us proclaim:\nLord, you are the model and Savior of all.\nChrist, by the mystery of your subjection to Mary and Joseph,\n— teach all people reverence and obedience to lawful authority.\nLord, you are the model and Savior of all.\n\nYou loved your parents and were loved by them,\n— establish our families in mutual love and peace.\nLord, you are the model and Savior of all.\n\nYou were eager to be about your Father’s business,\n— may he be honored in every home.\nLord, you are the model and Savior of all.\nChrist, after three days your anxious parents found you in your Father’s house,\n— teach all to seek first the kingdom of God.\nLord, you are the model and Savior of all.\n\nChrist, you have made Mary and Joseph sharers in heavenly glory,\n— admit the dead into the family of the blessed.\nLord, you are the model and Savior of all.",
+      "collect": "O God,\nwho were pleased to give us\nthe shining example of the Holy Family,\ngraciously grant that we may imitate them\nin practicing the virtues of family life\nand in the bonds of charity,\nand so, in the joy of your house,\ndelight one day in eternal rewards.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 8:9"
+    },
+    "holy-family-mp": {
+      "source": "https://divineoffice.org/holy-family-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The parents of Jesus went each year to Jerusalem for the solemn feast of Passover.",
+        "The child grew in wisdom and strength, and the favor of God was upon him.",
+        "His father and mother were full of wonder at what was said about their child."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou were obedient to Mary and Joseph,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Lord, give us light through the example of your family and guide our feet into the way of peace.",
+      "intercessions": "Let us adore the Son of the living God who humbled himself to become a son of a human family, and let us beseech him:\nJesus, you became obedient; sanctify us.\n\nJesus, eternal Word of the Father, you made yourself subject to Mary and Joseph,\n— teach us humility.\nJesus, you became obedient; sanctify us.\nYou are our teacher, and your own mother pondered in her heart every one of your words and deeds,\n— make us attentive to your word, and let us ponder it in hearts that are pure and good.\nJesus, you became obedient; sanctify us.\n\nChrist, by your work the world was made, but you were willing to be called a worker’s son,\n— teach us to work diligently.\nJesus, you became obedient; sanctify us.\nJesus, in the family at Nazareth you grew in wisdom, age, and grace before God and men,\n— help us to grow in all things toward you, our Head.\nJesus, you became obedient; sanctify us.",
+      "collect": "O God,\nwho were pleased to give us\nthe shining example of the Holy Family,\ngraciously grant that we may imitate them\nin practicing the virtues of family life\nand in the bonds of charity,\nand so, in the joy of your house,\ndelight one day in eternal rewards.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Deuteronomy 5:16"
+    },
+    "holy-family-ep2": {
+      "source": "https://divineoffice.org/holy-family-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "After three days, Jesus was found in the temple, seated in the midst of the doctors, listening to them and asking them questions.",
+        "Jesus returned with Mary and Joseph to Nazareth; there he lived and was obedient to them.",
+        "Jesus grew in wisdom with the years and was pleasing to God and men."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 127",
+        "Canticle — Ephesians 1:3-10"
+      ],
+      "responsory": "He had to become like his brothers in every way to show the fullness of his mercy.\n— He had to become like his brothers in every way to show the fullness of his mercy.\n\nHe was seen on earth and lived among men and women,\n— to show the fullness of his mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— He had to become like his brothers in every way to show the fullness of his mercy.",
+      "gospelAntiphon": "Son, why have you done this to us? Think what anguish your father and I have endured looking for you. But why did you look for me? Did you not know that I had to be in my Father’s house?",
+      "intercessions": "Let us adore the Son of the living God who humbled himself to become a son of a human family, and let us proclaim:\nLord, you are the model and Savior of all.\nChrist, by the mystery of your subjection to Mary and Joseph,\n— teach all people reverence and obedience to lawful authority.\nLord, you are the model and Savior of all.\n\nYou loved your parents and were loved by them,\n— establish our families in mutual love and peace.\nLord, you are the model and Savior of all.\n\nYou were eager to be about your Father’s business,\n— may he be honored in every home.\nLord, you are the model and Savior of all.\nChrist, after three days your anxious parents found you in your Father’s house,\n— teach all to seek first the kingdom of God.\nLord, you are the model and Savior of all.\n\nChrist, you have made Mary and Joseph sharers in heavenly glory,\n— admit the dead into the family of the blessed.\nLord, you are the model and Savior of all.",
+      "collect": "O God,\nwho were pleased to give us\nthe shining example of the Holy Family,\ngraciously grant that we may imitate them\nin practicing the virtues of family life\nand in the bonds of charity,\nand so, in the joy of your house,\ndelight one day in eternal rewards.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:6-7"
+    },
+    "1228-mp": {
+      "source": "https://divineoffice.org/1228-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Clothed in white robes, they will walk with me, says the Lord, for they are worthy.",
+        "These children cry out their praises to the Lord; by their death they have proclaimed what they could not preach with their infant voices.",
+        "From the mouths of children and babies at the breast you have found praise to foil your enemies."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "The just are the friends of God. They live with him for ever.\n— The just are the friends of God. They live with him for ever.\n\nGod himself is their reward.\n— They live with him for ever.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The just are the friends of God. They live with him for ever.",
+      "gospelAntiphon": "At the king’s command these innocent babies and little children were put to death; they died for Christ, and now in the glory of heaven as they follow him, the sinless lamb, they sing for ever: Glory to you, O Lord.",
+      "intercessions": "We rejoice in the glory of Jesus Christ, who conquered the enemy not by force of arms but with a white-robed army of children, and we cry out:\nThe white-robed army of martyrs praise you.\nThe Holy Innocents gave witness not by words but by their life’s blood,\n— give us strength to be your witnesses before men, both by words and actions.\nThe white-robed army of martyrs praise you.\n\nThey were not ready for battle but you made them fit to win the palm of victory,\n— now that we are prepared for victory, do not let us despair.\nThe white-robed army of martyrs praise you.\n\nYou washed the robes of the Innocents in your blood;\n— cleanse us from all sin.\nThe white-robed army of martyrs praise you.\nYou rewarded the child martyrs with the first share in your kingdom,\n— do not let us be cast out from the unending heavenly banquet.\nThe white-robed army of martyrs praise you.\n\nYou knew persecution and exile as a child,\n— protect all children whose lives are in danger from famine, war and disasters.\nThe white-robed army of martyrs praise you.",
+      "collect": "O God,\nwhom the Holy Innocents confessed\nand proclaimed on this day,\nnot by speaking but by dying,\ngrant, we pray,\nthat the faith in you which we confess\nwith our lips may also speak through our manner of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 31:15"
+    },
+    "1228-ep2": {
+      "source": "https://divineoffice.org/1228-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "You have been endowed from your birth with princely gifts; in eternal splendor, before the dawn of light on earth, I have begotten you.",
+        "With the Lord is unfailing love; great is his power to save.",
+        "In the beginning, before time began, the Word was God; today he is born, the Savior of the world."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 130",
+        "Canticle — Colossians 1:12-20"
+      ],
+      "responsory": "The Word was made man, alleluia, alleluia.\n— The Word was made man, alleluia, alleluia.\n\nHe lived among us.\n— Alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n—The Word was made man, alleluia, alleluia.",
+      "gospelAntiphon": "The holy Virgin gave birth to God who became for us the frail, tender baby she nursed at her breast. Let us worship the Lord who comes to save us.",
+      "intercessions": "God sent his Son, fashioned from a woman, made subject to the law, to redeem those under the law. Trusting in this hope, let us pray with confidence:\nMay the favor of your Son be with us, O Lord.\nGod of love and peace, renew the faith of all Christians in the incarnation of your Son,\n— that they may give thanks at all times.\nMay the favor of your Son be with us, O Lord.\n\nIncrease the hope of the weak, the poor and the aged,\n— give relief to the oppressed, confidence to those who despair, consolation to those who mourn.\nMay the favor of your Son be with us, O Lord.\n\nBe mindful of all those in prison,\n— and of those driven from their homeland.\nMay the favor of your Son be with us, O Lord.\nYou let the angels be heard praising you at the birth of your Son,\n— let the departed praise you for ever with this heavenly host.\nMay the favor of your Son be with us, O Lord.",
+      "collect": "O God,\nwhom the Holy Innocents confessed\nand proclaimed on this day,\nnot by speaking but by dying,\ngrant, we pray,\nthat the faith in you which we confess\nwith our lips may also speak through our manner of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 2:3b-5"
+    },
+    "0101-ep1": {
+      "source": "https://divineoffice.org/0101-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "O marvelous exchange! Man’s Creator has become man, born of a virgin. We have been made sharers in the divinity of Christ who humbled himself to share in our humanity.",
+        "By your miraculous birth of the Virgin you have fulfilled the Scriptures: like a gentle rain falling upon the earth you have come down to save your people. O God, we praise you.",
+        "Your blessed and fruitful virginity is like the bush, flaming yet unburned, which Moses saw on Sinai. Pray for us, Mother of God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 147",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "The Word was made man, alleluia, alleluia.\n— The Word was made man, alleluia, alleluia.\n\nHe lived among us.\n— Alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Word was made man, alleluia, alleluia.",
+      "gospelAntiphon": "In his great love for us, God sent his Son in the likeness of our sinful nature, born of a woman and subject to the law, alleluia.",
+      "intercessions": "Blessed be the Lord Jesus, our Peace, who came to unite man with God. Let us pray to him in humility:\nLord, grant your peace to all.\n\nWhen you were born you showed your kindness and gentleness,\n— help us always to be grateful for all your blessings.\nLord, grant your peace to all.\n\nYou made Mary, your Mother, full of grace,\n— give all people the fullness of grace.\nLord, grant your peace to all.\nYou came to announce God’s good news to the world,\n— increase the number of preachers and hearers of your word.\nLord, grant your peace to all.\n\nYou desired to become our brother by being born of the Virgin Mary,\n— teach men and women to love each other in mutual brotherhood.\nLord, grant your peace to all.\n\nYou came as the Sun rising over the earth,\n— show the light of your countenance to those who have died\nLord, grant your peace to all.",
+      "collect": "O God,\nwho through the fruitful virginity of Blessed Mary\nbestowed on the human race\nthe grace of eternal salvation,\ngrant, we pray,\nthat we may experience the intercession of her,\nthrough whom we were found worthy\nto receive the author of life,\nour Lord Jesus Christ, your Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Galatians 4:4-5"
+    },
+    "0101-mp": {
+      "source": "https://divineoffice.org/0101-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The Virgin has given birth to the Savior: a flower has sprung from Jesse’s stock and a star has risen from Jacob. O God, we praise you.",
+        "Mary has given birth to our Savior. John the Baptist saw him and cried out: This is the Lamb of God, who takes away the sins of the world, alleluia.",
+        "Mary has given birth to a King whose name is everlasting; hers the joy of motherhood, hers the virgin’s glory. Never was the like seen before, never shall it be seen again, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "The Lord has made known, alleluia, alleluia.\n— The Lord has made known, alleluia, alleluia.\n\nHis saving power.\n— Alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord has made known, alleluia, alleluia.",
+      "gospelAntiphon": "Marvelous is the mystery proclaimed today: man’s nature is made new as God becomes man; he remains what he was and becomes what he was not. Yet each nature stays distinct and for ever undivided.",
+      "intercessions": "Let us give glory to Christ who was born of the Virgin Mary by the power of the Holy Spirit, and let us pray to him in these words:\nSon of the Virgin Mary, have mercy on us.\nChrist, born of the Virgin Mary, you are Wonder-Counselor and Prince of Peace,\n— give your peace to the world.\nSon of the Virgin Mary, have mercy on us.\n\nOur King and our God, you have raised us up by your coming,\n— help us to honor you all the days of our lives by our faith and our deeds.\nSon of the Virgin Mary, have mercy on us.\n\nYou made yourself like us,\n— in your mercy grant that we may become more like you.\nSon of the Virgin Mary, have mercy on us.\nYou made yourself a citizen of our earthly city,\n— grant that we may become citizens of our true homeland, your kingdom in heaven.\nSon of the Virgin Mary, have mercy on us.",
+      "collect": "O God,\nwho through the fruitful virginity of Blessed Mary\nbestowed on the human race the grace of eternal salvation,\ngrant, we pray, that we may experience the intercession of her,\nthrough whom we were found worthy to receive the author of life,\nour Lord Jesus Christ, your Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Micah 5:2, 3, 4a"
+    },
+    "xmas-0101-ep2": {
+      "source": "https://divineoffice.org/xmas-0101-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "O marvelous exchange! Our Creator has become man, born of a virgin. We have been made sharers in the divinity of Christ who humbled himself to share in our humanity.",
+        "By your miraculous birth of the Virgin you have fulfilled the Scriptures: like a gentle rain falling upon the earth you have come down to save your people. O God, we praise you.",
+        "Your blessed and fruitful virginity is like the bush, flaming yet unburned, which Moses saw on Sinai. Pray for us, Mother of God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 127",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "The Word was made man, alleluia, alleluia.\n— The Word was made man, alleluia, alleluia.\n\nHe lived among us.\n— Alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Word was made man, alleluia, alleluia.",
+      "gospelAntiphon": "Blessed is the womb which bore you, O Christ, and the breast that nursed you, Lord and Savior of the world, alleluia.",
+      "intercessions": "To Christ, Emmanuel, whom the Virgin conceived and brought forth, let us give praise and pray to him:\nSon of the Virgin Mary, hear us.\n\nYou gave Mary the joy of motherhood,\n— give all parents true joy in their children.\nSon of the Virgin Mary, hear us.\n\nKing of peace, your kingdom is one of justice and peace,\n— help us to seek the paths of peace.\nSon of the Virgin Mary, hear us.\nYou came to make the human race the holy people of God,\n— bring all nations to acknowledge the unifying bond of your love.\nSon of the Virgin Mary, hear us.\n\nBy your birth you strengthened family ties,\n— help families to come to a greater love for one another.\nSon of the Virgin Mary, hear us.\n\nYou desired to be born into the days of time,\n— grant that our departed brothers and sisters may be born into the day of eternity.\nSon of the Virgin Mary, hear us.",
+      "collect": "O God,\nwho through the fruitful virginity of Blessed Mary\nbestowed on the human race\nthe grace of eternal salvation,\ngrant, we pray,\nthat we may experience the intercession of her,\nthrough whom we were found worthy\nto receive the author of life,\nour Lord Jesus Christ, your Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Galatians 4:4-5"
+    },
+    "0102-mp": {
+      "source": "https://divineoffice.org/0102-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you will accept the true sacrifice offered on your altar.",
+        "All the descendants of Israel will glory in the Lord’s gift of victory.",
+        "Let us go into God’s presence singing for joy."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle — Isaiah 45:15-25",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "With joy and gladness we cry out to you, Lord, and ask you: open our hearts to sing your praises and announce your goodness and truth."
+      },
+      "responsory": "Let the peoples proclaim the wisdom of the saints.\n— Let the peoples proclaim the wisdom of the saints.\n\nWith joyful praise let the Church tell forth,\n— the wisdom of the saints.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Let the peoples proclaim the wisdom of the saints.",
+      "gospelAntiphon": "Those who are learned will be as radiant as the sky in all its beauty; those who instruct the people in goodness will shine like the stars for all eternity.",
+      "intercessions": "Christ is the Good Shepherd who laid down his life for his sheep. Let us praise and thank him as we pray:\nNourish your people, Lord.\n\nChrist, you decided to show your merciful love through your holy shepherds,\n— let your mercy always reach us through them.\nNourish your people, Lord.\n\nThrough your vicars you continue to perform the ministry of shepherd of souls,\n— direct us always through our leaders.\nNourish your people, Lord.\nThrough your holy ones, the leaders of your people, you served as physician of our bodies and our spirits,\n— continue to fulfill your ministry of life and holiness in us.\nNourish your people, Lord.\n\nYou taught your flock through the prudence and love of your saints,\n— grant us continual growth in holiness under the direction of our pastors.\nNourish your people, Lord.",
+      "collect": "O God,\nwho were pleased to give light to your Church\nby the example and teaching of\nthe Bishops Saints Basil and Gregory,\ngrant, we pray,\nthat in humility we may learn your truth\nand practice it faithfully in charity.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Wisdom 7:13-14"
+    },
+    "xmas-epiphany-ep1": {
+      "source": "https://divineoffice.org/xmas-epiphany-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Begotten of the Father before the daystar shone or time began, the Lord our Savior has appeared on earth today.",
+        "Great is the Lord, our God, transcending all other gods.",
+        "The star burned like a flame, pointing the way to God, the King of kings; the wise men saw the sign and brought their gifts in homage to their great King."
+      ],
+      "psalmodyRefs": [
+        "Psalm 135",
+        "Psalm 135",
+        "Canticle – See 1 Timothy 3:16"
+      ],
+      "responsory": "All peoples will be blessed in him, men and women of every race.\n— All peoples will be blessed in him, men and women of every race.\n\nAll nations will acclaim his glory.\n— Men and women of every race.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— All peoples will be blessed in him, men and women of every race.",
+      "gospelAntiphon": "Seeing the star, the wise men said: This must signify the birth of some great king. Let us search for him and lay our treasures at his feet: gold, frankincense and myrrh.",
+      "intercessions": "Today our Savior was adored by the Magi. Let us also worship him with joy as we pray:\nSave the poor, O Lord.\n\nKing of the nations, you called the Magi to adore you as the first representatives of the nations,\n— give us a willing spirit of adoration and service.\nSave the poor, O Lord.\n\nKing of glory, you judge your people with justice,\n— grant mankind an abundant measure of peace.\nSave the poor, O Lord.\nKing of ages, you endure from age to age,\n— send your word as fresh spring rain falling on our hearts.\nSave the poor, O Lord.\n\nKing of justice, you desire to free the poor who have no advocate,\n— be compassionate to the suffering and the afflicted.\nSave the poor, O Lord.\n\nLord, your name is blessed for all ages,\n— show the wonders of your saving power to our deceased brothers and sisters.\nSave the poor, O Lord.",
+      "collect": "May the splendor of your majesty,\nO Lord, we pray,\nshed its light upon our hearts,\nthat we may pass through the shadows of this world\nand reach the brightness of our eternal home.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Timothy 1:9-10"
+    },
+    "xmas-epiphany-mp": {
+      "source": "https://divineoffice.org/xmas-epiphany-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The wise men opened their treasures and offered to the Lord gifts of gold, frankincense and myrrh, alleluia.",
+        "Mighty seas and rivers, bless the Lord; springs of water, sing his praises, alleluia.",
+        "Jerusalem, your light has come; the glory of the Lord dawns upon you. Men of every race shall walk in the splendor of your sunrise, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "All the kings of earth will bow down in worship.\n— All the kings of earth will bow down in worship.\n\nMen and women of every nation will serve him.\n— They will bow down in worship.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— All the kings of earth will bow down in worship.",
+      "gospelAntiphon": "Today the Bridegroom claims his bride, the Church, since Christ has washed her sins away in Jordan’s waters; the Magi hasten with their gifts to the royal wedding; and the wedding guests rejoice, for Christ has changed water into wine, alleluia.",
+      "intercessions": "Today our Savior was adored by the Magi. Let us also worship him with joy as we pray:\nLight from Light, shine on us this day.\nChrist, you revealed yourself in the flesh,\n— sanctify us through prayer and the word of God.\nLight from Light, shine on us this day.\n\nChrist, your witness was the Spirit,\n— free our lives from the spirit of doubt.\nLight from Light, shine on us this day.\n\nChrist, you revealed yourself to the angels,\n— help us to feel the joy of heaven on earth.\nLight from Light, shine on us this day.\nChrist, you were proclaimed to the nations,\n— by the power of the Holy Spirit open the hearts of all.\nLight from Light, shine on us this day.\n\nChrist, you generated faith in the world,\n— renew the faith of all believers.\nLight from Light, shine on us this day.\n\nChrist, you were taken up in glory,\n— enkindle in us a longing for your kingdom.\nLight from Light, shine on us this day.",
+      "collect": "O God, who on this day\nrevealed your Only Begotten Son to the nations\nby the guidance of a star,\ngrant in your mercy\nthat we, who know you already by faith,\nmay be brought to behold the beauty of your sublime glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 52:7-10"
+    },
+    "xmas-epiphany-ep2": {
+      "source": "https://divineoffice.org/xmas-epiphany-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "He comes in splendor, the King who is our peace; he is supreme over all the kings of the earth.",
+        "A light has shone through the darkness for the upright of heart; the Lord is gracious, merciful and just.",
+        "All the people, whom you have made, will come and worship before you, Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "All peoples will be blessed in him, men and women of every race.\n— All peoples will be blessed in him, men and women of every race.\n\nAll nations will acclaim his glory.\n— Men and women of every race.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— All peoples will be blessed in him, men and women of every race.",
+      "gospelAntiphon": "Three mysteries mark this holy day: today the star leads the Magi to the infant Christ; today water is changed into wine for the wedding feast; today Christ wills to be baptized by John in the river Jordan to bring us salvation.",
+      "intercessions": "On this day our Savior was adored by the Magi. Let us also worship him with joy as we pray:\nSave the poor, O Lord.\nKing of the nations, you called the Magi to adore you as the first representatives of the nations,\n— give us a willing spirit of adoration and service.\nSave the poor, O Lord.\n\nKing of glory, you judge your people with justice,\n— grant mankind an abundant measure of peace.\nSave the poor, O Lord.\n\nKing of ages, you endure from age to age,\n— send your word as fresh spring rain falling on our hearts.\nSave the poor, O Lord.\nKing of justice, you desire to free the poor who have no advocate,\n— be compassionate to the suffering and the afflicted.\nSave the poor, O Lord.\n\nLord, your name is blessed for all ages,\n— show the wonders of your saving power to our deceased brothers and sisters.\nSave the poor, O Lord.",
+      "collect": "O God, who on this day\nrevealed your Only Begotten Son to the nations\nby the guidance of a star,\ngrant in your mercy\nthat we, who know you already by faith,\nmay be brought to behold the beauty of your sublime glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Titus 3:4-5"
+    },
+    "0104-mp": {
+      "source": "https://divineoffice.org/0104-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Dawn finds me ready to welcome you, my God.",
+        "The Lord is my strength, and I shall sing his praise, for he has become my Savior.",
+        "O praise the Lord, all you nations."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Exodus 15:1-4a, 8-13, 17-18",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "The Lord will help her; his loving presence will be with her.\n— The Lord will help her; his loving presence will be with her.\n\nHe dwells in her; she will not falter.\n— His loving presence will be with her.\nGlory to the Father, and to the Son, and to the Holy Spirit.\n— The Lord will help her; his loving presence will be with her.",
+      "gospelAntiphon": "All the world will recognize you as my disciples when they see the love you have one for another.",
+      "intercessions": "My brothers, with all the holy women, let us profess our faith in our Savior and call upon him:\nCome, Lord Jesus.\n\nLord Jesus, you forgave the sinful woman because she loved much,\n— forgive us who have sinned much.\nCome, Lord Jesus.\nLord Jesus, the holy women ministered to your needs during your journeys,\n— help us to follow your footsteps.\nCome, Lord Jesus.\n\nLord Jesus, master, Mary listened to your words while Martha served your needs,\n— help us to serve you with love and devotion.\nCome, Lord Jesus.\n\nLord Jesus, you call everyone who does your will your brother, sister and mother,\n— help us to do what is pleasing to you in word and action.\nCome, Lord Jesus.",
+      "collect": "O God,\nwho crowned with the gift of true faith\nSaint Elizabeth Ann Seton’s burning zeal to find you,\ngrant by her intercession\nand example that we may always seek you with diligent love\nand find you in daily service with sincere faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 12:1-2"
+    },
+    "0105-mp": {
+      "source": "https://divineoffice.org/0105-mp/",
+      "edition": "first",
+      "antiphons": [
+        "When will I come to the end of my pilgrimage and enter the presence of God?",
+        "Lord, show us the radiance of your mercy.",
+        "The vaults of heaven ring with your praise, O Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 42",
+        "Canticle – Sirach 36:1-5, 10-13",
+        "Psalm 19"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, when your strength takes possession of us we no longer say: Why are you cast down, my soul? So now that the surging waves of your indignation have passed over us, let us feel the healing calm of your forgiveness. Inspire us to yearn for you always, like the deer for running streams, until you satisfy every longing in heaven.",
+        "2": "To enlighten the world, Father, you sent to us your Word as the sun of truth and justice shining upon mankind. Illumine our eyes that we may discern your glory in the many works of your hand."
+      },
+      "responsory": "On your walls, Jerusalem, I have set my watchmen to guard you.\n— On your walls, Jerusalem, I have set my watchmen to guard you.\n\nDay or night, they will not cease to proclaim the name of the Lord.\n— I have set my watchmen to guard you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— On your walls, Jerusalem, I have set my watchmen to guard you.",
+      "gospelAntiphon": "What you say of me does not come from yourselves; it is the Spirit of my Father speaking in you.",
+      "intercessions": "Christ is the Good Shepherd who laid down his life for his sheep. Let us praise and thank him as we pray:\nNourish your people, Lord.\n\nChrist, you decided to show your merciful love through your holy shepherds,\n— let your mercy always reach us through them.\nNourish your people, Lord.\nThrough your vicars you continue to perform the ministry of shepherd of souls,\n— direct us always through our leaders.\nNourish your people, Lord.\n\nThrough your holy ones, the leaders of your people, you served as physician of our bodies and our spirits,\n— continue to fulfill your ministry of life and holiness in us.\nNourish your people, Lord.\nYou taught your flock through the prudence and love of your saints,\n— grant us continual growth in holiness under the direction of our pastors.\nNourish your people, Lord.",
+      "collect": "O God,\nwho called Bishop Saint John Neumann,\nrenowned for his charity and pastoral service,\nto shepherd your people in America,\ngrant by his intercession that,\nas we foster the Christian education of youth\nand are strengthened by the witness of brotherly love,\nwe may constantly increase the family of your Church.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 13:7-9a"
+    },
+    "0105-ep2": {
+      "source": "https://divineoffice.org/0105-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Yours is more than mortal beauty; every word you speak is full of grace.",
+        "The Bridegroom is here; go out and welcome him.",
+        "God planned in the fullness of time to restore all things in Christ."
+      ],
+      "psalmodyRefs": [
+        "Psalm 45",
+        "Psalm 45",
+        "Canticle — Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "1": "When you took on flesh, Lord Jesus, you made a marriage of mankind with God. Help us to be faithful to your word and endure our exile bravely, until we are called to the heavenly marriage feast, to which the Virgin Mary, exemplar of your Church, has preceded us."
+      },
+      "responsory": "This is a man who loved his brethren and ever prayed for them.\n— This is a man who loved his brethren and ever prayed for them.\n\nHe spent himself in their service,\n— and ever prayed for them.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— This is a man who loved his brethren and ever prayed for them.",
+      "gospelAntiphon": "This is a faithful and wise steward: the Lord entrusted the care of his household to him, so that he might give them their portion of food at the proper season.",
+      "intercessions": "Jesus Christ is worthy of all praise, for he was appointed high priest among men and their representative before God. We honor him and in our weakness we pray:\nBring salvation to your people, Lord.\n\nYou marvelously illuminated your Church through distinguished leaders and holy men and women,\n— let Christians rejoice always in such splendor.\nBring salvation to your people, Lord.\nYou forgave the sins of your people when their holy leaders like Moses sought your compassion,\n— through their intercession continue to purify and sanctify your holy people.\nBring salvation to your people, Lord.\n\nIn the midst of their brothers and sisters you anointed your holy ones and filled them with the Holy Spirit,\n— fill all the leaders of your people with the same Spirit.\nBring salvation to your people, Lord.\nYou yourself are the only visible possession of our holy pastors,\n— let none of them, won at the price of your blood, remain far from you.\nBring salvation to your people, Lord.\n\nThe shepherds of your Church keep your flock from being snatched out of your hand. Through them you give your flock eternal life,\n— save those who have died, those for whom you gave up your life.\nBring salvation to your people, Lord.",
+      "collect": "O God,\nwho called Bishop Saint John Neumann,\nrenowned for his charity and pastoral service,\nto shepherd your people in America,\ngrant by his intercession that,\nas we foster the Christian education of youth\nand are strengthened by the witness of brotherly love,\nwe may constantly increase the family of your Church.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 5:1-4"
+    },
+    "xmas-baptism-of-the-lord-ep1": {
+      "source": "https://divineoffice.org/xmas-baptism-of-the-lord-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "John was in the wilderness baptizing and proclaiming a baptism of penance for the forgiveness of sins.",
+        "I baptize you with water, but the one who is coming will baptize with the Holy Spirit and with fire.",
+        "As soon as Jesus was baptized, he came out of the water, and the heavens opened before him."
+      ],
+      "psalmodyRefs": [
+        "Psalm 135",
+        "Psalm 135",
+        "Canticle — See 1 Timothy 3:16"
+      ],
+      "responsory": "O Lord our God, hear the cry of your people.\n— O Lord our God, hear the cry of your people.\n\nOpen for them the spring of living water.\n— Hear the cry of your people.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— O Lord our God, hear the cry of your people.",
+      "gospelAntiphon": "Our Savior came to be baptized, so that through the cleansing waters of baptism he might restore the old man to new life, heal our sinful nature, and clothe us with unfailing holiness.",
+      "intercessions": "Our Redeemer desired to be baptized in the Jordan by John; let us make our petition to him:\nLord, send forth your Spirit upon us.\n\nChrist, Servant of God, the Father acknowledged you as his own Son with whom he was pleased,\n— send forth your Spirit upon us.\nLord, send forth your Spirit upon us.\n\nChrist, Chosen One of God, you did not break the crushed reed or extinguish the wavering flame,\n— have mercy on all who are seeking you in good faith.\nLord, send forth your Spirit upon us.\nChrist, Son of God, the Father called you to be a light to the nations in the new covenant,\n— open the eyes of the blind by the waters of baptism.\nLord, send forth your Spirit upon us.\n\nChrist, Savior of mankind, the Father anointed you with the Holy Spirit for the ministry of salvation,\n— lead all mankind to see you and to believe in you, that they may have eternal life.\nLord, send forth your Spirit upon us.\nChrist, our hope, you lead those in darkness to the light of salvation,\n— receive our departed brothers and sisters into your kingdom.\nLord, send forth your Spirit upon us.",
+      "collect": "Almighty ever-living God,\nwho, when Christ had been baptized in the River Jordan\nand as the Holy Spirit descended upon him,\nsolemnly declared him your beloved Son,\ngrant that your children by adoption,\nreborn of water and the Holy Spirit,\nmay always be well pleasing to you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:37-38"
+    },
+    "xmas-baptism-of-the-lord-mp": {
+      "source": "https://divineoffice.org/xmas-baptism-of-the-lord-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The soldier baptizes his king, the servant his Lord, John his Savior; the waters of the Jordan tremble, a dove hovers as a sign of witness, and the voice of the Father is heard: This is my Son.",
+        "Springs of water were made holy as Christ revealed his glory to the world. Draw water from the fountain of the Savior, for Christ our God has hallowed all creation.",
+        "You burned away man’s guilt by fire and the Holy Spirit. We give praise to you, our God and Redeemer."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nToday you revealed yourself to us.\n— Have mercy on us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Christ is baptized, the world is made holy; he has taken away our sins. We shall be purified by water and the Holy Spirit.",
+      "intercessions": "Our Redeemer desired to be baptized in the Jordan by John; let us make this prayer to him:\nLord, have mercy.\n\nChrist, you made your light shine on us by revealing yourself,\n— grant us the spirit of humble service to all people.\nLord, have mercy.\n\nChrist, you humbled yourself and received baptism from your servant to show us the way of humility,\n— grant us the spirit of humble service to our fellow men.\nLord, have mercy.\nChrist, through your baptism you cleansed us of every blemish and made us children of your Father,\n— bestow your spirit of adoption on all who seek you.\nLord, have mercy.\n\nChrist, through baptism you have consecrated creation and opened the door of repentance to all who prepare for baptism,\n— make us servants of your Gospel in the world.\nLord, have mercy.\nChrist, through your baptism you revealed to us the Holy Trinity when the Father called you his beloved Son and the Holy Spirit came down upon you,\n— renew the spirit of adoption among the royal priesthood of the baptized.\nLord, have mercy.",
+      "collect": "Almighty ever-living God,\nwho, when Christ had been baptized in the River Jordan\nand as the Holy Spirit descended upon him,\nsolemnly declared him your beloved Son,\ngrant that your children by adoption,\nreborn of water and the Holy Spirit,\nmay always be well pleasing to you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 61:1-2a"
+    },
+    "xmas-baptism-of-the-lord-ep2": {
+      "source": "https://divineoffice.org/xmas-baptism-of-the-lord-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Father’s voice resounded from the heavens: This is my Son in whom I delight, listen to what he says to you.",
+        "In the Jordan river our Savior crushed the serpent’s head and wrested us free from his grasp.",
+        "A wondrous mystery is declared to us today: the Creator of the universe has washed away our sins in the waters of the Jordan."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "Christ comes to us. He comes in water and in blood.\n— Christ comes to us. He comes in water and in blood.\n\nJesus Christ our Lord.\n— Comes in water and in blood.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ comes to us. He comes in water and in blood.",
+      "gospelAntiphon": "Christ Jesus loved us, poured out his blood to wash away our sins, and made us a kingdom and priests for God our Father. To him be glory and honor for ever.",
+      "intercessions": "Our Redeemer desired to be baptized in the Jordan by John; let us make our petition to him:\nLord, send forth your Spirit upon us.\n\nChrist, Servant of God, the Father acknowledged you as his own Son with whom he was pleased,\n— send forth your Spirit upon us.\nLord, send forth your Spirit upon us.\n\nChrist, Chosen One of God, you did not break the crushed reed or extinguish the wavering flame,\n— have mercy on all who are seeking you in good faith.\nLord, send forth your Spirit upon us.\nChrist, Son of God, the Father called you to be a light to the nations in the new covenant,\n— open the eyes of the blind by the waters of baptism.\nLord, send forth your Spirit upon us.\n\nChrist, Savior of mankind, the Father anointed you with the Holy Spirit for the ministry of salvation,\n— lead all to see you and to believe in you, that they may have eternal life.\nLord, send forth your Spirit upon us.\nChrist, our hope, you lead those in darkness to the light of salvation,\n— receive our departed brothers and sisters into your kingdom.\nLord, send forth your Spirit upon us.",
+      "collect": "Almighty ever-living God,\nwho, when Christ had been baptized in the River Jordan\nand as the Holy Spirit descended upon him,\nsolemnly declared him your beloved Son,\ngrant that your children by adoption,\nreborn of water and the Holy Spirit,\nmay always be well pleasing to you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:37-38"
+    },
+    "ord-w02-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w02-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Your word, O Lord, is the lantern to light our way, alleluia.",
+        "When I see your face, O Lord, I shall know the fullness of joy, alleluia.",
+        "Let everything in heaven and on earth bend the knee at the name of Jesus, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle — Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Let your Word, Father, be a lamp for our feet and a light to our path, so that we may understand what you wish to teach us and follow the path your light marks out for us.",
+        "1": "Lord Jesus, uphold those who hope in you and give us your counsel, so that we may know the joy of your resurrection and deserve to be among the saints at your right hand."
+      },
+      "responsory": "From the rising of the sun to its setting,\nmay the name of the Lord be praised.\n— From the rising of the sun to its setting, may the name of the Lord be praised.\n\nHis splendor reaches far beyond the heavens;\n— may the name of the Lord be praised.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— From the rising of the sun to its setting,\nmay the name of the Lord be praised.",
+      "gospelAntiphon": "Behold the Lamb of God, behold him who takes away the sins of the world.",
+      "intercessions": "God aids and protects the people he has chosen for his inheritance. Let us give thanks to him and proclaim his goodness:\nLord, we trust in you.\n\nWe pray for our Pope, and for all our bishops,\n— protect them and in your goodness make them holy.\nLord, we trust in you.\n\nMay the sick feel their companionship with the suffering Christ,\n— and know that they will enjoy his eternal consolation.\nLord, we trust in you.\nIn your goodness have compassion on the homeless,\n— help them to find proper housing.\nLord, we trust in you.\n\nIn your goodness give and preserve the fruits of the earth,\n— so that each day there may be bread enough for all.\nLord, we trust in you.\n\nLord, you attend the dying with great mercy,\n— grant them an eternal dwelling.\nLord, we trust in you.",
+      "collect": "Almighty ever-living God,\nwho govern all things,\nboth in heaven and on earth,\nmercifully hear the pleading of your people\nand bestow your peace on our times.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Colossians 1:2b-6a"
+    },
+    "ord-w02-sun-mp": {
+      "source": "https://divineoffice.org/ord-w02-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Blessed is he who comes in the name of the Lord, alleluia.",
+        "Let us sing a hymn of praise to our God, alleluia.",
+        "Praise the Lord for his infinite greatness, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "We give thanks to you, O God, as we call upon your name.\n— We give thanks to you, O God, as we call upon your name.\n\nWe cry aloud how marvelous you are,\n— as we call upon your name.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— We give thanks to you, O God, as we call upon your name.",
+      "gospelAntiphon": "The disciples came to see where Jesus lived, and all that day they stayed with him.",
+      "intercessions": "Let us give thanks to our Savior who came into this world as God’s presence among us. Let us call upon him:\nChrist, King of Glory, be our light and our joy.\n\nLord Jesus, you are the rising Sun, the firstfruits of the future resurrection,\n— grant that we may not sit in the shadow of death but walk in the light of life.\nChrist, King of Glory, be our light and our joy.\nShow us your goodness, present in every creature,\n— that we may contemplate your glory everywhere.\nChrist, King of Glory, be our light and our joy.\n\nDo not allow us to be overcome by evil today,\n— but grant that we may overcome evil through the power of good.\nChrist, King of Glory, be our light and our joy.\n\nYou were baptized in the Jordan and anointed by the Holy Spirit,\n— grant that we may this day give thanks to your Holy Spirit.\nChrist, King of Glory, be our light and our joy.",
+      "collect": "Almighty ever-living God,\nwho govern all things,\nboth in heaven and on earth,\nmercifully hear the pleading of your people\nand bestow your peace on our times.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ezekiel 36:25-28"
+    },
+    "ord-w02-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w02-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Christ our Lord is a priest for ever, like Melchizedek of old, alleluia.",
+        "God dwells in highest heaven; he has power to do all he wills, alleluia.",
+        "Praise God, all you who serve him, both great and small, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name, and make all nations a holy people for you.",
+        "1": "Father, creator and ruler of heaven and earth, you made man in your likeness to subdue the earth and master it, and to recognize the work of your hands in created beauty. Grant that your children, thus surrounded on all sides by signs of your presence, may live continually in Christ, praising you through him and with him."
+      },
+      "responsory": "Our Lord is great, mighty is his power.\n— Our Lord is great, mighty is his power.\n\nHis wisdom is beyond compare,\n— mighty is his power.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our Lord is great, mighty is his power.",
+      "gospelAntiphon": "There was a wedding in Cana at Galilee, and Jesus was there with Mary his mother.",
+      "intercessions": "All praise and honor to Christ! He lives for ever to intercede for us, and he is able to save those who approach the Father in his name.\nSustained by our faith, let us call upon him:\nRemember your people, Lord.\nAs the day draws to a close, Sun of Justice, we invoke your name upon the whole human race,\n— so that all men may enjoy your never failing light.\nRemember your people, Lord.\n\nPreserve the covenant which you have ratified in your blood,\n— cleanse and sanctify your Church.\nRemember your people, Lord.\n\nRemember your assembly, Lord,\n— your dwelling place.\nRemember your people, Lord.\nGuide travelers along the path of peace and prosperity,\n— so that they may reach their destinations in safety and joy.\nRemember your people, Lord.\n\nReceive the souls of the dead, Lord,\n— grant them your favor and the gift of eternal glory.\nRemember your people, Lord.",
+      "collect": "Almighty ever-living God,\nwho govern all things,\nboth in heaven and on earth,\nmercifully hear the pleading of your people\nand bestow your peace on our times.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Thessalonians 2:13-14"
+    },
+    "0121-mp": {
+      "source": "https://divineoffice.org/0121-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My Lord Jesus Christ has espoused me with his ring; he has crowned me like a bride.",
+        "I am espoused to him whom the angels serve; sun and moon stand in wonder at his beauty.",
+        "Rejoice with me, and be glad, for I have taken my place with all the saints in the kingdom of light."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "The Lord will help her; his loving presence will be with her.\n— The Lord will help her; his loving presence will be with her.\n\nHe dwells in her; she will not falter.\n— His loving presence will be with her.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord will help her; his loving presence will be with her.",
+      "gospelAntiphon": "What I longed for, I now see; what I hoped for, I now possess; in heaven I am espoused to him whom on earth I loved with all my heart.",
+      "intercessions": "Our Savior’s faithfulness is mirrored in the fidelity of his witnesses who shed their blood for the word of God. Let us praise him in remembrance of them:\nYou redeemed us by your blood.\n\nYour martyrs freely embraced death in bearing witness to the faith,\n— give us the true freedom of the Spirit, O Lord.\nYou redeemed us by your blood.\nYour martyrs professed their faith by shedding their blood,\n— give us a faith, O Lord, that is constant and pure.\nYou redeemed us by your blood.\n\nYour martyrs followed in your footsteps by carrying the cross,\n— help us to endure courageously the misfortunes of life.\nYou redeemed us by your blood.\n\nYour martyrs washed their garments in the blood of the Lamb,\n— help us to avoid the weaknesses of the flesh and worldly allurements.\nYou redeemed us by your blood.",
+      "collect": "Almighty ever-living God,\nwho choose what is weak in the world\nto confound the strong,\nmercifully grant, that we,\nwho celebrate the heavenly birthday\nof your Martyr Saint Agnes,\nmay follow her constancy in the faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-5"
+    },
+    "0121-ep2": {
+      "source": "https://divineoffice.org/0121-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Christ’s virgin could not be broken by any terror, nor won over by false allurements.",
+        "To him alone I pledge my trust; to him alone I give my undivided love.",
+        "I give thanks to you, the Father of my Lord Jesus Christ, for through him you have made your servant victorious."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 116",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "responsory": "The Lord chose her, his loved one from the beginning.\n— The Lord chose her, his loved one from the beginning.\n\nHe has taken her to live with him,\n— his loved one from the beginning.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord chose her, his loved one from the beginning.",
+      "gospelAntiphon": "Saint Agnes raised her hands and prayed: Holy Father, hear me. I am coming to you whom I have loved, whom I have sought and always desired.",
+      "intercessions": "This is the hour when the King of martyrs offered his life in the upper room and laid it down on the cross. Let us thank him and say:\nWe praise you, O Lord.\n\nWe praise you, O Lord, our Savior, inspiration and example for every martyr, for loving us to the end:\nWe praise you, O Lord.\n\nFor calling all repentant sinners to the rewards of life:\nWe praise you, O Lord.\n\nFor entrusting to your Church the blood of the new and everlasting covenant poured out for the remission of sin:\nWe praise you, O Lord.\nFor our perseverance in your grace today:\nWe praise you, O Lord.\n\nFor incorporating our dead brothers and sisters into your own death today:\nWe praise you, O Lord.",
+      "collect": "Almighty ever-living God,\nwho choose what is weak in the world\nto confound the strong,\nmercifully grant, that we,\nwho celebrate the heavenly birthday\nof your Martyr Saint Agnes,\nmay follow her constancy in the faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 4:13-14"
+    },
+    "ord-w03-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w03-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "From the rising of the sun to its setting, may the name of the Lord be praised.",
+        "I shall take into my hand the saving chalice and invoke the name of the Lord.",
+        "The Lord Jesus humbled himself, and God exalted him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 116",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, Word of God, surrendering the brightness of your glory you became man so that we may be raised from the dust to share your very being. May there be innumerable children of the Church to offer homage to your name from the rising of the sun to its setting.",
+        "1": "Father, precious in your sight is the death of the saints, but precious above all is the love with which Christ suffered to redeem us. In this life we will fill up in our own flesh what is still lacking in the sufferings of Christ; accept this as our sacrifice of praise, and we shall even now taste the joy of the new Jerusalem."
+      },
+      "responsory": "Our hearts are filled with wonder as we contemplate your works, O Lord.\n— Our hearts are filled with wonder as we contemplate your works, O Lord.\n\nWe praise the wisdom which wrought them all,\n— as we contemplate your works, O Lord.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our hearts are filled with wonder as we contemplate your works, O Lord.",
+      "gospelAntiphon": "Jesus preached the Gospel of the kingdom and cured those who were in need of healing.",
+      "intercessions": "Christ had compassion on the hungry and performed a miracle of love for them. Mindful of this, let us pray:\nShow us your love, Lord.\n\nLord, we recognize that all the favors we have received today come through your generosity,\n— do not let them return to you empty, but let them bear fruit.\nShow us your love, Lord.\n\nLight and salvation of all nations, protect the missionaries you have sent into the world,\n— enkindle in them the fire of your Spirit.\nShow us your love, Lord.\nGrant that man may shape the world in keeping with human dignity,\n— and respond generously to the needs of our time.\nShow us your love, Lord.\n\nHealer of body and spirit, comfort the sick and be present to the dying,\n— in your mercy visit and refresh us.\nShow us your love, Lord.\n\nMay the faithful departed be numbered among the saints,\n— whose names are in the Book of Life.\nShow us your love, Lord.",
+      "collect": "All-powerful and ever-living God,\ndirect your love that is within us,\nthat our efforts in the name of your Son\nmay bring mankind to unity and peace.\nWe ask this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 13:20-21"
+    },
+    "ord-w03-sun-mp": {
+      "source": "https://divineoffice.org/ord-w03-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Glorious is the Lord on high, alleluia.",
+        "To you, Lord, be highest glory and praise for ever, alleluia.",
+        "Praise the Lord from the heavens, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 93",
+        "Canticle – Daniel 3:57-88,56",
+        "Psalm 148"
+      ],
+      "psalmPrayers": {
+        "0": "All power and all authority in heaven and earth have been given to you, Lord Jesus; you rule with decrees that are firm and trustworthy. Be with us always so that we may make disciples whose holiness will be worthy of your house.",
+        "2": "Lord, extolled in the heights by angelic powers, you are also praised by all earth’s creatures, each in its own way. With all the splendor of heavenly worship, you still delight in such tokens of love as earth can offer. May heaven and earth together acclaim you as King. May the praise that is sung in heaven resound in the heart of every creature on earth."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are seated at the right hand of the Father,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Come follow me, says the Lord; I will make you fishers of men.",
+      "intercessions": "Father, you sent the Holy Spirit to enlighten our hearts; hear us as we pray:\nEnlighten your people, Lord.\n\nBlessed are you, O God, our light,\n— you have given us a new day resplendent with your glory.\nEnlighten your people, Lord.\n\nYou enlightened the world through the resurrection of your Son,\n— through your Church shed this light on all people.\nEnlighten your people, Lord.\nYou gave the disciples of your only begotten Son the Spirit’s gift of understanding,\n— through the same Spirit keep the Church faithful to you.\nEnlighten your people, Lord.\n\nLight of nations, remember those who remain in darkness,\n— open their eyes and let them recognize you, the only true God.\nEnlighten your people, Lord.",
+      "collect": "All-powerful and ever-living God,\ndirect your love that is within us,\nthat our efforts in the name of your Son\nmay bring mankind to unity and peace.\nWe ask this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ezekiel 37:12b-14"
+    },
+    "ord-w03-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w03-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord said to my Master: Sit at my right hand, alleluia.",
+        "Our compassionate Lord has left us a memorial of his wonderful work, alleluia.",
+        "All power is yours, Lord God, our mighty King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Merciful and gentle Lord, you are the crowning glory of all the saints. Give us, your children, the gift of obedience which is the beginning of wisdom, so that we may do what you command and be filled with your mercy."
+      },
+      "responsory": "The whole creation proclaims the greatness of your glory.\n— The whole creation proclaims the greatness of your glory.\n\nEternal ages praise\n— the greatness of your glory.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The whole creation proclaims the greatness of your glory.",
+      "gospelAntiphon": "The Spirit of the Lord rests upon me; he has sent me to preach the good news to the poor.",
+      "intercessions": "The world was created by the Word of God, re-created by his redemption, and it is continually renewed by his love. Rejoicing in him we call out:\nRenew the wonders of your love, Lord.\n\nWe give thanks to God whose power is revealed in nature,\n— and whose providence is revealed in history.\nRenew the wonders of your love, Lord.\n\nThrough your Son, the herald of reconciliation,\n— the victor of the cross, free us from empty fear and hopelessness.\nRenew the wonders of your love, Lord.\nMay all those who love and pursue justice,\n— work together without deceit to build a world of true peace.\nRenew the wonders of your love, Lord.\n\nBe with the oppressed, free the captives, console the sorrowing, feed the hungry, strengthen the weak,\n— in all people reveal the victory of your cross.\nRenew the wonders of your love, Lord.\n\nAfter your Son’s death and burial you raised him up again in glory,\n— grant that the faithful departed may live with him.\nRenew the wonders of your love, Lord.",
+      "collect": "All-powerful and ever-living God,\ndirect your love that is within us,\nthat our efforts in the name of your Son\nmay bring mankind to unity and peace.\nWe ask this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n—Amen.",
+      "readingRef": "1 Peter 1:3-5"
+    },
+    "0126-mp": {
+      "source": "https://divineoffice.org/0126-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Blessed are they who dwell in your house, O Lord.",
+        "Come, let us climb the mountain of the Lord.",
+        "Sing to the Lord and bless his name."
+      ],
+      "psalmodyRefs": [
+        "Psalm 84",
+        "Canticle — Isaiah 2:2-5",
+        "Psalm 96"
+      ],
+      "psalmPrayers": {
+        "0": "Bless your people, Lord. You have given us the law that we may walk from strength to strength and raise our minds to you from this valley of tears. May we receive the gifts you have gained for us.",
+        "2": "Lord, you have renewed the face of the earth. Your Church throughout the world sings you a new song, announcing your wonders to all. Through a virgin, you have brought forth a new birth in our world; through your miracles, a new power; through your suffering, a new patience; in your resurrection, a new hope, and in your ascension, new majesty."
+      },
+      "responsory": "On your walls, Jerusalem, I have set my watchmen to guard you.\n— On your walls, Jerusalem, I have set my watchmen to guard you.\n\nDay or night, they will not cease to proclaim the name of the Lord.\n— I have set my watchmen to guard you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— On your walls, Jerusalem, I have set my watchmen to guard you.",
+      "gospelAntiphon": "Proclaim the message, insist on it in season and out of season, refute falsehood, correct error, call to obedience, but do all with patience and sound doctrine.",
+      "intercessions": "Christ is the Good Shepherd who laid down his life for his sheep. Let us praise and thank him as we pray:\nNourish your people, Lord.\n\nChrist, you decided to show your merciful love through your holy shepherds,\n— let your mercy always reach us through them.\nNourish your people, Lord.\n\nThrough your vicars you continue to perform the ministry of shepherd of souls,\n— direct us always through our leaders.\nNourish your people, Lord.\nThrough your holy ones, the leaders of your people, you served as physician of our bodies and our spirits,\n— continue to fulfill your ministry of life and holiness in us.\nNourish your people, Lord.\n\nYou taught your flock through the prudence and love of your saints,\n— grant us continual growth in holiness under the direction of our pastors.\nNourish your people, Lord.",
+      "collect": "O God,\nwho adorned Saints Timothy and Titus\nwith apostolic virtues,\ngrant through the intercession of them both,\nthat, living justly and devoutly in this present age,\nwe may merit to reach our heavenly homeland.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 13:7-9a"
+    },
+    "0126-ep2": {
+      "source": "https://divineoffice.org/0126-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Our eyes are fixed intently on the Lord, waiting for his merciful help.",
+        "Our help is in the name of the Lord who made heaven and earth.",
+        "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 123",
+        "Psalm 124",
+        "Canticle — Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, we lift our eyes to you and pray: confound the scorn of the proud and graciously show us your mercy.",
+        "1": "Lord Jesus, you foretold that your disciples would be despised on account of your name, but that not a hair of their heads is ever forgotten. In times of persecution, defend and revive us by the power and comfort of the Holy Spirit, so that we can be freed from our enemies and praise your saving help."
+      },
+      "responsory": "This is a man who loved his brethren and ever prayed for them.\n— This is a man who loved his brethren and ever prayed for them.\n\nHe spent himself in their service,\n— and ever prayed for them.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— This is a man who loved his brethren and ever prayed for them.",
+      "gospelAntiphon": "Let us live holy and upright lives, as we wait in joyful hope for the coming of our Savior Jesus Christ.",
+      "intercessions": "Jesus Christ is worthy of all praise, for he was appointed high priest among men and their representative before God. We honor him and in our weakness we pray:\nBring salvation to your people, Lord.\n\nYou marvelously illuminated your Church through distinguished leaders and holy men and women,\n— let Christians rejoice always in such splendor.\nBring salvation to your people, Lord.\nYou forgave the sins of your people when their holy leaders like Moses sought your compassion,\n— through their intercession continue to purify and sanctify your holy people.\nBring salvation to your people, Lord.\n\nIn the midst of their brothers and sisters you anointed your holy ones and filled them with the Holy Spirit,\n— fill all the leaders of your people with the same Spirit.\nBring salvation to your people, Lord.\nYou yourself are the only visible possession of our holy pastors,\n— let none of them, won at the price of your blood, remain far from you.\nBring salvation to your people, Lord.\n\nThe shepherds of your Church keep your flock from being snatched out of your hand. Through them you give your flock eternal life,\n— save those who have died, those for whom you gave up your life.\nBring salvation to your people, Lord.",
+      "collect": "O God,\nwho adorned Saints Timothy and Titus\nwith apostolic virtues,\ngrant through the intercession of them both,\nthat, living justly and devoutly in this present age,\nwe may merit to reach our heavenly homeland.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 5:1-4"
+    },
+    "0128-mp": {
+      "source": "https://divineoffice.org/0128-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Give joy to your servant, Lord; to you I lift up my heart.",
+        "Blessed is the upright man, who speaks the truth.",
+        "Let us celebrate with joy in the presence of our Lord and King."
+      ],
+      "psalmodyRefs": [
+        "Psalm 86",
+        "Canticle – Isaiah 33:13-16",
+        "Psalm 98"
+      ],
+      "psalmPrayers": {
+        "0": "God of mercy and goodness, when Christ called out to you in torment, you heard him and gave him victory over death because of his love for you. We already know the affection you have for us; fill us with a greater love of your name, and we will proclaim you more boldly before men and happily lead them to celebrate your glory.",
+        "2": "Lord Jesus, you have revealed your justice to all nations. We stood condemned and you came to be judged in our place. Send your saving power on us and when you come in glory bring your mercy to those for whom you were condemned."
+      },
+      "responsory": "Let the peoples proclaim the wisdom of the saints.\n— Let the peoples proclaim the wisdom of the saints.\n\nWith joyful praise let the Church tell forth\n— the wisdom of the saints.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Let the peoples proclaim the wisdom of the saints.",
+      "gospelAntiphon": "Blessed be the Lord; for love of him Saint Thomas Aquinas spent long hours in prayer, study and writing.",
+      "intercessions": "Christ is the Good Shepherd who laid down his life for his sheep. Let us praise and thank him as we pray:\nNourish your people, Lord.\n\nChrist, you decided to show your merciful love through your holy shepherds,\n— let your mercy always reach us through them.\nNourish your people, Lord.\n\nThrough your vicars you continue to perform the ministry of shepherd of souls,\n— direct us always through our leaders.\nNourish your people, Lord.\nThrough your holy ones, the leaders of your people, you served as physician of our bodies and our spirits,\n— continue to fulfill your ministry of life and holiness in us.\nNourish your people, Lord.\n\nYou taught your flock through the prudence and love of your saints,\n— grant us continual growth in holiness under the direction of our pastors.\nNourish your people, Lord.",
+      "collect": "O God,\nwho made Saint Thomas Aquinas\noutstanding in his zeal for holiness\nand his study of sacred doctrine,\ngrant us, we pray, that we may understand\nwhat he taught and imitate what he accomplished.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Wisdom 7:13-14"
+    },
+    "0128-ep2": {
+      "source": "https://divineoffice.org/0128-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Those who sow in tears will reap in joy.",
+        "May the Lord build our house and guard our city.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 126",
+        "Psalm 127",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you have raised us from the earth; may you let the seeds of justice, which we have sown in tears, grow and increase in your sight. May we reap in joy the harvest we hope for patiently.",
+        "1": "You command the seed to rise, Lord God, though the farmer is unaware. Grant that those who labor for you may trust not in their own work but in your help. Remembering that the land is brought to flower not with human tears but with those of your Son, may the Church rely only upon your gifts."
+      },
+      "responsory": "In the midst of the Church he spoke with eloquence.\n— In the midst of the Church he spoke with eloquence.\n\nThe Lord filled him with the spirit of wisdom and understanding.\n— He spoke with eloquence.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n—In the midst of the Church he spoke with eloquence.",
+      "gospelAntiphon": " God gave him surpassing wisdom which he taught without deceit, and shared freely with others.",
+      "intercessions": "Jesus Christ is worthy of all praise, for he was appointed high priest among men and their representative before God. We honor him and in our weakness we pray:\nBring salvation to your people, Lord.\n\nYou marvelously illuminated your Church through distinguished leaders and holy men and women,\n— let Christians rejoice always in such splendor.\nBring salvation to your people, Lord.\nYou forgave the sins of your people when their holy leaders like Moses sought your compassion,\n— through their intercession continue to purify and sanctify your holy people.\nBring salvation to your people, Lord.\n\nIn the midst of their brothers and sisters you anointed your holy ones and filled them with the Holy Spirit,\n— fill all the leaders of your people with the same Spirit.\nBring salvation to your people, Lord.\nYou yourself are the only visible possession of our holy pastors,\n— let none of them, won at the price of your blood, remain far from you.\nBring salvation to your people, Lord.\n\nThe shepherds of your Church keep your flock from being snatched out of your hand. Through them you give your flock eternal life,\n— save those who have died, those for whom you gave up your life.\nBring salvation to your people, Lord.",
+      "collect": "O God,\nwho made Saint Thomas Aquinas\noutstanding in his zeal for holiness\nand his study of sacred doctrine,\ngrant us, we pray, that we may understand\nwhat he taught and imitate what he accomplished.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 3:17-18"
+    },
+    "ord-w04-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w04-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Pray for the peace of Jerusalem.",
+        "From the morning watch until night, I have waited trustingly for the Lord.",
+        "Let everything in heaven and on earth bend the knee at the name of Jesus."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 130",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "When you rose from the dead, Lord Jesus, you formed the Church into your new body, and made of it the new Jerusalem, united in your Spirit. Give us peace in our day. Make all nations come to your Church to share in the gifts in fellowship, that they may render you thanks without end and come to your eternal city.",
+        "1": "Listen with compassion to our prayers, Lord. The forgiveness of sins is yours. Do not look on the wrong we have done, but grant us your merciful kindness."
+      },
+      "responsory": "From the rising of the sun to its setting, may the name of the Lord be praised.\n— From the rising of the sun to its setting, may the name of the Lord be praised.\n\nHis splendor reaches far beyond the heavens;\n— may the name of the Lord be praised.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— From the rising of the sun to its setting, may the name of the Lord be praised.",
+      "gospelAntiphon": "When Jesus saw the crowds, he went up the mountain; his disciples came and gathered round him, and he opened his mouth and began to teach them.",
+      "intercessions": "Everyone who waits for the Lord finds joy. Now we pray to him:\nLook on us with favor, Lord, and hear us.\n\nFaithful witness, first-born of the dead, you washed away our sins in your blood,\n— make us always remember your wonderful works.\nLook on us with favor, Lord, and hear us.\n\nYou called men to be heralds of your good news,\n— make them strong and faithful messengers of your kingdom.\nLook on us with favor, Lord, and hear us.\nKing of peace, send your Spirit on the leaders of the world,\n— turn their eyes toward the poor and suffering.\nLook on us with favor, Lord, and hear us.\n\nProtect and defend those who are discriminated against because of race, color, class, language or religion,\n— that they may be accorded the rights and dignity which are theirs.\nLook on us with favor, Lord, and hear us.\nMay all who died in your love share in your happiness,\n— with Mary, our mother, and all your holy ones.\nLook on us with favor, Lord, and hear us.",
+      "collect": "Lord our God,\nhelp us to love you with all our hearts\nand to love all men as you love them.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Peter 1:19-21"
+    },
+    "ord-w04-sun-mp": {
+      "source": "https://divineoffice.org/ord-w04-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Praise the Lord, for his loving kindness will never fail, alleluia.",
+        "Alleluia! Bless the Lord, all you works of the Lord, alleluia!",
+        "Let everything that breathes give praise to the Lord, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "We give thanks to you, O God, as we call upon your name.\n— We give thanks to you, O God, as we call upon your name.\n\nWe cry aloud how marvelous you are,\n— as we call upon your name.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— We give thanks to you, O God, as we call upon your name.",
+      "gospelAntiphon": "Everyone heard with amazement what Jesus taught, for he spoke with such authority.",
+      "intercessions": "Open your hearts to praise the God of power and goodness, for he loves us and knows our needs:\nWe praise you, Lord, and trust in you.\n\nWe bless you, almighty God, King of the universe, because you called us while we were yet sinners,\n— to acknowledge your truth and to serve your majesty.\nWe praise you, Lord, and trust in you.\nO God, you opened the gates of mercy for us,\n— let us never turn aside from the path of life.\nWe praise you, Lord, and trust in you.\n\nAs we celebrate the resurrection of your beloved Son,\n— help us to spend this day in the spirit of joy.\nWe praise you, Lord, and trust in you.\n\nGive to your faithful, O Lord, a prayerful spirit of gratitude,\n— that we may thank you for all your gifts.\nWe praise you, Lord, and trust in you.",
+      "collect": "Lord our God,\nhelp us to love you with all our hearts\nand to love all men as you love them.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Timothy 2:8, 11-13"
+    },
+    "ord-w04-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w04-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "In eternal splendor, before the dawn of light on earth, I have begotten you, alleluia.",
+        "Blessed are they who hunger and thirst for holiness; they will be satisfied.",
+        "Praise God, all you who serve him, both great and small, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle — See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Lord God, you are the eternal light which illumines the hearts of good people. Help us to love you, to rejoice in your glory, and so to live in this world as to avoid harsh judgment in the next. May we come to see the light of your countenance."
+      },
+      "responsory": "Our Lord is great, mighty is his power.\n— Our Lord is great, mighty is his power.\n\nHis wisdom is beyond compare,\n— mighty is his power.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our Lord is great, mighty is his power.",
+      "gospelAntiphon": "They all marveled at the words that came forth from the mouth of God.",
+      "intercessions": "Rejoicing in the Lord, from whom all good things come, let us pray:\nLord, hear our prayer.\n\nFather and Lord of all, you sent your Son into the world, that your name might be glorified in every place,\n— strengthen the witness of your Church among the nations.\nLord, hear our prayer.\n\nMake us obedient to the teachings of your apostles,\n— and bound to the truth of our faith.\nLord, hear our prayer.\nAs you love the innocent,\n— render justice to those who are wronged.\nLord, hear our prayer.\n\nFree those in bondage and give sight to the blind,\n— raise up the fallen and protect the stranger.\nLord, hear our prayer.\n\nFulfill your promise to those who already sleep in your peace,\n— through your Son grant them a blessed resurrection.\nLord, hear our prayer.",
+      "collect": "Grant us, Lord our God,\nthat we may honor you with all our mind,\nand love everyone in truth of heart.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 12:22-24"
+    },
+    "0202-mp": {
+      "source": "https://divineoffice.org/0202-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Simeon was a holy and devout man who looked for the redemption of Israel, and the Holy Spirit was with him.",
+        "Simeon took the child in his arms and gave thanks to God.",
+        "He is a light to reveal you to the nations, and the glory of your people Israel."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "Worship the Lord in his holy court.\n— Worship the Lord in his holy court.\nBring him your homage and praise,\n— in his holy court.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Worship the Lord in his holy court.",
+      "gospelAntiphon": "When the parents of Jesus brought him into the temple, Simeon took him in his arms and gave thanks to God.",
+      "intercessions": "Today our Savior was presented in the temple. Let us adore him as we say:\nLord, may our eyes see your saving power.\n\nChrist Jesus, in obedience to the law, you desired to be presented to your Father in the temple,\n— teach us to offer ourselves to the Father with you in your Church’s sacrifice.\nLord, may our eyes see your saving power.\nJesus, comforter of Israel, Simeon, the just man, took you into his arms when you came to the temple,\n— help us to welcome you in our brothers and sisters.\nLord, may our eyes see your saving power.\n\nJesus, desire of nations, Anna the prophetess spoke of you to all who were awaiting Israel’s redemption,\n— help us to proclaim you in our words and actions to all who yet yearn for your salvation.\nLord, may our eyes see your saving power.\nLord Jesus, cornerstone of God’s kingdom, you were destined to be a sign that is rejected,\n— be for those who acknowledge you the source of rising to new life.\nLord, may our eyes see your saving power.",
+      "collect": "Almighty ever-living God,\nwe humbly implore your majesty that,\njust as your Only Begotten Son was presented\non this day in the Temple in the substance of our flesh,\nso, by your grace, we may be presented to you with minds made pure.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Malachi 3:1"
+    },
+    "0202-ep2": {
+      "source": "https://divineoffice.org/0202-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Holy Spirit had revealed to Simeon that he would not see death until he had seen the Lord.",
+        "As the law prescribed, they offered to the Lord a pair of turtle doves or two young pigeons.",
+        "My own eyes have seen the salvation which you have prepared in the sight of every people."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 130",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "responsory": "The Lord has made known his saving power.\n— The Lord has made known his saving power.\n\nWhich he has prepared in the sight of every people.\n— His saving power.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord has made known his saving power.",
+      "gospelAntiphon": "Today the Blessed Virgin Mary presented the Child Jesus in the temple; and Simeon, inspired by the Holy Spirit, took him in his arms, and gave thanks to God.",
+      "intercessions": "Today our Savior was presented in the temple. Let us adore him as we say:\nLord, may our eyes see your saving power.\n\nChrist Jesus, you are the light that enlightens all nations,\n— shine upon those who do not know you, that they may come to believe in you, the one true God.\nLord, may our eyes see your saving power.\n\nYou are the redeemer and the glory of your people Israel,\n— may your Church proclaim your salvation to the ends of the earth.\nLord, may our eyes see your saving power.\nJesus, desire of the nations, Simeon, the just man, rejoiced at your coming,\n— lead all men to recognize that you still come to them.\nLord, may our eyes see your saving power.\n\nLord, when you were presented in the temple, Simeon foretold that a sword of sorrow would pierce your mother’s heart,\n— strengthen us to accept the sufferings we endure for the sake of your name.\nLord, may our eyes see your saving power.\nChrist Jesus, joy of all the saints, Simeon longed to see you before he died, and his prayer was answered,\n— hear our plea for all the dead who still yearn to see you face to face.\nLord, may our eyes see your saving power.",
+      "collect": "Almighty ever-living God,\nwe humbly implore your majesty that,\njust as your Only Begotten Son was presented\non this day in the Temple in the substance of our flesh,\nso, by your grace, we may be presented to you with minds made pure.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 4:15-16"
+    },
+    "0205-mp": {
+      "source": "https://divineoffice.org/0205-mp/",
+      "edition": "first",
+      "antiphons": [
+        "At daybreak, be merciful to me, O Lord.",
+        "The Lord will make a river of peace flow through Jerusalem.",
+        "Let us joyfully praise the Lord our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, early in the morning of your resurrection, you made your love known and brought the first light of dawn to those who dwell in darkness. Your death has opened a path for us. Do not enter into judgment with your servants; let your Holy Spirit guide us together into the land of justice.",
+        "2": "God our Father, great builder of the heavenly Jerusalem, you know the number of the stars and call each of them by name. Heal hearts that are broken, gather together those who have been scattered, and enrich us all from the plenitude of your eternal wisdom."
+      },
+      "responsory": "The Lord is my strength, and I shall sing his praise.\n— The Lord is my strength, and I shall sing his praise.\n\nThe Lord is my savior,\n— and I shall sing his praise.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is my strength, and I shall sing his praise.",
+      "gospelAntiphon": " With a festal spirit as though to a wedding banquet, Agatha went to prison; in prayer she offered her bitter suffering to God.",
+      "intercessions": "Our Savior’s faithfulness is mirrored in the fidelity of his witnesses who shed their blood for the word of God. Let us praise him in remembrance of them:\nYou redeemed us by your blood.\nYour martyrs freely embraced death in bearing witness to the faith,\n— give us the true freedom of the Spirit, O Lord.\nYou redeemed us by your blood.\n\nYour martyrs professed their faith by shedding their blood,\n— give us a faith, O Lord, that is constant and pure.\nYou redeemed us by your blood.\n\nYour martyrs followed in your footsteps by carrying the cross,\n— help us to endure courageously the misfortunes of life.\nYou redeemed us by your blood.\nYour martyrs washed their garments in the blood of the Lamb,\n— help us to avoid the weaknesses of the flesh and worldly allurements.\nYou redeemed us by your blood.",
+      "collect": "May the Virgin Martyr Saint Agatha\nimplore your compassion for us,\nO Lord, we pray,\nfor she found favor with you\nby the courage of her martyrdom\nand the merit of her chastity.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-5"
+    },
+    "0205-ep2": {
+      "source": "https://divineoffice.org/0205-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "He is my comfort and my refuge. In him I put my trust.",
+        "Blessed are the people whose God is the Lord.",
+        "Now the victorious reign of our God has begun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 144",
+        "Psalm 144",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in this world. Clothe us with the weapons of light and unite us under one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "You have tried us by fire, O God, then led us to a place of refreshment.\n— You have tried us by fire, O God, then led us to a place of refreshment.\n\nYou refined us as silver in the furnace,\n— then led us to a place of refreshment.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— You have tried us by fire, O God, then led us to a place of refreshment.",
+      "gospelAntiphon": " Lord Jesus Christ, my beloved Master, it is you who have given me victory in the midst of torments. Call me, Lord, to undying happiness with you.",
+      "intercessions": "This is the hour when the King of martyrs offered his life in the upper room and laid it down on the cross. Let us thank him and say:\nWe praise you, O Lord.\n\nWe praise you, O Lord, our Savior, inspiration and example for every martyr, for loving us to the end:\nWe praise you, O Lord.\n\nFor calling all repentant sinners to the rewards of life:\nWe praise you, O Lord.\n\nFor entrusting to your Church the blood of the new and everlasting covenant poured out for the remission of sin:\nWe praise you, O Lord.\nFor our perseverance in your grace today:\nWe praise you, O Lord.\n\nFor incorporating our dead brothers and sisters into your own death today:\nWe praise you, O Lord.",
+      "collect": "May the Virgin Martyr Saint Agatha\nimplore your compassion for us,\nO Lord, we pray,\nfor she found favor with you\nby the courage of her martyrdom\nand the merit of her chastity.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 4:13-14"
+    },
+    "0206-mp": {
+      "source": "https://divineoffice.org/0206-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Create a clean heart in me, O God; renew in me a steadfast spirit.",
+        "Rejoice, Jerusalem, for through you all men will be gathered to the Lord.",
+        "Zion, praise your God, who sent his Word to renew the earth."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Tobit 13:8-11, 13-15",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "All powerful God, it is through your Church, generously endowed with gifts of grace and fortified by the Holy Spirit, that you send out your word to all nations. Strengthen your Church with the best of all food and make it dauntless in faith. Multiply its children to celebrate with one accord the mysteries of your love at the altar on high."
+      },
+      "responsory": "The just are the friends of God. They live with him for ever.\n— The just are the friends of God. They live with him for ever.\n\nGod himself is their reward.\n— They live with him for ever.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The just are the friends of God. They live with him for ever.",
+      "gospelAntiphon": "Blessed are those who suffer persecution for the sake of justice; the kingdom of heaven is theirs.",
+      "intercessions": "Our Savior’s faithfulness is mirrored in the fidelity of his witnesses who shed their blood for the word of God. Let us praise him in remembrance of them:\nYou redeemed us by your blood.\n\nYour martyrs freely embraced death in bearing witness to the faith,\n— give us the true freedom of the Spirit, O Lord.\nYou redeemed us by your blood.\nYour martyrs professed their faith by shedding their blood,\n— give us a faith, O Lord, that is constant and pure.\nYou redeemed us by your blood.\n\nYour martyrs followed in your footsteps by carrying the cross,\n— help us to endure courageously the misfortunes of life.\nYou redeemed us by your blood.\n\nYour martyrs washed their garments in the blood of the Lamb,\n— help us to avoid the weaknesses of the flesh and worldly allurements.\nYou redeemed us by your blood.",
+      "collect": "O God,\nstrength of all the Saints,\nwho through the Cross were pleased\nto call the Martyrs Saint Paul Miki and companions to life,\ngrant, we pray,\nthat by their intercession we may hold with courage\neven until death to the faith that we profess.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-5"
+    },
+    "lent-w00-wed-mp": {
+      "source": "https://divineoffice.org/lent-w00-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My heart is ready, O God, my heart is ready.",
+        "The Lord has robed me with grace and salvation.",
+        "I will praise my God all the days of my life."
+      ],
+      "psalmodyRefs": [
+        "Psalm 108",
+        "Canticle – Isaiah 61:10 – 62:5",
+        "Psalm 146"
+      ],
+      "psalmPrayers": {
+        "0": "Accept the prayers of your servants, Lord, and prepare our hearts to praise your holy name. Come to our aid in time of trouble and make us worthy to sing you songs of thanksgiving.",
+        "2": "God of glory and power, those who have put all their trust in you are happy indeed. Shine the brightness of your light on us, that we may love you always with a pure heart."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "When you fast, do not put on a gloomy face, like the hypocrites.",
+      "intercessions": "Today God our Father brings us to the beginning of Lent. We pray that in this time of salvation he will fill us with the Holy Spirit, purify our hearts, and strengthen us in love. Let us humbly ask him:\nLord, give us your Holy Spirit.\n\nMay we be filled and satisfied,\n— by the word which you give us.\nLord, give us your Holy Spirit.\nTeach us to be loving not only in great and exceptional moments,\n— but above all in the ordinary events of daily life.\nLord, give us your Holy Spirit.\n\nMay we abstain from what we do not really need,\n— and help our brothers and sisters in distress.\nLord, give us your Holy Spirit.\n\nMay we bear the wounds of your Son in our bodies,\n— for through his body he gave us life.\nLord, give us your Holy Spirit.",
+      "collect": "Grant, O Lord,\nthat we may begin with holy fasting this campaign of Christian service,\nso that, as we take up battle against spiritual evils,\nwe may be armed with weapons of self-restraint.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Deuteronomy 7:6, 8-9"
+    },
+    "lent-w00-wed-ep": {
+      "source": "https://divineoffice.org/lent-w00-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, how wonderful is your wisdom, so far beyond my understanding.",
+        "I am the Lord: I search the mind and probe the heart; I give to each one as his deeds deserve.",
+        "Through him all things were made; he holds all creation together in himself."
+      ],
+      "psalmodyRefs": [
+        "Psalm 139",
+        "Psalm 139",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "You watch over heaven and earth, Lord Jesus. Your death brought light to the dead; your resurrection gave joy to the saints; your ascension made the angels rejoice. Your power exceeds all power. Lead us to life eternal, and watch over us with your love. May your friends be filled with honour and join you in heaven."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "When you give alms, do not let your left hand know what your right hand is doing.",
+      "intercessions": "All glory and honor to God, for in the blood of Christ he has ratified a new and everlasting covenant with his people, and renews it in the sacrament of the altar. Let us lift our voices in prayer:\nBless your people, Lord.\nLord, guide the minds and hearts of peoples and all in public office,\n— may they seek the common good.\nBless your people, Lord.\n\nRenew the spirit of dedication in those who have left all to follow Christ,\n— may they give clear witness to the holiness of the Church.\nBless your people, Lord.\n\nYou have made all men and women in your image,\n— may they always uphold human dignity.\nBless your people, Lord.\nLead back to your friendship and truth all who have gone astray,\n— teach us how to help them.\nBless your people, Lord.\n\nGrant that the dead may enter into your glory,\n— to praise you for ever.\nBless your people, Lord.",
+      "collect": "Grant, O Lord,\nthat we may begin with holy fasting this campaign of Christian service,\nso that, as we take up battle against spiritual evils,\nwe may be armed with weapons of self-restraint.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:12b-15a"
+    },
+    "lent-w00-thu-mp": {
+      "source": "https://divineoffice.org/lent-w00-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "At daybreak, be merciful to me, O Lord.",
+        "The Lord will make a river of peace flow through Jerusalem.",
+        "Let us joyfully praise the Lord our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, early in the morning of your resurrection, you made your love known and brought the first light of dawn to those who dwell in darkness. Your death has opened a path for us. Do not enter into judgment with your servants; let your Holy Spirit guide us together into the land of justice.",
+        "2": "God our Father, great builder of the heavenly Jerusalem, you know the number of the stars and call each of them by name. Heal hearts that are broken, gather together those who have been scattered, and enrich us all from the plenitude of your eternal wisdom."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " If anyone wishes to be my disciple, he must deny himself, take up his cross, and follow me, says the Lord.",
+      "intercessions": "God has revealed himself in Christ. Let us praise his goodness, and ask him from our hearts:\nRemember us, Lord, for we are your children.\n\nTeach us to enter more deeply into the mystery of the Church,\n— that it may be more effective for ourselves and for the world as the sacrament of salvation.\nRemember us, Lord, for we are your children.\n\nLover of mankind, inspire us to work for human progress,\n— seeking to spread your kingdom in all we do.\nRemember us, Lord, for we are your children.\nMay our hearts thirst for Christ,\n— the fountain of living water.\nRemember us, Lord, for we are your children.\n\nForgive us our sins,\n— and direct our steps into the ways of justice and sincerity.\nRemember us, Lord, for we are your children.",
+      "collect": "Prompt our actions with your inspiration,\nwe pray, O Lord,\nand further them with your constant help,\nthat all we do may always begin from you\nand by you be brought to completion.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See 1 Kings 8:51-53a"
+    },
+    "lent-w00-thu-ep": {
+      "source": "https://divineoffice.org/lent-w00-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "He is my comfort and my refuge. In him I put my trust.",
+        "Blessed are the people whose God is the Lord.",
+        "Now the victorious reign of our God has begun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 144",
+        "Psalm 144",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in the world. Clothe us with the weapons of light and unite us under the one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "Whoever gives up his life for my sake in this world will find it again for ever in the next, says the Lord.",
+      "intercessions": "In his mercy, God sends the Holy Spirit to shine on us, so that our lives may radiate holiness and faith. Let us raise our voices in prayer and say:\nLord, give life to your people, whom Christ has redeemed.\n\nLord, source of all holiness, draw bishops, priests and deacons closer to Christ through the eucharistic mystery,\n— may they grow daily in the grace of their ordination.\nLord, give life to your people, whom Christ has redeemed.\nTeach Christ’s faithful people to be devout and attentive at the table of his word and of his body,\n— so that they may bring into their daily lives the grace they receive through faith and sacrament.\nLord, give life to your people, whom Christ has redeemed.\n\nGrant, Lord, that we may see in each person the dignity of one redeemed by your Son’s blood,\n— so that we may respect the freedom and the conscience of all.\nLord, give life to your people, whom Christ has redeemed.\nTeach us to restrain our greed for earthly goods,\n— and to have concern for the needs of others.\nLord, give life to your people, whom Christ has redeemed.\n\nBe merciful to your faithful people whom you have called to yourself today,\n— grant them the gift of eternal happiness.\nLord, give life to your people, whom Christ has redeemed.",
+      "collect": "Prompt our actions with your inspiration,\nwe pray, O Lord,\nand further them with your constant help,\nthat all we do may always begin from you\nand by you be brought to completion.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 4:7-8,10"
+    },
+    "lent-w00-fri-mp": {
+      "source": "https://divineoffice.org/lent-w00-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Create a clean heart in me, O God; renew in me a steadfast spirit.",
+        "Rejoice, Jerusalem, for through you all men will be gathered to the Lord.",
+        "Zion, praise your God, who sent his Word to renew the earth."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Tobit 13:8-11, 13-15",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "All-powerful God, it is through your Church, generously endowed with gifts of grace and fortified by the Holy Spirit, that you send out your word to all nations. Strengthen your Church with the best of all food and make it dauntless in faith. Multiply its children to celebrate with one accord the mysteries of your love at the altar on high."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "When you meet those who are in need of clothing, do not turn away from them, for they are your brothers. Then your light shall break forth like the dawn, and your good deeds shall go before you.",
+      "intercessions": "Let us pray to Christ our Savior, who redeemed us by his death and resurrection:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\n\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\n\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "Show gracious favor,\nO Lord, we pray,\nto the works of penance we have begun,\nthat we may have strength to accomplish\nwith sincerity the bodily observances we undertake.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 53:11b-12"
+    },
+    "lent-w00-fri-ep": {
+      "source": "https://divineoffice.org/lent-w00-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Day after day I will bless you, Lord; I will tell of your marvelous deeds.",
+        "To you alone, Lord, we look with confidence; you are ever close to those who call upon you.",
+        "King of all the ages, your ways are perfect and true."
+      ],
+      "psalmodyRefs": [
+        "Psalm 145",
+        "Psalm 145",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, be near to all who call upon you in truth, and increase the dedication of those who revere you. Hear their prayers and save them, that they may always love you and praise your holy name."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": " When the bridegroom is taken away from them, then will be the time for the wedding guests to fast.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\n\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nIn their trials enable your faithful people to share in your passion,\n— and so reveal in their lives your saving power.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "Show gracious favor,\nO Lord, we pray,\nto the works of penance we have begun,\nthat we may have strength to accomplish\nwith sincerity the bodily observances we undertake.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:16, 19-20"
+    },
+    "lent-w00-sat-mp": {
+      "source": "https://divineoffice.org/lent-w00-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "We do well to sing to your name, Most High, and proclaim your mercy at daybreak.",
+        "I will create a new heart in you, and breathe into you a new spirit.",
+        "On the lips of children and infants you have found perfect praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Ezekiel 36:24-28",
+        "Psalm 8"
+      ],
+      "psalmPrayers": {
+        "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope and love in your service.",
+        "2": "Almighty Lord, how wonderful is your name. You have made every creature subject to you; make us worthy to give you service."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Store up for yourselves treasures in heaven where neither rust nor moth can destroy.",
+      "intercessions": "Let us always and everywhere give thanks to Christ our Savior, and ask him with confidence:\nLord, help us with your grace.\n\nMay we keep our bodies pure,\n— as temples of the Holy Spirit.\nLord, help us with your grace.\n\nMay we offer ourselves this morning to the service of others,\n— and do your will in all things throughout the day.\nLord, help us with your grace.\nTeach us to seek the bread of everlasting life,\n— the bread that is your gift.\nLord, help us with your grace.\n\nMay your Mother, the refuge of sinners, pray for us,\n— and gain for us your loving forgiveness.\nLord, help us with your grace.",
+      "collect": "Almighty ever-living God,\nlook with compassion on our weakness\nand ensure us your protection\nby stretching forth the right hand of your majesty.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 1:16-18"
+    },
+    "lent-w01-sun-ep1": {
+      "source": "https://divineoffice.org/lent-w01-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Lord God, we ask you to receive us and be pleased with the sacrifice we offer you this day with humble and contrite hearts.",
+        "Call upon the Lord and he will hear you; cry out and he will answer: Here I am.",
+        "Christ died for our sins, the innocent for the guilty, to bring us back to God. In the body he was put to death, but in the spirit he was raised to life."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
+        "1": "Lord, we humbly ask for your goodness. May you help us to hope in you, and give us a share with your chosen ones in the land of the living."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": " Man cannot live on bread alone but by every word that comes from the mouth of God.",
+      "intercessions": "Let us give glory to Christ the Lord, who became our teacher and example and our brother. Let us pray to him, saying:\nLord, fill your people with your life.\n\nLord Jesus, you became like us in all things but sin; teach us how to share with others their joy and sorrow,\n— that our love may grow deeper every day.\nLord, fill your people with your life.\n\nHelp us to feed you in feeding the hungry,\n— and to give you drink in giving drink to the thirsty.\nLord, fill your people with your life.\nYou raised Lazarus from the sleep of death,\n— grant that those who have died the death of sin may rise again through faith and repentance.\nLord, fill your people with your life.\n\nInspire many to follow you with greater zeal and perfection,\n— through the example of the blessed Virgin Mary and the saints.\nLord, fill your people with your life.\n\nLet the dead rise in your glory,\n— to enjoy your love for ever.\nLord, fill your people with your life.",
+      "collect": "Grant, almighty God,\nthrough the yearly observances of holy Lent,\nthat we may grow in understanding of the riches hidden in Christ\nand by worthy conduct pursue their effects.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 6:1-4a"
+    },
+    "lent-w01-sun-mp": {
+      "source": "https://divineoffice.org/lent-w01-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I will praise you all my life, O Lord; in your name I will lift up my hands.",
+        "Sing a hymn of praise to our God; praise him above all for ever.",
+        "The Lord delights in his people; he honors the humble with victory."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou were wounded for our offenses,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Jesus was led by the Spirit into the desert to be tempted by the devil; and when he had fasted for forty days and forty nights, he was hungry.",
+      "intercessions": "Let us praise our loving Redeemer, who gained for us this season of grace, and pray to him, saying:\nLord, create a new spirit in us.\n\nChrist, our life, through baptism we were buried with you and rose to life with you,\n— may we walk today in newness of life.\nLord, create a new spirit in us.\nLord, you have brought blessings to all mankind,\n— bring us to share your concern for the good of all.\nLord, create a new spirit in us.\n\nMay we work together to build up the earthly city,\n— with our eyes fixed on the city that lasts for ever.\nLord, create a new spirit in us.\n\nHealer of body and soul, cure the sickness of our spirit,\n— so that we may grow in holiness through your constant care.\nLord, create a new spirit in us.",
+      "collect": "Grant, almighty God,\nthrough the yearly observances of holy Lent,\nthat we may grow in understanding of the riches hidden in Christ\nand by worthy conduct pursue their effects.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See Nehemiah 8:9, 10"
+    },
+    "lent-w01-sun-ep2": {
+      "source": "https://divineoffice.org/lent-w01-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Worship your Lord and God; serve him alone.",
+        "This is the time when you can win God’s favor; the day when you can be saved.",
+        "Now we must go up to Jerusalem where all that has been written about the Son of Man will be fulfilled."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle — 1 Peter 2:21-24"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Almighty God, ever-living mystery of unity and Trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "Watch over us, eternal Savior; do not let the cunning tempter seize us. We place all our trust in your unfailing help.",
+      "intercessions": "All praise to God the Father who brought his chosen people to rebirth from imperishable seed through his eternal Word. Let us ask him as his children:\nLord, be gracious to your people.\n\nGod of mercy, hear the prayers we offer for all your people,\n— may they hunger for your word more than for bodily food.\nLord, be gracious to your people.\n\nGive us a sincere and active love for our own nation and for all mankind,\n— may we work always to build a world of peace and goodness.\nLord, be gracious to your people.\nLook with love on all to be reborn in baptism,\n— that they may be living stones in your temple of the Spirit.\nLord, be gracious to your people.\n\nYou moved Nineveh to repentance by the preaching of Jonah,\n— in your mercy touch the hearts of sinners by the preaching of your word.\nLord, be gracious to your people.\n\nMay the dying go in hope to meet Christ their judge,\n— may they rejoice for ever in the vision of your glory.\nLord, be gracious to your people.",
+      "collect": "Grant, almighty God,\nthrough the yearly observances of holy Lent,\nthat we may grow in understanding of the riches hidden in Christ\nand by worthy conduct pursue their effects.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 9:24-25"
+    },
+    "lent-w01-mon-mp": {
+      "source": "https://divineoffice.org/lent-w01-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I lift up my heart to you, O Lord, and you will hear my morning prayer.",
+        "We praise your glorious name, O Lord, our God.",
+        "Adore the Lord in his holy court."
+      ],
+      "psalmodyRefs": [
+        "Psalm 5",
+        "Canticle – 1 Chronicles 29:10-13",
+        "Psalm 29"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, all justice and all goodness come from you; you hate evil and abhor lies. Lead us, your servants, in the path of your justice, so that all who hope in you may rejoice with the Church and in Christ.",
+        "2": "You live for ever, Lord and King. All things of the earth justly sing your glory and honor. Strengthen your people against evil that we may rejoice in your peace and trust in your eternal promise."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "You have been blessed by my Father; come and receive the kingdom prepared for you from the foundation of the world.",
+      "intercessions": "Praise to Jesus, our Savior; by his death he has opened for us the way of salvation.\nLet us ask him:\nLord, guide your people to walk in your ways.\n\nGod of mercy, you gave us new life through baptism,\n— make us grow day by day in your likeness.\nLord, guide your people to walk in your ways.\nMay our generosity today bring joy to those in need,\n— in helping them may we find you.\nLord, guide your people to walk in your ways.\n\nHelp us to do what is good, right and true in your sight,\n— and to seek you always with undivided hearts.\nLord, guide your people to walk in your ways.\n\nForgive our sins against the unity of your family,\n— make us one in heart and spirit.\nLord, guide your people to walk in your ways.",
+      "collect": "Convert us,\nO God our Savior,\nand instruct our minds by heavenly teaching,\nthat we may benefit from the works of Lent.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Exodus 19:4-6a"
+    },
+    "lent-w01-mon-ep": {
+      "source": "https://divineoffice.org/lent-w01-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord looks tenderly on those who are poor.",
+        "Blessed are the pure of heart, for they shall see God.",
+        "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 11",
+        "Psalm 15",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you search the hearts of all, both the good and the wicked. May those who are in danger for love of you, find security in you now, and, in the day of judgment, may they rejoice in seeing you face to face.",
+        "1": "Make our lives blameless, Lord. Help us to do what is right and to speak what is true, that we may dwell in your tent and find rest on your holy mountain."
+      },
+      "responsory": "To you, O Lord, I make my prayers for mercy.\n— To you, O Lord, I make my prayers for mercy.\n\nHeal my soul for I have sinned against you\n— I make my prayers for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayers for mercy.",
+      "gospelAntiphon": "Whatever you do for the least of my brothers, you do for me.",
+      "intercessions": "Our Lord Jesus Christ has saved us from our sins, as his people let us call out to him\nJesus, Son of David, have mercy on us.\nLord Christ we pray for your Holy Church, you gave yourself up to make it holy, cleansing it with water and the life giving word,\n— renew it constantly and purify it by penance\nJesus, Son of David, have mercy on us.\n\nGood Master show young people the way you have chosen for each of them,\n— may they walk in it and find fulfilment\nJesus, Son of David, have mercy on us.\nIn your compassion you healed all forms of sickness bring hope to the sick and raise them up,\n— teach us to love and care for them\nJesus, Son of David, have mercy on us.\n\nMake us mindful of the dignity you gave us in baptism,\n— may we live for you at every moment\nJesus, Son of David, have mercy on us.\n\nMay the dead rise to glory in your peace,\n— grant us with them a share in your kingdom.\nJesus, Son of David, have mercy on us.",
+      "collect": "Convert us,\nO God our Savior,\nand instruct our minds by heavenly teaching,\nthat we may benefit from the works of Lent.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 12:1-2"
+    },
+    "lent-w01-tue-mp": {
+      "source": "https://divineoffice.org/lent-w01-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The man whose deeds are blameless and whose heart is pure will climb the mountain of the Lord.",
+        "Praise the eternal King in all your deeds.",
+        "The loyal heart must praise the Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 24",
+        "Canticle – Tobit 13:1-8",
+        "Psalm 33"
+      ],
+      "psalmPrayers": {
+        "0": "King of glory, Lord of power and might, cleanse our hearts from all sin, preserve the innocence of our hands, and keep our minds from vanity, so that we may deserve your blessing in your holy place.",
+        "2": "Nourish your people, Lord, for we hunger for your word. Rescue us from the death of sin and fill us with your mercy, that we may share your presence and the joy of all the saints."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Lord, teach us to pray as John taught his disciples.",
+      "intercessions": "Praise to Christ, who has given us himself as the bread from heaven. Let us pray to him, saying:\nJesus, you feed and heal our souls; come to strengthen us.\n\nLord, feed us at the banquet of the eucharist,\n— with all the gifts of your paschal sacrifice.\nJesus, you feed and heal our souls; come to strengthen us.\nGive us a perfect heart to receive your word,\n— that we may bring forth fruit in patience.\nJesus, you feed and heal our souls; come to strengthen us.\n\nMake us eager to work with you in building a better world,\n— so that it may listen to your Church and its gospel of peace.\nJesus, you feed and heal our souls; come to strengthen us.\n\nWe confess, Lord, that we have sinned,\n— wash us clean by your gift of salvation.\nJesus, you feed and heal our souls; come to strengthen us.",
+      "collect": "Look upon your family, Lord,\nthat, through the chastening effects of bodily discipline,\nour minds may be radiant in your presence\nwith the strength of our yearning for you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Joel 2:12-13"
+    },
+    "lent-w01-tue-ep": {
+      "source": "https://divineoffice.org/lent-w01-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "God has crowned his Christ with victory.",
+        "We celebrate your mighty works with songs of praise, O Lord.",
+        "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 20",
+        "Psalm 21",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you accepted the perfect sacrifice of your Son upon the cross. Hear us during times of trouble and protect us by the power of his name, that we who share his struggle on earth may merit a share in his victory.",
+        "1": "Father you have given us life on this earth and have met us with the grace of redemption. Bestow your greatest blessing on us, the fullness of eternal life."
+      },
+      "responsory": "To you, O Lord, I make my prayers for mercy.\n— To you, O Lord, I make my prayers for mercy.\n\nHeal my soul for I have sinned against you\n— I make my prayers for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayers for mercy.",
+      "gospelAntiphon": "When you wish to pray, go to your room, shut the door, and pray to your Father in secret.",
+      "intercessions": "Christ our Lord has warned us to watch and pray to avoid temptation. With our whole heart let us pray to him:\nTurn to us, Lord, and have mercy.\n\nJesus, our Christ, you promised to be with those who pray in your name,\n— help us always to pray with you to the Father in the Holy Spirit.\nTurn to us, Lord, and have mercy.\n\nBridegroom of the Church, cleanse her from every stain,\n— teach her to walk in hope and in the power of the Holy Spirit.\nTurn to us, Lord, and have mercy.\nFriend of the human race, teach us concern for our neighbor as you have commanded,\n— that all may see you more clearly as the light of the world.\nTurn to us, Lord, and have mercy.\n\nKing of peace, give your peace to the world,\n— that your presence may reveal your saving power in every place.\nTurn to us, Lord, and have mercy.\n\nOpen the door of eternal happiness to all the dead,\n— welcome them into the glory of unending life.\nTurn to us, Lord, and have mercy.",
+      "collect": "Look upon your family, Lord,\nthat, through the chastening effects of bodily discipline,\nour minds may be radiant in your presence\nwith the strength of our yearning for you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 2:14, 17, 18b"
+    },
+    "lent-w01-wed-mp": {
+      "source": "https://divineoffice.org/lent-w01-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Lord, in your light we see light itself.",
+        "O God, you are great and glorious; we marvel at your power.",
+        "Exult in God’s presence with hymns of praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 36",
+        "Canticle – Judith 16:2-3a, 13-15",
+        "Psalm 47"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you are the source of unfailing light. Give us true knowledge of your mercy so that we may renounce our pride and be filled with the riches of your house.",
+        "2": "God, King of all peoples and all ages, it is your victory we celebrate as we sing with all the skill at our command. Help us always to overcome evil by good, that we may rejoice in your triumph for ever."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "This evil and faithless generation asks for a sign, but no sign will be given it except the sign of the prophet Jonah.",
+      "intercessions": "Blessed be God, the giver of salvation, who decreed that mankind should become a new creation in himself, when all would be made new. With great confidence let us ask him:\nLord, renew us in your Spirit.\nLord, you promised a new heaven and a new earth; renew us daily through your Spirit,\n— that we may enjoy your presence for ever in the heavenly Jerusalem.\nLord, renew us in your Spirit.\n\nHelp us to work with you to make this world alive with your Spirit,\n— and to build on earth a city of justice, love and peace.\nLord, renew us in your Spirit.\n\nFree us from all negligence and sloth,\n— and give us joy in your gifts of grace.\nLord, renew us in your Spirit.\nDeliver us from evil,\n— and from slavery to the senses, which blinds us to goodness.\nLord, renew us in your Spirit.",
+      "collect": "Look kindly,\nLord, we pray,\non the devotion of your people,\nthat those who by self-denial are restrained in body\nmay by the fruit of good works be renewed in mind.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Deuteronomy 7:6, 8-9"
+    },
+    "lent-w01-wed-ep": {
+      "source": "https://divineoffice.org/lent-w01-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is my light and my help; whom shall I fear?",
+        "I long to look on you, O Lord; do not turn your face from me.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 27",
+        "Psalm 27",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "Father, you protect and strengthen those who hope in you; you heard the cry of your Son and kept him safe in your tent in the day of evil. Grant that your servants who seek your face in time of trouble may see your goodness in the land of the living."
+      },
+      "responsory": "To you, O Lord, I make my prayers for mercy.\n— To you, O Lord, I make my prayers for mercy.\n\nHeal my soul for I have sinned against you.\n— I make my prayers for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayers for mercy.",
+      "gospelAntiphon": "As Jonah was three days and three nights in the belly of the whale, so will the Son of Man spend three days and three nights in the heart of the earth.",
+      "intercessions": "Blessed be almighty God, who watches over us as a Father; he knows all our needs but wants us to seek first his kingdom. Let us cry out to him as his people:\nMay your kingdom come, that justice may reign.\nFather of all holiness, you gave us Christ as the shepherd of our souls; stay with your shepherds and the flock entrusted to them, do not leave this flock without the loving care of its shepherd,\n— do not leave your shepherds without an obedient flock to follow them.\nMay your kingdom come, that justice may reign.\n\nTeach Christians to help the weak with loving care,\n— and in serving them to serve your Son.\nMay your kingdom come, that justice may reign.\nGather into your Church those who do not yet believe,\n— and help them to build it up by good deeds done for love of you.\nMay your kingdom come, that justice may reign.\n\nHelp us to turn to you for forgiveness,\n— and, as you forgive us, reconcile us also with your Church.\nMay your kingdom come, that justice may reign.\n\nMay the dead pass from this world to eternal life,\n— to be with you for ever.\nMay your kingdom come, that justice may reign.",
+      "collect": "Look kindly,\nLord, we pray,\non the devotion of your people,\nthat those who by self-denial are restrained in body\nmay by the fruit of good works be renewed in mind.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:12b-15a"
+    },
+    "lent-w01-thu-mp": {
+      "source": "https://divineoffice.org/lent-w01-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Awake, lyre and harp, with praise let us awake the dawn.",
+        "My people, says the Lord, will be filled with my blessings.",
+        "The Lord is great and worthy to be praised in the city of our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 57",
+        "Canticle – Jeremiah 31:10-14",
+        "Psalm 48"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and we will praise you among the peoples and proclaim you to the nations, happy to be known as companions of your Son.",
+        "2": "Father, the body of your risen Son is the temple not made by human hands and the defending wall of the new Jerusalem. May this holy city, built of living stones, shine with spiritual radiance and witness to your greatness in the sight of all nations."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " If you, evil as you are, know how to give your children what is good, how much more will your Father in heaven pour out his gifts on all who pray to him.",
+      "intercessions": "Christ our Lord came among us as the light of the world, that we might walk in his light, and not in the darkness of death. Let us praise him and cry out to him:\nLet your word be a lamp to guide us.\nGod of mercy, help us today to grow in your likeness,\n— that we who sinned in Adam may rise again in Christ.\nLet your word be a lamp to guide us.\n\nLet your word be a lamp to guide us,\n— that we may live the truth and grow always in your love.\nLet your word be a lamp to guide us.\n\nTeach us to be faithful in seeking the common good for your sake,\n— that your light may shine on the whole human family by means of your Church.\nLet your word be a lamp to guide us.\nTouch our hearts to seek your friendship more and more,\n— and to make amends for our sins against your wisdom and goodness.\nLet your word be a lamp to guide us.",
+      "collect": "Bestow on us,\nwe pray, O Lord,\na spirit of always pondering on what is right\nand of hastening to carry it out,\nand since without you we cannot exist,\nmay we be enabled to live according to your will.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Kings 8:51-53a"
+    },
+    "lent-w01-thu-ep": {
+      "source": "https://divineoffice.org/lent-w01-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "I cried to you, Lord, and you healed me; I will praise you for ever.",
+        "The one who is sinless in the eyes of God is blessed indeed.",
+        "The Father has given Christ all power, honor and kingship; all people will obey him."
+      ],
+      "psalmodyRefs": [
+        "Psalm 30",
+        "Psalm 32",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "0": "God our Father, glorious in giving life. and even more glorious in restoring it, when his last night on earth came, your Son shed tears of blood, but dawn brought incomparable gladness. Do not turn away from us, or we shall fall back into dust, but rather turn our mourning into joy by raising us up with Christ.",
+        "1": "You desired, Lord, to keep from us your indignation and so did not spare Jesus Christ, who was wounded for our sins. We are your prodigal children, but confessing our sins we come back to you. Embrace us that we may rejoice in your mercy together with Christ your beloved Son."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul for I have sinned against you\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "Ask and you shall receive, seek and you shall find, knock and the door shall be opened to you.",
+      "intercessions": "Christ the Lord gave us a new commandment, of love for each other. Let us pray to him:\nLord, build up your people in love.\n\nGood Master, teach us to love you in our neighbor,\n— and in serving them to serve you.\nLord, build up your people in love.\n\nOn the cross you asked pardon for your executioners,\n— give us strength to love our enemies and pray for those who persecute us.\nLord, build up your people in love.\nThrough the mystery of your body and blood, deepen our love, our perseverance and our trust,\n— strengthen the weak, console the sorrowful, and give hope to the dying.\nLord, build up your people in love.\n\nLight of the world, you gave light to the man born blind when he had washed in the pool of Siloam,\n— enlighten catechumens through the water of baptism and the word of life.\nLord, build up your people in love.\nGive to the dead the perfect joy of your eternal love,\n— and number us also among your chosen ones.\nLord, build up your people in love.",
+      "collect": "Bestow on us,\nwe pray, O Lord,\na spirit of always pondering on what is right\nand of hastening to carry it out,\nand since without you we cannot exist,\nmay we be enabled to live according to your will.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 4:7-8,10"
+    },
+    "lent-w01-fri-mp": {
+      "source": "https://divineoffice.org/lent-w01-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you will accept the true sacrifice offered on your altar.",
+        "All the descendants of Israel will glory in the Lord’s gift of victory.",
+        "Let us go into God’s presence singing for joy."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Isaiah 45:15-25",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "With joy and gladness we cry out to you, Lord and ask you: open our hearts, to sing your praises and announce your goodness and truth."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " If your virtue does not surpass that of the scribes and Pharisees, you will never enter the kingdom of heaven.",
+      "intercessions": "Thanks be to Christ the Lord, who brought us life by his death on the cross. With our whole heart let us ask him:\nBy your death raise us to life.\nTeacher and Savior, you have shown us your fidelity and made us a new creation by your passion,\n— keep us from falling again into sin.\nBy your death raise us to life.\n\nHelp us to deny ourselves today,\n— and not deny those in need.\nBy your death raise us to life.\n\nMay we receive this day of penance as your gift,\n— and give it back to you through works of mercy.\nBy your death raise us to life.\n\nMaster our rebellious hearts,\n— and teach us generosity.\nBy your death raise us to life.",
+      "collect": "Grant that your faithful,\nO Lord, we pray,\nmay be so conformed to the paschal observances,\nthat the bodily discipline now solemnly begun\nmay bear fruit in the souls of all.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 53:11b-12"
+    },
+    "lent-w01-fri-ep": {
+      "source": "https://divineoffice.org/lent-w01-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, lay your healing hand upon me, for I have sinned.",
+        "The mighty Lord is with us; the God of Jacob is our stronghold.",
+        "All nations will come and worship before you, O Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 41",
+        "Psalm 46",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, healer of soul and body, you said: Blessed are the merciful, they will obtain mercy. Teach us to come to the aid of the needy in a spirit of love, that we in turn may be received and strengthened by you.",
+        "1": "All-powerful Father, the refuge and strength of your people, you protect in adversity and defend in prosperity those who put their trust in you. May they persevere in seeking your will and find their way to you through obedience."
+      },
+      "responsory": "To you, O Lord, I make my prayers for mercy.\n— To you, O Lord, I make my prayers for mercy.\n\nHeal my soul for I have sinned against you\n— I make my prayers for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayers for mercy.",
+      "gospelAntiphon": "If you are bringing your gift to the altar, and there you remember that your brother has something against you, leave your gift in front of the altar; go at once and make peace with your brother, and then come back and offer your gift.",
+      "intercessions": "The Lord Jesus sanctified his people with his blood. Let us cry out to him:\nLord, have mercy on your people.\nLoving, Redeemer, through your passion teach us self-denial, strengthen us against evil and adversity, and increase our hope,\n— and so make us ready to celebrate your resurrection.\nLord, have mercy on your people.\n\nGrant that Christians, as your prophets, may make you known in every place,\n— and bear witness to you with living faith and hope and love.\nLord, have mercy on your people.\nGive your strength to all in distress,\n— and help us to raise them up through our loving concern.\nLord, have mercy on your people.\n\nTeach the faithful to see your passion in their sufferings,\n— and show to others your power to save.\nLord, have mercy on your people.\n\nAuthor of life, remember those who have passed from this world,\n— grant them the glory of your risen life.\nLord, have mercy on your people.",
+      "collect": "Grant that your faithful,\nO Lord, we pray,\nmay be so conformed to the paschal observances,\nthat the bodily discipline now solemnly begun\nmay bear fruit in the souls of all.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:16, 19-20"
+    },
+    "lent-w01-sat-mp": {
+      "source": "https://divineoffice.org/lent-w01-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Dawn finds me ready to welcome you, my God.",
+        "The Lord is my strength, and I shall sing his praise, for he has become my Savior.",
+        "O praise the Lord, all you nations."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Exodus 15:1-4a, 8-13, 17-18",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words,\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " If you want to be true children of your heavenly Father, then you must pray for those who persecute you and speak all kinds of evil against you, says the Lord.",
+      "intercessions": "To make us his new creation, Christ the Lord gave us the waters of rebirth and spread the table of his body and his word. Let us call upon him and say:\nLord, renew us in your grace.\n\nJesus, meek and humble of heart, clothe us with compassion, kindness and humility,\n— make us want to be patient with everyone.\nLord, renew us in your grace.\n\nTeach us to be true neighbors to all in trouble and distress,\n— and so imitate you, the Good Samaritan.\nLord, renew us in your grace.\nMay the Blessed Virgin, your Mother, pray for all those vowed to a life of virginity,\n— that they may deepen their dedication to you and to the Church.\nLord, renew us in your grace.\n\nGrant us the gift of your mercy,\n— forgive our sins and remit their punishment.\nLord, renew us in your grace.",
+      "collect": "Turn our hearts to you,\neternal Father, and grant that,\nseeking always the one thing necessary\nand carrying out works of charity,\nwe may be dedicated to your worship.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 1:16-18"
+    },
+    "lent-w02-sun-ep1": {
+      "source": "https://divineoffice.org/lent-w02-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Jesus took Peter, James and his brother John and led them up a high mountain. There he was transfigured before them.",
+        "His face was radiant as the sun, and his clothing white as snow.",
+        "Moses and Elijah were speaking to him of the death he would endure in Jerusalem."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Let your Word, Father, be a lamp for our feet and a light to our path, so that we may understand what you wish to teach us and follow the path your light marks out for us.",
+        "1": "Lord Jesus, uphold those who hope in you and give us your counsel, so that we may know the joy of your resurrection and deserve to be among the saints at your right hand."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": " A voice spoke from the cloud: This is my beloved Son in whom I am well pleased; listen to him.",
+      "intercessions": "Let us give glory to God, who has concern for us all. Let us call upon him and say:\nLord, save the people you have redeemed.\n\nGiver of all gifts and source of all truth, give the fullness of your blessing to the college of bishops,\n— and keep all those entrusted to their care faithful to the teaching of the apostles.\nLord, save the people you have redeemed.\nPour your love into the hearts of all who share the one bread of life,\n— that they may grow in unity in the body of your Son.\nLord, save the people you have redeemed.\n\nHelp us to strip off our sinful selves,\n— and to be clothed with Christ, your Son, the new Adam.\nLord, save the people you have redeemed.\n\nGrant that all may do penance and find forgiveness,\n— and so share in the fruits of Christ’s redeeming death.\nLord, save the people you have redeemed.\nMay those who have died in your peace give you everlasting glory in heaven,\n— where we, too, hope to praise you for ever.\nLord, save the people you have redeemed.",
+      "collect": "O God,\nwho have commanded us to listen to your beloved Son,\nbe pleased, we pray,\nto nourish us inwardly by your word,\nthat, with spiritual sight made pure,\nwe may rejoice to behold your glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 6:1-4a"
+    },
+    "lent-w02-sun-mp": {
+      "source": "https://divineoffice.org/lent-w02-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The right hand of the Lord has shown its power; the right hand of the Lord has raised me up.",
+        "Let us sing the hymn of the three young men which they sang in the fiery furnace, giving praise to God.",
+        "Praise the Lord in his heavenly power."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou were wounded for our offenses,\n— have mercy on us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": " Our Lord Jesus Christ abolished death, and through the Gospel he revealed eternal life.",
+      "intercessions": "Let us give glory to God, whose kindness knows no limit. Through Jesus Christ, who lives for ever to intercede for us, let us pray:\nKindle in our hearts the fire of your love.\n\nGod of mercy, let today be a day rich in good works,\n— a day of generosity to all we meet.\nKindle in our hearts the fire of your love.\n\nFrom the waters of the flood you saved Noah through the ark,\n— from the waters of baptism raise up to new life those under instruction.\nKindle in our hearts the fire of your love.\nMay we live not by bread only,\n— but by every word falling from your lips.\nKindle in our hearts the fire of your love.\n\nHelp us to do away with all dissension,\n— so that we may rejoice in your gifts of peace and love.\nKindle in our hearts the fire of your love.",
+      "collect": "O God,\nwho have commanded us to listen to your beloved Son,\nbe pleased, we pray,\nto nourish us inwardly by your word,\nthat, with spiritual sight made pure,\nwe may rejoice to behold your glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See Nehemiah 8:9, 10"
+    },
+    "lent-w02-sun-ep2": {
+      "source": "https://divineoffice.org/lent-w02-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "In holy splendor the Lord will send forth your mighty scepter from Zion.",
+        "We worship the one true God who made heaven and earth.",
+        "God did not spare his own Son but gave him up for us all."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – 1 Peter 2:21-24"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name, and make all nations a holy people for you.",
+        "1": "Father, creator and ruler of heaven and earth, you made man in your likeness to subdue the earth and master it, and to recognize the work of your hands in created beauty. Grant that your children, thus surrounded on all sides by signs of your presence, may live continually in Christ, praising you through him and with him."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "Tell no one about the vision you have seen until the Son of Man has risen from the dead.",
+      "intercessions": "Let us give thanks continually to Christ, our teacher and our head, who came to serve and to do good to all. In humility and confidence let us ask him:\nCome, Lord, to visit your family.\n\nLord, be present to the bishops and priests of your Church, who share your role as head and shepherd,\n— may they lead your people to the Father under your guidance.\nCome, Lord, to visit your family.\n\nMay your angel be with all who travel,\n— to keep them safe in soul and body.\nCome, Lord, to visit your family.\nTeach us to serve the needs of others,\n— and to be like you, who came to serve, not to be served.\nCome, Lord, to visit your family.\n\nGrant that in the human family, brother may always help brother,\n— so that, with your assistance, it may be a city compact and strong.\nCome, Lord, to visit your family.\n\nHave mercy on all the dead,\nbring them to the vision of your glory.\nCome, Lord, to visit your family.",
+      "collect": "O God,\nwho have commanded us to listen to your beloved Son,\nbe pleased, we pray,\nto nourish us inwardly by your word,\nthat, with spiritual sight made pure,\nwe may rejoice to behold your glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 9:24-25"
+    },
+    "lent-w02-tue-mp": {
+      "source": "https://divineoffice.org/lent-w02-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, send forth your light and your truth.",
+        "Lord, keep us safe all the days of our life.",
+        "To you, O God, our praise is due in Zion."
+      ],
+      "psalmodyRefs": [
+        "Psalm 43",
+        "Canticle – Isaiah 38:10-14, 17-20",
+        "Psalm 65"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty Father, source of everlasting light, send forth your truth into our hearts and pour over us the brightness of your light.",
+        "2": "Lord God, hope of all the earth, hear the humble prayer of your children as we sing your praises. Pour out your Spirit on us so that our lives may bear fruit abundantly."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "You have one teacher, and he is in heaven: Christ your Lord.",
+      "intercessions": "God the Father has given us his only Son, the Word made man, to be our food and our life. Let us thank him and pray:\nMay the word of Christ dwell among us in all its richness.\n\nHelp us in this Lenten season to listen more frequently to your word,\n— that we may celebrate the solemnity of Easter with greater love for Christ, our paschal sacrifice.\nMay the word of Christ dwell among us in all its richness.\nMay your Holy Spirit be our teacher,\n— that we may encourage those in doubt and error to follow what is true and good.\nMay the word of Christ dwell among us in all its richness.\n\nEnable us to enter more deeply into the mystery of your Anointed One,\n— that our lives may reveal him more effectively.\nMay the word of Christ dwell among us in all its richness.\nPurify and renew your Church in this time of salvation,\n— that it may give an ever greater witness to you.\nMay the word of Christ dwell among us in all its richness.",
+      "collect": "Guard your Church, we pray, O Lord, in your unceasing mercy,\nand, since without you mortal humanity is sure to fall,\nmay we be kept by your constant help from all harm\nand directed to all that brings salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Joel 2:12-13"
+    },
+    "lent-w02-tue-ep": {
+      "source": "https://divineoffice.org/lent-w02-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "You cannot serve both God and mammon.",
+        "Store up for yourselves treasure in heaven, says the Lord.",
+        "Adoration and glory belong by right to the Lamb who was slain."
+      ],
+      "psalmodyRefs": [
+        "Psalm 49",
+        "Psalm 49",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "1": "You condemned the rich, Lord Jesus, because they have already received their reward, and you proclaimed the poor blessed because the kingdom of heaven is theirs. Teach us to seek for imperishable goods and to have confidence in your blood, poured out as the price of our redemption."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy;\n— To you, O Lord, I make my prayer for mercy;\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy;\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy;",
+      "gospelAntiphon": " You are all brothers, sons of one Father who is in heaven. Do not call anyone on earth your father. Nor must any of you be called a teacher, for your only teacher is Christ.",
+      "intercessions": "Let us praise the Lord Jesus, who, lifted high on the cross, drew all things to himself. With loving hearts let us pray:\nDraw all things to yourself, Lord.\n\nLord, may the mystery of your cross shine on all mankind,\n— that all may see you as the way, the truth and the life.\nDraw all things to yourself, Lord.\n\nMay all who thirst for you, the living water,\n— drink their fill for ever.\nDraw all things to yourself, Lord.\nInspire all teachers and artists,\n— to prepare mankind for your kingdom.\nDraw all things to yourself, Lord.\n\nGuide all estranged from you by sin or scandal,\n— that they may come back to you, and remain always in your love.\nDraw all things to yourself, Lord.\n\nWelcome all our deceased brothers and sisters to your home in heaven,\n— to share the joy of the blessed Virgin Mary and all the saints.\nDraw all things to yourself, Lord.",
+      "collect": "Guard your Church, we pray, O Lord, in your unceasing mercy,\nand, since without you mortal humanity is sure to fall,\nmay we be kept by your constant help from all harm\nand directed to all that brings salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 2:14, 17, 18b"
+    },
+    "lent-w02-wed-mp": {
+      "source": "https://divineoffice.org/lent-w02-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O God, all your ways are holy; what god can compare with our God?",
+        "My heart leaps up with joy to the Lord, for he humbles only to exalt us.",
+        "The Lord is king, let the earth rejoice."
+      ],
+      "psalmodyRefs": [
+        "Psalm 77",
+        "Canticle — 1 Samuel 2:1-10",
+        "Psalm 97"
+      ],
+      "psalmPrayers": {
+        "0": "Father, you established your ancient covenant by signs and wonders, but more wondrously you confirmed the new one through the sacrifice of your Son. Guide your Church through the pathways of life, that we may be led to the land of promise and celebrate your name with lasting praise.",
+        "2": "Father, you clothe the sky with light and the depths of the ocean with darkness. Among the sons of men you work wonders, and rain terror upon the enemy. Look upon your servants. Do not try us by fire but bring us rejoicing to the shelter of your home."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "The Son of Man did not come to be served but to serve, and to give his life as a ransom for many.",
+      "intercessions": "Let us give thanks to God our Father; through the power of the Spirit he purifies our hearts and strengthens us in love. Let us humbly ask him:\nLord, give us your Holy Spirit.\n\nHelp us to receive good things from your bounty with a deep sense of gratitude,\n— and to accept with patience the evil that comes to us.\nLord, give us your Holy Spirit.\nTeach us to be loving not only in great and exceptional moments,\n— but above all in the ordinary events of daily life.\nLord, give us your Holy Spirit.\n\nMay we abstain from what we do not really need,\n— and help our brothers and sisters in distress.\nLord, give us your Holy Spirit.\n\nMay we bear the wounds of your Son,\n— for through his body he gave us life.\nLord, give us your Holy Spirit.",
+      "collect": "Keep your family, O Lord,\nschooled always in good works,\nand so comfort them with your protection here\nas to lead them graciously to gifts on high.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Deuteronomy 7:6, 8-9"
+    },
+    "lent-w02-wed-ep": {
+      "source": "https://divineoffice.org/lent-w02-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Eagerly we await the fulfillment of our hope, the glorious coming of our Savior.",
+        "May God turn his radiant face toward us and fill us with his blessings.",
+        "Through him all things were made; he holds all creation together in himself."
+      ],
+      "psalmodyRefs": [
+        "Psalm 62",
+        "Psalm 67",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you reward each one according to his works. Hear us as we pour out our hearts to you seeking your grace and secure protection. We look to you for our stable hope in a constantly changing world.",
+        "1": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "The Son of Man will be handed over to the Gentiles to be mocked, scourged and crucified; and on the third day he will rise again.",
+      "intercessions": "All glory and honor to God, for in the blood of Christ he has ratified a new and everlasting covenant with his people, and renews it in the sacrament of the altar.\nBless your people, Lord.\n\nLord, guide the minds and hearts of peoples and all in public office,\n— may they always seek the common good.\nBless your people, Lord.\n\nRenew the spirit of dedication in those who have left all to follow Christ,\n— may they give clear witness to the holiness of the Church.\nBless your people, Lord.\nYou have made all men and women in your image,\n— may they always uphold human dignity.\nBless your people, Lord.\n\nLead back to your friendship and truth all who have gone astray,\n— teach us how to help them.\nBless your people, Lord.\n\nGrant that the dead may enter into your glory,\n— to praise you for ever.\nBless your people, Lord.",
+      "collect": "Keep your family, O Lord,\nschooled always in good works,\nand so comfort them with your protection here\nas to lead them graciously to gifts on high.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:12b-15a"
+    },
+    "lent-w02-thu-mp": {
+      "source": "https://divineoffice.org/lent-w02-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Stir up your mighty power, Lord; come to our aid.",
+        "The Lord has worked marvels for us; make it known to the ends of the world.",
+        "Ring out your joy to God our strength."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle – Isaiah 12:1-6",
+        "Psalm 81"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine, that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
+        "2": "Lord God, open our mouths to proclaim your glory. Help us to leave sin behind and to rejoice in professing your name."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " Son, remember the good things you received in your lifetime and the bad things Lazarus received in his.",
+      "intercessions": "God has revealed himself in Christ. Let us praise his goodness, and ask him from our hearts:\nRemember us, Lord, for we are your children.\nTeach us to enter more deeply into the mystery of the Church,\n— that it may be more effective for ourselves and for the world as the sacrament of salvation.\nRemember us, Lord, for we are your children.\n\nLover of mankind, inspire us to work for human progress,\n— seeking to spread your kingdom in all we do.\nRemember us, Lord, for we are your children.\n\nMay our hearts thirst for Christ,\n— the fountain of living water.\nRemember us, Lord, for we are your children.\nForgive us our sins,\n— and direct our steps into the ways of justice and sincerity.\nRemember us, Lord, for we are your children.",
+      "collect": "O God,\nwho delight in innocence and restore it,\ndirect the hearts of your servants to yourself,\nthat, caught up in the fire of your Spirit,\nwe may be found steadfast in faith\nand effective in works.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See 1 Kings 8:51-53a"
+    },
+    "lent-w02-thu-ep": {
+      "source": "https://divineoffice.org/lent-w02-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "I have made you the light of all nations to carry my salvation to the ends of the earth.",
+        "The Lord will save the children of the poor and rescue them from slavery.",
+        "Now the victorious reign of our God has begun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 72",
+        "Psalm 72",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "The rich man, who had refused Lazarus a crust of bread, pleaded for a drop of water.",
+      "intercessions": "In his mercy, God sends the Holy Spirit to shine on us, so that our lives may radiate holiness and faith. Let us raise our voices in prayer and say:\nLord, give life to your people, whom Christ has redeemed.\nLord, source of all holiness, draw bishops, priests and deacons closer to Christ through the eucharistic mystery,\n— may they grow daily in the grace of their ordination.\nLord, give life to your people, whom Christ has redeemed.\n\nTeach Christ’s faithful people to be devout and attentive at the table of his word and of his body,\n— so that they may bring into their daily lives the grace they receive through faith and sacrament.\nLord, give life to your people, whom Christ has redeemed.\nGrant, Lord, that we may see in each person the dignity of one redeemed by your Son’s blood,\n— so that we may respect the freedom and the conscience of all.\nLord, give life to your people, whom Christ has redeemed.\n\nTeach us to restrain our greed for earthly goods,\n— and to have concern for the need of others.\nLord, give life to your people, whom Christ has redeemed.\nBe merciful to your faithful people whom you have called to yourself today,\n— grant them the gift of eternal happiness.\nLord, give life to your people, whom Christ has redeemed.",
+      "collect": "O God,\nwho delight in innocence and restore it,\ndirect the hearts of your servants to yourself,\nthat, caught up in the fire of your Spirit,\nwe may be found steadfast in faith\nand effective in works.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 4:7-8, 10"
+    },
+    "lent-w02-fri-mp": {
+      "source": "https://divineoffice.org/lent-w02-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "A humble, contrite heart, O God, you will not spurn.",
+        "Even in your anger, Lord, you will remember compassion.",
+        "O praise the Lord, Jerusalem!"
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Habakkuk 3:2-4, 13a, 15-19",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "Lord, you established peace within the borders of Jerusalem. Give the fullness of peace now to your faithful people. May peace rule us in this life and possess us in eternal life. You are about to fill us with the best of wheat: grant that what we see dimly now as in a mirror, we may come to perceive clearly in the brightness of your truth."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "He will bring those evil men to an evil end and entrust his vineyard to other tenants who will give him the harvest at the proper season.",
+      "intercessions": "Let us pray to Christ our Savior, who redeemed us by his death and resurrection:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\n\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\n\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat, purifying us by the sacred practice of penance,\nyou may lead us in sincerity of heart\nto attain the holy things to come.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 53:11b-12"
+    },
+    "lent-w02-fri-ep": {
+      "source": "https://divineoffice.org/lent-w02-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, keep my soul from death, never let me stumble.",
+        "My help comes from the Lord, who made heaven and earth.",
+        "King of all the ages, your ways are perfect and true."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 121",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "0": "God of power and mercy, through your Son’s passion and resurrection you have freed us from the bonds of death and the anguish of separation from you. Be ever with us on our pilgrimage; then we shall sing rather than weep. Keep our feet from stumbling, so that we may be able to follow you until we come to eternal rest.",
+        "1": "Lord Jesus Christ, you have prepared a quiet place for us in your Father’s eternal home. Watch over our welfare on this perilous journey, shade us from the burning heat of day, and keep our lives free of evil until the end."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "They would have arrested Jesus but they feared the people who regarded him as a prophet.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\n\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nIn their trials enable your faithful people to share in your passion,\n— and so reveal in their lives your saving power.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat, purifying us by the sacred practice of penance,\nyou may lead us in sincerity of heart\nto attain the holy things to come.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:16, 19-20"
+    },
+    "lent-w02-sat-mp": {
+      "source": "https://divineoffice.org/lent-w02-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "As morning breaks we sing of your mercy, Lord, and night will find us proclaiming your fidelity.",
+        "Extol the greatness of our God.",
+        "How wonderful is your name, O Lord, in all creation."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Deuteronomy 32:1-12",
+        "Psalm 8"
+      ],
+      "psalmPrayers": {
+        "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
+        "2": "Almighty Lord, how wonderful is your name. You have made every creature subject to you; make us worthy to give you service."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Father, I have sinned against heaven and against you; I no longer deserve to be called your son; treat me as one of your servants.",
+      "intercessions": "Let us always and everywhere give thanks to Christ our Savior, and ask him with confidence:\nLord, help us with your grace.\n\nMay we keep our bodies pure,\n— as temples of the Holy Spirit.\nLord, help us with your grace.\nMay we offer ourselves this morning to the service of others,\n— and do your will in all things throughout the day.\nLord, help us with your grace.\n\nTeach us to seek the bread of everlasting life,\n— the bread that is your gift.\nLord, help us with your grace.\n\nMay your Mother, the refuge of sinners, pray for us,\n— and gain for us your loving forgiveness.\nLord, help us with your grace.",
+      "collect": "O God,\nwho grant us\nby glorious healing remedies while still on earth\nto be partakers of the things of heaven,\nguide us, we pray,\nthrough this present life\nand bring us to that light in which you dwell.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 1:16-18"
+    },
+    "lent-w03-sun-ep1": {
+      "source": "https://divineoffice.org/lent-w03-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord says: Turn away from sin and open your hearts to the Gospel.",
+        "I will offer a sacrifice of praise and call upon the name of the Lord.",
+        "No one takes my life away from me; I lay it down freely and I shall take it up again."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 116",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, Word of God, surrendering the brightness of your glory you became man so that we may be raised from the dust to share your very being. May there be innumerable children of the Church to offer homage to your name from the rising of the sun to its setting.",
+        "1": "Father, precious in your sight is the death of the saints, but precious above all is the love with which Christ suffered to redeem us. In this life we will fill up in our own flesh what is still lacking in the sufferings of Christ; accept this as our sacrifice of praise, and we shall even now taste the joy of the new Jerusalem."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "Now that we have been justified by faith, let us be at peace with God through our Lord Jesus Christ.",
+      "intercessions": "Let us give glory to Christ the Lord, who became our teacher, our example and our brother. Let us pray to him, saying:\nLord, fill your people with your life.\n\nLord Jesus, you became like us in all things but sin; teach us how to share with others their joy and sorrow,\n— that our love may grow deeper every day.\nLord, fill your people with your life.\n\nHelp us to feed you in feeding the hungry,\n— and to give you drink in giving drink to the thirsty.\nLord, fill your people with your life.\nYou raised Lazarus from the sleep of death,\n— grant that those who have died the death of sin may rise again through faith and repentance.\nLord, fill your people with your life.\n\nThrough the example of the blessed Virgin Mary and the saints,\n— inspire many to follow you with greater zeal and perfection.\nLord, fill your people with your life.\n\nLet the dead rise in your glory,\n— to enjoy your love for ever.\nLord, fill your people with your life.",
+      "collect": "O God,\nauthor of every mercy\nand of all goodness, who in fasting,\nprayer and almsgiving have shown us a remedy for sin,\nlook graciously on this confession of our lowliness,\nthat we, who are bowed down by our conscience,\nmay always be lifted up by your mercy.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 6:1-4a"
+    },
+    "lent-w03-sun-mp": {
+      "source": "https://divineoffice.org/lent-w03-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Your decrees, O Lord, are to be trusted; your truth is more powerful than the roaring of the seas.",
+        "Springs of water, bless the Lord; praise and exalt him above all for ever.",
+        "All kings and peoples of the earth, give praise to God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 93",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 148"
+      ],
+      "psalmPrayers": {
+        "0": "All power and all authority in heaven and earth have been given to you, Lord Jesus; you rule with decrees that are firm and trustworthy. Be with us always so that we may make disciples whose holiness will be worthy of your house.",
+        "2": "Lord, extolled in the heights by angelic powers, you are also praised by all earth’s creatures, each in its own way. With all the splendor of heavenly worship, you still delight in such tokens of love as earth can offer. May heaven and earth together acclaim you as King. May the praise that is sung in heaven resound in the heart of every creature on earth."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou were wounded for our offenses,\n— have mercy on us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Destroy this temple, says the Lord, and in three days, I will rebuild it. He was speaking of the temple of his body.",
+      "intercessions": "Let us praise our loving Redeemer, who gained for us this season of grace, and pray to him, saying:\nLord, create a new spirit in us.\n\nChrist, our life, through baptism we were buried with you and rose to life with you,\n— may we walk today in newness of life.\nLord, create a new spirit in us.\n\nLord, you have brought blessings to all mankind,\n— bring us to share your concern for the good of all.\nLord, create a new spirit in us.\nMay we work together to build up the earthly city,\n— with our eyes fixed on the city that lasts for ever.\nLord, create a new spirit in us.\n\nHealer of body and soul, cure the sickness of our spirit,\n— so that we may grow in holiness through your constant care.\nLord, create a new spirit in us.",
+      "collect": "O God,\nauthor of every mercy and of all goodness,\nwho in fasting, prayer and almsgiving\nhave shown us a remedy for sin,\nlook graciously on this confession of our lowliness,\nthat we, who are bowed down by our conscience,\nmay always be lifted up by your mercy.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See Nehemiah 8:9, 10"
+    },
+    "lent-w03-sun-ep2": {
+      "source": "https://divineoffice.org/lent-w03-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, all powerful King, free us for the sake of your name. Give us time to turn from our sins.",
+        "We have been redeemed by the precious blood of Christ, the lamb without blemish.",
+        "Ours were the sufferings he bore; ours the torments he endured."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – 1 Peter 2:21-24"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Merciful and gentle Lord, you are the crowning glory of all the saints. Give us, your children, the gift of obedience which is the beginning of wisdom, so that we may do what you command and be filled with your mercy."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "Whoever drinks the water that I shall give will never be thirsty again, says the Lord.",
+      "intercessions": "All praise to God the Father who brought his chosen people to rebirth from imperishable seed through his eternal Word. Let us ask him as his children:\nLord, be gracious to your people.\n\nGod of mercy, hear the prayers we offer for all your people,\n— may they hunger for your word more than for bodily food.\nLord, be gracious to your people.\n\nGive us a sincere and active love for our own nation and for all mankind,\n— may we work always to build a world of peace and goodness.\nLord, be gracious to your people.\nLook with love on all to be reborn in baptism,\n— that they may be living stones in your temple of the Spirit.\nLord, be gracious to your people.\n\nYou moved Nineveh to repentance by the preaching of Jonah,\n— in your mercy touch the hearts of sinners by the preaching of your word.\nLord, be gracious to your people.\n\nMay the dying go in hope to meet Christ their judge,\n— may they rejoice for ever in the vision of your glory.\nLord, be gracious to your people.",
+      "collect": "O God,\nauthor of every mercy and of all goodness,\nwho in fasting, prayer and almsgiving\nhave shown us a remedy for sin,\nlook graciously on this confession of our lowliness,\nthat we, who are bowed down by our conscience,\nmay always be lifted up by your mercy.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 9:24-25"
+    },
+    "lent-w03-mon-mp": {
+      "source": "https://divineoffice.org/lent-w03-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Blessed are they who dwell in your house, O Lord.",
+        "Come, let us climb the mountain of the Lord.",
+        "Sing to the Lord and bless his name."
+      ],
+      "psalmodyRefs": [
+        "Psalm 84",
+        "Canticle – Isaiah 2:2-5",
+        "Psalm 96"
+      ],
+      "psalmPrayers": {
+        "0": "Bless your people, Lord. You have given us the law that we may walk from strength to strength and raise our minds to you from this valley of tears. May we receive the gifts you have gained for us.",
+        "2": "Lord, you have renewed the face of the earth. Your Church throughout the world sings you a new song, announcing your wonders to all. Through a virgin, you have brought forth a new birth in our world; through your miracles, a new power; through your suffering, a new patience; in your resurrection, a new hope, and in your ascension, new majesty."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "I tell you assuredly, no prophet is accepted in his own country.",
+      "intercessions": "Praise to Jesus, our Savior; by his death he has opened for us the way of salvation. Let us ask him:\nLord, guide your people to walk in your ways.\n\nGod of mercy, you gave us new life through baptism,\n— make us grow day by day in your likeness.\nLord, guide your people to walk in your ways.\n\nMay our generosity today bring joy to those in need,\n— in helping them may we find you.\nLord, guide your people to walk in your ways.\nHelp us to do what is good, right and true in your sight,\n— and to seek you always with undivided hearts.\nLord, guide your people to walk in your ways.\n\nForgive our sins against the unity of your family,\n— make us one in heart and spirit.\nLord, guide your people to walk in your ways.",
+      "collect": "May your unfailing compassion,\nO Lord, cleanse and protect your Church,\nand since without you she cannot stand secure,\nmay she be always governed by your grace.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Exodus 19:4-6a"
+    },
+    "lent-w03-mon-ep": {
+      "source": "https://divineoffice.org/lent-w03-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Our eyes are fixed intently on the Lord, waiting for his merciful help.",
+        "Our help is in the name of the Lord who made heaven and earth.",
+        "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 123",
+        "Psalm 124",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, we lift our eyes to you and pray: confound the scorn of the proud and graciously show us your mercy.",
+        "1": "Lord Jesus, you foretold that your disciples would be despised on account of your name, but that not a hair of their heads is ever forgotten. In times of persecution, defend and revive us by the power and comfort of the Holy Spirit, so that we can be freed from our enemies and praise your saving help."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy;\n— To you, O Lord, I make my prayer for mercy;\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy;\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy;",
+      "gospelAntiphon": "Jesus walked through the crowd and went away.",
+      "intercessions": "Our Lord Jesus Christ has saved us from our sins. As his people, let us call out to him:\nJesus, Son of David, have mercy on us.\nLord Christ, we pray for your holy Church; you gave yourself up to make it holy, washing it clean by water and the life-giving word,\n— renew it constantly, and purify it by penance.\nJesus, Son of David, have mercy on us.\n\nGood Master, show young people the way you have chosen for each of them,\n— may they walk in it, and find fulfillment.\nJesus, Son of David, have mercy on us.\nIn your compassion you healed all forms of sickness; bring hope to the sick and raise them up,\n— teach us to love and care for them.\nJesus, Son of David, have mercy on us.\n\nMake us mindful of the dignity you gave us in baptism,\n— may we live for you at every moment.\nJesus, Son of David, have mercy on us.\n\nMay the dead rise to glory in your peace,\n— grant us with them a share in your kingdom.\nJesus, Son of David, have mercy on us.",
+      "collect": "May your unfailing compassion,\nO Lord, cleanse and protect your Church,\nand since without you she cannot stand secure,\nmay she be always governed by your grace.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 12:1-2"
+    },
+    "lent-w03-tue-mp": {
+      "source": "https://divineoffice.org/lent-w03-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you have blessed your land; you have forgiven the sins of your people.",
+        "My soul has yearned for you in the night, and as morning breaks I watch for your coming.",
+        "Lord, let the light of your face shine upon us."
+      ],
+      "psalmodyRefs": [
+        "Psalm 85",
+        "Canticle – Isaiah 26:1-4, 7-9, 12",
+        "Psalm 67"
+      ],
+      "psalmPrayers": {
+        "0": "Show us your mercy, Lord; our misery is known to us. May no evil desires prevail over us, for your glory and love dwell in our hearts.",
+        "2": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "The Lord said: Peter, I do not tell you to forgive only seven times, but seventy times seven.",
+      "intercessions": "Praise to Christ, who has given us himself as the bread from heaven. Let us pray to him, saying:\nJesus, you feed and heal our souls; come to strengthen us.\n\nLord, feed us at the banquet of the eucharist,\n— with all the gifts of your paschal sacrifice.\nJesus, you feed and heal our souls; come to strengthen us.\n\nGive us a perfect heart to receive your word,\n— that we may bring forth fruit in patience.\nJesus, you feed and heal our souls; come to strengthen us.\nMake us eager to work with you in building a better world,\n— so that it may listen to your Church and its gospel of peace.\nJesus, you feed and heal our souls; come to strengthen us.\n\nWe confess, Lord, that we have sinned,\n— wash us clean by your gift of salvation.\nJesus, you feed and heal our souls; come to strengthen us.",
+      "collect": "May your grace not forsake us,\nO Lord, we pray,\nbut make us dedicated to your holy service\nand at all times obtain for us your help.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Joel 2:12-13"
+    },
+    "lent-w03-tue-ep": {
+      "source": "https://divineoffice.org/lent-w03-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord surrounds his people with his strength.",
+        "Unless you acquire the heart of a child, you cannot enter the kingdom of God.",
+        "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 125",
+        "Psalm 131",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Surround your people, Lord, within the safety of your Church, which you preserve on its rock foundation. Do not let us stretch out our hands to evil deeds, nor be destroyed by the insidious snares of the enemy, but bring us to share the lot of the saints in light.",
+        "1": "Lord Jesus, gentle and humble of heart, you declared that whoever receives a little child in your name receives you, and you promised your kingdom to those who are like children. Never let pride reign in our hearts, but may the Father’s compassion reward and embrace all who willingly bear your gentle yoke."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy;\n— To you, O Lord, I make my prayer for mercy;.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy;\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy;",
+      "gospelAntiphon": "This is how my heavenly Father will treat each one of you, unless you forgive your brothers and sisters from your heart.",
+      "intercessions": "Christ our Lord has warned us to watch and pray to avoid temptation. With our whole heart let us pray to him:\nTurn to us, Lord, and have mercy.\n\nJesus, our Christ, you promised to be with those who pray in your name,\n— help us always to pray with you to the Father in the Holy Spirit.\nTurn to us, Lord, and have mercy.\n\nBridegroom of the Church, cleanse her from every stain,\n— teach her to walk in hope and in the power of the Holy Spirit.\nTurn to us, Lord, and have mercy.\nFriend of the human race, teach us concern for our neighbor as you have commanded,\n— that all may see you more clearly as the light of the world.\nTurn to us, Lord, and have mercy.\n\nKing of peace, give your peace to the world,\n— that your presence may reveal your saving power in every place.\nTurn to us, Lord, and have mercy.\n\nOpen the door of eternal happiness to all the dead,\n— welcome them into the glory of unending life.\nTurn to us, Lord, and have mercy.",
+      "collect": "May your grace not forsake us,\nO Lord, we pray,\nbut make us dedicated to your holy service\nand at all times obtain for us your help.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 2:14-18b"
+    },
+    "lent-w03-wed-mp": {
+      "source": "https://divineoffice.org/lent-w03-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Give joy to your servant, Lord; to you I lift up my heart.",
+        "Blessed is the upright man, who speaks the truth.",
+        "Let us celebrate with joy in the presence of our Lord and King."
+      ],
+      "psalmodyRefs": [
+        "Psalm 86",
+        "Canticle – Isaiah 33:13-16",
+        "Psalm 98"
+      ],
+      "psalmPrayers": {
+        "0": "God of mercy and goodness, when Christ called out to you in torment, you heard him and gave him victory over death because of his love for you. We already know the affection you have for us; fill us with a great love of your name, and we will proclaim you more boldly before men and happily lead them to celebrate your glory.",
+        "2": "Lord Jesus, you have revealed your justice to all nations. We stood condemned and you came to be judged in our place. Send your saving power on us and when you come in glory bring your mercy to those for whom you were condemned."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " The Lord said: Do not think that I have come to abolish the law and the prophets; I have come not to abolish but to fulfill them.",
+      "intercessions": "Blessed be God, the giver of salvation, who decreed that mankind should become a new creation in himself, when all would be made new. With great confidence let us ask him:\nLord, renew us in your Spirit.\nLord, you promised a new heaven and a new earth; renew us daily through your Spirit,\n— that we may enjoy your presence for ever in the heavenly Jerusalem.\nLord, renew us in your Spirit.\n\nHelp us to work with you to make this world alive with your Spirit,\n— and to build on earth a city of justice, love and peace.\nLord, renew us in your Spirit.\n\nFree us from all negligence and sloth,\n— and give us joy in your gifts of grace.\nLord, renew us in your Spirit.\nDeliver us from evil,\n— and from slavery to the senses, which blinds us to goodness.\nLord, renew us in your Spirit.",
+      "collect": "Grant,\nwe pray, O Lord, that,\nschooled through Lenten observance\nand nourished by your word,\nthrough holy restraint,\nwe may be devoted to you with all our heart\nand be ever united in prayer.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Deuteronomy 7:6, 8-9"
+    },
+    "lent-w03-wed-ep": {
+      "source": "https://divineoffice.org/lent-w03-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Those who sow in tears will reap in joy.",
+        "May the Lord build our house and guard our city.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 126",
+        "Psalm 127",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you have raised us from the earth; may you let the seeds of justice, which we have sown in tears, grow and increase in your sight. May we reap in joy the harvest we hope for patiently.",
+        "1": "You command the seed to rise, Lord God, though the farmer is unaware. Grant that those who labor for you may trust not in their own work but in your help. Remembering that the land is brought to flower not with human tears but with those of your Son, may the Church rely only upon your gifts."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": " The one who obeys God’s law and teaches others to do so will be great in the kingdom of heaven.",
+      "intercessions": "Blessed be almighty God, who watches over us as a Father; he knows all our needs but wants us to seek first his kingdom. Let us cry out to him as his people:\nMay your kingdom come, that justice may reign.\nFather of all holiness, you gave us Christ as the shepherd of our souls; stay with your shepherds and the flock entrusted to them, do not leave this flock without the loving care of its shepherd,\n— do not leave your shepherds without an obedient flock to follow them.\nMay your kingdom come, that justice may reign.\n\nTeach Christians to help the weak with loving care,\n— and in serving them to serve your Son.\nMay your kingdom come, that justice may reign.\nGather into your Church those who do not yet believe,\n— and help them to build it up by good deeds done for love of you.\nMay your kingdom come, that justice may reign.\n\nHelp us to turn to you for forgiveness,\n— and, as you forgive us, reconcile us also with your Church.\nMay your kingdom come, that justice may reign.\n\nMay the dead pass from this world to eternal life,\n— to be with you for ever.\nMay your kingdom come, that justice may reign.",
+      "collect": "Grant,\nwe pray, O Lord, that,\nschooled through Lenten observance\nand nourished by your word,\nthrough holy restraint,\nwe may be devoted to you with all our heart\nand be ever united in prayer.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:12b-15a"
+    },
+    "lent-w03-thu-mp": {
+      "source": "https://divineoffice.org/lent-w03-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Glorious things are said of you, O city of God.",
+        "The Lord, the mighty conqueror, will come; he will bring with him the prize of victory.",
+        "Give praise to the Lord our God, bow down before his holy mountain."
+      ],
+      "psalmodyRefs": [
+        "Psalm 87",
+        "Canticle – Isaiah 40:10-17",
+        "Psalm 99"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, your only Son wept over ancient Jerusalem, soon to be destroyed for its lack of faith. He established the new Jerusalem firmly upon the rock and made it the mother of the faithful. Make us rejoice in your Church, and grant that all people may be reborn into the freedom of your Spirit.",
+        "2": "God, you are the source of all holiness. Though no one can see you and live, you give life most generously, and in an even greater way restore it. Sanctify your priests through your life-giving Word, and consecrate your people in his blood until our eyes see your face."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " If it is by the power of God that I cast out devils, says the Lord, then the kingdom of God has come to you already.",
+      "intercessions": "Christ our Lord came among us as the light of the world, that we might walk in his light, and not in the darkness of death. Let us praise him and cry out to him:\nLet your word be a lamp to guide us.\n\nGod of mercy, help us today to grow in your likeness,\n— that we who sinned in Adam may rise again in Christ.\nLet your word be a lamp to guide us.\n\nLet your word be a lamp to guide us,\n— that we may live the truth and grow always in your love.\nLet your word be a lamp to guide us.\nTeach us to be faithful in seeking the common good for your sake,\n— that your light may shine on the whole human family by means of your Church.\nLet your word be a lamp to guide us.\n\nTouch our hearts to seek your friendship more and more,\n— and to make amends for our sins against your wisdom and goodness.\nLet your word be a lamp to guide us.",
+      "collect": "We implore\nyour majesty most humbly,\nO Lord, that,\nas the feast of our salvation draws ever closer,\nso we may press forward all the more eagerly\ntowards the worthy celebration of the Paschal Mystery.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See 1 Kings 8:51-53a"
+    },
+    "lent-w03-thu-ep": {
+      "source": "https://divineoffice.org/lent-w03-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Let your holy people rejoice, O Lord, as they enter your dwelling place.",
+        "The Lord has chosen Zion as his sanctuary.",
+        "The Father has given Christ all power, honor and kingship; all people will obey him."
+      ],
+      "psalmodyRefs": [
+        "Psalm 132",
+        "Psalm 132",
+        "Canticle — Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord Jesus Christ, you chose to suffer and be overwhelmed by death in order to open the gates of death in triumph. Stay with us to help us on our pilgrimage; free us from all evil by the power of your resurrection. In the company of your saints, and constantly remembering your love for us, may we sing of your wonders in our Father’s house."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "A woman in the crowd called out: How happy your mother must be, she bore you and fed you at her breast. But Jesus answered: Happier still those who hear the word of God and live by it.",
+      "intercessions": "Christ the Lord gave us a new commandment, of love for each other. Let us pray to him:\nLord, build up your people in love.\n\nGood Master, teach us to love you in our neighbor,\n— and in serving them to serve you.\nLord, build up your people in love.\n\nOn the cross you asked pardon for your executioners,\n— give us strength to love our enemies and pray for those who persecute us.\nLord, build up your people in love.\nThrough the mystery of your body and blood, deepen our love, our perseverance and our trust,\n— strengthen the weak, console the sorrowful, and give hope to the dying.\nLord, build up your people in love.\n\nLight of the world, you gave sight to the man born blind when he had washed in the pool of Siloam,\n— enlighten catechumens through the water of baptism and the word of life.\nLord, build up your people in love.\nGive to the dead the perfect joy of your eternal love,\n— and number us also among your chosen ones.\nLord, build up your people in love.",
+      "collect": "We implore\nyour majesty most humbly,\nO Lord, that,\nas the feast of our salvation draws ever closer,\nso we may press forward all the more eagerly\ntowards the worthy celebration of the Paschal Mystery.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 4:7-8, 10"
+    },
+    "lent-w03-fri-mp": {
+      "source": "https://divineoffice.org/lent-w03-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You alone I have grieved by my sin; have pity on me, O Lord.",
+        "Truly we know our offenses, Lord, for we have sinned against you.",
+        "The Lord is God; we are his people, the flock he shepherds."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Jeremiah 14:17-21",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "God, devoted to us as a Father, you created us as a sign of your power and elected us your people to show your goodness, accept the thanks your children offer that all people may enter your courts praising you in song."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Teacher, what is the greatest commandment in the Law? Jesus said to him: you shall love the Lord your God with your whole heart.",
+      "intercessions": "Thanks be to Christ the Lord, who brought us life by his death on the cross. With our whole heart let us ask him:\nBy your death raise us to life.\n\nTeacher and Savior, you have shown us your fidelity and made us a new creation by your passion,\n— keep us from falling again into sin.\nBy your death raise us to life.\nHelp us to deny ourselves today,\n— and not deny those in need.\nBy your death raise us to life.\n\nMay we receive this day of penance as your gift,\n— and give it back to you through works of mercy.\nBy your death raise us to life.\n\nMaster our rebellious hearts,\n— and teach us generosity.\nBy your death raise us to life.",
+      "collect": "Pour your grace into our hearts,\nwe pray, O Lord,\nthat we may be constantly drawn away\nfrom unruly desires and obey by your own gift\nthe heavenly teaching you give us.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 53:11b-12"
+    },
+    "lent-w03-fri-ep": {
+      "source": "https://divineoffice.org/lent-w03-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Great is the Lord, our God, transcending all other gods.",
+        "House of Israel, bless the Lord! Sing psalms to him, for he is merciful.",
+        "All nations will come and worship before you, O Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 135",
+        "Psalm 135",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "1": "Father, your name and your memory last forever. We stand to pray and praise you with psalms of joy. We ask you in your kindness to have mercy on us in our lowliness."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "It is far more important to love your neighbor as yourself than to offer sacrifice.",
+      "intercessions": "The Lord Jesus sanctified his people with his blood. Let us cry out to him:\nLord, have mercy on your people.\nLoving, Redeemer, through your passion teach us self-denial, strengthen us against evil and adversity, and increase our hope,\n— and so make us ready to celebrate your resurrection.\nLord, have mercy on your people.\n\nGrant that Christians, as your prophets, may make you known in every place,\n— and bear witness to you with living faith and hope and love.\nLord, have mercy on your people.\nGive your strength to all in distress,\n— and help us to raise them up through our loving concern.\nLord, have mercy on your people.\n\nTeach the faithful to see your passion in their sufferings,\n— and show to others your power to save.\nLord, have mercy on your people.\n\nAuthor of life, remember those who have passed from this world,\n— grant them the glory of your risen life.\nLord, have mercy on your people.",
+      "collect": "Pour your grace into our hearts,\nwe pray, O Lord,\nthat we may be constantly drawn away\nfrom unruly desires and obey by your own gift\nthe heavenly teaching you give us.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:16, 19-20"
+    },
+    "lent-w03-sat-mp": {
+      "source": "https://divineoffice.org/lent-w03-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, you are near to us, and all your ways are true.",
+        "Wisdom of God, be with me, always at work in me.",
+        "The Lord remains faithful to his promise for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Wisdom 9:1-6, 9-11",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " The tax collector stood far away and would not even raise his eyes to heaven. He struck his breast and prayed: God, have mercy on me, a sinner.",
+      "intercessions": "To make us his new creation, Christ the Lord gave us the waters of rebirth and spread the table of his body and his word. Let us call upon him and say:\nLord, renew us in your grace.\n\nJesus, meek and humble of heart, clothe us with compassion, kindness and humility,\n— make us want to be patient with everyone.\nLord, renew us in your grace.\n\nTeach us to be true neighbors to all in trouble and distress,\n— and so imitate you, the Good Samaritan.\nLord, renew us in your grace.\nMay the Blessed Virgin, your Mother, pray for all those vowed to a life of virginity,\n— that they may deepen their dedication to you and to the Church.\nLord, renew us in your grace.\n\nGrant us the gift of your mercy,\n— forgive our sins and remit their punishment.\nLord, renew us in your grace.",
+      "collect": "Rejoicing\nin this annual celebration\nof our Lenten observance,\nwe pray, O Lord, that,\nwith our hearts set on the paschal mysteries,\nwe may be gladdened by their full effects.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 1:16-18"
+    },
+    "lent-w04-sun-ep1": {
+      "source": "https://divineoffice.org/lent-w04-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Let us go to God’s house with rejoicing.",
+        "Awake from your sleep, rise from the dead, and Christ will give you light.",
+        "So great was God’s love for us that when we were dead because of our sins, he brought us to life in Christ Jesus."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 130",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "When you rose from the dead, Lord Jesus, you formed the Church into your new body, and made of it the new Jerusalem, united in your Spirit. Give us peace in our day. Make all nations come to your Church to share in the gifts in fellowship, that they may render you thanks without end and come to your eternal city.",
+        "1": "Listen with compassion to our prayers, Lord. The forgiveness of sins is yours. Do not look on the wrong we have done, but grant us your merciful kindness."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "God loved the world so much that he gave his only Son to save all who have faith in him and to give them eternal life.",
+      "intercessions": "Let us give glory to God, who has concern for us all. Let us call upon him and say:\nLord, save the people you have redeemed.\n\nGiver of all gifts and source of all truth, give the fullness of your blessing to the college of bishops,\n— and keep all those entrusted to their care faithful to the teaching of the apostles.\nLord, save the people you have redeemed.\nPour your love into the hearts of all who share the one bread of life,\n— that they may grow in unity in the body of your Son.\nLord, save the people you have redeemed.\n\nHelp us to strip off our sinful selves,\n— and to be clothed with Christ, your Son, the new Adam.\nLord, save the people you have redeemed.\n\nGrant that all may do penance and find forgiveness,\n— and so share in the fruits of Christ’s redeeming death.\nLord, save the people you have redeemed.\nMay those who have died in your peace give you everlasting glory in heaven,\n— where we, too, hope to praise you for ever.\nLord, save the people you have redeemed.",
+      "collect": "O God,\nwho through your Word reconcile the human race\nto yourself in a wonderful way,\ngrant, we pray,\nthat with prompt devotion and eager faith\nthe Christian people may hasten\ntoward the solemn celebrations to come.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 6:1-4a"
+    },
+    "lent-w04-sun-mp": {
+      "source": "https://divineoffice.org/lent-w04-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O God, my God, I give you thanks; you are my God, I shall proclaim your glory.",
+        "God of might, deliver us; free us from the power of the enemy.",
+        "Praise God for his mighty deeds."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52 57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou were wounded for our offenses,\n— have mercy on us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "It was unheard of for anyone to open the eyes of a man born blind until the coming of Christ, the Son of God.",
+      "intercessions": "Let us give glory to God, whose kindness knows no limit. Through Jesus Christ, who lives for ever to intercede for us, let us pray:\nKindle in our hearts the fire of your love.\n\nGod of mercy, let today be a day rich in good works,\n— a day of generosity to all we meet.\nKindle in our hearts the fire of your love.\n\nFrom the waters of the flood you saved Noah through the ark,\n— from the waters of baptism raise up to new life those under instruction.\nKindle in our hearts the fire of your love.\nMay we live not by bread only,\n— but by every word falling from your lips.\nKindle in our hearts the fire of your love.\n\nHelp us to do away with all dissension,\n— so that we may rejoice in your gifts of peace and love.\nKindle in our hearts the fire of your love.",
+      "collect": "O God,\nwho through your Word reconcile the human race\nto yourself in a wonderful way,\ngrant, we pray,\nthat with prompt devotion and eager faith\nthe Christian people may hasten\ntoward the solemn celebrations to come.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "See Nehemiah 8:9, 10"
+    },
+    "lent-w04-sun-ep2": {
+      "source": "https://divineoffice.org/lent-w04-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "God has appointed Christ to be the judge of the living and the dead.",
+        "Happy the man who shows mercy for the Lord’s sake; he will stand firm for ever.",
+        "Those things, which God foretold through his prophets concerning the sufferings that Christ would endure, have been fulfilled."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle – 1 Peter 2:21-24"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Lord God, you are the eternal light which illumines the hearts of good people. Help us to love you, to rejoice in your glory, and so to live in this world as to avoid harsh judgment in the next. May we come to see the light of your countenance."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "My son, you have been with me all the time and everything I have is yours. But we had to feast and rejoice, because your brother was dead and has come to life again; he was lost to us and now has been found.",
+      "intercessions": "Let us give thanks continually to Christ, our teacher and our head, who came to serve and to do good to all. In humility and confidence let us ask him:\nCome, Lord, to visit your family.\nLord, be present to the bishops and priests of your Church, who share your role as head and shepherd,\n— may they lead your people to the Father under your guidance.\nCome, Lord, to visit your family.\n\nMay your angel be with all who travel,\n— to keep them safe in soul and body.\nCome, Lord, to visit your family.\n\nTeach us to serve the needs of others,\n— and to be like you, who came to serve, not to be served.\nCome, Lord, to visit your family.\nGrant that in the human family, brother may always help brother,\n— so that, with your assistance, it may be a city compact and strong.\nCome, Lord, to visit your family.\n\nHave mercy on all the departed,\n— bring them to the vision of your glory.\nCome, Lord, to visit your family.",
+      "collect": "O God,\nwho through your Word reconcile the human race\nto yourself in a wonderful way,\ngrant, we pray,\nthat with prompt devotion and eager faith\nthe Christian people may hasten\ntoward the solemn celebrations to come.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 9:24-27"
+    },
+    "lent-w04-mon-mp": {
+      "source": "https://divineoffice.org/lent-w04-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Each morning, Lord, you fill us with your kindness.",
+        "From the farthest bounds of earth, may God be praised!",
+        "You who stand in his sanctuary, praise the name of the Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 90",
+        "Canticle – Isaiah 42:10-16",
+        "Psalm 135"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and, happy to be known as companions of your Son, we will praise you among the peoples and proclaim you to the nations.",
+        "2": "Where two or three gather in your name, Lord, you promised to be with them and share their fellowship. Look down upon your family gathered here in your name, and graciously pour out your blessing upon us."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "A royal official, hearing that Jesus had come to Galilee, begged him to heal his son who lay ill in Capernaum.",
+      "intercessions": "Blessed be God the Father for his gift of this sacrifice of praise. In the spirit of this Lenten season, let us pray:\nInstruct us, Lord, in the ways of your kingdom.\n\nGod of power and mercy, give us the spirit of prayer and repentance,\n— with burning love for you and for all mankind.\nInstruct us, Lord, in the ways of your kingdom.\nHelp us to work with you in making all things new in Christ,\n— and in spreading justice and peace throughout the world.\nInstruct us, Lord, in the ways of your kingdom.\n\nTeach us the meaning and value of creation,\n— so that we may join its voice to ours as we sing your praise.\nInstruct us, Lord, in the ways of your kingdom.\nForgive us for failing to see Christ in the poor, the distressed and the troublesome,\n— and for our failure to reverence your Son in their persons.\nInstruct us, Lord, in the ways of your kingdom.",
+      "collect": "O God, who renew the world\nthrough mysteries beyond all telling,\ngrant, we pray,\nthat your Church may be guided by your eternal design\nand not be deprived of your help in this present age.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Exodus 19:4-6a"
+    },
+    "lent-w04-mon-ep": {
+      "source": "https://divineoffice.org/lent-w04-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Give thanks to the Lord, for his great love is without end.",
+        "Great and wonderful are your deeds, Lord God the Almighty.",
+        "God planned in the fullness of time to restore all things in Christ."
+      ],
+      "psalmodyRefs": [
+        "Psalm 136",
+        "Psalm 136",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "1": "Almighty God, remember our lowliness and have mercy. Once you gave our fathers a foreign land to inherit. Free us today from sin and give us a share in your inheritance."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "The father realized that it was at that very hour when Jesus had told him: Your son will live; and he and all his household became believers.",
+      "intercessions": "Glory to God the Father, who has promised through his Son to grant what is asked by those who pray together. With confidence in this promise, let us pray:\nLord, look with favor on your people.\n\nLord, you gave the Law to Moses on Mount Sinai, and brought it to perfection in your Anointed One,\n— may all recognize the Law written in their hearts, and keep it faithfully as a covenant.\nLord, look with favor on your people.\nGive those in authority a true concern for their brothers and sisters entrusted to their care,\n— and inspire the hearts of the people to support their leaders.\nLord, look with favor on your people.\n\nStrengthen with your Spirit the minds and hearts of missionaries,\n— and raise up a great company to help them from every nation.\nLord, look with favor on your people.\nGive your grace to children, that they may grow in your favor,\n— and to young people, that they may reach their full stature by loving you and keeping your commandments.\nLord, look with favor on your people.\n\nRemember our brothers and sisters, who have fallen asleep in your peace,\n— bring them at last to eternal life.\nLord, look with favor on your people.",
+      "collect": "O God, who renew the world\nthrough mysteries beyond all telling,\ngrant, we pray,\nthat your Church may be guided by your eternal design\nand not be deprived of your help in this present age.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 12:1-2"
+    },
+    "lent-w04-tue-mp": {
+      "source": "https://divineoffice.org/lent-w04-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I will sing to you, O Lord; I will learn from you the way of perfection.",
+        "Lord, do not withhold your compassion from us.",
+        "O God, I will sing to you a new song."
+      ],
+      "psalmodyRefs": [
+        "Psalm 101",
+        "Canticle – Daniel 3:26, 27, 29, 34-41",
+        "Psalm 144"
+      ],
+      "psalmPrayers": {
+        "0": "So that your people may walk in innocence, you came to us, Lord Jesus, and told us to be holy as your Father is holy. Help your children to love what is truly perfect, so that we may neither speak what is evil nor do what is wrong. Let us stand in your sight and celebrate with you the Father’s love and justice.",
+        "2": "Lord God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in the world. Clothe us with the weapons of light and unite us under the one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "The man who cured me told me to pick up my sleeping mat and go in peace.",
+      "intercessions": "God the Father has given us his only Son, the Word made man, to be our food and our life. Let us thank him and pray:\nMay the word of Christ dwell among us in all its richness.\n\nHelp us in this lenten season to listen more frequently to your word,\n— that we may celebrate the solemnity of Easter with greater love for Christ, our paschal sacrifice.\nMay the word of Christ dwell among us in all its richness.\nMay your Holy Spirit be our teacher,\n— that we may encourage those in doubt and error to follow what is true and good.\nMay the word of Christ dwell among us in all its richness.\n\nEnable us to enter more deeply into the mystery of your Anointed One,\n— that our lives may reveal him more effectively.\nMay the word of Christ dwell among us in all its richness.\nPurify and renew your Church in this time of salvation,\n— that it may give an ever greater witness to you.\nMay the word of Christ dwell among us in all its richness.",
+      "collect": "May the venerable exercises of holy devotion\nshape the hearts of your faithful, O Lord,\nto welcome worthily the Paschal Mystery\nand proclaim the praises of your salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Joel 2:12-13"
+    },
+    "lent-w04-tue-ep": {
+      "source": "https://divineoffice.org/lent-w04-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "If I forget you, Jerusalem, let my right hand wither.",
+        "In the presence of the angels I will sing to you, my God.",
+        "Adoration and glory belong by right to the Lamb who was slain."
+      ],
+      "psalmodyRefs": [
+        "Psalm 137",
+        "Psalm 138",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, remember your pilgrim Church. We sit weeping at the streams of Babylon. Do not let us be drawn into the current of the passing world, but free us from every evil and raise our thoughts to the heavenly Jerusalem.",
+        "1": "Listen to the prayers of your Church, Lord God. In the presence of the angels we praise your name. You keep the proud at a distance and look upon the lowly with favor. Stretch out your hand to us in our suffering. Perfect in us the work of your love and bring us to life."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "Now that you are well again, do not sin any more, or something worse may happen to you.",
+      "intercessions": "Let us praise the Lord Jesus, who, lifted high on the cross, drew all things to himself. With loving hearts let us pray:\nDraw all things to yourself, Lord.\n\nLord, may the mystery of your cross shine on all mankind,\n— that all may see you as the way, the truth and the life.\nDraw all things to yourself, Lord.\n\nMay all who thirst for you, the living water,\n— drink their fill for ever.\nDraw all things to yourself, Lord.\nInspire all teachers and artists,\n— to prepare mankind for your kingdom.\nDraw all things to yourself, Lord.\n\nGuide all estranged from you by sin or scandal,\n— that they may come back to you, and remain always in your love.\nDraw all things to yourself, Lord.\n\nWelcome all our deceased brothers and sisters to your home in heaven,\n— to share the joy of the blessed Virgin Mary and all the saints.\nDraw all things to yourself, Lord.",
+      "collect": "May the venerable exercises of holy devotion\nshape the hearts of your faithful, O Lord,\nto welcome worthily the Paschal Mystery\nand proclaim the praises of your salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 2:14, 17, 18b"
+    },
+    "lent-w04-wed-mp": {
+      "source": "https://divineoffice.org/lent-w04-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My heart is ready, O God, my heart is ready.",
+        "The Lord has robed me with grace and salvation.",
+        "I will praise my God all the days of my life."
+      ],
+      "psalmodyRefs": [
+        "Psalm 108",
+        "Canticle – Isaiah 61:10—62:5",
+        "Psalm 146"
+      ],
+      "psalmPrayers": {
+        "0": "Accept the prayers of your servants, Lord, and prepare our hearts to praise your holy name. Come to our aid in times of trouble, and make us worthy to sing you songs of thanksgiving.",
+        "2": "God of glory and power, those who have put all their trust in you are happy indeed. Shine the brightness of your light on us, that we may love you always with a pure heart."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Whoever hears my words, says the Lord, and believes in him who sent me, has eternal life.",
+      "intercessions": "Let us give thanks to God our Father; through the power of the Spirit he purifies our hearts and strengthens us in love. Let us humbly ask him:\nLord, give us your Holy Spirit.\n\nHelp us to receive good things from your bounty with a deep sense of gratitude,\n— and to accept with patience the evil that comes to us.\nLord, give us your Holy Spirit.\nTeach us to be loving not only in great and exceptional moments,\n— but above all in the ordinary events of daily life.\nLord, give us your Holy Spirit.\n\nMay we abstain from what we do not really need,\n— and help our brothers and sisters in distress.\nLord, give us your Holy Spirit.\n\nMay we bear the wounds of your Son,\n— for through his body he gave us life.\nLord, give us your Holy Spirit.",
+      "collect": "O God, who reward the merits of the just\nand offer pardon to sinners who do penance,\nhave mercy, we pray, on those who call upon you,\nthat the admission of our guilt\nmay serve to obtain your pardon for our sins.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Deuteronomy 7:6, 8-9"
+    },
+    "lent-w04-wed-ep": {
+      "source": "https://divineoffice.org/lent-w04-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, how wonderful is your wisdom, so far beyond my understanding.",
+        "I am the Lord: I search the mind and probe the heart; I give to each one as his deeds deserve.",
+        "Through him all things were made; he holds all creation together in himself."
+      ],
+      "psalmodyRefs": [
+        "Psalm 139",
+        "Psalm 139",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "You watch over heaven and earth, Lord Jesus. Your death brought light to the dead; your resurrection gave joy to the saints; your ascension made the angels rejoice. Your power exceeds all power. Lead us to life eternal, and watch over us with your love. May your friends be filled with honor and join you in heaven."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "By myself, says the Lord, I can do nothing. I judge as I am told to judge, and my sentence is just.",
+      "intercessions": "All glory and honor to God, for in the blood of Christ he has ratified a new and everlasting covenant with his people, and renews it in the sacrament of the altar. Let us lift up our voices in prayer:\nBless your people, Lord.\n\nLord, guide the minds and hearts of peoples and all in public office,\n— may they always seek the common good.\nBless your people, Lord.\nRenew the spirit of dedication in those who have left all to follow Christ,\n— may they give clear witness to the holiness of the Church.\nBless your people, Lord.\n\nYou have made all men and women in your image,\n— may they always uphold human dignity.\nBless your people, Lord.\n\nLead back to your friendship and truth all who have gone astray,\n— teach us how to help them.\nBless your people, Lord.\n\nGrant that the dead may enter into your glory,\n— to praise you for ever.\nBless your people, Lord.",
+      "collect": "O God, who reward the merits of the just\nand offer pardon to sinners who do penance,\nhave mercy, we pray, on those who call upon you,\nthat the admission of our guilt\nmay serve to obtain your pardon for our sins.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:12b-15a"
+    },
+    "lent-w04-thu-mp": {
+      "source": "https://divineoffice.org/lent-w04-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "At daybreak, be merciful to me, O Lord.",
+        "The Lord will make a river of peace flow through Jerusalem.",
+        "Let us joyfully praise the Lord our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, early in the morning of your resurrection, you made your love known and brought the first light of dawn to those who dwell in darkness. Your death has opened a path for us. Do not enter into judgment with your servants; let your Holy Spirit guide us together into the land of justice.",
+        "2": "God our Father, great builder of the heavenly Jerusalem, you know the number of the stars and call each of them by name. Heal hearts that are broken, gather together those who have been scattered, and enrich us all from the plenitude of your eternal wisdom."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "John bore testimony to the truth, and although I have no need of human testimony, says the Lord, I remind you of this for your own salvation.",
+      "intercessions": "God has revealed himself in Christ. Let us praise his goodness, and ask him from our hearts:\nRemember us, Lord, for we are your children.\n\nTeach us to enter more deeply into the mystery of the Church,\n— that it may be more effective for ourselves and for the world as the sacrament of salvation.\nRemember us, Lord, for we are your children.\nLover of mankind, inspire us to work for human progress,\n— seeking to spread your kingdom in all we do.\nRemember us, Lord, for we are your children.\n\nMay our hearts thirst for Christ,\n— the fountain of living water.\nRemember us, Lord, for we are your children.\n\nForgive us our sins,\n— and direct our steps into the ways of justice and sincerity.\nRemember us, Lord, for we are your children.",
+      "collect": "We invoke your mercy in humble prayer, O Lord,\nthat you may cause us, your servants,\ncorrected by penance and schooled by good works,\nto persevere sincerely in your commands\nand come safely to the paschal festivities.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Kings 8:51-53a"
+    },
+    "lent-w04-thu-ep": {
+      "source": "https://divineoffice.org/lent-w04-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "He is my comfort and my refuge. In him I put my trust.",
+        "Blessed are the people whose God is the Lord.",
+        "Now the victorious reign of our God has begun."
+      ],
+      "psalmodyRefs": [
+        "Psalm 144",
+        "Psalm 144",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, God of strength, You gave your Son victory over death. Direct Your Church’s fight against evil in the world. Clothe us with the weapons of light and unite us under one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": " The works that I do speak on my behalf, says the Lord. They prove that the Father has sent me.",
+      "intercessions": "In his mercy, God sends the Holy Spirit to shine on us, so that our lives may radiate holiness and faith. Let us raise our voices in prayer and say:\nLord, give life to your people, whom Christ has redeemed.\n\nLord, source of all holiness, draw bishops, priests and deacons closer to Christ through the eucharistic mystery,\n— may they grow daily in the grace of their ordination.\nLord, give life to your people, whom Christ has redeemed.\nTeach Christ’s faithful people to be devout and attentive at the table of his word and of his body,\n— so that they may bring into their daily lives the grace they receive through faith and sacrament.\nLord, give life to your people, whom Christ has redeemed.\n\nGrant, Lord, that we may see in each person the dignity of one redeemed by your Son’s blood,\n— so that we may respect the freedom and the conscience of all.\nLord, give life to your people, whom Christ has redeemed.\nTeach us to restrain our greed for earthly goods,\n— and to have concern for the needs of others.\nLord, give life to your people, whom Christ has redeemed.\n\nBe merciful to your faithful people whom you called to yourself today,\n— grant them the gift of eternal happiness.\nLord, give life to your people, whom Christ has redeemed.",
+      "collect": "We invoke your mercy in humble prayer, O Lord,\nthat you may cause us, your servants,\ncorrected by penance and schooled by good works,\nto persevere sincerely in your commands\nand come safely to the paschal festivities.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 4:7-10"
+    },
+    "lent-w04-fri-mp": {
+      "source": "https://divineoffice.org/lent-w04-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Create a clean heart in me, O God; renew in me a steadfast spirit.",
+        "Rejoice, Jerusalem, for through you all men will be gathered to the Lord.",
+        "Zion, praise your God, who sent his Word to renew the earth."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Tobit 13:8-11, 13-15",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "All powerful God, it is through your Church, generously endowed with gifts of grace and fortified by the Holy Spirit, that you send out your word to all nations. Strengthen your Church with the best of all food and make it dauntless in faith. Multiply its children to celebrate with one accord the mysteries of your love at the altar on high."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Indeed you know me, says the Lord, and you know where I come from. Yet I have not come of my own accord; it was my Father who sent me.",
+      "intercessions": "Let us pray to Christ our Savior, who redeemed us by his death and resurrection:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\n\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\n\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "O God,\nwho have prepared\nfitting helps for us in our weakness,\ngrant, we pray, that we may receive\ntheir healing effects with joy\nand reflect them in a holy way of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 53:11b-12"
+    },
+    "lent-w04-fri-ep": {
+      "source": "https://divineoffice.org/lent-w04-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Day after day I will bless you, Lord; I will tell of your marvelous deeds.",
+        "To you alone, Lord, we look with confidence; you are ever close to those who call upon you.",
+        "King of all the ages, your ways are perfect and true."
+      ],
+      "psalmodyRefs": [
+        "Psalm 145",
+        "Psalm 145",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "1": "Lord, be near to all who call upon you in truth and increase the dedication of those who revere you. Hear their prayers and save them that they may always love you and praise your holy name."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": " No one could lay a hand on Jesus, because his time had not yet come.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nIn their trials enable your faithful people to share in your passion,\n— and so reveal in their lives your saving power.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "O God,\nwho have prepared\nfitting helps for us in our weakness,\ngrant, we pray, that we may receive\ntheir healing effects with joy\nand reflect them in a holy way of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 5:16, 19-20"
+    },
+    "lent-w04-sat-mp": {
+      "source": "https://divineoffice.org/lent-w04-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "We do well to sing to your name, Most High, and proclaim your mercy at daybreak.",
+        "I will create a new heart in you, and breathe into you a new spirit.",
+        "On the lips of children and infants you have found perfect praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Ezekiel 36:24-28",
+        "Psalm 8"
+      ],
+      "psalmPrayers": {
+        "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
+        "2": "Almighty Lord, how wonderful is your name. You have made every creature subject to you; make us worthy to give you service."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Never before has anyone spoken like this man.",
+      "intercessions": "Let us always and everywhere give thanks to Christ our Savior, and ask him with confidence:\nLord, help us with your grace.\n\nMay we keep our bodies pure,\n— as temples of the Holy Spirit.\nLord, help us with your grace.\n\nMay we offer ourselves this morning to the service of others,\n— and do your will in all things throughout the day.\nLord, help us with your grace.\nTeach us to seek the bread of everlasting life,\n— the bread that is your gift.\nLord, help us with your grace.\n\nMay your Mother, the refuge of sinners, pray for us,\n— and gain for us your loving forgiveness.\nLord, help us with your grace.",
+      "collect": "May the working of your mercy,\nO Lord, we pray,\ndirect our hearts aright,\nfor without your grace\nwe cannot find favor in your sight.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 1:16-18"
+    },
+    "lent-w05-sun-ep1": {
+      "source": "https://divineoffice.org/lent-w05-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "I shall place my law in their hearts; I shall be their God, and they will be my people.",
+        "I count everything as loss but this: the surpassing worth of knowing Christ Jesus my Lord.",
+        "Although he was the Son of God, Christ learned obedience through suffering."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
+        "1": "Lord, we humbly ask for your goodness. May you help us to hope in you, and give us a share with your chosen ones in the land of the living."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": " Unless a grain of wheat falls into the ground and dies, it remains only a single grain; but if it dies, it produces a rich harvest.",
+      "intercessions": "Let us give glory to Christ the Lord, who became our teacher, our example and our brother. Let us pray to him, saying:\nLord, fill your people with your life.\n\nLord Jesus, you became like us in all things but sin; teach us how to share with others their joy and sorrow,\n— that our love may grow deeper every day.\nLord, fill your people with your life.\n\nHelp us to feed you in feeding the hungry,\n— and to give you drink in giving drink to the thirsty.\nLord, fill your people with your life.\nYou raised Lazarus from the sleep of death,\n— grant that those who have died the death of sin may rise again through faith and repentance.\nLord, fill your people with your life.\n\nInspire many to follow you with greater zeal and perfection,\n— through the example of the blessed Virgin Mary and the saints.\nLord, fill your people with your life.\n\nLet the dead rise in your glory,\n— to enjoy your love for ever.\nLord, fill your people with your life.",
+      "collect": "By your help,\nwe beseech you, Lord our God,\nmay we walk eagerly\nin that same charity with which,\nout of love for the world,\nyour Son handed himself over to death.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 1:18-21"
+    },
+    "lent-w05-sun-mp": {
+      "source": "https://divineoffice.org/lent-w05-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My God, you have become my help.",
+        "Free us by your wonderful works; deliver us from the power of death.",
+        "The hour has come for the Son of Man to be glorified."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou were wounded for our offenses,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Our friend Lazarus has fallen asleep; let us go and wake him.",
+      "intercessions": "Let us praise our loving Redeemer, who gained for us this season of grace, and pray to him, saying:\nLord, create a new spirit in us.\n\nChrist, our life, through baptism we were buried with you and rose to life with you,\n— may we walk today in newness of life.\nLord, create a new spirit in us.\nLord, you have brought blessings to all mankind,\n— bring us to share your concern for the good of all.\nLord, create a new spirit in us.\n\nMay we work together to build up the earthly city,\n— with our eyes fixed on the city that lasts for ever.\nLord, create a new spirit in us.\n\nHealer of body and soul, cure the sickness of our spirit,\n— so that we may grow in holiness through your constant care.\nLord, create a new spirit in us.",
+      "collect": "By your help,\nwe beseech you, Lord our God,\nmay we walk eagerly\nin that same charity with which,\nout of love for the world,\nyour Son handed himself over to death.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Leviticus 23:4-7"
+    },
+    "lent-w05-sun-ep2": {
+      "source": "https://divineoffice.org/lent-w05-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "As the serpent was lifted up in the desert, so the Son of Man must be lifted up.",
+        "The Lord of hosts protects us and sets us free; he guides and saves his people.",
+        "He was pierced for our offenses and burdened with our sins. By his wounds we are healed."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – 1 Peter 2:21-24"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Almighty God, ever-living mystery of unity and trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
+      },
+      "responsory": "Listen to us, O Lord, and have mercy, for we have sinned against you.\n— Listen to us, O Lord, and have mercy, for we have sinned against you.\n\nChrist Jesus, hear our humble petitions,\n— for we have sinned against you.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Listen to us, O Lord, and have mercy, for we have sinned against you.",
+      "gospelAntiphon": "When I am lifted up from the earth, I will draw all people to myself.",
+      "intercessions": "All praise to God the Father who brought his chosen people to rebirth from imperishable seed through his eternal Word. Let us ask him as his children:\nLord, be gracious to your people.\n\nGod of mercy, hear the prayers we offer for all your people,\n— may they hunger for your word more than for bodily food.\nLord, be gracious to your people.\n\nGive us a sincere and active love for our own nation and for all mankind,\n— may we work always to build a world of peace and goodness.\nLord, be gracious to your people.\nLook with love on all to be reborn in baptism,\n— that they may be living stones in your temple of the Spirit.\nLord, be gracious to your people.\n\nYou moved Nineveh to repentance by the preaching of Jonah,\n— in your mercy touch the hearts of sinners by the preaching of your word.\nLord, be gracious to your people.\n\nMay the dying go in hope to meet Christ their judge,\n— may they rejoice for ever in the vision of your glory.\nLord, be gracious to your people.",
+      "collect": "By your help,\nwe beseech you, Lord our God,\nmay we walk eagerly\nin that same charity with which,\nout of love for the world,\nyour Son handed himself over to death.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:26-30"
+    },
+    "lent-w05-mon-mp": {
+      "source": "https://divineoffice.org/lent-w05-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I lift up my heart to you, O Lord, and you will hear my morning prayer.",
+        "We praise your glorious name, O Lord, our God.",
+        "Adore the Lord in his holy court."
+      ],
+      "psalmodyRefs": [
+        "Psalm 5",
+        "Canticle – 1 Chronicles 29:10-13",
+        "Psalm 29"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, all justice and all goodness comes from you; you hate evil and abhor lies. Lead us, your servants, in the path of your justice, so that all who hope in you may rejoice with the Church and in Christ.",
+        "2": "You live for ever, Lord and King. All things of the earth justly sing your glory and honor. Strengthen your people against evil that we may rejoice in your peace and trust in your eternal promise."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and, from the hunter’s snare.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Whoever follows me does not walk in the dark; he will have the light of life.",
+      "intercessions": "Praise to Jesus, our Savior; by his death he has opened for us the way of salvation.\nLet us ask him:\nLord, guide your people to walk in your ways.\n\nGod of mercy, you gave us new life through baptism,\n— make us grow day by day in your likeness.\nLord, guide your people to walk in your ways.\n\nMay our generosity today bring joy to those in need,\n— in helping them may we find you.\nLord, guide your people to walk in your ways.\nHelp us to do what is good, right and true in your sight,\n— and to seek you always with undivided hearts.\nLord, guide your people to walk in your ways.\n\nForgive our sins against the unity of your family,\n— make us one in heart and spirit.\nLord, guide your people to walk in your ways.",
+      "collect": "O God,\nby whose wondrous grace\nwe are enriched with every blessing,\ngrant us so to pass from former ways to newness of life,\nthat we may be made ready for the glory of the heavenly Kingdom.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 11:19-20"
+    },
+    "lent-w05-mon-ep": {
+      "source": "https://divineoffice.org/lent-w05-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord looks tenderly on those who are poor.",
+        "Blessed are the pure of heart, for they shall see God.",
+        "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 11",
+        "Psalm 15",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you search the hearts of all, both the good and the wicked. May those who are in danger for love of you, find security in you now, and, in the day of judgment, may they rejoice in seeing you face to face.",
+        "1": "Make our lives blameless, Lord. Help us to do what is right and to speak what is true, that we may dwell in your tent and find rest on your holy mountain."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "I am my own testimony, says the Lord, and my Father who sent me also testifies on my behalf.",
+      "intercessions": "Our Lord Jesus Christ has saved us from our sins, as his people let us call out to him\nJesus, Son of David, have mercy on us.\n\nLord Christ we pray for your Holy Church, you gave yourself up to make it holy, cleansing it with water and the life giving word,\n— renew it constantly and purify it by penance\nJesus, Son of David, have mercy on us.\n\nGood Master show young people the way you have chosen for each of them,\n— may they walk in it and find fulfilment\nJesus, Son of David, have mercy on us.\nIn your compassion you healed all forms of sickness bring hope to the sick and raise them up,\n— teach us to love and care for them\nJesus, Son of David, have mercy on us.\n\nMake us mindful of the dignity you gave us in baptism,\n— may we live for you at every moment\nJesus, Son of David, have mercy on us.\n\nMay the dead rise to glory in your peace,\n— grant us with them a share in your kingdom.\nJesus, Son of David, have mercy on us.",
+      "collect": "O God,\nby whose wondrous grace\nwe are enriched with every blessing,\ngrant us so to pass from former ways to newness of life,\nthat we may be made ready for the glory of the heavenly Kingdom.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 5:8-9"
+    },
+    "lent-w05-tue-mp": {
+      "source": "https://divineoffice.org/lent-w05-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The man whose deeds are blameless and whose heart is pure will climb the mountain of the Lord.",
+        "Praise the eternal King in all your deeds.",
+        "The loyal heart must praise the Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 24",
+        "Canticle – Tobit 13:1-8",
+        "Psalm 33"
+      ],
+      "psalmPrayers": {
+        "0": "King of glory, Lord of power and might, cleanse our hearts from all sin, preserve the innocence of our hands, and keep our minds from vanity, so that we may deserve your blessing in your holy place.",
+        "2": "Nourish your people, Lord, for we hunger for your word. Rescue us from the death of sin and fill us with your mercy, that we may share your presence and the joys of all your saints."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and, from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "When you have lifted up the Son of Man, says the Lord, you will know that I am he.",
+      "intercessions": "Praise to Christ, who has given us himself as the bread from heaven. Let us pray to him, saying:\nJesus, you feed and heal our souls; come to strengthen us.\n\nLord, feed us at the banquet of the eucharist,\n— with all the gifts of your paschal sacrifice.\nJesus, you feed and heal our souls; come to strengthen us.\nGive us a perfect heart to receive your word,\n— that we may bring forth fruit in patience.\nJesus, you feed and heal our souls; come to strengthen us.\n\nMake us eager to work with you in building a better world,\n— so that it may listen to your Church and its gospel of peace.\nJesus, you feed and heal our souls; come to strengthen us.\n\nWe confess, Lord, that we have sinned,\n— wash us clean by your gift of salvation.\nJesus, you feed and heal our souls; come to strengthen us.",
+      "collect": "Grant us,\nwe pray, O Lord,\nperseverance in obeying your will,\nthat in our days the people dedicated to your service\nmay grow in both merit and number.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Zechariah 12:10-11a"
+    },
+    "lent-w05-tue-ep": {
+      "source": "https://divineoffice.org/lent-w05-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "God has crowned his Christ with victory.",
+        "We celebrate your mighty works with songs of praise, O Lord.",
+        "Lord, you have made us a kingdom and priests for God our Father."
+      ],
+      "psalmodyRefs": [
+        "Psalm 20",
+        "Psalm 21",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you accepted the perfect sacrifice of your Son upon the cross. Hear us during times of trouble and protect us by the power of his name, that we who share his struggle on earth may merit a share in his victory.",
+        "1": "Father, you have given us life on this earth and have met us with the grace of redemption. Bestow your greatest blessing on us, the fullness of eternal life."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": " The One who sent me is with me; he has not left me alone, because I always do what pleases him.",
+      "intercessions": "Christ our Lord has warned us to watch and pray to avoid temptation. With our whole heart let us pray to him:\nTurn to us, Lord, and have mercy.\n\nJesus, our Christ, you promised to be with those who pray in your name,\n— help us always to pray with you to the Father in the Holy Spirit.\nTurn to us, Lord, and have mercy.\n\nBridegroom of the Church, cleanse her from every stain,\n— teach her to walk in hope and in the power of the Holy Spirit.\nTurn to us, Lord, and have mercy.\nFriend of the human race, teach us concern for our neighbor as you have commanded,\n— that all may see you more clearly as the light of the world.\nTurn to us, Lord, and have mercy.\n\nKing of peace, give your peace to the world,\n— that your presence may reveal your saving power in every place.\nTurn to us, Lord, and have mercy.\n\nOpen the door of eternal happiness to all the dead,\n— welcome them into the glory of unending life.\nTurn to us, Lord, and have mercy.",
+      "collect": "Grant us,\nwe pray, O Lord,\nperseverance in obeying your will,\nthat in our days the people dedicated to your service\nmay grow in both merit and number.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 1:27b-30"
+    },
+    "lent-w05-wed-mp": {
+      "source": "https://divineoffice.org/lent-w05-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Lord, in your light we see light itself.",
+        "O God, you are great and glorious; we marvel at your power.",
+        "Exult in God’s presence with hymns of praise."
+      ],
+      "psalmodyRefs": [
+        "Psalm 36",
+        "Canticle – Judith 16:2-3a, 13-15",
+        "Psalm 47"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you are the source of unfailing light. Give us true knowledge of your mercy so that we may renounce our pride and be filled with the riches of your house.",
+        "2": "God, King of all peoples and all ages, it is your victory we celebrate as we sing with all the skill at our command. Help us always to overcome evil by good, that we may rejoice in your triumph for ever."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and, from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": " If you are faithful to my teaching, says the Lord, you will indeed be my disciples. You will know the truth and the truth will make you free.",
+      "intercessions": "Blessed be God, the giver of salvation, who decreed that mankind should become a new creation in himself, when all would be made new. With great confidence let us ask him:\nLord, renew us in your Spirit.\n\nLord, you promised a new heaven and a new earth; renew us daily through your Spirit,\n— that we may enjoy your presence for ever in the heavenly Jerusalem.\nLord, renew us in your Spirit.\nHelp us to work with you to make this world alive with your Spirit,\n— and to build on earth a city of justice, love and peace.\nLord, renew us in your Spirit.\n\nFree us from all negligence and sloth,\n— and give us joy in your gifts of grace.\nLord, renew us in your Spirit.\n\nDeliver us from evil,\n— and from slavery to the senses, which blinds us to goodness.\nLord, renew us in your Spirit.",
+      "collect": "Enlighten,\nO God of compassion,\nthe hearts of your children,\nsanctified by penance, and in your kindness\ngrant those you stir to a sense of devotion\na gracious hearing when they cry out to you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 50:4b-7"
+    },
+    "lent-w05-wed-ep": {
+      "source": "https://divineoffice.org/lent-w05-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is my light and my help; whom shall I fear?",
+        "I long to look on you, O Lord; do not turn your face from me.",
+        "He is the first-born of all creation; in every way the primacy is his."
+      ],
+      "psalmodyRefs": [
+        "Psalm 27",
+        "Psalm 27",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "Father, you protect and strengthen those who hope in you; you heard the cry of your Son and kept him safe in your tent in the day of evil. Grant that your servants who seek your face in time of trouble may see your goodness in the land of the living."
+      },
+      "responsory": "To you, O Lord, I make my prayer for mercy.\n— To you, O Lord, I make my prayer for mercy.\n\nHeal my soul, for I have sinned against you.\n— I make my prayer for mercy.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— To you, O Lord, I make my prayer for mercy.",
+      "gospelAntiphon": "Why are you bent on killing me, when I have told you the truth?",
+      "intercessions": "Blessed be almighty God, who watches over us as a Father; he knows all our needs but wants us to seek first his kingdom. Let us cry out to him as his people:\nMay your kingdom come, that justice may reign.\nFather of all holiness, you gave us Christ as the shepherd of our souls; stay with your shepherds and the flock entrusted to them, do not leave this flock without the loving care of its shepherd,\n— do not leave your shepherds without an obedient flock to follow them.\nMay your kingdom come, that justice may reign.\n\nTeach Christians to help the weak with loving care,\n— and in serving them to serve your Son.\nMay your kingdom come, that justice may reign.\nGather into your Church those who do not yet believe,\n— and help them to build it up by good deeds done for love of you.\nMay your kingdom come, that justice may reign.\n\nHelp us to turn to you for forgiveness,\n— and, as you forgive us, reconcile us also with your Church.\nMay your kingdom come, that justice may reign.\n\nMay the dead pass from this world to eternal life,\n— to be with you for ever.\nMay your kingdom come, that justice may reign.",
+      "collect": "Enlighten,\nO God of compassion,\nthe hearts of your children,\nsanctified by penance, and in your kindness\ngrant those you stir to a sense of devotion\na gracious hearing when they cry out to you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 4:32-5:2"
+    },
+    "lent-w05-thu-mp": {
+      "source": "https://divineoffice.org/lent-w05-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Awake, lyre and harp, with praise let us awake the dawn.",
+        "My people, says the Lord, will be filled with my blessings.",
+        "The Lord is great and worthy to be praised in the city of our God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 57",
+        "Canticle – Jeremiah 31:10-14",
+        "Psalm 48"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and we will praise you among the peoples and proclaim you to the nations, happy to be known as companions of your Son.",
+        "2": "Father, the body of your risen Son is the temple not made by human hands and the defending wall of the new Jerusalem. May this holy city, built of living stones, shine with spiritual radiance and witness to your greatness in the sight of all nations."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and, from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Jesus said to the chief priests and the crowds of the Jews: Whoever comes from God hears the word of God. You will not listen because you do not come from God.",
+      "intercessions": "Christ our Lord came among us as the light of the world, that we might walk in his light, and not in the darkness of death. Let us praise him and cry out to him:\nLet your word be a lamp to guide us.\n\nGod of mercy, help us today to grow in your likeness,\n— that we who sinned in Adam may rise again in Christ.\nLet your word be a lamp to guide us.\n\nLet your word be a lamp to guide us,\n— that we may live the truth and grow always in your love.\nLet your word be a lamp to guide us.\nTeach us to be faithful in seeking the common good for your sake,\n— that your light may shine on the whole human family by means of your Church.\nLet your word be a lamp to guide us.\n\nTouch our hearts to seek your friendship more and more,\n— and to make amends for our sins against your wisdom and goodness.\nLet your word be a lamp to guide us.",
+      "collect": "Be near,\nO Lord, to those who plead before you,\nand look kindly on those who place their hope in your mercy,\nthat, cleansed from the stain of their sins,\nthey may persevere in holy living\nand be made full heirs of your promise.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 2:9-10"
+    },
+    "lent-0319-ep1": {
+      "source": "https://divineoffice.org/lent-0319-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Jacob became the father of Joseph, the husband of Mary. She gave birth to Jesus who is called Christ.",
+        "The angel Gabriel was sent by God to a town of Galilee called Nazareth, to a virgin betrothed to a man named Joseph.",
+        "Mary the mother of Jesus was betrothed to Joseph, but before they came together, she was found to be with child through the power of the Holy Spirit."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 146",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "The just man shall blossom like the lily.\n— The just man shall blossom like the lily.\n\nHe shall flourish for ever in the courts of our God,\n— like the lily.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The just man shall blossom like the lily.",
+      "gospelAntiphon": "This is the faithful and prudent steward whom the Lord has set over his household.",
+      "intercessions": "All fatherhood in heaven and on earth has its origin in God. Let us turn to him and pray:",
+      "collect": "Grant,\nwe pray, almighty God,\nthat by Saint Joseph’s intercession\nyour Church may constantly watch over\nthe unfolding of the mysteries of human salvation,\nwhose beginnings you entrusted to his faithful care.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Colossians 3:23-24"
+    },
+    "0319-ep2-joseph": {
+      "source": "https://divineoffice.org/0319-ep2-joseph/",
+      "edition": "first",
+      "antiphons": [
+        "His parents found Jesus in the temple sitting in the midst of the doctors, listening to them and asking them questions.",
+        "The mother of Jesus said to him: Son, why have you done this to us? See how your father and I have been anxiously searching for you.",
+        "Jesus returned with Mary and Joseph to Nazareth; there he lived and was obedient to them."
+      ],
+      "psalmodyRefs": [
+        "Psalm 15",
+        "Psalm 112",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "The just man shall blossom like the lily.\n— The just man shall blossom like the lily.\n\nHe shall flourish for ever in the courts of our God,\n— like the lily.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The just man shall blossom like the lily.",
+      "gospelAntiphon": "When Jesus began his ministry, he was about thirty years old, and was thought to be the son of Joseph.",
+      "intercessions": "All fatherhood in heaven and on earth has its origin in God. Let us turn to him and pray:",
+      "collect": "Grant,\nwe pray, almighty God,\nthat by Saint Joseph’s intercession\nyour Church may constantly watch over\nthe unfolding of the mysteries of human salvation,\nwhose beginnings you entrusted to his faithful care.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Colossians 3:23-24"
+    },
+    "lent-w05-sat-mp": {
+      "source": "https://divineoffice.org/lent-w05-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Dawn finds me ready to welcome you, my God.",
+        "The Lord is my strength, and I shall sing his praise, for he has become my Savior.",
+        "O praise the Lord, all you nations."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Exodus 15:1-4a, 8-13, 17-18",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "God himself will set me free, from the hunter’s snare.\n— God himself will set me free, from the hunter’s snare.\n\nFrom those who would trap me with lying words\n— and from the hunter’s snare.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God himself will set me free, from the hunter’s snare.",
+      "gospelAntiphon": "Jesus died to gather into one family all the scattered children of God.",
+      "intercessions": "To make us his new creation, Christ the Lord gave us the waters of rebirth and spread the table of his body and his word. Let us call upon him and say:\nLord, renew us in your grace.\n\nJesus, meek and humble of heart, clothe us with compassion, kindness and humility,\n— make us want to be patient with everyone.\nLord, renew us in your grace.\nTeach us to be true neighbors to all in trouble and distress,\n— and so imitate you, the Good Samaritan.\nLord, renew us in your grace.\n\nMay the Blessed Virgin, your Mother, pray for all those vowed to a life of virginity,\n— that they may deepen their dedication to you and to the Church.\nLord, renew us in your grace.\n\nGrant us the gift of your mercy,\n— forgive our sins and remit their punishment.\nLord, renew us in your grace.",
+      "collect": "O God,\nwho have made all those reborn in Christ\na chosen race and a royal priesthood,\ngrant us, we pray,\nthe grace to will and to do what you command,\nthat the people called to eternal life\nmay be one in the faith of their hearts\nand the homage of their deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 65:1b-3a"
+    },
+    "lent-hw-sun-ep1": {
+      "source": "https://divineoffice.org/lent-hw-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Day after day I sat teaching you in the temple and you did not lay hands on me. Now you come to scourge me and lead me to the cross.",
+        "The Lord God is my help; no shame can harm me.",
+        "The Lord Jesus humbled himself by showing obedience even when this meant death, death on the cross."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Let your Word, Father, be a lamp for our feet and a light to our path, so that we may understand what you wish to teach us and follow the path your light marks out for us.",
+        "1": "Lord Jesus, uphold those who hope in you and give us your counsel, so that we may know the joy of your resurrection and deserve to be among the saints at your right hand."
+      },
+      "responsory": "We worship you, O Christ, and we praise you.\n— We worship you, O Christ, and we praise you.\n\nBecause by your cross you have redeemed the world.\n— We praise you.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— We worship you, O Christ, and we praise you.",
+      "gospelAntiphon": "Praise to our King, the Son of David, the Redeemer of the world; praise to the Savior whose coming had been foretold by the prophets.",
+      "intercessions": "Before his passion, Christ looked out over Jerusalem and wept for it, because it had not recognized the hour of God’s visitation. With sorrow for our sins, let us adore him, and say:\nLord, have mercy on your people.\n\nYou longed to gather to yourself the people of Jerusalem, as the hen gathers her young,\n— teach all peoples to recognize the hour of your visitation.\nLord, have mercy on your people.\nDo not forsake those who have forsaken you,\n— turn our hearts to you, and we will return to you, our God.\nLord, have mercy on your people.\n\nThrough your passion you gave grace to the world,\n— help us to live always by your Spirit, given to us in baptism.\nLord, have mercy on your people.\n\nBy your passion, help us to deny ourselves,\n— and so prepare to celebrate your resurrection.\nLord, have mercy on your people.\nYou reign in the glory of the Father,\n— remember those who have died today.\nLord, have mercy on your people.",
+      "collect": "Almighty ever-living God,\nwho as an example of humility\nfor the human race to follow,\ncaused our savior to take flesh\nand submit to the Cross,\ngraciously grant that\nwe may heed his lesson of patient suffering\nand so merit a share in his Resurrection.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 1:18-21"
+    },
+    "lent-hw-sun-ep2": {
+      "source": "https://divineoffice.org/lent-hw-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Christ was scourged and treated with contempt, but God’s right hand has raised him up.",
+        "The blood of Christ washes away our sins and makes us worthy to serve the living God.",
+        "Christ bore our sins in his own body on the cross so that we might die to sin and be alive to all that is good."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – 1 Peter 2:21-24"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name, and make all nations a holy people for you.",
+        "1": "Father, creator and ruler of heaven and earth, you made man in your likeness to subdue the earth and master it, and to recognize the work of your hands in created beauty. Grant that your children, thus surrounded on all sides by signs of your presence, may live continually in Christ, praising you through him and with him."
+      },
+      "responsory": "We worship you, O Christ, and we praise you.\n— We worship you, O Christ, and we praise you.\n\nBecause by your cross you have redeemed the world.\n— We praise you.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— We worship you, O Christ, and we praise you.",
+      "gospelAntiphon": " It is written: I will strike the shepherd and his flock shall be scattered. But when I have risen, I will go before you into Galilee. There you shall see me, says the Lord.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\n\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nLook with love on those who suffer because of our indifference,\n— come to their aid, and turn our uncaring hearts to works of justice and charity.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "Almighty ever-living God,\nwho as an example of humility\nfor the human race to follow,\ncaused our savior to take flesh\nand submit to the Cross,\ngraciously grant that\nwe may heed his lesson of patient suffering\nand so merit a share in his Resurrection.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:26-30"
+    },
+    "lent-hw-mon-mp": {
+      "source": "https://divineoffice.org/lent-hw-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Jesus said: My heart is nearly broken with sorrow; stay here and keep watch with me.",
+        "Now the time has come for this world to receive its sentence; now the prince of this world will be driven out.",
+        "Jesus, the beginning and end of our faith, endured the cross, heedless of the shame, and is seated now at the right hand of the throne of God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 42",
+        "Canticle – Sirach 36:1-5, 10-13",
+        "Psalm 19"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, when your strength takes possession of us we no longer say: Why are you cast down, my soul? So now that the surging waves of your indignation have passed over us, let us feel the healing calm of your forgiveness. Inspire us to yearn for you always, like the deer for running streams, until you satisfy every longing in heaven.",
+        "2": "To enlighten the world, Father, you sent to us your Word as the sun of truth and justice shining upon mankind. Illumine our eyes that we may discern your glory in the many works of your hands."
+      },
+      "responsory": "By your own blood, Lord, you brought us back to God.\n— By your own blood, Lord, you brought us back to God.\n\nFrom every tribe, and tongue, and people and nation,\n— you brought us back to God.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— By your own blood, Lord, you brought us back to God.",
+      "gospelAntiphon": "Father, righteous One, the world does not know you, but I know you, because you are the One who sent me.",
+      "intercessions": "Let us pray to Christ our Savior, who redeemed us by his death and resurrection:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\n\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\n\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat, though in our weakness we fail,\nwe may be revived through the Passion of your Only Begotten Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 11:19-20"
+    },
+    "lent-hw-mon-ep": {
+      "source": "https://divineoffice.org/lent-hw-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "He had neither beauty, nor majesty, nothing to attract our eyes.",
+        "I will entrust all people to his care, for he has given himself up to death for all.",
+        "God has blessed us in Christ. Through him, at the cost of his blood, we have been redeemed."
+      ],
+      "psalmodyRefs": [
+        "Psalm 45",
+        "Psalm 45",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "1": "When you took on flesh, Lord Jesus, you made a marriage of mankind with God. Help us to be faithful to your word and endure our exile bravely, until we are called to the heavenly marriage feast, to which the Virgin Mary, exemplar of your Church, has preceded us."
+      },
+      "responsory": "We worship you, O Christ, and we praise you.\n— We worship you, O Christ, and we praise you.\n\nBecause by your cross you have redeemed the world.\n— We praise you.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— We worship you, O Christ, and we praise you.",
+      "gospelAntiphon": "As Moses lifted up the serpent in the desert, so must the Son of Man be raised up, so that all who believe in him may have eternal life.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\n\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nIn their trials enable your faithful people to share in your passion,\n— and so reveal in their lives your saving power.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat, though in our weakness we fail,\nwe may be revived through the Passion of your Only Begotten Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 5:8-9"
+    },
+    "lent-hw-tue-mp": {
+      "source": "https://divineoffice.org/lent-hw-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Lord, defend my cause; rescue me from deceitful and impious men.",
+        "Lord, my God, you defended my cause; you ransomed my life.",
+        "My servant, the Just One, will justify many by taking their sins on himself."
+      ],
+      "psalmodyRefs": [
+        "Psalm 43",
+        "Canticle – Isaiah 38:10-14, 17-20",
+        "Psalm 65"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty Father, source of everlasting light, send forth your truth into our hearts and pour over us the brightness of your light.",
+        "2": "Lord God, hope of all the earth, hear the humble prayer of your children as we sing your praises. Pour out your Spirit on us so that our lives may bear fruit abundantly."
+      },
+      "responsory": "By your own blood, Lord, you brought us back to God.\n— By your own blood, Lord, you brought us back to God.\n\nFrom every tribe, and tongue, and people and nation,\n— you brought us back to God.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— By your own blood, Lord, you brought us back to God.",
+      "gospelAntiphon": "Father, give me the glory that I had with you before the world was made.",
+      "intercessions": "Let us pray to Christ our Savior, who redeemed us by his death and resurrection:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\n\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\n\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "Almighty ever-living God,\ngrant us so to celebrate\nthe mysteries of the Lord’s Passion\nthat we may merit to receive your pardon.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Zechariah 12:10-11a"
+    },
+    "lent-hw-tue-ep": {
+      "source": "https://divineoffice.org/lent-hw-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "They insulted me and filled me with dread, but the Lord was at my side, like a mighty warrior.",
+        "Deliver me, Lord, and place me at your side, then let whoever will, lift his hand to strike me.",
+        "You were slain, Lord, and by your blood you have ransomed us for God."
+      ],
+      "psalmodyRefs": [
+        "Psalm 49",
+        "Psalm 49",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "1": "You condemned the rich, Lord Jesus, because they have already received their reward, and you proclaimed the poor blessed because the kingdom of heaven is theirs. Teach us to seek for imperishable goods and to have confidence in your blood, poured out as the price of our redemption."
+      },
+      "responsory": "We worship you, O Christ, and we praise you.\n— We worship you, O Christ, and we praise you.\n\nBecause by your cross you have redeemed the world.\n— We praise you.\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— We worship you, O Christ, and we praise you.",
+      "gospelAntiphon": "I have power to lay down my life, and I have power to take it up again.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nLook with love on those who suffer because of our indifference,\n— come to their aid, and turn our uncaring hearts to works of justice and charity.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "Almighty ever-living God,\ngrant us so to celebrate\nthe mysteries of the Lord’s Passion\nthat we may merit to receive your pardon.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 1:27b-30"
+    },
+    "lent-hw-wed-mp": {
+      "source": "https://divineoffice.org/lent-hw-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "In the day of my distress, I reached out with my hands to seek the Lord’s help.",
+        "If we have died with Christ, we believe that we shall also live with Christ.",
+        "God has made Christ Jesus our wisdom and our holiness. By him we have been sanctified and redeemed."
+      ],
+      "psalmodyRefs": [
+        "Psalm 77",
+        "Canticle – 1 Samuel 2:1-10",
+        "Psalm 97"
+      ],
+      "psalmPrayers": {
+        "0": "Father, you established your ancient covenant by signs and wonders, but more wondrously you confirmed the new one through the sacrifice of your Son. Guide your Church through the pathways of life, that we may be led to the land of promise and celebrate your name with lasting praise.",
+        "2": "Father, you clothe the sky with light and the depths of the ocean with darkness. Among the sons of men you work wonders, and rain terror upon the enemy. Look upon your servants. Do not try us by fire but bring us rejoicing to the shelter of your home."
+      },
+      "responsory": "By your own blood, Lord, you brought us back to God.\n— By your own blood, Lord, you brought us back to God.\n\nFrom every tribe, and tongue, and people and nation,\n— you brought us back to God.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— By your own blood, Lord, you brought us back to God.",
+      "gospelAntiphon": "Through the eternal Spirit, Christ offered himself to God as the perfect sacrifice. His blood purifies us from sin and makes us fit servants of the living God.",
+      "intercessions": "Let us pray to Christ our Savior, who redeemed us by his death and resurrection:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\n\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\n\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "O God,\nwho willed your Son to submit\nfor our sake to the yoke of the Cross,\nso that you might drive from us the power of the enemy,\ngrant us, your servants,\nto attain the grace of the resurrection.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 50:4b-7"
+    },
+    "lent-hw-wed-ep": {
+      "source": "https://divineoffice.org/lent-hw-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Evil men said: Let us make the just man suffer; he sets himself against our way of life.",
+        "He took all our sins upon himself and asked forgiveness for our offenses.",
+        "In Christ we have found deliverance; through his blood, the forgiveness of our sins."
+      ],
+      "psalmodyRefs": [
+        "Psalm 62",
+        "Psalm 67",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you reward each one according to his works. Hear us as we pour out our hearts to you seeking your grace and secure protection. We look to you for our stable hope in a constantly changing world.",
+        "1": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
+      },
+      "responsory": "We worship you, O Christ, and we praise you.\n— We worship you, O Christ, and we praise you.\n\nBecause by your cross you have redeemed the world.\n— We praise you.\n\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— We worship you, O Christ, and we praise you.",
+      "gospelAntiphon": " The Master says: My hour is close at hand; I and my disciples shall celebrate the Passover in your house.",
+      "intercessions": "The Savior of mankind by dying destroyed death and by rising again restored life. Let us humbly ask him:\nSanctify your people, redeemed by your blood.\n\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\n\nLook with love on those who suffer because of our indifference,\n— come to their aid, and turn our uncaring hearts to works of justice and charity.\nSanctify your people, redeemed by your blood.\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\n\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "O God,\nwho willed your Son to submit\nfor our sake to the yoke of the Cross,\nso that you might drive from us the power of the enemy,\ngrant us, your servants,\nto attain the grace of the resurrection.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 4:32—5:2"
+    },
+    "lent-hw-thu-mp": {
+      "source": "https://divineoffice.org/lent-hw-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Look, O Lord, and see my suffering. Come quickly to my aid.",
+        "God is my savior; I trust in him and shall not fear.",
+        "The Lord has fed us with the finest wheat; he has filled us with honey from the rock."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle – Isaiah 12:1-6",
+        "Psalm 81"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine, that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
+        "2": "Lord God, open our mouths to proclaim your glory. Help us to leave sin behind and to rejoice in professing your name."
+      },
+      "responsory": "By your own blood, Lord, you brought us back to God.\n— By your own blood, Lord, you brought us back to God.\n\nFrom every tribe, and tongue, and people and nation,\n— you brought us back to God.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— By your own blood, Lord, you brought us back to God.",
+      "gospelAntiphon": "I have longed to eat this meal with you before I suffer.",
+      "intercessions": "The Father anointed Christ with the Holy Spirit to proclaim forgiveness to those in bondage. Let us humbly call upon the eternal priest:\nLord, have mercy on us.\n\nYou went up to Jerusalem to suffer and so enter into your glory,\n— bring your Church to the Passover feast of heaven.\nLord, have mercy on us.\n\nYou were lifted high on the cross and pierced by the soldier’s lance,\n— heal our wounds.\nLord, have mercy on us.\nYou made the cross the tree of life,\n— give its fruit to those reborn in baptism.\nLord, have mercy on us.\n\nOn the cross you forgave the repentant thief,\n— forgive us our sins.\nLord, have mercy on us.",
+      "collect": "O God,\nwho anointed your Only Begotten Son\nwith the Holy Spirit\nand made him Christ and Lord,\ngraciously grant\nthat, being made sharers in his consecration,\nwe may bear witness to your Redemption in the world.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 2:9-10"
+    },
+    "lent-hw-thu-ep": {
+      "source": "https://divineoffice.org/lent-hw-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Jesus Christ, the firstborn from the dead and ruler of the kings of the earth, has made us a royal people to serve his God and Father.",
+        "The Lord will be the champion of the helpless; he will free the poor from the grip of the powerful.",
+        "The saints won their victory over death through the blood of the Lamb and the truth to which they bore witness."
+      ],
+      "psalmodyRefs": [
+        "Psalm 72",
+        "Psalm 72",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "We call upon your name, Father, and pronounce it blessed above the earth. Give your people the fullness of peace and justice in your kingdom."
+      },
+      "responsory": "For our sake Christ was obedient, accepting even death.\n—For our sake Christ was obedient, accepting even death.",
+      "gospelAntiphon": "While they were at supper, Jesus took bread, said the blessing, broke the bread and gave it to his disciples.",
+      "intercessions": "At the Last Supper, on the night he was betrayed, our Savior entrusted to his Church the memorial of his death and resurrection, to be celebrated for ever. Let us adore him, and say:\nSanctify your people, redeemed by your blood.\nRedeemer of the world, give us a greater share of your passion through a deeper spirit of repentance,\n— so that we may share the glory of your resurrection.\nSanctify your people, redeemed by your blood.\n\nMay your Mother, comfort of the afflicted, protect us,\n— may we console others as you console us.\nSanctify your people, redeemed by your blood.\nIn their trials enable your faithful people to share in your passion,\n— and so reveal in their lives your saving power.\nSanctify your people, redeemed by your blood.\n\nYou humbled yourself by being obedient even to accepting death, death on a cross,\n— give all who serve you the gifts of obedience and patient endurance.\nSanctify your people, redeemed by your blood.\nTransform the bodies of the dead to be like your own in glory,\n— and bring us at last into their fellowship.\nSanctify your people, redeemed by your blood.",
+      "collect": "O God,\nwho have called us\nto participate in this most sacred Supper,\nin which your Only Begotten Son,\nwhen about to hand himself over to death,\nentrusted to the Church a sacrifice new for all eternity,\nthe banquet of his love, grant, we pray,\nthat we may draw from so great a mystery,\nthe fullness of charity and of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 13:12-15"
+    },
+    "lent-hw-fri-mp": {
+      "source": "https://divineoffice.org/lent-hw-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "God did not spare his own Son, but gave him up to suffer for our sake.",
+        "Jesus Christ loved us, and poured out his own blood for us to wash away our sins.",
+        "We worship your cross, O Lord, and we praise and glorify your holy resurrection, for the wood of the cross has brought joy to the world."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Habakkuk 3:2-4, 13a, 15-19",
+        "Psalm 147"
+      ],
+      "responsory": "For our sake Christ was obedient, accepting even death, death on a cross.\n— For our sake Christ was obedient, accepting even death, death on a cross.",
+      "gospelAntiphon": " Over his head they hung their accusation: Jesus of Nazareth, King of the Jews.",
+      "intercessions": "For our sake our Redeemer suffered death and was buried, and rose again. With heartfelt love let us adore him, and pray:\nLord, have mercy on us.\nChrist our teacher, for our sake you were obedient even to accepting death,\n— teach us to obey the Father’s will in all things.\nLord, have mercy on us.\n\nChrist our life, by your death on the cross you destroyed the power of evil and death,\n— may we die with you, to rise with you in glory.\nLord, have mercy on us.\n\nChrist our King, you became an outcast among us, a worm and no man,\n— teach us the humility by which you saved the world.\nLord, have mercy on us.\nChrist our salvation, you gave yourself up to death out of love for us,\n— help us to show your love to one another.\nLord, have mercy on us.\n\nChrist our Savior, on the cross you embraced all time with your outstretched arms,\nunite God’s scattered children in your kingdom of salvation.\nLord, have mercy on us.",
+      "collect": "Father,\nlook with love upon your people,\nthe love which our Lord Jesus Christ showed us\nwhen he delivered himself to evil men\nand suffered the agony of the cross,\nfor he lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Isaiah 52:13-15"
+    },
+    "lent-hw-fri-ep": {
+      "source": "https://divineoffice.org/lent-hw-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Look well, all you peoples, and see my suffering.",
+        "My soul is in anguish, my heart is in torment.",
+        "When Jesus had taken the vinegar, he said: “It is accomplished.” Then he bowed his head and died."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 143",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "For our sake Christ was obedient, accepting even death, death on a cross.\n— For our sake Christ was obedient, accepting even death, death on a cross.",
+      "gospelAntiphon": "When we were his enemies, God reconciled us to himself by the death of his Son.",
+      "intercessions": "Today we lovingly remember the death of our Lord Jesus Christ, from which was born new life for the whole world. Let us turn to God the Father, and say:\nBy the merits of your Son’s death, hear us, Lord.\n\nGive unity to your Church.\nBy the merits of your Son’s death, hear us, Lord.\nProtect our Pope.\nBy the merits of your Son’s death, hear us, Lord.\n\nSanctify your people, both clergy and faithful, by your Spirit.\nBy the merits of your Son’s death, hear us, Lord.\n\nIncrease faith and understanding in those under instruction.\nBy the merits of your Son’s death, hear us, Lord.\n\nGather all Christians in unity.\nBy the merits of your Son’s death, hear us, Lord.\n\nLead the Jewish people to the fullness of redemption.\nBy the merits of your Son’s death, hear us, Lord.\nEnlighten with your glory those who do not yet believe in Christ.\nBy the merits of your Son’s death, hear us, Lord.\n\nShow the marks of your love in creation to those who deny them.\nBy the merits of your Son’s death, hear us, Lord.\n\nGuide the minds and hearts of those who govern us.\nBy the merits of your Son’s death, hear us, Lord.\n\nConsole all who are troubled.\nBy the merits of your Son’s death, hear us, Lord.\n\nHave pity on those who have died.\nBy the merits of your Son’s death, hear us, Lord.",
+      "collect": "Father,\nlook with love upon your people,\nthe love which our Lord Jesus Christ showed us\nwhen he delivered himself to evil men\nand suffered the agony of the cross,\nfor he lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:21-24"
+    },
+    "lent-hw-sat-mp": {
+      "source": "https://divineoffice.org/lent-hw-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Though sinless, the Lord has been put to death. The world is in mourning as for an only son.",
+        "From the jaws of hell, Lord, rescue my soul.",
+        "I was dead, but now I live for ever, and I hold the keys of death and of hell."
+      ],
+      "psalmodyRefs": [
+        "Psalm 64",
+        "Canticle – Isaiah 38:10-14, 17-20",
+        "Psalm 150"
+      ],
+      "responsory": "For our sake Christ was obedient, accepting even death, death on a cross.\nTherefore God raised him on high and gave him the name above all other names.\n— For our sake Christ was obedient, accepting even death, death on a cross. Therefore God raised him on high and gave him the name above all other names.",
+      "gospelAntiphon": "Save us, O Savior of the world. On the cross you redeemed us by the shedding of your blood; we cry out for your help, O God.",
+      "intercessions": "Our Redeemer suffered and was buried for us in order to rise again. With sincere love we adore him, and aware of our needs we cry out:\nLord, have mercy on us.\n\nChrist our Savior, your sorrowing Mother stood by you at your death and burial,\n— in our sorrows may we share your suffering.\nLord, have mercy on us.\n\nChrist our Lord, like the seed buried in the ground, you brought forth for us the harvest of grace,\n— may we die to sin and live for God.\nLord, have mercy on us.\nChrist, the Good Shepherd, in death you lay hidden from the world,\n— teach us to love a life hidden with you in the Father.\nLord, have mercy on us.\n\nChrist, the new Adam, you entered the kingdom of death to release all the just since the beginning of the world,\n— may all who lie dead in sin hear your voice and rise to life.\nLord, have mercy on us.\nChrist, Son of the living God, through baptism we were buried with you,\n— risen also with you in baptism, may we walk in newness of life.\nLord, have mercy on us.",
+      "collect": "All-powerful and ever-living God,\nyour only Son went down among the dead\nand rose again in glory.\nIn your goodness\nraise up your faithful people,\nburied with him in baptism,\nto be one with him\nin the eternal life of heaven,\nwhere he lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hosea 5:15b-16:2"
+    },
+    "lent-hw-sat-ep": {
+      "source": "https://divineoffice.org/lent-hw-sat-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Death, you shall die in me; hell, you shall be destroyed by me.",
+        "As Jonah was three days and three nights in the belly of the whale, so will the Son of Man be three days and three nights in the heart of the earth.",
+        "Destroy this temple, says the Lord, and in three days I will rebuild it. He was speaking of the temple of his body."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 143",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "— For our sake Christ was obedient even when this meant death, death on a cross. Therefore God raised him on high and gave him the name above all other names.",
+      "gospelAntiphon": "Now the Son of Man has been glorified and God has been glorified in him.",
+      "intercessions": "For our sake our Redeemer suffered death and was buried, and rose again. With heartfelt love let us adore him, and pray:\nLord, have mercy on us.\nLord Jesus, when your side was pierced, there flowed out blood and water, the marvelous symbol of the whole Church,\n— through your death, burial and resurrection, bring life to your bride, the Church.\nLord, have mercy on us.\n\nLord Jesus, you remembered those who did not remember your promise of resurrection,\n— remember those without hope, who do not know that you have risen.\nLord, have mercy on us.\nLamb of God, you were offered for all as our paschal sacrifice,\n— draw all mankind to yourself.\nLord, have mercy on us.\n\nGod of all the world, you encompass the universe but were pleased to be laid in a tomb,\n— free the human race from the powers of darkness, and grant it the gift of immortal glory.\nLord, have mercy on us.\nChrist, Son of the living God, you opened the gates of paradise to the repentant thief,\n— gather all who have shared your death and burial into the glory of your resurrection.\nLord, have mercy on us.",
+      "collect": "All-powerful and ever-living God,\nyour only Son went down among the dead\nand rose again in glory.\nIn your goodness\nraise up your faithful people,\nburied with him in baptism,\nto be one with him\nin the eternal life of heaven,\nwhere he lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 1:18-21"
+    },
+    "easter-w01-sun-mp": {
+      "source": "https://divineoffice.org/easter-w01-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": " Very early on the morning after the Sabbath, when the sun had just risen, they came to the tomb, alleluia.",
+      "intercessions": "Christ is the Lord of life, raised up by the Father; in his turn he will raise us up by his power. Let us pray to him, saying:\nChrist our life, save us.\n\nLord Jesus, light shining in the darkness, you lead your people into life, and give our mortal nature the gift of holiness,\n— may we spend this day in praise of your glory.\nChrist our life, save us.\nLord, you walked the way of suffering and crucifixion,\n— may we suffer and die with you, and rise again to share your glory.\nChrist our life, save us.\n\nSon of the Father, our master and our brother, you have made us a kingdom of priests for our God,\n— may we offer you our joyful sacrifice of praise.\nChrist our life, save us.\nKing of glory, we look forward to the great day of your coming in splendor,\n— that we may see you face to face, and be transformed in your likeness.\nChrist our life, save us.",
+      "collect": "O God,\nwho on this day,\nthrough your Only Begotten Son,\nhave conquered death\nand unlocked for us the path to eternity,\ngrant, we pray,\nthat we who keep the solemnity of the Lord’s Resurrection may,\nthrough the renewal brought by your Spirit,\nrise up in the light of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:40-43"
+    },
+    "easter-w01-sun-ep2": {
+      "source": "https://divineoffice.org/easter-w01-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": " On the evening of the first day of the week, the disciples were gathered together behind locked doors; suddenly, Jesus stood among them and said: Peace be with you, alleluia.",
+      "intercessions": "With joy in our hearts, let us call upon Christ the Lord, who died and rose again, and lives always to intercede for us:\nVictorious King, hear our prayer.\n\nLight and salvation of all peoples,\n— send into our hearts the fire of your Spirit, as we proclaim your resurrection.\nVictorious King, hear our prayer.\nLet Israel recognize in you her longed-for Messiah,\n— and the whole earth be filled with the knowledge of your glory.\nVictorious King, hear our prayer.\n\nKeep us in the communion of your saints,\n— and grant us rest from our labors in their company.\nVictorious King, hear our prayer.\n\nYou have triumphed over death, your enemy; destroy in us the power of death,\n— that we may live only for you, victorious and immortal Lord.\nVictorious King, hear our prayer.\nSavior Christ, you were obedient even to accepting death, and were raised up to the right hand of the Father,\n— in your goodness welcome your brothers and sisters into the kingdom of your glory.\nVictorious King, hear our prayer.",
+      "collect": "O God,\nwho on this day,\nthrough your Only Begotten Son,\nhave conquered death\nand unlocked for us the path to eternity,\ngrant, we pray,\nthat we who keep the solemnity of the Lord’s Resurrection may,\nthrough the renewal brought by your Spirit,\nrise up in the light of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "easter-w01-mon-mp": {
+      "source": "https://divineoffice.org/easter-w01-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "Go quickly and tell his disciples: The Lord is risen, alleluia.",
+      "intercessions": "The Father glorified Jesus and appointed him heir to all nations. Let us praise him, saying:\nSave us, Lord, through your victory.\n\nLord Christ, by your victory you broke the power of evil and destroyed sin and death,\n— make us victorious over sin today.\nSave us, Lord, through your victory.\n\nYou laid death low, and brought us new life,\n— grant that we may walk today in this new life.\nSave us, Lord, through your victory.\nYou gave life to the dead, and led mankind from death to life,\n— give eternal life to all those we shall meet today.\nSave us, Lord, through your victory.\n\nYou brought confusion on the guards at your tomb, but joy to your disciples,\n— grant the fullness of joy to all who serve you.\nSave us, Lord, through your victory.",
+      "collect": "O God,\nwho give constant increase\nto your Church by new offspring,\ngrant that your servants may hold fast in their lives\nto the Sacrament they have received in faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 10:8b-10"
+    },
+    "easter-w01-mon-ep": {
+      "source": "https://divineoffice.org/easter-w01-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "Jesus met the women and greeted them. They came up to him and knelt at his feet, alleluia.",
+      "intercessions": "The Holy Spirit raised the body of Christ to life and made it the source of life. With joy in our hearts let us call upon the risen Christ, saying:\nLord, make all things new and fill them with life.\n\nSavior of the world and King of the new creation, raise our minds and hearts to your kingdom,\n— where you sit at the right hand of the Father.\nLord, make all things new and fill them with life.\nLord, you are always present in your Church,\n— through your Holy Spirit guide it into all truth.\nLord, make all things new and fill them with life.\n\nShow your mercy to the sick, the overburdened and the dying,\n— that all may receive strength and courage from your love.\nLord, make all things new and fill them with life.\nLight that never fails, as the day draws to its close we offer you our sacrifice of praise,\n— and pray that the glory of your resurrection may shine on our deceased brothers and sisters.\nLord, make all things new and fill them with life.",
+      "collect": "O God,\nwho give constant increase\nto your Church by new offspring,\ngrant that your servants may hold fast in their lives\nto the Sacrament they have received in faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 8:1b-3a"
+    },
+    "easter-w01-tue-mp": {
+      "source": "https://divineoffice.org/easter-w01-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "Jesus called her by name: Mary. She turned to him and said: Rabboni. Then he said to her: Do not touch me; I have not yet ascended to my Father, alleluia.",
+      "intercessions": "By his own power Christ raised up the temple of his body when it had been destroyed in death. With joy let us ask him:\nLord, share with us the fruits of your victory.\n\nChrist our Savior, when you rose again you brought to the holy women and the apostles the joyful news of a world redeemed,\n— make us witnesses to your risen life.\nLord, share with us the fruits of your victory.\nYou promised to all people that we would rise up again to newness of life,\n— make us heralds of your Gospel.\nLord, share with us the fruits of your victory.\n\nYou showed yourself to your apostles and breathed the Holy Spirit on them,\n— renew in us the presence of the same creator Spirit.\nLord, share with us the fruits of your victory.\n\nYou promised to be with your disciples to the end of the world,\n— stay with us today, and remain with us always.\nLord, share with us the fruits of your victory.",
+      "collect": "O God,\nwho have bestowed on us paschal remedies,\nendow your people with heavenly gifts,\nso that, possessed of perfect freedom,\nthey may rejoice in heaven over what gladdens them now on earth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w01-tue-ep": {
+      "source": "https://divineoffice.org/easter-w01-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": " While I was weeping at the tomb, I saw my Lord, alleluia.",
+      "intercessions": "As Christ lay in the darkness of the earth he saw the light of a new glory. Let us cry out to him in joy:\nKing of glory, hear us.\n\nWe pray for all bishops, priests and deacons, that they may be zealous in their ministry,\n— and prepare for you a people devoted to every good work.\nKing of glory, hear us.\n\nWe pray for all who teach in the service of your Church,\n— that they may seek your truth with a sincere heart.\nKing of glory, hear us.\nWe pray for your faithful people, that they may be victorious in the contest of faith,\n— and win the prize of victory in your kingdom.\nKing of glory, hear us.\n\nYou canceled our condemnation by nailing it to the cross,\n— free us from our chains, and lead us out of darkness.\nKing of glory, hear us.\n\nYou went down among the dead and opened for them the gates to life,\n— welcome our dead brothers and sisters into your kingdom.\nKing of glory, hear us.",
+      "collect": "O God,\nwho have bestowed on us paschal remedies,\nendow your people with heavenly gifts,\nso that, possessed of perfect freedom,\nthey may rejoice in heaven over what gladdens them now on earth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:4-5"
+    },
+    "easter-w01-wed-mp": {
+      "source": "https://divineoffice.org/easter-w01-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "Beginning with Moses and the prophets, Jesus interpreted for them all that had been written of him in the Scriptures, alleluia.",
+      "intercessions": "Christ was given up for our sins and rose again to make us righteous. Let us cry out to him, saying:\nSave us, Lord, by your victory.\n\nChrist our Savior, in conquering death you brought us joy, in rising again you raised us up and filled us with the abundance of your gifts,\n— stir up our hearts, and sanctify this day through the gift of your Holy Spirit.\nSave us, Lord, by your victory.\nYou are glorified by the angels in heaven and adored by mankind on earth; as we celebrate your resurrection,\n— accept our worship in spirit and in truth.\nSave us, Lord, by your victory.\n\nLord Jesus, save us; show your great mercy to your people, as we look forward to our own resurrection,\n— have mercy on us, and protect us today from every evil.\nSave us, Lord, by your victory.\nKing of glory, source of our life, grant that, when you come again,\n— we may be one with you in glory.\nSave us, Lord, by your victory.",
+      "collect": "O God,\nwho gladden us year by year\nwith the solemnity of the Lord’s Resurrection,\ngraciously grant that,\nby celebrating these present festivities,\nwe may merit through them to reach eternal joys.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w01-wed-ep": {
+      "source": "https://divineoffice.org/easter-w01-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "Jesus went in with them, and while they were at table he took bread and said the blessing; he broke the bread and gave it to them, alleluia.",
+      "intercessions": "Christ rose from the dead and is seated at the right hand of the Father. Let us pray to him, saying:\nLord Jesus, you live for ever; hear our prayer.\n\nLord, remember all who minister in your service,\n— may their holy lives be an example to your people.\nLord Jesus, you live for ever; hear our prayer.\nGive to those who govern us the spirit of justice and peace,\n— so that the human family may live in harmony.\nLord Jesus, you live for ever; hear our prayer.\n\nGuide our days in the way of salvation,\n— and fill the earth with your plenty for the sake of the needy.\nLord Jesus, you live for ever; hear our prayer.\nChrist our savior, light of the world, you have called creation from death to life,\n— may your light shine for ever on our departed brothers and sisters.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "O God,\nwho gladden us year by year\nwith the solemnity of the Lord’s Resurrection,\ngraciously grant that,\nby celebrating these present festivities,\nwe may merit through them to reach eternal joys.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 7:24-27"
+    },
+    "easter-w01-thu-mp": {
+      "source": "https://divineoffice.org/easter-w01-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "—  This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": " Jesus stood in the midst of his disciples and said: Peace be with you, alleluia.",
+      "intercessions": "Christ rose from the dead and is always present in his Church. Let us adore him, and say:\nStay with us, Lord.\n\nLord Jesus, victor over sin and death, glorious and immortal,\n— be always in our midst.\nStay with us, Lord.\n\nCome to us in the power of your victory,\n— and show our hearts the loving kindness of your Father.\nStay with us, Lord.\n\nCome to heal a world wounded by division,\n— for you alone can transform our hearts and make them one.\nStay with us, Lord.\nStrengthen our faith in final victory,\n— and renew our hope in your second coming.\nStay with us, Lord.",
+      "collect": "O God,\nwho have united the many nations\nin confessing your name,\ngrant that those reborn in the font of Baptism\nmay be one in the faith of their hearts\nand the homage of their deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:10-11"
+    },
+    "easter-w01-thu-ep": {
+      "source": "https://divineoffice.org/easter-w01-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": " See my hands and my feet and know that I am here among you, alleluia.",
+      "intercessions": "Christ rose from the dead as the firstfruits of those who sleep. In our joy let us praise him, and say:\nFirstborn from the dead, hear our prayer.\n\nLord Jesus, remember your holy Church, built on the apostles and reaching to the ends of the earth,\n— and let your blessing rest on all who believe in you.\nFirstborn from the dead, hear our prayer.\n\nYou are the healer of soul and body,\n— come to our aid, and save us in your love.\nFirstborn from the dead, hear our prayer.\nRaise up the sick and give them strength,\n— free them from their infirmities.\nFirstborn from the dead, hear our prayer.\n\nHelp those in distress of mind or body,\n— and in your compassion lift up those in need.\nFirstborn from the dead, hear our prayer.\n\nThrough your cross and resurrection you opened for all the way to immortality,\n— grant to our deceased brothers and sisters the joys of your kingdom.\nFirstborn from the dead, hear our prayer.",
+      "collect": "O God,\nwho have united the many nations\nin confessing your name,\ngrant that those reborn in the font of Baptism\nmay be one in the faith of their hearts\nand the homage of their deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 3:18, 22"
+    },
+    "easter-w01-fri-mp": {
+      "source": "https://divineoffice.org/easter-w01-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": " This was the third time Jesus had shown himself to his disciples after he had risen from the dead, alleluia.",
+      "intercessions": "Let us pray to God the Father, who gave us new life through the risen Christ:\nGive us the glory of your Son.\n\nLord our God, your mighty works have revealed your eternal plan: you created the earth, and you are faithful in every generation,\n— hear us, Father of mercy.\nGive us the glory of your Son.\n\nPurify our hearts with your truth, and guide them in the way of holiness,\n— so that we may do what is pleasing in your sight.\nGive us the glory of your Son.\nLet your face shine upon us,\n— that we may be freed from sin and filled with your plenty.\nGive us the glory of your Son.\n\nYou gave the apostles the peace of Christ,\n— grant peace to your people, and to the whole world.\nGive us the glory of your Son.",
+      "collect": "Almighty ever-living God,\nwho gave us the Paschal Mystery\nin the covenant you established\nfor reconciling the human race,\nso dispose our minds, we pray,\nthat what we celebrate by professing the faith\nwe may express in deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 5:30-32"
+    },
+    "easter-w01-fri-ep": {
+      "source": "https://divineoffice.org/easter-w01-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "gospelAntiphon": "The disciple whom Jesus loved said: It is the Lord, alleluia.",
+      "intercessions": "Christ is the way, the truth and the life. Let us praise him, and say:\nSon of the living God, bless your people.\nWe pray to you, Lord Jesus, for all ministers of your Church, as they break for us the bread of life,\n— may they themselves receive nourishment and strength.\nSon of the living God, bless your people.\n\nWe pray for the whole Christian people, that all may be worthy of their calling,\n— and safeguard their unity in the Spirit by the bond of peace.\nSon of the living God, bless your people.\nWe pray for those who govern us, that they may temper justice with mercy,\n— and promote harmony and peace throughout the world.\nSon of the living God, bless your people.\n\nWe pray for ourselves, that our hearts may be purified to sing your praises in the communion of saints,\n— may we be reunited with our deceased brothers and sisters, whom we commend to your loving kindness.\nSon of the living God, bless your people.",
+      "collect": "Almighty ever-living God,\nwho gave us the Paschal Mystery\nin the covenant you established\nfor reconciling the human race,\nso dispose our minds, we pray,\nthat what we celebrate by professing the faith\nwe may express in deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 5:8-10"
+    },
+    "easter-w01-sat-mp": {
+      "source": "https://divineoffice.org/easter-w01-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "When Jesus had risen from the dead on the morning after the Sabbath, he appeared first to Mary Magdalene, from whom he had cast out seven devils, alleluia.",
+      "intercessions": "Christ is the bread of life; he will raise up on the last day all who share the table of his word and his body. In our joy let us pray:\nLord, give us peace and joy.\n\nSon of God, you were raised from the dead to lead us into life,\n— bless and sanctify all the children of your Father.\nLord, give us peace and joy.\n\nYou give peace and joy to all who believe in you,\n— grant that we may walk as children of the light, rejoicing in your victory.\nLord, give us peace and joy.\nBuild up the faith of your pilgrim Church on earth,\n— that it may bear witness to your resurrection before the whole world.\nLord, give us peace and joy.\n\nYou suffered and so entered into the glory of the Father,\n— change the tears of the sorrowful into joy.\nLord, give us peace and joy.",
+      "collect": "O God,\nwho by the abundance of your grace\ngive increase to the peoples who believe in you,\nlook with favor on those you have chosen\nand clothe with blessed immortality\nthose reborn through the Sacrament of Baptism.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "easter-w02-sun-mp": {
+      "source": "https://divineoffice.org/easter-w02-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The splendor of Christ risen from the dead has shone on the people redeemed by his blood, alleluia.",
+        "Our Redeemer has risen from the tomb; let us sing a hymn of praise to the Lord our God, alleluia.",
+        "Alleluia, the Lord is risen as he promised, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "With your hand, touch the mark of the nails; doubt no longer, but believe, alleluia.",
+      "intercessions": "God the almighty Father raised Jesus as the firstborn from the dead, and made him our Savior. Let us call upon him, saying.\nGive us, Lord, the glory of your Son.\n\nAll-holy Father, you brought your beloved Son Jesus from the darkness of death into the splendor of your glory,\n— bring us also into your marvelous light.\nGive us, Lord, the glory of your Son.\n\nYou have given us faith to save us,\n— may we live today by the faith of our baptism.\nGive us, Lord, the glory of your Son.\nYou command us to seek the things that are above, where Christ is seated at your right hand,\n— do not let us be deceived by the allurements of sin.\nGive us, Lord, the glory of your Son.\n\nMay our life, hidden with Christ in you, our Father, shine before the world,\n— foreshadowing a new heaven and a new earth.\nGive us, Lord, the glory of your Son.",
+      "collect": "God of everlasting mercy,\nwho in the very recurrence of the paschal feast\nkindle the faith of the people you have made your own,\nincrease, we pray, the grace you have bestowed,\nthat all may grasp and rightly understand\nin what font they have been washed,\nby whose Spirit they have been reborn,\nby whose Blood they have been redeemed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:40-43"
+    },
+    "easter-w02-sun-ep2": {
+      "source": "https://divineoffice.org/easter-w02-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Mary Magdalene and the other Mary came to see the Lord’s tomb, alleluia.",
+        "Come and see the place where the Lord was buried, alleluia.",
+        "Jesus said: Do not be afraid. Go and tell my brothers to set out for Galilee; there they will see me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "— This is the day the Lord has made; let us rejoice and be glad, alleluia.",
+      "gospelAntiphon": "Because you have seen me, Thomas, you have believed; blessed are they who have not seen me and yet believe, alleluia.",
+      "intercessions": "God the Father raised Christ from the dead and exalted him at his right hand. Let us pray to the Father, saying:\nThrough Christ in glory, watch over your people, Lord.\n\nRighteous Father, you lifted Jesus above the earth through the triumph of the cross,\n—may all things be lifted up in him.\nThrough Christ in glory, watch over your people, Lord.\nThrough your Son in glory send the Holy Spirit upon the Church,\n—that it may be the sacrament of unity for the whole human race.\nThrough Christ in glory, watch over your people, Lord.\n\nYou have brought a new family into being through water and the Holy Spirit,\n—keep them faithful to their baptism, and bring them to everlasting life.\nThrough Christ in glory, watch over your people, Lord.\nThrough your exalted Son help those in distress, free those in captivity, heal the sick,\n—and by your blessings give joy to the world.\nThrough Christ in glory, watch over your people, Lord.\n\nYou nourished our deceased brothers and sisters with the body and blood of the risen Christ,\n—raise them up at the last day.\nThrough Christ in glory, watch over your people, Lord.",
+      "collect": "God of everlasting mercy,\nwho in the very recurrence of the paschal feast\nkindle the faith of the people you have made your own,\nincrease, we pray, the grace you have bestowed,\nthat all may grasp and rightly understand\nin what font they have been washed,\nby whose Spirit they have been reborn,\nby whose Blood they have been redeemed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "0325-mp-annunciation": {
+      "source": "https://divineoffice.org/0325-mp-annunciation/",
+      "edition": "first",
+      "antiphons": [
+        "The angel Gabriel was sent to the Virgin Mary, who was engaged to be married to Joseph.",
+        "Blessed are you among women, and blessed is the fruit of your womb.",
+        "Trusting in the Lord’s promise, the Virgin Mary conceived a child, and remaining a virgin, she gave birth to the Savior."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Hail Mary, full of grace, the Lord is with you.\n— Hail Mary, full of grace, the Lord is with you.\n\nBlessed are you among women, and blessed is the fruit of your womb.\n— The Lord is with you.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Hail Mary, full of grace, the Lord is with you.",
+      "gospelAntiphon": "In his great love for us, God sent his Son in the likeness of our sinful nature.",
+      "intercessions": "Today we celebrate the beginning of our salvation when the coming of the Lord was announced by the angel. Let us pray with joy in our hearts, saying:\nMay God’s holy Mother intercede for us.\n\nMary received God’s word with joy,\n— may joy fill our hearts as we welcome our Savior.\nMay God’s holy Mother intercede for us.\n\nYou looked with love on your lowly servant,\n— in your mercy, Father, remember us and all your children.\nMay God’s holy Mother intercede for us.\nMary, the new Eve, was obedient to your word,\n— may we echo her loving obedience.\nMay God’s holy Mother intercede for us.\n\nMay God’s holy Mother help all in distress, encourage the fainthearted, console the sorrowful,\n— may she pray for your holy people, for the clergy, and for all women dedicated to your service.\nMay God’s holy Mother intercede for us.",
+      "collect": "O God,\nwho willed that your Word should take on\nthe reality of human flesh in the womb of the Virgin Mary,\ngrant, we pray, that we, who confess our Redeemer to be God and man,\nmay merit to become partakers even in his divine nature.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Philippians 2:6-7"
+    },
+    "0325-ep2-annunciation": {
+      "source": "https://divineoffice.org/0325-ep2-annunciation/",
+      "edition": "first",
+      "antiphons": [
+        "The angel of the Lord brought God’s message to Mary. And she conceived by the power of the Holy Spirit.",
+        "Do not be afraid, Mary; you have found favor with God. Behold you shall conceive and bear a son, and he will be called the Son of the Most High.",
+        "I am the handmaid of the Lord. Let it be done to me as you have said."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 130",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "responsory": "The Word was made man and he lived among us.\n— The Word was made man and he lived among us.\n\nHe was in the beginning with God,\n— and he lived among us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit:\n— The Word was made man and he lived among us.",
+      "gospelAntiphon": "The angel Gabriel said to Mary in greeting: Hail, full of grace, the Lord is with you; blessed are you among women.",
+      "intercessions": "On this day the eternal Father sent his angel to bring Mary the good news of our salvation. Let us turn to God and pray with confidence:\nLord, fill our hearts with your love.\nYou chose the Virgin Mary as the mother of your Son,\n— have mercy on all who look for your gift of salvation.\nLord, fill our hearts with your love.\n\nYou sent Gabriel to give Mary your message of peace and joy,\n— give to the whole world the joy of salvation and your gift of true peace.\nLord, fill our hearts with your love.\nMary gave her consent, the Holy Spirit overshadowed her, and your Word came to dwell among us,\n— touch our hearts that we may welcome Christ as Mary did.\nLord, fill our hearts with your love.\n\nYou look with love on the humble, and fill the hungry with your gifts,\n— raise up the downcast, help all in need, comfort and strengthen the dying.\nLord, fill our hearts with your love.\nLord our God, you alone work wonders and with you all things are possible,\n— give us the fullness of salvation when you raise up the dead on the last day.\nLord, fill our hearts with your love.",
+      "collect": "O God,\nwho willed that your Word should take on\nthe reality of human flesh in the womb of the Virgin Mary,\ngrant, we pray, that we, who confess our Redeemer to be God and man,\nmay merit to become partakers even in his divine nature.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 John 1:1-2"
+    },
+    "easter-w02-tue-mp": {
+      "source": "https://divineoffice.org/easter-w02-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You have come to Mount Zion and to the city of the living God, alleluia.",
+        "Lord, you have preserved my life from destruction, alleluia.",
+        "You have visited the earth and brought life-giving rain to fill it with plenty, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 43",
+        "Canticle – Isaiah 38:10-14, 17-20",
+        "Psalm 65"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty Father, source of everlasting light, send forth your truth into our hearts and pour over us the brightness of your light.",
+        "2": "Lord God, hope of all the earth, hear the humble prayer of your children as we sing your praises. Pour out your Spirit on us so that our lives may bear fruit abundantly."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I am the Alpha and the Omega, the first and the last, the beginning and the end; I am the root and offspring of David’s race; I am the splendor of the morning star, alleluia.",
+      "intercessions": "The spotless Lamb of God takes away the sins of the world. Let us give thanks to the Father, and say:\nSource of all life, raise us to life.\n\nSource of all life, remember the death and resurrection of the Lamb slain on the cross,\n— listen to his voice as he lives for ever, making intercession for us.\nSource of all life, raise us to life.\n\nNow that the old leaven of wickedness and evil is destroyed,\n— may we always feed on the unleavened bread of sincerity and truth.\nSource of all life, raise us to life.\nGrant that today we may put aside all friction and jealousy,\n— and show greater concern for the needs of others.\nSource of all life, raise us to life.\n\nSend into our hearts the spirit of the Gospel,\n— that we may walk in the way of your commandments, today and for ever.\nSource of all life, raise us to life.",
+      "collect": "Enable us,\nwe pray, almighty God,\nto proclaim the power of the risen Lord,\nthat we, who have received the pledge of his gift,\nmay come to possess all he gives when it is fully revealed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w02-tue-ep": {
+      "source": "https://divineoffice.org/easter-w02-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Seek the things of heaven, not those that are on the earth, alleluia.",
+        "The Lord has rescued my life from the power of hell, alleluia.",
+        "Yours, O Lord, is majesty and power, glory and triumph, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 49",
+        "Psalm 49",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "1": "You condemned the rich, Lord Jesus, because they have already received their reward, and you proclaimed the poor blessed because the kingdom of heaven is theirs. Teach us to seek for imperishable goods and to have confidence in your blood, poured out as the price of our redemption."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " Did not our hearts burn within us as Jesus talked to us on the road? alleluia.",
+      "intercessions": "By his resurrection Christ has given sure hope to his people. Let us ask him with our whole hearts:\nLord Jesus, you live for ever; hear our prayer.\nLord Jesus, from your wounded side flowed blood and water,\n— make the Church your spotless bride.\nLord Jesus, you live for ever; hear our prayer.\n\nChief shepherd, after your resurrection you made Peter shepherd of your flock when he professed his love for you,\n— increase from day to day the love and devotion of our Pope.\nLord Jesus, you live for ever; hear our prayer.\nYou showed your disciples how to make a great catch of fish,\n— send others to continue their work as fishers of men.\nLord Jesus, you live for ever; hear our prayer.\n\nAt the lakeside you prepared bread and fish for your disciples,\n— grant that we may never allow others to die of hunger.\nLord Jesus, you live for ever; hear our prayer.\nJesus, the new Adam and life-giving spirit, transform the dead into your own likeness,\n— that the fullness of your joy may be theirs.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "Enable us,\nwe pray, almighty God,\nto proclaim the power of the risen Lord,\nthat we, who have received the pledge of his gift,\nmay come to possess all he gives when it is fully revealed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:4-5"
+    },
+    "easter-w02-wed-mp": {
+      "source": "https://divineoffice.org/easter-w02-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The waters saw you, O God; you led your people through the sea, alleluia.",
+        "The Lord puts to death and raises to life, alleluia.",
+        "A light has dawned for the just; joy has come to the upright of heart, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 77",
+        "Canticle – 1 Samuel 2:1-10",
+        "Psalm 97"
+      ],
+      "psalmPrayers": {
+        "0": "Father, you established your ancient covenant by signs and wonders, but more wondrously you confirmed the new one through the sacrifice of your Son. Guide your Church through the pathways of life, that we may be led to the land of promise and celebrate your name with lasting praise.",
+        "2": "Father, you clothe the sky with light and the depths of the ocean with darkness. Among the sons of men you work wonders, and rain terror upon the enemy. Look upon your servants. Do not try us by fire but bring us rejoicing to the shelter of your home."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "God loved the world so much that he gave his only Son to save all who have faith in him, and to give them eternal life, alleluia.",
+      "intercessions": "By the gift of the Father, the risen Christ was seen by the apostles. Let us pray to the Father, and say:\nGive us, Lord, the glory of your Son.\n\nFather of lights, today we offer you our thanks and praise for calling us into your marvelous light,\n— to receive your mercy.\nGive us, Lord, the glory of your Son.\nMay the efforts of mankind to make the world more human,\n— be purified and strengthened by the power of your Spirit.\nGive us, Lord, the glory of your Son.\n\nMay we be so dedicated to the service of others,\n— that the whole human family may become a pleasing sacrifice in your honor.\nGive us, Lord, the glory of your Son.\n\nAt the dawn of a new day, fill us with your mercy,\n— that the whole day may be a day of joy and praise.\nGive us, Lord, the glory of your Son.",
+      "collect": "As we recall\nyear by year the mysteries by which,\nthrough the restoration of its original dignity,\nhuman nature has received the hope of rising again,\nwe earnestly beseech your mercy, Lord,\nthat what we celebrate in faith we may possess in unending love.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w02-wed-ep": {
+      "source": "https://divineoffice.org/easter-w02-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Do not let your hearts be troubled; have faith in me, alleluia.",
+        "Let the peoples praise you, Lord God; let them rejoice in your salvation, alleluia.",
+        "His glory covers the heavens and his praise fills the earth, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 62",
+        "Psalm 67",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you reward each one according to his works. Hear us as we pour out our hearts to you seeking your grace and secure protection. We look to you for our stable hope in a constantly, changing world.",
+        "1": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence: and bring forth a harvest of justice."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "The man of God welcomes the light that searches his deeds and finds them true, alleluia.",
+      "intercessions": "In his Son, risen from the dead, God has opened for us the way to everlasting life. Let us ask the Father:\nThrough the victory of Christ, save the people he has redeemed.\nGod of our fathers, you raised your Son Jesus from the dead and clothed him in glory; move our hearts to complete repentance,\n— that we may walk in newness of life.\nThrough the victory of Christ, save the people he has redeemed.\n\nYou have led us back to the shepherd and bishop of our souls,\n— keep us faithful under the guidance of the shepherds of the Church.\nThrough the victory of Christ, save the people he has redeemed.\nYou chose the firstfruits of Christ’s disciples from the Jewish people,\n— reveal to the children of Israel the fulfillment of the promise made to their forefathers.\nThrough the victory of Christ, save the people he has redeemed.\n\nRemember the lonely, the orphaned and the widowed,\n— and do not abandon those who have been reconciled with you by the death of your Son.\nThrough the victory of Christ, save the people he has redeemed.\nYou called Stephen to your presence when he bore witness to Jesus, standing at your right hand,\n— welcome our deceased brothers and sisters who in faith and love hoped for the vision of your glory.\nThrough the victory of Christ, save the people he has redeemed.",
+      "collect": "As we recall\nyear by year the mysteries by which,\nthrough the restoration of its original dignity,\nhuman nature has received the hope of rising again,\nwe earnestly beseech your mercy, Lord,\nthat what we celebrate in faith we may possess in unending love.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 7:24-27"
+    },
+    "easter-w02-thu-mp": {
+      "source": "https://divineoffice.org/easter-w02-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I am the vine; you are the branches, alleluia.",
+        "Rejoicing, you will draw water from the wellsprings of the Savior, alleluia.",
+        "The Lord has fed us with the finest wheat, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle – Isaiah 12:1-6",
+        "Psalm 81"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine, that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
+        "2": "Lord God, open our mouths to proclaim your glory. Help us to leave sin behind and to rejoice in professing your name."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "The Father loves the Son and has entrusted everything to him, alleluia.",
+      "intercessions": "God the Father has given us his Son for the resurrection of his people. Let us turn with confidence to the Father, and say:\nMay the Lord Jesus be our very life.\n\nAs a pillar of fire, you lighted the way for your people in the desert,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\nThrough the voice of Moses you taught your people from the mountain,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\n\nYou fed your pilgrim people with your gift of manna,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\n\nYou gave your people water from the rock,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.",
+      "collect": "O God,\nwho for the salvation of the world\nbrought about the paschal sacrifice,\nbe favorable to the supplications of your people,\nso that Christ our High Priest,\ninterceding on our behalf,\nmay by his likeness to ourselves\nbring us reconciliation,\nand by his equality with you free us from our sins.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:10-11"
+    },
+    "easter-w02-thu-ep": {
+      "source": "https://divineoffice.org/easter-w02-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "God has appointed him to judge the living and the dead, alleluia.",
+        "All the peoples of the earth will be blessed in him, alleluia.",
+        "Christ yesterday and today: he is the same for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 72",
+        "Psalm 72",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "We call upon your name, Father, and pronounce it blessed above the earth. Give your people the fullness of peace and justice in your kingdom."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " Whoever believes in the Son possesses eternal life, alleluia.",
+      "intercessions": "The Father has established in Christ the foundation of all our hope and the principle of our resurrection. Let us rejoice in Christ, and cry out to him, saying:\nKing of glory, hear our prayer.\nLord Jesus, through your resurrection you entered the sanctuary of heaven to offer the blood of your own sacrifice,\n— lead us with you into the glory of the Father.\nKing of glory, hear our prayer.\n\nThrough your resurrection you confirmed the faith of your disciples and sent them out into the world,\n— make all bishops and priests faithful preachers of the Gospel.\nKing of glory, hear our prayer.\nThrough your resurrection you became our peace and reconciliation,\n— unite the baptized in perfect communion of faith and love.\nKing of glory, hear our prayer.\n\nThrough your resurrection the crippled man was healed at the gate of the temple,\n— look on the sick and reveal in them the power of your glory.\nKing of glory, hear our prayer.\nYou became the firstborn from the dead, the firstfruits of the resurrection,\n— grant to the dead who hoped in you a share in your glory.\nKing of glory, hear our prayer.",
+      "collect": "O God,\nwho for the salvation of the world\nbrought about the paschal sacrifice,\nbe favorable to the supplications of your people,\nso that Christ our High Priest,\ninterceding on our behalf,\nmay by his likeness to ourselves\nbring us reconciliation,\nand by his equality with you free us from our sins.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 3:18, 22"
+    },
+    "easter-w02-fri-mp": {
+      "source": "https://divineoffice.org/easter-w02-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Have courage, my son; your sins are forgiven, alleluia.",
+        "You go forth to save your people, to save your anointed one, alleluia.",
+        "Zion, give praise to your God; he has brought peace to your borders, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Habakkuk 3:2-4, 13a, 15-19",
+        "Psalm 147"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "Lord, you established peace within the borders of Jerusalem. Give the fullness of peace now to your faithful people. May peace rule us in this life and possess us in eternal life. You are about to fill us with the best of wheat: grant that what we see dimly now as in a mirror, we may come to perceive clearly in the brightness of your truth."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " Jesus took bread, and when he had given thanks, he gave it to those who were at table with him, alleluia.",
+      "intercessions": "God the Father raised up Christ through the Spirit, and will also raise up our mortal bodies. Let us cry out to him:\nLord, raise us to life through your Holy Spirit.\nAll-holy Father, you accepted the holocaust of your Son in raising him from the dead,\n— accept the offering we make today, and lead us to eternal life.\nLord, raise us to life through your Holy Spirit.\n\nLook with favor on all we do today,\n— that it may be for your glory and the sanctification of the world.\nLord, raise us to life through your Holy Spirit.\nMay our work today not be in vain but for the good of the whole world,\n— and through it lead us to your kingdom.\nLord, raise us to life through your Holy Spirit.\n\nOpen our eyes today to recognize our brothers and sisters, and our hearts to love them,\n— so that we may love and serve each other.\nLord, raise us to life through your Holy Spirit.",
+      "collect": "O God,\nhope and light of the sincere,\nwe humbly entreat you to dispose our hearts\nto offer you worthy prayer and ever to extol you\nby dutiful proclamation of your praise.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 5:30-32"
+    },
+    "easter-w02-fri-ep": {
+      "source": "https://divineoffice.org/easter-w02-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord has rescued my life from the grasp of hell, alleluia.",
+        "The Lord watches over his people, and protects them as the apple of his eye, alleluia.",
+        "The Lord is my strength, I shall always praise him, for he has become my Savior, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 121",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "0": "God of power and mercy, through your Son’s passion and resurrection you have freed us from the bonds of death and the anguish of separation from you. Be ever with us on our pilgrimage; then we shall sing rather than weep. Keep our feet from stumbling, so that we may be able to follow you until we come to eternal rest.",
+        "1": "Lord Jesus Christ, you have prepared a quiet place for us in your Father’s eternal home. Watch over our welfare on this perilous journey, shade us from the burning heat of day, and keep our lives free of evil until the end."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " To destroy the power of hell Christ died upon the cross; clothed in strength and glory, he triumphed over death on the third day, alleluia.",
+      "intercessions": "Let us praise Christ, the source of all life and the foundation of all virtue:\nLord, establish your kingdom in the world.\nJesus our Savior, you died in your human nature but were restored to life by the Spirit,\n— make us die to sin, and live by the Spirit.\nLord, establish your kingdom in the world.\n\nYou sent your disciples into the whole world to preach the Gospel to every creature,\n— inspire those who preach the Gospel to live by your Spirit.\nLord, establish your kingdom in the world.\nAll power in heaven and on earth has been given to you, to bear witness to the truth,\n— keep the hearts of those who govern us faithful to the truth.\nLord, establish your kingdom in the world.\n\nYou make all things new, and command us to wait and watch for your kingdom,\n— grant that the more we look forward to a new heaven and a new earth, the more we may seek to better this present world.\nLord, establish your kingdom in the world.\nYou went down among the dead to bring them the good news of the Gospel,\n— be the great joy and hope of all the dead.\nLord, establish your kingdom in the world.",
+      "collect": "O God,\nhope and light of the sincere,\nwe humbly entreat you to dispose our hearts\nto offer you worthy prayer and ever to extol you\nby dutiful proclamation of your praise.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 5:8-10"
+    },
+    "easter-w02-sat-mp": {
+      "source": "https://divineoffice.org/easter-w02-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You have filled me with gladness, Lord, I will sing for joy at the works of your hands, alleluia.",
+        "It is I who bring death and I who give life; I inflict injury and I bring healing, alleluia.",
+        "You have crowned your Anointed One with glory and honor, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Deuteronomy 32:1-12",
+        "Psalm 8"
+      ],
+      "psalmPrayers": {
+        "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
+        "2": "Almighty Lord, how wonderful is your name. You have made every creature subject to you; make us worthy to give you service."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " Peace be with you; it is I, alleluia; do not be afraid, alleluia.",
+      "intercessions": "Christ has made known to us the life that lasts for ever. With faith and joy let us cry out to him, saying:\nLord, may your resurrection bring us the riches of your grace.\nEternal shepherd, look on your flock as it rises from sleep,\n— feed us with the word of life and the bread from heaven.\nLord, may your resurrection bring us the riches of your grace.\n\nKeep us safe from wolf and hireling,\n— and make us faithful in listening to your voice.\nLord, may your resurrection bring us the riches of your grace.\nYou are present to all who preach your Gospel, and give power to their words,\n— make us today preachers of your resurrection by our holiness of life.\nLord, may your resurrection bring us the riches of your grace.\n\nBe our great joy that no one can take from us,\n— so that we may reject sin with its sadness, and reach out to eternal life.\nLord, may your resurrection bring us the riches of your grace.",
+      "collect": "Set aside, O Lord,\nthe bond of sentence written for us by the law of sin,\nwhich in the Paschal Mystery you canceled\nthrough the Resurrection of Christ your Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "easter-w03-sun-ep1": {
+      "source": "https://divineoffice.org/easter-w03-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord our God is high above the heavens; he raises up the lowly from the dust, alleluia.",
+        "Lord, you have broken the chains that held me bound; I will offer you a sacrifice of praise, alleluia.",
+        "Though he was the Son of God, Christ learned obedience through suffering; and for all who obey him, he has become the source of life, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 116",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, Word of God, surrendering the brightness of your glory you became man so that we may be raised from the dust to share your very being. May there be innumerable children of the Church to offer homage to your name from the rising of the sun to its setting.",
+        "1": "Father, precious in your sight is the death of the saints, but precious above all is the love with which Christ suffered to redeem us. In this life we will fill up in our own flesh what is still lacking in the sufferings of Christ; accept this as our sacrifice of praise, and we shall even now taste the joy of the new Jerusalem."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "Stay with us, Lord, for evening draws near and daylight is fading, alleluia.",
+      "intercessions": "Christ is our life and resurrection. Let us cry out to him with faith:\nSon of the living God, protect your people.\n\nLord Jesus, we pray for your Catholic Church,\n— make it holy, so that your kingdom may be established among all nations.\nSon of the living God, protect your people.\nWe pray for the sick and the sorrowful, for those in bondage and in exile,\n— that they may receive consolation and help.\nSon of the living God, protect your people.\n\nWe pray for those who have turned away from your paths,\n— that they may experience the grace of your forgiveness and the joy of rising to new life.\nSon of the living God, protect your people.\n\nCrucified and risen Savior, you will come to judge the world,\n— have mercy on us sinners.\nSon of the living God, protect your people.\nWe pray for all the living,\n— and for all who have gone from us in the hope of resurrection.\nSon of the living God, protect your people.",
+      "collect": "May your people\nexult for ever, O God,\nin renewed youthfulness of spirit,\nso that, rejoicing now in the restored glory of our adoption,\nwe may look forward in confident hope\nto the rejoicing of the day of resurrection.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:9-10"
+    },
+    "easter-w03-sun-mp": {
+      "source": "https://divineoffice.org/easter-w03-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is king, robed in splendor, alleluia.",
+        "All creation will be freed; all peoples will know the glory and freedom of God’s children, alleluia.",
+        "The name of the Lord is praised in heaven and on earth, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 93",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 148"
+      ],
+      "psalmPrayers": {
+        "0": "All power and all authority in heaven and earth have been given to you, Lord Jesus; you rule with decrees that are firm and trustworthy. Be with us always so that we may make disciples whose holiness will be worthy of your house.",
+        "2": "Lord, extolled in the heights by angelic powers, you are also praised by all earth’s creatures, each in its own way. With all the splendor of heavenly worship, you still delight in such tokens of love as earth can offer. May heaven and earth together acclaim you as King. May the praise that is sung in heaven resound in the heart of every creature on earth."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n\nYou have risen from the dead,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.",
+      "gospelAntiphon": "It was ordained that Christ should suffer, and on the third day rise from the dead, alleluia.",
+      "intercessions": "Christ is the Lord of life, raised up by the Father; in his turn he will raise us up by his power. Let us pray to him, saying:\nChrist our life, save us.\n\nLord Jesus, light shining in the darkness, you lead your people into life, and give our mortal nature the gift of holiness,\n— may we spend this day in praise of your glory.\nChrist our life, save us.\nLord, you walked the way of suffering and crucifixion,\n— may we suffer and die with you, and rise again to share your glory.\nChrist our life, save us.\n\nSon of the Father, our master and our brother, you have made us a kingdom of priests for our God,\n— may we offer you our joyful sacrifice of praise.\nChrist our life, save us.\n\nKing of glory, we look forward to the great day of your coming in splendor,\n— that we may see you face to face, and be transformed in your likeness.\nChrist our life, save us.",
+      "collect": "May your people\nexult for ever, O God,\nin renewed youthfulness of spirit,\nso that, rejoicing now in the restored glory of our adoption,\nwe may look forward in confident hope\nto the rejoicing of the day of resurrection.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:40-43"
+    },
+    "easter-w03-sun-ep2": {
+      "source": "https://divineoffice.org/easter-w03-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "He purified us from our sins, and is seated on high at God’s right hand, alleluia.",
+        "The Lord has redeemed his people, alleluia.",
+        "Alleluia, our Lord is king; let us rejoice and give glory to him, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Merciful and gentle Lord, you are the crowning glory of all the saints. Give us, your children, the gift of obedience which is the beginning of wisdom, so that we may do what you command and be filled with your mercy."
+      },
+      "responsory": "The Lord is risen, alleluia, alleluia.\n— The Lord is risen, alleluia, alleluia.\n\nHe has appeared to Simon,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen, alleluia, alleluia.",
+      "gospelAntiphon": "Jesus said to his disciples: Bring me some of the fish you have just caught. Simon Peter went aboard and hauled ashore the net, full of large fish, alleluia.",
+      "intercessions": "With joy in our hearts, let us call upon Christ the Lord, who died and rose again, and lives always to intercede for us:\nVictorious King, hear our prayer.\nLight and salvation of all peoples,\n— send into our hearts the fire of your Spirit, as we proclaim your resurrection.\nVictorious King, hear our prayer.\n\nLet Israel recognize in you her longed-for Messiah,\n— and the whole earth be filled with the knowledge of your glory.\nVictorious King, hear our prayer.\n\nKeep us in the communion of your saints,\n— and grant us rest from our labors in their company.\nVictorious King, hear our prayer.\nYou have triumphed over death, your enemy; destroy in us the power of death,\n— that we may live only for you, victorious and immortal Lord.\nVictorious King, hear our prayer.\n\nSavior Christ, you were obedient even to accepting death, and were raised up to the right hand of the Father,\n— in your goodness welcome your brothers and sisters into the kingdom of your glory.\nVictorious King, hear our prayer.",
+      "collect": "May your people\nexult for ever, O God,\nin renewed youthfulness of spirit,\nso that, rejoicing now in the restored glory of our adoption,\nwe may look forward in confident hope\nto the rejoicing of the day of resurrection.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "easter-w03-mon-mp": {
+      "source": "https://divineoffice.org/easter-w03-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My heart and my flesh rejoice in the living God, alleluia.",
+        "The house of the Lord has been raised on high, and all the nations will go up to it, alleluia.",
+        "Proclaim this among the nations: the Lord is king, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 84",
+        "Canticle – Isaiah 2:2-5",
+        "Psalm 96"
+      ],
+      "psalmPrayers": {
+        "0": "Bless your people, Lord. You have given us the law that we may walk from strength to strength and raise our minds to you from this valley of tears. May we receive the gifts you have gained for us.",
+        "2": "Lord, you have renewed the face of the earth. Your Church throughout the world sings you a new song, announcing your wonders to all. Through a virgin, you have brought forth a new birth in our world; through your miracles, a new power; through your suffering, a new patience; in your resurrection, a new hope, and in your ascension, new majesty."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Do not work for food that will perish, but for food that lasts to eternal life, alleluia.",
+      "intercessions": "The Father glorified Jesus and appointed him heir to all nations. Let us praise him, saying:\nSave us, Lord, through your victory.\n\nLord Christ, by your victory you broke the power of evil and destroyed sin and death,\n— make us victorious over sin today.\nSave us, Lord, through your victory.\nYou laid death low, and brought us new life,\n— grant that we may walk today in this new life.\nSave us, Lord, through your victory.\n\nYou gave life to the dead, and led mankind from death to life,\n— give eternal life to all those we shall meet today.\nSave us, Lord, through your victory.\n\nYou brought confusion on the guards at your tomb, but joy to your disciples,\n— grant the fullness of joy to all who serve you.\nSave us, Lord, through your victory.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat, putting off our old self with all its ways,\nwe may live as Christ did, for through the healing paschal remedies\nyou have conformed us to his nature.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 10:8b-10"
+    },
+    "easter-w03-mon-ep": {
+      "source": "https://divineoffice.org/easter-w03-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will be your light for ever; your God will be your glory, alleluia.",
+        "The snare was broken and we were set free, alleluia.",
+        "When I am lifted up from the earth, I shall draw all people to myself, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 123",
+        "Psalm 124",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, we lift our eyes to you and pray: confound the scorn of the proud and graciously show us your mercy.",
+        "1": "Lord Jesus, you foretold that your disciples would be despised on account of your name, but that not a hair of their heads is ever forgotten. In times of persecution, defend and revive us by the power and comfort of the Holy Spirit, so that we can be freed from our enemies and praise your saving help."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "This is what God asks of you: trust in the one whom he has sent, alleluia.",
+      "intercessions": "The Holy Spirit raised the body of Christ to life and made it the source of life. With joy in our hearts let us call upon the risen Christ, saying:\nLord, make all things new and fill them with life.\nSavior of the world and King of the new creation, raise our minds and hearts to your kingdom,\n— where you sit at the right hand of the Father.\nLord, make all things new and fill them with life.\n\nLord, you are always present in your Church,\n— through your Holy Spirit guide it into all truth.\nLord, make all things new and fill them with life.\nShow your mercy to the sick, the overburdened and the dying,\n— that all may receive strength and courage from your love.\nLord, make all things new and fill them with life.\n\nLight that never fails, as the day draws to its close we offer you our sacrifice of praise,\n— and pray that the glory of your resurrection may shine on our deceased brothers and sisters.\nLord, make all things new and fill them with life.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat, putting off our old self with all its ways,\nwe may live as Christ did, for through the healing paschal remedies\nyou have conformed us to his nature.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 8:1b-3a"
+    },
+    "easter-w03-tue-mp": {
+      "source": "https://divineoffice.org/easter-w03-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You will turn back, O God, and bring us to life, and your people will rejoice in you, alleluia.",
+        "We have placed all our hope in the Lord, and he has given us his peace, alleluia.",
+        "The earth has yielded its fruit; let the nations be glad and sing for joy, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 85",
+        "Canticle – Isaiah 26:1-4, 7-9, 12",
+        "Psalm 67"
+      ],
+      "psalmPrayers": {
+        "0": "Show us your mercy, Lord; our misery is known to us. May no evil desires prevail over us, for your glory and love dwell in our hearts.",
+        "2": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Truly I say to you: Moses did not give you the bread of heaven; my Father gives you the true bread from heaven, alleluia.",
+      "intercessions": "By his own power Christ raised up the temple of his body when it had been destroyed in death. With joy let us ask him:\nLord, share with us the fruits of your victory.\nChrist our Savior, when you rose again you brought to the holy women and the apostles the joyful news of a world redeemed,\n— make us witnesses to your risen life.\nLord, share with us the fruits of your victory.\n\nYou promised to all people that we would rise up again to newness of life,\n— make us heralds of your Gospel.\nLord, share with us the fruits of your victory.\nYou showed yourself to your apostles and breathed the Holy Spirit on them,\n— renew in us the presence of the same creator Spirit.\nLord, share with us the fruits of your victory.\n\nYou promised to be with your disciples to the end of the world,\n— stay with us today, and remain with us always.\nLord, share with us the fruits of your victory.",
+      "collect": "O God, who open wide\nthe gates of the heavenly Kingdom\nto those reborn of water and the Holy Spirit,\npour out on your servants\nan increase of the grace you have bestowed,\nthat, having been purged of all sins,\nthey may lack nothing that in your kindness you have promised.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w03-tue-ep": {
+      "source": "https://divineoffice.org/easter-w03-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Peace be with you; it is I, do not be afraid, alleluia.",
+        "Let Israel hope in the Lord, alleluia.",
+        "Let all creation serve you, for all things came into being at your word, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 125",
+        "Psalm 131",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Surround your people, Lord, within the safety of your Church, which you preserve on its rock foundation. Do not let us stretch out our hands to evil deeds, nor be destroyed by the insidious snares of the enemy, but bring us to share the lot of the saints in light.",
+        "1": "Lord Jesus, gentle and humble of heart, you declared that whoever receives a little child in your name receives you, and you promised your kingdom to those who are like children. Never let pride reign in our hearts, but may the Father’s compassion reward and embrace all who willingly bear your gentle yoke."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "The bread of God that comes down from heaven gives life to the world, alleluia.",
+      "intercessions": "As Christ lay in the darkness of the earth he saw the light of a new glory. Let us cry out to him in joy:\nKing of glory, hear us.\n\nWe pray for all bishops, priests and deacons, that they may be zealous in their ministry,\n— and prepare for you a people devoted to every good work.\nKing of glory, hear us.\n\nWe pray for all who teach in the service of your Church,\n— that they may seek your truth with a sincere heart.\nKing of glory, hear us.\nWe pray for your faithful people, that they may be victorious in the contest of faith,\n— and win the prize of victory in your kingdom.\nKing of glory, hear us.\n\nYou canceled our condemnation by nailing it to the cross,\n— free us from our chains, and lead us out of darkness.\nKing of glory, hear us.\n\nYou went down among the dead and opened for them the gates to life,\n— welcome our dead brothers and sisters into your kingdom.\nKing of glory, hear us.",
+      "collect": "O God, who open wide\nthe gates of the heavenly Kingdom\nto those reborn of water and the Holy Spirit,\npour out on your servants\nan increase of the grace you have bestowed,\nthat, having been purged of all sins,\nthey may lack nothing that in your kindness you have promised.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:4-5"
+    },
+    "easter-w03-wed-mp": {
+      "source": "https://divineoffice.org/easter-w03-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "People of every nation shall come and worship you, O Lord, alleluia.",
+        "Our eyes will see the King in all his radiant beauty, alleluia.",
+        "All people will see the saving power of our God, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 86",
+        "Canticle – Isaiah 33:13-16",
+        "Psalm 98"
+      ],
+      "psalmPrayers": {
+        "0": "God of mercy and goodness, when Christ called out to you in torment, you heard him and gave him victory over death because of his love for you. We already know the affection you have for us; fill us with a greater love of your name, and we will proclaim you more boldly before men and happily lead them to celebrate your glory.",
+        "2": "Lord Jesus, you have revealed your justice to all nations. We stood condemned, and you came to be judged in our place. Send your saving power on us and, when you come in glory, bring your mercy to those for whom you were condemned."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Whoever sees the Son and believes in him will live for ever, and I shall raise him up on the last day, alleluia.",
+      "intercessions": "Christ was given up for our sins and rose again to make us righteous. Let us cry out to him, saying:\nSave us, Lord, by your victory.\nChrist our Savior, in conquering death you brought us joy, in rising again you raised us up and filled us with the abundance of your gifts,\n— stir up our hearts, and sanctify this day through the gift of your Holy Spirit.\nSave us, Lord, by your victory.\n\nYou are glorified by the angels in heaven and adored by mankind on earth; as we celebrate your resurrection,\n— accept our worship in spirit and in truth.\nSave us, Lord, by your victory.\nLord Jesus, save us; show your great mercy to your people, as we look forward to our own resurrection,\n— have mercy on us, and protect us today from every evil.\nSave us, Lord, by your victory.\n\nKing of glory, source of our life, grant that, when you come again,\n— we may be one with you in glory.\nSave us, Lord, by your victory.",
+      "collect": "Be present to your family,\nO Lord, we pray,\nand graciously ensure those you have endowed\nwith the grace of faith\nan eternal share in the Resurrection of your Only Begotten Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w03-wed-ep": {
+      "source": "https://divineoffice.org/easter-w03-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Your sorrow will be turned into joy, alleluia.",
+        "Whether we live or die, we are the Lord’s, alleluia.",
+        "From him, through him, and in him all things exist; glory to him for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 126",
+        "Psalm 127",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you have raised us from the earth; may you let the seeds of justice, which we have sown in tears, grow and increase in your sight. May we reap in joy the harvest we hope for patiently.",
+        "1": "You command the seed to rise, Lord God, though the farmer is unaware. Grant that those who labor for you may trust not in their own work but in your help. Remembering that the land is brought to flower not with human tears but with those of your Son, may the Church rely only upon your gifts."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "All that the Father gives me will come to me, and whoever comes to me I shall not turn away, alleluia.",
+      "intercessions": "Christ rose from the dead and is seated at the right hand of the Father. Let us pray to him, saying:\nLord Jesus, you live for ever; hear our prayer.\nLord, remember all who minister in your service,\n— may their holy lives be an example to your people.\nLord Jesus, you live for ever; hear our prayer.\n\nGive to those who govern us the spirit of justice and peace,\n— so that the human family may live in harmony.\nLord Jesus, you live for ever; hear our prayer.\n\nGuide our days in the way of salvation,\n— and fill the earth with your plenty for the sake of the needy.\nLord Jesus, you live for ever; hear our prayer.\nChrist our savior, light of the world, you have called creation from death to life,\n— may your light shine for ever on our departed brothers and sisters.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "Be present to your family,\nO Lord, we pray,\nand graciously ensure those you have endowed\nwith the grace of faith\nan eternal share in the Resurrection of your Only Begotten Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 7:24-27"
+    },
+    "easter-w03-thu-mp": {
+      "source": "https://divineoffice.org/easter-w03-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "City of God, you are the source of our life; with music and dance we shall rejoice in you, alleluia.",
+        "Like a shepherd he will gather the lambs in his arms and carry them close to his heart, alleluia.",
+        "Great is the Lord in Zion; he is exalted above all the peoples, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 87",
+        "Canticle – Isaiah 40:10-17",
+        "Psalm 99"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, your only Son wept over ancient Jerusalem, soon to be destroyed for its lack of faith. He established the new Jerusalem firmly upon rock and made it the mother of the faithful. Make us rejoice in your Church, and grant that all people may be reborn into the freedom of your Spirit.",
+        "2": "God, you are the source of all holiness. Though no one can see you and live, you give life most generously, and in an even greater way restore it. Sanctify your priests through your life-giving Word, and consecrate our people in his blood until our eyes see your face."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Amen, amen, I say to you: Whoever believes in me will live for ever, alleluia.",
+      "intercessions": "Christ rose from the dead and is always present in his Church. Let us adore him, and say:\nStay with us, Lord.\n\nLord Jesus, victor over sin and death, glorious and immortal,\n— be always in our midst.\nStay with us, Lord.\n\nCome to us in the power of your victory,\n— and show our hearts the loving kindness of your Father.\nStay with us, Lord.\nCome to heal a world wounded by division,\n— for you alone can transform our hearts and make them one.\nStay with us, Lord.\n\nStrengthen our faith in final victory,\n— and renew our hope in your second coming.\nStay with us, Lord.",
+      "collect": "Almighty ever-living God,\nlet us feel your compassion\nmore readily during these days when,\nby your gift, we have known it more fully,\nso that those you have freed from the darkness of error\nmay cling more firmly to the teachings of your truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:10-11"
+    },
+    "easter-w03-thu-ep": {
+      "source": "https://divineoffice.org/easter-w03-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord God has given him the throne of David his father, alleluia.",
+        "Jesus Christ is supreme in his power. He is King of kings and Lord of lords, alleluia.",
+        "Lord, who is your equal in power? Who is like you, majestic in holiness? alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 132",
+        "Psalm 132",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord Jesus Christ, you chose to suffer and be overwhelmed by death in order to open the gates of death in triumph. Stay with us to help us on our pilgrimage; free us from all evil by the power of your resurrection. In the company of your saints, and constantly remembering your love for us, may we sing of your wonders in our Father’s house."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " I am the living bread come down from heaven; anyone who eats this bread will live for ever; the bread that I will give is my flesh, for the life of the world, alleluia.",
+      "intercessions": "Christ rose from the dead as the firstfruits of those who sleep. In our joy let us praise him, and say:\nFirstborn from the dead, hear our prayer.\nLord Jesus, remember your holy Church, built on the apostles and reaching to the ends of the earth,\n— and let your blessing rest on all who believe in you.\nFirstborn from the dead, hear our prayer.\n\nYou are the healer of soul and body,\n— come to our aid, and save us in your love.\nFirstborn from the dead, hear our prayer.\n\nRaise up the sick and give them strength,\n— free them from their infirmities.\nFirstborn from the dead, hear our prayer.\nHelp those in distress of mind or body,\n— and in your compassion lift up those in need.\nFirstborn from the dead, hear our prayer.\n\nThrough your cross and resurrection you opened for all the way to immortality,\n— grant to our deceased brothers and sisters the joys of your kingdom.\nFirstborn from the dead, hear our prayer.",
+      "collect": "Almighty ever-living God,\nlet us feel your compassion\nmore readily during these days when,\nby your gift, we have known it more fully,\nso that those you have freed from the darkness of error\nmay cling more firmly to the teachings of your truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 3:18, 22"
+    },
+    "easter-w03-fri-mp": {
+      "source": "https://divineoffice.org/easter-w03-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, wash away my guilt, alleluia.",
+        "Christ bore our sins in his own body as he hung upon the cross, alleluia.",
+        "Come into the Lord’s presence singing for joy, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Jeremiah 14:17-21",
+        "Psalm 100"
+      ],
+      "psalmPrayers": {
+        "0": "Father, he who knew no sin was made sin for us, to save us and restore us to your friendship. Look upon our contrite heart and afflicted spirit and heal our troubled conscience, so that in the joy and strength of the Holy Spirit we may proclaim your praise and glory before all the nations.",
+        "2": "God, devoted to us as a Father, you created us as a sign of your power, and elected us your people to show your goodness. Accept the thanks your children offer, that all men may enter your courts praising you in song."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Whoever eats my flesh and drinks my blood shall live in me and I in him, alleluia.",
+      "intercessions": "Let us pray to God the Father, who gave us new life through the risen Christ:\nGive us the glory of your Son.\n\nLord our God, your mighty works have revealed your eternal plan: you created the earth, and you are faithful in every generation,\n— hear us, Father of mercy.\nGive us the glory of your Son.\nPurify our hearts with your truth, and guide them in the way of holiness,\n— so that we may do what is pleasing in your sight.\nGive us the glory of your Son.\n\nLet your face shine upon us,\n— that we may be freed from sin and filled with your plenty.\nGive us the glory of your Son.\n\nYou gave the apostles the peace of Christ,\n— grant peace to your people, and to the whole world.\nGive us the glory of your Son.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat we, who have come to know\nthe grace of the Lord’s Resurrection,\nmay through the love of the Spirit,\nourselves rise to newness of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 5:30-32"
+    },
+    "easter-w03-fri-ep": {
+      "source": "https://divineoffice.org/easter-w03-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "I, the Lord, am your savior and redeemer, alleluia.",
+        "Blessed is the kingdom of David our father which has come among us, alleluia.",
+        "Let us sing to the Lord, glorious in his triumph, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 135",
+        "Psalm 135",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "psalmPrayers": {
+        "1": "Father, your name and your memory last for ever. We stand to pray in your house and praise you with psalms of joy. We ask you in your kindness to have mercy on us in our lowliness."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " Our crucified and risen Lord has redeemed us, alleluia.",
+      "intercessions": "Christ is the way, the truth and the life. Let us praise him, and say:\nSon of the living God, bless your people.\nWe pray to you, Lord Jesus, for all ministers of your Church,\n— as they break for us the bread of life, may they themselves receive nourishment and strength.\nSon of the living God, bless your people.\n\nWe pray for the whole Christian people, that all may be worthy of their calling,\n— and safeguard their unity in the Spirit by the bond of peace.\nSon of the living God, bless your people.\nWe pray for those who govern us, that they may temper justice with mercy,\n— and promote harmony and peace throughout the world.\nSon of the living God, bless your people.\n\nWe pray for ourselves, that our hearts may be purified to sing your praises in the communion of saints,\n— may we be reunited with our deceased brothers and sisters, whom we commend to your loving kindness.\nSon of the living God, bless your people.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat we, who have come to know\nthe grace of the Lord’s Resurrection,\nmay through the love of the Spirit,\nourselves rise to newness of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 5:8-10"
+    },
+    "easter-w03-sat-mp": {
+      "source": "https://divineoffice.org/easter-w03-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The words I have spoken to you are spirit and life, alleluia.",
+        "Lord, you have built your temple and altar on your holy mountain, alleluia.",
+        "I am the way, the truth and the life, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle — Wisdom 9:1-6, 9-11",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts for ever."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia,alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Simon Peter said: Lord, to whom shall we go? You have the words of eternal life; and we believe and we are convinced that you are the Christ, the Son of God, alleluia.",
+      "intercessions": "Christ is the bread of life; he will raise up on the last day all who share the table of his word and his body.\nIn our joy let us pray:\nLord, give us peace and joy.\n\nSon of God, you were raised from the dead to lead us into life,\n— bless and sanctify all the children of your Father.\nLord, give us peace and joy.\nYou give peace and joy to all who believe in you,\n— grant that we may walk as children of the light, rejoicing in your victory.\nLord, give us peace and joy.\n\nBuild up the faith of your pilgrim Church on earth,\n— that it may bear witness to your resurrection before the whole world.\nLord, give us peace and joy.\n\nYou suffered and so entered into the glory of the Father,\n— change the tears of the sorrowful into joy.\nLord, give us peace and joy.",
+      "collect": "O God,\nwho in the font of Baptism\nhave made new those who believe in you,\nkeep safe those reborn in Christ,\nthat, defeating every onslaught of error,\nthey may faithfully preserve the grace of your blessing.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "easter-w04-sun-ep1": {
+      "source": "https://divineoffice.org/easter-w04-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "May the peace of Christ fill your hearts with joy, alleluia.",
+        "With your own blood, you have redeemed us for God, alleluia.",
+        "Was it not necessary for Christ to suffer and so enter into his glory? alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 130",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "When you rose from the dead, Lord Jesus, you formed the Church into your new body, and made of it the new Jerusalem, united in your Spirit. Give us peace in our day. Make all nations come to your Church to share your gifts in fellowship, that they may render you thanks without end and come to your eternal city.",
+        "1": "Listen with compassion to our prayers, Lord. The forgiveness of sins is yours. Do not look on the wrong we have done, but grant us your merciful kindness."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "I am the gate, says the Lord; whoever enters through me shall be saved and find pasture, alleluia.",
+      "intercessions": "In rising from the dead, Christ destroyed death and restored life. Let us cry out to him, saying:\nLord Jesus, you live for ever; hear our prayer.\nYou are the stone rejected by the builders which became the chief cornerstone,\n— make us living stones in the temple of your Church.\nLord Jesus, you live for ever; hear our prayer.\n\nYou are the faithful and true witness, the firstborn from the dead,\n— make your Church bear constant witness to yourself.\nLord Jesus, you live for ever; hear our prayer.\nYou alone are the Bridegroom of the Church, born from your wounded side,\n— make us reveal to the world the love of Bridegroom and Bride.\nLord Jesus, you live for ever; hear our prayer.\n\nYou are the first and the last, you were dead and are alive,\n— keep those who have been baptized faithful until death, that they may receive the crown of victory.\nLord Jesus, you live for ever; hear our prayer.\nLight and lamp of God’s holy city,\n— shine on our friends who have died, that they may reign for ever.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "Almighty ever-living God,\nlead us to a share in the joys of heaven,\nso that the humble flock may reach\nwhere the brave Shepherd has gone before.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:9-10"
+    },
+    "easter-w04-sun-mp": {
+      "source": "https://divineoffice.org/easter-w04-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I shall not die but live and proclaim the works of the Lord, alleluia.",
+        "Blessed be your holy and glorious name, O Lord, alleluia.",
+        "Give honor and praise to our God; all that he does is perfect and all his ways are true, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n\nYou have risen from the dead,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.",
+      "gospelAntiphon": " I am the shepherd of the sheep; I am the way, the truth and the life: I know my sheep, and my sheep know me, alleluia.",
+      "intercessions": "God the almighty Father raised Jesus as the firstborn from the dead, and made him our Savior. Let us call upon him, saying.\nGive us, Lord, the glory of your Son.\nAll-holy Father, you brought your beloved Son Jesus from the darkness of death into the splendor of your glory,\n— bring us also into your marvelous light.\nGive us, Lord, the glory of your Son.\n\nYou have given us faith to save us,\n— may we live today by the faith of our baptism.\nGive us, Lord, the glory of your Son.\nYou command us to seek the things that are above, where Christ is seated at your right hand,\n— do not let us be deceived by the allurements of sin.\nGive us, Lord, the glory of your Son.\n\nMay our life, hidden with Christ in you, our Father, shine before the world,\n— foreshadowing a new heaven and a new earth.\nGive us, Lord, the glory of your Son.",
+      "collect": "Almighty ever-living God,\nlead us to a share in the joys of heaven,\nso that the humble flock may reach\nwhere the brave Shepherd has gone before.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:40-43"
+    },
+    "easter-w04-sun-ep2": {
+      "source": "https://divineoffice.org/easter-w04-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Seek the things that are above where Christ is seated at God’s right hand, alleluia.",
+        "In the darkness he dawns: a light for upright hearts, alleluia.",
+        "Alleluia, salvation, glory and power to our God, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Lord God, you are the eternal light which illumines the hearts of good people. Help us to love you, to rejoice in your glory, and so to live in this world as to avoid harsh judgment in the next. May we come to see the light of your countenance."
+      },
+      "responsory": "The Lord is risen, alleluia, alleluia.\n— The Lord is risen, alleluia, alleluia.\n\nHe has appeared to Simon,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen, alleluia, alleluia.",
+      "gospelAntiphon": "My sheep will hear my voice. I, their Lord, know them.",
+      "intercessions": "God the Father raised Christ from the dead and exalted him at his right hand. Let us pray to the Father, saying:\nThrough Christ in glory, watch over your people, Lord.\n\nRighteous Father, you lifted Jesus above the earth through the triumph of the cross,\n— may all things be lifted up in him.\nThrough Christ in glory, watch over your people, Lord.\nThrough your Son in glory send the Holy Spirit upon the Church,\n— that it may be the sacrament of unity for the whole human race.\nThrough Christ in glory, watch over your people, Lord.\n\nYou have brought a new family into being through water and the Holy Spirit,\n— keep them faithful to their baptism, and bring them to everlasting life.\nThrough Christ in glory, watch over your people, Lord.\nThrough your exalted Son help those in distress, free those in captivity, heal the sick,\n— and by your blessings give joy to the world.\nThrough Christ in glory, watch over your people, Lord.\n\nYou nourished our deceased brothers and sisters with the body and blood of the risen Christ,\n— raise them up at the last day.\nThrough Christ in glory, watch over your people, Lord.",
+      "collect": "Almighty ever-living God,\nlead us to a share in the joys of heaven,\nso that the humble flock may reach\nwhere the brave Shepherd has gone before.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "easter-w04-mon-mp": {
+      "source": "https://divineoffice.org/easter-w04-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Let the splendor of the Lord our God be upon us, alleluia.",
+        "I will turn darkness into light before them, alleluia.",
+        "The Lord does whatever he wills, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 90",
+        "Canticle – Isaiah 42:10-16",
+        "Psalm 135"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, send your mercy and your truth to rescue us from the snares of the devil, and, happy to be known as companions of your Son, we will praise you among the peoples and proclaim you to the nations.",
+        "2": "Where two or three gather in your name, Lord, you promised to be with them and share their fellowship. Look down upon your family gathered here in your name, and graciously pour out your blessing upon us."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I am the Good Shepherd; I pasture my sheep and I lay down my life for them, alleluia.",
+      "intercessions": "God the Father was glorified in the death and resurrection of his Son. Let us pray to him with confidence, saying:\nLord, enlighten our minds.\n\nFather of lights, you bathed the world in splendor when Christ rose again in glory,\n— fill our minds with the light of faith.\nLord, enlighten our minds.\nThrough the resurrection of your Son you opened for us the way to eternal life,\n— as we work today sustain us with the hope of glory.\nLord, enlighten our minds.\n\nThrough your risen Son you sent the Holy Spirit into the world,\n— set our hearts on fire with spiritual love.\nLord, enlighten our minds.\n\nMay Jesus Christ, who was crucified to set us free,\n— be today our salvation and redemption.\nLord, enlighten our minds.",
+      "collect": "O God,\nperfect light of the blessed,\nby whose gift we celebrate\nthe paschal mysteries on earth,\nbring us, we pray, to rejoice\nin the full measure of your grace for ages unending.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 10:8b-10"
+    },
+    "easter-w04-mon-ep": {
+      "source": "https://divineoffice.org/easter-w04-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Whoever is in Christ is a new creature, alleluia.",
+        "Let us love God, for he has first loved us, alleluia.",
+        "From his fullness we have all received, grace upon grace, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 136",
+        "Psalm 136",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "1": "Almighty God, remember our lowliness and have mercy. Once you gave our fathers a foreign land to inherit. Free us today from sin and give us a share in your inheritance."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "I have other sheep that do not belong to this flock; these also I must lead. They will hear my voice, and there will be one fold and one shepherd, alleluia.",
+      "intercessions": "Let us pray to Christ the Lord, who bathed the world in glory through his resurrection. With joyful hearts let us say:\nChrist, our life, hear our prayer.\nLord Jesus Christ, you walked with your disciples on the way,\n— be with your Church on its pilgrimage through life.\nChrist, our life, hear our prayer.\n\nDo not let us be slow to believe,\n— but ready to proclaim you as victor over death.\nChrist, our life, hear our prayer.\n\nLook with kindness on those who do not recognize your presence,\n— reveal yourself to them, so that they may welcome you as Savior.\nChrist, our life, hear our prayer.\nThrough the cross you have brought reconciliation to mankind in your body,\n— grant unity and peace to all nations.\nChrist, our life, hear our prayer.\n\nJudge of the living and the dead,\n— forgive the sins of the faithful departed.\nChrist, our life, hear our prayer.",
+      "collect": "O God,\nperfect light of the blessed,\nby whose gift we celebrate\nthe paschal mysteries on earth,\nbring us, we pray, to rejoice\nin the full measure of your grace for ages unending.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 8:1b-3a"
+    },
+    "easter-w04-tue-mp": {
+      "source": "https://divineoffice.org/easter-w04-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Whoever does the will of my Father will enter the kingdom of heaven, alleluia.",
+        "Let all the nations, O Lord, know the depths of your loving mercy for us, alleluia.",
+        "The Lord is my refuge and my savior, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 101",
+        "Canticle – Daniel 3:26, 27, 29, 34-41",
+        "Psalm 144"
+      ],
+      "psalmPrayers": {
+        "0": "So that your people may walk in innocence, you came to us, Lord Jesus, and told us to be holy as your Father is holy. Help your children to love what is truly perfect, so that we may neither speak what is evil nor do what is wrong. Let us stand in your sight and celebrate with you the Father’s love and justice.",
+        "2": "Lord, God of strength, you gave your Son victory over death. Direct your Church’s fight against evil in the world. Clothe us with the weapons of light and unite us under the one banner of love, that we may receive our eternal reward after the battle of earthly life."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "The works that I do in the name of my Father speak on my behalf, alleluia.",
+      "intercessions": "The spotless Lamb of God takes away the sins of the world. Let us give thanks to the Father, and say:\nSource of all life, raise us to life.\n\nSource of all life, remember the death and resurrection of the Lamb slain on the cross,\n— listen to his voice as he lives for ever, making intercession for us.\nSource of all life, raise us to life.\nNow that the old leaven of wickedness and evil is destroyed,\n— may we always feed on the unleavened bread of sincerity and truth.\nSource of all life, raise us to life.\n\nGrant that today we may put aside all friction and jealousy,\n— and show greater concern for the needs of others.\nSource of all life, raise us to life.\n\nSend into our hearts the spirit of the Gospel,\n— that we may walk in the way of your commandments, today and forever.\nSource of all life, raise us to life.",
+      "collect": "Grant,\nwe pray, almighty God, that,\ncelebrating the mysteries of the Lord’s Resurrection,\nwe may merit to receive the joy of our redemption.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w04-tue-ep": {
+      "source": "https://divineoffice.org/easter-w04-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Sing for us one of Zion’s songs, alleluia.",
+        "Though I am surrounded by affliction, you preserve my life, alleluia.",
+        "Yours, O Lord, is majesty and power, glory and triumph, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 137",
+        "Psalm 138",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, remember your pilgrim Church. We sit weeping at the streams of Babylon. Do not let us be drawn into the current of the passing world, but free us from every evil and raise our thoughts to the heavenly Jerusalem.",
+        "1": "Listen to the prayers of your Church, Lord God; in the presence of the angels we praise your name. You keep the proud at a distance and look upon the lowly with favor. Stretch out your hand to us in our suffering, perfect in us the work of your love and bring us to life."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "I know my sheep and they follow me; I give them eternal life, alleluia.",
+      "intercessions": "By his resurrection Christ has given sure hope to his people. Let us ask him with our whole hearts:\nLord Jesus, you live for ever; hear our prayer.\n\nLord Jesus, from your wounded side flowed blood and water,\n— make the Church your spotless bride.\nLord Jesus, you live for ever; hear our prayer.\nChief shepherd, after your resurrection you made Peter shepherd of your flock when he professed his love for you,\n— increase from day to day the love and devotion of our Pope.\nLord Jesus, you live for ever; hear our prayer.\n\nYou showed your disciples how to make a great catch of fish,\n— send others to continue their work as fishers of men.\nLord Jesus, you live for ever; hear our prayer.\nAt the lakeside you prepared bread and fish for your disciples,\n— grant that we may never allow others to die of hunger.\nLord Jesus, you live for ever; hear our prayer.\n\nJesus, the new Adam and life-giving spirit, transform the dead into your own likeness,\n— that the fullness of your joy may be theirs.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "Grant,\nwe pray, almighty God, that,\ncelebrating the mysteries of the Lord’s Resurrection,\nwe may merit to receive the joy of our redemption.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:4-5"
+    },
+    "easter-w04-wed-mp": {
+      "source": "https://divineoffice.org/easter-w04-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O God, arise above the heavens, alleluia.",
+        "The Lord will make praise and justice blossom before all the nations, alleluia.",
+        "Zion, the Lord, your God, will reign for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 108",
+        "Canticle – Isaiah 61:10—62:5",
+        "Psalm 146"
+      ],
+      "psalmPrayers": {
+        "0": "Accept the prayers of your servants, Lord, and prepare our hearts to praise your holy name. Come to our aid in times of trouble, and make us worthy to sing you songs of thanksgiving.",
+        "2": "God of glory and power, those who have put all their trust in you are happy indeed. Shine the brightness of your light on us, that we may love you always with a pure heart."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I am the light; I have come into the world, that those who believe in me may not remain in darkness, alleluia.",
+      "intercessions": "By the gift of the Father, the risen Christ was seen by the apostles. Let us pray to the Father, and say:\nGive us, Lord, the glory of your Son.\n\nFather of lights, today we offer you our thanks and praise for calling us into your marvelous light,\n— to receive your mercy.\nGive us, Lord, the glory of your Son.\nMay the efforts of mankind to make the world more human,\n— be purified and strengthened by the power of your Spirit.\nGive us, Lord, the glory of your Son.\n\nMay we be so dedicated to the service of others,\n— that the whole human family may become a pleasing sacrifice in your honor.\nGive us, Lord, the glory of your Son.\n\nAt the dawn of a new day, fill us with your mercy,\n— that the whole day may be a day of joy and praise.\nGive us, Lord, the glory of your Son.",
+      "collect": "O God,\nlife of the faithful,\nglory of the humble,\nblessedness of the just,\nlisten kindly to the prayers of those who call on you,\nthat they who thirst for what you generously promise\nmay always have their fill of your plenty.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w04-wed-ep": {
+      "source": "https://divineoffice.org/easter-w04-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The night will be as clear as day, alleluia.",
+        "I know my sheep and mine know me, alleluia.",
+        "His glory covers the heavens and his praise fills the earth, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 139",
+        "Psalm 139",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "You watch over heaven and earth, Lord Jesus. Your death brought light to the dead; your resurrection gave joy to the saints; your ascension made the angels rejoice. Your power exceeds all power. Lead us to life eternal, and watch over us with your love. May your friends be filled with honor and join you in heaven."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "God sent his Son into the world not as its judge but as its savior, alleluia.",
+      "intercessions": "In his Son, risen from the dead, God has opened for us the way to everlasting life. Let us ask the Father:\nThrough the victory of Christ, save the people he has redeemed.\nGod of our fathers, you raised your Son Jesus from the dead and clothed him in glory; move our hearts to complete repentance,\n— that we may walk in newness of life.\nThrough the victory of Christ, save the people he has redeemed.\n\nYou have led us back to the shepherd and bishop of our souls,\n— keep us faithful under the guidance of the shepherds of the Church.\nThrough the victory of Christ, save the people he has redeemed.\nYou chose the firstfruits of Christ’s disciples from the Jewish people,\n— reveal to the children of Israel the fulfillment of the promise made to their forefathers.\nThrough the victory of Christ, save the people he has redeemed.\n\nRemember the lonely, the orphaned and the widowed,\n— and do not abandon those who have been reconciled with you by the death of your Son.\nThrough the victory of Christ, save the people he has redeemed.\nYou called Stephen to your presence when he bore witness to Jesus, standing at your right hand,\n— welcome our deceased brothers and sisters who in faith and love hoped for the vision of your glory.\nThrough the victory of Christ, save the people he has redeemed.",
+      "collect": "O God,\nlife of the faithful,\nglory of the humble,\nblessedness of the just,\nlisten kindly to the prayers of those who call on you,\nthat they who thirst for what you generously promise\nmay always have their fill of your plenty.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 7:24-27"
+    },
+    "easter-w04-thu-mp": {
+      "source": "https://divineoffice.org/easter-w04-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Be true to your name, O Lord, and preserve my life, alleluia.",
+        "I will see you again and your hearts will rejoice, alleluia.",
+        "The Lord rebuilds Jerusalem and heals the brokenhearted, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 143",
+        "Canticle – Isaiah 66:10-14a",
+        "Psalm 147"
+      ],
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "No disciple is greater than his teacher; he should be glad to become like his master, alleluia.",
+      "intercessions": "God the Father has given us his Son for the resurrection of his people. Let us turn with confidence to the Father and say:\nMay the Lord Jesus be our very life.\n\nAs a pillar of fire, you lighted the way for your people in the desert,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\nThrough the voice of Moses you taught your people from the mountain,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\n\nYou fed your pilgrim people with your gift of manna,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\n\nYou gave your people water from the rock,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.",
+      "collect": "O God,\nwho restores human nature\nto yet greater dignity than at its beginnings,\nlook upon the amazing mystery of your loving kindness,\nand in those you have chosen to make new\nthrough the wonder of rebirth,\nmay you preserve the gifts of your enduring grace and blessing.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:10-11"
+    },
+    "easter-w04-thu-ep": {
+      "source": "https://divineoffice.org/easter-w04-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is my stronghold and my savior, alleluia.",
+        "Thanks be to God who has given us the victory through our Lord Jesus Christ, alleluia.",
+        "Christ yesterday and today: he is the same for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 144",
+        "Psalm 144",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "I am the shepherd of my sheep. I have come that they may have life and have it more abundantly, alleluia.",
+      "intercessions": "The Father has established in Christ the foundation of all our hope and the principle of our resurrection. Let us rejoice in Christ, and cry out to him, saying:\nKing of glory, hear our prayer.\nLord Jesus, through your resurrection you entered the sanctuary of heaven to offer the blood of your own sacrifice\n— lead us with you into the glory of the Father.\nKing of glory, hear our prayer.\n\nThrough your resurrection you confirmed the faith of your disciples and sent them out into the world\n— make all bishops and priests faithful preachers of the Gospel.\nKing of glory, hear our prayer.\nThrough your resurrection you became our peace and reconciliation\n— unite the baptized in perfect communion of faith and love.\nKing of glory, hear our prayer.\n\nThrough your resurrection the crippled man was healed at the gate of the temple\n— look on the sick and reveal in them the power of your glory.\nKing of glory, hear our prayer.\n\nYou became the firstborn from the dead, the firstfruits of the resurrection\n— grant to the dead who hoped in you a share in your glory.\nKing of glory, hear our prayer.",
+      "collect": "O God,\nwho restores human nature\nto yet greater dignity than at its beginnings,\nlook upon the amazing mystery of your loving kindness,\nand in those you have chosen to make new\nthrough the wonder of rebirth,\nmay you preserve the gifts of your enduring grace and blessing.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 3:18, 22"
+    },
+    "easter-w04-fri-mp": {
+      "source": "https://divineoffice.org/easter-w04-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Christ gave himself up for us as a sacrificial offering to God, alleluia.",
+        "Jerusalem, city of God, you will shine with a radiant light, alleluia.",
+        "I saw the new Jerusalem, coming down from heaven, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Tobit 13:8-11,13-15",
+        "Psalm 147"
+      ],
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I go now to prepare a place for you, but I shall return to take you with me, so that where I am you also may be, alleluia.",
+      "intercessions": "God the Father raised up Christ through the Spirit, and will also raise up our mortal bodies. Let us cry out to him:\nLord, raise us to life through your Holy Spirit.\nAll-holy Father, you accepted the holocaust of your Son in raising him from the dead,\n— accept the offering we make today, and lead us to eternal life.\nLord, raise us to life through your Holy Spirit.\n\nLook with favor on all we do today,\n— that it may be for your glory and the sanctification of the world.\nLord, raise us to life through your Holy Spirit.\nMay our work today not be in vain but for the good of the whole world,\n— and through it lead us to your kingdom.\nLord, raise us to life through your Holy Spirit.\n\nOpen our eyes today to recognize our brothers and sisters, and our hearts to love them,\n— so that we may love and serve each other.\nLord, raise us to life through your Holy Spirit.",
+      "collect": "O God,\nauthor of our freedom\nand of our salvation,\nlisten to the voice of our pleading\nand grant that those you have redeemed\nby the shedding of your Son’s Blood\nmay have life through you and, under your protection,\nrejoice for ever unharmed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 5:30-32"
+    },
+    "easter-w04-fri-ep": {
+      "source": "https://divineoffice.org/easter-w04-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "God so loved the world that he gave us his only Son, alleluia.",
+        "To the King of ages, immortal and invisible, be all honor and glory, alleluia.",
+        "The Lord is my strength, I shall always praise him, for he has become my savior, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 145",
+        "Psalm 145",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " The Good Shepherd laid down his life for his sheep, alleluia.",
+      "intercessions": "Let us praise Christ, the source of all life and the foundation of all virtue:\nLord, establish your kingdom in the world.\nJesus our Savior, you died in your human nature but were restored to life by the Spirit,\n— make us die to sin, and live by the Spirit.\nLord, establish your kingdom in the world.\n\nYou sent your disciples into the whole world to preach the Gospel to every creature,\n— inspire those who preach the Gospel to live by your Spirit.\nLord, establish your kingdom in the world.\nAll power in heaven and on earth has been given to you, to bear witness to the truth,\n— keep the hearts of those who govern us faithful to the truth.\nLord, establish your kingdom in the world.\n\nYou make all things new, and command us to wait and watch for your kingdom,\n— grant that the more we look forward to a new heaven and a new earth, the more we may seek to better this present world.\nLord, establish your kingdom in the world.\nYou went down among the dead to bring them the good news of the Gospel,\n— be the great joy and hope of all the dead.\nLord, establish your kingdom in the world.",
+      "collect": "O God,\nauthor of our freedom\nand of our salvation,\nlisten to the voice of our pleading\nand grant that those you have redeemed\nby the shedding of your Son’s Blood\nmay have life through you and, under your protection,\nrejoice for ever unharmed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 5:8-10"
+    },
+    "easter-w04-sat-mp": {
+      "source": "https://divineoffice.org/easter-w04-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "How wonderful are your works, O Lord, alleluia.",
+        "I will pour cleansing water upon you, alleluia.",
+        "All things are yours, and you are Christ’s, and Christ is God’s, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Ezekiel 36:24-28",
+        "Psalm 8"
+      ],
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "When the prince of pastors comes again, you will receive from him an unfading crown of glory, alleluia.",
+      "intercessions": "Christ has made known to us the life that lasts for ever. With faith and joy let us cry out to him, saying:\nLord, may your resurrection bring us the riches of your grace.\n\nEternal shepherd, look on your flock as it rises from sleep,\n— feed us with the word of life and the bread from heaven.\nLord, may your resurrection bring us the riches of your grace.\nKeep us safe from wolf and hireling,\n— and make us faithful in listening to your voice.\nLord, may your resurrection bring us the riches of your grace.\n\nYou are present to all who preach your Gospel, and give power to their words,\n— make us today preachers of your resurrection by our holiness of life.\nLord, may your resurrection bring us the riches of your grace.\nBe our great joy that no one can take from us,\n— so that we may reject sin with its sadness, and reach out to eternal life.\nLord, may your resurrection bring us the riches of your grace.",
+      "collect": "O God,\nwho in the celebration of Easter\ngraciously give to the world\nthe healing of heavenly remedies,\nshow benevolence to your Church,\nthat our present observance\nmay benefit us for eternal life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "easter-w05-sun-ep1": {
+      "source": "https://divineoffice.org/easter-w05-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Like the evening offering my hands rise up in prayer to you, O Lord, alleluia.",
+        "You have led me forth from prison, that I may give praise to your name, alleluia.",
+        "The Son of God learned obedience through suffering and became for all who obey him the source of eternal salvation, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "I am the way, the truth and the life; no one comes to the Father except through me, alleluia.",
+      "intercessions": "Christ is our life and resurrection. Let us cry out to him with faith:\nSon of the living God, protect your people.\nLord Jesus, we pray for your Catholic Church,\n— make it holy, so that your kingdom may be established among all nations.\nSon of the living God, protect your people.\n\nWe pray for the sick and the sorrowful, for those in bondage and in exile,\n— that they may receive consolation and help.\nSon of the living God, protect your people.\nWe pray for those who have turned away from your paths,\n— that they may experience the grace of your forgiveness and the joy of rising to new life.\nSon of the living God, protect your people.\n\nCrucified and risen Savior, you will come to judge the world,\n— have mercy on us sinners.\nSon of the living God, protect your people.\n\nWe pray for all the living,\n— and for all who have gone from us in the hope of resurrection.\nSon of the living God, protect your people.",
+      "collect": "Almighty ever-living God,\nconstantly accomplish the Paschal Mystery within us,\nthat those you were pleased to make new in Holy Baptism may,\nunder your protective care,\nbear much fruit and come to the joys of life eternal.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:9-10"
+    },
+    "easter-w05-sun-mp": {
+      "source": "https://divineoffice.org/easter-w05-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Whoever thirsts will drink freely of life-giving water, alleluia.",
+        "Worship the Lord who made the heavens and the earth, springs of water and the mighty sea, alleluia.",
+        "The saints will rejoice in glory, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n\nYou have risen from the dead,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.",
+      "gospelAntiphon": " Whoever lives in me and I in him will yield much fruit, says the Lord, alleluia.",
+      "intercessions": "Christ is the Lord of life, raised up by the Father; in his turn he will raise us up by his power. Let us pray to him, saying:\nChrist our life, save us.\nLord Jesus, light shining in the darkness, you lead your people into life, and give our mortal nature the gift of holiness,\n— may we spend this day in praise of your glory.\nChrist our life, save us.\n\nLord, you walked the way of suffering and crucifixion,\n— may we suffer and die with you, and rise again to share your glory.\nChrist our life, save us.\nSon of the Father, our master and our brother, you have made us a kingdom of priests for our God,\n— may we offer you our joyful sacrifice of praise.\nChrist our life, save us.\n\nKing of glory, we look forward to the great day of your coming in splendor,\n— that we may see you face to face, and be transformed in your likeness.\nChrist our life, save us.",
+      "collect": "Almighty ever-living God,\nconstantly accomplish the Paschal Mystery within us,\nthat those you were pleased to make new in Holy Baptism may,\nunder your protective care,\nbear much fruit and come to the joys of life eternal.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:40-43"
+    },
+    "easter-w05-sun-ep2": {
+      "source": "https://divineoffice.org/easter-w05-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord has risen and is seated at the right hand of God, alleluia.",
+        "He has rescued us from the power of darkness and has brought us into the kingdom of his Son, alleluia.",
+        "Alleluia, our God is king; glory and praise to him, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "The Lord is risen, alleluia, alleluia.\n— The Lord is risen, alleluia, alleluia.\n\nHe has appeared to Simon,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen, alleluia, alleluia.",
+      "gospelAntiphon": " I give you a new commandment: love one another as I have loved you, says the Lord, alleluia.",
+      "intercessions": "With joy in our hearts, let us call upon Christ the Lord, who died and rose again, and lives always to intercede for us:\nVictorious King, hear our prayer.\nLight and salvation of all peoples,\n— send into our hearts the fire of your Spirit, as we proclaim your resurrection.\nVictorious King, hear our prayer.\n\nLet Israel recognize in you her longed-for Messiah,\n— and the whole earth be filled with the knowledge of your glory.\nVictorious King, hear our prayer.\n\nKeep us in the communion of your saints,\n— and grant us rest from our labors in their company.\nVictorious King, hear our prayer.\nYou have triumphed over death, your enemy; destroy in us the power of death,\n— that we may live only for you, victorious and immortal Lord.\nVictorious King, hear our prayer.\n\nSavior Christ, you were obedient even to accepting death, and were raised up to the right hand of the Father,\n— in your goodness welcome your brothers and sisters into the kingdom of your glory.\nVictorious King, hear our prayer.",
+      "collect": "Almighty ever-living God,\nconstantly accomplish the Paschal Mystery within us,\nthat those you were pleased to make new in Holy Baptism may,\nunder your protective care,\nbear much fruit and come to the joys of life eternal.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "easter-w05-mon-mp": {
+      "source": "https://divineoffice.org/easter-w05-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "All those who love your name will rejoice in you, alleluia.",
+        "Yours is the kingdom, Lord, and yours the primacy over all the rulers of the earth, alleluia.",
+        "The Lord is enthroned as king for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 5",
+        "Canticle – 1 Chronicles 29:10b-13",
+        "Psalm 29"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, all justice and all goodness come from you; you hate evil and abhor lies. Lead us, your servants, in the path of your justice, so that all who hope in you may rejoice with the Church and in Christ.",
+        "2": "You live for ever, Lord and King. All things of the earth justly sing your glory and honor. Strengthen your people against evil that we may rejoice in your peace and trust in your eternal promise."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Whoever loves me will be loved by my Father, and I will love him and show myself to him, alleluia.",
+      "intercessions": "The Father glorified Jesus and appointed him heir to all nations. Let us praise him, saying:\nSave us, Lord, through your victory.\n\nLord Christ, by your victory you broke the power of evil and destroyed sin and death,\n— make us victorious over sin today.\nSave us, Lord, through your victory.\nYou laid death low, and brought us new life,\n— grant that we may walk today in this new life,\nSave us, Lord, through your victory.\n\nYou gave life to the dead, and led mankind from death to life,\n— give eternal life to all those we shall meet today.\nSave us, Lord, through your victory.\n\nYou brought confusion on the guards at your tomb, but joy to your disciples,\n— grant the fullness of joy to all who serve you.\nSave us, Lord, through your victory.",
+      "collect": "May your right hand,\nO Lord, we pray,\nencompass your family with perpetual help,\nso that, defended from all wickedness\nby the Resurrection of your Only Begotten Son,\nwe may make our way by means of your heavenly gifts.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 10:8-10"
+    },
+    "easter-w05-mon-ep": {
+      "source": "https://divineoffice.org/easter-w05-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Have courage; I have overcome the world, alleluia.",
+        "He shall sojourn in your tent; he shall dwell on your holy mountain, alleluia.",
+        "When I am lifted up from the earth I shall draw all people to myself, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 11",
+        "Psalm 15",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "The Holy Spirit, the Paraclete, whom the Father will send in my name, will teach you, and remind you of all that I told you, alleluia.",
+      "intercessions": "The Holy Spirit raised the body of Christ to life and made it the source of life. With joy in our hearts, let us call upon the risen Christ, saying:\nLord, make all things new and fill them with life.\nSaviour of the world and king of the new creation, raise our minds and hearts to your kingdom\n— where you sit at the right hand of the Father.\nLord, make all things new and fill them with life.\n\nLord, you are always present in your Church.\n— through your Holy Spirit, guide it into all truth.\nLord, make all things new and fill them with life.\nShow your mercy to the sick, the overburdened and the dying.\n— that they may receive strength and courage from your love.\nLord, make all things new and fill them with life.\n\nLight that never fails, as the day draws to its close we offer you our sacrifice of praise\n— and pray that the glory of your resurrection may shine on our deceased brothers and sisters.\nLord, make all things new and fill them with life.",
+      "collect": "May your right hand,\nO Lord, we pray,\nencompass your family with perpetual help,\nso that, defended from all wickedness\nby the Resurrection of your Only Begotten Son,\nwe may make our way by means of your heavenly gifts.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 8:1b-3a"
+    },
+    "easter-w05-tue-mp": {
+      "source": "https://divineoffice.org/easter-w05-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The one who came down from heaven has ascended above all the heavens, alleluia.",
+        "Keep this day as a festival day and give praise to the Lord, alleluia.",
+        "The mercy of the Lord fills the earth, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 24",
+        "Canticle: Tobit 13:1-8",
+        "Psalm 33"
+      ],
+      "psalmPrayers": {
+        "0": "King of glory, Lord of power and might, cleanse our hearts from all sin, preserve the innocence of our hands, and keep our minds from vanity, so that we may deserve your blessing in your holy place.",
+        "2": "Nourish your people, Lord, for we hunger for your word. Rescue us from the death of sin and fill us with your mercy, that we may share your presence and the joys of all the saints."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father and to the Son and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "Peace I leave with you, alleluia; peace is my gift to you, alleluia.",
+      "intercessions": "By his own power Christ raised up the temple of his body when it had been destroyed in death. With joy let us ask him:\nLord, share with us the fruits of your victory.\n\nChrist our Savior, when you rose again you brought to the holy women and the apostles the joyful news of a world redeemed,\n— make us witnesses to your risen life.\nLord, share with us the fruits of your victory.\nYou promised to all people that we would rise up again to newness of life,\n— make us heralds of your Gospel.\nLord, share with us the fruits of your victory.\n\nYou showed yourself to your apostles and breathed the Holy Spirit on them,\n— renew in us the presence of the same creator Spirit.\nLord, share with us the fruits of your victory.\n\nYou promised to be with your disciples to the end of the world,\n— stay with us today, and remain with us always.\nLord, share with us the fruits of your victory.",
+      "collect": "O God,\nwho restore us to eternal life\nin the Resurrection of Christ,\ngrant your people constancy in faith and hope,\nthat we may never doubt the promises\nof which we have learned from you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w05-tue-ep": {
+      "source": "https://divineoffice.org/easter-w05-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Now the reign of our God has begun and power is given to Christ, his anointed, alleluia.",
+        "You have assumed the authority that is yours; you have established your kingdom, alleluia.",
+        "Let all creation serve you, for all things came into being at your word, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 20",
+        "Psalm 21",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you accepted the perfect sacrifice of your Son upon the cross. Hear us during times of trouble and protect us by the power of his name, that we who share his struggle on earth may merit a share in his victory.",
+        "1": "Father, you have given us life on this earth and have met us with the grace of redemption. Bestow your greatest blessing on us, the fullness of eternal life."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " If you loved me, you would surely be glad that I am going to the Father, alleluia.",
+      "intercessions": "As Christ lay in the darkness of the earth he saw the light of a new glory. Let us cry out to him in joy:\nKing of glory, hear us.\nWe pray for all bishops, priests and deacons, that they may be zealous in their ministry,\n— and prepare for you a people devoted to every good work.\nKing of glory, hear us.\n\nWe pray for all who teach in the service of your Church,\n— that they may seek your truth with a sincere heart.\nKing of glory, hear us.\n\nWe pray for your faithful people, that they may be victorious in the contest of faith,\n— and win the prize of victory in your kingdom.\nKing of glory, hear us.\nYou canceled our condemnation by nailing it to the cross,\n— free us from our chains, and lead us out of darkness.\nKing of glory, hear us.\n\nYou went down among the dead and opened for them the gates to life,\n— welcome our dead brothers and sisters into your kingdom.\nKing of glory, hear us.",
+      "collect": "O God,\nwho restore us to eternal life\nin the Resurrection of Christ,\ngrant your people constancy in faith and hope,\nthat we may never doubt the promises\nof which we have learned from you.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:4-5"
+    },
+    "easter-w05-wed-mp": {
+      "source": "https://divineoffice.org/easter-w05-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You, O Lord, are the source of life, alleluia.",
+        "You sent forth your Spirit, O Lord, and all things were created, alleluia.",
+        "God is King over all the earth; make music for him with all your skill, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 36",
+        "Canticle – Judith 16:2-3a, 13-15",
+        "Psalm 47"
+      ],
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I am the true vine, alleluia; you are the branches, alleluia.",
+      "intercessions": "Christ was given up for our sins and rose again to make us righteous. Let us cry out to him, saying:\nSave us, Lord, by your victory.\n\nChrist our Savior, in conquering death you brought us joy, in rising again you raised us up and filled us with the abundance of your gifts,\n— stir up our hearts, and sanctify this day through the gift of your Holy Spirit.\nSave us, Lord, by your victory.\nYou are glorified by the angels in heaven and adored by mankind on earth; as we celebrate your resurrection,\n— accept our worship in spirit and in truth.\nSave us, Lord, by your victory.\n\nLord Jesus, save us; show your great mercy to your people, as we look forward to our own resurrection,\n— have mercy on us, and protect us today from every evil.\nSave us, Lord, by your victory.\nKing of glory, source of our life,\n— grant that, when you come again, we may be one with you in glory.\nSave us, Lord, by your victory.",
+      "collect": "O God,\nrestorer and lover of innocence,\ndirect the hearts of your servants towards yourself,\nthat those you have set free from the darkness\nof unbelief may never stray from the light of your truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w05-wed-ep": {
+      "source": "https://divineoffice.org/easter-w05-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "With his right hand God has raised him up as king and savior, alleluia.",
+        "I believe that I shall see the goodness of the Lord in the land of the living, alleluia.",
+        "From him, through him, and in him all things exist: glory to him for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 27",
+        "Psalm 27",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "If you live in me and my words live in you, all you ask will be yours, alleluia.",
+      "intercessions": "Christ rose from the dead and is seated at the right hand of the Father. Let us pray to him, saying:\nLord Jesus, you live for ever; hear our prayer.\nLord, remember all who minister in your service,\n— may their holy lives be an example to your people.\nLord Jesus, you live for ever; hear our prayer.\n\nGive to those who govern us the spirit of justice and peace,\n— so that the human family may live in harmony.\nLord Jesus, you live for ever; hear our prayer.\n\nGuide our days in the way of salvation,\n— and fill the earth with your plenty for the sake of the needy.\nLord Jesus, you live for ever; hear our prayer.\nChrist our savior, light of the world, you have called creation from death to life,\n— may your light shine for ever on our departed brothers and sisters.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "O God,\nrestorer and lover of innocence,\ndirect the hearts of your servants towards yourself,\nthat those you have set free from the darkness\nof unbelief may never stray from the light of your truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 7:24-27"
+    },
+    "0429-mp": {
+      "source": "https://divineoffice.org/0429-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O God, arise above the heavens, alleluia.",
+        "The Lord will make praise and justice blossom before all the nations, alleluia.",
+        "Zion, the Lord, your God, will reign for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 108",
+        "Canticle – Isaiah 61:10—62:5",
+        "Psalm 146"
+      ],
+      "psalmPrayers": {
+        "0": "Accept the prayers of your servants, Lord, and prepare our hearts to praise your holy name. Come to our aid in times of trouble, and make us worthy to sing you songs of thanksgiving.",
+        "2": "God of glory and power, those who have put all their trust in you are happy indeed. Shine the brightness of your light on us, that we may love you always with a pure heart."
+      },
+      "responsory": "Let the peoples proclaim the wisdom of the saints, alleluia, alleluia.\n— Let the peoples proclaim the wisdom of the saints, alleluia, alleluia.\n\nWith joyful praise let the Church tell forth\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Let the peoples proclaim the wisdom of the saints, alleluia, alleluia.",
+      "gospelAntiphon": " The holy virgin Catherine steadfastly begged the Lord to restore peace to his holy Church, alleluia.",
+      "intercessions": "Christ is the spouse and crowning glory of virgins. Let us praise him with joy in our voices and pray to him with sincerity in our hearts:\nJesus, crown of virgins, hear us.\nChrist, the holy virgins loved you as their one true spouse,\n— grant that nothing may separate us from your love.\nJesus, crown of virgins, hear us.\n\nYou crowned Mary, your mother, queen of virgins,\n— through her intercession, let us continually serve you with pure hearts.\nJesus, crown of virgins, hear us.\nYour handmaids were always careful to love you with whole and\nundivided attention, that they might be holy in body and spirit,\n— through their intercession grant that the lure of this passing world may not distract our attention from you.\nJesus, crown of virgins, hear us.\n\nLord Jesus, you are the spouse whose coming was anticipated by the wise virgins,\n— grant that we may wait for you in hope and expectation.\nJesus, crown of virgins, hear us.\nThrough the intercession of this saint and virgin we commemorate today,\nwho was one of the wise and prudent virgins,\n— grant us wisdom and innocence of life.\nJesus, crown of virgins, hear us.",
+      "collect": "O God,\nwho set Saint Catherine of Siena on fire\nwith divine love in her contemplation of the Lord’s Passion\nand her service of your Church,\ngrant, through her intercession,\nthat your people, participating in the mystery of Christ,\nmay ever exult in the revelation of his glory.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Wisdom 7:13-14"
+    },
+    "0429-ep2": {
+      "source": "https://divineoffice.org/0429-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The night will be as clear as day, alleluia.",
+        "I know my sheep and mine know me, alleluia.",
+        "His glory covers the heavens and his praise fills the earth, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 139",
+        "Psalm 139",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "1": "You watch over heaven and earth, Lord Jesus. Your death brought light to the dead; your resurrection gave joy to the saints; your ascension made the angels rejoice. Your power exceeds all power. Lead us to life eternal, and watch over us with your love. May your friends be filled with honor and join you in heaven."
+      },
+      "responsory": "In the midst of the Church she spoke with eloquence, alleluia, alleluia.\n— In the midst of the Church she spoke with eloquence, alleluia, alleluia.\n\nThe Lord filled her with the spirit of wisdom and understanding,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— In the midst of the Church she spoke with eloquence, alleluia, alleluia.",
+      "gospelAntiphon": " Always and everywhere Catherine sought and found God. Through the strength of her love she entered into union with him, alleluia.",
+      "intercessions": "Christ extolled those who practiced virginity for the sake of the kingdom. Let us praise him joyfully and pray to him:\nJesus, example of virgins, hear us.\nChrist, you presented the Church to yourself as a chaste virgin to her spouse,\n— keep her holy and inviolate.\nJesus, example of virgins, hear us.\n\nChrist, the holy virgins went out to meet you with their lamps alight,\n— keep the fidelity of your consecrated handmaids burning brightly.\nJesus, example of virgins, hear us.\n\nLord, your virgin Church has always kept its faith whole and untarnished,\n— grant all Christians a whole and untarnished faith.\nJesus, example of virgins, hear us.\nYou have given your people joy in celebrating the feast of your holy virgin,\n— give us constant joy through her intercession.\nJesus, example of virgins, hear us.\n\nYou have admitted the holy virgins to your marriage banquet,\n— in your mercy lead the dead to your heavenly feast.\nJesus, example of virgins, hear us.",
+      "collect": "O God,\nwho set Saint Catherine of Siena on fire\nwith divine love in her contemplation of the Lord’s Passion\nand her service of your Church,\ngrant, through her intercession,\nthat your people, participating in the mystery of Christ,\nmay ever exult in the revelation of his glory.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "James 3:17-18"
+    },
+    "easter-w05-fri-mp": {
+      "source": "https://divineoffice.org/easter-w05-fri-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Remember me, Lord God, when you come into your kingdom, alleluia.",
+        "Truly you are a hidden God, the God of Israel, the Savior, alleluia.",
+        "Serve the Lord with gladness, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 51",
+        "Canticle – Isaiah 45:15-25",
+        "Psalm 100"
+      ],
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " My commandment is this: love one another as I have loved you, alleluia.",
+      "intercessions": "Let us pray to God the Father, who gave us new life through the risen Christ:\nGive us the glory of your Son.\nLord our God, your mighty works have revealed your eternal plan: you created the earth, and you are faithful in every generation,\n— hear us, Father of mercy.\nGive us the glory of your Son.\n\nPurify our hearts with your truth, and guide them in the way of holiness,\n— so that we may do what is pleasing in your sight.\nGive us the glory of your Son.\n\nLet your face shine upon us,\n— that we may be freed from sin and filled with your plenty.\nGive us the glory of your Son.\nYou gave the apostles the peace of Christ,\n— grant peace to your people, and to the whole world.\nGive us the glory of your Son.",
+      "collect": "Grant us,\nLord, we pray, that,\nbeing rightly conformed to the paschal mysteries,\nwhat we celebrate in joy may protect\nand save us with perpetual power.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 5:30-32"
+    },
+    "easter-w05-fri-ep": {
+      "source": "https://divineoffice.org/easter-w05-fri-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Christ became poor for our sake, that we might become rich, alleluia.",
+        "The streams of the river gladden the city of God, alleluia.",
+        "Let us sing to the Lord, glorious in his triumph, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 41",
+        "Psalm 46",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "There is no greater love than to lay down your life for your friends, alleluia.",
+      "intercessions": "Christ is the way, the truth and the life. Let us praise him, and say:\nSon of the living God, bless your people.\n\nWe pray to you, Lord Jesus, for all ministers of your Church,\n— as they break for us the bread of life, may they themselves receive nourishment and strength.\nSon of the living God, bless your people.\n\nWe pray for the whole Christian people, that all may be worthy of their calling,\n— and safeguard their unity in the Spirit by the bond of peace.\nSon of the living God, bless your people.\nWe pray for those who govern us, that they may temper justice with mercy,\n— and promote harmony and peace throughout the world.\nSon of the living God, bless your people.\n\nWe pray for ourselves, that our hearts may be purified to sing your praises in the communion of saints,\n— may we be reunited with our deceased brothers and sisters, whom we commend to your loving kindness.\nSon of the living God, bless your people.",
+      "collect": "Grant us,\nLord, we pray, that,\nbeing rightly conformed to the paschal mysteries,\nwhat we celebrate in joy may protect\nand save us with perpetual power.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 5:8-10"
+    },
+    "easter-w05-sat-mp": {
+      "source": "https://divineoffice.org/easter-w05-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, in your love, give me life, alleluia.",
+        "Those who were victorious sang the hymn of Moses, the servant of God, and the hymn of the Lamb, alleluia.",
+        "Strong and steadfast is his love for us, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Exodus 15:1-4a, 8-13, 17-18",
+        "Psalm 117"
+      ],
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " Christ died and rose from the dead, that he might be the Lord of the living and the dead, alleluia.",
+      "intercessions": "Christ is the bread of life; he will raise up on the last day all who share the table of his word and his body. In our joy let us pray:\nLord, give us peace and joy.\nSon of God, you were raised from the dead to lead us into life,\n— bless and sanctify all the children of your Father.\nLord, give us peace and joy.\n\nYou give peace and joy to all who believe in you,\n— grant that we may walk as children of the light, rejoicing in your victory.\nLord, give us peace and joy.\n\nBuild up the faith of your pilgrim Church on earth,\n— that it may bear witness to your resurrection before the whole world.\nLord, give us peace and joy.\nYou suffered and so entered into the glory of the Father,\n— change the tears of the sorrowful into joy.\nLord, give us peace and joy.",
+      "collect": "Almighty and eternal God,\nwho through the regenerating power of Baptism\nhave been pleased to confer on us heavenly life,\ngrant, we pray, that those you render capable of immortality\nby justifying them may by your guidance attain the fullness of glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "easter-w06-sun-ep1": {
+      "source": "https://divineoffice.org/easter-w06-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "The man of truth welcomes the light, alleluia.",
+        "God freed Jesus from the pangs of death, and raised him up to life, alleluia.",
+        "Was it not necessary for Christ to suffer and so enter into his glory? alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": "I will ask the Father and he will give you another Paraclete to remain with you for ever, alleluia.",
+      "intercessions": "In rising from the dead, Christ destroyed death and restored life. Let us cry out to him, saying:\nLord Jesus, you live for ever; hear our prayer.\nYou are the stone rejected by the builders which became the chief cornerstone,\n— make us living stones in the temple of your Church.\nLord Jesus, you live for ever; hear our prayer.\n\nYou are the faithful and true witness, the firstborn from the dead,\n— make your Church bear constant witness to yourself.\nLord Jesus, you live for ever; hear our prayer.\nYou alone are the Bridegroom of the Church, born from your wounded side,\n— make us reveal to the world the love of Bridegroom and Bride.\nLord Jesus, you live for ever; hear our prayer.\n\nYou are the first and the last, you were dead and are alive,\n— keep those who have been baptized faithful until death, that they may receive the crown of victory.\nLord Jesus, you live for ever; hear our prayer.\nLight and lamp of God’s holy city,\n— shine on our friends who have died, that they may reign for ever.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "Grant,\nalmighty God,\nthat we may celebrate\nwith heartfelt devotion these days of joy,\nwhich we keep in honor of the risen Lord,\nand that, what we relive in remembrance,\nwe may always hold to in what we do.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:9-10"
+    },
+    "easter-w06-sun-mp": {
+      "source": "https://divineoffice.org/easter-w06-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "This is the day the Lord has made, alleluia, alleluia.",
+        "Blessed are you, Lord our God, in the firmament of heaven. You are worthy of praise for ever, alleluia.",
+        "Worship God who is seated upon the throne; sing to him in praise: Amen, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.\n\nYou have risen from the dead,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us, alleluia, alleluia.",
+      "gospelAntiphon": "As the Father has loved me, so I have loved you; live on in my love, alleluia.",
+      "intercessions": "God the almighty Father raised Jesus as the firstborn from the dead, and made him our Savior. Let us call upon him, saying.\nGive us, Lord, the glory of your Son.\n\nAll-holy Father, you brought your beloved Son Jesus from the darkness of death into the splendor of your glory,\n— bring us also into your marvelous light.\nGive us, Lord, the glory of your Son.\nYou have given us faith to save us,\n— may we live today by the faith of our baptism.\nGive us, Lord, the glory of your Son.\n\nYou command us to seek the things that are above, where Christ is seated at your right hand,\n— do not let us be deceived by the allurements of sin.\nGive us, Lord, the glory of your Son.\n\nMay our life, hidden with Christ in you, our Father, shine before the world,\n— foreshadowing a new heaven and a new earth.\nGive us, Lord, the glory of your Son.",
+      "collect": "Grant,\nalmighty God,\nthat we may celebrate\nwith heartfelt devotion these days of joy,\nwhich we keep in honor of the risen Lord,\nand that, what we relive in remembrance,\nwe may always hold to in what we do.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 10:40-43"
+    },
+    "easter-w06-sun-ep2": {
+      "source": "https://divineoffice.org/easter-w06-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "God raised up Christ from the dead and gave him a place at his right hand in heaven, alleluia.",
+        "You have been turned from faith in idols to the living God, alleluia.",
+        "Alleluia, salvation, glory and power to our God, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name, and make all nations a holy people for you.",
+        "1": "Father, creator and ruler of heaven and earth, you made man in your likeness to subdue the earth and master it, and to recognize the work of your hands in created beauty. Grant that your children, thus surrounded on all sides by signs of your presence, may live continually in Christ, praising you through him and with him."
+      },
+      "responsory": "The Lord is risen, alleluia, alleluia.\n— The Lord is risen, alleluia, alleluia.\n\nHe has appeared to Simon,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen, alleluia, alleluia.",
+      "gospelAntiphon": "If anyone loves me he will keep my word, and my Father will love him. We will come to him and make our home with him, alleluia.",
+      "intercessions": "God the Father raised Christ from the dead and exalted him at his right hand. Let us pray to the Father, saying:\nThrough Christ in glory, watch over your people, Lord.\n\nRighteous Father, you lifted Jesus above the earth through the triumph of the cross,\n— may all things be lifted up in him.\nThrough Christ in glory, watch over your people, Lord.\nThrough your Son in glory send the Holy Spirit upon the Church,\n— that it may be the sacrament of unity for the whole human race.\nThrough Christ in glory, watch over your people, Lord.\n\nYou have brought a new family into being through water and the Holy Spirit,\n— keep them faithful to their baptism, and bring them to everlasting life.\nThrough Christ in glory, watch over your people, Lord.\nThrough your exalted Son help those in distress, free those in captivity, heal the sick,\n— and by your blessings give joy to the world.\nThrough Christ in glory, watch over your people, Lord.\n\nYou nourished our deceased brothers and sisters with the body and blood of the risen Christ,\n— raise them up at the last day.\nThrough Christ in glory, watch over your people, Lord.",
+      "collect": "Grant,\nalmighty God,\nthat we may celebrate\nwith heartfelt devotion these days of joy,\nwhich we keep in honor of the risen Lord,\nand that, what we relive in remembrance,\nwe may always hold to in what we do.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "easter-w06-tue-mp": {
+      "source": "https://divineoffice.org/easter-w06-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You have come to Mount Zion and to the city of the living God, alleluia.",
+        "Lord, you have preserved my life from destruction, alleluia.",
+        "You have visited the earth and brought life-giving rain to fill it with plenty, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 43",
+        "Canticle – Isaiah 38:10-14, 17-20",
+        "Psalm 65"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty Father, source of everlasting light, send forth your truth into our hearts and pour over us the brightness of your light.",
+        "2": "Lord God, hope of all the earth, hear the humble prayer of your children as we sing your praises. Pour out your Spirit on us so that our lives may bear fruit abundantly."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "In a little while the world will no longer see me, but you will see me, for I live and you will live, alleluia.",
+      "intercessions": "The spotless Lamb of God takes away the sins of the world. Let us give thanks to the Father, and say:\nSource of all life, raise us to life.\n\nSource of all life, remember the death and resurrection of the Lamb slain on the cross,\n— listen to his voice as he lives for ever, making intercession for us.\nSource of all life, raise us to life.\nNow that the old leaven of wickedness and evil is destroyed,\n— may we always feed on the unleavened bread of sincerity and truth.\nSource of all life, raise us to life.\n\nGrant that today we may put aside all friction and jealousy,\n— and show greater concern for the needs of others.\nSource of all life, raise us to life.\n\nSend into our hearts the spirit of the Gospel,\n— that we may walk in the way of your commandments, today and for ever.\nSource of all life, raise us to life.",
+      "collect": "Grant,\nalmighty and merciful God,\nthat we may in truth receive a share\nin the Resurrection of Christ your Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w06-tue-ep": {
+      "source": "https://divineoffice.org/easter-w06-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Seek the things of heaven, not those that are on the earth, alleluia.",
+        "The Lord has rescued my life from the power of hell, alleluia.",
+        "Yours, O Lord, is majesty and power, glory and triumph, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 49",
+        "Psalm 49",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "1": "You condemned the rich, Lord Jesus, because they have already received their reward, and you proclaimed the poor blessed because the kingdom of heaven is theirs. Teach us to seek for imperishable goods and to have confidence in your blood, poured out as the price of our redemption."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " Believe me, it is for your own good that I am going. If I do not go, the Paraclete will not come, alleluia.",
+      "intercessions": "By his resurrection Christ has given sure hope to his people. Let us ask him with our whole hearts:\nLord Jesus, you live for ever; hear our prayer.\nLord Jesus, from your wounded side flowed blood and water,\n— make the Church your spotless bride.\nLord Jesus, you live for ever; hear our prayer.\n\nChief shepherd, after your resurrection you made Peter shepherd of your flock when he professed his love for you,\n— increase from day to day the love and devotion of our Pope.\nLord Jesus, you live for ever; hear our prayer.\nYou showed your disciples how to make a great catch of fish,\n— send others to continue their work as fishers of men.\nLord Jesus, you live for ever; hear our prayer.\n\nAt the lakeside you prepared bread and fish for your disciples,\n— grant that we may never allow others to die of hunger.\nLord Jesus, you live for ever; hear our prayer.\nJesus, the new Adam and life-giving spirit, transform the dead into your own likeness,\n— that the fullness of your joy may be theirs.\nLord Jesus, you live for ever; hear our prayer.",
+      "collect": "Grant,\nalmighty and merciful God,\nthat we may in truth receive a share\nin the Resurrection of Christ your Son.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 2:4-5"
+    },
+    "easter-w06-wed-mp": {
+      "source": "https://divineoffice.org/easter-w06-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The waters saw you, O God; you led your people through the sea, alleluia.",
+        "The Lord puts to death and raises to life, alleluia.",
+        "A light has dawned for the just; joy has come to the upright of heart, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 77",
+        "Canticle – 1 Samuel 2:1-10",
+        "Psalm 97"
+      ],
+      "psalmPrayers": {
+        "0": "Father, you established your ancient covenant by signs and wonders, but more wondrously you confirmed the new one through the sacrifice of your Son. Guide your Church through the pathways of life, that we may be led to the land of promise and celebrate your name with lasting praise.",
+        "2": "Father, you clothe the sky with light and the depths of the ocean with darkness. Among the sons of men you work wonders, and rain terror upon the enemy. Look upon your servants. Do not try us by fire but bring us rejoicing to the shelter of your home."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I have many more things to tell you, but they would be too much for you now. When the Spirit of truth comes he will guide you to all truth, alleluia.",
+      "intercessions": "By the gift of the Father, the risen Christ was seen by the apostles. Let us pray to the Father, and say:\nGive us, Lord, the glory of your Son.\n\nFather of lights, today we offer you our thanks and praise for calling us into your marvelous light,\n— to receive your mercy.\nGive us, Lord, the glory of your Son.\nMay the efforts of mankind to make the world more human,\n— be purified and strengthened by the power of your Spirit.\nGive us, Lord, the glory of your Son.\n\nMay we be so dedicated to the service of others,\n— that the whole human family may become a pleasing sacrifice in your honor.\nGive us, Lord, the glory of your Son.\n\nAt the dawn of a new day, fill us with your mercy,\n— that the whole day may be a day of joy and praise.\nGive us, Lord, the glory of your Son.",
+      "collect": "Grant,\nwe pray, O Lord, that,\nas we celebrate in mystery\nthe solemnities of your Son’s Resurrection,\nso, too, we may be worthy to rejoice\nat his coming with all the Saints.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w06-wed-ep": {
+      "source": "https://divineoffice.org/easter-w06-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Do not let your hearts be troubled; have faith in me, alleluia.",
+        "Let the peoples praise you, Lord God; let them rejoice in your salvation, alleluia.",
+        "His glory covers the heavens and his praise fills the earth, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 62",
+        "Psalm 67",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you reward each one according to his works. Hear us as we pour out our hearts to you seeking your grace and secure protection. We look to you for our stable hope in a constantly, changing world.",
+        "1": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence: and bring forth a harvest of justice."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " The Spirit will glorify me for he will proclaim to you all that he has received from me, alleluia.",
+      "intercessions": "In his Son, risen from the dead, God has opened for us the way to everlasting life. Let us ask the Father:\nThrough the victory of Christ, save the people he has redeemed.\nGod of our fathers, you raised your Son Jesus from the dead and clothed him in glory; move our hearts to complete repentance,\n— that we may walk in newness of life.\nThrough the victory of Christ, save the people he has redeemed.\n\nYou have led us back to the shepherd and bishop of our souls,\n— keep us faithful under the guidance of the shepherds of the Church.\nThrough the victory of Christ, save the people he has redeemed.\nYou chose the firstfruits of Christ’s disciples from the Jewish people,\n— reveal to the children of Israel the fulfillment of the promise made to their forefathers.\nThrough the victory of Christ, save the people he has redeemed.\n\nRemember the lonely, the orphaned and the widowed,\n— and do not abandon those who have been reconciled with you by the death of your Son.\nThrough the victory of Christ, save the people he has redeemed.\nYou called Stephen to your presence when he bore witness to Jesus, standing at your right hand,\n— welcome our deceased brothers and sisters who in faith and love hoped for the vision of your glory.\nThrough the victory of Christ, save the people he has redeemed.",
+      "collect": "Grant,\nwe pray, O Lord, that,\nas we celebrate in mystery\nthe solemnities of your Son’s Resurrection,\nso, too, we may be worthy to rejoice\nat his coming with all the Saints.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 7:24-27"
+    },
+    "easter-w06-thu-mp": {
+      "source": "https://divineoffice.org/easter-w06-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I am the vine; you are the branches, alleluia.",
+        "Rejoicing you will draw water from the well-springs of the Savior, alleluia.",
+        "The Lord has fed us with the finest wheat, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle – Isaiah 12:1-6",
+        "Psalm 81"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine, that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
+        "2": "Lord God, open our mouths to proclaim your glory. Help us to leave sin behind and to rejoice in professing your name."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "In a little while you will no longer see me, says the Lord; then a little while later you will see me again, since I am going to the Father, alleluia.",
+      "intercessions": "God the Father has given us his Son for the resurrection of his people. Let us turn with confidence to the Father and say:\nMay the Lord Jesus be our very life.\nAs a pillar of fire, you lighted the way for your people in the desert,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\n\nThrough the voice of Moses you taught your people from the mountain,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\nYou fed your pilgrim people with your gift of manna,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.\n\nYou gave your people water from the rock,\n— through his resurrection may Christ be today the light of our life.\nMay the Lord Jesus be our very life.",
+      "collect": "O God,\nwho made your people\npartakers in your redemption,\ngrant, we pray,\nthat we may perpetually render thanks\nfor the Resurrection of the Lord.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:10-11"
+    },
+    "easter-w06-thu-ep": {
+      "source": "https://divineoffice.org/easter-w06-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "God has appointed him to judge the living and the dead, alleluia.",
+        "All the peoples of the earth will be blessed in him, alleluia.",
+        "Christ yesterday and today; he is the same for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 72",
+        "Psalm 72",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "We call upon your name, Father, and pronounce it blessed above the earth. Give your people the fullness of peace and justice in your kingdom."
+      },
+      "responsory": "The disciples rejoiced, alleluia, alleluia.\n— The disciples rejoiced, alleluia, alleluia.\n\nWhen they saw the risen Lord,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The disciples rejoiced, alleluia, alleluia.",
+      "gospelAntiphon": " Your sorrow will be turned into joy, and that joy no one will take from you, alleluia.",
+      "intercessions": "The Father has established in Christ the foundation of all our hope and the principle of our resurrection. Let us rejoice in Christ, and cry out to him, saying:\nKing of glory, hear our prayer.\nLord Jesus, through your resurrection you entered the sanctuary of heaven to offer the blood of your own sacrifice\n— lead us with you into the glory of the Father.\nKing of glory, hear our prayer.\n\nThrough your resurrection you confirmed the faith of your disciples and sent them out into the world\n— make all bishops and priests faithful preachers of the Gospel.\nKing of glory, hear our prayer.\nThrough your resurrection you became our peace and reconciliation\n— unite the baptized in perfect communion of faith and love.\nKing of glory, hear our prayer.\n\nThrough your resurrection the crippled man was healed at the gate of the temple\n— look on the sick and reveal in them the power of your glory.\nKing of glory, hear our prayer.\nYou became the firstborn from the dead, the firstfruits of the resurrection\n— grant to the dead who hoped in you a share in your glory.\nKing of glory, hear our prayer.",
+      "collect": "O God,\nwho made your people\npartakers in your redemption,\ngrant, we pray,\nthat we may perpetually render thanks\nfor the Resurrection of the Lord.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 3:18-22"
+    },
+    "easter-w06-sat-mp": {
+      "source": "https://divineoffice.org/easter-w06-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You have filled me with gladness, Lord; I will sing for joy at the works of your hands, alleluia.",
+        "It is I who bring death and I who give life; I inflict injury and I bring healing, alleluia.",
+        "You have crowned your Anointed One with glory and honor, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 92",
+        "Canticle – Deuteronomy 32:1-12",
+        "Psalm 8"
+      ],
+      "psalmPrayers": {
+        "0": "Take our shame away from us, Lord, and make us rejoice in your saving works. May all who have been chosen by your Son always abound in works of faith, hope, and love in your service.",
+        "2": "Almighty Lord, how wonderful is your name. You have made every creature subject to you; make us worthy to give you service."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "I promise that the Father will give you anything you ask for in my name, alleluia.",
+      "intercessions": "Christ has made known to us the life that lasts for ever. With faith and joy let us cry out to him, saying:\nLord, may your resurrection bring us the riches of your grace.\n\nEternal shepherd, look on your flock as it rises from sleep,\n— feed us with the word of life and the bread from heaven.\nLord, may your resurrection bring us the riches of your grace.\nKeep us safe from wolf and hireling,\n— and make us faithful in listening to your voice.\nLord, may your resurrection bring us the riches of your grace.\n\nYou are present to all who preach your Gospel, and give power to their words,\n— make us today preachers of your resurrection by our holiness of life.\nLord, may your resurrection bring us the riches of your grace.\nBe our great joy that no one can take from us,\n— so that we may reject sin with its sadness, and reach out to eternal life.\nLord, may your resurrection bring us the riches of your grace.",
+      "collect": "Constantly shape our minds,\nwe pray, O Lord, by the practice of good works,\nthat trying always for what is better,\nwe may strive to hold ever fast to the paschal mystery.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "ascension-thursday-ep1": {
+      "source": "https://divineoffice.org/ascension-thursday-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "I came forth from the Father and have come into the world; now I leave the world to return to the Father, alleluia.",
+        "After he spoke to his disciples, the Lord Jesus ascended into heaven where he is seated at the right hand of the Father, alleluia.",
+        "No one has ascended into heaven except the one who descended from heaven, the Son of Man, who is in heaven, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 117",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "responsory": "God ascends to shouts of joy, alleluia, alleluia.\n— God ascends to shouts of joy, alleluia, alleluia.\n\nThe Lord to the blast of trumpets,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God ascends to shouts of joy, alleluia, alleluia.",
+      "gospelAntiphon": "Father, I have made known your name to the men you have given me; now I am praying for them and not for the world, because I am coming to you, alleluia.",
+      "intercessions": "In joy of spirit let us acclaim Christ, who sits at the right hand of the Father:\nLord Jesus, you are the King of glory.\n\nKing of glory, you took with you our frail humanity to be glorified in heaven; remove the sins of the world,\n— and restore us to the innocence which was ours before the Fall.\nLord Jesus, you are the King of glory.\nYou came down from heaven on a pilgrimage of love,\n— grant that we may take the same path to your presence.\nLord Jesus, you are the King of glory.\n\nYou promised to draw all things to yourself,\n— do not allow any one of us to be separated from your body.\nLord Jesus, you are the King of glory.\n\nWhere you have gone before us in glory,\n— may we follow you in mind and heart.\nLord Jesus, you are the King of glory.\nTrue God, we await your coming as our judge,\n— may we see the vision of your glory and your mercy in company with all the dead.\nLord Jesus, you are the King of glory.",
+      "collect": "O God,\nwhose Son today ascended\nto the heavens as the Apostles looked on,\ngrant, we pray, that, in accordance with his promise,\nwe may be worthy for him to live with us always on earth,\nand we with him in heaven.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 2:4-6"
+    },
+    "evening-prayer-2-ascension-thursday": {
+      "source": "https://divineoffice.org/evening-prayer-2-ascension-thursday/",
+      "edition": "first",
+      "antiphons": [
+        "He ascended into heaven and is seated at the right hand of the Father, alleluia.",
+        "God ascends to shouts of joy, the Lord to the blast of trumpets, alleluia.",
+        "Now the Son of Man has been glorified and God has been glorified in him, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 47",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "responsory": "I am ascending to my Father and your Father, alleluia, alleluia.\n— I am ascending to my Father and your Father, alleluia, alleluia.\n\nTo my God and your God,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— I am ascending to my Father and your Father, alleluia, alleluia.",
+      "gospelAntiphon": "O Victor King, Lord of power and might, today you have ascended in glory above the heavens. Do not leave us orphans, but send us the Father’s promised gift, the Spirit of truth, alleluia.",
+      "intercessions": "In joy of spirit let us acclaim Christ, who sits at the right hand of the Father:\nLord Jesus, you are the King of glory.\nKing of glory, you took with you our frail humanity to be glorified in heaven; remove the sins of the world,\n— and restore us to the innocence which was ours before the Fall.\nLord Jesus, you are the King of glory.\n\nYou came down from heaven on a pilgrimage of love,\n— grant that we may take the same path to your presence.\nLord Jesus, you are the King of glory.\n\nYou promised to draw all things to yourself,\n— do not allow any one of us to be separated from your body.\nLord Jesus, you are the King of glory.\nWhere you have gone before us in glory,\n— may we follow you in mind and heart.\nLord Jesus, you are the King of glory.\n\nTrue God, we await your coming as our judge,\n— may we see the vision of your glory and your mercy in company with all the dead.\nLord Jesus, you are the King of glory.",
+      "collect": "Gladden us with holy joys,\nalmighty God, and make us rejoice\nwith devout thanksgiving,\nfor the Ascension of Christ your Son is our exaltation,\nand, where the Head has gone before in glory,\nthe Body is called to follow in hope.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 3:18, 22"
+    },
+    "easter-w07-mon-mp": {
+      "source": "https://divineoffice.org/easter-w07-mon-mp/",
+      "edition": "first",
+      "antiphons": [
+        "My heart and my flesh rejoice in the living God, alleluia.",
+        "The house of the Lord has been raised on high, and all the nations will go up to it, alleluia.",
+        "Proclaim this among the nations: the Lord is king, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 84",
+        "Canticle – Isaiah 2:2-5",
+        "Psalm 96"
+      ],
+      "psalmPrayers": {
+        "0": "Bless your people, Lord. You have given us the law that we may walk from strength to strength and raise our minds to you from this valley of tears. May we receive the gifts you have gained for us.",
+        "2": "Lord, you have renewed the face of the earth. Your Church throughout the world sings you a new song, announcing your wonders to all. Through a virgin, you have brought forth a new birth in our world; through your miracles, a new power; through your suffering, a new patience; in your resurrection, a new hope, and in your ascension, new majesty."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": "The world will persecute you, but have courage, I have overcome the world, alleluia.",
+      "intercessions": "Christ promised to send the Holy Spirit from the Father in his name, to be our helper and guide. Let us bless him and ask him:\nLord Jesus, give us your Spirit.\n\nLord Jesus, we thank you, and through you the Father also, in the unity of the Holy Spirit,\n— may everything we say and do today be in your name.\nLord Jesus, give us your Spirit.\nGive us the Holy Spirit to dwell within us,\n— that we may be living members in your body.\nLord Jesus, give us your Spirit.\n\nGrant that we may never condemn or despise others,\n— for we shall all one day face you as our judge.\nLord Jesus, give us your Spirit.\n\nFill us with the fullness of joy and peace in believing,\n— that we may be rich in hope and in the power of the Holy Spirit.\nLord Jesus, give us your Spirit.",
+      "collect": "May the power of the Holy Spirit\ncome to us, we pray, O Lord,\nthat we may keep your will faithfully in mind\nand express it in a devout way of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 10:8b-10"
+    },
+    "easter-w07-mon-ep": {
+      "source": "https://divineoffice.org/easter-w07-mon-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will be your light for ever; your God will be your glory, alleluia.",
+        "The snare was broken and we were set free, alleluia.",
+        "When I am lifted up from the earth, I shall draw all people to myself, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 123",
+        "Psalm 124",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Father in heaven, we lift our eyes to you and pray: confound the scorn of the proud and graciously show us your mercy.",
+        "1": "Lord Jesus, you foretold that your disciples would be despised on account of your name, but that not a hair of their heads is ever forgotten. In times of persecution, defend and revive us by the power and comfort of the Holy Spirit, so that we can be freed from our enemies and praise your saving help."
+      },
+      "responsory": "The Holy Spirit is the Paraclete, alleluia, alleluia.\n— The Holy Spirit is the Paraclete, alleluia, alleluia.\n\nHe will teach you all things,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Holy Spirit is the Paraclete, alleluia, alleluia.",
+      "gospelAntiphon": "The Spirit, the Advocate, will remain with you and live in you, alleluia.",
+      "intercessions": "Let us give thanks to Christ, who filled the apostles and the whole Church with the consolation of the Holy Spirit. In union with all the faithful, let us cry out:\nLord, send your consoling Spirit into your Church.\nLord Jesus, mediator between God and men, you chose priests to share your work,\n— through them may all rise with you to the Father.\nLord, send your consoling Spirit into your Church.\n\nGrant that rich and poor may meet in friendship, for you are the God of both,\n— do not let the rich make riches their god.\nLord, send your consoling Spirit into your Church.\n\nMake your Gospel known to all peoples,\n— that all may come to obey you in faith.\nLord, send your consoling Spirit into your Church.\nSend forth your Spirit, gentlest of consolers,\n— to wipe away the tears of all who mourn.\nLord, send your consoling Spirit into your Church.\n\nPurify the souls of the departed,\n— and receive them into the company of your saints and chosen ones in heaven.\nLord, send your consoling Spirit into your Church.",
+      "collect": "May the power of the Holy Spirit\ncome to us, we pray, O Lord,\nthat we may keep your will faithfully in mind\nand express it in a devout way of life.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:14-17"
+    },
+    "easter-w07-tue-mp": {
+      "source": "https://divineoffice.org/easter-w07-tue-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You will turn back, O God, and bring us to life, and your people will rejoice in you, alleluia.",
+        "We have placed all our hope in the Lord, and he has given us his peace, alleluia.",
+        "The earth has yielded its fruit; let the nations be glad and sing for joy, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 85",
+        "Canticle – Isaiah 26:1-4, 7-9, 12",
+        "Psalm 67"
+      ],
+      "psalmPrayers": {
+        "0": "Show us your mercy, Lord; our misery is known to us. May no evil desires prevail over us, for your glory and love dwell in our hearts.",
+        "2": "Be gracious and bless us, Lord, and let your face shed its light on us, so that we can make you known with reverence and bring forth a harvest of justice."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " The Lord has risen from the dead as he promised; let all the earth rejoice and be glad, for he shall reign for ever, alleluia.",
+      "intercessions": "Christ the Lord promised to send us from the Father their Holy Spirit. Let us give Christ glory and ask him:\nLord Jesus, give us your Spirit.\nLord Jesus, may your word dwell in us in all its richness,\n— that we may thank you in psalms, hymns and spiritual canticles.\nLord Jesus, give us your Spirit.\n\nThrough the Spirit you have made us children of God,\n— grant that through the Spirit we may join with you in always calling on God as Father.\nLord Jesus, give us your Spirit.\n\nGive us wisdom in our daily lives,\n— that we may do everything for God’s glory.\nLord Jesus, give us your Spirit.\nYou are patient and full of compassion,\n— make us live at peace with all mankind.\nLord Jesus, give us your Spirit.",
+      "collect": "Grant,\nwe pray,\nalmighty and merciful God,\nthat the Holy Spirit,\ncoming near and dwelling graciously within us,\nmay make of us a perfect temple of his glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:30-33"
+    },
+    "easter-w07-tue-ep": {
+      "source": "https://divineoffice.org/easter-w07-tue-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Peace be with you; it is I, do not be afraid, alleluia.",
+        "Let Israel hope in the Lord, alleluia.",
+        "Let all creation serve you, for all things came into being at your word, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 125",
+        "Psalm 131",
+        "Canticle – Revelation 4:11; 5:9, 10, 12"
+      ],
+      "psalmPrayers": {
+        "0": "Surround your people, Lord, within the safety of your Church, which you preserve on its rock foundation. Do not let us stretch out our hands to evil deeds, nor be destroyed by the insidious snares of the enemy, but bring us to share the lot of the saints in light.",
+        "1": "Lord Jesus, gentle and humble of heart, you declared that whoever receives a little child in your name receives you, and you promised your kingdom to those who are like children. Never let pride reign in our hearts, but may the Father’s compassion reward and embrace all who willingly bear your gentle yoke."
+      },
+      "responsory": "The Holy Spirit is the Paraclete, alleluia, alleluia.\n— The Holy Spirit is the Paraclete, alleluia, alleluia.\n\nHe will teach you all things,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Holy Spirit is the Paraclete, alleluia, alleluia.",
+      "gospelAntiphon": " You will receive the power of the Holy Spirit. You will be my witnesses to the ends of the earth, alleluia.",
+      "intercessions": "All honor and glory to Christ, who has given the faithful a share in the Holy Spirit. Let us cry out to him, saying:\nChrist, hear us.\n\nSend forth the Holy Spirit from the Father,\n— to cleanse and strengthen the Church and spread it throughout the world.\nChrist, hear us.\n\nLord, by your Spirit, guide those who govern us,\n— that they may be servants of the common good in your name.\nChrist, hear us.\nPour out your Spirit, the protector of the poor,\n— to help and lift up all those in need.\nChrist, hear us.\n\nWe pray for all stewards of your mysteries,\n— that they may always be found faithful.\nChrist, hear us.\n\nBy your suffering, resurrection and ascension you accomplished our redemption,\n— bring it to completion in the souls and bodies of the dead.\nChrist, hear us.",
+      "collect": "Grant,\nwe pray,\nalmighty and merciful God,\nthat the Holy Spirit,\ncoming near and dwelling graciously within us,\nmay make of us a perfect temple of his glory.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:26-27"
+    },
+    "easter-w07-wed-mp": {
+      "source": "https://divineoffice.org/easter-w07-wed-mp/",
+      "edition": "first",
+      "antiphons": [
+        "People of every nation shall come and worship you, O Lord, alleluia.",
+        "Our eyes will see the King in all his radiant beauty, alleluia.",
+        "All people will see the saving power of our God, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 86",
+        "Canticle – Isaiah 33:13-16",
+        "Psalm 98"
+      ],
+      "psalmPrayers": {
+        "0": "God of mercy and goodness, when Christ called out to you in torment, you heard him and gave him victory over death because of his love for you. We already know the affection you have for us; fill us with a greater love of your name, and we will proclaim you more boldly before men and happily lead them to celebrate your glory.",
+        "2": "Lord Jesus, you have revealed your justice to all nations. We stood condemned and you came to be judged in our place. Send your saving power on us and when you come in glory bring your mercy to those for whom you were condemned."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " Thanks be to God who has given us the victory through our Lord Jesus Christ, alleluia.",
+      "intercessions": "The Holy Spirit gives witness to our spirit that we are children of God. Let us give thanks to God the Father as we pray:\nFather, hear your children.\nGod of patience and consolation, teach us to be one in mind and heart, following the example of Jesus,\n— so that we may praise you with one voice and one spirit.\nFather, hear your children.\n\nGrant that we may all seek to serve our neighbor,\n— by doing good and building up a community of love.\nFather, hear your children.\n\nDo not let us be led by the spirit of the world, rooted in evil,\n— but guide us by the Spirit that comes from you.\nFather, hear your children.\nYou search the hearts of all,\n— lead us always along the way of sincerity and truth.\nFather, hear your children.",
+      "collect": "Graciously\ngrant to your Church,\nO merciful God, that,\ngathered by the Holy Spirit,\nshe may be devoted to you with all her heart\nand united in purity of intent.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 6:8-11"
+    },
+    "easter-w07-wed-ep": {
+      "source": "https://divineoffice.org/easter-w07-wed-ep/",
+      "edition": "first",
+      "antiphons": [
+        "Your sorrow will be turned into joy, alleluia.",
+        "Whether we live or die, we are the Lord’s, alleluia.",
+        "From him, through him, and in him all things exist; glory to him for ever, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 126",
+        "Psalm 127",
+        "Canticle – Colossians 1:12-20"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, you have raised us from the earth; may you let the seeds of justice, which we have sown in tears, grow and increase in your sight. May we reap in joy the harvest we hope for patiently.",
+        "1": "You command the seed to rise, Lord God, though the farmer is unaware. Grant that those who labor for you may trust not in their own work but in your help. Remembering that the land is brought to flower not with human tears but with those of your Son, may the Church rely only upon your gifts."
+      },
+      "responsory": "The Holy Spirit is the Paraclete, alleluia, alleluia.\n— The Holy Spirit is the Paraclete, alleluia, alleluia.\n\nHe will teach you all things,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Holy Spirit is the Paraclete, alleluia, alleluia.",
+      "gospelAntiphon": " Christ will baptize you with fire and the Holy Spirit, alleluia.",
+      "intercessions": "In company with the apostles and all who have the firstfruits of the Holy Spirit, let us praise God and say:\nLord, hear our prayer.\n\nAlmighty God, you raised Christ to glory in heaven,\n— may all mankind recognize his presence in the Church.\nLord, hear our prayer.\n\nAll-holy Father, you said of Christ: This is my beloved Son, hear him,\n— grant that all may hear his voice and be saved.\nLord, hear our prayer.\nSend your Spirit into the hearts of your faithful people,\n— as cleansing water and refreshing rain.\nLord, hear our prayer.\n\nSend your Spirit to guide the course of nature,\n— and renew life over the face of the earth.\nLord, hear our prayer.\n\nWe commend to your care all who have died,\n— and ask you to strengthen our hope in the resurrection to come.\nLord, hear our prayer.",
+      "collect": "Graciously\ngrant to your Church,\nO merciful God, that,\ngathered by the Holy Spirit,\nshe may be devoted to you with all her heart\nand united in purity of intent.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 2:9b-10"
+    },
+    "easter-w07-thu-mp": {
+      "source": "https://divineoffice.org/easter-w07-thu-mp/",
+      "edition": "first",
+      "antiphons": [
+        "City of God, you are the source of our life; with music and dance we shall rejoice in you, alleluia.",
+        "Like a shepherd he will gather the lambs in his arms and carry them close to his heart, alleluia.",
+        "Great is the Lord in Zion; he is exalted above all the peoples, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 87",
+        "Canticle – Isaiah 40:10-17",
+        "Psalm 99"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, your only Son wept over ancient Jerusalem, soon to be destroyed for its lack of faith. He established the new Jerusalem firmly upon the rock and made it the mother of the faithful. Make us rejoice in your Church, and grant that all people may be reborn into the freedom of your Spirit.",
+        "2": "God, you are the source of all holiness. Though no one can see you and live, you give life most generously, and in an even greater way restore it. Sanctify your priests through your life-giving Word, and consecrate your people in his blood until our eyes see your face."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " Go into the world and teach all nations. Baptize them in the name of the Father and of the Son and of the Holy Spirit, alleluia.",
+      "intercessions": "Blessed be Christ the Lord: through him we all have access to the Father in the Holy Spirit. Let us pray:\nChrist, hear us.\nSend your Spirit, the longed-for guest of our hearts,\n— and grant that we may never offend him.\nChrist, hear us.\n\nYou rose from the dead and are seated at the right hand of God,\n— make intercession for us always with the Father.\nChrist, hear us.\n\nThrough your Spirit unite us with yourself,\n— so that trial or persecution or danger may never separate us from your love.\nChrist, hear us.\n\nMay we welcome each other,\n— in the way you have welcomed us, to the glory of God.\nChrist, hear us.",
+      "collect": "May your Spirit,\nO Lord, we pray,\nimbue us powerfully with spiritual gifts,\nthat he may give us a mind pleasing to you\nand graciously conform us to your will.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:10-11"
+    },
+    "easter-w07-thu-ep": {
+      "source": "https://divineoffice.org/easter-w07-thu-ep/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord God has given him the throne of David his father, alleluia.",
+        "Jesus Christ is supreme in his power. He is King of kings and Lord of lords, alleluia.",
+        "Lord, who is your equal in power? Who is like you, majestic in holiness? alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 132",
+        "Psalm 132",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord Jesus Christ, you chose to suffer and be overwhelmed by death in order to open the gates of death in triumph. Stay with us to help us on our pilgrimage; free us from all evil by the power of your resurrection. In the company of your saints, and constantly remembering your love for us, may we sing of your wonders in our Father’s house."
+      },
+      "responsory": "The Holy Spirit is the Paraclete, alleluia, alleluia.\n— The Holy Spirit is the Paraclete, alleluia, alleluia.\n\nHe will teach you all things,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Holy Spirit is the Paraclete, alleluia, alleluia.",
+      "gospelAntiphon": "When the Spirit of truth comes, he will teach you all truth and will proclaim to you the things to come, alleluia.",
+      "intercessions": "Christ is God, blessed for ever. Let us ask him to send the Holy Spirit on all redeemed by his blood, as we say:\nLord, look with favor on those you have redeemed.\n\nSend into the Church the Spirit of unity,\n— to remove all dissension, hatred and division.\nLord, look with favor on those you have redeemed.\n\nYou freed those possessed by devils,\n— free the world from the evils that afflict it.\nLord, look with favor on those you have redeemed.\nYou prayed, and were led by the Spirit to begin your ministry,\n— may priests find in prayer the guidance of the Spirit to perform their duties.\nLord, look with favor on those you have redeemed.\n\nMay your Spirit guide all in authority,\n— to seek the common good.\nLord, look with favor on those you have redeemed.\n\nYou live in the glory of the Father,\n— summon into your glory all the departed.\nLord, look with favor on those you have redeemed.",
+      "collect": "May your Spirit,\nO Lord, we pray,\nimbue us powerfully with spiritual gifts,\nthat he may give us a mind pleasing to you\nand graciously conform us to your will.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 6:19-20"
+    },
+    "easter-w07-sat-mp": {
+      "source": "https://divineoffice.org/easter-w07-sat-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The words I have spoken to you are spirit and life, alleluia.",
+        "Lord, you have built your temple and altar on your holy mountain, alleluia.",
+        "I am the way, the truth and the life, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Canticle – Wisdom 9:1-6, 9-11",
+        "Psalm 117"
+      ],
+      "psalmPrayers": {
+        "0": "Save us by the power of your hand, Father, for our enemies have ignored your words. May the fire of your word consume our sins and its brightness illumine our hearts.",
+        "2": "God, our Father, may all nations and peoples praise you. May Jesus, who is called faithful and true and who lives with you eternally, possess our hearts forever."
+      },
+      "responsory": "The Lord is risen from the tomb, alleluia, alleluia.\n— The Lord is risen from the tomb, alleluia, alleluia.\n\nHe hung upon the cross for us,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is risen from the tomb, alleluia, alleluia.",
+      "gospelAntiphon": " Know that I am with you always, even until the end of the world, alleluia.",
+      "intercessions": "We have been baptized in the Holy Spirit. With all who are baptized, let us give glory to the Lord, and ask him:\nLord Jesus, give us your Spirit to make us holy.\nSend us your Holy Spirit,\n— that we may acclaim you before the world as Lord and king.\nLord Jesus, give us your Spirit to make us holy.\n\nGive us a sincere love,\n— that the Church may be a loving family.\nLord Jesus, give us your Spirit to make us holy.\n\nGive your life-giving grace to all the faithful,\n— that they may receive with joy the gifts of the Spirit.\nLord Jesus, give us your Spirit to make us holy.\nGive us the power of your Holy Spirit,\n— to heal our wounds and make us strong.\nLord Jesus, give us your Spirit to make us holy.",
+      "collect": "Grant,\nwe pray, almighty God, that we,\nwho have celebrated the paschal festivities,\nmay by your gift hold fast to them\nin the way that we live our lives.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 14:7-9"
+    },
+    "easter-pentecost-ep1": {
+      "source": "https://divineoffice.org/easter-pentecost-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "On the day of Pentecost they had all gathered together in one place, alleluia.",
+        "Tongues as of fire appeared before the apostles, and the Holy Spirit came upon each of them, alleluia.",
+        "The Spirit who comes from the Father will glorify me, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 147",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "The Holy Spirit is the Paraclete, alleluia, alleluia.\n— The Holy Spirit is the Paraclete, alleluia, alleluia.\n\nHe will teach you all things,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Holy Spirit is the Paraclete, alleluia, alleluia.",
+      "gospelAntiphon": "Come, Holy Spirit, fill the hearts of all believers and set them on fire with your love. Though they spoke many different languages, you united the nations in professing the same faith, alleluia.",
+      "intercessions": "When the days of Pentecost were complete, God sent the Holy Spirit upon the apostles. As we celebrate this great feast with joy and faith, let us cry out:\nSend forth your Spirit and make the whole world new.\nIn the beginning you created heaven and earth, and in the fullness of time you renewed all things in Christ,\n— through your Spirit go on renewing the world with the gift of salvation.\nSend forth your Spirit and make the whole world new.\n\nYou breathed the breath of life into Adam,\n— send your Spirit into your Church to be its life and vigor, that it may bring new life to the whole world.\nSend forth your Spirit and make the whole world new.\nBy the light of your Spirit, enlighten the world and dispel the darkness of our times,\n— turn hatred into love, sorrow into joy and war into the peace we so desire.\nSend forth your Spirit and make the whole world new.\n\nWater flowed from the side of Christ as the fountain of your Spirit,\n— may it flow over all the earth and bring forth goodness.\nSend forth your Spirit and make the whole world new.\nYou bring life and glory to mankind through the Holy Spirit,\n— through the Spirit lead the departed into the love and joy of heaven.\nSend forth your Spirit and make the whole world new.",
+      "collect": "Almighty ever-living God,\nwho willed the Paschal Mystery\nto be encompassed as a sign in fifty days,\ngrant that from out of the scattered nations\nthe confusion of many tongues may be gathered\nby heavenly grace into one great confession of your name.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 8:11"
+    },
+    "easter-pentecost-mp": {
+      "source": "https://divineoffice.org/easter-pentecost-mp/",
+      "edition": "first",
+      "antiphons": [
+        "O Lord, how good and gentle is your Spirit in us, alleluia.",
+        "Let streams and rivers and all the creatures that live in the waters sing praise to God, alleluia.",
+        "The apostles preached in different tongues and proclaimed the great works of God, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "All were filled with the Holy Spirit, alleluia, alleluia.\n— All were filled with the Holy Spirit, alleluia, alleluia.\n\nThey began to speak,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— All were filled with the Holy Spirit, alleluia, alleluia.",
+      "gospelAntiphon": "Receive the Holy Spirit; the sins of those you forgive shall be forgiven, alleluia.",
+      "intercessions": "Christ the Lord has gathered his Church in unity through the Spirit. With sure hope let us ask him:\nLord, make the whole world new.\n\nLord Jesus, when you were raised high upon the cross, streams of living water flowed from your pierced side,\n— pour out on us your life-giving Spirit.\nLord, make the whole world new.\nIn glory at the right hand of God, you gave the Gift of the Father to your disciples,\n— send forth your Spirit to renew the world.\nLord, make the whole world new.\n\nYou gave your Spirit to the apostles, with the power to forgive sins,\n— destroy all sin in the world.\nLord, make the whole world new.\n\nYou promised us the Holy Spirit, to teach us all things and remind us of all you had said,\n— send us your Spirit to enlighten our minds in faith.\nLord, make the whole world new.\nYou promised to send the Spirit of truth, to bear witness to yourself,\n— send forth your Spirit to make us your faithful witnesses.\nLord, make the whole world new.",
+      "collect": "O God,\nwho by the mystery of today’s great feast\nsanctify your whole Church in every people and nation,\npour out, we pray, the gifts of the Holy Spirit\nacross the face of the earth\nand, with the divine grace that was at work\nwhen the Gospel was first proclaimed,\nfill now once more the hearts of believers.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 5:30-32"
+    },
+    "easter-pentecost-ep2": {
+      "source": "https://divineoffice.org/easter-pentecost-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Spirit of the Lord has filled the whole world, alleluia.",
+        "Send us your strength, O God, from your holy temple in Jerusalem, and perfect your work in us, alleluia.",
+        "All were filled with the Holy Spirit, and they began to speak, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "The Spirit of the Lord has filled the whole world, alleluia, alleluia.\n— The Spirit of the Lord has filled the whole world, alleluia, alleluia.\n\nHe sustains all creation and knows every word that is spoken,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Spirit of the Lord has filled the whole world, alleluia, alleluia.",
+      "gospelAntiphon": "Today we celebrate the feast of Pentecost, alleluia; on this day the Holy Spirit appeared before the apostles in tongues of fire and gave them his spiritual gifts. He sent them out to preach to the whole world, and to proclaim that all who believe and are baptized shall be saved, alleluia.",
+      "intercessions": "God the Father has gathered his Church in unity through Christ. With joy in our hearts let us ask him:\nSend your Holy Spirit into the Church.\nYou desire the unity of all Christians through one baptism in the Spirit,\n— make all who believe one in heart and soul.\nSend your Holy Spirit into the Church.\n\nYou desire the whole world to be filled with the Spirit,\n— help all mankind to build a world of justice and peace.\nSend your Holy Spirit into the Church.\nLord God, Father of all mankind, you desire to gather together your scattered children in unity of faith,\n— enlighten the world by the grace of the Holy Spirit.\nSend your Holy Spirit into the Church.\n\nThrough the Spirit you make all things new,\n— heal the sick, comfort the distressed, give salvation to all.\nSend your Holy Spirit into the Church.\n\nThrough the Spirit you raised your Son from the dead,\n— raise up the bodies of the dead into everlasting life.\nSend your Holy Spirit into the Church.",
+      "collect": "O God,\nwho by the mystery of today’s great feast\nsanctify your whole Church in every people and nation,\npour out, we pray, the gifts of the Holy Spirit\nacross the face of the earth\nand, with the divine grace that was at work\nwhen the Gospel was first proclaimed,\nfill now once more the hearts of believers.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 4:3-6"
+    },
+    "ord-trinity-sunday-ep1": {
+      "source": "https://divineoffice.org/ord-trinity-sunday-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Glory to you, O Trinity, one God in three equal Persons, as in the beginning, so now, and for ever.",
+        "Praise to the Holy Trinity and undivided Unity. Let us praise God for he has shown us his mercy.",
+        "Glory and honor to God in three Persons: Father, Son and Holy Spirit; glory and praise to him for endless ages."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 147",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "Let us worship the Father, the Son and the Holy Spirit; let us praise God for ever.\n— Let us worship the Father, the Son and the Holy Spirit; let us praise God for ever.\n\nTo God alone be honor and glory;\n— let us praise God for ever.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Let us worship the Father, the Son and the Holy Spirit; let us praise God for ever.",
+      "gospelAntiphon": "We give you thanks, O God; we give you thanks, Trinity one and true, Divinity one and most high, Unity one and holy.",
+      "intercessions": "The Father through the Holy Spirit has given life to the humanity of Christ his Son, and has made him a source of life for us; let us raise our voices in praise to the triune God:\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nFather, almighty and eternal God, send the Holy Spirit upon your Church in your Son’s name,\n— preserve it in the unity of charity and in the fullness of truth.\nGlory to the Father, and to the Son and to the Holy Spirit.\nSend laborers into your harvest, Lord, to teach the truth to all nations, and to baptize them in the name of the Father, and of the Son and of the Holy Spirit,\n— to confirm their faith.\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nFather, send help to all who suffer persecution in the name of your Son,\n— for he promised to send the Spirit of Truth to answer for them.\nGlory to the Father, and to the Son and to the Holy Spirit.\nFather omnipotent, may all men come to acknowledge you, together with the Word and the Holy Spirit, as the one true God,\n— may they believe in you, hope in you, love you.\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nFather of all the living, bring the dead to share in your glory,\n— the glory of your eternal reign with your Son and the Holy Spirit.\nGlory to the Father, and to the Son and to the Holy Spirit.",
+      "collect": "God our Father,\nwho by sending into the world the Word\nof truth and the Spirit of sanctification\nmade known to the human race your wondrous mystery,\ngrant us, we pray, that in professing the true faith,\nwe may acknowledge the Trinity of eternal glory\nand adore your Unity, powerful in majesty.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 11:33-36"
+    },
+    "ord-trinity-sunday-mp": {
+      "source": "https://divineoffice.org/ord-trinity-sunday-mp/",
+      "edition": "first",
+      "antiphons": [
+        "To you, O blessed Trinity, be worship and honor, glory and power, praise and joyful adoration through eternal ages.",
+        "May all your creatures give you fitting praise, adoration and glory, O blessed Trinity.",
+        "All things are from him, through him, and in him; to him be glory for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "All praise, all glory to you, O Holy Trinity.\n— All praise, all glory to you, O Holy Trinity.\n\nMay we give thanks to you for ever,\n— O Holy Trinity.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— All praise, all glory to you, O Holy Trinity.",
+      "gospelAntiphon": "O holy, undivided Trinity, Creator and Ruler of all that exists, may all praise be yours now, for ever, and for ages unending.",
+      "intercessions": "Let us give all honor and glory to the Father, Son, and Holy Spirit, as we cry out with joy:\nGlory to the Father, and to the Son and to the Holy Spirit.\nHoly Father send your Spirit to us who know not how to pray as we ought,\n— that he may help us in our frailty, and ask for us those gifts which will make us pleasing to you.\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nChrist, Son of the living God, you asked the Father to send the Holy Spirit upon your Church,\n— make us worthy to have this Spirit of Truth with us always.\nGlory to the Father, and to the Son and to the Holy Spirit.\nCome, Holy Spirit, that we may show your fruit in our lives, charity, joy, peace, equanimity, kindness, generosity,\n— long-suffering, patience, faithfulness, modesty, self-control, chastity.\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nFather all powerful, you have sent the Spirit of your Son into our hearts, so that we cry: Abba, Father,\n— make us submissive to your Spirit that we may be your heirs , and coheirs with Christ.\nGlory to the Father, and to the Son and to the Holy Spirit.\nChrist Jesus, you sent the Paraclete who proceeds from the Father to bear witness to you,\n— enable us also to be your witnesses before men.\nGlory to the Father, and to the Son and to the Holy Spirit.",
+      "collect": "God our Father,\nwho by sending into the world the Word\nof truth and the Spirit of sanctification\nmade known to the human race your wondrous mystery,\ngrant us, we pray, that in professing the true faith,\nwe may acknowledge the Trinity of eternal glory\nand adore your Unity, powerful in majesty.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 12:4-6"
+    },
+    "ord-trinity-sunday-ep2": {
+      "source": "https://divineoffice.org/ord-trinity-sunday-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "O Trinity most high, eternal and true: Father, Son and Holy Spirit.",
+        "Save us, set us free and give us life, O blessed Trinity.",
+        "Holy, holy, holy Lord, God of power and might, the God who is, who was, and who is to come."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "Let us worship the Father, the Son and the Holy Spirit; let us praise God for ever.\n— Let us worship the Father, the Son and the Holy Spirit; let us praise God for ever.\n\nTo God alone be honor and glory;\n— let us praise God for ever.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Let us worship the Father, the Son and the Holy Spirit; let us praise God for ever.",
+      "gospelAntiphon": "With our whole heart and voice we acclaim you, O God; we offer you our praise and worship, unbegotten Father, only-begotten Son, Holy Spirit, constant friend and guide; most holy and undivided Trinity, to you be glory for ever.",
+      "intercessions": "The Father through the Holy Spirit has given life to the humanity of Christ his Son, and has made him a source of life for us; let us raise our voices in praise to the triune God:\nGlory to the Father, and to the Son and to the Holy Spirit.\nFather, almighty and eternal God, send the Holy Spirit upon your Church in your Son’s name,\n— — preserve it in the unity of charity and in the fullness of truth.\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nSend laborers into your harvest, Lord, to teach the truth to all nations, and to baptize them in the name of the Father, and of the Son and of the Holy Spirit,\n— and to confirm their faith.\nGlory to the Father, and to the Son and to the Holy Spirit.\nFather, send help to all who suffer persecution in the name of your Son,\n— for he promised to send the Spirit of Truth to answer for them.\nGlory to the Father, and to the Son and to the Holy Spirit.\n\nFather omnipotent, may all men come to acknowledge you, together with the Word and the Holy Spirit, as the one true God,\n— may they believe in you, hope in you, love you.\nGlory to the Father, and to the Son and to the Holy Spirit.\nFather of all the living, bring the dead to share in your glory,\n— the glory of your eternal reign with your Son and the Holy Spirit.\nGlory to the Father, and to the Son and to the Holy Spirit.",
+      "collect": "God our Father,\nwho by sending into the world the Word\nof truth and the Spirit of sanctification\nmade known to the human race your wondrous mystery,\ngrant us, we pray, that in professing the true faith,\nwe may acknowledge the Trinity of eternal glory\nand adore your Unity, powerful in majesty.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 4:3-6"
+    },
+    "ord-corpus-christi-ep1": {
+      "source": "https://divineoffice.org/ord-corpus-christi-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord is compassionate; he gives food to those who fear him as a remembrance of his great deeds.",
+        "The Lord brings peace to his Church, and fills us with the finest wheat.",
+        "Truly I say to you: Moses did not give you the bread from heaven; my Father gives you the true bread from heaven, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 111",
+        "Psalm 147",
+        "Canticle — Revelation 11:17-18; 12:10b-12a"
+      ],
+      "responsory": "He gave them bread from heaven, alleluia, alleluia.\n— He gave them bread from heaven, alleluia, alleluia.\n\nMan has eaten the bread of angels,\n— alleluia,alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— He gave them bread from heaven, alleluia, alleluia.",
+      "gospelAntiphon": "How kind and gentle you are, O Lord. You showed your goodness to your sons by giving them bread from heaven. You filled the hungry with good things, and the rich you sent away empty.",
+      "intercessions": "Christ invites all to the supper in which he gives his body and blood for the life of the world. Let us ask him:\nChrist, the bread of heaven, grant us everlasting life.\nChrist, Son of the living God, you commanded that this thanksgiving meal be done in memory of you,\n— enrich your Church through the faithful celebration of these mysteries.\nChrist, the bread of heaven, grant us everlasting life.\n\nChrist, eternal priest of the Most High, you have commanded your priests to offer your sacraments,\n— may they help them to exemplify in their lives the meaning of the sacred mysteries which they celebrate.\nChrist, the bread of heaven, grant us everlasting life.\nChrist, bread from heaven, you form one body out of all who partake of the one bread,\n— refresh all who believe in you with harmony and peace.\nChrist, the bread of heaven, grant us everlasting life.\n\nChrist, through your bread you offer the remedy for immortality and the pledge of future resurrection,\n— restore health to the sick and living hope to sinners.\nChrist, the bread of heaven, grant us everlasting life.\nChrist, our king who is to come, you commanded that the mysteries which proclaim your death be celebrated until you return,\n— grant that all who die in you may share in your resurrection.\nChrist, the bread of heaven, grant us everlasting life.",
+      "collect": "O God,\nwho in this wonderful Sacrament\nhave left us a memorial of your Passion,\ngrant us, we pray, so to revere the sacred mysteries\nof your Body and Blood that we may always experience\nin ourselves the fruits of your redemption.\nWho live and reign with God the Father in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 10:16-17"
+    },
+    "ord-corpus-christi-mp": {
+      "source": "https://divineoffice.org/ord-corpus-christi-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You fed your people with the food of angels; you gave them bread from heaven, alleluia.",
+        "Holy priests will offer incense and bread to God, alleluia.",
+        "I will give to the one who is victorious the hidden bread and a new name, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "You bring forth bread from the earth, alleluia, alleluia.\n— You bring forth bread from the earth, alleluia, alleluia.\n\nAnd wine which gives warmth to men’s hearts,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— You bring forth bread from the earth, alleluia, alleluia.",
+      "gospelAntiphon": "I am the living bread come down from heaven; anyone who eats this bread will live for ever, alleluia.",
+      "intercessions": "Brethren, let us pray to Jesus Christ, the bread of life, as we joyfully say:\nHappy are those who are called to your heavenly banquet.\n\nPriest of the new and eternal covenant, you offered perfect sacrifice to the Father on the altar of the cross,\n— teach us to offer ourselves with you.\nHappy are those who are called to your heavenly banquet.\nKing of justice and peace, you consecrated bread and wine as the sign of your offering,\n— unite us as victims with you.\nHappy are those who are called to your heavenly banquet.\n\nTrue worshiper of the Father, your perfect offering is celebrated by the Church from the rising to the setting of the sun,\n— unite in your body those who partake of the one bread.\nHappy are those who are called to your heavenly banquet.\nManna from heaven, you nourish the Church with your body and blood,\n— grant that we may walk strengthened by this food.\nHappy are those who are called to your heavenly banquet.\n\nUnseen host of our banquet, you stand at the door and knock,\n— come to us, stay and share the evening meal with us.\nHappy are those who are called to your heavenly banquet.",
+      "collect": "O God,\nwho in this wonderful Sacrament\nhave left us a memorial of your Passion,\ngrant us, we pray, so to revere the sacred mysteries\nof your Body and Blood that we may always experience\nin ourselves the fruits of your redemption.\nWho live and reign with God the Father in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Malachi 1:11"
+    },
+    "ord-corpus-christi-ep2": {
+      "source": "https://divineoffice.org/ord-corpus-christi-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Christ the Lord is a priest for ever in the line of Melchizedek; he offered up bread and wine.",
+        "I will take up the cup of salvation, and I will offer a sacrifice of praise.",
+        "You are the way, the truth and the life of the world, O Lord."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 116",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "He gave them bread from heaven, alleluia, alleluia.\n— He gave them bread from heaven, alleluia, alleluia.\n\nMan has eaten the bread of angels,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— He gave them bread from heaven, alleluia, alleluia.",
+      "gospelAntiphon": "How holy this feast in which Christ is our food; his passion is recalled; grace fills our hearts; and we receive a pledge of the glory to come, alleluia.",
+      "intercessions": "Christ invites all to the supper in which he gives his body and blood for the life of the world. Let us ask him:\nChrist, the bread of heaven, grant us everlasting life.\n\nChrist, Son of the living God, you commanded that this thanksgiving meal be done in memory of you,\n— enrich your Church through the faithful celebration of these mysteries.\nChrist, the bread of heaven, grant us everlasting life.\nChrist, eternal priest of the Most High, you have commanded your priests to offer your sacraments,\n— may they help them to exemplify in their lives the meaning of the sacred mysteries which they celebrate.\nChrist, the bread of heaven, grant us everlasting life.\n\nChrist, bread from heaven, you form one body out of all who partake of the one bread,\n— refresh all who believe in you with harmony and peace.\nChrist, the bread of heaven, grant us everlasting life.\nChrist, through your bread you offer the remedy for immortality and the pledge of future resurrection,\n— restore health to the sick and living hope to sinners.\nChrist, the bread of heaven, grant us everlasting life.\n\nChrist, our king who is to come, you commanded that the mysteries which proclaim your death be celebrated until you return,\n— grant that all who die in you may share in your resurrection.\nChrist, the bread of heaven, grant us everlasting life.",
+      "collect": "O God,\nwho in this wonderful Sacrament\nhave left us a memorial of your Passion,\ngrant us, we pray, so to revere the sacred mysteries\nof your Body and Blood that we may always experience\nin ourselves the fruits of your redemption.\nWho live and reign with God the Father in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 11:23-25"
+    },
+    "0601-mp": {
+      "source": "https://divineoffice.org/0601-mp/",
+      "edition": "first",
+      "antiphons": [
+        "I lift up my heart to you, O Lord, and you will hear my morning prayer.",
+        "We praise your glorious name, O Lord, our God.",
+        "Adore the Lord in his holy court."
+      ],
+      "psalmodyRefs": [
+        "Psalm 5",
+        "Canticle: 1 Chronicles 29:10-13",
+        "Psalm 29"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, all justice and all goodness come from you; you hate evil and abhor lies. Lead us, your servants, in the path of your justice, so that all who hope in you may rejoice with the Church and in Christ.",
+        "2": "You live for ever, Lord and King. All things of the earth justly sing your glory and honor. Strengthen your people against evil that we may rejoice in your peace and trust in your eternal promise."
+      },
+      "responsory": "The Lord is my strength, and I shall sing his praise.\n— The Lord is my strength, and I shall sing his praise.\n\nThe Lord is my savior,\n— and I shall sing his praise.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The Lord is my strength, and I shall sing his praise.",
+      "gospelAntiphon": "In every sacrifice let us praise the creator of all things through his Son Jesus Christ and through the Holy Spirit.",
+      "intercessions": "Our Savior’s faithfulness is mirrored in the fidelity of his witnesses who shed their blood for the Word of God. Let us praise him in remembrance of them:\nYou redeemed us by your blood.\n\nYour martyrs freely embraced death in bearing witness to the faith,\n— give us the true freedom of the Spirit, O Lord.\nYou redeemed us by your blood.\nYour martyrs professed their faith by shedding their blood,\n— give us a faith, O Lord, that is constant and pure.\nYou redeemed us by your blood.\n\nYour martyrs followed in your footsteps by carrying the cross,\n— help us to endure courageously the misfortunes of life.\nYou redeemed us by your blood.\n\nYour martyrs washed their garments in the blood of the Lamb,\n— help us to avoid the weaknesses of the flesh and worldly allurements.\nYou redeemed us by your blood.",
+      "collect": "O God,\nwho through the folly of the Cross\nwondrously taught Saint Justin the Martyr\nthe surpassing knowledge of Jesus Christ,\ngrant us, through his intercession, that,\nhaving rejected deception and error,\nwe may become steadfast in the faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-5"
+    },
+    "0601-ep2": {
+      "source": "https://divineoffice.org/0601-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord looks tenderly on those who are poor.",
+        "Blessed are the pure of heart, for they shall see God.",
+        "God chose us in his Son to be his adopted children."
+      ],
+      "psalmodyRefs": [
+        "Psalm 11",
+        "Psalm 15",
+        "Canticle — Ephesians 1:3-10"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you search the hearts of all, both the good and the wicked. May those who are in danger for love of you, find security in you now, and, in the day of judgment, may they rejoice in seeing you face to face.",
+        "1": "Make our lives blameless, Lord. Help us to do what is right and to speak what is true, that we may dwell in your tent and find rest on your holy mountain."
+      },
+      "responsory": "You have tried us by fire, O God, then led us to a place of refreshment.\n— You have tried us by fire, O God, then led us to a place of refreshment.\n\nYou refined us as silver in the furnace,\n— then led us to a place of refreshment.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— You have tried us by fire, O God, then led us to a place of refreshment.",
+      "gospelAntiphon": "Suddenly my soul caught fire, and I became filled with love for the prophets and those men who are friends of Christ.",
+      "intercessions": "This is the hour when the King of martyrs offered his life in the upper room and laid it down on the cross. Let us thank him and say:\nWe praise you, O Lord.\n\nWe praise you, O Lord, our Savior, inspiration and example for every martyr, for loving us to the end:\nWe praise you, O Lord.\n\nFor calling all repentant sinners to the rewards of life:\nWe praise you, O Lord.\n\nFor entrusting to your Church the blood of the new and everlasting covenant poured out for the remission of sin:\nWe praise you, O Lord.\nFor our perseverance in your grace today:\nWe praise you, O Lord.\n\nFor incorporating our dead brothers and sisters into your own death today:\nWe praise you, O Lord.",
+      "collect": "O God,\nwho through the folly of the Cross\nwondrously taught Saint Justin the Martyr\nthe surpassing knowledge of Jesus Christ,\ngrant us, through his intercession, that,\nhaving rejected deception and error,\nwe may become steadfast in the faith.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 4:13-14"
+    },
+    "ord-sacred-heart-ep1": {
+      "source": "https://divineoffice.org/ord-sacred-heart-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "God has loved us with an everlasting love; therefore, when he was lifted up from the earth, in his mercy he drew us to his heart.",
+        "Learn from me, for I am gentle and humble of heart.",
+        "I am the Good Shepherd; I pasture my sheep and I lay down my life for them."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 146",
+        "Canticle — Revelation 4:11; 5:9, 10, 12"
+      ],
+      "responsory": "Christ has loved us, and in his blood he has washed away our sins.\n— Christ has loved us, and in his blood he has washed away our sins.\n\nHe has made us a kingdom and priests to serve God our Father.\n— And in his blood he has washed away our sins.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ has loved us, and in his blood he has washed away our sins.",
+      "gospelAntiphon": "I have come to cast fire upon the earth; how I long to see the flame leap up.",
+      "intercessions": "Brethren, let us pray to the Lord Jesus, the refuge of our souls; let us ask him:\nMost loving Lord, have mercy on us.\nJesus, whose heart when pierced by a lance poured forth blood and water and gave birth to your spouse the Church,\n— cleanse and sanctify us.\nMost loving Lord, have mercy on us.\n\nJesus, holy temple of God, slain by men and raised up again by the Father,\n— make your Church the dwelling place of the Most High.\nMost loving Lord, have mercy on us.\nJesus, King and center of all hearts, you love us and lead us to yourself with unending love and mercy,\n— renew your covenant with all men.\nMost loving Lord, have mercy on us.\n\nJesus, our peace and reconciliation, you unite all in the peace of the new creation and put enmity to death through the cross,\n— show us the path to the Father.\nMost loving Lord, have mercy on us.\nJesus, our life and resurrection, you refresh the burdened and give rest to the weary,\n— draw all sinners to yourself.\nMost loving Lord, have mercy on us.\n\nJesus, because you loved us with so great a love, you were obedient even to death on the cross,\n— raise up again all who sleep in your peace.\nMost loving Lord, have mercy on us.",
+      "collect": "Grant, we pray,\nalmighty God, that we,\nwho glory in the Heart of your beloved Son\nand recall the wonders of his love for us,\nmay be made worthy to receive\nan overflowing measure of grace\nfrom that fount of heavenly gifts.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 5:25b-27"
+    },
+    "ord-sacred-heart-mp": {
+      "source": "https://divineoffice.org/ord-sacred-heart-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Jesus stood and cried out: If anyone thirsts, let him come to me and drink.",
+        "Come to me, all you who labor and are burdened, and I will give you rest.",
+        "My son, give me your heart; note carefully the way I point out to you."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "Take my yoke upon you and learn from me.\n— Take my yoke upon you and learn from me.\n\nFor I am gentle and humble of heart.\n— Learn from me.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Take my yoke upon you and learn from me.",
+      "gospelAntiphon": "With tender compassion, our God has come to his people and set them free.",
+      "intercessions": "Brethren, let us pray to the Lord Jesus, who is meek and humble of heart. Let us ask him:\nMost loving Lord, have mercy on us.\n\nJesus, the fullness of divinity dwells in you,\n— give us a share in your divine life.\nMost loving Lord, have mercy on us.\n\nJesus, in you are all the treasures of wisdom and knowledge,\n— make known to us through your Church the manifold wisdom of God.\nMost loving Lord, have mercy on us.\nJesus, the Father was well pleased in you,\n— help us to hear your word and keep it.\nMost loving Lord, have mercy on us.\n\nJesus, of your fullness we have all received,\n— pour out upon us in abundance the Father’s favor and truth.\nMost loving Lord, have mercy on us.\n\nJesus, you are the source of life and holiness,\n— make us holy and blameless in love.\nMost loving Lord, have mercy on us.",
+      "collect": "Grant, we pray,\nalmighty God, that we,\nwho glory in the Heart of your beloved Son\nand recall the wonders of his love for us,\nmay be made worthy to receive\nan overflowing measure of grace\nfrom that fount of heavenly gifts.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Jeremiah 31:33"
+    },
+    "ord-sacred-heart-ep2": {
+      "source": "https://divineoffice.org/ord-sacred-heart-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, rule in the midst of your enemies with your gentle yoke.",
+        "The Lord is loving and merciful; he gives food to those who fear him.",
+        "This is the Lamb of God who takes away the sins of the world."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "Christ has loved us, and in his blood he has washed away our sins.\n— Christ has loved us, and in his blood he has washed away our sins.\n\nHe has made us a kingdom and priests to serve God our Father.\n— And in his blood he has washed away our sins.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ has loved us, and in his blood he has washed away our sins.",
+      "gospelAntiphon": "The Lord has lifted us up and drawn us to his heart, for he has remembered his promise of mercy, Alleluia.",
+      "intercessions": "Brethren, let us pray to the Lord Jesus, the refuge of our souls; let us ask him:\nMost loving Lord, have mercy on us.\n\nJesus, whose heart when pierced by a lance poured forth blood and water and gave birth to your spouse the Church,\n— cleanse and sanctify us.\nMost loving Lord, have mercy on us.\n\nJesus, holy temple of God, slain by men and raised up again by the Father,\n— make your Church the dwelling place of the Most High.\nMost loving Lord, have mercy on us.\nJesus, King and center of all hearts, you love us and lead us to yourself with unending love and mercy,\n— renew your covenant with all men.\nMost loving Lord, have mercy on us.\n\nJesus, our peace and reconciliation, you unite all in the peace of the new creation and put enmity to death through the cross,\n— show us the path to the Father.\nMost loving Lord, have mercy on us.\nJesus, our life and resurrection, you refresh the burdened and give rest to the weary,\n— draw all sinners to yourself.\nMost loving Lord, have mercy on us.\n\nJesus, because you loved us with so great a love, you were obedient even to death on the cross,\n— raise up again all who sleep in your peace.\nMost loving Lord, have mercy on us.",
+      "collect": "Grant, we pray,\nalmighty God, that we,\nwho glory in the Heart of your beloved Son\nand recall the wonders of his love for us,\nmay be made worthy to receive\nan overflowing measure of grace\nfrom that fount of heavenly gifts.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 2:4-7"
+    },
+    "ord-w10-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w10-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Your word, O Lord, is the lantern to light our way, alleluia.",
+        "When I see your face, O Lord, I shall know the fullness of joy, alleluia.",
+        "Let everything in heaven and earth bend the knee at the name of Jesus, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Let your Word, Father, be a lamp for our feet and a light to our path, so that we may understand what you wish to teach us and follow the path your light marks out for us.",
+        "1": "Lord Jesus, uphold those who hope in you and give us your counsel, so that we may know the joy of your resurrection and deserve to be among the saints at your right hand."
+      },
+      "responsory": "From the rising of the sun to its setting, may the name of the Lord be praised.\n— From the rising of the sun to its setting, may the name of the Lord be praised.\n\nHis splendor reaches far beyond the heavens,\n— may the name of the Lord be praised.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— From the rising of the sun to its setting, may the name of the Lord be praised.",
+      "gospelAntiphon": "I desire mercy and not sacrifice. I did not come to call the virtuous, but sinners.",
+      "intercessions": "God aids and protects the people he has chosen for his inheritance. Let us give thanks to him and proclaim his goodness:\nLord, we trust in you.\n\nWe pray for our Pope, and all our bishops,\n— protect them and in your goodness make them holy.\nLord, we trust in you.\n\nMay the sick feel their companionship with the suffering Christ,\n— and know that they will enjoy his eternal consolation.\nLord, we trust in you.\nIn your goodness have compassion on the homeless,\n— help them to find proper housing.\nLord, we trust in you.\n\nGraciously protect our nation from evil,\n— that it may prosper in your peace.\nLord, we trust in you.\n\nLord, you attend the dying with great mercy,\n— grant them an eternal dwelling.\nLord, we trust in you.",
+      "collect": "O God,\nfrom whom all good things come,\ngrant that we, who call on you in our need,\nmay at your prompting discern what is right,\nand by your guidance do it.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Colossians 1:2b-6a"
+    },
+    "ord-w10-sun-mp": {
+      "source": "https://divineoffice.org/ord-w10-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Blessed is he who comes in the name of the Lord, alleluia.",
+        "Let us sing a hymn of praise to our God, alleluia.",
+        "Praise the Lord for his infinite greatness, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "We give thanks to you, O God, as we call upon your name.\n— We give thanks to you, O God, as we call upon your name.\n\nWe cry aloud how marvelous you are,\n— as we call upon your name.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— We give thanks to you, O God, as we call upon your name.",
+      "gospelAntiphon": "Whoever does the will of God, he is my brother, and my sister, and my mother.",
+      "intercessions": "Let us give thanks to our Savior who came into this world as God’s presence among us. Let us call upon him:\nChrist, King of Glory, be our light and our joy.\n\nLord Jesus, you are the rising Sun, the firstfruits of the future resurrection,\n— grant that we may not sit in the shadow of death but walk in the light of life.\nChrist, King of Glory, be our light and our joy.\nShow us your goodness, present in every creature,\n— that we may contemplate your glory everywhere.\nChrist, King of Glory, be our light and our joy.\n\nDo not allow us to be overcome by evil today,\n— but grant that we may overcome evil through the power of good.\nChrist, King of Glory, be our light and our joy.\n\nYou were baptized in the Jordan and anointed by the Holy Spirit,\n— grant that we may this day give thanks to your Holy Spirit.\nChrist, King of Glory, be our light and our joy.",
+      "collect": "O God,\nfrom whom all good things come,\ngrant that we, who call on you in our need,\nmay at your prompting discern what is right,\nand by your guidance do it.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ezekiel 36:25-27"
+    },
+    "ord-w10-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w10-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "Christ our Lord is a priest for ever, like Melchizedek of old, alleluia.",
+        "God dwells in highest heaven; he has power to do all he wills, alleluia.",
+        "Praise God, all you who serve him, both great and small, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Almighty God, bring the kingdom of Christ, your anointed one, to its fullness. May the perfect offering of your Son, eternal priest of the new Jerusalem, be offered in every place to your name, and make all nations a holy people for you.",
+        "1": "Father, creator and ruler of heaven and earth, you made man in your likeness to subdue the earth and master it, and to recognize the work of your hands in created beauty. Grant that your children, thus surrounded on all sides by signs of your presence, may live continually in Christ, praising you through him and with him."
+      },
+      "responsory": "Our Lord is great, mighty is his power.\n— Our Lord is great, mighty is his power.\n\nHis wisdom is beyond compare,\n— mighty is his power.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our Lord is great, mighty is his power.",
+      "gospelAntiphon": "A great prophet has risen up among us and God has visited his people.",
+      "intercessions": "All praise and honor to Christ! He lives for ever to intercede for us, and he is able to save those who approach the Father in his name.\nSustained by our faith, let us call upon him:\n— Remember your people, Lord.\n\nAs the day draws to a close, Sun of Justice, we invoke your name upon the whole human race,\nso that all men may enjoy your never failing light.\n— Remember your people, Lord.\nPreserve the covenant which you have ratified in your blood,\ncleanse and sanctify your Church.\n— Remember your people, Lord.\n\nRemember your assembly, Lord,\nyour dwelling place.\n— Remember your people, Lord.\n\nGuide travelers along the path of peace and prosperity,\nso that they may reach their destinations in safety and joy.\n— Remember your people, Lord.\n\nReceive the souls of the dead, Lord,\ngrant them your favor and the gift of eternal glory.\n— Remember your people, Lord.",
+      "collect": "O God,\nfrom whom all good things come,\ngrant that we, who call on you in our need,\nmay at your prompting discern what is right,\nand by your guidance do it.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Thessalonians 2:13-14"
+    },
+    "0611-mp": {
+      "source": "https://divineoffice.org/0611-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Stir up your mighty power, Lord; come to our aid.",
+        "The Lord has worked marvels for us; make it known to the ends of the world.",
+        "Ring out your joy to God our strength."
+      ],
+      "psalmodyRefs": [
+        "Psalm 80",
+        "Canticle — Isaiah 12:1-6",
+        "Psalm 81"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, eternal shepherd, you so tend the vineyard you planted that now it extends its branches even to the farthest coast. Look down on your Church and come to us. Help us remain in your Son as branches on the vine, that, planted firmly in your love, we may testify before the whole world to your great power working everywhere.",
+        "2": "Lord God, open our mouths to proclaim your glory. Help us to leave sin behind and to rejoice in professing your name."
+      },
+      "responsory": "They proclaimed the Lord’s praises and his saving power.\n— They proclaimed the Lord’s praises and his saving power.\n\nThey spoke of the wonders he had worked,\n— and his saving power.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— They proclaimed the Lord’s praises and his saving power.",
+      "gospelAntiphon": "Barnabas set out for Tarsus to look for Paul. Once he found him, he brought him to Antioch where they met with the church and instructed a great number of people.",
+      "intercessions": "Let us sing a fitting song of praise to our Savior, who destroyed the power of death and made clear the path to life and immortality through the Gospel, and let us petition him in humble supplication:\nStrengthen your Church in faith and love.\n\nYou gave wonderful guidance to your Church through her holy and distinguished teachers,\n— may Christians rejoice always in the splendid legacy given to your Church.\nStrengthen your Church in faith and love.\nWhen their holy pastors prayed to you, as Moses had done, you forgave the sins of the people,\n— through the intercession of these holy pastors continue to sanctify and purify your Church.\nStrengthen your Church in faith and love.\n\nYou anointed your holy ones in the midst of their brothers and called the Holy Spirit down upon them,\n— fill all the leaders of your people with the Holy Spirit.\nStrengthen your Church in faith and love.\nYou yourself are the sole possession of your holy pastors,\n— grant that those you have redeemed with your blood may remain always in you.\nStrengthen your Church in faith and love.",
+      "collect": "O God,\nwho decreed that Saint Barnabas,\na man filled with faith and the Holy Spirit,\nshould be set apart to convert the nations,\ngrant that the Gospel of Christ,\nwhich he strenuously preached,\nmay be faithfully proclaimed by word and by deed.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 15:1-2a, 3-4"
+    },
+    "ord-w11-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w11-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "From the rising of the sun to its setting, may the name of the Lord be praised.",
+        "I shall take into my hand the saving chalice and invoke the name of the Lord.",
+        "The Lord Jesus humbled himself, and God exalted him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 113",
+        "Psalm 116",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord Jesus, Word of God, surrendering the brightness of your glory you became man so that we may be raised from the dust to share your very being. May there be innumerable children of the Church to offer homage to your name from the rising of the sun to its setting.",
+        "1": "Father, precious in your sight is the death of the saints, but precious above all is the love with which Christ suffered to redeem us. In this life we will fill up in our own flesh what is still lacking in the sufferings of Christ; accept this as our sacrifice of praise, and we shall even now taste the joy of the new Jerusalem."
+      },
+      "responsory": "Our hearts are filled with wonder as we contemplate your works, O Lord.\n— Our hearts are filled with wonder as we contemplate your works, O Lord.\n\nWe praise the wisdom which wrought them all,\n— as we contemplate your works, O Lord.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our hearts are filled with wonder as we contemplate your works, O Lord.",
+      "gospelAntiphon": "Go, preach the good news of the kingdom; freely you have received, freely give, alleluia.",
+      "intercessions": "Christ had compassion on the hungry and performed a miracle of love for them. Mindful of this, let us pray:\nShow us your love, Lord.\n\nLord, we recognize that all the favors we have received today come through your generosity,\n— do not let them return to you empty, but let them bear fruit.\nShow us your love, Lord.\n\nLight and salvation of all nations, protect the missionaries you have sent into the world,\n— enkindle in them the fire of your Spirit.\nShow us your love, Lord.\nGrant that man may shape the world in keeping with human dignity,\n— and respond generously to the needs of our time.\nShow us your love, Lord.\n\nHealer of body and spirit, comfort the sick and be present to the dying,\n— in your mercy visit and refresh us.\nShow us your love, Lord.\n\nMay the faithful departed be numbered among the saints,\n— whose names are in the Book of Life.\nShow us your love, Lord.",
+      "collect": "O God,\nstrength of those who hope in you,\ngraciously hear our pleas, and,\nsince without you mortal frailty can do nothing,\ngrant us always the help of your grace,\nthat in following your commands we may please you\nby our resolve and our deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 13:20-21"
+    },
+    "ord-w11-sun-mp": {
+      "source": "https://divineoffice.org/ord-w11-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Glorious is the Lord on high, alleluia.",
+        "To you, Lord, be highest glory and praise for ever, alleluia.",
+        "Praise the Lord from the heavens, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 93",
+        "Canticle Daniel 3:57-88, 56",
+        "Psalm 148"
+      ],
+      "psalmPrayers": {
+        "0": "All power and all authority in heaven and on earth have been given to you, Lord Jesus; you rule with decrees that are firm and trustworthy. Be with us always so that we may make disciples whose holiness will be worthy of your house.",
+        "2": "Lord, extolled in the heights by angelic powers, you are also praised by all earth’s creatures, each in its own way. With all the splendor of heavenly worship, you still delight in such tokens of love as earth can offer. May heaven and earth together acclaim you as King; may the praise that is sung in heaven resound in the heart of every creature on earth."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are seated at the right hand of the Father,\n— have mercy on us.\n\nGlory to the Father, Son, and Holy Spirit\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "The kingdom of heaven is like a mustard seed, the smallest of all seeds; yet when full-grown it is the largest of shrubs.",
+      "intercessions": "Father, you sent the Holy Spirit to enlighten the hearts of men; hear us as we pray:\nEnlighten your people, Lord.\n\nBlessed are you, O God, our light,\n— you have given us a new day resplendent with your glory.\nEnlighten your people, Lord.\n\nYou enlightened the world through the resurrection of your Son,\n— through your Church shed this light on all men.\nEnlighten your people, Lord.\nYou gave the disciples of your only-begotten Son the Spirit’s gift of understanding,\n— through the same Spirit keep the Church faithful to you.\nEnlighten your people, Lord.\n\nLight of nations, remember those who remain in darkness,\n— open their eyes and let them recognize you, the only true God.\nEnlighten your people, Lord.",
+      "collect": "O God,\nstrength of those who hope in you,\ngraciously hear our pleas, and,\nsince without you mortal frailty can do nothing,\ngrant us always the help of your grace,\nthat in following your commands we may please you\nby our resolve and our deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ezekiel 37:12b-14"
+    },
+    "ord-w11-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w11-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord said to my Master: Sit at my right hand, alleluia.",
+        "Our compassionate Lord has left us a memorial of his wonderful work, alleluia.",
+        "All power is yours, Lord God, our mighty King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 111",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Merciful and gentle Lord, you are the crowning glory of all the saints. Give us, your children, the gift of obedience which is the beginning of wisdom, so that we may do what you command and be filled with your mercy."
+      },
+      "responsory": "The whole creation proclaims the greatness of your glory.\n— The whole creation proclaims the greatness of your glory.\n\nEternal ages praise\n— the greatness of your glory.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The whole creation proclaims the greatness of your glory.",
+      "gospelAntiphon": "Jesus said to the woman: Your faith has saved you, go in peace.",
+      "intercessions": "The world was created by the Word of God, re-created by his redemption, and it is continually renewed by his love. Rejoicing in him we call out:\nRenew the wonders of your love, Lord.\nWe give thanks to God whose power is revealed in nature,\n— and whose providence is revealed in history.\nRenew the wonders of your love, Lord.\n\nThrough your Son, the herald of reconciliation, the victor of the cross,\n— free us from empty fear and hopelessness.\nRenew the wonders of your love, Lord.\n\nMay all those who love and pursue justice,\n— work together without deceit to build a world of true peace.\nRenew the wonders of your love, Lord.\nBe with the oppressed, free the captives, console the sorrowing, feed the hungry, strengthen the weak,\n— in all people reveal the victory of your cross.\nRenew the wonders of your love, Lord.\n\nAfter your Son’s death and burial you raised him up again in glory,\n— grant that the faithful departed may live with him.\nRenew the wonders of your love, Lord.",
+      "collect": "O God,\nstrength of those who hope in you,\ngraciously hear our pleas, and,\nsince without you mortal frailty can do nothing,\ngrant us always the help of your grace,\nthat in following your commands we may please you\nby our resolve and our deeds.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 1:3-5"
+    },
+    "ord-w12-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w12-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Pray for the peace of Jerusalem.",
+        "From the morning watch until night, I have waited trustingly for the Lord.",
+        "Let everything in heaven and on earth bend the knee at the name of Jesus."
+      ],
+      "psalmodyRefs": [
+        "Psalm 122",
+        "Psalm 130",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "When you rose from the dead, Lord Jesus, you formed the Church into your new body and made of it the new Jerusalem, united in your Spirit. Give us peace in our day. Make all nations come to your Church to share your gifts in fellowship, that they may render you thanks without end and come to your eternal city.",
+        "1": "Listen with compassion to our prayers, Lord. The forgiveness of sins is yours. Do not look on the wrong we have done, but grant us your merciful kindness."
+      },
+      "responsory": "From the rising of the sun to its setting, may the name of the Lord be praised.\n— From the rising of the sun to its setting, may the name of the Lord be praised.\n\nHis splendor reaches far beyond the heavens;\n— may the name of the Lord be praised.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— From the rising of the sun to its setting, may the name of the Lord be praised.",
+      "gospelAntiphon": "If anyone bears witness to me before men, I will praise him in the presence of my Father.",
+      "intercessions": "Everyone who waits for the Lord finds joy. Now we pray to him:\nLook on us with favor, Lord, and hear us.\nFaithful witness, first-born of the dead, you washed away our sins in your blood,\n— make us always remember your wonderful works.\nLook on us with favor, Lord, and hear us.\n\nYou called men to be heralds of your good news,\n— make them strong and faithful messengers of your kingdom.\nLook on us with favor, Lord, and hear us.\n\nKing of peace, send your Spirit on the leaders of the world,\n— turn their eyes toward the poor and suffering.\nLook on us with favor, Lord, and hear us.\nProtect and defend those who are discriminated against because of race, color, class, language or religion,\n— that they may be accorded the rights and dignity which are theirs.\nLook on us with favor, Lord, and hear us.\n\nMay all who died in your love share in your happiness,\n— with Mary, our mother, and all your holy ones.\nLook on us with favor, Lord, and hear us.",
+      "collect": "Grant, O Lord,\nthat we may always revere and love your holy name\nfor you never deprive of your guidance\nthose you set firm on the foundation of your love.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Peter 1:19-21"
+    },
+    "ord-w12-sun-mp": {
+      "source": "https://divineoffice.org/ord-w12-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Praise the Lord, for his loving kindness will never fail, alleluia.",
+        "Alleluia! Bless the Lord, all you works of the Lord, alleluia!",
+        "Let everything that breathes give praise to the Lord, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle — Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "psalmPrayers": {
+        "0": "Lord God, you have given us the great day of rejoicing: Jesus Christ, the stone rejected by the builders, has become the cornerstone of the Church, our spiritual home. Shed upon your Church the rays of your glory, that it may be seen as the gate of salvation open to all nations. Let cries of joy and exultation ring out from its tents, to celebrate the wonder of Christ’s resurrection.",
+        "2": "Lord God, maker of heaven and earth and of all created things, you make your just ones holy and you justify sinners who confess your name. Hear us as we humbly pray to you: give us eternal joy with your saints."
+      },
+      "responsory": "We give thanks to you, O God, as we call upon your name.\n— We give thanks to you, O God, as we call upon your name.\n\nWe cry aloud how marvelous you are,\n— as we call upon your name.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— We give thanks to you, O God, as we call upon your name.",
+      "gospelAntiphon": "Help us, O Lord, for we are troubled; give the command, O God, and bring us peace.",
+      "intercessions": "Open your hearts to praise the God of power and goodness, for he loves us and knows our needs:\nWe praise you, Lord, and trust in you.\n\nWe bless you, almighty God, King of the universe, because you called us while we were yet sinners,\n— to acknowledge your truth and to serve your majesty.\nWe praise you, Lord, and trust in you.\nO God, you opened the gates of mercy for us,\n— let us never turn aside from the path of life.\nWe praise you, Lord, and trust in you.\n\nAs we celebrate the resurrection of your beloved Son,\n— help us to spend this day in the spirit of joy.\nWe praise you, Lord, and trust in you.\n\nGive to your faithful, O Lord, a prayerful spirit of gratitude,\n— that we may thank you for all your gifts.\nWe praise you, Lord, and trust in you.",
+      "collect": "Grant, O Lord,\nthat we may always revere and love your holy name\nfor you never deprive of your guidance\nthose you set firm on the foundation of your love.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Timothy 2:8, 11-13"
+    },
+    "ord-w12-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w12-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "In eternal splendor, before the dawn of light on earth, I have begotten you, alleluia.",
+        "Blessed are they who hunger and thirst for holiness; they will be satisfied.",
+        "Praise God, all you who serve him, both great and small, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 112",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Lord God, you are the eternal light which illumines the hearts of good people. Help us to love you, to rejoice in your glory, and so to live in this world as to avoid harsh judgment in the next. May we come to see the light of your countenance."
+      },
+      "responsory": "Our Lord is great, mighty is his power.\n— Our Lord is great, mighty is his power.\nHis wisdom is beyond compare,\n— mighty is his power.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our Lord is great, mighty is his power.",
+      "gospelAntiphon": "Whoever wishes to come after me must deny himself, take up his cross and follow me.",
+      "intercessions": "Rejoicing in the Lord, from whom all good things come, let us pray:\nLord, hear our prayer.\nFather and Lord of all, you sent your Son into the world,\nthat your name might be glorified in every place,\n— strengthen the witness of your Church among the nations.\nLord, hear our prayer.\n\nMake us obedient to the teachings of your apostles,\n— and bound to the truth of our faith.\nLord, hear our prayer.\n\nAs you love the innocent,\n— render justice to those who are wronged.\nLord, hear our prayer.\nFree those in bondage and give sight to the blind,\n— raise up the fallen and protect the stranger.\nLord, hear our prayer.\n\nFulfill your promise to those who already sleep in your peace,\n— through your Son grant them a blessed resurrection.\nLord, hear our prayer.",
+      "collect": "Grant, O Lord,\nthat we may always revere and love your holy name\nfor you never deprive of your guidance\nthose you set firm on the foundation of your love.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 12:22-24"
+    },
+    "0624-mp": {
+      "source": "https://divineoffice.org/0624-mp/",
+      "edition": "first",
+      "antiphons": [
+        "You shall name the child John, and many will rejoice at his birth.",
+        "In the spirit and power of Elijah, he will go before the Lord to prepare a people worthy of him.",
+        "You, my child, shall be called the prophet of the Most High, for you will go before the Lord to prepare his way."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "He will be great in the eyes of the Lord and he will be filled with the Holy Spirit.\n— He will be great in the eyes of the Lord and he will be filled with the Holy Spirit.\n\nHe will go before the Lord to prepare a people worthy of him.\n— And he will be filled with the Holy Spirit.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— He will be great in the eyes of the Lord and he will be filled with the Holy Spirit.",
+      "gospelAntiphon": "The mouth of Zechariah was opened, and he spoke this prophecy: Blessed be the Lord, the God of Israel.",
+      "intercessions": "In faith let us call upon Christ who sent John to prepare for his coming:\nDawn from on high, break upon us.\n\nYour coming caused John the Baptist to leap for joy in his mother’s womb,\n— help us to rejoice at your coming among us.\nDawn from on high, break upon us.\n\nThrough the life and preaching of the Baptist, you showed us the way to repentance,\n— turn our hearts to follow the commandments of your kingdom.\nDawn from on high, break upon us.\nYou willed that your coming among men should be announced by John the Baptist,\n— send new heralds to proclaim you throughout the world.\nDawn from on high, break upon us.\n\nYou wished to be baptized by John in the Jordan to fulfill all that the Father required,\n— help us to do the Father’s will.\nDawn from on high, break upon us.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat your family may walk in the way of salvation and,\nattentive to what Saint John the Precursor urged,\nmay come safely to the One he foretold, our Lord Jesus Christ.\nWho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Malachi 3:23-24"
+    },
+    "0624-ep2": {
+      "source": "https://divineoffice.org/0624-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "There was a man sent by God whose name was John.",
+        "He came to bear witness to the truth.",
+        "John was like a brilliantly shining light."
+      ],
+      "psalmodyRefs": [
+        "Psalm 15",
+        "Psalm 112",
+        "Canticle – Revelation 15:3-4"
+      ],
+      "responsory": "Prepare the way of the Lord; make straight his paths.\n— Prepare the way of the Lord; make straight his paths.\n\nHe who is to come after me existed before me.\n— Make straight his paths.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Prepare the way of the Lord; make straight his paths.",
+      "gospelAntiphon": "This child, born to us, is greater than any prophet; the Savior said of him: There is no man born of women greater than John the Baptist.",
+      "intercessions": "Let us pray joyfully to God our Father who called John the Baptist to proclaim the coming of the kingdom of Christ:\nO Lord, guide our feet into the way of peace.\n\nYou called John the Baptist from his mother’s womb to prepare the way of your Son,\n— help us to follow in that path which the Baptist opened before the Lord Jesus.\nO Lord, guide our feet into the way of peace.\nMay your Church, in imitation of the Baptist, fearlessly point out the Lamb of God,\n— so that people in every age may acknowledge that the Lord comes to them.\nO Lord, guide our feet into the way of peace.\n\nJohn the Baptist did not exalt himself but acknowledged his role as forerunner of the Christ,\n— teach us to acknowledge that you are the giver of all our good gifts and that we must use them in your service.\nO Lord, guide our feet into the way of peace.\nYou called John the Baptist to give testimony to you by his life and even by his death,\n— help us to imitate his unceasing witness to your truth.\nO Lord, guide our feet into the way of peace.\n\nRemember those who have died,\n— give them a place of light, happiness and peace.\nO Lord, guide our feet into the way of peace.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat your family may walk in the way of salvation and,\nattentive to what Saint John the Precursor urged,\nmay come safely to the One he foretold, our Lord Jesus Christ.\nWho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Acts 13:23-25"
+    },
+    "ord-w13-sun-ep1": {
+      "source": "https://divineoffice.org/ord-w13-sun-ep1/",
+      "edition": "first",
+      "antiphons": [
+        "Like burning incense, Lord, let my prayer rise up to you.",
+        "You are my refuge, Lord; you are all that I desire in life.",
+        "The Lord Jesus humbled himself, and God exalted him for ever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
+        "1": "Lord, we humbly ask for your goodness. May you help us to hope in you, and give us a share with your chosen ones in the land of the living."
+      },
+      "responsory": "Our hearts are filled with wonder as we contemplate your works, O Lord.\n— Our hearts are filled with wonder as we contemplate your works, O Lord.\n\nWe praise the wisdom which wrought them all,\n— as we contemplate your works, O Lord.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Our hearts are filled with wonder as we contemplate your works, O Lord.",
+      "gospelAntiphon": "Those who welcome you are welcoming me, and those who welcome me are welcoming him who sent me.",
+      "intercessions": "We give glory to the one God — Father, Son and Holy Spirit — and in our weakness we pray:\nLord, be with your people.\n\nHoly Lord, Father all-powerful, let justice spring up on the earth,\n— then your people will dwell in the beauty of peace.\nLord, be with your people.\n\nLet every nation come into your kingdom,\n— so that all peoples will be saved.\nLord, be with your people.\n\nLet married couples live in your peace,\n— and grow in mutual love.\nLord, be with your people.\nReward all who have done good to us, Lord,\n— and grant them eternal life.\nLord, be with your people.\n\nLook with compassion on victims of hatred and war,\n— grant them heavenly peace.\nLord, be with your people.",
+      "collect": "O God,\nwho through the grace of adoption\nchose us to be children of light,\ngrant, we pray, that we may not be wrapped\nin the darkness of error but always be seen\nto stand in the bright light of truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 11:33-36"
+    },
+    "ord-w13-sun-mp": {
+      "source": "https://divineoffice.org/ord-w13-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "As morning breaks I look to you, O God, to be my strength this day, alleluia.",
+        "From the midst of the flames the three young men cried out with one voice: Blessed be God, alleluia.",
+        "Let the people of Zion rejoice in their King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are seated at the right hand of the Father,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "Jesus, turning, saw the woman and said: Take courage, daughter; your faith has saved you, alleluia.",
+      "intercessions": "Christ is the sun that never sets, the true light that shines on every man. Let us call out to him in praise:\nLord, you are our life and our salvation.\n\nCreator of the stars, we thank you for your gift, the first rays of the dawn,\n— and we commemorate your resurrection.\nLord, you are our life and our salvation.\nMay your Holy Spirit teach us to do your will today,\n— and may your Wisdom guide us always.\nLord, you are our life and our salvation.\n\nEach Sunday give us the joy of gathering as your people,\n— around the table of your Word and your Body.\nLord, you are our life and our salvation.\n\nFrom our hearts we thank you,\n— for your countless blessings.\nLord, you are our life and our salvation.",
+      "collect": "O God,\nwho through the grace of adoption\nchose us to be children of light,\ngrant, we pray, that we may not be wrapped\nin the darkness of error but always be seen\nto stand in the bright light of truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Revelation 7:10, 12"
+    },
+    "ord-w13-sun-ep2": {
+      "source": "https://divineoffice.org/ord-w13-sun-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will stretch forth his mighty scepter from Zion, and he will reign for ever, alleluia.",
+        "The earth is shaken to its depths before the glory of your face.",
+        "All power is yours, Lord God, our mighty King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Almighty God, ever-living mystery of unity and trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
+      },
+      "responsory": "The whole creation proclaims the greatness of your glory.\n— The whole creation proclaims the greatness of your glory.\n\nEternal ages praise\n— the greatness of your glory.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The whole creation proclaims the greatness of your glory.",
+      "gospelAntiphon": "The Son of Man did not come to condemn men but to save them.",
+      "intercessions": "Christ the Lord is our head; we are his members. In joy let us call out to him:\nLord, may your kingdom come.\n\nChrist our Savior, make your Church a more vivid symbol of the unity of all mankind,\n— make it more effectively the sacrament of salvation for all peoples.\nLord, may your kingdom come.\nThrough your presence, guide the college of bishops in union with the Pope,\n— give them the gifts of unity, love and peace.\nLord, may your kingdom come.\n\nBind all Christians more closely to yourself, their divine Head,\n— lead them to proclaim your kingdom by the witness of their lives.\nLord, may your kingdom come.\n\nGrant peace to the world,\n— let every land flourish in justice and security.\nLord, may your kingdom come.\nGrant to the dead the glory of resurrection,\n— and give us a share in their happiness.\nLord, may your kingdom come.",
+      "collect": "O God,\nwho through the grace of adoption\nchose us to be children of light,\ngrant, we pray, that we may not be wrapped\nin the darkness of error but always be seen\nto stand in the bright light of truth.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-4"
+    },
+    "lent-0319-mp": {
+      "source": "https://divineoffice.org/lent-0319-mp/",
+      "edition": "first",
+      "antiphons": [
+        "The shepherds went in haste and found Joseph and Mary, and the infant lying in the manger.",
+        "Joseph and Mary, the mother of Jesus, marveled at what was said of their child, and Simeon blessed them.",
+        "Joseph rose in the night and took the child and his mother into Egypt. There they stayed until the death of Herod."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "God made him the master of his household.\n— God made him the master of his household.\n\nHe gave him charge over all his possessions,\n— and made him the master of his household.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— God made him the master of his household.",
+      "gospelAntiphon": "Joseph lived in the town of Nazareth to fulfill what the prophets had foretold of Christ: He will be called a Nazarean.",
+      "intercessions": "The Lord is the giver of holiness. Let us turn to him and pray:\nHoly God, raise us up to new life in holiness.\n\nLord our God, you called our fathers in faith to walk before you in holiness of heart,\n— may we follow in their footsteps, and obey your command to be perfect.\nHoly God, raise us up to new life in holiness.\nYou chose Joseph the righteous to care for your Son in childhood and youth,\n— teach us to care for Christ’s body by caring for our brothers and sisters.\nHoly God, raise us up to new life in holiness.\n\nYou entrusted the earth to mankind, to people it and make it prosper,\n— inspire us to work wholeheartedly in this world, seeking always to give you glory.\nHoly God, raise us up to new life in holiness.\nFather of all mankind, do not forget what your hands have made,\n— grant that all who work may have secure employment and a fitting standard of living.\nHoly God, raise us up to new life in holiness.",
+      "collect": "Grant,\nwe pray, almighty God,\nthat by Saint Joseph’s intercession\nyour Church may constantly watch over\nthe unfolding of the mysteries of human salvation,\nwhose beginnings you entrusted to his faithful care.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Samuel 7:28-29"
+    },
+    "morning-prayer-ascension-thursday": {
+      "source": "https://divineoffice.org/morning-prayer-ascension-thursday/",
+      "edition": "first",
+      "antiphons": [
+        "Men of Galilee, why are you looking up into the sky? This Jesus who has been taken up into heaven will return in the same way, alleluia.",
+        "Give glory to the King of kings, sing praise to God, alleluia.",
+        "As they watched, he was lifted up, and a cloud took him from their sight, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ ascended into heaven, alleluia, alleluia.\n— Christ ascended into heaven, alleluia, alleluia.\n\nHe led captivity captive,\n— alleluia, alleluia.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ ascended into heaven, alleluia, alleluia.",
+      "gospelAntiphon": "I am ascending to my Father and your Father, to my God and your God, alleluia.",
+      "intercessions": "The Lord has been lifted high above the earth and draws all things to himself. Let us cry out to him in our joy:\nLord Jesus, you are the King of glory.\n\nLord Jesus, King of glory, you were offered once as the victim for sins, and ascended to the right hand of the Father,\n— make perfect for all time those whom you sanctify.\nLord Jesus, you are the King of glory.\nEternal Priest and minister of the new Covenant, you live for ever to make intercession for us,\n— save the people that prays to you.\nLord Jesus, you are the King of glory.\n\nYou showed yourself alive after your passion and appeared to the disciples for forty days,\n— confirm our faith today.\nLord Jesus, you are the King of glory.\nToday you promised the Spirit to your apostles, to make them your witnesses to the ends of the earth,\n— by the power of the Spirit strengthen our own witness.\nLord Jesus, you are the King of glory.",
+      "collect": "Gladden us with holy joys,\nalmighty God, and make us rejoice\nwith devout thanksgiving,\nfor the Ascension of Christ your Son is our exaltation,\nand, where the Head has gone before in glory,\nthe Body is called to follow in hope.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 10:12-14"
+    },
+    "0629-mp-peter-and-paul": {
+      "source": "https://divineoffice.org/0629-mp-peter-and-paul/",
+      "edition": "first",
+      "antiphons": [
+        "I know the one whom I have trusted and I am certain that he, the just judge, has power to keep safe what he has entrusted to me until that Day.",
+        "God’s grace in me has not been without fruit; it is always at work in me.",
+        "I have fought the good fight; I have run the race to the finish; I have kept the faith."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "They gave up their lives for the name of our Lord Jesus Christ.\n— They gave up their lives for the name of our Lord Jesus Christ.\n\nThey went forth rejoicing because they have been found worthy to suffer insult,\n— for the name of our Lord Jesus Christ.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— They gave up their lives for the name of our Lord Jesus Christ.",
+      "gospelAntiphon": "Simon Peter said: Lord to whom shall we go? You have the words of eternal life; and we believe and we are convinced that you are the Christ, the Son of God, alleluia.",
+      "intercessions": "The Lord Jesus built his holy people on the foundation of the apostles and prophets. In faith let us pray:\nBless your Church, O Lord.\n\nYou prayed that the faith of Peter would not fail,\n— strengthen the faith of your Church.\nBless your Church, O Lord.\nYou appeared to Peter after your resurrection and you appeared to Saul on the road to Damascus,\n— strengthen our faith, so that we may steadfastly proclaim that you have risen from the dead.\nBless your Church, O Lord.\n\nYou chose Paul as an apostle to preach your message to the Gentiles,\n— make us faithful preachers of your Gospel.\nBless your Church, O Lord.\n\nYou mercifully forgave Peter’s denials,\n— forgive us all of our sins.\nBless your Church, O Lord.",
+      "collect": "Grant,\nwe pray, O Lord our God,\nthat we may be sustained\nby the intercession of the\nblessed Apostles Peter and Paul, that,\nas through them you gave your Church\nthe foundations of her heavenly office,\nso through them you may help her to eternal salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Peter 4:13-14"
+    },
+    "0629-ep1-peter-and-paul": {
+      "source": "https://divineoffice.org/0629-ep1-peter-and-paul/",
+      "edition": "first",
+      "antiphons": [
+        "You are Christ, the Son of the living God. Blessed are you Simon, son of John!",
+        "You are Peter, and on this rock I will build my Church.",
+        "You are the chosen vessel of God, blessed apostle Paul; you preached the truth throughout the whole world."
+      ],
+      "psalmodyRefs": [
+        "Psalm 117",
+        "Psalm 147",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "The apostles proclaimed the word of God and preached it faithfully.\n— The apostles proclaimed the word of God and preached it faithfully.\n\nThey testified to the resurrection of Jesus Christ.\n— And preached it faithfully.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The apostles proclaimed the word of God and preached it faithfully.",
+      "gospelAntiphon": " How glorious are the apostles of Christ; in life they loved one another; in death they rejoice together for ever.",
+      "intercessions": "The Lord Jesus built his holy people on the foundation of the apostles and prophets. In faith let us pray:\nLord, come to the aid of your people.\n\nYou once called Simon, the fisherman, to catch men,\n— now summon new workers who will bring the message of salvation to all peoples.\nLord, come to the aid of your people.\n\nYou calmed the waves so that your followers would not be drowned,\n— guard your Church, protect it from all dangers.\nLord, come to the aid of your people.\nYou gathered your scattered flock around Peter after the resurrection,\n— good Shepherd, bring all your people together as one flock.\nLord, come to the aid of your people.\n\nYou sent Paul as apostle to preach the good news to the Gentiles,\n— let the word of salvation be proclaimed to all mankind.\nLord, come to the aid of your people.\nYou gave the keys of your kingdom into the hands of your holy Church,\n— open the gates of that kingdom to all who trusted in your mercy while on earth.\nLord, come to the aid of your people.",
+      "collect": "Grant,\nwe pray, O Lord our God,\nthat we may be sustained\nby the intercession of the\nblessed Apostles Peter and Paul, that,\nas through them you gave your Church\nthe foundations of her heavenly office,\nso through them you may help her to eternal salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 1:1-2,7"
+    },
+    "0629-ep2-peter-and-paul": {
+      "source": "https://divineoffice.org/0629-ep2-peter-and-paul/",
+      "edition": "first",
+      "antiphons": [
+        "I have prayed for you, Peter, that your faith may not fail; and when you have turned to me, you must strengthen the faith of your brothers.",
+        "Willingly I boast of my weaknesses, that the power of Christ may live in me.",
+        "You are shepherd of the flock, the prince of the apostles; to you were entrusted the keys of the kingdom of heaven."
+      ],
+      "psalmodyRefs": [
+        "Psalm 116",
+        "Psalm 126",
+        "Canticle – Ephesians 1:3-10"
+      ],
+      "responsory": "The apostles proclaimed the word of God and preached it faithfully.\n— The apostles proclaimed the word of God and preached it faithfully.\n\nThey testified to the resurrection of Jesus Christ.\n— And preached it faithfully.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The apostles proclaimed the word of God and preached it faithfully.",
+      "gospelAntiphon": "Peter the apostle and Paul the teacher of the Gentiles taught us your law, O Lord.",
+      "intercessions": "The Lord Jesus built his holy people on the foundation of the apostles and prophets. In faith let us pray:\nLord, come to the aid of your people.\n\nYou once called Simon, the fisherman, to catch men,\n— now summon new workers who will bring the message of salvation to all peoples.\nLord, come to the aid of your people.\n\nYou calmed the waves so that your followers would not be drowned,\n— guard your Church, protect it from all dangers.\nLord, come to the aid of your people.\nYou gathered your scattered flock around Peter after the resurrection,\n— good Shepherd, bring all your people together as one flock.\nLord, come to the aid of your people.\n\nYou sent Paul as apostle to preach the good news to the Gentiles,\n— let the word of salvation be proclaimed to all mankind.\nLord, come to the aid of your people.\nYou gave the keys of your kingdom into the hands of your holy Church,\n— open the gates of that kingdom to all who trusted in your mercy while on earth.\nLord, come to the aid of your people.",
+      "collect": "Grant,\nwe pray, O Lord our God,\nthat we may be sustained\nby the intercession of the\nblessed Apostles Peter and Paul, that,\nas through them you gave your Church\nthe foundations of her heavenly office,\nso through them you may help her to eternal salvation.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Corinthians 15:3-5, 8a"
+    },
+    "0503-philip-and-james-mp": {
+      "source": "https://divineoffice.org/0503-philip-and-james-mp/",
+      "edition": "first",
+      "antiphons": [
+        "Lord, show us the Father, and we shall be satisfied, alleluia.",
+        "Have I been with you all this time and still you do not know me? Philip, whoever sees me, sees my Father also, alleluia.",
+        "Do not let your hearts be troubled or afraid; trust in God and trust also in me; there are many rooms in my Father’s house, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "responsory": "You have made them rulers over all the earth, alleluia, alleluia.\n— You have made them rulers over all the earth, alleluia, alleluia.\n\nThey will always remember your name, O Lord,\n— alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— You have made them rulers over all the earth, alleluia, alleluia.",
+      "gospelAntiphon": " Philip found Nathanael and said to him: We have found the man Moses wrote of in the law, the one of whom the prophets spoke. He is Jesus, son of Joseph, from Nazareth, alleluia.",
+      "intercessions": "Beloved friends, we have inherited heaven along with the apostles. Let us give thanks to the Father for all his gifts:\nThe company of apostles praises you, O Lord.\nPraise be to you, Lord, for the banquet of Christ’s body and blood given us through the apostles,\n— which refreshes us and gives us life.\nThe company of apostles praises you, O Lord.\n\nPraise be to you, Lord, for the feast of your word prepared for us by the apostles,\n— giving us light and joy.\nThe company of apostles praises you, O Lord.\nPraise be to you, Lord, for your holy Church, founded on the apostles,\n— where we are gathered together into your community.\nThe company of apostles praises you, O Lord.\n\nPraise be to you, Lord, for the cleansing power of baptism and penance that you have entrusted to your apostles,\n— through which we are cleansed of our sins.\nThe company of apostles praises you, O Lord.",
+      "collect": "O God,\nwho gladden us each year\nwith the feast day of the Apostles Philip and James,\ngrant us, through their prayers,\na share in the Passion and Resurrection of your Only Begotten Son,\nso that we may merit to behold you for eternity.\nThrough our Lord Jesus Christ, your Son,\nwho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Ephesians 2:19-22"
+    },
+    "1217-adv-w03-thu-ep2": {
+      "source": "https://divineoffice.org/1217-adv-w03-thu-ep2/",
+      "edition": "first",
+      "antiphons": [
+        "To you, O Lord, I lift up my soul; come and rescue me, for you are my refuge and my strength.",
+        "Bless those, O Lord, who have waited for your coming; let your prophets prove to be true.",
+        "Turn to us, O Lord, make haste to help your people."
+      ],
+      "psalmodyRefs": [
+        "Psalm 132",
+        "Psalm 132",
+        "Canticle – Revelation 11:17-18; 12:10b-12a"
+      ],
+      "psalmPrayers": {
+        "1": "Lord Jesus Christ, you chose to suffer and be overwhelmed by death in order to open the gates of death in triumph. Stay with us on our pilgrimage, free us from all evil by the power of your resurrection. In the company of your saints, and constantly remembering your love for us, may we sing of your wonders in our Father’s house."
+      },
+      "responsory": "Lord, show us your mercy and love.\n— Lord, show us your mercy and love.\n\nAnd grant us your salvation,\n— your mercy and love.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Lord, show us your mercy and love.",
+      "gospelAntiphon": "O Wisdom, O holy Word of God, you govern all creation with your strong yet tender care. Come and show your people the way to salvation.",
+      "intercessions": "Jesus Christ is the joy and happiness of all who look forward to his coming. Let us call upon him and say:\nCome, Lord, and do not delay!\n\nIn joy, we wait for your coming;\n— come, Lord Jesus.\nCome, Lord, and do not delay!\n\nBefore time began, you shared life with the Father,\n— come now and save us.\nCome, Lord, and do not delay!\nYou created the world and all who live in it,\n— come to redeem the work of your hands.\nCome, Lord, and do not delay!\n\nYou did not hesitate to become man, subject to death,\n— come to free us from the power of death.\nCome, Lord, and do not delay!\n\nYou came to give us life to the full,\n— come and give us your unending life.\nCome, Lord, and do not delay!\n\nYou desire all people to live in love in your kingdom,\n— come and bring together those who long to see you face to face.\nCome, Lord, and do not delay!",
+      "collect": "O God, Creator and Redeemer of human nature,\nwho willed that your Word should take flesh\nin an ever-virgin womb,\nlook with favor on our prayers,\nthat your Only Begotten Son,\nhaving taken to himself our humanity,\nmay be pleased to grant us a share in his divinity.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 Thessalonians 5:23-24"
     }
   }
 };});

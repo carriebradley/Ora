@@ -26,27 +26,70 @@
     const day=L.roman(date,options),base=psalter(plan.pw,plan.dow,which,plan.first);
     const id=properId(L,date,which,options,plan.first);
     const proper=record(id);
-    if(proper)return {...proper,proper:true,id};
+    if(proper){
+      const selected={...proper,proper:true,id};
+      if(day.rank==='Memorial'&&!(which==='L'&&/^Saint Agnes,/.test(day.title))){
+        selected.antiphons=base?.antiphons;selected.psalmPrayers=base?.psalmPrayers;
+        selected.psalmodyRefs=base?.psalmodyRefs;
+      }
+      // A reusable Sunday page can contain a Gospel antiphon for a different
+      // lectionary year. Importing its other prayers does not verify that year.
+      const cycleDependent=/^(?:ord-w\d+-sun|adv-w\d+-sun|\d{4}-adv-w\d+-sun|lent-w\d+-sun|lent-hw-sun|easter-w\d+-sun|holy-family|xmas-baptism|ord-trinity|ord-corpus|ord-sacred)/.test(id);
+      if(cycleDependent&&proper.gospelCycleVerified!==day.sundayCycle)
+        delete selected.gospelAntiphon;
+      if(selected.psalmodyRefs&&!matchesPsalmody(selected.psalmodyRefs,plan.items)){
+        delete selected.antiphons;delete selected.psalmPrayers;
+      }
+      return selected;
+    }
     if(!base)return null;
     // Psalter responsories/intercessions are appointed in Ordinary Time.
     // Sunday Gospel antiphons and collects belong to the particular Sunday,
     // not to the four-week psalter, so never recycle Week V's proper here.
     if(day.season==='Ordinary Time'){
       const selected={...base,id:base.source.split('/').filter(Boolean).at(-1)};
-      if(plan.first||plan.dow===0||!day.temporal){delete selected.collect;delete selected.gospelAntiphon;}
+      if(plan.first||plan.dow===0||!day.temporal||day.rank==='Memorial'){delete selected.collect;delete selected.gospelAntiphon;}
       if(plan.festiveMorning||/^(?:Solemnity|Feast(?: of the Lord)?)$/.test(day.rank))return null;
       return selected;
     }
     // Before December 17 and on Lenten weekdays the psalmody is from the
     // weekday psalter. Proper antiphons at other seasons must be sourced.
     if(day.temporal&&plan.dow!==0&&!plan.first&&
-      ((day.season==='Advent'&&date.getUTCDate()<17)||day.season==='Lent'))
+      ((day.season==='Advent'&&(date.getUTCMonth()===10||date.getUTCDate()<17))||day.season==='Lent'))
       return {antiphons:base.antiphons,psalmPrayers:base.psalmPrayers,source:base.source};
     return null;
+  }
+  function matchesPsalmody(refs,items){
+    if(refs.length!==items.length)return false;
+    const normalize=s=>s.toLowerCase().replace(/canticle|see|[–—·:-]/g,'').replace(/\s/g,'');
+    return items.every((item,i)=>{
+      if(item[0]==='p'){
+        const n=+item.match(/^p(\d+)/)[1];
+        const modern=n===113?(/113\(1-8\)/.test(item)?114:115):n===114||n===115?116:n===146||n===147?147:((n>=10&&n<=112)||(n>=116&&n<=145))?n+1:n;
+        return refs[i]===`Psalm ${modern}`;
+      }
+      const expected=item==='c210'||item==='c220'?'Daniel 3':item==='c211'?'1 Chronicles 29':item.slice(2).split('|')[0];
+      const prefix=expected.replace(/^Canticle · /,'').match(/^(?:[123] )?[A-Za-z]+ \d+/)?.[0];
+      const actual=(refs[i]||'').replace(/^Canticle\s*(?:[–—·:-]\s*)?(?:See\s+)?/i,'').match(/^(?:[123] )?[A-Za-z]+ \d+/)?.[0];
+      return !!prefix&&!!actual&&normalize(prefix)===normalize(actual);
+    });
   }
   function properId(L,date,which,options={},first=false){
     const day=L.roman(date,options),hour=which==='L'?'mp':first?'ep1':date.getUTCDay()===0?'ep2':'ep';
     const md=L.iso(date).slice(5).replace('-','');
+    const feastHour=which==='L'?'mp':first?'ep1':'ep2';
+    const named=[
+      [/Nativity of the Lord \(Christmas\)/,'1225'],[/Holy Family of Jesus/,'holy-family'],
+      [/Epiphany of the Lord/,'xmas-epiphany'],[/Baptism of the Lord/,'xmas-baptism-of-the-lord'],
+      [/Pentecost Sunday/,'easter-pentecost'],[/Most Holy Trinity/,'ord-trinity-sunday'],
+      [/Body and Blood of Christ/,'ord-corpus-christi'],[/Most Sacred Heart/,'ord-sacred-heart'],
+      [/King of the Universe/,'ord-w34-sun']
+    ].find(([re])=>re.test(day.title));
+    if(named)return named[1]+'-'+feastHour;
+    if(/Ascension of the Lord/.test(day.title))return which==='L'?'ascension-thursday-mp':first?'ascension-thursday-ep1':'evening-prayer-2-ascension-thursday';
+    if(/Mary, the Holy Mother of God/.test(day.title))return which==='L'?'0101-mp':first?'0101-ep1':'xmas-0101-ep2';
+    if(/Saint Joseph, Spouse/.test(day.title))return which==='L'?'0319-mp-joseph':first?'lent-0319-ep1':'0319-ep2-joseph';
+    if(/Annunciation of the Lord/.test(day.title))return which==='L'?'0325-mp-annunciation':first?'sol-annunciation-ep1':'0325-ep2-annunciation';
     if(!day.temporal){
       const fixed=[[/Annunciation of the Lord/,'0325'],[/Saint Joseph, Spouse/,'0319']].find(([re])=>re.test(day.title));
       return (fixed?fixed[1]:md)+'-'+(which==='L'?'mp':first?'ep1':'ep2');
@@ -56,11 +99,14 @@
       const week=Math.floor((date-L.advent(date.getUTCFullYear()))/6048e5)+1;
       return `${date.getUTCMonth()===11&&date.getUTCDate()>=17?md+'-':''}adv-w0${week}-${days[date.getUTCDay()]}-${hour}`;
     }
-    if(day.season==='Lent')return diff < -42 ? `lent-0${days[date.getUTCDay()]}-${hour}`
+    if(day.season==='Lent')return diff < -42 ? `lent-w00-${days[date.getUTCDay()]}-${hour}`
       :`lent-w0${Math.floor((diff+42)/7)+1}-${days[date.getUTCDay()]}-${hour}`;
     if(['Holy Week','Paschal Triduum'].includes(day.season))return `lent-hw-${days[date.getUTCDay()]}-${hour}`;
-    if(day.season==='Easter Time')return diff<7?`easter-${days[date.getUTCDay()]}-${hour}`
-      :`easter-w0${Math.floor(diff/7)+1}-${days[date.getUTCDay()]}-${hour}`;
+    if(day.season==='Easter Time')return `easter-w0${Math.floor(diff/7)+1}-${days[date.getUTCDay()]}-${hour}`;
+    if(day.season==='Ordinary Time'&&date.getUTCDay()===0){
+      const week=day.title.match(/^(\d+)(?:st|nd|rd|th) Sunday/);
+      return week?`ord-w${week[1].padStart(2,'0')}-sun-${hour}`:'';
+    }
     return '';
   }
   function night(plan){

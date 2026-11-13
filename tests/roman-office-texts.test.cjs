@@ -32,7 +32,8 @@ test('Sunday proper canticle antiphons and collects are never recycled by psalte
   const plan=H.modernPsalmody(L,date('2027-06-27'),'L',us);
   const selected=R.select(L,plan.d,'L',us,plan);
   assert.ok(selected.intercessions);assert.ok(selected.antiphons);
-  assert.equal(selected.collect,undefined);assert.equal(selected.gospelAntiphon,undefined);
+  assert.equal(selected.id,'ord-w13-sun-mp');
+  assert.match(selected.collect,/grace of adoption/);assert.equal(selected.gospelAntiphon,undefined);
   const feast=H.modernPsalmody(L,date('2027-06-29'),'L',us);
   assert.equal(R.select(L,feast.d,'L',us,feast),null);
 });

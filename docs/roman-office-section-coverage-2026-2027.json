@@ -1,0 +1,365 @@
+{
+  "from": "2026-11-12",
+  "through": "2027-06-30",
+  "options": {
+    "epiphany": "sunday",
+    "ascension": "sunday",
+    "corpus": "sunday"
+  },
+  "totals": {
+    "offices": 462,
+    "proper": 310,
+    "psalter": 115,
+    "antiphons": 425,
+    "responsory": 424,
+    "gospelAntiphon": 330,
+    "intercessions": 425,
+    "collect": 420
+  },
+  "missingSourceIds": [
+    "0104-ep2",
+    "0125-ep2",
+    "0125-mp",
+    "0222-ep2",
+    "0222-mp",
+    "0319-mp-joseph",
+    "0503-ep2",
+    "0503-mp",
+    "0514-ep2",
+    "0514-mp",
+    "0531-ep2",
+    "0531-mp",
+    "0603-mp",
+    "0611-ep2",
+    "0624-ep1",
+    "0629-ep1",
+    "0629-ep2",
+    "0629-mp",
+    "1207-mp",
+    "1208-ep1",
+    "1217-adv-w03-thu-ep",
+    "1223-adv-w04-wed-ep",
+    "ascension-thursday-mp",
+    "easter-w01-sat-ep",
+    "easter-w06-fri-ep",
+    "easter-w06-fri-mp",
+    "lent-hw-sun-mp"
+  ],
+  "withheldPsalmodyIds": [],
+  "unverifiedGospelCycleIds": [
+    "1220-adv-w04-sun-ep1",
+    "1220-adv-w04-sun-ep2",
+    "1220-adv-w04-sun-mp",
+    "adv-w01-sun-ep1",
+    "adv-w01-sun-ep2",
+    "adv-w01-sun-mp",
+    "adv-w02-sun-ep1",
+    "adv-w02-sun-ep2",
+    "adv-w02-sun-mp",
+    "adv-w03-sun-ep1",
+    "adv-w03-sun-ep2",
+    "adv-w03-sun-mp",
+    "easter-w01-sun-ep2",
+    "easter-w01-sun-mp",
+    "easter-w02-sun-ep2",
+    "easter-w02-sun-mp",
+    "easter-w03-sun-ep1",
+    "easter-w03-sun-ep2",
+    "easter-w03-sun-mp",
+    "easter-w04-sun-ep1",
+    "easter-w04-sun-ep2",
+    "easter-w04-sun-mp",
+    "easter-w05-sun-ep1",
+    "easter-w05-sun-ep2",
+    "easter-w05-sun-mp",
+    "easter-w06-sun-ep1",
+    "easter-w06-sun-ep2",
+    "easter-w06-sun-mp",
+    "holy-family-ep1",
+    "holy-family-ep2",
+    "holy-family-mp",
+    "lent-hw-sun-ep1",
+    "lent-hw-sun-ep2",
+    "lent-w01-sun-ep1",
+    "lent-w01-sun-ep2",
+    "lent-w01-sun-mp",
+    "lent-w02-sun-ep1",
+    "lent-w02-sun-ep2",
+    "lent-w02-sun-mp",
+    "lent-w03-sun-ep1",
+    "lent-w03-sun-ep2",
+    "lent-w03-sun-mp",
+    "lent-w04-sun-ep1",
+    "lent-w04-sun-ep2",
+    "lent-w04-sun-mp",
+    "lent-w05-sun-ep1",
+    "lent-w05-sun-ep2",
+    "lent-w05-sun-mp",
+    "ord-corpus-christi-ep1",
+    "ord-corpus-christi-ep2",
+    "ord-corpus-christi-mp",
+    "ord-sacred-heart-ep1",
+    "ord-sacred-heart-ep2",
+    "ord-sacred-heart-mp",
+    "ord-trinity-sunday-ep1",
+    "ord-trinity-sunday-ep2",
+    "ord-trinity-sunday-mp",
+    "ord-w02-sun-ep1",
+    "ord-w02-sun-ep2",
+    "ord-w02-sun-mp",
+    "ord-w03-sun-ep1",
+    "ord-w03-sun-ep2",
+    "ord-w03-sun-mp",
+    "ord-w04-sun-ep1",
+    "ord-w04-sun-ep2",
+    "ord-w04-sun-mp",
+    "ord-w05-sun-ep1",
+    "ord-w05-sun-ep2",
+    "ord-w05-sun-mp",
+    "ord-w10-sun-ep1",
+    "ord-w10-sun-ep2",
+    "ord-w10-sun-mp",
+    "ord-w11-sun-ep1",
+    "ord-w11-sun-ep2",
+    "ord-w11-sun-mp",
+    "ord-w12-sun-ep1",
+    "ord-w12-sun-ep2",
+    "ord-w12-sun-mp",
+    "ord-w13-sun-ep1",
+    "ord-w13-sun-ep2",
+    "ord-w13-sun-mp",
+    "ord-w33-sun-ep1",
+    "ord-w33-sun-ep2",
+    "ord-w33-sun-mp",
+    "ord-w34-sun-ep1",
+    "ord-w34-sun-ep2",
+    "ord-w34-sun-mp",
+    "xmas-baptism-of-the-lord-ep1",
+    "xmas-baptism-of-the-lord-ep2",
+    "xmas-baptism-of-the-lord-mp"
+  ],
+  "unresolvedOffices": [
+    {
+      "date": "2026-12-07",
+      "hour": "L",
+      "observance": "Saint Ambrose, Bishop and Doctor",
+      "id": "1207-mp"
+    },
+    {
+      "date": "2026-12-07",
+      "hour": "V",
+      "observance": "Immaculate Conception of the Blessed Virgin Mary",
+      "id": "1208-ep1"
+    },
+    {
+      "date": "2026-12-17",
+      "hour": "V",
+      "observance": "Thursday, December 17 — weekday of Advent",
+      "id": "1217-adv-w03-thu-ep"
+    },
+    {
+      "date": "2026-12-23",
+      "hour": "V",
+      "observance": "Wednesday, December 23 — weekday of Advent",
+      "id": "1223-adv-w04-wed-ep"
+    },
+    {
+      "date": "2026-12-29",
+      "hour": "L",
+      "observance": "Tuesday within the Octave of Christmas",
+      "id": ""
+    },
+    {
+      "date": "2026-12-29",
+      "hour": "V",
+      "observance": "Tuesday within the Octave of Christmas",
+      "id": ""
+    },
+    {
+      "date": "2026-12-30",
+      "hour": "L",
+      "observance": "Wednesday within the Octave of Christmas",
+      "id": ""
+    },
+    {
+      "date": "2026-12-30",
+      "hour": "V",
+      "observance": "Wednesday within the Octave of Christmas",
+      "id": ""
+    },
+    {
+      "date": "2026-12-31",
+      "hour": "L",
+      "observance": "Thursday within the Octave of Christmas",
+      "id": ""
+    },
+    {
+      "date": "2027-01-04",
+      "hour": "V",
+      "observance": "Saint Elizabeth Ann Seton",
+      "id": "0104-ep2"
+    },
+    {
+      "date": "2027-01-06",
+      "hour": "L",
+      "observance": "Wednesday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-06",
+      "hour": "V",
+      "observance": "Wednesday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-07",
+      "hour": "L",
+      "observance": "Thursday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-07",
+      "hour": "V",
+      "observance": "Thursday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-08",
+      "hour": "L",
+      "observance": "Friday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-08",
+      "hour": "V",
+      "observance": "Friday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-09",
+      "hour": "L",
+      "observance": "Saturday of Christmas Time",
+      "id": ""
+    },
+    {
+      "date": "2027-01-25",
+      "hour": "L",
+      "observance": "Conversion of Saint Paul, Apostle",
+      "id": "0125-mp"
+    },
+    {
+      "date": "2027-01-25",
+      "hour": "V",
+      "observance": "Conversion of Saint Paul, Apostle",
+      "id": "0125-ep2"
+    },
+    {
+      "date": "2027-02-22",
+      "hour": "L",
+      "observance": "Chair of Saint Peter, Apostle",
+      "id": "0222-mp"
+    },
+    {
+      "date": "2027-02-22",
+      "hour": "V",
+      "observance": "Chair of Saint Peter, Apostle",
+      "id": "0222-ep2"
+    },
+    {
+      "date": "2027-03-19",
+      "hour": "L",
+      "observance": "Saint Joseph, Spouse of the Blessed Virgin Mary",
+      "id": "0319-mp-joseph"
+    },
+    {
+      "date": "2027-03-21",
+      "hour": "L",
+      "observance": "Palm Sunday of the Passion of the Lord",
+      "id": "lent-hw-sun-mp"
+    },
+    {
+      "date": "2027-04-03",
+      "hour": "V",
+      "observance": "Saturday within the Octave of Easter",
+      "id": "easter-w01-sat-ep"
+    },
+    {
+      "date": "2027-05-03",
+      "hour": "L",
+      "observance": "Saints Philip and James, Apostles",
+      "id": "0503-mp"
+    },
+    {
+      "date": "2027-05-03",
+      "hour": "V",
+      "observance": "Saints Philip and James, Apostles",
+      "id": "0503-ep2"
+    },
+    {
+      "date": "2027-05-07",
+      "hour": "L",
+      "observance": "Friday of the 6th Week of Easter",
+      "id": "easter-w06-fri-mp"
+    },
+    {
+      "date": "2027-05-07",
+      "hour": "V",
+      "observance": "Friday of the 6th Week of Easter",
+      "id": "easter-w06-fri-ep"
+    },
+    {
+      "date": "2027-05-09",
+      "hour": "L",
+      "observance": "The Ascension of the Lord",
+      "id": "ascension-thursday-mp"
+    },
+    {
+      "date": "2027-05-14",
+      "hour": "L",
+      "observance": "Saint Matthias, Apostle",
+      "id": "0514-mp"
+    },
+    {
+      "date": "2027-05-14",
+      "hour": "V",
+      "observance": "Saint Matthias, Apostle",
+      "id": "0514-ep2"
+    },
+    {
+      "date": "2027-05-31",
+      "hour": "L",
+      "observance": "Visitation of the Blessed Virgin Mary",
+      "id": "0531-mp"
+    },
+    {
+      "date": "2027-05-31",
+      "hour": "V",
+      "observance": "Visitation of the Blessed Virgin Mary",
+      "id": "0531-ep2"
+    },
+    {
+      "date": "2027-06-23",
+      "hour": "V",
+      "observance": "Nativity of Saint John the Baptist",
+      "id": "0624-ep1"
+    },
+    {
+      "date": "2027-06-28",
+      "hour": "V",
+      "observance": "Saints Peter and Paul, Apostles",
+      "id": "0629-ep1"
+    },
+    {
+      "date": "2027-06-29",
+      "hour": "L",
+      "observance": "Saints Peter and Paul, Apostles",
+      "id": "0629-mp"
+    },
+    {
+      "date": "2027-06-29",
+      "hour": "V",
+      "observance": "Saints Peter and Paul, Apostles",
+      "id": "0629-ep2"
+    }
+  ]
+}

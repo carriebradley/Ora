@@ -12,6 +12,7 @@ module.exports=async function(page,base,artifacts){
     await page.emulateMedia({colorScheme});await page.setViewportSize({width,height:844});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
     await page.screenshot({path:path.join(artifacts,`roman-icel-${width}-${colorScheme}.png`),fullPage:true});
+    if(width===390)await page.screenshot({path:path.join(artifacts,`roman-icel-preview-${colorScheme}.jpg`),type:'jpeg',quality:30,fullPage:false});
   }
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-19&kind=night`);
   assert.match(await page.locator('#st0').innerText(),/send peaceful sleep/);
@@ -58,4 +59,15 @@ module.exports=async function(page,base,artifacts){
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   }
   await page.setViewportSize({width:390,height:844});await page.emulateMedia({colorScheme:'light'});
+  for(const [date,kind,prayer]of [
+    ['2026-12-01','morning',/Jerusalem/],['2026-12-24','evening',/Christ/],
+    ['2027-03-03','morning',/Lord/],['2027-04-01','morning',/This is the day the Lord has made/],
+    ['2027-05-29','evening',/Lord/]
+  ]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=${kind}`);
+    const text=await page.locator('#st0').innerText();assert.match(text,prayer);
+    assert.doesNotMatch(text,/Intercessions \(devotional\)|Collect \(traditional\)|Scriptural refrain:/);
+    assert.equal(await page.locator('#st0 .roman-office-credit').count(),1);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  }
 };

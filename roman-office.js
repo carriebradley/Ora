@@ -66,6 +66,19 @@
   function properPsalmody(L,date,which,options={},first=false){
     const day=L.roman(date,options),easter=L.westernEaster(date.getUTCFullYear()),offset=days(date,easter);
     if(which==='V'){
+      if(offset===-2||offset===-1)return ['p115','p142(1-11)','b:Canticle · Philippians 2|Philippians 2:6-11'];
+      if(/^The Most Holy Trinity/.test(day.title))return first
+        ? ['p112','p147',eph]:['p109(1-5,7)','p113(1-8)','b:Canticle · Revelation 19|Revelation 19:1-7'];
+      if(/Body and Blood of Christ/.test(day.title))return first
+        ? ['p110','p147',ascensionCanticle]:['p109(1-5,7)','p115','b:Canticle · Revelation 19|Revelation 19:1-7'];
+      if(/Most Sacred Heart/.test(day.title))return first
+        ? ['p112','p145','b:Canticle · Revelation 4–5|Revelation 4:11|Revelation 5:9-10|Revelation 5:12']
+        : ['p109(1-5,7)','p110','b:Canticle · Philippians 2|Philippians 2:6-11'];
+      if(/King of the Universe/.test(day.title))return first
+        ? ['p112','p116','b:Canticle · Revelation 4–5|Revelation 4:11|Revelation 5:9-10|Revelation 5:12']
+        : ['p109(1-5,7)','p144','b:Canticle · Revelation 19|Revelation 19:1-7'];
+      if(!first&&/^Nativity of Saint John the Baptist/.test(day.title))return ['p14','p111',rev15];
+      if(!first&&/^Saint Andrew, Apostle/.test(day.title))return ['p115','p125',eph];
       if(!first&&/^Presentation of the Lord$/.test(day.title))return [...christmasSecond];
       if(/^Annunciation of the Lord$/.test(day.title))return [...(first?christmasFirst:christmasSecond)];
       if(/^Saint Joseph, Spouse/.test(day.title))return first

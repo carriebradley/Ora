@@ -185,3 +185,62 @@ Sunday proper canticle antiphons and collects are excluded from the repeating
 four-week selection. Compline now distinguishes the Sunday concluding prayer
 from the house-visitation prayer for solemnities outside Sundays. The remainder
 of the seasonal, proper and Common audit is still incomplete.
+
+## Seasonal and proper integration — November 13 continuation (v264)
+
+The eligible-text bundle now contains **380 source records** (314 more than the
+previous release). Seasonal and proper antiphons, optional psalm-prayers,
+responsories, Gospel-canticle antiphons, intercessions and concluding prayers
+now resolve through the calendar, including transferred feasts and First Vespers.
+The importer recognizes unnumbered first antiphons, split psalms, alternate
+canticle headings, Easter-octave response verses, and the Triduum's replacement
+for the responsory. Four previously incomplete capture records were recovered.
+
+Memorial psalmody follows the current weekday, preserving the checked Agnes
+exception. Reusable Sunday pages cannot supply a cycle-specific Gospel antiphon
+unless their cycle is independently verified. Other checked prayer sections are
+still used. Fixed Christmas, Epiphany, Ascension and Pentecost antiphons remain.
+
+The captured prayer bodies also establish these additional Vespers psalm sets
+(modern numbers; Scripture bodies remain Douay–Rheims):
+
+| Celebration | First Vespers | Second Vespers |
+|---|---|---|
+| Trinity | 113; 147:12–20; Ephesians 1 | 110:1–5,7; 114; Revelation 19 |
+| Corpus Christi | 111; 147:12–20; Revelation 11–12 | 110:1–5,7; 116:10–19; Revelation 19 |
+| Sacred Heart | 113; 146; Revelation 4–5 | 110:1–5,7; 111; Philippians 2 |
+| Christ the King | 113; 117; Revelation 4–5 | 110:1–5,7; 145; Revelation 19 |
+
+Witness URLs are recorded per phase in `roman-office-texts-data.js`, e.g.
+[Trinity I](https://divineoffice.org/ord-trinity-sunday-ep1/),
+[Corpus Christi II](https://divineoffice.org/ord-corpus-christi-ep2/),
+[Sacred Heart I](https://divineoffice.org/ord-sacred-heart-ep1/), and
+[Christ the King II](https://divineoffice.org/ord-w34-sun-ep2/).
+[Good Friday](https://divineoffice.org/lent-hw-fri-ep/) and
+[Holy Saturday](https://divineoffice.org/lent-hw-sat-ep/) use 116:10–19;
+143:1–11; Philippians 2.
+[Andrew](https://divineoffice.org/1130-ep2/) uses 116:10–19; 126; Ephesians 1.
+[John the Baptist II](https://divineoffice.org/0624-ep2/) uses 15; 112; Revelation 15.
+
+The reproducible section audit covers **462 Lauds/Vespers offices** from
+November 12, 2026 through June 30, 2027 with US Sunday transfer settings:
+425 have sourced antiphons and intercessions, 424 a sourced responsory or
+replacement verse, 420 a concluding prayer, and 330 a usable Gospel antiphon.
+See `tools/audit_roman_office_texts.cjs` and its committed JSON output.
+These counts measure availability, **not complete liturgical certification**.
+All imported proper antiphon sets that are used agree with the planned psalm
+and canticle references. The guard rejects a mismatched set instead of applying
+its antiphons to different psalms.
+
+Remaining: 27 named source IDs are unavailable; Christmas-season weekdays
+without a mapped source are listed separately among 37 unresolved offices;
+the correct-cycle Sunday antiphons remain explicitly listed. Short Scripture
+readings, hymn choices, exact canticle excerpts beyond those already checked,
+and the complete Office of Readings still require work. This release does not
+claim full First Edition equivalence. Edmonton Ukrainian, Melkite and Sarum
+selection and private uploaded books are preserved.
+
+Validation: 87 unit checks pass locally, including dated seasonal, precedence,
+memorial, cycle and mismatched-psalmody cases. Local Chromium cannot start because
+this environment denies its process-singleton socket; the GitHub browser suite
+must pass before this batch reaches the published main branch.

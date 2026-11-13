@@ -42,33 +42,56 @@ def extract(capture, url):
         return text
     psalmody = find(r'^PSALMODY$')
     reading = find(r'^READING\b', psalmody or 0)
-    resp = find(r'^RESPONSORY$', reading or 0)
+    resp = find(r'^(?:RESPONSORY|In place of the [Rr]esponsory,.*)$', reading or 0)
     gospel = find(r'^(?:CANTICLE OF (?:MARY|ZECHARIAH|SIMEON)|GOSPEL CANTICLE)$', resp or 0)
     intercessions = find(r'^INTERCESSIONS$', gospel or 0)
     collect = find(r'^Concluding Prayer$', gospel or 0)
-    ending = find(r'^(?:DISMISSAL|BLESSING)$', collect or 0)
+    ending = find(r'^(?:DISMISSAL|BLESSING|May the Lord bless us\b)', collect or 0)
     result = {'source': url, 'edition': 'first'}
     ants = []
     prayers = {}
+    refs = []
     current = None
     for n, text in sorted(rows.items()):
         if psalmody is None or reading is None or not psalmody < n < reading:
             continue
         m = re.match(r'^Ant\.\s*([123])\s+(.+)$', text)
+        if not ants and not m:
+            # Some witnesses omit the numeral on the first antiphon.
+            first = re.match(r'^Ant\.\s+(.+)$', text)
+            if first:
+                m = re.match(r'^Ant\.\s*([123])\s+(.+)$', 'Ant. 1 ' + first[1])
         if m:
-            current = int(m[1]) - 1
+            current, ant = int(m[1]) - 1, m[2]
+            if current < len(ants) and ants[current] == ant:
+                continue  # An antiphon repeated between canticle stanzas.
             if current != len(ants):
                 raise ValueError('Nonsequential psalm antiphons')
-            ants.append(m[2])
+            ants.append(ant)
+            refs.append(None)
+        ref = re.match(r'^(Psalm\s+\d+)(?:[AB])?(?:[:\s].*)?$|^(Canticle\s*(?:[–—·:-]\s*)?.+)$', text)
+        if ref and current is not None:
+            refs[current] = ref[1] or ref[2]
+        if current is not None and refs[current] is None and re.match(r'^(?:[123] )?[A-Za-z]+ \d+:\d', text):
+            refs[current] = 'Canticle – ' + text
+        if text in ('II', 'III') and current and refs[current] is None:
+            # A split psalm prints its number once, followed by I / II.
+            if (refs[current - 1] or '').startswith('Psalm '):
+                refs[current] = refs[current - 1]
         if text.lower() == 'psalm-prayer' and current is not None:
             end = find(r'^Ant\.', n + 1)
             prayers[str(current)] = between(n + 1, end)
     if ants:
         result['antiphons'] = ants
+        result['psalmodyRefs'] = refs
     if prayers:
         result['psalmPrayers'] = prayers
     if resp is not None and gospel is not None:
         result['responsory'] = between(resp + 1, gospel)
+    elif gospel is not None:
+        octave = find(r'^—\s+This is the day the Lord has made;', reading or 0)
+        if octave is not None and octave < gospel:
+            result['responsory'] = rows[octave]
     if gospel is not None:
         ant = find(r'^Ant\. ', gospel + 1)
         if ant is not None:

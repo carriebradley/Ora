@@ -78,6 +78,14 @@ Compline witnesses:
 - [Solemnity Second Vespers](https://divineoffice.org/ord-sol-np2/)
 - [Easter Night Prayer](https://divineoffice.org/easter-sun-np2/)
 
-Outstanding appointment work is tracked in the dated Roman Office audit.
+The continued import now contains 380 source records, including the seasonal
+and proper Lauds/Vespers sections. The source's concluding prayer sometimes
+uses the current Roman Missal collect; these source-witness prayers are not a
+claim to reproduce an unmodified 1974 printing or the forthcoming Second Edition.
+Sunday-cycle Gospel antiphons require a matching verified cycle; fixed Christmas,
+Epiphany, Ascension and Pentecost texts retain their cycle-independent antiphons.
+
+Outstanding appointment work is tracked in the dated Roman Office audit and
+`roman-office-section-coverage-2026-2027.json` (section availability only).
 This inventory is not a claim that all November 2026–June 2027 propers or
 Common choices have been independently verified.
