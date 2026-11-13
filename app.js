@@ -1192,14 +1192,23 @@
     if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
     if (hasTTS) h += '<div class="row" style="margin:0 0 14px"><button class="btn fill" data-act="play">▶ Play session aloud</button></div>';
     steps.forEach((s, i) => {
-      h += `<div class="step ${st.active === i ? 'on' : ''}" id="st${i}">${rite === "roman" && (s.type === "office" || s.type === "oor") ? "" : `<div class="t">${esc(s.title)}</div>`}`;
+      h += `<div class="step ${st.active === i ? 'on' : ''}" id="st${i}">${["office","oor","matins"].includes(s.type) ? "" : `<div class="t">${esc(s.title)}</div>`}`;
       if (s.type === 'prayer') h += `<div class="tx">${esc(s.body)}</div>${speakBtn(s.text)}`;
       else if (s.type === 'calendar') h += `<div class="tx">${esc(s.head)}</div><div class="muted">${esc(s.sub)}</div>`;
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">${officeHourLabel(s.which,rite)}</summary>${rite === 'roman' ? (s.which === 'C' ? romanNightHTML() : officePrayerMarkup(Hours.modern(L, P(st.date), s.which))) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Other English resources for this office:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
-      else if (s.type === 'matins') h += Hours.sarumMatins ? `<details class="matins-d" open><summary class="muted">Show or hide</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : '';
+      else if (s.type === 'office') h += window.Hours
+        ? (rite === 'roman'
+            ? (s.which === 'C' ? romanNightHTML() : officePrayerMarkup(Hours.modern(L, P(st.date), s.which)))
+            : rite === 'sarum'
+              ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted">This Sarum office is unavailable for this date.</p>')
+              : Hours.hour(L, P(st.date), s.which))
+          + (rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div>` : '')
+        : '';
+      else if (s.type === 'matins') h += Hours.sarumMatins
+        ? `<div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins…</p></div>`
+        : '';
       else if (s.type === 'little') h += `<div class="muted" style="font-size:.82rem">Prime at about 6, Terce at 9, Sext at noon, None at 3. Open each hour to pray it.</div>${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'sarumhours') h += `<div class="muted" style="font-size:.82rem">Matins at night; Prime, Terce, Sext and None at about 6, 9, noon and 3.</div>${Hours.sarumMatins ? `<details class="matins-d" style="margin:4px 0"><summary class="muted">Matins</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : ''}${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'bvm') h += `<div class="muted" style="font-size:.82rem">A short office of Mary, said on free days, chiefly Saturdays. Optional.</div>${s.hrs.map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
