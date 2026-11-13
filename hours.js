@@ -57,8 +57,16 @@
     }
     return out;
   }
+  function modernPsalmNumber(number,ref){
+    const n=+number;
+    if(n===113)return /113\(1-8\)/.test(ref)?'114':/113\(9-26\)/.test(ref)?'115':'114–115';
+    if(n===114||n===115)return '116';
+    if(n===146||n===147)return '147';
+    if((n>=10&&n<=112)||(n>=116&&n<=145))return String(n+1);
+    return String(n);
+  }
   function psalmHTML(ref, modern=false) {
-    return psalm(ref,modern).map(p => `<div class="psalm"><div class="muted" style="font-size:.78rem">Psalm ${esc(p.n)}${p.title ? ' — ' + esc(p.title) : ''}</div>${p.rows.map(r => `<div>${esc(vclean(r[2]))}</div>`).join('')}<div class="muted" style="margin-top:6px">${esc(H.g.Gloria).replace(/\n/g, '<br>')}</div></div>`).join('');
+    return psalm(ref,modern).map(p => `<div class="psalm"><div class="muted" style="font-size:.78rem">Psalm ${esc(modern ? modernPsalmNumber(p.n,ref) : p.n)}${p.title ? ' — ' + esc(p.title) : ''}</div>${p.rows.map(r => `<div>${esc(vclean(r[2]))}</div>`).join('')}<div class="muted" style="margin-top:6px">${esc(H.g.Gloria).replace(/\n/g, '<br>')}</div></div>`).join('');
   }
   function canticle(code, modern=false) {
     const p = psalm(code,modern)[0]; if (!p) return '';
@@ -136,7 +144,7 @@
     // Lauds on solemnities, feasts, and the Easter/Christmas octaves uses
     // Sunday Week I psalmody, not the psalms of the ordinary weekday.
     const observance=context.observance;
-    const proper=RO.properPsalmody(L,d,which,options);
+    const proper=RO.properPsalmody(L,d,which,options,first);
     const festiveMorning=which==='L'&&(
       !!proper || /^(?:Solemnity|Feast(?: of the Lord)?)$/.test(observance.rank)
       || /within the Octave of (?:Easter|Christmas)/i.test(observance.title)
@@ -170,7 +178,7 @@
     const seasonal=season==='Advent'?'Adv':season==='Easter Time'?'Pasch':season==='Holy Week'||season==='Paschal Triduum'?'Quad5':season==='Lent'?(d>=L.add(L.westernEaster(d.getUTCFullYear()),-14)?'Quad5':'Quad'):'';
     const hymn = (seasonal && H.seas[seasonal][which]) || D.hymn, coll = tmp.O || sun.O || '';
     const name = which === 'L' ? 'Morning Prayer (Lauds)' : 'Evening Prayer (Vespers)';
-    let h = `<p class="muted" style="font-size:.82rem">${first ? 'Evening Prayer I of Sunday. ' : ''}${name} · modern four-week psalter, Week ${['', 'I', 'II', 'III', 'IV'][pw]}. Psalms in the Douay translation (Vulgate numbers). Each psalm’s antiphon is its own opening verse. The short reading and responsory are the traditional ones. The current books’ antiphons, readings and intercessions are copyrighted and are not included.</p>`;
+    let h = `<p class="muted" style="font-size:.82rem">${first ? 'Evening Prayer I. ' : ''}${name} · modern four-week psalter, Week ${['', 'I', 'II', 'III', 'IV'][pw]}. Psalms in the Douay translation, with modern psalm numbers in headings. Each psalm’s antiphon is its own opening verse. The short reading and responsory are the traditional ones. The current books’ antiphons, readings and intercessions are copyrighted and are not included.</p>`;
     h += `<div class="sec"><b>Opening</b>${lines(H.g['Deus in adjutorium'] + (RO.night(L,d,options).alleluia ? '\nAlleluia.' : ''))}</div>`;
     if (hymn) h += `<div class="sec"><b>Hymn (traditional)</b>${lines(hymn)}</div>`;
     h += '<div class="sec"><b>Psalmody</b>' + items.map(it => {

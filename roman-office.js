@@ -51,8 +51,27 @@
     return {index,kind:solemnity?(context.first?'solemnity-i':'solemnity-ii'):sunday?(context.first?'sunday-i':'sunday-ii'):'weekday',observance:day.title,
       easter:day.season==='Easter Time',alleluia:!['Lent','Holy Week','Paschal Triduum'].includes(day.season),reference};
   }
-  function properPsalmody(L,date,which,options={}){
+  const canticle=(label,ref)=>'b:Canticle · '+label+'|'+ref;
+  const eph=canticle('Ephesians 1','Ephesians 1:3-10');
+  const marianFirst=['p112','p147',eph],marianSecond=['p121','p126',eph];
+  const christmasFirst=['p112','p147',canticle('Philippians 2','Philippians 2:6-11')];
+  const christmasSecond=['p109(1-5,7)','p129',canticle('Colossians 1','Colossians 1:12-20')];
+  const epiphanyFirst=['p134(1-12)','p134(13-21)',canticle('1 Timothy 3','1 Timothy 3:16')];
+  const epiphanySecond=['p109(1-5,7)','p111',canticle('Revelation 15','Revelation 15:3-4')];
+  // Sources and individual verification are recorded in the dated audit.
+  // Match resolved observances so transferred celebrations keep their own Office.
+  function properPsalmody(L,date,which,options={},first=false){
     const day=L.roman(date,options),easter=L.westernEaster(date.getUTCFullYear()),offset=days(date,easter);
+    if(which==='V'){
+      if(/Nativity of the Lord \(Christmas\)/.test(day.title))return [...(first?christmasFirst:christmasSecond)];
+      if(/Holy Family of Jesus/.test(day.title)||/Mary, the Holy Mother of God/.test(day.title))
+        return [...(first?marianFirst:marianSecond)];
+      if(/Epiphany of the Lord|Baptism of the Lord/.test(day.title))return [...(first?epiphanyFirst:epiphanySecond)];
+      if(day.season==='Christmas Time'&&(/within the Octave of Christmas/.test(day.title)
+        ||/^(?:Saint Stephen,|Saint John, Apostle|Holy Innocents,)/.test(day.title)))return [...christmasSecond];
+      // Only Second Vespers has been independently checked for this solemnity.
+      if(!first&&/Immaculate Conception of the Blessed Virgin Mary/.test(day.title))return [...marianSecond];
+    }
     // Proper of Seasons through the Second Sunday of Easter; references only.
     if(offset>=0&&offset<=7){
       if(which==='L')return ['p62(2-9)','c210','p149'];

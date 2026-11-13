@@ -28,5 +28,15 @@ module.exports=async function(page,base,artifacts){
   assert.doesNotMatch(await page.locator('#st0').innerText(),/Alleluia/i);
   await page.setViewportSize({width:320,height:720});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  for(const [date,firstPsalm,canticle]of [
+    ['2026-12-24',113,/Philippians 2/],['2026-12-25',110,/Colossians 1/],
+    ['2026-12-26',113,/Ephesians 1/],['2026-12-27',122,/Ephesians 1/],
+    ['2027-01-02',135,/1 Timothy 3/],['2027-01-03',110,/Revelation 15/]
+  ]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=evening`);
+    assert.match(await page.locator('#st0 .psalm').first().innerText(),new RegExp('Psalm '+firstPsalm+'\\b','i'));
+    assert.match(await page.locator('#st0').innerText(),canticle);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  }
   await page.setViewportSize({width:390,height:844});await page.emulateMedia({colorScheme:'light'});
 };

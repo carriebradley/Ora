@@ -27,6 +27,8 @@ module.exports=async function(browser,artifacts){
       for(const [kind,date,pattern]of [
         ['morning','2027-01-17',/Blessed art thou in the holy temple/],
         ['evening','2026-11-12',/Magnificat/i],
+        ['evening','2026-12-24',/Philippians 2/],
+        ['evening','2027-01-02',/1 Timothy 3/],
         ['night','2027-03-30',/Regina Caeli/i]
       ]){
         await page.goto(`${base}index.html?tab=pray&rite=roman&kind=${kind}&date=${date}`);
@@ -37,7 +39,7 @@ module.exports=async function(browser,artifacts){
           assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${kind}/${width}/${colorScheme} overflow`);
         }
         await page.setViewportSize({width:390,height:844});
-        await page.screenshot({path:path.join(artifacts,`published-${kind}-${colorScheme}.png`),fullPage:true});
+        await page.screenshot({path:path.join(artifacts,`published-${date}-${kind}-${colorScheme}.png`),fullPage:true});
       }
     }
     assert.deepEqual(errors,[],'published app JavaScript errors');

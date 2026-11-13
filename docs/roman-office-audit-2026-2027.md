@@ -93,3 +93,28 @@ The follow-up defaults the service helper to Ukrainian, matching Ora's active se
 - [Second Sunday of Easter Lauds](https://divineoffice.org/easter-w02-sun-mp/) explicitly uses Sunday Week I, not the ordinary Week II morning set. This now closes the eight-day Easter sequence correctly.
 
 These checks complete the **psalm-reference selection** for Agnes Lauds and the Easter octave in this pass. Their appointed antiphons, short readings, responsories and collects remain separately outstanding; no publisher prayer wording was copied. The browser suite also now recognizes Ora's existing Compline heading and reads heading styles atomically while asynchronous feeds render.
+
+## Christmas and Epiphany continuation — November 13, 2026
+
+The next pass replaces weekly-psalter fallbacks with verified **psalm/canticle reference sets** for the following Evening Prayers. First and Second Vespers use separate sets. Resolution uses the calendar's observance and the evening-precedence result, so January 3/6 Epiphany settings carry the proper Office with the celebration.
+
+| Observance / phase | Modern psalm references | Canticle | First Edition source witness |
+|---|---|---|---|
+| Christmas I | 113; 147:12–20 | Philippians 2:6–11 | [Christmas I](https://divineoffice.org/1225-ep1/) |
+| Christmas II | 110:1–5,7; 130 | Colossians 1:12–20 | [Christmas II](https://divineoffice.org/1225-ep2/) |
+| Holy Family I | 113; 147:12–20 | Ephesians 1:3–10 | [Holy Family I](https://divineoffice.org/holy-family-ep1/) |
+| Holy Family II | 122; 127 | Ephesians 1:3–10 | [Holy Family II](https://divineoffice.org/holy-family-ep2/) |
+| Mary, Mother of God I | 113; 147:12–20 | Ephesians 1:3–10 | [January 1 I](https://divineoffice.org/0101-ep1/) |
+| Mary, Mother of God II | 122; 127 | Ephesians 1:3–10 | [January 1 II](https://divineoffice.org/xmas-0101-ep2/) |
+| Epiphany I | 135:1–12; 135:13–21 | 1 Timothy 3:16 | [Epiphany I](https://divineoffice.org/xmas-epiphany-ep1/) |
+| Epiphany II | 110:1–5,7; 112 | Revelation 15:3–4 | [Epiphany II](https://divineoffice.org/xmas-epiphany-ep2/) |
+| Baptism I / II | As Epiphany I / II respectively | As Epiphany I / II | [Baptism I](https://divineoffice.org/xmas-baptism-of-the-lord-ep1/), [Baptism II](https://divineoffice.org/xmas-baptism-of-the-lord-ep2/) explicitly direct these sets |
+| Immaculate Conception II | 122; 127 | Ephesians 1:3–10 | [December 8 II](https://divineoffice.org/1208-ep2/) |
+
+The Christmas-octave evening assignments use Christmas II where prescribed: [Stephen](https://divineoffice.org/1226-ep2/), [Holy Innocents](https://divineoffice.org/1228-ep2/), [December 29](https://divineoffice.org/1229-ep2/), and [December 30](https://divineoffice.org/xmas-sixth-day-in-the-octave-ep/). Higher-ranking evening observances take priority: December 26, 2026 instead opens Holy Family I; December 31 opens Mary, Mother of God I. These are explicitly tested.
+
+DivineOffice's reusable prayer bodies and volume/page directions were inspected. Its changing outer date heading was not treated as a witness for the named celebration. No copyrighted translations, antiphons, hymn arrangements or recordings were imported. The previously inaccessible Immaculate Conception I witness was not silently filled by analogy; that phase remains outstanding.
+
+Modern Roman Lauds/Vespers headings now display **modern psalm numbers** while keeping the source's Vulgate identifiers internally. This includes the combined/split Vulgate Psalms 113, 114/115 and 146/147. Traditional/Sarum rendering and its source numbering are preserved. This fixes a misleading heading such as “Psalm 112” when the appointed modern reference is Psalm 113.
+
+The new regression file covers 14 dated evening assignments, both Epiphany transfer choices, and rendered psalm numbering. Browser checks cover Christmas, Holy Family and Epiphany phases at a narrow phone width; the published smoke check also opens Christmas Eve and Epiphany First Vespers. The full Office's appointed antiphons, short readings, responsories, intercessions and collects remain separate work. A verified psalm-reference set is not certification of the complete Office.
