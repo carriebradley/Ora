@@ -77,7 +77,11 @@
       if(/King of the Universe/.test(day.title))return first
         ? ['p112','p116','b:Canticle · Revelation 4–5|Revelation 4:11|Revelation 5:9-10|Revelation 5:12']
         : ['p109(1-5,7)','p144','b:Canticle · Revelation 19|Revelation 19:1-7'];
-      if(!first&&/^Nativity of Saint John the Baptist/.test(day.title))return ['p14','p111',rev15];
+      if(/^Nativity of Saint John the Baptist/.test(day.title))return first
+        ? ['p112','p145',eph]:['p14','p111',rev15];
+      if(/^Saints Peter and Paul, Apostles/.test(day.title))return first
+        ? ['p116','p147',eph]:['p115','p125',eph];
+      if(/^Saint Matthias, Apostle/.test(day.title)&&day.season==='Easter Time')return ['p115','p125',eph];
       if(!first&&/^Saint Andrew, Apostle/.test(day.title))return ['p115','p125',eph];
       if(!first&&/^Presentation of the Lord$/.test(day.title))return [...christmasSecond];
       if(/^Annunciation of the Lord$/.test(day.title))return [...(first?christmasFirst:christmasSecond)];

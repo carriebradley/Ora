@@ -268,3 +268,42 @@ Regression checks include all three hours for the 33rd Sunday in 2026, 2027 and
 of a mismatched psalm-antiphon set. Browser checks cover the three November 14–15
 hours on the local and published app. The existing structural checks continue to
 cover the Ukrainian Edmonton, Melkite and Traditional calendars.
+
+
+## Recovered propers and Christmas weekdays — v266
+
+Recovered **18 source records**, bringing the bundle to 398. Corrected nine
+source-ID mappings and the Easter-only Matthias mappings. This resolves 13 of
+the preceding 27 named source-ID gaps, and adds 11 previously unmapped Christmas
+offices. Friday after Epiphany Morning Prayer is now explicitly listed as an
+unavailable source. These are availability improvements, not completion of the
+full independent comparison or the appointed Scripture/hymn audit.
+
+| Appointment | Prayer-body witnesses and correction |
+|---|---|
+| December 7, Ambrose Lauds | [1207-mp](https://divineoffice.org/1207-mp/); preserve the current weekday psalmody as a memorial |
+| December 17 Vespers | [1217-adv-w03-thu-ep2](https://divineoffice.org/1217-adv-w03-thu-ep2/); correct the unexpected source suffix and restore O Wisdom |
+| December 23 Vespers | [1223-w04-wed-ep](https://divineoffice.org/1223-w04-wed-ep/); recover the actual source ID and O Emmanuel |
+| December 29–31 | [December 29 Lauds](https://divineoffice.org/1229-mp/), [Vespers](https://divineoffice.org/1229-ep2/), [December 30 Lauds](https://divineoffice.org/xmas-sixth-day-in-the-octave-mp/), [Vespers](https://divineoffice.org/xmas-sixth-day-in-the-octave-ep/), [December 31 Lauds](https://divineoffice.org/1231-mp/); December 31 evening still anticipates Mary, Mother of God |
+| After Epiphany | [Wednesday Lauds](https://divineoffice.org/xmas-after-epiphany-wed-mp/), [Vespers](https://divineoffice.org/xmas-after-epiphany-wed-ep2/), [Thursday Lauds](https://divineoffice.org/xmas-after-epiphany-thu-mp/), [Vespers](https://divineoffice.org/xmas-after-epiphany-thu-ep/), [Friday Vespers](https://divineoffice.org/xmas-after-epiphany-fri-ep2/), [Saturday Lauds](https://divineoffice.org/xmas-after-epiphany-sat-mp/); select only after the observed Epiphany, leaving Baptism I intact |
+| Joseph and Philip/James Lauds | [Joseph](https://divineoffice.org/lent-0319-mp/), [Philip and James](https://divineoffice.org/0503-philip-and-james-mp/); map existing records to their calendar observances |
+| Ascension Lauds | [Morning Prayer](https://divineoffice.org/morning-prayer-ascension-thursday/); map both Thursday and Sunday observances |
+| Matthias | [Lauds](https://divineoffice.org/easter-0514-mp/), [Vespers](https://divineoffice.org/easter-0514-ep2/); apply these witnesses only during Easter Time; Vespers uses Psalms 116, 126 and Ephesians 1 |
+| Charles Lwanga Lauds | [June 3](https://divineoffice.org/0603-mp/); source the memorial prayers while retaining the current weekday psalmody |
+| John the Baptist I | [First Vespers](https://divineoffice.org/0624-ep1-nativity-of-john-baptist/); Psalms 113, 146 and Ephesians 1 |
+| Peter and Paul | [Lauds](https://divineoffice.org/0629-mp-peter-and-paul/), [I](https://divineoffice.org/0629-ep1-peter-and-paul/), [II](https://divineoffice.org/0629-ep2-peter-and-paul/); First Vespers uses Psalms 117, 147 and Ephesians 1; Second Vespers uses Psalms 116, 126 and Ephesians 1 |
+| Easter VII I | [First Vespers](https://divineoffice.org/easter-w07-sun-ep1/); available where Ascension remains on Thursday; US Sunday Ascension keeps its own proper |
+
+The 462-office US-transfer audit now finds 448 sourced antiphon/intercession
+sets, 447 responsories or replacement verses, and **444 Gospel antiphons and
+concluding prayers** (previously 420 each). No used proper psalm-antiphon set is
+withheld for mismatching the planned references. Fourteen offices still have no
+resolved prayer source; fifteen requested source IDs are listed as unavailable
+(the extra one falls back to an ordinary weekday set). Source counts do not
+certify the appointed Scripture translations, hymn choices, or complete Offices.
+
+Validation adds dated regressions for the recovered mappings, Christmas-octave
+and Epiphany-transfer context, First/Second Vespers, memorial weekday psalmody,
+and apostle feast psalmody. All 90 unit tests pass locally. Mobile and published
+browser checks include O Wisdom, O Emmanuel, Christmas December 30, Wednesday
+after Epiphany, Matthias Vespers, and Peter/Paul First Vespers.

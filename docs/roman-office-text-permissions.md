@@ -78,7 +78,7 @@ Compline witnesses:
 - [Solemnity Second Vespers](https://divineoffice.org/ord-sol-np2/)
 - [Easter Night Prayer](https://divineoffice.org/easter-sun-np2/)
 
-The continued import now contains 380 source records, including the seasonal
+The continued import now contains 398 source records, including the seasonal
 and proper Lauds/Vespers sections. The source's concluding prayer sometimes
 uses the current Roman Missal collect; these source-witness prayers are not a
 claim to reproduce an unmodified 1974 printing or the forthcoming Second Edition.
@@ -92,3 +92,20 @@ Outstanding appointment work is tracked in the dated Roman Office audit and
 `roman-office-section-coverage-2026-2027.json` (section availability only).
 This inventory is not a claim that all November 2026–June 2027 propers or
 Common choices have been independently verified.
+
+
+### v266 recovered sources and calendar mappings
+
+Eighteen additional eligible source records cover Christmas-octave weekdays,
+after-Epiphany weekdays, Ambrose, Charles Lwanga, Matthias, John the Baptist I,
+and Easter VII I. Previously captured Joseph, Philip and James, Peter and Paul,
+Ascension, and December 17 witnesses now resolve by their actual source IDs.
+The same section boundaries and copyright exclusions apply. Each new record
+retains its source URL, First Edition label, biblical reference metadata, and
+only the eligible prayer sections; no Scripture body or hymn is imported.
+
+Christmas weekdays after Epiphany are selected only after its observed date,
+including the US Sunday transfer. The source's changing outer date banner is
+excluded; the inner heading and psalm references were inspected. Inaccessible
+sources remain listed in the section audit rather than being filled from an
+unrelated feast or weekday.

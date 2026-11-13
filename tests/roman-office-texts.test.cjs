@@ -35,7 +35,7 @@ test('Sunday proper canticle antiphons and collects are never recycled by psalte
   assert.equal(selected.id,'ord-w13-sun-mp');
   assert.match(selected.collect,/grace of adoption/);assert.match(selected.gospelAntiphon,/Take courage, daughter/);
   const feast=H.modernPsalmody(L,date('2027-06-29'),'L',us);
-  assert.equal(R.select(L,feast.d,'L',us,feast),null);
+  assert.equal(R.select(L,feast.d,'L',us,feast).id,'0629-mp-peter-and-paul');
 });
 
 test('Night Prayer uses seven weekday prayers and the special solemnity prayer',()=>{

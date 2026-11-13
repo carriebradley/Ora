@@ -8,13 +8,13 @@
   },
   "totals": {
     "offices": 462,
-    "proper": 310,
-    "psalter": 115,
-    "antiphons": 425,
-    "responsory": 424,
-    "gospelAntiphon": 420,
-    "intercessions": 425,
-    "collect": 420
+    "proper": 334,
+    "psalter": 114,
+    "antiphons": 448,
+    "responsory": 447,
+    "gospelAntiphon": 444,
+    "intercessions": 448,
+    "collect": 444
   },
   "missingSourceIds": [
     "0104-ep2",
@@ -22,85 +22,25 @@
     "0125-mp",
     "0222-ep2",
     "0222-mp",
-    "0319-mp-joseph",
     "0503-ep2",
-    "0503-mp",
-    "0514-ep2",
-    "0514-mp",
     "0531-ep2",
     "0531-mp",
-    "0603-mp",
     "0611-ep2",
-    "0624-ep1",
-    "0629-ep1",
-    "0629-ep2",
-    "0629-mp",
-    "1207-mp",
     "1208-ep1",
-    "1217-adv-w03-thu-ep",
-    "1223-adv-w04-wed-ep",
-    "ascension-thursday-mp",
     "easter-w01-sat-ep",
     "easter-w06-fri-ep",
     "easter-w06-fri-mp",
-    "lent-hw-sun-mp"
+    "lent-hw-sun-mp",
+    "xmas-after-epiphany-fri-mp"
   ],
   "withheldPsalmodyIds": [],
   "withheldGospelAntiphonIds": [],
   "unresolvedOffices": [
     {
       "date": "2026-12-07",
-      "hour": "L",
-      "observance": "Saint Ambrose, Bishop and Doctor",
-      "id": "1207-mp"
-    },
-    {
-      "date": "2026-12-07",
       "hour": "V",
       "observance": "Immaculate Conception of the Blessed Virgin Mary",
       "id": "1208-ep1"
-    },
-    {
-      "date": "2026-12-17",
-      "hour": "V",
-      "observance": "Thursday, December 17 — weekday of Advent",
-      "id": "1217-adv-w03-thu-ep"
-    },
-    {
-      "date": "2026-12-23",
-      "hour": "V",
-      "observance": "Wednesday, December 23 — weekday of Advent",
-      "id": "1223-adv-w04-wed-ep"
-    },
-    {
-      "date": "2026-12-29",
-      "hour": "L",
-      "observance": "Tuesday within the Octave of Christmas",
-      "id": ""
-    },
-    {
-      "date": "2026-12-29",
-      "hour": "V",
-      "observance": "Tuesday within the Octave of Christmas",
-      "id": ""
-    },
-    {
-      "date": "2026-12-30",
-      "hour": "L",
-      "observance": "Wednesday within the Octave of Christmas",
-      "id": ""
-    },
-    {
-      "date": "2026-12-30",
-      "hour": "V",
-      "observance": "Wednesday within the Octave of Christmas",
-      "id": ""
-    },
-    {
-      "date": "2026-12-31",
-      "hour": "L",
-      "observance": "Thursday within the Octave of Christmas",
-      "id": ""
     },
     {
       "date": "2027-01-04",
@@ -109,46 +49,10 @@
       "id": "0104-ep2"
     },
     {
-      "date": "2027-01-06",
-      "hour": "L",
-      "observance": "Wednesday of Christmas Time",
-      "id": ""
-    },
-    {
-      "date": "2027-01-06",
-      "hour": "V",
-      "observance": "Wednesday of Christmas Time",
-      "id": ""
-    },
-    {
-      "date": "2027-01-07",
-      "hour": "L",
-      "observance": "Thursday of Christmas Time",
-      "id": ""
-    },
-    {
-      "date": "2027-01-07",
-      "hour": "V",
-      "observance": "Thursday of Christmas Time",
-      "id": ""
-    },
-    {
       "date": "2027-01-08",
       "hour": "L",
       "observance": "Friday of Christmas Time",
-      "id": ""
-    },
-    {
-      "date": "2027-01-08",
-      "hour": "V",
-      "observance": "Friday of Christmas Time",
-      "id": ""
-    },
-    {
-      "date": "2027-01-09",
-      "hour": "L",
-      "observance": "Saturday of Christmas Time",
-      "id": ""
+      "id": "xmas-after-epiphany-fri-mp"
     },
     {
       "date": "2027-01-25",
@@ -175,12 +79,6 @@
       "id": "0222-ep2"
     },
     {
-      "date": "2027-03-19",
-      "hour": "L",
-      "observance": "Saint Joseph, Spouse of the Blessed Virgin Mary",
-      "id": "0319-mp-joseph"
-    },
-    {
       "date": "2027-03-21",
       "hour": "L",
       "observance": "Palm Sunday of the Passion of the Lord",
@@ -191,12 +89,6 @@
       "hour": "V",
       "observance": "Saturday within the Octave of Easter",
       "id": "easter-w01-sat-ep"
-    },
-    {
-      "date": "2027-05-03",
-      "hour": "L",
-      "observance": "Saints Philip and James, Apostles",
-      "id": "0503-mp"
     },
     {
       "date": "2027-05-03",
@@ -217,24 +109,6 @@
       "id": "easter-w06-fri-ep"
     },
     {
-      "date": "2027-05-09",
-      "hour": "L",
-      "observance": "The Ascension of the Lord",
-      "id": "ascension-thursday-mp"
-    },
-    {
-      "date": "2027-05-14",
-      "hour": "L",
-      "observance": "Saint Matthias, Apostle",
-      "id": "0514-mp"
-    },
-    {
-      "date": "2027-05-14",
-      "hour": "V",
-      "observance": "Saint Matthias, Apostle",
-      "id": "0514-ep2"
-    },
-    {
       "date": "2027-05-31",
       "hour": "L",
       "observance": "Visitation of the Blessed Virgin Mary",
@@ -245,30 +119,6 @@
       "hour": "V",
       "observance": "Visitation of the Blessed Virgin Mary",
       "id": "0531-ep2"
-    },
-    {
-      "date": "2027-06-23",
-      "hour": "V",
-      "observance": "Nativity of Saint John the Baptist",
-      "id": "0624-ep1"
-    },
-    {
-      "date": "2027-06-28",
-      "hour": "V",
-      "observance": "Saints Peter and Paul, Apostles",
-      "id": "0629-ep1"
-    },
-    {
-      "date": "2027-06-29",
-      "hour": "L",
-      "observance": "Saints Peter and Paul, Apostles",
-      "id": "0629-mp"
-    },
-    {
-      "date": "2027-06-29",
-      "hour": "V",
-      "observance": "Saints Peter and Paul, Apostles",
-      "id": "0629-ep2"
     }
   ]
 }

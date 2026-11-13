@@ -72,7 +72,24 @@
       return !!prefix&&!!actual&&normalize(prefix)===normalize(actual);
     });
   }
+  // Resolve the publisher's actual source IDs, which are not uniform date slugs.
+  const properSources=Object.freeze({
+    '0319-mp-joseph':'lent-0319-mp',
+    '0503-mp':'0503-philip-and-james-mp',
+    '0624-ep1':'0624-ep1-nativity-of-john-baptist',
+    '0629-mp':'0629-mp-peter-and-paul',
+    '0629-ep1':'0629-ep1-peter-and-paul',
+    '0629-ep2':'0629-ep2-peter-and-paul',
+    'ascension-thursday-mp':'morning-prayer-ascension-thursday',
+    '1217-adv-w03-thu-ep':'1217-adv-w03-thu-ep2',
+    '1223-adv-w04-wed-ep':'1223-w04-wed-ep'
+  });
   function properId(L,date,which,options={},first=false){
+    const id=rawProperId(L,date,which,options,first);
+    if(/^0514-(?:mp|ep2)$/.test(id)&&L.roman(date,options).season==='Easter Time')return 'easter-'+id;
+    return properSources[id]||id;
+  }
+  function rawProperId(L,date,which,options={},first=false){
     const day=L.roman(date,options),hour=which==='L'?'mp':first?'ep1':date.getUTCDay()===0?'ep2':'ep';
     const md=L.iso(date).slice(5).replace('-','');
     const feastHour=which==='L'?'mp':first?'ep1':'ep2';
@@ -96,6 +113,23 @@
     if(day.season==='Advent'){
       const week=Math.floor((date-L.advent(date.getUTCFullYear()))/6048e5)+1;
       return `${date.getUTCMonth()===11&&date.getUTCDate()>=17?md+'-':''}adv-w0${week}-${days[date.getUTCDay()]}-${hour}`;
+    }
+    if(day.season==='Christmas Time'){
+      if(/^12(?:29|30|31)$/.test(md)){
+        if(md==='1230')return `xmas-sixth-day-in-the-octave-${which==='L'?'mp':'ep'}`;
+        return md+'-'+(which==='L'?'mp':'ep2');
+      }
+      // These weekday propers follow the observed Epiphany, including the US
+      // Sunday transfer. A January date alone does not establish that context.
+      let epiphany=L.D(date.getUTCFullYear(),1,6);
+      if(options.epiphany==='sunday'){
+        const jan2=L.D(date.getUTCFullYear(),1,2);epiphany=L.add(jan2,(7-jan2.getUTCDay())%7);
+      }
+      if(date>epiphany&&date.getUTCMonth()===0){
+        const dow=days[date.getUTCDay()];
+        const suffix=which==='L'?'mp':['wed','fri'].includes(dow)?'ep2':'ep';
+        return `xmas-after-epiphany-${dow}-${suffix}`;
+      }
     }
     if(day.season==='Lent')return diff < -42 ? `lent-w00-${days[date.getUTCDay()]}-${hour}`
       :`lent-w0${Math.floor((diff+42)/7)+1}-${days[date.getUTCDay()]}-${hour}`;

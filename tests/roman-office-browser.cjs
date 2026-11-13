@@ -24,6 +24,16 @@ module.exports=async function(page,base,artifacts){
     const text=await page.locator('#st0').innerText();assert.match(text,pattern);
     assert.doesNotMatch(text,/Scriptural refrain:/);
   }
+  for(const [date,kind,pattern]of [
+    ['2026-12-17','evening',/O Wisdom/],['2026-12-23','evening',/O Emmanuel/],
+    ['2026-12-30','morning',/born/],['2027-01-06','morning',/seen his star/],
+    ['2027-05-14','evening',/chosen you/],['2027-06-28','evening',/How glorious are the apostles/]
+  ]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=${kind}`);
+    const text=await page.locator('#st0').innerText();assert.match(text,pattern);
+    assert.doesNotMatch(text,/Scriptural refrain:|Intercessions \(devotional\)/);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  }
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-19&kind=night`);
   assert.match(await page.locator('#st0').innerText(),/send peaceful sleep/);
   assert.match(await page.locator('#st0').innerText(),/restful night and a peaceful death/);
