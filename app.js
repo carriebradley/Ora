@@ -1143,13 +1143,29 @@
       const label=+num+1;
       return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate; approximately Psalm ${label} in modern numbering)</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\\s*\\*\\s*/g,' ')).join('<br>')}</p></div>`;
     }).join('');
-    return `<p class="muted" style="font-size:.8rem">Night Prayer · ${chosen.note}. Weekday psalm selection follows the modern Roman pattern; Douay-Rheims wording is used for personal prayer. Proper antiphons, readings, responsories and concluding prayers still require verification against the approved edition.</p>
+    return `
       <div class="sec"><b>Introduction and examination of conscience</b><p>O God, come to my assistance. O Lord, make haste to help me.</p><p class="muted">Review the day in silence, giving thanks and asking forgiveness.</p></div>
       <div class="sec"><b>Hymn</b><p class="muted">Use the appointed hymn from the authorized daily office.</p></div>
       ${psalms}
       <div class="sec"><b>Short reading and responsory</b><p class="muted">Consult the authorized text linked below for the appointed reading and responsory.</p></div>
       <div class="sec"><b>Canticle of Simeon (Nunc Dimittis)</b><p>${esc(C.TEXTS.nunc)}</p></div>
       <div class="sec"><b>Concluding prayer and blessing</b><p class="muted">Use the appointed concluding prayer from the authorized office.</p><p>May the all-powerful Lord grant us a restful night and a peaceful death. Amen.</p></div>`;
+  }
+  // Hide editorial notices from daily Roman Office without editing prayers.
+  function officePrayerMarkup(markup) {
+    const container=document.createElement('div');
+    container.innerHTML=markup;
+    for(const paragraph of container.querySelectorAll('p')){
+      const text=(paragraph.textContent||'').replace(/\s+/g,' ').trim();
+      if((/modern four.week psalter|each psalm.s antiphon is its own opening verse|current books. antiphons, readings and intercessions/i.test(text)
+        && /Douay|copyright|Vulgate|traditional ones/i.test(text))
+        || /^(?:source note|editorial note):/i.test(text))paragraph.remove();
+    }
+    return container.innerHTML;
+  }
+  function officeHourLabel(which,rite) {
+    if(rite==='roman')return {L:'Morning Prayer',V:'Evening Prayer',C:'Night Prayer',O:'Office of Readings'}[which]||'Prayer text';
+    return 'Prayer text';
   }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
@@ -1171,7 +1187,7 @@
       else if (s.type === 'quote') h += `<div class="quote">“${esc(s.q.t)}”<small>${esc(s.q.s)} · ${esc(s.q.w)}</small></div>`;
       else if (s.type === 'art') h += artHTML(s.a);
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
-      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">Show or hide</summary>${rite === 'roman' ? (s.which === 'C' ? romanNightHTML() : Hours.modern(L, P(st.date), s.which)) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div><p class="muted" style="font-size:.78rem">For the full modern text with the official antiphons, readings and intercessions, use the buttons above.</p>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Other English resources for this office:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
+      else if (s.type === 'office') h += (window.Hours ? `<details open><summary class="muted">${officeHourLabel(s.which,rite)}</summary>${rite === 'roman' ? (s.which === 'C' ? romanNightHTML() : officePrayerMarkup(Hours.modern(L, P(st.date), s.which))) : rite === 'sarum' ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted" style="font-size:.82rem">The Sarum office for this part of the year has not been added yet (the Sarum office now covers the whole year of seasons; this may be a day the app cannot place). Nothing is shown in its place, so as not to repeat the Roman office.</p>') : Hours.hour(L, P(st.date), s.which)}</details>${rite === 'roman' ? `<div class="row">${linksHTML('roman', s.hour)}</div>` : rite === 'sarum' ? `<p class="muted" style="font-size:.78rem;margin-top:8px">Other English resources for this office:</p><div class="row">${linksHTML('sarum', 'any')}</div>` : ''}` : '');
       else if (s.type === 'matins') h += Hours.sarumMatins ? `<details class="matins-d" open><summary class="muted">Show or hide</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : '';
       else if (s.type === 'little') h += `<div class="muted" style="font-size:.82rem">Prime at about 6, Terce at 9, Sext at noon, None at 3. Open each hour to pray it.</div>${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'sarumhours') h += `<div class="muted" style="font-size:.82rem">Matins at night; Prime, Terce, Sext and None at about 6, 9, noon and 3.</div>${Hours.sarumMatins ? `<details class="matins-d" style="margin:4px 0"><summary class="muted">Matins</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : ''}${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
@@ -1332,6 +1348,7 @@
         <p class="muted"><b>Prayer reader notes:</b> The Roman Gloria and creed are available for personal prayer but are not appointed at every Mass. The English Melkite <a href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener noreferrer">2009 draft Divine Liturgy</a> has not been verified as the currently approved edition. Saved prayer books remain private on your device.</p>
         <p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ukrainian Catholic</h3><p><a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton · calendar and daily liturgical texts</a></p><p><a href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener noreferrer">New Westminster · fixed Menaion</a></p><h3>Melkite Catholic</h3><p><a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Melkite liturgical resources</a></p><h3>Additional Ruthenian references</h3><p class="muted">A separate local calendar and translation; these do not supply the selected Edmonton calendar.</p><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p>
         <details class="more-source-sub more-source-nested"><summary>Divine Office texts</summary><div class="more-source-content">
+        <p class="muted"><b>Roman Office source details:</b> Ora uses a devotional four-week psalter with Douay-Rheims psalms and traditional responsories. Current authorized editions may have different antiphons, readings, and intercessions; those texts are not reproduced in full.</p>
         <p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For the selected date’s Ukrainian Hours and Vespers, consult the <a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton liturgical calendar</a>. Roman and Traditional texts also identify their sources within the prayers.</p>
         <p class="muted">The modern Roman Liturgy of the Hours in Ora includes devotional adaptations; see the detailed sources and acknowledgments below.</p>
       </div></details>
