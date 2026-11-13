@@ -134,7 +134,10 @@
     return RO.psalterWeek(L,date,options);
   }
   function canticleBlock(label, refs) {
-    return `<div class="psalm"><div class="muted" style="font-size:.78rem">${esc(label)}</div><div class="asv" data-ref="${esc(refs)}" data-tr="dra"></div><div class="muted" style="margin-top:6px">${esc(H.g.Gloria).replace(/\n/g, '<br>')}</div></div>`;
+    const bundled=RO.canticleText(refs);
+    const body=bundled?bundled.paragraphs.map(text=>`<p>${esc(text).replace(/\n/g,'<br>')}</p>`).join('')
+      : `<div class="asv" data-ref="${esc(refs)}" data-tr="dra"></div>`;
+    return `<div class="psalm"><div class="muted" style="font-size:.78rem">${esc(label)}</div>${body}<div class="muted" style="margin-top:6px">${esc(H.g.Gloria).replace(/\n/g, '<br>')}</div></div>`;
   }
   function modernPsalmody(L, date, which, options) {
     const context=which==='V'?RO.evening(L,date,options):{d:date,first:false,observance:L.roman(date,options)};

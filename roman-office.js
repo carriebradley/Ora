@@ -118,5 +118,30 @@
     if(day.rank==='Memorial'&&/^Saint Josaphat,/.test(day.title))return readings.peter;
     return null;
   }
-  return {reference,psalterWeek,evening,night,properPsalmody,properReading};
+  // Public-domain clause excerpts following the First Edition canticle's
+  // biblical selection. These are not the copyrighted ICEL/NAB wording.
+  const canticles={
+    'Revelation 11:17-18|Revelation 12:10-12':{
+      ref:'Revelation 11:17–18; 12:10b–12a',translation:'Douay-Rheims',rights:'public-domain',
+      paragraphs:[
+        'We give thee thanks, O Lord God Almighty, who art, and who wast: because thou hast taken to thee thy great power, and thou hast reigned.',
+        'And the nations were angry, and thy wrath is come, and the time of the dead, that they should be judged, and that thou shouldest render reward to thy servants the prophets and the saints, and to them that fear thy name, little and great.',
+        'Now is come salvation, and strength, and the kingdom of our God, and the power of his Christ: because the accuser of our brethren is cast forth, who accused them before our God day and night.',
+        'And they overcame him by the blood of the Lamb, and by the word of the testimony, and they loved not their lives unto death.',
+        'Therefore rejoice, O heavens, and you that dwell therein.'
+      ]
+    },
+    'Revelation 19:1-7':{
+      ref:'See Revelation 19:1–7',translation:'Douay-Rheims',rights:'public-domain',
+      paragraphs:[
+        'Alleluia.\nSalvation, and glory, and power is to our God.\nFor true and just are his judgments.\nAlleluia.',
+        'Alleluia.\nGive praise to our God, all ye his servants; and you that fear him, little and great.\nAlleluia.',
+        'Alleluia.\nFor the Lord our God the Almighty hath reigned.\nLet us be glad and rejoice, and give glory to him.\nAlleluia.',
+        'Alleluia.\nFor the marriage of the Lamb is come, and his wife hath prepared herself.\nAlleluia.'
+      ]
+    }
+  };
+  for(const text of Object.values(canticles)){Object.freeze(text.paragraphs);Object.freeze(text);}
+  function canticleText(refs){return canticles[refs]||null;}
+  return {reference,psalterWeek,evening,night,properPsalmody,properReading,canticleText};
 });
