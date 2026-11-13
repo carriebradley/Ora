@@ -33,5 +33,23 @@ test('fixed Compline additions preserve the Byzantine Creed and source provenanc
  assert.match(B.fixed.creed,/who proceedeth from the Father/);assert.doesNotMatch(B.fixed.creed,/proceedeth from the Father and the Son/);
  assert.match(B.fixed.doxology,/Every evening will I bless thee/);
  assert.match(B.fixed.prayerHours,/Sanctify our souls/);
- assert.deepEqual(C.FLOWS.byz.night.filter(s=>s.type==='byzfixed').map(s=>s.key),['doxology','creed','prayerHours']);
+ assert.deepEqual(C.FLOWS.byz.night.filter(s=>s.type==='byzfixed').map(s=>s.key),['comeWorship','doxology','creed','worthy','prayerHours','glory','moreHonourable','motherOfGod','beforeSleep','mostGlorious','trinityProtection']);
+});
+test('expanded companions preserve the order of fixed prayers and psalm groups',()=>{
+ const night=C.FLOWS.byz.night.map(s=>s.key||s.title),v=C.FLOWS.byz.evening;
+ assert.ok(night.indexOf('creed')<night.indexOf('worthy'));
+ assert.ok(night.indexOf('worthy')<night.indexOf('prayerHours'));
+ assert.ok(night.indexOf('motherOfGod')<night.indexOf('beforeSleep'));
+ assert.match(B.fixed.motherOfGod,/^O thou Virgin/);assert.match(B.fixed.beforeSleep,/^And grant unto us/);
+ assert.match(B.fixed.vespersVouchsafe,/despise not thou the works of thine own hands/);
+ assert.equal(v.find(s=>s.title==='Lord, I have cried').psalms,'140;141;129;116');
+ assert.ok(v.findIndex(s=>s.title==='Song of Simeon')<v.findIndex(s=>s.title==='Other appointed troparia · service book'));
+});
+test('Resurrection hymns use the verified Sunday tone, including Saturday Vespers',()=>{
+ const d={tone:8,pascha:'2026-04-05',title:'Sunday'};
+ assert.equal(B.resurrectionFor('morning','2026-11-15',d,true).text,B.resurrection['8'].text);
+ assert.equal(B.resurrectionFor('evening','2026-11-14',d,true).date,'2026-11-15');
+ for(const [kind,date,verified]of [['evening','2026-11-15',true],['morning','2026-11-14',true],['night','2026-11-15',true],['morning','2026-11-15',false],['morning','2026-04-05',true],['morning','2026-05-24',true]])assert.equal(B.resurrectionFor(kind,date,d,verified),null);
+ assert.equal(Object.keys(B.resurrection).length,8);
+ for(const h of Object.values(B.resurrection)){assert.ok(h.text.length>150);assert.doesNotMatch(h.text,/【|‚Ä|\ufffd/);}
 });

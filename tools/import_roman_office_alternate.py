@@ -17,10 +17,10 @@ def extract(capture,url,common=False):
         text='\n'.join(rows[i].strip() for i in range(a,b)).strip()
         if '【' in text or '\ufffd' in text:raise ValueError('Unresolved source artifact')
         return re.sub(r'^\s*[-–]\s*','— ',text,flags=re.M)
-    ps=find(r'^PSALMODY$');rd=find(r'^READING\b',ps or 0);resp=find(r'^RESPONSORY$',rd or 0)
-    gospel=find(r'^(?:BENEDICTUS|MAGNIFICAT)\b',resp or 0);inter=find(r'^INTERCESSIONS$',gospel or 0)
-    father=find(r'^Our Father',inter or 0);coll=find(r'^(?:COLLECT|PRAYER)$',father or 0)
-    end=find(r'^May the Lord bless us',coll or 0)
+    ps=find(r'^PSALMODY$');rd=find(r'^READING\b',ps or 0);resp=find(r'^RESPONSORY:?$',rd or 0)
+    gospel=find(r'^(?:BENEDICTUS|MAGNIFICAT)\b',resp or 0);inter=find(r'^INTERCESSIONS:?$',gospel or 0)
+    father=find(r'^Our Father',inter or 0);coll=find(r'^(?:COLLECT|PRAYER|Closing Prayer):?$',father or 0)
+    end=find(r'^(?:May the Lord bless us|Alternative Prayer|\* \* \*)',coll or 0)
     if any(x is None for x in [ps,rd,resp,gospel,inter,father]):raise ValueError('Incomplete Office witness')
     out={'source':url,'edition':'first','antiphons':[],'psalmodyRefs':[]};current=None;prayers={}
     for n in range(ps+1,rd):
@@ -39,7 +39,7 @@ def extract(capture,url,common=False):
     if len(out['antiphons'])!=3 or not all(out['psalmodyRefs']):raise ValueError('Incomplete psalmody')
     if prayers:out['psalmPrayers']=prayers
     out['responsory']=between(resp+1,gospel)
-    ant=find(r'^Antiphon\s*:',gospel+1)
+    ant=next((n for n in sorted(rows,reverse=True) if gospel<n<inter and re.match(r'^Antiphon\s*:',rows[n],re.I)),None)
     if ant is None or ant>=inter:raise ValueError('Missing Gospel antiphon')
     out['gospelAntiphon']=' '.join(re.sub(r'^Antiphon\s*:\s*','',between(ant,inter)).split())
     out['intercessions']=between(inter+1,father)

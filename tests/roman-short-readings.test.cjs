@@ -1,7 +1,7 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const D=require('../roman-short-readings.js'),H=require('../hours.js'),L=require('../calendar.js');
 test('appointed short readings have clean public-domain verse text and provenance',()=>{
- assert.equal(Object.keys(D.records).length,202);
+ assert.equal(Object.keys(D.records).length,203);
  for(const [ref,r]of Object.entries(D.records)){
   assert.equal(r.officeRef,ref);assert.equal(r.rights,'public-domain');assert.ok(r.text.length>35,ref);
   assert.ok(r.source.length);for(const u of r.source)assert.match(u,/^https:\/\/(?:(?:www\.)?drbo\.org\/chapter\/\d{5}\.htm|ebible\.org\/eng-lxx2012\/JDT08\.htm)$/);

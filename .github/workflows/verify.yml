@@ -42,12 +42,12 @@ jobs:
             const path = '/tmp/ora-browser-audit/browser-log.txt';
             const text = fs.existsSync(path) ? fs.readFileSync(path, 'utf8').slice(-20000) : 'Browser step did not start.';
             await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Browser diagnostics', status: 'completed', conclusion: 'neutral', output: {title: 'Ora browser audit output', summary: '```text\n' + text + '\n```'}});
-            for (const theme of ['light', 'dark']) {
-              const preview = '/tmp/ora-browser-audit/roman-icel-preview-' + theme + '.jpg';
+            for (const family of ['roman-icel','byzantine-expanded','oor-expanded']) for (const theme of ['light', 'dark']) {
+              const preview = '/tmp/ora-browser-audit/' + family + '-preview-' + theme + '.jpg';
               if (!fs.existsSync(preview)) continue;
               const image = fs.readFileSync(preview).toString('base64');
               if (image.length > 60000) continue;
-              await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Mobile prayer preview ' + theme, status: 'completed', conclusion: 'neutral', output: {title: '390px Roman Office screenshot', summary: 'JPEG_BASE64:' + image}});
+              await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Mobile prayer preview ' + family + ' ' + theme, status: 'completed', conclusion: 'neutral', output: {title: '390px ' + family + ' screenshot', summary: 'JPEG_BASE64:' + image}});
             }
       - uses: actions/upload-artifact@v4
         if: always()

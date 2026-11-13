@@ -27,7 +27,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await require('./sacred-art-browser.cjs')(page,base,artifacts);
  await require('./liturgical-colors-browser.cjs')(page,base);
  await require('./roman-office-browser.cjs')(page,base,artifacts);
- await require('./byzantine-office-browser.cjs')(page,base);
+ await require('./byzantine-office-browser.cjs')(page,base,artifacts);
  await require('./theme-browser.cjs')(page,base);
  await require('./swipe-browser.cjs')(browser,base);
  await require('./justice-browser.cjs')(page,base,artifacts);
@@ -139,7 +139,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-16&kind=evening`);
  assert.match(await page.locator('#st0').innerText(),/marriage of the Lamb is come/);
  const offline=await page.evaluate(async()=>{const out={};for(const f of ['matins.json','fathers.json','oortext.json']){const r=await fetch(f);out[f]=[r.status,Object.keys(await r.json()).length]}return out});
- assert.equal(offline['oortext.json'][1],64);assert.equal(offline['matins.json'][0],200);
+ assert.equal(offline['oortext.json'][1],71);assert.equal(offline['matins.json'][0],200);
  assert.deepEqual(errors,[]);
  await context.setOffline(false);
  for(const colorScheme of ['light','dark']) {

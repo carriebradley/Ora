@@ -37,6 +37,19 @@ module.exports=async function(page,base,artifacts){
     assert.doesNotMatch(text,/Intercessions \(devotional\)|Short reading \(traditional chapter\)|Scriptural refrain:/);
     assert.equal(await page.locator('.prayer-opening').count(),1);
   }
+  for(const [date,pattern]of [['2026-11-17',/Elizabeth recognized and loved Christ/],['2026-11-29',/On the twofold coming of Christ/],['2026-11-30',/We have found the Messiah/],['2026-12-01',/The marvel of the Incarnation/],['2026-12-07',/By the grace of your words/],['2027-03-23',/By one death and resurrection/],['2027-03-24',/The perfection of love/]]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=readings`);
+    await page.locator('.oortx-slot').filter({hasText:pattern}).waitFor();
+    const slot=page.locator('.oortx-slot').first();assert.match(await slot.innerText(),/Responsory/);
+    assert.equal(await slot.locator('.roman-office-credit').count(),1);
+    assert.match(await slot.innerText(),/No ICEL affiliation or endorsement/);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  }
+  for(const colorScheme of ['light','dark']){
+    await page.emulateMedia({colorScheme});await page.locator('.oortx-slot').first().scrollIntoViewIfNeeded();
+    await page.screenshot({path:path.join(artifacts,`oor-expanded-preview-${colorScheme}.jpg`),type:'jpeg',quality:30});
+  }
+  await page.emulateMedia({colorScheme:'light'});
   // First Edition uses these same hour-specific Sunday antiphons in A/B/C.
   for(const [date,kind,pattern]of [
     ['2026-11-14','evening',/Well done, my good and faithful servant/],

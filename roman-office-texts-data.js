@@ -9407,6 +9407,136 @@
       "intercessions": "In company with all who have been reconciled with the Father by the power of his Holy Spirit, let us join in prayer and praise, saying:\nMay your Spirit come to our aid.\n\nLord Jesus, may we be guided today by God’s Spirit,\n— and walk always as children of your Father.\nMay your Spirit come to our aid.\nThrough your Spirit intercede for us with the Father,\n— that we may be made worthy to receive what you promise.\nMay your Spirit come to our aid.\n\nGive us a generous heart, that we may not seek our selfish interests,\n— but be concerned for the good of others.\nMay your Spirit come to our aid.\n\nTeach us to know God,\n— that we may advance in knowledge of you and the Father through the Holy Spirit.\nMay your Spirit come to our aid.",
       "collect": "Graciously\nhear our supplications,\nO Lord, so that we,\nwho believe that the Savior of the human race\nis with you in your glory,\nmay experience, as he promised,\nuntil the end of the world,\nhis abiding presence among us.\nWho lives and reigns with you in the unity of the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
       "readingRef": "Acts 10:40-43"
+    },
+    "ord-w09-sun-ep1": {
+      "source": "https://www.liturgies.net/Liturgies/Catholic/loh/week9sundayep1.htm",
+      "edition": "first",
+      "antiphons": [
+        "Like burning incense, Lord, let my prayer rise up to you.",
+        "You are my refuge, Lord, you are all that I desire in life.",
+        "The Lord Jesus humbled himself, and God exalted him forever."
+      ],
+      "psalmodyRefs": [
+        "Psalm 141",
+        "Psalm 142",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "psalmPrayers": {
+        "0": "Lord, from the rising of the sun to its setting your name is worthy of all praise. Let our prayer come like incense before you. May the lifting up of our hands be as an evening sacrifice acceptable to you, Lord our God.",
+        "1": "Lord, we humbly ask for your goodness. May you help us to hope in you, and give us a share with your chosen ones in the land of the living."
+      },
+      "responsory": "Our hearts are filled with wonder as we contemplate your works, O Lord.\n— - Our hearts are filled with wonder as we contemplate your works, O Lord.\nWe praise the wisdom which wrought them all,\n— as we contemplate your works, O Lord.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— - Our hearts are filled with wonder as we contemplate your works, O Lord.",
+      "gospelAntiphon": "Not everyone who says, \"Lord, Lord,\" will enter the kingdom of heaven, but the one who does the will of my heavenly Father will certainly enter it.",
+      "intercessions": "We give glory to the one God, Father, Son and Holy Spirit, and in our weakness we pray:\n\nLord, be with your people.\n\nHoly Lord, Father all-powerful, let justice spring up on the earth,\n— then your people will dwell in the beauty of peace.\nLet every nation come into your kingdom,\n— so that all peoples will be saved.\n\nLet married couples live in your peace,\n— and grow in mutual love.\n\nReward all who have done good to us, Lord,\n— and grant them eternal life.\nLord, you attend the dying with great mercy,\n— grant them an eternal dwelling.",
+      "collect": "Father,\nyour love never fails.\nHear our call.\nKeep us from danger\nand provide for all our needs.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Romans 11:33-36",
+      "readingSource": "https://divineoffice.org/ord-w05-sun-ep1/",
+      "selectionNote": "Usual Psalter Week I short reading, corroborated by the corresponding Sunday of Week V. The alternate Week IX witness prints a longer biblical reading; its Gospel antiphon and concluding prayer are retained."
+    },
+    "xmas-second-sunday-ep1": {
+      "source": "https://www.liturgies.net/Liturgies/Catholic/loh/christmas/2ndsunday/eveningprayeri.htm",
+      "edition": "first",
+      "antiphons": [
+        "Trusting in the Lord's promise, the Virgin Mary conceived a child, and remaining a virgin she gave birth to the King of kings.",
+        "Sing for joy with Jerusalem; the Lord has refreshed her like a river of peace.",
+        "He who was from the beginning, God from God, Light from Light, is born for us."
+      ],
+      "psalmodyRefs": [
+        "Psalm 119",
+        "Psalm 16",
+        "Canticle – Philippians 2:6-11"
+      ],
+      "responsory": "The Word was made flesh; and lived among us.\n— The Word was made flesh and lived among us.\nFrom his fullness we have all received,\n— and he lived among us.\nGlory to the Father...\n— The Word was made flesh and lived among us.",
+      "gospelAntiphon": "By the power of the Holy Spirit the Virgin Mary has conceived a child; she carries in her womb this mystery which she cannot comprehend.",
+      "intercessions": "Christ Jesus emptied himself and took the form of a slave. He was tested like us in all things and did not sin.Now let us worship him and pray to him with deep faith.\nBy the power of your birth, comfort those who are saved.\nYou came into the world heralding the new age foretold by the prophets,\n— give your holy people the gift of renewal in every generation..\n\nYou once took on the weakness of our human condition,\n— be light now for those who do not see, strength for the wavering\nand comfort for the troubled heart.\n\nYou were born into poverty and lowliness,\n— look with favor on the poor and comfort them.\nBy your birth bring joy to all peoples with the promise of unending life,\n— give joy to the dying through the hope of heavenly birth.\nYou came to earth to lead everyone into the Kingdom,\n— share your life of glory with those who have died.",
+      "collect": "God of power and life,\nglory of all who believe in you,\nfill the world with Your splendor\nand show the nations the light of Your truth.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 John 5:20"
+    },
+    "ord-w09-sun-ep2": {
+      "source": "https://liturgies.net/Liturgies/Catholic/loh/week9sundayep2.htm",
+      "edition": "first",
+      "antiphons": [
+        "The Lord will stretch forth his mighty scepter from Zion, and he will reign for ever, alleluia.",
+        "The earth is shaken to its depths before the glory of your face.",
+        "All power is yours, Lord God, our mighty king, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 114",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "psalmPrayers": {
+        "0": "Father, we ask you to give us victory and peace. In Jesus Christ, our Lord and King, we are already seated at your right hand. We look forward to praising you in the fellowship of all your saints in our heavenly homeland.",
+        "1": "Almighty God, ever-living mystery of unity and trinity, you gave life to the new Israel by birth from water and the Spirit, and made it a chosen race, a royal priesthood, a people set apart as your eternal possession. May all those you have called to walk in the splendor of the new light render you fitting service and adoration."
+      },
+      "responsory": "The whole creation proclaims the greatness of your glory.\n— The whole creation proclaims the greatness of your glory.\nEternal ages praise\n— the greatness of your glory.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— The whole creation proclaims the greatness of your glory.",
+      "gospelAntiphon": "Lord, I am not worthy to have you enter my house; just say the word and my servant will be healed.",
+      "intercessions": "Christ the Lord is our head; we are his members. In joy let us call out to him:\nLord, may your kingdom come.\n\nChrist our Savior, make your Church a more vivid symbol of the unity of all people,\n— make it more effectively the sacrament of salvation for all peoples.\n\nThrough your presence, guide the college of bishops in union with the Pope,\n— give them the gifts of unity, love and peace.\n\nBind all Christians more closely to yourself, their divine Head,\nlead them to proclaim your kingdom by the witness of their lives.\nGrant peace to the world,\n— let every land flourish in justice and security.\nGrant to the dead the glory of resurrection,\n— and give us a share in their happiness.",
+      "collect": "Father,\nyour love never fails.\nHear our call.\nKeep us from danger\nand provide for all our needs.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "2 Corinthians 1:3-4",
+      "readingSource": "https://divineoffice.org/ord-w05-sun-ep2/",
+      "selectionNote": "Usual Psalter Week I short reading, corroborated by the corresponding Sunday of Week V. The alternate Week IX witness prints a longer biblical reading; its Gospel antiphon and concluding prayer are retained."
+    },
+    "xmas-second-sunday-mp": {
+      "source": "https://www.liturgies.net/Liturgies/Catholic/loh/christmas/2ndsunday/morningprayer.htm",
+      "edition": "first",
+      "antiphons": [
+        "A light has dawned for the just man: the Savior of the world is born, alleluia.",
+        "Let us sing to the Lord our God.",
+        "The people who lived in darkness have seen a great light."
+      ],
+      "psalmodyRefs": [
+        "Psalm 118",
+        "Canticle – Daniel 3:52-57",
+        "Psalm 150"
+      ],
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\nYou were obedient to Mary and Joseph,\n— have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "The Virgin believed in the Lord's promise: as a virgin she gave birth to the Word made flesh, and yet she remained a virgin. Let us praise her and say: Blessed are you among women.",
+      "intercessions": "The Word of God existed before the creation of the universe yet was born among us in time. We praise and worship him as we cry out in joy.\nLet the earth ring out with joy for you have come!\n\nYou are the eternal Word of God who flooded the world with joy at your birth,\n— fill us with joy by the continuous gift of your life.\n\nYou saved us and by your birth revealed to us the covenant faithfulness of the Lord,\n— help us to be faithful to the promises of our baptism.\n\nYou are the King of heaven and earth who sent messengers to announce peace to all,\n— let our lives be filled with your peace.\nYou are the true vine that brings forth the fruit of life,\n— make us branches of the vine bearing much fruit.",
+      "collect": "God of power and life,\nglory of all who believe in you,\nfill the world with Your splendor\nand show the nations the light of Your truth.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "Hebrews 1:1-2"
+    },
+    "xmas-second-sunday-ep2": {
+      "source": "https://www.liturgies.net/Liturgies/Catholic/loh/christmas/2ndsunday/eveningprayerii.htm",
+      "edition": "first",
+      "antiphons": [
+        "This pledge of new redemption and promise of eternal joy, prepared through ages past, has dawned for us today.",
+        "The Lord has made manifest his steadfast love for us.",
+        "The Lord, the King of kings, is born for us; the day of the world's salvation has come; the promise of our redemption is fulfilled, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 110",
+        "Psalm 115",
+        "Canticle – See Revelation 19:1-7"
+      ],
+      "responsory": "The Word was made flesh, alleluia, alleluia.\n— The Word was made flesh, alleluia, alleluia.\nHe lived among us.\n— Alleluia, alleluia.\nGlory to the Father, and to the Son, and to the Holy Spirit.\n— The Word was made flesh, alleluia, alleluia.",
+      "gospelAntiphon": "Blessed is the womb that bore the Son of the Eternal Father, and blessed are the breasts that nursed Christ the Lord.",
+      "intercessions": "At the birth of Jesus, angels proclaimed peace to the world.\nWe worship him now with joy, and we pray with hearts full of faith:\n\nMay your birth bring peace to all.\n\nLord, fill your holy people with whatever good they need,\n— let the mystery of your birth be the source of our peace.\n\nYou came as chief shepherd and guardian of our lives,\n— let the pope and bishops be faithful channels of your many gifts of grace.\nKing from all eternity, you desired to be born within time\nand to experience the day-to-day life of men and women,\n— share your gift of unending life with us, weak people doomed to death.\n\nAwaited from the beginning of the world, you came only in the fullness of time,\n— now reveal your presence to those who are expecting you.\n\nYou became one of us and gave new life to our human condition in the grip of death,\n— now give the fullness of life to all who have died.",
+      "collect": "God of power and life,\nglory of all who believe in you,\nfill the world with Your splendor\nand show the nations the light of Your truth.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you and the Holy Spirit,\nGod, for ever and ever.\n— Amen.",
+      "readingRef": "1 John 1:1-3"
+    },
+    "ord-w09-sun-mp": {
+      "source": "https://divineoffice.org/ord-w09-sun-mp/",
+      "edition": "first",
+      "antiphons": [
+        "As morning breaks I look to you, O God, to be my strength this day, alleluia.",
+        "From the midst of the flames the three young men cried out with one voice: Blessed be God, alleluia.",
+        "Let the people of Zion rejoice in their King, alleluia."
+      ],
+      "psalmodyRefs": [
+        "Psalm 63",
+        "Canticle – Daniel 3:57-88, 56",
+        "Psalm 149"
+      ],
+      "psalmPrayers": {
+        "0": "Father, creator of unfailing light, give that same light to those who call to you. May our lips praise you; our lives proclaim your goodness; our work give you honor, and our voices celebrate you for ever.",
+        "2": "Let Israel rejoice in you, Lord, and acknowledge you as creator and redeemer. We put our trust in your faithfulness and proclaim the wonderful truths of salvation. May your loving kindness embrace us now and for ever."
+      },
+      "responsory": "Christ, Son of the living God, have mercy on us.\n— Christ, Son of the living God, have mercy on us.\n\nYou are seated at the right hand of the Father,\n— have mercy on us.\n\nGlory to the Father, and to the Son, and to the Holy Spirit,\n— Christ, Son of the living God, have mercy on us.",
+      "gospelAntiphon": "The sabbath was made for man, not man for the sabbath.",
+      "intercessions": "Christ is the sun that never sets, the true light that shines on every man. Let us call out to him in praise:\n— Lord, you are our life and our salvation.\n\nCreator of the stars, we thank you for your gift, the first rays of the dawn,\nand we commemorate your resurrection.\n— Lord, you are our life and our salvation.\n\nMay your Holy Spirit teach us to do your will today,\nand may your Wisdom guide us always.\n— Lord, you are our life and our salvation.\nEach Sunday give us the joy of gathering as your people,\naround the table of your Word and your Body.\n— Lord, you are our life and our salvation.\n\nFrom our hearts we thank you,\nfor your countless blessings.\n— Lord, you are our life and our salvation.",
+      "collect": "Father,\nyour love never fails.\nHear our call.\nKeep us from danger\nand provide for all our needs.\nGrant this through our Lord Jesus Christ, your Son,\nwho lives and reigns with you and the Holy Spirit,\none God, for ever and ever.\n— Amen.",
+      "readingRef": "Revelation 7:10, 12"
     }
   }
 };});

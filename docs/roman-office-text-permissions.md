@@ -46,7 +46,7 @@ standalone text databases, recordings or sublicensing texts to other publishers.
 | Dismissal / night blessing | Approximate wording | First Edition ordinary |
 | Compline | Generic antiphon, historical responsory, generic prayer | Seven weekday antiphon sets and prayers; special solemnity prayer; ICET Nunc Dimittis |
 | Hymns / Marian antiphons | Historical public-domain texts | Retained, separately credited; no assumption that a modern hymn or recording belongs to ICEL |
-| Office of Readings | Reading index and public-domain reading bodies | No existing ICEL prayer sections to replace; it remains an incomplete reader |
+| Office of Readings | Reading index and public-domain reading bodies | Selected approved ICEL nonbiblical readings and responsories now supplement the historical texts, with notices at both ends of each reading pane; the annual reader remains incomplete |
 
 ## Source integrity and liturgical selection
 

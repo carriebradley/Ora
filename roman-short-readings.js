@@ -2429,6 +2429,18 @@
       "rights": "public-domain",
       "wholeVerses": true,
       "referenceAdjusted": false
+    },
+    "1 John 5:20": {
+      "ref": "1 John 5:20",
+      "officeRef": "1 John 5:20",
+      "text": "And we know that the Son of God is come: and he hath given us understanding that we may know the true God, and may be in his true Son. This is the true God and life eternal.",
+      "source": [
+        "https://www.drbo.org/chapter/69005.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
     }
   },
   "unresolved": {}

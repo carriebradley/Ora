@@ -109,7 +109,7 @@
     const feastHour=which==='L'?'mp':first?'ep1':'ep2';
     const named=[
       [/Nativity of the Lord \(Christmas\)/,'1225'],[/Holy Family of Jesus/,'holy-family'],
-      [/Epiphany of the Lord/,'xmas-epiphany'],[/Baptism of the Lord/,'xmas-baptism-of-the-lord'],
+      [/Second Sunday after Christmas/,'xmas-second-sunday'],[/Epiphany of the Lord/,'xmas-epiphany'],[/Baptism of the Lord/,'xmas-baptism-of-the-lord'],
       [/Pentecost Sunday/,'easter-pentecost'],[/Most Holy Trinity/,'ord-trinity-sunday'],
       [/Body and Blood of Christ/,'ord-corpus-christi'],[/Most Sacred Heart/,'ord-sacred-heart'],
       [/King of the Universe/,'ord-w34-sun']

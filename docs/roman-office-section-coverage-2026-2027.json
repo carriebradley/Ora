@@ -21,5 +21,183 @@
   "missingSourceIds": [],
   "withheldPsalmodyIds": [],
   "withheldGospelAntiphonIds": [],
-  "unresolvedOffices": []
+  "unresolvedOffices": [],
+  "transferOptions": [
+    {
+      "options": {
+        "epiphany": "sunday",
+        "ascension": "sunday",
+        "corpus": "sunday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 360,
+        "psalter": 102,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "sunday",
+        "ascension": "sunday",
+        "corpus": "thursday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 362,
+        "psalter": 100,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "sunday",
+        "ascension": "thursday",
+        "corpus": "sunday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 360,
+        "psalter": 102,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "sunday",
+        "ascension": "thursday",
+        "corpus": "thursday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 362,
+        "psalter": 100,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "fixed",
+        "ascension": "sunday",
+        "corpus": "sunday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 360,
+        "psalter": 102,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "fixed",
+        "ascension": "sunday",
+        "corpus": "thursday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 362,
+        "psalter": 100,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "fixed",
+        "ascension": "thursday",
+        "corpus": "sunday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 360,
+        "psalter": 102,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    },
+    {
+      "options": {
+        "epiphany": "fixed",
+        "ascension": "thursday",
+        "corpus": "thursday"
+      },
+      "totals": {
+        "offices": 462,
+        "proper": 362,
+        "psalter": 100,
+        "antiphons": 462,
+        "responsory": 462,
+        "gospelAntiphon": 462,
+        "intercessions": 462,
+        "collect": 462,
+        "appointedShortReading": 462
+      },
+      "missingSourceIds": [],
+      "withheldPsalmodyIds": [],
+      "withheldGospelAntiphonIds": [],
+      "unresolvedOffices": []
+    }
+  ]
 }

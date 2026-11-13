@@ -64,3 +64,16 @@ test('imported optional saints keep the official US optional rank and weekday of
  assert.match(r.collect,/John Baptist de la Salle/);assert.match(r.weekdaySource,/easter-w02-wed-mp/);
  assert.deepEqual(r.antiphons,R.record('easter-w02-wed-mp').antiphons);
 });
+test('all eight transfer-setting combinations have complete audited Morning and Evening sections',()=>{
+ for(const epiphany of ['sunday','fixed'])for(const ascension of ['sunday','thursday'])for(const corpus of ['sunday','thursday']){
+  const opt={epiphany,ascension,corpus};
+  for(let d=L.D(2026,11,12);d<=L.D(2027,6,30);d=L.add(d,1))for(const which of ['L','V']){
+   const p=H.modernPsalmody(L,d,which,opt),r=R.select(L,p.d,which,opt,p),label=L.iso(d)+'/'+which+'/'+JSON.stringify(opt);
+   for(const key of ['antiphons','responsory','gospelAntiphon','intercessions','collect'])assert.ok(r?.[key],label+'/'+key);
+   assert.equal(r.antiphons.length,3,label);assert.ok(RO.properReading(L,p.d,which,opt,p.first)||SR.records[r.readingRef],label+'/reading');
+  }
+ }
+ for(const id of ['xmas-second-sunday-mp','xmas-second-sunday-ep1','xmas-second-sunday-ep2']){
+  const r=R.record(id);assert.doesNotMatch(r.collect,/Alternative Prayer/);assert.doesNotMatch(r.gospelAntiphon,/My soul proclaims|Blessed be the Lord/);
+ }
+});
