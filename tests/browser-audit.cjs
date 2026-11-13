@@ -23,6 +23,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.equal(metrics[1],'24px');assert.equal(metrics[3],'start');
   results.push(`${rite}/${tab}`);
  }
+ await require('./roman-office-browser.cjs')(page,base,artifacts);
  await require('./swipe-browser.cjs')(browser,base);
  await require('./justice-browser.cjs')(page,base,artifacts);
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='melkite';s.byzLiturgyChurch='melkite';s.byzAnna='9';delete s.ruthenian2026;localStorage.setItem('ora.settings',JSON.stringify(s));});
