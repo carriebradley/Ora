@@ -6,7 +6,7 @@
   else root.RomanOffice=factory();
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
   'use strict';
-  const reference=Object.freeze({edition:'first',textStatus:'devotional-adaptation',scripture:'Douay-Rheims',authorizedStructuredSource:null});
+  const reference=Object.freeze({edition:'first',textStatus:'mixed-official-and-public-domain',scripture:'Douay-Rheims',authorizedStructuredSource:null});
   const days=(a,b)=>Math.round((a-b)/864e5);
   const cycle=n=>((n-1)%4+4)%4+1;
   function psalterWeek(L,date,options={}){
@@ -48,8 +48,9 @@
     const solemnity=day.rank==='Solemnity';
     const sunday=context.d.getUTCDay()===0;
     const index=solemnity||sunday?(context.first?6:0):date.getUTCDay();
-    return {index,kind:solemnity?(context.first?'solemnity-i':'solemnity-ii'):sunday?(context.first?'sunday-i':'sunday-ii'):'weekday',observance:day.title,
-      easter:day.season==='Easter Time',alleluia:!['Lent','Holy Week','Paschal Triduum'].includes(day.season),reference};
+    return {index,sunday,kind:solemnity?(context.first?'solemnity-i':'solemnity-ii'):sunday?(context.first?'sunday-i':'sunday-ii'):'weekday',observance:day.title,
+      easter:day.season==='Easter Time',octave:days(date,L.westernEaster(date.getUTCFullYear()))>=0&&days(date,L.westernEaster(date.getUTCFullYear()))<=7,
+      alleluia:!['Lent','Holy Week','Paschal Triduum'].includes(day.season),reference};
   }
   const canticle=(label,ref)=>'b:Canticle · '+label+'|'+ref;
   const eph=canticle('Ephesians 1','Ephesians 1:3-10');

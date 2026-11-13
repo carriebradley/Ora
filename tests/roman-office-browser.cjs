@@ -1,6 +1,22 @@
 const assert=require('node:assert/strict');
 const path=require('node:path');
 module.exports=async function(page,base,artifacts){
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
+  const official=page.locator('#st0');
+  assert.match(await official.innerText(),/I lift up my heart to you, O Lord/);
+  assert.match(await official.innerText(),/Give us your Spirit, Lord/);
+  assert.match(await official.innerText(),/he has come to his people and set them free/);
+  assert.doesNotMatch(await official.innerText(),/Intercessions \(devotional\)|Scriptural refrain:/);
+  assert.equal(await official.locator('.roman-office-credit').count(),1);
+  for(const colorScheme of ['light','dark'])for(const width of [320,390]){
+    await page.emulateMedia({colorScheme});await page.setViewportSize({width,height:844});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await page.screenshot({path:path.join(artifacts,`roman-icel-${width}-${colorScheme}.png`),fullPage:true});
+  }
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-19&kind=night`);
+  assert.match(await page.locator('#st0').innerText(),/send peaceful sleep/);
+  assert.match(await page.locator('#st0').innerText(),/restful night and a peaceful death/);
+  assert.equal(await page.locator('#st0 .roman-office-credit').count(),1);
   for(const colorScheme of ['light','dark']){
     await page.setViewportSize({width:390,height:844});await page.emulateMedia({colorScheme});
     await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-17&kind=morning`);

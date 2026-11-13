@@ -168,3 +168,20 @@ The previously recorded whole-verse limitation is now corrected for the **Revela
 - Revelation 19 now contains four praise stanzas, with an Alleluia refrain, using the selected salvation/judgment, servants, reign/rejoicing and marriage clauses. Narrative introductions, the harlot passage, smoke and heavenly-creature narrative are excluded. The First Edition selection was compared with the [Pentecost II witness](https://divineoffice.org/easter-pentecost-ep2/); wording is public-domain [Douay–Rheims chapter 19](https://www.drbo.org/chapter/73019.htm).
 
 These remain public-domain **devotional renderings of the biblical canticles**, not approved ICEL translations. Punctuation/capitalization is adapted at excerpt boundaries. Other biblical canticles still require their own clause/verse audit. Unit checks verify selected endings and exclusions; the browser suite first opens Ascension and Pentecost Vespers offline to verify both bundled texts, and published checks verify their displayed text.
+
+
+## November 13: published ICEL / ICET permissions applied
+
+The earlier copyright restriction is superseded for eligible ICEL-owned text by
+ICEL’s published noncommercial website permission. See
+[the text inventory and permissions](roman-office-text-permissions.md).
+The ordinary, four-week psalter prayer sections and weekly Compline cycle now
+use sourced First Edition wording where appointed. Grail and NAB bodies,
+modern hymns, and recordings are separate and have not been imported by this
+change. No Second Edition texts have been introduced.
+
+All four weeks (56 Lauds/Vespers witnesses) were extracted with provenance.
+Sunday proper canticle antiphons and collects are excluded from the repeating
+four-week selection. Compline now distinguishes the Sunday concluding prayer
+from the house-visitation prayer for solemnities outside Sundays. The remainder
+of the seasonal, proper and Common audit is still incomplete.
