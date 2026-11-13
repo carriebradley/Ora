@@ -51,3 +51,19 @@ test('Melkite preparation rubrics and tracked headings are not spoken prayers',(
  assert.equal(F.normalize('T H E  O R D E R  O F  A N T I P H O N S'),'The Order of Antiphons');
  assert.equal(F.normalize('T H E  E K T E N E'),'The Ektene');
 });
+
+test('spoken prayer after a rubric ending in a colon remains readable',()=>{
+ const lines=[
+  'The Deacon censes the Holy Table saying:',
+  'Being God, You were present in the tomb by Your body,',
+  'and yet in Hades by Your soul, in Paradise with the thief.',
+  'Deacon: In peace let us pray to the Lord.',
+  'All: Lord, have mercy.'
+ ];
+ const blocks=F.combine(lines);
+ assert.equal(blocks.length,4);
+ assert.equal(F.instruction(blocks[0]),true);
+ assert.equal(F.instruction(blocks[1]),false);
+ assert.match(blocks[1],/^Being God, You were present/);
+ assert.match(blocks[1],/Paradise with the thief/);
+});
