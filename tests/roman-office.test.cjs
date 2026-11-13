@@ -50,3 +50,12 @@ test('ordinary Roman Vespers has two psalm portions plus a New Testament canticl
   assert.match(selected.items[2],/^b:/,day.toISOString());
  }
 });
+
+test('Lent Sunday Vespers II selects 1 Peter instead of Revelation 19',()=>{
+ for(const day of [[2027,2,14],[2027,3,7],[2027,3,14]]){
+  const selection=Hours.modernPsalmody(LitCal,LitCal.D(...day),'V');
+  assert.match(selection.items[2],/1 Peter 2:21-24/,day.join('-'));
+ }
+ const easter=Hours.modernPsalmody(LitCal,LitCal.D(2027,4,11),'V');
+ assert.match(easter.items[2],/Revelation 19:1-7/);
+});

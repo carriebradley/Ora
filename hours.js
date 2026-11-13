@@ -82,7 +82,7 @@
   const B = (label, ...refs) => 'b:' + label + '|' + refs.join('|');
   const EPH = B('Canticle · Ephesians 1', 'Ephesians 1:3-10'), COL = B('Canticle · Colossians 1', 'Colossians 1:12-20'), PHIL = B('Canticle · Philippians 2', 'Philippians 2:6-11'),
     R4 = B('Canticle · Revelation 4–5', 'Revelation 4:11', 'Revelation 5:9-10', 'Revelation 5:12'), R11 = B('Canticle · Revelation 11–12', 'Revelation 11:17-18', 'Revelation 12:10-12'),
-    R15 = B('Canticle · Revelation 15', 'Revelation 15:3-4'), R19 = B('Canticle · Revelation 19', 'Revelation 19:1-7');
+    R15 = B('Canticle · Revelation 15', 'Revelation 15:3-4'), R19 = B('Canticle · Revelation 19', 'Revelation 19:1-7'), LENT_V = B('Canticle · 1 Peter 2', '1 Peter 2:21-24');
   const EP1 = { 1: ['p140(1-9)', 'p141', PHIL], 2: ['p118(105-112)', 'p15', PHIL], 3: ['p112', 'p115', PHIL], 4: ['p121', 'p129', PHIL] };
   const SUN_V = { 1: ['p109(1-5,7)', 'p113(1-8)', R19], 2: ['p109(1-5,7)', 'p113(9-26)', R19], 3: ['p109(1-5,7)', 'p110', R19], 4: ['p109(1-5,7)', 'p111', R19] };
   const MP = {
@@ -127,7 +127,12 @@
     );
     const items = which === 'L' ? (festiveMorning ? MP[1][0] : MP[pw][dow])
       : dow === 0 ? (first ? EP1[pw] : SUN_V[pw]) : EP[pw][dow];
-    return {d,first,dow,pw,items,festiveMorning};
+    // Sunday Evening Prayer II takes 1 Peter 2:21-24 in Lent rather than
+    // the Revelation 19 canticle used at other times of the year.
+    const season=observance.season;
+    const selected=which==='V' && dow===0 && !first && season==='Lent'
+      ? [items[0],items[1],LENT_V] : items;
+    return {d,first,dow,pw,items:selected,festiveMorning};
   }
   function devotionalIntercessions(which) {
     // Original devotional petitions; not the copyrighted ICEL intercessions.
