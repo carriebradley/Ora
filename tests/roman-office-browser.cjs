@@ -14,6 +14,16 @@ module.exports=async function(page,base,artifacts){
     await page.screenshot({path:path.join(artifacts,`roman-icel-${width}-${colorScheme}.png`),fullPage:true});
     if(width===390)await page.screenshot({path:path.join(artifacts,`roman-icel-preview-${colorScheme}.jpg`),type:'jpeg',quality:30,fullPage:false});
   }
+  // First Edition uses these same hour-specific Sunday antiphons in A/B/C.
+  for(const [date,kind,pattern]of [
+    ['2026-11-14','evening',/Well done, my good and faithful servant/],
+    ['2026-11-15','morning',/They will see the Son of Man coming in the clouds/],
+    ['2026-11-15','evening',/By your trusting acceptance of trials/]
+  ]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=${kind}`);
+    const text=await page.locator('#st0').innerText();assert.match(text,pattern);
+    assert.doesNotMatch(text,/Scriptural refrain:/);
+  }
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-19&kind=night`);
   assert.match(await page.locator('#st0').innerText(),/send peaceful sleep/);
   assert.match(await page.locator('#st0').innerText(),/restful night and a peaceful death/);

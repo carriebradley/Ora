@@ -25,6 +25,9 @@ module.exports=async function(browser,artifacts){
     for(const colorScheme of ['light','dark']){
       await page.emulateMedia({colorScheme});
       for(const [kind,date,pattern]of [
+        ['evening','2026-11-14',/Well done, my good and faithful servant/],
+        ['morning','2026-11-15',/They will see the Son of Man coming in the clouds/],
+        ['evening','2026-11-15',/By your trusting acceptance of trials/],
         ['morning','2027-01-17',/Blessed art thou in the holy temple/],
         ['evening','2026-11-12',/Magnificat/i],
         ['evening','2026-12-24',/Galatians 4:4-5/i],

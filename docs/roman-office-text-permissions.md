@@ -82,8 +82,11 @@ The continued import now contains 380 source records, including the seasonal
 and proper Lauds/Vespers sections. The source's concluding prayer sometimes
 uses the current Roman Missal collect; these source-witness prayers are not a
 claim to reproduce an unmodified 1974 printing or the forthcoming Second Edition.
-Sunday-cycle Gospel antiphons require a matching verified cycle; fixed Christmas,
-Epiphany, Ascension and Pentecost texts retain their cycle-independent antiphons.
+The current US English First Edition has one proper Gospel antiphon at each
+hour, used in all three lectionary years. The A/B/C alternatives belong to the
+revised edition, as explained by the [USCCB March 2015 newsletter, p. 9](https://www.usccb.org/resources/newsletter-2015-03.pdf).
+Sourced Sunday antiphons are therefore retained at Morning Prayer and First
+and Second Evening Prayer; they are never recycled from another psalter week.
 
 Outstanding appointment work is tracked in the dated Roman Office audit and
 `roman-office-section-coverage-2026-2027.json` (section availability only).

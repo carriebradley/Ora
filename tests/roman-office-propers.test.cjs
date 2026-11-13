@@ -24,10 +24,29 @@ test('memorials use the current weekday psalms while preserving proper and Commo
   assert.match(r.collect,/Josaphat/);assert.match(r.intercessions,/martyrs/);
   assert.equal(select('2027-01-21').antiphons.length,3);
 });
-test('Sunday-cycle antiphons are withheld, while cycle-independent Christmas and Pentecost are retained',()=>{
+test('First Edition Sunday antiphons retain the sourced text at each hour across lectionary cycles',()=>{
+  // USCCB March 2015, p. 9: the present English edition has one antiphon
+  // at each hour. Three A/B/C alternatives belong to the revised edition.
   for(const s of ['2026-11-15','2026-11-22','2026-11-29','2027-02-14','2027-06-27']){
-    const r=select(s);assert.ok(r.collect);assert.equal(r.gospelAntiphon,undefined,s);
+    for(const [day,which]of [[s,'L'],[s,'V'],[L.iso(L.add(new Date(s+'T00:00:00Z'),-1)),'V']]){
+      const r=select(day,which);assert.ok(r.collect,day);assert.ok(r.gospelAntiphon,day);
+      assert.equal(r.gospelAntiphon,R.record(r.id).gospelAntiphon,`${day}/${which}`);
+    }
   }
+  const expected={
+    L:'They will see the Son of Man coming in the clouds with great glory and majesty.',
+    I:'Well done, my good and faithful servant, you have been trustworthy in small things. Now share your master’s joy.',
+    V:'By your trusting acceptance of trials, you will gain your life, says the Lord.'
+  };
+  // The 33rd Sunday in three successive years spans C, A and B.
+  const cycles=new Set();
+  for(const s of ['2026-11-15','2027-11-14','2028-11-19']){
+    const d=new Date(s+'T00:00:00Z');cycles.add(L.roman(d,options).sundayCycle);
+    assert.equal(select(s).gospelAntiphon,expected.L);
+    assert.equal(select(s,'V').gospelAntiphon,expected.V);
+    assert.equal(select(L.iso(L.add(d,-1)),'V').gospelAntiphon,expected.I);
+  }
+  assert.equal(cycles.size,3);
   assert.match(select('2026-12-25').gospelAntiphon,/Glory to God/);
   assert.ok(select('2027-05-16').gospelAntiphon);
 });

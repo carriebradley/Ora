@@ -16,4 +16,4 @@ for(let d=L.D(2026,11,12);d<=L.D(2027,6,30);d=L.add(d,1))for(const which of ['L'
 }
 console.log(JSON.stringify({from:'2026-11-12',through:'2027-06-30',options,totals,
   missingSourceIds:[...missing].sort(),withheldPsalmodyIds:[...psalmody].sort(),
-  unverifiedGospelCycleIds:[...gospel].sort(),unresolvedOffices:unresolved},null,2));
+  withheldGospelAntiphonIds:[...gospel].sort(),unresolvedOffices:unresolved},null,2));

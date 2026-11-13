@@ -244,3 +244,27 @@ Validation: 87 unit checks pass locally, including dated seasonal, precedence,
 memorial, cycle and mismatched-psalmody cases. Local Chromium cannot start because
 this environment denies its process-singleton socket; the GitHub browser suite
 must pass before this batch reaches the published main branch.
+
+
+## First Edition Sunday Gospel antiphons — v265 correction
+
+The preceding v264 cycle restriction was incorrect for the current US English
+First Edition. The [USCCB March 2015 newsletter, p. 9](https://www.usccb.org/resources/newsletter-2015-03.pdf)
+explicitly distinguishes its single antiphon at each hour from the three A/B/C
+alternatives in the revised Latin edition and forthcoming English Second Edition.
+Ora now uses the captured proper antiphon at Morning Prayer, First Evening
+Prayer and Second Evening Prayer in all three lectionary years. The three hours
+retain their own distinct antiphons. No text is inferred from a different Sunday
+or recycled from its repeating psalter week.
+
+The 462-office section audit now finds **420 sourced Gospel antiphons**, up from
+330: **90 additional offices** receive their sourced antiphon. All other section
+counts and the unresolved-source list are unchanged. The machine-readable audit
+now calls its generic rejection field `withheldGospelAntiphonIds`, avoiding the
+incorrect suggestion that First Edition sources require A/B/C verification.
+
+Regression checks include all three hours for the 33rd Sunday in 2026, 2027 and
+2028 (cycles C, A and B), representative seasonal Sundays, and continued rejection
+of a mismatched psalm-antiphon set. Browser checks cover the three November 14–15
+hours on the local and published app. The existing structural checks continue to
+cover the Ukrainian Edmonton, Melkite and Traditional calendars.

@@ -32,11 +32,9 @@
         selected.antiphons=base?.antiphons;selected.psalmPrayers=base?.psalmPrayers;
         selected.psalmodyRefs=base?.psalmodyRefs;
       }
-      // A reusable Sunday page can contain a Gospel antiphon for a different
-      // lectionary year. Importing its other prayers does not verify that year.
-      const cycleDependent=/^(?:ord-w\d+-sun|adv-w\d+-sun|\d{4}-adv-w\d+-sun|lent-w\d+-sun|lent-hw-sun|easter-w\d+-sun|holy-family|xmas-baptism|ord-trinity|ord-corpus|ord-sacred)/.test(id);
-      if(cycleDependent&&proper.gospelCycleVerified!==day.sundayCycle)
-        delete selected.gospelAntiphon;
+      // The current US English First Edition has one proper Gospel antiphon
+      // per hour, used in all three lectionary years. A/B/C alternatives are
+      // an addition to the forthcoming English Second Edition (USCCB, 2015).
       if(selected.psalmodyRefs&&!matchesPsalmody(selected.psalmodyRefs,plan.items)){
         delete selected.antiphons;delete selected.psalmPrayers;
       }
