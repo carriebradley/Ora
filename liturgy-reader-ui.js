@@ -16,7 +16,7 @@
     return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" aria-label="Prayers of the day">
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
-        ${id==='melkite-chrysostom'?'<p class="muted">Select your personal English Melkite copy. <a href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener noreferrer">Publisher-hosted 2009 draft</a> · this source has not been verified as the current approved edition.</p>':''}
+        
         <p class="reader-status" role="status">Checking saved book…</p>
         <button class="btn" data-reader="open" disabled>Open original book</button>
         <label for="liturgical-file">Choose a PDF or EPUB</label>
@@ -59,7 +59,6 @@
     // Readings are available in their own tab.
     appendMassPart(target,'Apostles’ Creed',fixed('apostles'));
     if(!fixed('apostles'))appendMassPart(target,'Nicene Creed',fixed('creed'));
-    const note=document.createElement('p');note.className='muted roman-devotional-note';note.textContent='Gloria and creed are included for private prayer; their liturgical use varies by day.';target.append(note);
     appendMassPart(target,'Prayer over the Offerings',proper.offerings);
     const sectionEp=document.createElement('section');sectionEp.className='roman-mass-part roman-eucharistic';
     const heading=document.createElement('h3');heading.textContent='Eucharistic Prayer';sectionEp.append(heading);

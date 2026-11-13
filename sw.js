@@ -1,4 +1,4 @@
-const V = 'ora-v238', DATA = 'ora-data-v1';
+const V = 'ora-v239', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'liturgy-schedule.js', 'epub-reader.js', 'roman-missal.js', 'liturgical-format.js', 'liturgy-reader.js', 'liturgy-reader-ui.js', 'source-reader.js', 'vendor/pdfjs/pdf.mjs', 'vendor/pdfjs/pdf.worker.mjs', 'edmonton-2026.js', 'edmonton.js', 'calendar.js', 'melkite.js', 'melkite-2026.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzlect.js', 'justice.js', 'justice-readings.js', 'felire.js', 'oor.js', 'hours.js', 'oortext.json', 'manifest.webmanifest', 'icon.svg', 'icon-180.png'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json']);
 
@@ -10,7 +10,7 @@ self.addEventListener('activate', e => {
     const data = await caches.open(DATA);
     // Retain downloaded texts from the previous version before removing its shell.
     for (const key of await caches.keys()) {
-      if (!/^ora-v\d+$/.test(key) || key === V) continue;
+      if (!/^ora-v239+$/.test(key) || key === V) continue;
       const old = await caches.open(key);
       let migrated = true;
       for (const request of await old.keys()) {
