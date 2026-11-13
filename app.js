@@ -1145,7 +1145,7 @@
       const verses=Hours.H.ps[num];
       if(!verses)return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate)</b><p class="muted">Text not available in Ora's current psalter.</p></div>`;
       const label=+num+1;
-      return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate; approximately Psalm ${label} in modern numbering)</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\\s*\\*\\s*/g,' ')).join('<br>')}</p></div>`;
+      return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate; approximately Psalm ${label} in modern numbering)</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p></div>`;
     }).join('');
     return `
       <div class="sec"><b>Introduction and examination of conscience</b><p>O God, come to my assistance. O Lord, make haste to help me.</p><p class="muted">Review the day in silence, giving thanks and asking forgiveness.</p></div>
@@ -1164,6 +1164,13 @@
       if((/modern four.week psalter|each psalm.s antiphon is its own opening verse|current books. antiphons, readings and intercessions/i.test(text)
         && /Douay|copyright|Vulgate|traditional ones/i.test(text))
         || /^(?:source note|editorial note):/i.test(text))paragraph.remove();
+    }
+    // The source marks pauses for chanting with bare asterisks. In Ora's
+    // reading view, hide only these display marks; leave the source intact.
+    for(const paragraph of container.querySelectorAll('p')){
+      const walker=document.createTreeWalker(paragraph,NodeFilter.SHOW_TEXT);
+      const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+      for(const node of nodes)node.nodeValue=node.nodeValue.replace(/\s*\*\s*/g,' ');
     }
     return container.innerHTML;
   }
