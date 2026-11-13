@@ -12,6 +12,8 @@
  function instruction(text){
   const s=String(text||'').trim();if(!s||role(s))return false;
   if(/^(?:rubric|instructions?|note):/i.test(s))return true;
+  // Episcopal ceremony notes are directions, not prayers or responses.
+  if(/^(?:the (?:first|second|third) (?:protopresbyter|concelebrant)|having received the blessing|the bishop (?:elevating|holding|raising)|the (?:priest|deacon|bishop)\s*,\s*(?:raising|holding|turning)|singing, crying, exclaiming and saying|the (?:protodeacon|deacon) opens the royal doors)\b/i.test(s))return true;
   if(/^[([](?:stand|sit|kneel|bow|quietly|silently|aloud|repeat|all stand|the priest|the deacon)\b/i.test(s))return true;
   if(/^(?:the |a |an )?(?:priest|deacon|protodeacon|bishop|celebrant|server|reader|cantor|choir|people|faithful|congregation|clergy|concelebrants|subdeacon|acolyte)\s+(?:then\s+|now\s+)?(?:stands?|sits?|kneels?|bows?|turns?|takes?|makes?|offers?|sings?|chants?|says?|prays?|recites?|enters?|exits?|proceeds?|raises?|continues?|responds?|places?|opens?|closes?|incenses?|censes?|blesses?|kisses?|holds?|lifts?|moves?|faces?|approaches?|departs?|receives?|distributes?|reads?|begins?|repeats?|goes?|comes?|removes?|puts?|washes?|covers?|uncovers?|pours?|carries?|gives?|hands?|returns?|walks?|crosses?)\b/i.test(s))return true;
   if(/^(?:during|after|before|while|when|then|meanwhile|at this point|at the conclusion|as the|following the|if the|once the)\s+(?:the |this |these |a |an )?(?:priest|deacon|bishop|celebrant|litany|hymn|prayer|entrance|gospel|people|choir|faithful|clergy|singing|chanting|reading|communion|gifts|service|troparion|antiphon|procession|holy doors|royal doors)\b/i.test(s))return true;
@@ -23,12 +25,12 @@
   for(let i=0;i<lines.length;i++){
    const raw=lines[i];let text=normalize(typeof raw==='string'?raw:raw.text);
    if(!text){flush();last=null;continue;}
-   if(/^\d{1,4}$/.test(text)||/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(text))continue;
+   if(/^\d{1,4}$/.test(text)||/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(text)||/^THE END OF THE DIVINE LITURGY$/i.test(text)||/^OF ST\. JOHN CHRYSOSTOM$/i.test(text))continue;
    // Repair only a known heading, including one split over two PDF rows.
    const next=lines[i+1],joined=next&&heads.get(compact(text+' '+(typeof next==='string'?next:next.text)));
    if(joined){text=joined;i++;}
    const gap=last&&typeof raw==='object'&&last.page===raw.page&&Number.isFinite(last.y)&&Number.isFinite(raw.y)?last.y-raw.y:0;
-   if(heading(text)||role(text)||instruction(text)||gap>Math.max(20,(raw.height||12)*1.7))flush();
+   if(heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\\s*\\d+)?|DEACON|DCN(?:\\s*\\d+)?|ALL|CHOIR|CLERGY):\\s*$/i.test(current)))flush();
    if(!current)current=text;
    else if(/[-\u2010]$/.test(current)&&/^[a-z]/.test(text))current=current.slice(0,-1)+text;
    else current+=' '+text;

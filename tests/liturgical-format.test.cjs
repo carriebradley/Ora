@@ -25,3 +25,16 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
  assert.equal(M.fixed([sections[0]],'1'),null,'a lone seasonal variant is not a general form');
  assert.equal(M.fixed([sections[1],sections[1]],'1'),null);
 });
+
+test('Edmonton episcopal ceremonial directions are classified separately',()=>{
+ for(const text of [
+  'The first protopresbyter bows to the bishop and enters the sanctuary.',
+  'Having received the blessing, the deacon incenses the altar.',
+  'The bishop elevating the holy Bread, exclaims:',
+  'Singing, crying, exclaiming and saying the triumphal hymn.'
+ ])assert.equal(F.instruction(text),true,text);
+ for(const prayer of ['BISHOP: Let us give thanks to the Lord.','ALL: Lord, have mercy.','For the peace from on high and for the salvation of our souls, let us pray to the Lord.'])
+  assert.equal(F.instruction(prayer),false,prayer);
+ assert.deepEqual(F.combine([{text:'BISHOP:',y:500,page:1},{text:'Fixture prayer spoken by the bishop.',y:471,page:1}]),['BISHOP: Fixture prayer spoken by the bishop.']);
+ assert.deepEqual(F.combine(['THE END OF THE DIVINE LITURGY','OF ST. JOHN CHRYSOSTOM']),[]);
+});
