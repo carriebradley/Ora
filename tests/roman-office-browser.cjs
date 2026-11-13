@@ -46,7 +46,7 @@ module.exports=async function(page,base,artifacts){
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   }
   for(const colorScheme of ['light','dark']){
-    await page.emulateMedia({colorScheme});await page.locator('.oortx-slot').first().scrollIntoViewIfNeeded();
+    await page.emulateMedia({colorScheme});await page.evaluate(()=>{const h=document.querySelector('.oortx-slot h4');if(!h)throw Error('Second-reading title missing');scrollTo(0,h.getBoundingClientRect().top+scrollY-document.querySelector('header').getBoundingClientRect().height-16);});
     await page.screenshot({path:path.join(artifacts,`oor-expanded-preview-${colorScheme}.jpg`),type:'jpeg',quality:30});
   }
   await page.emulateMedia({colorScheme:'light'});

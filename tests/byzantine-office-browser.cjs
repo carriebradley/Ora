@@ -39,7 +39,7 @@ module.exports=async(page,base,artifacts)=>{
  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-13&kind=night`);
  for(const colorScheme of ['light','dark']){
   await page.emulateMedia({colorScheme});await page.setViewportSize({width:390,height:844});
-  await page.locator('.step').filter({has:page.locator('.t',{hasText:'Prayer to the Mother of God'})}).first().scrollIntoViewIfNeeded();
+  await page.evaluate(()=>{const h=[...document.querySelectorAll('.step>.t')].find(el=>el.textContent==='Prayer to the Mother of God');if(!h)throw Error('Compline heading missing');scrollTo(0,h.getBoundingClientRect().top+scrollY-document.querySelector('header').getBoundingClientRect().height-16);});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   await page.screenshot({path:path.join(artifacts,`byzantine-expanded-preview-${colorScheme}.jpg`),type:'jpeg',quality:30});
  }
