@@ -117,8 +117,17 @@
     let d = date, first = false;
     if (which === 'V' && date.getUTCDay() === 6) { d = L.add(date, 1); first = true; }
     const dow = d.getUTCDay(), pw = psalterWeek(L, d);
-    const items = which === 'L' ? MP[pw][dow] : dow === 0 ? (first ? EP1[pw] : SUN_V[pw]) : EP[pw][dow];
-    return {d,first,dow,pw,items};
+    // General Instruction of the Liturgy of the Hours, no. 134:
+    // Lauds on solemnities, feasts, and the Easter/Christmas octaves uses
+    // Sunday Week I psalmody, not the psalms of the ordinary weekday.
+    const observance=L.roman(d);
+    const festiveMorning=which==='L'&&(
+      /^(?:Solemnity|Feast(?: of the Lord)?)$/.test(observance.rank)
+      || /within the Octave of (?:Easter|Christmas)/i.test(observance.title)
+    );
+    const items = which === 'L' ? (festiveMorning ? MP[1][0] : MP[pw][dow])
+      : dow === 0 ? (first ? EP1[pw] : SUN_V[pw]) : EP[pw][dow];
+    return {d,first,dow,pw,items,festiveMorning};
   }
   function devotionalIntercessions(which) {
     // Original devotional petitions; not the copyrighted ICEL intercessions.
