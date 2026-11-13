@@ -20,7 +20,7 @@ test('12 November 2026: Roman Week IV Vespers divides Psalm 144 into two parts',
 
 test('solemnities and feasts use Sunday Week I psalmody at Roman Lauds',()=>{
  const sundayOne=Hours.modernPsalmody(LitCal,LitCal.D(2026,11,29),'L').items;
- for(const date of [[2026,12,8],[2027,2,2],[2027,3,29],[2027,4,5],[2027,6,11]]){
+ for(const date of [[2026,12,8],[2027,2,2],[2027,3,29],[2027,4,5],[2027,6,4]]){
    const selection=Hours.modernPsalmody(LitCal,LitCal.D(...date),'L');
    assert.equal(selection.festiveMorning,true,date.join('-'));
    assert.deepEqual(selection.items,sundayOne,date.join('-'));

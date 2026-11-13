@@ -105,3 +105,10 @@ test('Offline deep links fall back to the cached app; missing downloads return a
   assert.equal(w.request('https://external.test/text.json'), undefined);
   assert.equal(w.request('readings.json', 'cors', 'POST'), undefined);
 });
+
+// Updating one without the other causes a perpetual false update notice.
+test('App build and installed worker version agree', () => {
+  const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
+  const sw = fs.readFileSync(require.resolve('../sw.js'), 'utf8');
+  assert.equal(app.match(/const APP_BUILD = '(ora-v\d+)'/)[1], sw.match(/const V = '(ora-v\d+)'/)[1]);
+});
