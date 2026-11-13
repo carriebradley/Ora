@@ -30,6 +30,8 @@ module.exports=async function(browser,artifacts){
         ['evening','2026-12-24',/Galatians 4:4-5/i],
         ['evening','2026-12-25',/1 John 1:1-3/i],
         ['evening','2027-01-02',/1 Timothy 3/],
+        ['evening','2027-04-05',/Colossians 1/],
+        ['evening','2027-05-09',/Revelation 11/],
         ['night','2027-03-30',/Regina Caeli/i]
       ]){
         await page.goto(`${base}index.html?tab=pray&rite=roman&kind=${kind}&date=${date}`);

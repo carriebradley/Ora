@@ -137,3 +137,25 @@ Appointment witnesses are the corresponding DivineOffice prayer bodies linked in
 The resolver distinguishes first/second Vespers and the observed feast; it does not infer an octave day's short reading merely because it shares Christmas psalmody. Eleven dated Vespers checks verify the appointed reference, final verse, public-domain provenance and replacement of the historical chapter. The browser audit opens Christmas Eve for the first time **offline** and verifies its bundled reading; published checks include Christmas I and II reading references. Other daily short readings, approved responsories, intercessions and proper collects remain outstanding.
 
 The immediate November 12 checkpoint also now receives its missing Vespers reading: **1 Peter 4:13–14** for Saint Josaphat, verified against the [dated 2026 DivineOffice prayer body](https://divineoffice.org/1112-ep2/) and bundled from the [public-domain 1 Peter 4 witness](https://www.drbo.org/chapter/67004.htm). This brings the reading tests to twelve dated Vespers. The previously noted disagreement between witnesses on other November 12 parts is not resolved by this reading correction.
+
+### Presentation, Joseph, Annunciation, Ascension and Pentecost
+
+Further prayer-body comparisons replace the ordinary Vespers psalter fallback with the following reference sets:
+
+| Celebration / phase | Modern psalms | Canticle | Witness |
+|---|---|---|---|
+| Presentation, evening of February 2 | 110:1–5,7; 130 | Colossians 1:12–20 | [Presentation](https://divineoffice.org/0202-ep2/) |
+| Joseph I | 113; 146 | Ephesians 1:3–10 | [Joseph I](https://divineoffice.org/lent-0319-ep1/) |
+| Joseph II | 15; 112 | Revelation 15:3–4 | [Joseph II](https://divineoffice.org/0319-ep2-joseph/) |
+| Annunciation I | 113; 147:12–20 | Philippians 2:6–11 | [Annunciation I](https://divineoffice.org/sol-annunciation-ep1/) |
+| Annunciation II | 110:1–5,7; 130 | Colossians 1:12–20 | [Annunciation II](https://divineoffice.org/0325-ep2-annunciation/) |
+| Ascension I | 113; 117 | Revelation 11–12 | [Ascension I](https://divineoffice.org/ascension-thursday-ep1/) |
+| Ascension II | 110:1–5,7; 47 | Revelation 11–12 | [Ascension II](https://divineoffice.org/evening-prayer-2-ascension-thursday/) |
+| Pentecost I | 113; 147:1–11 | Revelation 15:3–4 | [Pentecost I](https://divineoffice.org/easter-pentecost-ep1/) |
+| Pentecost II | 110:1–5,7; 114 | Revelation 19 | [Pentecost II](https://divineoffice.org/easter-pentecost-ep2/) |
+
+Annunciation I is available when precedence permits it, but **April 4, 2027 remains the Second Sunday of Easter**; Annunciation II is selected April 5. Weekday Presentation has no First Vespers on February 1. Both Thursday and Sunday Ascension settings receive the same proper sets on their respective dates. The Joseph sets remain distinct from Marian Commons.
+
+The Revelation canticles continue through Ora's existing public-domain whole-verse Scripture mechanism. The source's finer canticle excerpts (including Revelation 12:10b–12a and selected lines of Revelation 19) still require a separate public-domain clause/half-verse transcription audit. Matching the named canticle here does **not** certify the exact liturgical excerpt or its approved wording. These new psalmody assignments do not claim to complete the proper readings, antiphons, responsories or collects.
+
+The ordinary Vespers matrix previously treated February 2, 2027 as an ordinary Tuesday. It now chooses genuine Ordinary Time weekdays/memorials for each independently recorded week/day reference pair; separate seasonal and feast tests check the calendar and replacement rules. Narrow-phone browser checks include the new feast sets, and published checks include transferred Annunciation and Sunday Ascension.

@@ -57,12 +57,22 @@
   const christmasFirst=['p112','p147',canticle('Philippians 2','Philippians 2:6-11')];
   const christmasSecond=['p109(1-5,7)','p129',canticle('Colossians 1','Colossians 1:12-20')];
   const epiphanyFirst=['p134(1-12)','p134(13-21)',canticle('1 Timothy 3','1 Timothy 3:16')];
-  const epiphanySecond=['p109(1-5,7)','p111',canticle('Revelation 15','Revelation 15:3-4')];
+  const rev15=canticle('Revelation 15','Revelation 15:3-4');
+  const epiphanySecond=['p109(1-5,7)','p111',rev15];
+  const ascensionCanticle='b:Canticle · Revelation 11–12|Revelation 11:17-18|Revelation 12:10-12';
   // Sources and individual verification are recorded in the dated audit.
   // Match resolved observances so transferred celebrations keep their own Office.
   function properPsalmody(L,date,which,options={},first=false){
     const day=L.roman(date,options),easter=L.westernEaster(date.getUTCFullYear()),offset=days(date,easter);
     if(which==='V'){
+      if(!first&&/^Presentation of the Lord$/.test(day.title))return [...christmasSecond];
+      if(/^Annunciation of the Lord$/.test(day.title))return [...(first?christmasFirst:christmasSecond)];
+      if(/^Saint Joseph, Spouse/.test(day.title))return first
+        ? ['p112','p145',eph]:['p14','p111',rev15];
+      if(/^The Ascension of the Lord$/.test(day.title))return first
+        ? ['p112','p116',ascensionCanticle]:['p109(1-5,7)','p46',ascensionCanticle];
+      if(/^Pentecost Sunday$/.test(day.title))return first
+        ? ['p112','p146',rev15]:['p109(1-5,7)','p113(1-8)','b:Canticle · Revelation 19|Revelation 19:1-7'];
       if(/Nativity of the Lord \(Christmas\)/.test(day.title))return [...(first?christmasFirst:christmasSecond)];
       if(/Holy Family of Jesus/.test(day.title)||/Mary, the Holy Mother of God/.test(day.title))
         return [...(first?marianFirst:marianSecond)];

@@ -39,9 +39,16 @@ test('ordinary Roman Vespers has two psalm portions plus a New Testament canticl
   [3,1,'p122','p123'],[3,2,'p124','p130'],[3,3,'p125','p126'],[3,4,'p131(1-10)','p131(11-18)'],[3,5,'p134(1-12)','p134(13-21)'],
   [4,1,'p135(1-9)','p135(10-26)'],[4,2,'p136(1-6)','p137'],[4,3,'p138(1-12)','p138(13-18,23-24)'],[4,4,'p143(1-8)','p143(9-15)'],[4,5,'p144(1-13a)','p144(13b-21)']
  ];
- // Four consecutive weeks in January 2027 start with Week I on Jan 11.
+ // Feasts replace the ordinary Psalter. Choose an actual ordinary weekday
+ // for each recorded week/day pair, rather than treating February 2 as a feria.
+ const ordinary=[];
+ for(let d=LitCal.D(2027,1,11);d<=LitCal.D(2027,6,30);d=LitCal.add(d,1)){
+  const observance=LitCal.roman(d);
+  if(observance.season==='Ordinary Time'&&['Weekday','Memorial'].includes(observance.rank))ordinary.push(d);
+ }
  for(const [week,dow,first,second] of matrix){
-  const day=LitCal.add(LitCal.D(2027,1,11),((week-1)*7)+(dow-1));
+  const day=ordinary.find(d=>d.getUTCDay()===dow&&Hours.psalterWeek(LitCal,d)===week);
+  assert.ok(day,`ordinary weekday for Week ${week}, day ${dow}`);
   const selected=Hours.modernPsalmody(LitCal,day,'V');
   assert.equal(selected.pw,week,day.toISOString());
   assert.equal(selected.items.length,3,day.toISOString());

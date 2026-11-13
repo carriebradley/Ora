@@ -31,7 +31,10 @@ module.exports=async function(page,base,artifacts){
   for(const [date,firstPsalm,canticle]of [
     ['2026-12-24',113,/Philippians 2/],['2026-12-25',110,/Colossians 1/],
     ['2026-12-26',113,/Ephesians 1/],['2026-12-27',122,/Ephesians 1/],
-    ['2027-01-02',135,/1 Timothy 3/],['2027-01-03',110,/Revelation 15/]
+    ['2027-01-02',135,/1 Timothy 3/],['2027-01-03',110,/Revelation 15/],
+    ['2027-02-02',110,/Colossians 1/],['2027-03-19',15,/Revelation 15/],
+    ['2027-04-05',110,/Colossians 1/],['2027-05-09',110,/Revelation 11/],
+    ['2027-05-15',113,/Revelation 15/]
   ]){
     await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=evening`);
     assert.match(await page.locator('#st0 .psalm').first().innerText(),new RegExp('Psalm '+firstPsalm+'\\b','i'));
