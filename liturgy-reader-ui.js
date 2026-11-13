@@ -225,7 +225,7 @@
           const words=document.createElement('span');words.textContent=text;
           rubric.append(flag,words);container.append(rubric);
           pendingRole=LiturgicalFormat.speakerInstruction(text);
-          lastLine=null;lastRole=null;pendingRole=null;continue;
+          lastLine=null;lastRole=null;continue;
         }
         if(!role&&pendingRole)role={...pendingRole,words:text};
         pendingRole=null;

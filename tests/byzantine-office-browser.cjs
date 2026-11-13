@@ -17,6 +17,7 @@ module.exports=async(page,base)=>{
   }
   for(const [date,paschal,heavenly]of [['2026-04-06',true,false],['2026-05-14',false,false],['2026-05-24',false,true]]){
    await page.goto(`${base}index.html?tab=pray&rite=byz&date=${date}&kind=morning`);
+   if(date==='2026-04-06'){assert.equal(await page.locator('.byz-fixed-psalms').count(),0);assert.match(await page.locator('.byz-office-guide').innerText(),/Bright Week: use the Paschal order/);}
    const titles=await page.locator('.step .t').allTextContents();
    assert.equal(titles.includes('O Heavenly King'),heavenly);
    assert.equal(titles.includes('Paschal opening · three times'),paschal);

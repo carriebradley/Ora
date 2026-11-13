@@ -1062,6 +1062,7 @@
       if (rite === 'roman' && (s0.type === 'calendar' ||
           (s0.type === 'prayer' && s0.title === 'Opening'))) continue;
       if (s0.type === 'silence' && !s0.text) continue;
+      if(rite==='byz'&&s0.type==='byzpsalms'&&ByzantineOffice.plan(kind,S.byzChurch,v.iso,r.pascha).brightWeek)continue;
       if (s0.type === 'bvm' && !(sat && window.Hours && Hours.sarumBVM)) continue;   // Our Lady's office: Saturdays
       if ((s0.type === 'matins' || s0.type === 'little') && !window.Hours) continue;  // silence timers removed
       if(rite==='byz'&&s0.title==='O Heavenly King'){
@@ -1196,7 +1197,7 @@
     if (rite === 'byz') h += `<h3 class="prayer-rite-title">${{morning:'Orthros',evening:'Vespers',night:'Compline'}[kindOf(rite)]}</h3>`;
     if(rite==='byz'){
       const plan=ByzantineOffice.plan(kindOf(rite),S.byzChurch,v.iso,v.byz.pascha);
-      h+=`<div class="byz-office-guide"><p>${esc(plan.church)} · Prayer companion</p><details><summary>Order of the full office</summary><p>The prayers below are selections for personal prayer. The full office also includes the appointed hymns and daily propers.</p><ol>${plan.outlines.map(line=>`<li>${esc(line)}</li>`).join('')}</ol><p>Psalm numbers follow the Septuagint. ${esc(plan.note)}</p>${plan.brightWeek?'<p>During Bright Week, use the Paschal order; this ordinary outline does not apply.</p>':''}<p>The liturgical day begins with Vespers. The full daily cycle also includes the Midnight Office and First, Third, Sixth and Ninth Hours (traditionally about 6 am, 9 am, noon and 3 pm). Parish service times vary.</p><div class="row">${linksHTML('byz','any')}</div></details></div>`;
+      h+=`<div class="byz-office-guide"><p>${esc(plan.church)} · Prayer companion</p>${plan.brightWeek?'<p>Bright Week: use the Paschal order in your church’s service book. The ordinary psalm selections are omitted here.</p>':''}<details><summary>Order of the full office</summary><p>The prayers below are selections for personal prayer. The full office also includes the appointed hymns and daily propers.</p><ol>${plan.outlines.map(line=>`<li>${esc(line)}</li>`).join('')}</ol><p>Psalm numbers follow the Septuagint. ${esc(plan.note)}</p>${plan.brightWeek?'<p>During Bright Week, use the Paschal order; this ordinary outline does not apply.</p>':''}<p>The liturgical day begins with Vespers. The full daily cycle also includes the Midnight Office and First, Third, Sixth and Ninth Hours (traditionally about 6 am, 9 am, noon and 3 pm). Parish service times vary.</p><div class="row">${linksHTML('byz','any')}</div></details></div>`;
     }
     if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
     if (rite === 'roman') h += `<div class="step prayer-opening"><div class="t">Sign of the Cross</div><div class="tx">${esc(C.TEXTS.cross)}</div></div>`;

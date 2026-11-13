@@ -44,7 +44,7 @@ the next liturgical day.
 
 Heavenly King is omitted from Pascha until Pentecost. The Paschal troparion
 replaces it until Ascension; from Ascension it is omitted without that
-replacement. Bright Week explicitly directs the reader to the Paschal order.
+replacement. Bright Week visibly directs the reader to the Paschal order and omits the ordinary psalm selections.
 The ordinary companion is not represented as the full Paschal or Lenten office.
 Evening transitions are still date-based, not a sunset/time-zone service engine;
 use the selected church's typikon for Pentecost vigil and other festal transitions.
