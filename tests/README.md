@@ -32,3 +32,5 @@ The touch audit checks swiping between the six navigation tabs, both end boundar
 
 
 `calendar-accuracy.test.cjs` checks official 2026 Roman amendments, optional memorial precedence, transfers, Cheesefare aliturgical days, and church-specific service confidence. `liturgical-format.test.cjs` checks PDF headings/paragraphs, rubrics versus petitions, and safe Roman proper/fixed-prayer matching. Browser formatting tests use fictional source text and PDF-shaped rows; private uploaded books are never fixtures. The reader audit checks source response labels, default-hidden instructions, Eucharistic alternatives, appendix boundaries, and distinct Melkite/Ukrainian storage slots.
+
+On main-branch pushes in the original repository, the browser audit also waits for the expected build on the published GitHub Pages site and checks Lauds, Vespers and Compline at 320/390 pixels in light/dark mode. Published screenshots and `published-results.json` are retained with the existing audit artifact. External media is blocked; this checks the deployed app's behavior and layout, not Safari or media availability. Local runs and pull requests do not depend on the live deployment.
