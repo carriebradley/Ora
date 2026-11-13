@@ -1065,6 +1065,10 @@
     const out = [];
     const sat = P(v.iso).getUTCDay() === 6;
     for (const s0 of tpl) {
+      // The Roman Office includes its own opening versicle, and calendar facts
+      // are already available on Today. Do not interrupt or repeat the office.
+      if (rite === 'roman' && (s0.type === 'calendar' ||
+          (s0.type === 'prayer' && s0.title === 'Opening'))) continue;
       if (s0.type === 'silence' && !s0.text) continue;
       if (s0.type === 'bvm' && !(sat && window.Hours && Hours.sarumBVM)) continue;   // Our Lady's office: Saturdays
       if ((s0.type === 'matins' || s0.type === 'little') && !window.Hours) continue;  // silence timers removed
