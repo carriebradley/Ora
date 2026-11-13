@@ -116,7 +116,19 @@
   // alternating-language Edmonton booklet, do not assume fixed page numbers.
   async function standardPrayerText(book,id){
     const sections=[];let foundLiturgy=false;
-    for(let number=1;number<=book.numPages;number++){
+    // The user's Melkite 2009 *final draft* contains Kairos, vesting,
+    // prothesis, Orthros, and post-Liturgy appendices. Only its actual
+    // Chrysostom Liturgy (PDF pages 30–96) belongs in this prayer view.
+    // Identify the edition before applying page boundaries to other PDFs.
+    let startPage=1,endPage=book.numPages;
+    if(id==='melkite-chrysostom'&&book.numPages===159){
+      const notice=await book.getPage(2);
+      const imprint=(await notice.getTextContent()).items.map(item=>item.str).join(' ').replace(/\s+/g,' ');
+      if(/FINAL\s+DRAFT\s+EDITION/i.test(imprint)&&/COMMON\s+ENGLISH\s+TRANSLATION/i.test(imprint)){
+        startPage=30;endPage=96;foundLiturgy=true;
+      }
+    }
+    for(let number=startPage;number<=endPage;number++){
       const page=await book.getPage(number),items=(await page.getTextContent()).items;
       const rows=new Map();
       for(const item of items){
@@ -134,12 +146,12 @@
         else if(id.endsWith('presanctified')&&/blessed is our God/i.test(full))foundLiturgy=true;
         else continue;
       }
-      const end=lines.findIndex(line=>/^(?:appendix|appendices|glossary|acknowledg(?:e)?ments|prayers (?:before|after) (?:the )?(?:divine liturgy|liturgy)|private prayers|about (?:this|the) (?:book|translation))$/i.test(line.text));
+      const end=lines.findIndex(line=>/^(?:appendix|appendices|glossary|acknowledg(?:e)?ments|prayers (?:before|after) (?:the )?(?:divine liturgy|liturgy)|private prayers|about (?:this|the) (?:book|translation))$/i.test(line.text)||/^APPENDIX(?:\d+)?$/.test(String(line.text).replace(/[^a-z0-9]/gi,'').toUpperCase()));
       const clean=combinePdfLines(end<0?lines:lines.slice(0,end)).filter(line=>{
         if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
         return true;
       });
-      if(clean.length)sections.push({heading:null,lines:clean});
+      if(clean.length)sections.push({heading:number===startPage&&startPage===30?'Divine Liturgy of St. John Chrysostom':null,lines:clean});
       if(end>=0)break;
     }
     return foundLiturgy&&sections.length?sections:null;

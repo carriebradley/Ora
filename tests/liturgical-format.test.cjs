@@ -38,3 +38,16 @@ test('Edmonton episcopal ceremonial directions are classified separately',()=>{
  assert.deepEqual(F.combine([{text:'BISHOP:',y:500,page:1},{text:'Fixture prayer spoken by the bishop.',y:471,page:1}]),['BISHOP: Fixture prayer spoken by the bishop.']);
  assert.deepEqual(F.combine(['THE END OF THE DIVINE LITURGY','OF ST. JOHN CHRYSOSTOM']),[]);
 });
+
+test('Melkite preparation rubrics and tracked headings are not spoken prayers',()=>{
+ for(const line of ['When the time comes for celebrating the Divine Liturgy, the Priest and Deacon bow.',
+  'Bowing his uncovered head, the Deacon says:', 'He kisses the Priest’s right hand.',
+  'The following petitions may be replaced by special petitions.',
+  'It is permitted to chant the three traditional Antiphons.'])
+  assert.equal(F.instruction(line),true,line);
+ for(const line of ['Blessed is our God at all times.', 'Let us pray to the Lord.', 'All: Lord, have mercy.'])
+  assert.equal(F.instruction(line),false,line);
+ assert.equal(F.normalize('T H E  L I T A N Y  O F  P E A C E'),'The Litany of Peace');
+ assert.equal(F.normalize('T H E  O R D E R  O F  A N T I P H O N S'),'The Order of Antiphons');
+ assert.equal(F.normalize('T H E  E K T E N E'),'The Ektene');
+});
