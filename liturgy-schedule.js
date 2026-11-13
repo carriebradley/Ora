@@ -4,7 +4,7 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgySchedule=factory();})(typeof self!=='undefined'?self:this,function(){
   const basil=new Set(['2026-01-01','2026-01-05','2026-02-22','2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-02','2026-04-04','2026-12-24']);
   const names={chrysostom:'Divine Liturgy of St. John Chrysostom',basil:'Divine Liturgy of St. Basil the Great',presanctified:'Liturgy of the Presanctified Gifts',none:'No Divine Liturgy prescribed',unknown:'Divine Liturgy · calendar unavailable'};
-  function service(iso,church='ruthenian'){
+  function service(iso,church='ukrainian'){
     if(!['ukrainian','melkite','ruthenian'].includes(church))return {id:'unknown',title:names.unknown,note:'No Byzantine service rules are configured for this tradition.',verification:'unavailable',source:''};
     if(iso instanceof Date)iso=Number.isNaN(iso.getTime())?'':iso.toISOString().slice(0,10);
     const date=typeof iso==='string'&&/^2026-\d\d-\d\d$/.test(iso)?new Date(iso+'T12:00:00Z'):null;

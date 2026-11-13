@@ -1149,7 +1149,8 @@
       num=selection?.n||num;
       if(!verses)return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate)</b><p class="muted">Text not available in Ora's current psalter.</p></div>`;
       const label=({90:91,85:86,142:143,30:31,129:130,15:16,87:88,4:4,133:134})[num]||num;
-      return `<div class="sec"><b>Psalm ${label}</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p><p>${esc(Hours.H.g.Gloria).replace(/\s*\*\s*/g,' ').replace(/\n/g,'<br>')}</p></div>`;
+      const refrain=plan.easter?'Alleluia, alleluia, alleluia.':verses[0][2];
+      return `<div class="sec"><b>Psalm ${label}</b><p class="ant"><i>Scriptural refrain:</i> ${esc(refrain)}</p><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p><p>${esc(Hours.H.g.Gloria).replace(/\s*\*\s*/g,' ').replace(/\n/g,'<br>')}</p><p class="ant"><i>Scriptural refrain:</i> ${esc(refrain)}</p></div>`;
     }).join('');
     return `
       <div class="sec"><b>Opening</b><p>O God, come to my assistance.<br><span class="roman-response">— O Lord, make haste to help me.</span></p><p>Glory be to the Father, and to the Son, and to the Holy Ghost; as it was in the beginning, is now, and ever shall be, world without end. Amen.${plan.alleluia?' Alleluia.':''}</p></div><details class="sec"><summary>Examination of conscience</summary><p>Recall the day before God in silence, giving thanks and asking forgiveness.</p></details>
@@ -1171,11 +1172,9 @@
     }
     // The source marks pauses for chanting with bare asterisks. In Ora's
     // reading view, hide only these display marks; leave the source intact.
-    for(const paragraph of container.querySelectorAll('p')){
-      const walker=document.createTreeWalker(paragraph,NodeFilter.SHOW_TEXT);
-      const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-      for(const node of nodes)node.nodeValue=node.nodeValue.replace(/\s*\*\s*/g,' ');
-    }
+    const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT);
+    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    for(const node of nodes)node.nodeValue=node.nodeValue.replace(/\s*\*\s*/g,' ');
     return container.innerHTML;
   }
   function officeHourLabel(which,rite) {
@@ -1709,7 +1708,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v256';
+  const APP_BUILD = 'ora-v257';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

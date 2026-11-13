@@ -1,5 +1,7 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
-const {service}=require('../liturgy-schedule.js'),L=require('../calendar.js');
+const {service:serviceForChurch}=require('../liturgy-schedule.js'),L=require('../calendar.js');
+// Historical Pittsburgh comparison fixtures must opt into that reference explicitly.
+const service=iso=>serviceForChurch(iso,'ruthenian');
 test('The ten Basil dates follow the 2026 Pittsburgh feast and Paschal calendar',()=>{
  const expected=['2026-01-01','2026-01-05','2026-02-22','2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-02','2026-04-04','2026-12-24'];
  assert.deepEqual(Array.from({length:365},(_,i)=>L.iso(L.add(L.D(2026,1,1),i))).filter(d=>service(d).id==='basil'),expected);
@@ -14,4 +16,13 @@ test('Lenten and Holy Week exceptions do not default to Chrysostom',()=>{
 test('Unverified years and invalid dates have no silently substituted service',()=>{
  for(const d of ['2027-01-01','2026-02-30','not-a-date',null])assert.equal(service(d).id,'unknown');
  assert.equal(service(new Date('2026-04-02T00:00:00Z')).id,'basil');
+});
+
+test('Unspecified service church follows Ukrainian Edmonton and preserves Melkite separation',()=>{
+ const ordinary=serviceForChurch('2026-11-12');
+ assert.equal(ordinary.verification,'calculated');
+ assert.match(ordinary.source,/eeparchy\.com/);
+ assert.equal(serviceForChurch('2026-12-24').verification,'source-conflict');
+ assert.equal(serviceForChurch('2026-12-24','melkite').id,'basil');
+ assert.match(serviceForChurch('2026-11-12','melkite').source,/melkite\.org/);
 });
