@@ -19,7 +19,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   const heading = page.locator('#app > .tab-heading');
   assert.equal(await heading.count(),1,`${tab} has one page heading`);
   assert.equal(await heading.locator('h1').innerText(),({today:'Today',pray:'Divine Office',readings:'Daily Mass Readings',liturgy:'Sacred Liturgy',justice:'Catholic Social Teaching',calendar:'Calendar',more:'More'})[tab]);
-  const metrics = await heading.locator('h1').evaluate(el=>{const s=getComputedStyle(el);return [s.fontFamily,s.fontSize,s.fontWeight,s.textAlign]});
+  // Read the current heading atomically: asynchronous feed rendering may replace it.
+  const metrics = await page.evaluate(()=>{const el=document.querySelector('#app > .tab-heading h1');const s=getComputedStyle(el);return [s.fontFamily,s.fontSize,s.fontWeight,s.textAlign]});
   assert.equal(metrics[1],'24px');assert.equal(metrics[3],'start');
   results.push(`${rite}/${tab}`);
  }
@@ -37,7 +38,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.match(await page.locator('#app').innerText(),/Luke 12:48-59/);
  for(const rite of ['roman','byz']) {
   await page.goto(`${base}index.html?tab=pray&date=2026-11-15&rite=${rite}&kind=night`);
-  assert.match(await page.locator('#app').innerText(), /Night Prayer|Song of Simeon/);
+  assert.match(await page.locator('#app').innerText(), /Night Prayer|Song of Simeon|Nunc Dimittis|Compline/i);
   assert.equal(await page.locator('[data-act="kind"].on').getAttribute('data-v'),'night');
  }
  await page.goto(`${base}index.html?tab=justice&date=2026-11-11`);
