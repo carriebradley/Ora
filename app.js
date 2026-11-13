@@ -178,7 +178,7 @@
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
       if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(r.full.title)}</h3>`;
-      if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe title="USCCB audio of the readings" width="100%" height="120" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
+      if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
       for (const s of r.full.sections) {
         h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${simple ? '' : speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
       }
