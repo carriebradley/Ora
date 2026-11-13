@@ -95,7 +95,7 @@
     1: [null, ['p10', 'p14', EPH], ['p19', 'p20(2-8,14)', R4], ['p26', COL], ['p29', 'p31', R11], ['p40', 'p45', R15], null],
     2: [null, ['p44', EPH], ['p48', R4], ['p61', 'p66', COL], ['p71', R11], ['p114', 'p120', R15], null],
     3: [null, ['p122', 'p123', EPH], ['p124', 'p130', R4], ['p125', 'p126', COL], ['p131', R11], ['p134', R15], null],
-    4: [null, ['p135', EPH], ['p136(1-6)', 'p137', R4], ['p138(1-18,23-24)', COL], ['p143', R11], ['p144', R15], null]
+    4: [null, ['p135', EPH], ['p136(1-6)', 'p137', R4], ['p138(1-18,23-24)', COL], ['p143(1-8)', 'p143(9-15)', R11], ['p144', R15], null]
   };
   function psalterWeek(L, date) {
     const y = date.getUTCFullYear(), t = Math.floor(date.getTime() / DAY), dow = date.getUTCDay();
@@ -113,13 +113,15 @@
   function canticleBlock(label, refs) {
     return `<div class="psalm"><div class="muted" style="font-size:.78rem">${esc(label)}</div><div class="asv" data-ref="${esc(refs)}" data-tr="dra"></div><div class="muted" style="margin-top:6px">${esc(H.g.Gloria).replace(/\n/g, '<br>')}</div></div>`;
   }
-  function modern(L, date, which) {
+  function modernPsalmody(L, date, which) {
     let d = date, first = false;
     if (which === 'V' && date.getUTCDay() === 6) { d = L.add(date, 1); first = true; }
     const dow = d.getUTCDay(), pw = psalterWeek(L, d);
-    let items;
-    if (which === 'L') items = MP[pw][dow];
-    else items = dow === 0 ? (first ? EP1[pw] : SUN_V[pw]) : EP[pw][dow];
+    const items = which === 'L' ? MP[pw][dow] : dow === 0 ? (first ? EP1[pw] : SUN_V[pw]) : EP[pw][dow];
+    return {d,first,dow,pw,items};
+  }
+  function modern(L, date, which) {
+    const {d,first,dow,pw,items}=modernPsalmody(L,date,which);
     const trad = hour(L, date, which), wk = week(L, d), tmp = H.temp[`${wk}-${dow}`] || {}, sun = H.temp[`${wk}-0`] || {}, D = H.days[dow][which];
     const hymn = seasonHymn(wk, which) || D.hymn, coll = tmp.O || sun.O || '';
     const name = which === 'L' ? 'Morning Prayer (Lauds)' : 'Evening Prayer (Vespers)';
@@ -2825,6 +2827,6 @@
     return { hour, sundayInfo, bvmHour, matins, setMatins };
   })();
 
-  const api = { hour, week, H, modern, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo, sarumBVM: SH.bvmHour, sarumMatins: SH.matins, setMatins: SH.setMatins };
+  const api = { hour, week, H, modern, modernPsalmody, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo, sarumBVM: SH.bvmHour, sarumMatins: SH.matins, setMatins: SH.setMatins };
   if (typeof module !== 'undefined') module.exports = api; else root.Hours = api;
 })(typeof window !== 'undefined' ? window : globalThis);
