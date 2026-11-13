@@ -109,17 +109,12 @@ const CONTENT = (() => {
   const P = (title, text) => ({ type: 'prayer', title, text });
   const FLOWS = {
     roman: {
-      morning: [P('Sign of the Cross', T.cross), P('Opening', T.lips + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
-        { type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }, 
-{ type: 'quote', title: 'From the Saints' }, { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Zechariah (Benedictus)', T.benedictus),
-        P('Intercessions', 'Lord, I offer you this day: my work, my words, my joys and my sufferings. Bless those I love. Remember the sick, the dying and the lonely, and those who have asked for my prayers.'),
-        P('Our Father', T.our), P('Blessing', T.blessing)],
+      // The Roman Office already supplies its own canticles, intercessions,
+      // Lord's Prayer and conclusion. Do not append parallel devotional texts.
+      morning: [{ type: 'office', title: 'Morning Prayer (Lauds)', which: 'L', hour: 'lauds' }],
       readings: [{ type: 'oor', title: 'Office of Readings' }],
-      evening: [P('Sign of the Cross', T.cross), P('Opening', T.help + ' ' + T.glory), { type: 'calendar', title: 'Today in the Church' },
-        { type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' },
-        { type: 'silence', title: 'Silence', seconds: 120 }, P('Canticle of Mary (Magnificat)', T.magnificat),
-        P('Examen', 'Where was God in this day? For what am I most grateful? Where did I fall short, and where did I feel most alive? What do I ask for tomorrow?'),
-        P('Our Father', T.our), P('Hail Mary', T.hail), P('Blessing', T.blessing)],
+      evening: [{ type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' }],
+      // The examination of conscience is permitted before Compline.
       night: [P('Sign of the Cross', T.cross), P('Examination of conscience', 'In silence, review the day before God. Give thanks for what was good, ask forgiveness for your sins, and entrust tomorrow to his care.'), { type: 'office', title: 'Night Prayer (Compline)', which: 'C', hour: 'compline' }]
     },
     byz: {

@@ -109,3 +109,12 @@ test('Three calendar engines return valid days for every date in 2026–2027', (
     }
   }
 });
+
+const ContentFlows=require('../content.js').FLOWS;
+test('Roman Lauds and Vespers do not append duplicate canticles or devotions',()=>{
+ for(const [hour,code] of [['morning','L'],['evening','V']]){
+  assert.deepEqual(ContentFlows.roman[hour].map(step=>step.type),['office']);
+  assert.equal(ContentFlows.roman[hour][0].which,code);
+ }
+ assert.equal(ContentFlows.roman.night.some(step=>step.type==='office'&&step.which==='C'),true);
+});
