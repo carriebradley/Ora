@@ -49,6 +49,18 @@
     "pages": "425"
   }
 };
+ const feastTroparia={
+  "11-21": {
+    "title": "Entrance of the Mother of God",
+    "tone": 4,
+    "text": "To-day is the foreshadowing of God’s goodwill, and the preaching of the salvation of men; for the Virgin is clearly seen in the Temple, and announceth Christ unto all. Then let us cry aloud to her, Hail! thou fulfilment of the Creator’s dispensation."
+  },
+  "12-25": {
+    "title": "Nativity of our Lord",
+    "tone": 4,
+    "text": "O Christ our God, upon the world thy birth hath shined the light of knowledge; for at it they that served the stars were taught by a star to worship thee, the Sun of righteousness, and to know thee, the Dayspring from on high. Glory to thee, O Lord."
+  }
+};
  // The caller supplies dated calendar facts for the selected church.
  function resurrectionFor(kind,iso,day,verified){
   if(!verified||!['morning','evening'].includes(kind))return null;
@@ -57,6 +69,12 @@
   const age=Math.round((d-Date.parse(day.pascha+'T00:00:00Z'))/86400000);
   if(age===-7||(age>=0&&age<56)||/Nativity of (?:Christ|the Lord)|Theophany|Transfiguration|Exaltation of.*Cross/i.test(day.title))return null;
   return {title:'Resurrection troparion · Tone '+day.tone,text:resurrection[day.tone].text,date:d.toISOString().slice(0,10)};
+ }
+ function troparionFor(kind,iso,day,verified){
+  if(!verified||!['morning','evening'].includes(kind))return null;
+  const d=new Date(iso+'T00:00:00Z');if(kind==='evening')d.setUTCDate(d.getUTCDate()+1);
+  const feast=feastTroparia[d.toISOString().slice(5,10)];
+  return feast?{title:feast.title+' · Troparion · Tone '+feast.tone,text:feast.text,date:d.toISOString().slice(0,10)}:resurrectionFor(kind,iso,day,verified);
  }
  const outlines={
   morning:['Opening prayers; the Six Psalms (3, 37, 62, 87, 102, 142).','Litanies, God is the Lord (or Alleluia), and appointed troparia; kathismata and sessional hymns.','On appointed days: polyeleos, Gospel and resurrection material.','Psalm 50, the appointed canon, praises, doxology, petitions and dismissal.'],
@@ -71,5 +89,5 @@
    sources:ukrainian?[['Edmonton daily services',/^2026-/.test(iso)?'https://eeparchy.com/calendar/'+iso:'https://eeparchy.com/calendar']]:[['Melkite liturgical resources','https://melkite.org/liturgical-resources'],['Melkite Horologion · book information','https://store.melkite.org/product/horologion/']],
    note:kind==='night'?'This outline is Small Compline. Great Compline has a different order, including the Prayer of Manasseh; consult the typikon in Lent and on festal eves.':'The appointed hymns, psalm divisions and festal or Lenten variations must come from the selected church’s service books and daily propers.'};
  }
- return {plan,fixed,fixedSource,resurrection,resurrectionFor};
+ return {plan,fixed,fixedSource,resurrection,resurrectionFor,feastTroparia,troparionFor};
 });

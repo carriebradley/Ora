@@ -1070,7 +1070,7 @@
         const hymnDate=kind==='evening'?L.iso(L.add(P(v.iso),1)):v.iso;
         const hymnDay=dayInfo(hymnDate).byz;
         const verified=S.byzChurch==='melkite'?!!Melkite.entry(hymnDate):!!Edmonton.entry(hymnDate);
-        const hymn=ByzantineOffice.resurrectionFor(kind,v.iso,hymnDay,verified);
+        const hymn=ByzantineOffice.troparionFor(kind,v.iso,hymnDay,verified);
         if(!hymn)continue;
         s0={type:'prayer',title:hymn.title,text:hymn.text};
       }

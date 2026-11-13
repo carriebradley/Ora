@@ -26,12 +26,16 @@ module.exports=async(page,base,artifacts)=>{
   }
  }
  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-15&kind=morning`);
- assert.match(await page.locator('#st0').innerText(),/Resurrection troparion · Tone 8/);
- assert.match(await page.locator('#st0').innerText(),/Thou didst descend from on high/);
+ assert.match(await page.locator('.divine-office-card').innerText(),/Resurrection troparion · Tone 8/);
+ assert.match(await page.locator('.divine-office-card').innerText(),/Thou didst descend from on high/);
  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-14&kind=evening`);
- assert.match(await page.locator('#st0').innerText(),/Resurrection troparion · Tone 8/);
+ assert.match(await page.locator('.divine-office-card').innerText(),/Resurrection troparion · Tone 8/);
  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-15&kind=evening`);
- assert.doesNotMatch(await page.locator('#st0').innerText(),/Resurrection troparion/);
+ assert.doesNotMatch(await page.locator('.divine-office-card').innerText(),/Resurrection troparion/);
+ for(const [date,kind,pattern]of [['2026-11-20','evening',/Entrance of the Mother of God · Troparion/],['2026-11-21','morning',/Entrance of the Mother of God · Troparion/],['2026-12-24','evening',/Nativity of our Lord · Troparion/]]){
+  await page.goto(`${base}index.html?tab=pray&rite=byz&date=${date}&kind=${kind}`);
+  assert.match(await page.locator('.divine-office-card').innerText(),pattern);
+ }
  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-13&kind=night`);
  for(const colorScheme of ['light','dark']){
   await page.emulateMedia({colorScheme});await page.setViewportSize({width:390,height:844});

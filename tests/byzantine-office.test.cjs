@@ -53,3 +53,14 @@ test('Resurrection hymns use the verified Sunday tone, including Saturday Vesper
  assert.equal(Object.keys(B.resurrection).length,8);
  for(const h of Object.values(B.resurrection)){assert.ok(h.text.length>150);assert.doesNotMatch(h.text,/【|‚Ä|\ufffd/);}
 });
+
+test('upcoming great-feast troparia follow the feast and its preceding Vespers',()=>{
+ const day={tone:8,pascha:'2026-04-05',title:'Great Feast'};
+ for(const [morning,eve,title]of [['2026-11-21','2026-11-20',/Entrance/],['2026-12-25','2026-12-24',/Nativity/]]){
+  const a=B.troparionFor('morning',morning,day,true),b=B.troparionFor('evening',eve,day,true);
+  assert.match(a.title,title);assert.equal(a.text,b.text);assert.equal(b.date,morning);
+  assert.equal(B.troparionFor('morning',morning,day,false),null);
+  assert.equal(B.troparionFor('night',morning,day,true),null);
+  assert.ok(!B.troparionFor('evening',morning,day,true)?.title.match(title));
+ }
+});
