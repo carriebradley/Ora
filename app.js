@@ -1132,28 +1132,28 @@
     // Modern Roman Night Prayer's ordinary weekday psalm assignments (Vulgate numbering).
     // Text remains the public-domain Douay translation, not the official ICEL edition.
     const days = [
-      {refs:['90'],note:'Sunday night after Evening Prayer II'},
-      {refs:['85'],note:'Monday'},
-      {refs:['142'],note:'Tuesday'},
-      {refs:['30','129'],note:'Wednesday'},
-      {refs:['15'],note:'Thursday'},
-      {refs:['87'],note:'Friday'},
-      {refs:['4','133'],note:'Saturday night after Evening Prayer I'}
+      {refs:['90'],note:'Sunday night after Evening Prayer II',reading:'Revelation 22:4–5',verse:'And they shall see his face: and his name shall be on their foreheads. And night shall be no more; and they shall not need the light of the lamp, nor of the sun, because the Lord God shall enlighten them.'},
+      {refs:['85'],note:'Monday',reading:'1 Thessalonians 5:9–10',verse:'For God hath not appointed us unto wrath, but unto the purchasing of salvation by our Lord Jesus Christ, who died for us: that, whether we watch or sleep, we may live together with him.'},
+      {refs:['142'],note:'Tuesday',reading:'1 Peter 5:8–9a',verse:'Be sober and watch: because your adversary the devil, as a roaring lion, goeth about seeking whom he may devour. Whom resist ye, strong in faith.'},
+      {refs:['30','129'],note:'Wednesday',reading:'Ephesians 4:26–27',verse:'Be angry, and sin not. Let not the sun go down upon your anger. Give not place to the devil.'},
+      {refs:['15'],note:'Thursday',reading:'1 Thessalonians 5:23',verse:'And may the God of peace himself sanctify you in all things; that your whole spirit, and soul, and body may be preserved blameless in the coming of our Lord Jesus Christ.'},
+      {refs:['87'],note:'Friday',reading:'Jeremiah 14:9a',verse:'But thou, O Lord, art among us, and thy name is called upon by us: forsake us not.'},
+      {refs:['4','133'],note:'Saturday night after Evening Prayer I',reading:'Deuteronomy 6:4–7',verse:'Hear, O Israel, the Lord our God is one Lord. Thou shalt love the Lord thy God with thy whole heart, and with thy whole soul, and with thy whole strength.'}
     ];
     const dow=P(st.date).getUTCDay(), chosen=days[dow];
     const psalms=chosen.refs.map(num=>{
       const verses=Hours.H.ps[num];
       if(!verses)return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate)</b><p class="muted">Text not available in Ora's current psalter.</p></div>`;
-      const label=+num+1;
-      return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate; approximately Psalm ${label} in modern numbering)</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p></div>`;
+      const label=({90:91,85:86,142:143,30:31,129:130,15:16,87:88,4:4,133:134})[num]||num;
+      return `<div class="sec"><b>Psalm ${label}</b><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p></div>`;
     }).join('');
     return `
-      <div class="sec"><b>Introduction and examination of conscience</b><p>O God, come to my assistance. O Lord, make haste to help me.</p><p class="muted">Review the day in silence, giving thanks and asking forgiveness.</p></div>
-      <div class="sec"><b>Hymn</b><p class="muted">Use the appointed hymn from the authorized daily office.</p></div>
+      <div class="sec"><b>Opening</b><p>O God, come to my assistance.<br><span class="roman-response">— O Lord, make haste to help me.</span></p><p>Glory be to the Father, and to the Son, and to the Holy Ghost; as it was in the beginning, is now, and ever shall be, world without end. Amen.</p></div><div class="sec"><b>Examination of conscience</b><p>Recall the day before God in silence, giving thanks and asking forgiveness.</p></div>
+      <div class="sec"><b>Hymn · Before the Ending of the Day (Neale, 1852)</b><p>Before the ending of the day,<br>Creator of the world, we pray<br>That with Thy wonted favor, Thou<br>Wouldst be our guard and keeper now.</p><p>From all ill dreams defend our sight,<br>From fears and terrors of the night;<br>Withhold from us our ghostly foe,<br>That spot of sin we may not know.</p><p>O Father, that we ask be done,<br>Through Jesus Christ, Thine only Son;<br>Who, with the Holy Ghost and Thee,<br>Doth live and reign eternally. Amen.</p></div>
       ${psalms}
-      <div class="sec"><b>Short reading and responsory</b><p class="muted">Consult the authorized text linked below for the appointed reading and responsory.</p></div>
-      <div class="sec"><b>Canticle of Simeon (Nunc Dimittis)</b><p>${esc(C.TEXTS.nunc)}</p></div>
-      <div class="sec"><b>Concluding prayer and blessing</b><p class="muted">Use the appointed concluding prayer from the authorized office.</p><p>May the all-powerful Lord grant us a restful night and a peaceful death. Amen.</p></div>`;
+      <div class="sec"><b>Short reading · ${esc(chosen.reading)}</b><p>${esc(chosen.verse)}</p></div><div class="sec"><b>Responsory</b><p>Into thy hands I commend my spirit.<br><span class="roman-response">— Into thy hands I commend my spirit.</span></p><p>Thou hast redeemed me, O Lord, the God of truth.<br><span class="roman-response">— I commend my spirit.</span></p><p>Glory be to the Father, and to the Son, and to the Holy Ghost.<br><span class="roman-response">— Into thy hands I commend my spirit.</span></p></div>
+      <div class="sec"><b>Canticle of Simeon (Nunc Dimittis)</b><p class="ant"><i>Devotional antiphon:</i> Guard us, O Lord, while we wake, and protect us while we sleep.</p><p>${esc(C.TEXTS.nunc)}</p><p class="ant"><i>Devotional antiphon:</i> Guard us, O Lord, while we wake, and protect us while we sleep.</p></div>
+      <div class="sec"><b>Concluding prayer (devotional)</b><p>Lord, keep us safe throughout this night. Grant rest to our bodies and peace to our souls, and bring us to the light of a new day through Christ our Lord. Amen.</p></div><div class="sec"><b>Blessing</b><p>May the almighty Lord grant us a quiet night and a peaceful end. Amen.</p></div><div class="sec"><b>Marian prayer</b><p>Hail Mary, full of grace, the Lord is with thee; blessed art thou among women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.</p></div>`;
   }
   // Hide editorial notices from daily Roman Office without editing prayers.
   function officePrayerMarkup(markup) {
@@ -1369,6 +1369,7 @@
         <p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ukrainian Catholic</h3><p><a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton · calendar and daily liturgical texts</a></p><p><a href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener noreferrer">New Westminster · fixed Menaion</a></p><h3>Melkite Catholic</h3><p><a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Melkite liturgical resources</a></p><h3>Additional Ruthenian references</h3><p class="muted">A separate local calendar and translation; these do not supply the selected Edmonton calendar.</p><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p>
         <details class="more-source-sub more-source-nested"><summary>Divine Office texts</summary><div class="more-source-content">
         <p class="muted"><b>US Roman Liturgy of the Hours, Second Edition:</b> According to DivineOffice.org’s October 2026 update, the new edition may be used beginning February 10, 2027, and becomes mandatory December 3, 2028. DivineOffice.org reports that applications for digital and audio licensing are expected to open in mid-2027. Ora has not obtained rights or approval to distribute that edition. Its eventual availability in Ora depends on USCCB licensing requirements and authorization. <a href="https://divineoffice.org/" target="_blank" rel="noopener noreferrer">DivineOffice.org</a></p>
+        <p class="muted"><b>Public-domain Compline:</b> The weekday psalms and short-reading references follow the current Roman Office cycle. Scripture uses Douay–Rheims; the hymn is John Mason Neale’s public-domain 1852 translation of <i>Te lucis ante terminum</i>. Responses, antiphon and concluding prayer are devotional alternatives where exact authorized wording could not be distributed. <a href="https://www.catholic-resources.org/LoH/Psalter-Hours.html" target="_blank" rel="noopener noreferrer">Weekly references</a> · <a href="https://hymnary.org/hymn/HRGC1892/21a" target="_blank" rel="noopener noreferrer">Hymn</a>.</p>
         <p class="muted"><b>Roman Office source details:</b> Ora uses a devotional four-week psalter with Douay-Rheims psalms and traditional responsories. Current authorized editions may have different antiphons, readings, and intercessions; those texts are not reproduced in full.</p>
         <p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For the selected date’s Ukrainian Hours and Vespers, consult the <a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton liturgical calendar</a>. Roman and Traditional texts also identify their sources within the prayers.</p>
         <p class="muted">The modern Roman Liturgy of the Hours in Ora includes devotional adaptations; see the detailed sources and acknowledgments below.</p>
