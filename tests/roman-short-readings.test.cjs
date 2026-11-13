@@ -1,13 +1,14 @@
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const D=require('../roman-short-readings.js'),H=require('../hours.js'),L=require('../calendar.js');
 test('appointed short readings have clean public-domain verse text and provenance',()=>{
- assert.equal(Object.keys(D.records).length,191);
+ assert.equal(Object.keys(D.records).length,202);
  for(const [ref,r]of Object.entries(D.records)){
   assert.equal(r.officeRef,ref);assert.equal(r.rights,'public-domain');assert.ok(r.text.length>35,ref);
-  assert.ok(r.source.length);for(const u of r.source)assert.match(u,/^https:\/\/(www\.)?drbo.org\/chapter\/\d{5}\.htm$/);
+  assert.ok(r.source.length);for(const u of r.source)assert.match(u,/^https:\/\/(?:(?:www\.)?drbo\.org\/chapter\/\d{5}\.htm|ebible\.org\/eng-lxx2012\/JDT08\.htm)$/);
   assert.doesNotMatch(r.text,/【|L\d+:|TOP OF PAGE|Content type:|< prev|\[\d+\]/,ref);
  }
- assert.equal(D.records['Judith 8:25-27'],undefined,'Greek/Vulgate passage has not been silently substituted');
+ assert.equal(D.records['Judith 8:25-27'].translation,'LXX2012','Greek passage uses a separately credited public-domain Septuagint');
+ assert.match(D.records['Judith 8:25-27'].text,/Laban/);assert.match(D.records['Judith 8:25-27'].text,/to admonish them\.$/);
 });
 test('different biblical numbering is aligned at passage boundaries',()=>{
  const hosea=D.records['Hosea 5:15b-16:2'];assert.equal(hosea.ref,'Hosea 6:1-3a');

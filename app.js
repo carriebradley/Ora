@@ -36,7 +36,7 @@
   const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
 
   /* ---------- settings & state ---------- */
-  const S = Object.assign({}, L.DEFAULTS, { ascension:'sunday', corpus:'sunday', epiphany:'sunday', ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable' }, store.get('ora.settings', {}));
+  const S = Object.assign({}, L.DEFAULTS, { ascension:'sunday', corpus:'sunday', epiphany:'sunday', ladyDayTransfer: true, rite: 'roman', rate: 0.95, voice: '', readingSize: 'comfortable', theme:'system' }, store.get('ora.settings', {}));
   S.byzPascha = 'gregorian'; S.byzOldCal = false;   // Byzantine calendar on the Gregorian reckoning, matching the Roman
   if (!Object.hasOwn(RITES, S.rite)) S.rite = 'roman';
   if (!['ukrainian', 'melkite'].includes(S.byzChurch)) S.byzChurch = 'ukrainian';
@@ -47,6 +47,12 @@
   const applyReadingSize = () => document.documentElement.style.setProperty('--reading-scale', { compact: .94, comfortable: 1, large: 1.18 }[S.readingSize]);
   applyReadingSize();
   const save = () => store.set('ora.settings', S);
+  if(!['system','light','dark'].includes(S.theme))S.theme='system';
+  const systemAppearance=matchMedia('(prefers-color-scheme: dark)');
+  const applyTheme=()=>{document.documentElement.dataset.theme=S.theme==='system'?(systemAppearance.matches?'dark':'light'):S.theme;};
+  applyTheme();
+  systemAppearance.addEventListener('change',applyTheme);
+
   // Preserve the Ukrainian/Melkite choice and move Ukrainian sources to Edmonton.
   if (!S.edmonton2026) { S.edmonton2026 = true; save(); }
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
@@ -1053,7 +1059,10 @@
   const SHOURS = [['M', 'Matins'], ['L', 'Lauds'], ['LH', 'Little Hrs'], ['V', 'Vespers'], ['C', 'Compline']];
   const kindOf = rite => rite === 'sarum' ? st.shour : rite === 'byz' && st.kind === 'readings' ? 'morning' : st.kind;
   function stepsFor(rite, kind, v) {
-    const tpl = C.FLOWS[rite][kind], r = v[rite === 'sarum' ? 'sarum' : rite === 'byz' ? 'byz' : 'roman'];
+    const r = v[rite === 'sarum' ? 'sarum' : rite === 'byz' ? 'byz' : 'roman'];
+    const tpl = rite==='byz'&&ByzantineOffice.plan(kind,S.byzChurch,v.iso,r.pascha).brightWeek
+      ? C.FLOWS.byz[kind].filter(s=>['Sign of the Cross','Reader’s opening','O Heavenly King','Jesus Prayer','Prayer before sleep'].includes(s.title)||s.type==='hourlink')
+      : C.FLOWS[rite][kind];
     const out = [];
     const sat = P(v.iso).getUTCDay() === 6;
     for (const s0 of tpl) {
@@ -1062,7 +1071,7 @@
       if (rite === 'roman' && (s0.type === 'calendar' ||
           (s0.type === 'prayer' && s0.title === 'Opening'))) continue;
       if (s0.type === 'silence' && !s0.text) continue;
-      if(rite==='byz'&&s0.type==='byzpsalms'&&ByzantineOffice.plan(kind,S.byzChurch,v.iso,r.pascha).brightWeek)continue;
+      if(rite==='byz'&&['byzpsalms','byzfixed'].includes(s0.type)&&ByzantineOffice.plan(kind,S.byzChurch,v.iso,r.pascha).brightWeek)continue;
       if (s0.type === 'bvm' && !(sat && window.Hours && Hours.sarumBVM)) continue;   // Our Lady's office: Saturdays
       if ((s0.type === 'matins' || s0.type === 'little') && !window.Hours) continue;  // silence timers removed
       if(rite==='byz'&&s0.title==='O Heavenly King'){
@@ -1072,7 +1081,7 @@
           continue;
         }
       }
-      const s = s0.type === 'silence' ? { type: 'prayer', title: s0.title, text: s0.text } : s0;
+      const s = s0.type==='byzfixed'?{type:'prayer',title:s0.title,text:ByzantineOffice.fixed[s0.key]}:s0.type === 'silence' ? { type: 'prayer', title: s0.title, text: s0.text } : s0;
       const x = Object.assign({}, s);
       if (s.type === 'calendar') { x.text = `${r.title}. ${r.season}.${r.fast ? ' ' + r.fast + '.' : ''}${rite === 'sarum' && r.notes ? ' ' + r.notes : ''}`; x.head = r.title; x.sub = [r.rank, r.season, r.fast].filter(Boolean).join(' · '); }
       if (s.type === 'quote') { const q = quoteFor(v, rite); x.q = q; x.text = `${q.t} — ${q.s}, ${q.w}.`; }
@@ -1197,7 +1206,7 @@
     if (rite === 'byz') h += `<h3 class="prayer-rite-title">${{morning:'Orthros',evening:'Vespers',night:'Compline'}[kindOf(rite)]}</h3>`;
     if(rite==='byz'){
       const plan=ByzantineOffice.plan(kindOf(rite),S.byzChurch,v.iso,v.byz.pascha);
-      h+=`<div class="byz-office-guide"><p>${esc(plan.church)} · Prayer companion</p>${plan.brightWeek?'<p>Bright Week: use the Paschal order in your church’s service book. The ordinary psalm selections are omitted here.</p>':''}<details><summary>Order of the full office</summary><p>The prayers below are selections for personal prayer. The full office also includes the appointed hymns and daily propers.</p><ol>${plan.outlines.map(line=>`<li>${esc(line)}</li>`).join('')}</ol><p>Psalm numbers follow the Septuagint. ${esc(plan.note)}</p>${plan.brightWeek?'<p>During Bright Week, use the Paschal order; this ordinary outline does not apply.</p>':''}<p>The liturgical day begins with Vespers. The full daily cycle also includes the Midnight Office and First, Third, Sixth and Ninth Hours (traditionally about 6 am, 9 am, noon and 3 pm). Parish service times vary.</p><div class="row">${linksHTML('byz','any')}</div></details></div>`;
+      h+=`<div class="byz-office-guide"><p>${esc(plan.church)} · Prayer companion</p>${kindOf(rite)==='morning'&&S.byzChurch==='melkite'&&Melkite.typicon(v.iso)?.orthrosGospel?`<p>Appointed Orthros Gospel${Melkite.typicon(v.iso).orthrosNumber?' '+Melkite.typicon(v.iso).orthrosNumber:''}: ${esc(Melkite.typicon(v.iso).orthrosGospel)} · November 2026 monthly typicon.</p>`:''}${plan.brightWeek?'<p>Bright Week: use the Paschal order in your church’s service book. The ordinary psalm selections and fixed Compline additions are omitted here.</p>':''}<details><summary>Order of the full office</summary><p>The prayers below are selections for personal prayer. The full office also includes the appointed hymns and daily propers.</p>${kindOf(rite)==='night'?'<p>The Small Doxology, Creed and Prayer of the Hours use Shann’s public-domain English translation (1891). Follow your church’s service book for the canon, kontakion and remaining closing prayers.</p>':''}<ol>${plan.outlines.map(line=>`<li>${esc(line)}</li>`).join('')}</ol><p>Psalm numbers follow the Septuagint. ${esc(plan.note)}</p>${plan.brightWeek?'<p>During Bright Week, use the Paschal order; this ordinary outline does not apply.</p>':''}<p>The liturgical day begins with Vespers. The full daily cycle also includes the Midnight Office and First, Third, Sixth and Ninth Hours (traditionally about 6 am, 9 am, noon and 3 pm). Parish service times vary.</p><div class="row">${linksHTML('byz','any')}</div></details></div>`;
     }
     if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
     if (rite === 'roman') h += `<div class="step prayer-opening"><div class="t">Sign of the Cross</div><div class="tx">${esc(C.TEXTS.cross)}</div></div>`;
@@ -1362,6 +1371,7 @@
   }
   function viewMore() {
     return `<div class="more-section-heading">Preferences</div>
+    <section class="card more-appearance"><h3>Appearance</h3><div class="seg" role="group" aria-label="Color theme">${[['light','Light'],['dark','Dark'],['system','System']].map(([value,label])=>`<button data-act="theme" data-v="${value}" class="${S.theme===value?'on':''}" aria-pressed="${S.theme===value}">${label}</button>`).join('')}</div><p class="muted">System follows your device’s appearance.</p></section>
     <section class="card more-settings"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
     <section class="card"><div class="lab"><span class="grow">Byzantine Calendar</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian · Edmonton</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This setting controls Byzantine dates and readings throughout Ora.</p></section>
     <div class="more-section-heading">Prayer books</div>
@@ -1372,7 +1382,7 @@
       <details class="more-source-sub"><summary>Calendar sources</summary><div class="more-source-content">
         <p><b>Roman (modern)</b> — General Roman Calendar with U.S. additions checked against the <a href="https://www.usccb.org/resources/2026cal.pdf" target="_blank" rel="noopener noreferrer">USCCB 2026 calendar</a>. Ascension, Corpus Christi and Epiphany follow your saved settings. New installations use Sunday transfers; retain Thursday Ascension where observed locally.</p>
         <p><b>Divine Liturgy appointments</b> — Ukrainian and Melkite service selections use a labelled calculated Byzantine cycle. <a href="https://eeparchy.com/wp-content/uploads/2020/09/ugcc-catechism-english-20200924-2nd-ed-final-for-print.pdf" target="_blank" rel="noopener noreferrer">Ukrainian catechism, §§393–394</a>; <a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Newton calendar and monthly typika</a>. Dates with source conflicts are withheld from definitive appointment claims. Calculated service appointments are not a verified parish timetable; consult the respective eparchial typikon for the appointed service.</p>
-      <p><b>Byzantine</b> — The Ukrainian option follows the Eparchy of Edmonton’s checked 2026 daily entries, using Gregorian Pascha and fixed feasts. New Westminster supplies fixed commemorations when Edmonton has no verified date; seasonal calculations and reading-cycle fallbacks are labelled. Inconsistent source dates are withheld. The Melkite option follows Newton’s dated 2026 calendar. Canada-specific obligations are not applied as U.S. obligations; consult your own eparchy.</p>
+      <p><b>Byzantine</b> — The Ukrainian option follows the Eparchy of Edmonton’s checked 2026 daily entries, using Gregorian Pascha and fixed feasts. New Westminster supplies fixed commemorations when Edmonton has no verified date; seasonal calculations and reading-cycle fallbacks are labelled. Inconsistent source dates are withheld. The Melkite option follows Newton’s dated 2026 calendar. The November 2026 monthly typicon, prepared by Rev. Protodeacon Saleem Naber of Christ the Savior Melkite Catholic Church in Yonkers, verifies twelve dated Divine Liturgy appointments and supplies Orthros references. Conflicting epistle or Gospel references are identified in Readings; the annual calendar is retained until clarified. Canada-specific obligations are not applied as U.S. obligations; consult your own eparchy.</p>
       <p><b>Traditional</b> — the Sarum Use, the medieval rite of Salisbury that was followed in England and Ireland: its temporal cycle with Ember Days, Rogation, vigils, octaves, Lenten and St Martin’s fasts, and the feasts from your Gaelic Sarum calendars (valid for any year).</p>
         ${felireMore()}
       </div></details>
@@ -1383,9 +1393,9 @@
         <p class="muted"><b>US Roman Liturgy of the Hours, Second Edition:</b> According to DivineOffice.org’s October 2026 update, the new edition may be used beginning February 10, 2027, and becomes mandatory December 3, 2028. DivineOffice.org reports that applications for digital and audio licensing are expected to open in mid-2027. Ora has not obtained rights or approval to distribute that edition. Its eventual availability in Ora depends on USCCB licensing requirements and authorization. <a href="https://divineoffice.org/" target="_blank" rel="noopener noreferrer">DivineOffice.org</a></p>
         <p class="muted"><b>First Edition Roman Office:</b> Eligible ICEL prayer texts are reproduced under ICEL’s published permission for free, noncommercial websites, with exact wording and acknowledgments. The Benedictus, Magnificat, Nunc Dimittis and doxology use the older ICET texts under the published ICET/ELLC reproduction guidelines. Ora does not claim ICEL endorsement or ecclesiastical approval. <a href="https://www.icelweb.org/PubPolicy.PDF" target="_blank" rel="noopener noreferrer">ICEL policy</a> · <a href="https://www.englishtexts.org/permissions" target="_blank" rel="noopener noreferrer">ICET/ELLC permissions</a>.</p>
         <p class="muted"><b>Office coverage:</b> The four-week psalter supplies verified antiphons, responsories and intercessions in Ordinary Time, plus weekday concluding prayers. Sunday proper prayers and Gospel antiphons are selected separately when verified. Seasonal and feast-day coverage remains partial; identified historical or devotional alternatives remain where the appointed text has not yet been checked. Ora is not yet a complete reproduction of the approved First Edition.</p>
-        <p class="muted"><b>Short readings:</b> Appointed Lauds and Vespers references are supplied in public-domain Douay–Rheims–Challoner wording where checked. When a reference specifies only part of a verse, an expanded whole verse is labelled. Biblical numbering differences are aligned separately; unresolved passages retain a labelled historical alternative. <a href="https://www.drbo.org/" target="_blank" rel="noopener noreferrer">Scripture source</a>.</p>
+        <p class="muted"><b>Short readings:</b> Appointed Lauds and Vespers references are supplied in public-domain Douay–Rheims–Challoner wording where checked. When a reference specifies only part of a verse, an expanded whole verse is labelled. Biblical numbering differences are aligned separately; unresolved passages retain a labelled historical alternative. <a href="https://www.drbo.org/" target="_blank" rel="noopener noreferrer">Scripture source</a>. Judith 8:25–27 uses <a href="https://ebible.org/eng-lxx2012/JDT08.htm" target="_blank" rel="noopener noreferrer">LXX2012</a> to preserve the Greek passage rather than the differently divided Vulgate text.</p>
         <p class="muted"><b>Compline:</b> ICEL antiphons, responsory, concluding prayers and blessing follow the weekday or Sunday/solemnity arrangement. Psalms and short readings remain Douay–Rheims. The hymn is John Mason Neale’s public-domain 1852 translation of <i>Te lucis ante terminum</i>; the traditional Salve Regina is used outside Easter and Regina Caeli during Easter. Grail psalms, NAB Scripture, modern hymns and recordings have separate rights and are not covered by ICEL’s permission alone.</p>
-        <p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. For the selected date’s Ukrainian Hours and Vespers, consult the <a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton liturgical calendar</a>. Roman and Traditional texts also identify their sources within the prayers.</p>
+        <p class="muted">The Byzantine prayer sequences in Ora are devotional adaptations, not complete official liturgical offices. Small Compline includes the Small Doxology, Symbol of Faith and Prayer of the Hours in G. V. Shann’s public-domain 1891 English translation; daily canons, hymns and remaining closing prayers still follow the selected church’s service books. For the selected date’s Ukrainian Hours and Vespers, consult the <a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton liturgical calendar</a>. Roman and Traditional texts also identify their sources within the prayers.</p>
         <p class="muted">Prayer text acknowledgments appear with each Roman Office. Source explanations and coverage details are collected here.</p>
       </div></details>
       </div></details>
@@ -1393,7 +1403,7 @@
         
       <p class="muted">Roman readings: USCCB daily readings feed (bible.usccb.org); fallback citations from the <a href="https://cpbjr.github.io/catholic-readings-api/">Catholic Readings API</a>. Art images: Wikipedia / Wikimedia Commons. Prayer texts: public domain (Douay-Rheims–Challoner wording, Keble’s Phos Hilaron). Official links: USCCB, Universalis, Divine Office and the Metropolitan Cantor Institute of Pittsburgh.</p>
       <p class="muted">Sarum Mass: F. E. Warren, <i>The Sarum Missal in English</i> (1911). Sarum Matins: Divinum Officium texts, with Irish Lives from the Book of Lismore (Stokes, 1890) and Plummer. Félire Óengusso: Whitley Stokes (1905). Texts read from scans, so an occasional misread word is possible.</p>
-      <p class="muted"><b>Roman Liturgy of the Hours:</b> The English translation of The Liturgy of the Hours (Four Volumes) © 1974, International Commission on English in the Liturgy Corporation. All rights reserved. English translations of the Benedictus, Magnificat, Nunc Dimittis and Gloria Patri © 1998, International Consultation on English Texts (ICET), and used by permission. www.englishtexts.org. Prayer witnesses: <a href="https://divineoffice.org/">DivineOffice.org</a>. Psalms and other biblical texts: public-domain Douay–Rheims. Historical alternatives remain individually identified.</p>
+      <p class="muted"><b>Roman Liturgy of the Hours:</b> The English translation of The Liturgy of the Hours (Four Volumes) © 1974, International Commission on English in the Liturgy Corporation. All rights reserved. English translations of the Benedictus, Magnificat, Nunc Dimittis and Gloria Patri © 1998, International Consultation on English Texts (ICET), and used by permission. www.englishtexts.org. Prayer witnesses: <a href="https://divineoffice.org/">DivineOffice.org</a>. Psalms and other biblical texts: public-domain Douay–Rheims; Judith 8:25–27 uses the separately credited public-domain LXX2012 Septuagint. Historical alternatives remain individually identified.</p>
       <p class="muted">Office of Readings: the table of readings from the four-volume <i>Liturgy of the Hours</i>, indexed by Felix Just, S.J. (catholic-resources.org). Full texts of the second readings, where public domain: Kirsopp Lake, <i>The Apostolic Fathers</i> (1912); A. Roberts &amp; J. Donaldson, <i>Ante-Nicene Fathers</i> vol. 1 (1885). Byzantine calendar: Edmonton daily facts and reading citations; New Westminster fixed Menaion; separately labelled computed cycles. Ukrainian heritage data from Winnipeg remains separate. Audio of the Roman hours: the free daily recordings of <a href="https://divineoffice.org" target="_blank" rel="noopener">Divine Office</a> (DivineOffice.org), streamed from their podcast.</p>
       <p class="muted">Papal quotations and the Sunday Angelus: the official English texts on <a href="https://www.vatican.va" target="_blank" rel="noopener">vatican.va</a> © Dicastero per la Comunicazione – Libreria Editrice Vaticana; only short excerpts are shown, with links to the full text.</p>
       <p class="muted">Quotations are modern renderings of public-domain translations; check the cited work before quoting in print.</p>
@@ -1700,6 +1710,7 @@
       case 'mnext': st.month.m++; if (st.month.m > 11) { st.month.m = 0; st.month.y++; } break;
       case 'layer': st.layers[v] = !st.layers[v]; break;
       case 'pick': st.date = b.dataset.d; break;
+      case 'theme': if(['light','dark','system'].includes(v)){S.theme=v;save();applyTheme();} break;
       case 'settings': openSettings(); return;
       case 'savesettings': saveSettings(); return;
       case 'closedlg': $('#dlg').close(); return;
@@ -1724,7 +1735,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v269';
+  const APP_BUILD = 'ora-v270';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

@@ -1,6 +1,6 @@
 /* Public-domain Douay–Rheims–Challoner; appointments from First Edition witnesses. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.RomanShortReadings=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){return {
-  "translation": "Douay-Rheims-Challoner",
+  "translation": "Douay-Rheims-Challoner; Judith: LXX2012",
   "records": {
     "2 Corinthians 1:3-5": {
       "ref": "2 Corinthians 1:3-5",
@@ -2296,9 +2296,140 @@
       "rights": "public-domain",
       "wholeVerses": true,
       "referenceAdjusted": false
+    },
+    "Romans 8:29-30": {
+      "ref": "Romans 8:29-30",
+      "officeRef": "Romans 8:29-30",
+      "text": "For whom he foreknew, he also predestinated to be made conformable to the image of his Son; that he might be the firstborn amongst many brethren. And whom he predestinated, them he also called. And whom he called, them he also justified. And whom he justified, them he also glorified.",
+      "source": [
+        "https://www.drbo.org/chapter/52008.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
+    },
+    "Romans 8:28-30": {
+      "ref": "Romans 8:28-30",
+      "officeRef": "Romans 8:28-30",
+      "text": "And we know that to them that love God, all things work together unto good, to such as, according to his purpose, are called to be saints. For whom he foreknew, he also predestinated to be made conformable to the image of his Son; that he might be the firstborn amongst many brethren. And whom he predestinated, them he also called. And whom he called, them he also justified. And whom he justified, them he also glorified.",
+      "source": [
+        "https://www.drbo.org/chapter/52008.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
+    },
+    "Isaiah 45:22-23": {
+      "ref": "Isaiah 45:22-23",
+      "officeRef": "Isaiah 45:22-23",
+      "text": "Be converted to me, and you shall be saved, all ye ends of the earth: for I am God, and there is no other. I have sworn by myself, the word of justice shall go out of my mouth, and shall not return:",
+      "source": [
+        "https://www.drbo.org/chapter/27045.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
+    },
+    "Acts 26:16b-18": {
+      "ref": "Acts 26:16-18",
+      "officeRef": "Acts 26:16b-18",
+      "text": "But rise up, and stand upon thy feet: for to this end have I appeared to thee, that I may make thee a minister, and a witness of those things which thou hast seen, and of those things wherein I will appear to thee, Delivering thee from the people, and from the nations, unto which now I send thee: To open their eyes, that they may be converted from darkness to light, and from the power of Satan to God, that they may receive forgiveness of sins, and a lot among the saints, by the faith that is in me.",
+      "source": [
+        "https://www.drbo.org/chapter/51026.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": true,
+      "referenceAdjusted": false
+    },
+    "1 Corinthians 15:9-10": {
+      "ref": "1 Corinthians 15:9-10",
+      "officeRef": "1 Corinthians 15:9-10",
+      "text": "For I am the least of the apostles, who am not worthy to be called an apostle, because I persecuted the church of God. But by the grace of God, I am what I am; and his grace in me hath not been void, but I have laboured more abundantly than all they: yet not I, but the grace of God with me.",
+      "source": [
+        "https://www.drbo.org/chapter/53015.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
+    },
+    "Judith 8:25-27": {
+      "ref": "Judith 8:25-27",
+      "officeRef": "Judith 8:25-27",
+      "text": "Moreover let us give thanks to the Lord our God, which tries us, even as he did our fathers. Remember what things he did to Abraham, and how he tried Isaac, and what happened to Jacob in Mesopotamia of Syria, when he kept the sheep of Laban his mother's brother. For he has not tried us in the fire, as he did them, for the examination of their hearts, neither has he taken vengeance on us: but the Lord does scourge them that come near to him, to admonish them.",
+      "source": [
+        "https://ebible.org/eng-lxx2012/JDT08.htm"
+      ],
+      "translation": "LXX2012",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false,
+      "license": "https://ebible.org/find/details.php?id=eng-lxx2012"
+    },
+    "Acts 15:7b-9": {
+      "ref": "Acts 15:7-9",
+      "officeRef": "Acts 15:7b-9",
+      "text": "And when there had been much disputing, Peter, rising up, said to them: Men, brethren, you know, that in former days God made choice among us, that by my mouth the Gentiles should hear the word of the gospel, and believe. And God, who knoweth the hearts, gave testimony, giving unto them the Holy Ghost, as well as to us; And put no difference between us and them, purifying their hearts by faith.",
+      "source": [
+        "https://www.drbo.org/chapter/51015.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": true,
+      "referenceAdjusted": false
+    },
+    "Zechariah 9:9": {
+      "ref": "Zechariah 9:9",
+      "officeRef": "Zechariah 9:9",
+      "text": "Rejoice greatly, O daughter of Sion, shout for joy, O daughter of Jerusalem: BEHOLD THY KING will come to thee, the just and saviour: he is poor, and riding upon an ass, and upon a colt the foal of an ass.",
+      "source": [
+        "https://www.drbo.org/chapter/43009.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
+    },
+    "Joel 2:27-3:1a": {
+      "ref": "Joel 2:27-28",
+      "officeRef": "Joel 2:27-3:1a",
+      "text": "And you shall know that I am in the midst of Israel: and I am the Lord your God, and there is none besides: and my people shall not be confounded for ever. And it shall come to pass after this, that I will pour out my spirit upon all flesh: and your sons and your daughters shall prophesy: your old men shall dream dreams, and your young men shall see visions.",
+      "source": [
+        "https://www.drbo.org/chapter/34002.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": true,
+      "referenceAdjusted": true
+    },
+    "See Isaiah 61:10": {
+      "ref": "Isaiah 61:10",
+      "officeRef": "See Isaiah 61:10",
+      "text": "I will greatly rejoice in the Lord, and my soul shall be joyful in my God: for he hath clothed me with the garments of salvation: and with the robe of justice he hath covered me, as a bridegroom decked with a crown, and as a bride adorned with her jewels.",
+      "source": [
+        "https://www.drbo.org/chapter/27061.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": false,
+      "referenceAdjusted": false
+    },
+    "Colossians 1:3-6a": {
+      "ref": "Colossians 1:3-6",
+      "officeRef": "Colossians 1:3-6a",
+      "text": "Grace be to you and peace from God our Father, and from the Lord Jesus Christ. We give thanks to God, and the Father of our Lord Jesus Christ, praying always for you. Hearing your faith in Christ Jesus, and the love which you have towards all the saints. For the hope that is laid up for you in heaven, which you have heard in the word of the truth of the gospel, Which is come unto you, as also it is in the whole world, and bringeth forth fruit and groweth, even as it doth in you, since the day you heard and knew the grace of God in truth.",
+      "source": [
+        "https://www.drbo.org/chapter/58001.htm"
+      ],
+      "translation": "Douay-Rheims-Challoner",
+      "rights": "public-domain",
+      "wholeVerses": true,
+      "referenceAdjusted": false
     }
   },
-  "unresolved": {
-    "Judith 8:25-27": "Greek/Vulgate passage boundaries need separate alignment"
-  }
+  "unresolved": {}
 };});

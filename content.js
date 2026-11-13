@@ -686,7 +686,13 @@ const CONTENT = (() => {
       evening: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
         { type: 'byzpsalms', title: 'Opening Psalm', psalms: '103' }, P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe),
         { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)],
-      night: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'byzpsalms', title: 'Psalms of Small Compline', psalms: '50;69;142' }, P('Prayer before sleep', 'Into your hands, O Lord, I commend my spirit. Protect me through this night and grant me peaceful rest.'), { type: 'hourlink', title: 'Full Byzantine Compline (Horologion)', hour: 'compline' }]
+      night: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our),
+        { type: 'byzpsalms', title: 'Psalms of Small Compline', psalms: '50;69;142' },
+        { type: 'byzfixed', title: 'Small Doxology', key: 'doxology' }, { type: 'byzfixed', title: 'Symbol of Faith', key: 'creed' },
+        { type: 'hourlink', title: 'Appointed canon and hymns · service book', hour: 'compline' },
+        P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), P('Lord, have mercy · forty times', 'Lord, have mercy.'),
+        { type: 'byzfixed', title: 'Prayer of the Hours', key: 'prayerHours' }, P('Lord, have mercy · three times', 'Lord, have mercy. Lord, have mercy. Lord, have mercy.'),
+        P('Prayer before sleep', 'Into your hands, O Lord, I commend my spirit. Protect me through this night and grant me peaceful rest.'), P('Dismissal', T.dismissal)]
     },
     sarum: {
       // the Traditional tab is laid out by hour: Matins, Lauds, the Little Hours, Vespers, Compline

@@ -29,8 +29,18 @@
     if(proper){
       const selected={...proper,proper:true,id};
       if(day.rank==='Memorial'&&!(which==='L'&&/^Saint Agnes,/.test(day.title))){
-        selected.antiphons=base?.antiphons;selected.psalmPrayers=base?.psalmPrayers;
-        selected.psalmodyRefs=base?.psalmodyRefs;
+        // Memorial psalmody belongs to the current weekday, including its
+        // Easter antiphons. Never replace those with Ordinary Time refrains.
+        const offset=Math.round((date-L.westernEaster(date.getUTCFullYear()))/864e5);
+        const seasonalId=day.season==='Easter Time'?`easter-w0${Math.floor(offset/7)+1}-${days[date.getUTCDay()]}-${which==='L'?'mp':'ep'}`:null;
+        const seasonal=record(seasonalId);
+        const weekday=seasonal?.antiphons&&matchesPsalmody(seasonal.psalmodyRefs,plan.items)?seasonal:base;
+        selected.antiphons=weekday?.antiphons;selected.psalmPrayers=weekday?.psalmPrayers;
+        selected.psalmodyRefs=weekday?.psalmodyRefs;
+        if(proper.memorialSeasonal&&seasonal){
+          selected.readingRef=seasonal.readingRef;selected.responsory=seasonal.responsory;
+          selected.intercessions=seasonal.intercessions;selected.weekdaySource=seasonal.source;
+        }
       }
       // The current US English First Edition has one proper Gospel antiphon
       // per hour, used in all three lectionary years. A/B/C alternatives are
@@ -86,6 +96,10 @@
   });
   function properId(L,date,which,options={},first=false){
     const id=rawProperId(L,date,which,options,first);
+    if(/^easter-w06-fri-(?:mp|ep)$/.test(id)){
+      if(options.ascension==='sunday')return id+'-before-ascension';
+      return id.endsWith('-mp')?'easter-w6-fri-mp-after-ascension':'easter-w06-fri-ep2-after-ascension';
+    }
     if(/^0514-(?:mp|ep2)$/.test(id)&&L.roman(date,options).season==='Easter Time')return 'easter-'+id;
     return properSources[id]||id;
   }
@@ -100,6 +114,8 @@
       [/Body and Blood of Christ/,'ord-corpus-christi'],[/Most Sacred Heart/,'ord-sacred-heart'],
       [/King of the Universe/,'ord-w34-sun']
     ].find(([re])=>re.test(day.title));
+    if(/Blessed Virgin Mary, Mother of the Church/.test(day.title))return 'mother-of-the-church-'+(which==='L'?'mp':'ep2');
+    if(which==='L'&&/Immaculate Heart of the Blessed Virgin Mary/.test(day.title))return 'immaculate-heart-mp';
     if(named)return named[1]+'-'+feastHour;
     if(/Ascension of the Lord/.test(day.title))return which==='L'?'ascension-thursday-mp':first?'ascension-thursday-ep1':'evening-prayer-2-ascension-thursday';
     if(/Mary, the Holy Mother of God/.test(day.title))return which==='L'?'0101-mp':first?'0101-ep1':'xmas-0101-ep2';
@@ -154,6 +170,6 @@
   }
   const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function html(text){return String(text||'').split(/\n\s*\n/).map(p=>'<p>'+p.split('\n').map(line=>/^—/.test(line)?'<span class="roman-response">'+esc(line)+'</span>':esc(line)).join('<br>')+'</p>').join('');}
-  function acknowledgment(){return '<p class="muted roman-office-credit" style="font-size:.7rem;line-height:1.45;margin-top:1.5rem">The English translation of The Liturgy of the Hours (Four Volumes) © 1974, International Commission on English in the Liturgy Corporation. All rights reserved.<br>English translations of the Benedictus, Magnificat, Nunc Dimittis and Gloria Patri © 1998, International Consultation on English Texts (ICET), and used by permission. www.englishtexts.org</p>';}
+  function acknowledgment(){return '<p class="muted roman-office-credit" style="font-size:.7rem;line-height:1.45;margin-top:1.5rem">The English translation of The Liturgy of the Hours (Four Volumes) © 1974, International Commission on English in the Liturgy Corporation. All rights reserved.<br>Excerpts from the English translation of The Roman Missal © 2010, International Commission on English in the Liturgy Corporation. All rights reserved.<br>Liturgical Texts for the Memorial of the Blessed Virgin Mary, Mother of the Church © 2020, International Commission on English in the Liturgy Corporation. All rights reserved.<br>English translations of the Benedictus, Magnificat, Nunc Dimittis and Gloria Patri © 1998, International Consultation on English Texts (ICET), and used by permission. www.englishtexts.org</p>';}
   return {ordinary,record,psalter,select,properId,night,html,acknowledgment,metadata:data.metadata};
 });

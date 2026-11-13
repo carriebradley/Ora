@@ -1,6 +1,7 @@
 {
   "from": "2026-11-12",
   "through": "2027-06-30",
+  "calendarData": "data.js including imported saints, with official rank corrections",
   "options": {
     "epiphany": "sunday",
     "ascension": "sunday",
@@ -8,118 +9,17 @@
   },
   "totals": {
     "offices": 462,
-    "proper": 334,
-    "psalter": 114,
-    "antiphons": 448,
-    "responsory": 447,
-    "gospelAntiphon": 444,
-    "intercessions": 448,
-    "collect": 444,
-    "appointedShortReading": 445
+    "proper": 360,
+    "psalter": 102,
+    "antiphons": 462,
+    "responsory": 462,
+    "gospelAntiphon": 462,
+    "intercessions": 462,
+    "collect": 462,
+    "appointedShortReading": 462
   },
-  "missingSourceIds": [
-    "0104-ep2",
-    "0125-ep2",
-    "0125-mp",
-    "0222-ep2",
-    "0222-mp",
-    "0503-ep2",
-    "0531-ep2",
-    "0531-mp",
-    "0611-ep2",
-    "1208-ep1",
-    "easter-w01-sat-ep",
-    "easter-w06-fri-ep",
-    "easter-w06-fri-mp",
-    "lent-hw-sun-mp",
-    "xmas-after-epiphany-fri-mp"
-  ],
+  "missingSourceIds": [],
   "withheldPsalmodyIds": [],
   "withheldGospelAntiphonIds": [],
-  "unresolvedOffices": [
-    {
-      "date": "2026-12-07",
-      "hour": "V",
-      "observance": "Immaculate Conception of the Blessed Virgin Mary",
-      "id": "1208-ep1"
-    },
-    {
-      "date": "2027-01-04",
-      "hour": "V",
-      "observance": "Saint Elizabeth Ann Seton",
-      "id": "0104-ep2"
-    },
-    {
-      "date": "2027-01-08",
-      "hour": "L",
-      "observance": "Friday of Christmas Time",
-      "id": "xmas-after-epiphany-fri-mp"
-    },
-    {
-      "date": "2027-01-25",
-      "hour": "L",
-      "observance": "Conversion of Saint Paul, Apostle",
-      "id": "0125-mp"
-    },
-    {
-      "date": "2027-01-25",
-      "hour": "V",
-      "observance": "Conversion of Saint Paul, Apostle",
-      "id": "0125-ep2"
-    },
-    {
-      "date": "2027-02-22",
-      "hour": "L",
-      "observance": "Chair of Saint Peter, Apostle",
-      "id": "0222-mp"
-    },
-    {
-      "date": "2027-02-22",
-      "hour": "V",
-      "observance": "Chair of Saint Peter, Apostle",
-      "id": "0222-ep2"
-    },
-    {
-      "date": "2027-03-21",
-      "hour": "L",
-      "observance": "Palm Sunday of the Passion of the Lord",
-      "id": "lent-hw-sun-mp"
-    },
-    {
-      "date": "2027-04-03",
-      "hour": "V",
-      "observance": "Saturday within the Octave of Easter",
-      "id": "easter-w01-sat-ep"
-    },
-    {
-      "date": "2027-05-03",
-      "hour": "V",
-      "observance": "Saints Philip and James, Apostles",
-      "id": "0503-ep2"
-    },
-    {
-      "date": "2027-05-07",
-      "hour": "L",
-      "observance": "Friday of the 6th Week of Easter",
-      "id": "easter-w06-fri-mp"
-    },
-    {
-      "date": "2027-05-07",
-      "hour": "V",
-      "observance": "Friday of the 6th Week of Easter",
-      "id": "easter-w06-fri-ep"
-    },
-    {
-      "date": "2027-05-31",
-      "hour": "L",
-      "observance": "Visitation of the Blessed Virgin Mary",
-      "id": "0531-mp"
-    },
-    {
-      "date": "2027-05-31",
-      "hour": "V",
-      "observance": "Visitation of the Blessed Virgin Mary",
-      "id": "0531-ep2"
-    }
-  ]
+  "unresolvedOffices": []
 }

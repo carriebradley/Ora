@@ -39,8 +39,10 @@
     // Days within the Easter octave have no separate First Vespers.
     const nextHasFirst=!/within the Octave of Easter/i.test(tomorrow.title)
       &&(tomorrow.rank==='Solemnity'||nextDate.getUTCDay()===0);
-    // The current celebration wins ties. This also protects the Triduum.
-    const first=nextHasFirst&&tomorrow.p<today.p;
+    // The current celebration wins ties, except the prescribed First Vespers
+    // of the Second Sunday of Easter that close the octave. The Triduum stays protected.
+    const octaveClose=days(date,L.westernEaster(date.getUTCFullYear()))===6;
+    const first=nextHasFirst&&(tomorrow.p<today.p||octaveClose);
     return {d:first?nextDate:date,first,observance:first?tomorrow:today};
   }
   function night(L,date,options={}){
@@ -82,6 +84,8 @@
       if(/^Saints Peter and Paul, Apostles/.test(day.title))return first
         ? ['p116','p147',eph]:['p115','p125',eph];
       if(/^Saint Matthias, Apostle/.test(day.title)&&day.season==='Easter Time')return ['p115','p125',eph];
+      if(!first&&/^(?:The Conversion of Saint Paul|Conversion of Saint Paul|The Chair of Saint Peter|Chair of Saint Peter|Saints Philip and James)/.test(day.title))return ['p115','p125',eph];
+      if(!first&&/^Visitation of the Blessed Virgin Mary/.test(day.title))return ['p121','p126','b:Canticle · Revelation 19|Revelation 19:1-7'];
       if(!first&&/^Saint Andrew, Apostle/.test(day.title))return ['p115','p125',eph];
       if(!first&&/^Presentation of the Lord$/.test(day.title))return [...christmasSecond];
       if(/^Annunciation of the Lord$/.test(day.title))return [...(first?christmasFirst:christmasSecond)];
@@ -97,8 +101,7 @@
       if(/Epiphany of the Lord|Baptism of the Lord/.test(day.title))return [...(first?epiphanyFirst:epiphanySecond)];
       if(day.season==='Christmas Time'&&(/within the Octave of Christmas/.test(day.title)
         ||/^(?:Saint Stephen,|Saint John, Apostle|Holy Innocents,)/.test(day.title)))return [...christmasSecond];
-      // Only Second Vespers has been independently checked for this solemnity.
-      if(!first&&/Immaculate Conception of the Blessed Virgin Mary/.test(day.title))return [...marianSecond];
+      if(/Immaculate Conception of the Blessed Virgin Mary/.test(day.title))return [...(first?marianFirst:marianSecond)];
     }
     // Proper of Seasons through the Second Sunday of Easter; references only.
     if(offset>=0&&offset<=7){

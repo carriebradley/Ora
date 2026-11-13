@@ -199,7 +199,7 @@
     }).join('') + '</div>';
     const cap = (which === 'L' ? tmp.C || (dow === 0 ? sun.C : '') : '') || D.cap;
     const properReading=RO.properReading(L,d,which,options,first) || SR.records[official?.readingRef];
-    if(properReading)h += `<div class="sec"><b>Short reading · ${esc(properReading.ref)}</b><div>${esc(properReading.text)}</div>${properReading.wholeVerses?'<p class="muted roman-reading-credit">Douay–Rheims · whole verses.</p>':''}</div>`;
+    if(properReading)h += `<div class="sec"><b>Short reading · ${esc(properReading.ref)}</b><div>${esc(properReading.text)}</div>${properReading.translation==='LXX2012'?'<p class="muted roman-reading-credit">LXX2012 · public-domain Septuagint.</p>':properReading.wholeVerses?'<p class="muted roman-reading-credit">Douay–Rheims · whole verses.</p>':''}</div>`;
     else if (cap) h += `<div class="sec"><b>Short reading (traditional chapter)</b>${lines(cap)}</div>`;
     if (official?.responsory) h += `<div class="sec"><b>Responsory</b>${RT.html(official.responsory)}</div>`;
     else if (D.resp) h += `<div class="sec"><b>Short responsory (traditional)</b>${lines(D.resp)}</div>`;

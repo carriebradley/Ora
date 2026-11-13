@@ -89,7 +89,7 @@ def extract(capture, url):
     if resp is not None and gospel is not None:
         result['responsory'] = between(resp + 1, gospel)
     elif gospel is not None:
-        octave = find(r'^—\s+This is the day the Lord has made;', reading or 0)
+        octave = find(r'^—\s+This is the day(?: that)? the Lord has made;', reading or 0)
         if octave is not None and octave < gospel:
             result['responsory'] = rows[octave]
     if gospel is not None:

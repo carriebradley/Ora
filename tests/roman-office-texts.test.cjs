@@ -72,7 +72,7 @@ test('modern ordinary uses the permitted ICET canticles and acknowledgments whil
 test('eligible-text bundle contains no Scripture bodies, hymn lyrics, recordings or Second Edition texts',()=>{
   for(const [key,r]of Object.entries(D.records)){
     assert.equal(r.edition,'first',key);
-    assert.match(r.source,/^https:\/\/divineoffice\.org\//);
+    assert.match(r.source,/^https:\/\/(?:divineoffice\.org|(?:www\.)?liturgies\.net)\//);
     assert.deepEqual(Object.keys(r).filter(k=>/^(?:hymn|readingText|psalmText|audio|secondEdition)$/.test(k)),[]);
     for(const value of Object.values(r))if(typeof value==='string')assert.doesNotMatch(value,/Login to|Contribute now|Surgeworks|Recording copyright|\u3010/);
   }

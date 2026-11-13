@@ -7,7 +7,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  // written to device storage, and no publisher or user's book is uploaded.
  await page.evaluate(async()=>{
   const originalGet=LiturgyReader.get,originalLoad=LiturgyReader.load;
-  const rows=[['The Divine Liturgy',760],['L I T U R G Y O F T H E',730],['W O R D',715],['PRIEST: Blessed is the Kingdom. Fixture opening',680],['continues on the following row.',665],['ALL: Fixture response.',635],['The priest bows.',605],['For the peace of the world, fixture petition.',565],['(Amen.)',530],['Appendix',495],['Fixture appendix must stay out.',465]];
+  const rows=[['The Divine Liturgy',790],['T H E D I V I N E A N D H O L Y L I T',775],['U R G Y O F S A I N T J O H N C H R Y',760],['S O S T O M',745],['L I T U R G Y O F T H E',730],['W O R D',715],['PRIEST: Blessed is the Kingdom. Fixture opening',680],['continues on the following row.',665],['ALL: Fixture response.',635],['The Priest and the Deacon on his right stand before the Holy Table.',605],['For the peace of the world, fixture petition.',565],['(Amen.)',530],['Appendix',495],['Fixture appendix must stay out.',465]];
   LiturgyReader.get=async id=>({id,name:'fictional.pdf',format:'pdf',pages:1,page:1,updated:1,blob:new Blob()});
   LiturgyReader.load=async()=>({numPages:1,getPage:async()=>({getTextContent:async()=>({items:rows.map(([str,y])=>({str,transform:[1,0,0,12,20,y]}))})}),destroy:async()=>{}});
   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=originalGet;LiturgyReader.load=originalLoad;}
@@ -23,11 +23,11 @@ module.exports=async(page,base,artifacts,violations)=>{
  }
  await page.setViewportSize({width:390,height:844});
 
- assert.equal(await text.locator('.byz-major-heading').innerText(),'Liturgy of the Word');
+ assert.deepEqual(await text.locator('.byz-major-heading').allTextContents(),['Divine Liturgy of St. John Chrysostom','Liturgy of the Word']);
  assert.match(await text.innerText(),/Fixture opening continues on the following row/);
  assert.match(await text.innerText(),/For the peace of the world, fixture petition/);
  assert.match(await text.innerText(),/\(Amen\.\)/);
- assert.doesNotMatch(await text.innerText(),/Fixture appendix|The priest bows/);
+ assert.doesNotMatch(await text.innerText(),/Fixture appendix|stand before the Holy Table/);
  assert.equal(await text.locator('.byz-role-priest').count(),1);assert.equal(await text.locator('.byz-role-all').count(),1);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'whole-service view has no irrelevant page controls');
  await text.locator('.byz-rubrics-toggle').click();assert.equal(await text.locator('.byz-rubric').isVisible(),true);

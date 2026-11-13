@@ -32,7 +32,7 @@ test('Evening Prayer and Compline share precedence and the selected transfer set
     ['2027-02-01',false,1,/Week/], // weekday Presentation has no First Vespers
     ['2027-03-18',true,6,/Joseph/],
     ['2027-03-27',false,6,/Holy Saturday/], // no anticipation of Easter Vespers
-    ['2027-04-03',false,0,/Octave of Easter/],
+    ['2027-04-03',true,6,/Second Sunday of Easter/],
     ['2027-04-04',false,0,/Second Sunday of Easter/], // Sunday outranks transferred Annunciation
     ['2027-06-03',true,6,/Sacred Heart/],
     ['2027-06-28',true,6,/Peter and Paul/]

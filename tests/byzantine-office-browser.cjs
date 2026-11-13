@@ -9,6 +9,7 @@ module.exports=async(page,base)=>{
    assert.equal(await page.locator('.step .tx').first().innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
    await page.locator('.byz-fixed-psalms > summary').click();
    assert.ok((await page.locator('.byz-fixed-psalms .tx').first().innerText()).length>100);
+   if(kind==='night'){assert.match(await page.locator('.divine-office-card').innerText(),/Small Doxology/);assert.match(await page.locator('.divine-office-card').innerText(),/who proceedeth from the Father/);assert.match(await page.locator('.divine-office-card').innerText(),/Sanctify our souls/);}
    if(kind==='night')assert.doesNotMatch(await page.locator('.divine-office-card').innerText(),/Song of Simeon/);
    for(const width of [320,390]){
     await page.setViewportSize({width,height:844});
@@ -19,6 +20,7 @@ module.exports=async(page,base)=>{
    await page.goto(`${base}index.html?tab=pray&rite=byz&date=${date}&kind=morning`);
    if(date==='2026-04-06'){assert.equal(await page.locator('.byz-fixed-psalms').count(),0);assert.match(await page.locator('.byz-office-guide').innerText(),/Bright Week: use the Paschal order/);}
    const titles=await page.locator('.step .t').allTextContents();
+   if(date==='2026-04-06')assert.equal(titles.includes('Trisagion Prayers'),false);
    assert.equal(titles.includes('O Heavenly King'),heavenly);
    assert.equal(titles.includes('Paschal opening · three times'),paschal);
   }

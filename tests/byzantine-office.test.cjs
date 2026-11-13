@@ -26,3 +26,12 @@ test('private companions use a reader opening and Small Compline psalms instead 
  assert.equal(C.FLOWS.byz.night.some(s=>s.title==='Song of Simeon'),false);
  assert.equal(C.FLOWS.byz.night.find(s=>s.type==='byzpsalms').psalms,'50;69;142');
 });
+
+
+test('fixed Compline additions preserve the Byzantine Creed and source provenance',()=>{
+ assert.equal(B.fixedSource.rights,'public-domain');assert.match(B.fixedSource.translation,/1891/);
+ assert.match(B.fixed.creed,/who proceedeth from the Father/);assert.doesNotMatch(B.fixed.creed,/proceedeth from the Father and the Son/);
+ assert.match(B.fixed.doxology,/Every evening will I bless thee/);
+ assert.match(B.fixed.prayerHours,/Sanctify our souls/);
+ assert.deepEqual(C.FLOWS.byz.night.filter(s=>s.type==='byzfixed').map(s=>s.key),['doxology','creed','prayerHours']);
+});

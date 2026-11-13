@@ -1,7 +1,7 @@
 /* Gregorian 2026 common service cycle. Ukrainian/Melkite appointments are
  * calculated, with explicit source conflicts; Ruthenian reference rules remain
  * separate. Sources and limits: docs/ORA-AUDIT-2026-11-12.md. Not a parish timetable. */
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgySchedule=factory();})(typeof self!=='undefined'?self:this,function(){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./melkite.js'));else root.LiturgySchedule=factory(root.Melkite);})(typeof self!=='undefined'?self:this,function(Melkite){
   const basil=new Set(['2026-01-01','2026-01-05','2026-02-22','2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-02','2026-04-04','2026-12-24']);
   const names={chrysostom:'Divine Liturgy of St. John Chrysostom',basil:'Divine Liturgy of St. Basil the Great',presanctified:'Liturgy of the Presanctified Gifts',none:'No Divine Liturgy prescribed',unknown:'Divine Liturgy · calendar unavailable'};
   function service(iso,church='ukrainian'){
@@ -28,6 +28,10 @@
     if(church==='ukrainian'&&iso==='2026-12-24'){
       id='unknown';verification='source-conflict';title='Divine Liturgy · confirm Edmonton directions';
       note='Source conflict: the usual cycle calls for St. Basil, while Edmonton’s dated page says no Divine Liturgy. The service has not been selected automatically. Confirm the eparchy’s directions.';
+    }
+    if(church==='melkite'&&Melkite?.typicon(iso)){
+      id=Melkite.typicon(iso).liturgy;title=names[id];verification='verified';
+      note='Appointed in the November 2026 monthly typicon prepared by Rev. Protodeacon Saleem Naber, Christ the Savior Melkite Catholic Church, Yonkers. Parish service times vary.';
     }
     const source=church==='ukrainian'?'https://eeparchy.com/calendar/'+iso:church==='melkite'?'https://melkite.org/liturgical-resources':'https://mci.archpitt.org/LiturgicalCalendar2026.html';
     return {id,title,note,verification,source};

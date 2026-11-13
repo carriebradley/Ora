@@ -204,7 +204,7 @@
         }
         if(heading)text=heading;
         if(!text)continue;
-        if(/^(?:Liturgy of the Word|Liturgy of the Eucharist|Anaphora|Holy Communion)$/i.test(text)){
+        if(/^(?:Divine Liturgy of St\. John Chrysostom|Liturgy of the Word|Liturgy of the Eucharist|Anaphora|Holy Communion)$/i.test(text)){
           if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;container.append(h);lastMajor=text;lastHeading=text.toLowerCase();}
           lastLine=null;lastRole=null;pendingRole=null;continue;
         }

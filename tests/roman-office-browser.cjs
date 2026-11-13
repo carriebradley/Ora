@@ -21,6 +21,22 @@ module.exports=async function(page,base,artifacts){
     await page.screenshot({path:path.join(artifacts,`roman-icel-${width}-${colorScheme}.png`),fullPage:true});
     if(width===390)await page.screenshot({path:path.join(artifacts,`roman-icel-preview-${colorScheme}.jpg`),type:'jpeg',quality:30,fullPage:false});
   }
+  for(const [date,kind,pattern]of [
+    ['2027-01-25','morning',/persecutor of Christ/],['2027-01-25','evening',/instrument.*Paul|Apostle Paul/is],
+    ['2027-02-22','morning',/strengthen the faith of your brothers/],
+    ['2027-04-03','evening',/Evening Prayer I/],['2027-04-07','morning',/John Baptist de la Salle/],
+    ['2027-05-07','evening',/Father will send the Holy Spirit/],
+    ['2027-05-17','morning',/disciples devoted themselves with one accord/],
+    ['2027-05-17','evening',/Woman, behold your son/],
+    ['2027-05-31','evening',/All generations will call me blessed/],
+    ['2027-02-01','morning',/LXX2012/],['2026-11-17','morning',/Elizabeth/],
+    ['2027-06-21','morning',/Aloysius/]
+  ]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=${kind}`);
+    const text=await page.locator('#st0').innerText();assert.match(text,pattern);
+    assert.doesNotMatch(text,/Intercessions \(devotional\)|Short reading \(traditional chapter\)|Scriptural refrain:/);
+    assert.equal(await page.locator('.prayer-opening').count(),1);
+  }
   // First Edition uses these same hour-specific Sunday antiphons in A/B/C.
   for(const [date,kind,pattern]of [
     ['2026-11-14','evening',/Well done, my good and faithful servant/],

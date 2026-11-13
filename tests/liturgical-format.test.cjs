@@ -83,3 +83,12 @@ test('parallel ordinary antiphons keep complete columns before common prayers',(
  assert.deepEqual(F.combine(rows.filter(r=>r.alternative==='sunday')),['Sunday (Ordinary)','ALL: Left fixture left continuation.']);
  assert.doesNotMatch(F.combine(rows.filter(r=>r.alternative==='sunday')).join(' '),/Right|right/);
 });
+
+test('Melkite long tracked title is repaired across three physical rows',()=>{
+ const rows=['T H E D I V I N E A N D H O L Y L I T','U R G Y O F S A I N T J O H N C H R Y','S O S T O M','DEACON: Fixture spoken words.'];
+ assert.deepEqual(F.combine(rows),['Divine Liturgy of St. John Chrysostom','DEACON: Fixture spoken words.']);
+ const rubric='The Priest and the Deacon on his right stand before the Holy Table. They uncover their heads, and raise their hands saying the following prayer:';
+ assert.equal(F.instruction(rubric),true);
+ assert.deepEqual(F.combine([rubric,'PRIEST AND DEACON: Fixture prayer.']),[rubric,'PRIEST AND DEACON: Fixture prayer.']);
+ assert.equal(F.instruction('The priest and the deacon are your servants, O Lord.'),false);
+});

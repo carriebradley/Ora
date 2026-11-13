@@ -31,6 +31,7 @@ def verses(capture):
 def normalize(raw):
     if raw=='Judith 8:25-27':raise ValueError('Greek/Vulgate passage boundaries need separate alignment')
     value=re.sub(r'^See\s+','',raw).replace('—','-').replace('–','-')
+    if raw=='Joel 2:27-3:1a':return 'Joel 2:27-28'
     value=value.replace('Genesis 49-10','Genesis 49:10').replace('Hosea 5:15b-16:2','Hosea 6:1-3a')
     if value.startswith('Tobit 4:'):value='Tobit 4:16,17,19,20'
     if value.startswith('Zechariah 2:14-17'):value='Zechariah 2:10-13'
@@ -80,18 +81,30 @@ def build(raw,chapters):
             'wholeVerses':bool(re.search(r'\d[ab]\b',raw)) and book not in ('Micah','Hosea'),
             'referenceAdjusted':ref!=re.sub(r'^See\s+','',raw).replace('—','-').replace('–','-')}
 
+def lxx_judith(capture):
+    body=' '.join(re.findall(r'^L\d+: ?(.*)$',capture,re.M))
+    match=re.search(r'\b25\s+(.*?)\s+26\s+(.*?)\s+27\s+(.*?)\s+28\s',body)
+    if not match:raise ValueError('Missing Judith LXX verse boundaries')
+    text=' '.join(' '.join(match.groups()).split())
+    if not text.startswith('Moreover let us give thanks') or not text.endswith('to admonish them.') or 'Laban' not in text:raise ValueError('Judith LXX passage changed')
+    return {'ref':'Judith 8:25-27','officeRef':'Judith 8:25-27','text':text,
+            'source':['https://ebible.org/eng-lxx2012/JDT08.htm'],
+            'translation':'LXX2012','rights':'public-domain','wholeVerses':False,
+            'referenceAdjusted':False,'license':'https://ebible.org/find/details.php?id=eng-lxx2012'}
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--references',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('captures',type=Path,nargs='+');a=p.parse_args()
-    chapters={};failures={}
+    chapters={};failures={};judith=None
     for path in a.captures:
         for url,capture in json.loads(path.read_text()).items():
+            if url=='https://ebible.org/eng-lxx2012/JDT08.htm':judith=lxx_judith(capture)
             match=re.search(r'drbo\.org/chapter/(\d{5})\.htm',url)
             if not match:continue
             found=verses(capture)
             if found:chapters[match[1]]={'verses':found,'source':url}
     records={}
     for ref in json.loads(a.references.read_text()):
-        try:records[ref]=build(ref,chapters)
+        try:records[ref]=judith if ref=='Judith 8:25-27' and judith else build(ref,chapters)
         except ValueError as exc:failures[ref]=str(exc)
     a.output.write_text(json.dumps({'translation':'Douay-Rheims-Challoner','records':records,'unresolved':failures},ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({'imported':len(records),'unresolved':failures},indent=2))
