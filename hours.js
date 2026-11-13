@@ -134,6 +134,20 @@
       ? [items[0],items[1],LENT_V] : items;
     return {d,first,dow,pw,items:selected,festiveMorning};
   }
+  // GILH 230: on solemnities Night Prayer follows the Sunday pattern.
+  // The preceding weekday evening uses Sunday Compline I when the next
+  // day's solemnity has First Vespers. Conflict with a Sunday is deliberately
+  // left to the proper precedence rules rather than guessed here.
+  function romanNightPlan(L, date) {
+    const today=L.roman(date);
+    const nextDate=L.add(date,1), tomorrow=L.roman(nextDate);
+    const dow=date.getUTCDay();
+    const todaySolemnity=today.rank==='Solemnity';
+    const nextSolemnity=tomorrow.rank==='Solemnity';
+    if(todaySolemnity)return {index:0,kind:'solemnity-ii',observance:today.title};
+    if(nextSolemnity && dow!==0)return {index:6,kind:'solemnity-i',observance:tomorrow.title};
+    return {index:dow,kind:'weekday',observance:today.title};
+  }
   function devotionalIntercessions(which) {
     // Original devotional petitions; not the copyrighted ICEL intercessions.
     const groups=which==='L'
@@ -2849,6 +2863,6 @@
     return { hour, sundayInfo, bvmHour, matins, setMatins };
   })();
 
-  const api = { hour, week, H, modern, modernPsalmody, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo, sarumBVM: SH.bvmHour, sarumMatins: SH.matins, setMatins: SH.setMatins };
+  const api = { hour, week, H, modern, modernPsalmody, romanNightPlan, psalterWeek, sarum: SH.hour, sarumSunday: SH.sundayInfo, sarumBVM: SH.bvmHour, sarumMatins: SH.matins, setMatins: SH.setMatins };
   if (typeof module !== 'undefined') module.exports = api; else root.Hours = api;
 })(typeof window !== 'undefined' ? window : globalThis);

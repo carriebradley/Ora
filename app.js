@@ -1140,7 +1140,8 @@
       {refs:['87'],note:'Friday',reading:'Jeremiah 14:9a',verse:'But thou, O Lord, art among us, and thy name is called upon by us: forsake us not.'},
       {refs:['4','133'],note:'Saturday night after Evening Prayer I',reading:'Deuteronomy 6:4–7',verse:'Hear, O Israel, the Lord our God is one Lord. Thou shalt love the Lord thy God with thy whole heart, and with thy whole soul, and with thy whole strength.'}
     ];
-    const dow=P(st.date).getUTCDay(), chosen=days[dow];
+    const plan=Hours.romanNightPlan(L,P(st.date));
+    const dow=plan.index, chosen=days[dow];
     const psalms=chosen.refs.map(num=>{
       const verses=Hours.H.ps[num];
       if(!verses)return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate)</b><p class="muted">Text not available in Ora's current psalter.</p></div>`;

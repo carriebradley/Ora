@@ -59,3 +59,17 @@ test('Lent Sunday Vespers II selects 1 Peter instead of Revelation 19',()=>{
  const easter=Hours.modernPsalmody(LitCal,LitCal.D(2027,4,11),'V');
  assert.match(easter.items[2],/Revelation 19:1-7/);
 });
+
+test('Solemnities use the Sunday Night Prayer pattern, ordinary days retain weekdays',()=>{
+ const ordinary=Hours.romanNightPlan(LitCal,LitCal.D(2026,11,12));
+ assert.equal(ordinary.index,4);
+ assert.equal(ordinary.kind,'weekday');
+ const eve=Hours.romanNightPlan(LitCal,LitCal.D(2026,12,7));
+ assert.equal(eve.kind,'solemnity-i');
+ assert.equal(eve.index,6);
+ const day=Hours.romanNightPlan(LitCal,LitCal.D(2026,12,8));
+ assert.equal(day.kind,'solemnity-ii');
+ assert.equal(day.index,0);
+ const feb=Hours.romanNightPlan(LitCal,LitCal.D(2027,2,1));
+ assert.equal(feb.kind,'weekday','feasts do not receive solemnity Compline');
+});
