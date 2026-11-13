@@ -13,6 +13,16 @@ module.exports=async(page,base,artifacts,violations)=>{
   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=originalGet;LiturgyReader.load=originalLoad;}
  });
  const text=page.locator('.reader-inline-text');
+ assert.equal(await page.locator('.liturgy-opening .t').innerText(),'Sign of the Cross');
+ assert.equal(await page.locator('.liturgy-opening .tx').innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
+ for(const width of [320,390,800]){
+  await page.setViewportSize({width,height:844});
+  const sizes=await page.evaluate(()=>[document.querySelector('.liturgy-opening .tx'),document.querySelector('.byz-prayer-words')].map(el=>getComputedStyle(el).fontSize));
+  assert.equal(sizes[0],sizes[1],'Divine Liturgy matches the standard prayer text size');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ }
+ await page.setViewportSize({width:390,height:844});
+
  assert.equal(await text.locator('.byz-major-heading').innerText(),'Liturgy of the Word');
  assert.match(await text.innerText(),/Fixture opening continues on the following row/);
  assert.match(await text.innerText(),/For the peace of the world, fixture petition/);

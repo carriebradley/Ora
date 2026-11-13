@@ -55,6 +55,15 @@ module.exports=async function(browser,artifacts){
         await page.screenshot({path:path.join(artifacts,`published-${date}-${kind}-${colorScheme}.png`),fullPage:true});
       }
     }
+
+    await page.goto(`${base}index.html?tab=liturgy&rite=byz&date=2026-11-15`);
+    await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+    assert.equal(await page.locator('.liturgy-opening .t').innerText(),'Sign of the Cross');
+    assert.equal(await page.locator('.liturgy-opening .tx').innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
+    for(const width of [320,390]){
+      await page.setViewportSize({width,height:844});
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Divine Liturgy opening fits the phone');
+    }
     assert.deepEqual(errors,[],'published app JavaScript errors');
     fs.writeFileSync(path.join(artifacts,'published-results.json'),JSON.stringify({url:base,build:expected,widths:[320,390],colorSchemes:['light','dark'],hours:['morning','evening','night'],errors},null,2));
     console.log(`Published ${expected}: Lauds, Vespers and Compline passed at 320/390px in light/dark mode.`);

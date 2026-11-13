@@ -14,6 +14,7 @@
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
     const roman=id==='roman';
     return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" aria-label="Prayers of the day">
+      ${roman?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
         
