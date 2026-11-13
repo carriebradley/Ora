@@ -278,6 +278,21 @@ nav button.on b{color:inherit}
 .more-source-content h3{font-size:1rem;line-height:1.4;margin:18px 0 6px}
 .more-source-content p{margin:8px 0 12px}
 .more-sources>summary{font-size:1rem}
+/* Unified iPhone prayer-book layout; the page scrolls, never a nested text pane. */
+.simple-liturgy,.simple-liturgical-text,.simple-liturgical-text .reader-inline-panel{min-width:0;max-width:100%}
+.simple-liturgical-text .reader-inline-text{max-height:none;overflow:visible;white-space:normal;min-width:0;width:100%}
+.simple-liturgical-text .reader-inline-missal p,
+.simple-liturgical-text .reader-inline-missal blockquote{white-space:normal;overflow-wrap:break-word;word-break:normal;hyphens:none;line-height:1.76;margin:0 0 .92em}
+.simple-liturgical-text .reader-inline-missal h3{line-height:1.4;letter-spacing:0;margin:26px 0 12px}
+.simple-liturgical-text .roman-mass-part{min-width:0;margin:0 0 23px}
+.simple-liturgical-text .roman-mass-part+ .roman-mass-part{border-top:1px solid var(--line);padding-top:9px}
+.simple-liturgical-text .roman-response{padding-left:12px;border-left:2px solid var(--gold);font-weight:600}
+.simple-liturgical-text .reader-byzantine-prayers .byz-major-heading{margin:30px 0 15px;line-height:1.35;overflow-wrap:break-word}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-heading{margin:24px 0 10px;line-height:1.4;overflow-wrap:break-word}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line{font-variant-ligatures:common-ligatures;white-space:normal;line-height:1.76}
+.simple-liturgical-text .reader-byzantine-prayers .byz-role-all .byz-prayer-words{font-weight:600}
+.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line[class*="byz-role-"]{border-radius:0;max-width:100%}
+@media(max-width:420px){.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line{font-size:1em}.simple-liturgical-text .reader-inline-text{padding-inline:0}}
 /* Each Social Teaching category has its own matching border and icon. */
 .justice-daily>.card{--justice-accent:#b88b25}.justice-ecology{--justice-accent:#648c69}.justice-economic{--justice-accent:#6191b4}.justice-voice{--justice-accent:#b57a91}.justice-charity{--justice-accent:#559b9a}.justice-teaching{--justice-accent:#bd8057}.justice-reading{--justice-accent:#9c82ba}.justice-library{--justice-accent:#788494}
 .justice-daily>.card,.justice-ecology,.justice-economic,.justice-voice,.justice-charity,.justice-teaching,.justice-reading,.justice-library{border-left:3px solid var(--justice-accent);border-right:3px solid var(--justice-accent)}

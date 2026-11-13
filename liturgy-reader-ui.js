@@ -175,9 +175,9 @@
     });
     toolbar.append(toggle);target.append(toolbar);
     const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
-    let lastLine=null,lastRole=null,lastMajor=null;
+    let lastLine=null,lastRole=null,lastMajor=null,lastHeading=null;
     for(const section of sections){
-      if(section.heading){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;target.append(h);lastMajor=section.heading;lastLine=null;lastRole=null;}
+      if(section.heading){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;target.append(h);lastMajor=section.heading;lastHeading=section.heading.toLowerCase();lastLine=null;lastRole=null;}
       for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
         const raw=section.lines[lineIndex];
         let text=String(raw||'').trim();
@@ -200,11 +200,17 @@
         if(heading)text=heading;
         if(!text)continue;
         if(/^(?:Liturgy of the Word|Liturgy of the Eucharist|Anaphora|Holy Communion)$/i.test(text)){
-          if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;target.append(h);lastMajor=text;}
+          if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;target.append(h);lastMajor=text;lastHeading=text.toLowerCase();}
           lastLine=null;lastRole=null;continue;
         }
         if(heading || headingPattern.test(text) || isPdfHeading(text)) {
-          const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=text;target.append(h);lastLine=null;lastRole=null;continue;
+          const normalized=normalizePdfLine(text);
+          // PDFs repeat running headings at page breaks. Avoid a second
+          // identical title, but retain headings that recur later in prayer.
+          if(lastHeading!==normalized.toLowerCase()){
+            const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=normalized;target.append(h);
+          }
+          lastHeading=normalized.toLowerCase();lastLine=null;lastRole=null;continue;
         }
         const role=roleLine(text);
         if(!role && liturgicalInstruction(text)){
@@ -215,6 +221,7 @@
           rubric.append(flag,words);target.append(rubric);
           lastLine=null;lastRole=null;continue;
         }
+        lastHeading=null;
         const p=document.createElement('p');
         p.className='byz-prayer-line';
         if(role){
@@ -222,7 +229,9 @@
           const speaker=document.createElement('span');
           speaker.className='byz-speaker';speaker.textContent=role.name;
           p.append(speaker);
-          const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=role.words;p.append(words);
+          if(role.words){
+            const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=role.words;p.append(words);
+          }
           lastRole=role.kind;
         }else{
           p.textContent=text;lastRole=null;
