@@ -5,9 +5,39 @@
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
  function heading(text){return heads.has(compact(text))||/^Antiphon:\s*Psalm\s*\d+$/i.test(text);}
  function role(text){
-  const m=String(text).match(/^\s*(PRIEST(?:\s*\d+)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)\s*:\s*(.*)$/i);if(!m)return null;
-  const label=m[1].toUpperCase(),kind=/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL)$/.test(label)?'all':'other';
-  return {kind,name:kind==='priest'?(/BISHOP/.test(label)?'Bishop':'Priest'):kind==='deacon'?'Deacon':kind==='all'?'All':label[0]+label.slice(1).toLowerCase(),words:m[2].trim()};
+  const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
+  const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
+  const name=label==='PRIEST AND DEACON'?'Priest and Deacon':kind==='priest'?(/BISHOP/.test(label)?'Bishop':'Priest'):kind==='deacon'?'Deacon':label[0]+label.slice(1).toLowerCase();
+  return {kind,name,words:m[4].trim(),...(m[2]||m[3]?{cue:(m[2]||m[3]).trim()}: {})};
+ }
+ function speakerInstruction(text){
+  const m=String(text).match(/^(?:the )?(priest|deacon|bishop|reader|cantor|choir)\s+(?:[^:]*?\s+)?(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming)\s*(?:\([^)]*\))?\s*:\s*$/i);
+  return m?role(m[1]+':'):null;
+ }
+ // Preserve parallel alternatives as separate columns; never interleave prayers.
+ function pdfRows(items,page){
+  const rows=new Map();
+  for(const item of items){
+   const text=normalize(item.str);if(!text)continue;
+   const x=Number(item.transform?.[4]||0),y=Number(item.transform?.[5]||0),key=Math.round(y*2)/2;
+   if(!rows.has(key))rows.set(key,[]);rows.get(key).push({x,text,width:Number(item.width)||0,height:Number(item.height)||12});
+  }
+  const sorted=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([y,parts])=>({y,parts:parts.sort((a,b)=>a.x-b.x)}));
+  const header=sorted.find(row=>/Sunday.*Ordinary.*Weekday.*Ordinary/i.test(row.parts.map(p=>p.text).join(' ')));
+  const right=header?.parts.find(p=>/\bWeekday\b/i.test(p.text));
+  if(!right)return sorted.map(row=>({text:row.parts.map(p=>p.text).join(' '),y:row.y,page,height:Math.max(...row.parts.map(p=>p.height))}));
+  const cut=right.x-8,out=[],left=[],rightRows=[];let columns=false;
+  const flush=()=>{out.push(...left,...rightRows);left.length=rightRows.length=0;};
+  for(const row of sorted){
+   if(row===header)columns=true;
+   const l=row.parts.filter(p=>p.x<cut),r=row.parts.filter(p=>p.x>=cut);
+   const spans=l.some(p=>p.width&&p.x+p.width>cut+12);
+   if(columns&&spans&&!r.length){flush();columns=false;}
+   const make=parts=>({text:parts.map(p=>p.text).join(' '),y:row.y,page,height:Math.max(...parts.map(p=>p.height))});
+   if(columns){if(l.length)left.push({...make(l),alternative:'sunday'});if(r.length)rightRows.push({...make(r),alternative:'weekday'});}
+   else out.push(make(row.parts));
+  }
+  flush();return out;
  }
  function instruction(text){
   const s=String(text||'').trim();if(!s||role(s))return false;
@@ -36,13 +66,13 @@
    // A rubric ending in ':' introduces spoken words in the next paragraph.
    // Never let the prayer be swallowed into the hidden instruction.
    const followsRubric=/[:：]\s*$/.test(current)&&instruction(current)&&!instruction(text)&&!role(text);
-   if(followsRubric||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
+   if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
    if(!current)current=text;
    else if(/[-\u2010]$/.test(current)&&/^[a-z]/.test(text))current=current.slice(0,-1)+text;
    else current+=' '+text;
-   if(heading(text))flush();last=typeof raw==='object'?raw:null;
+   if(heading(text)||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text))flush();last=typeof raw==='object'?raw:null;
   }
   flush();return out;
  }
- return {normalize,heading,role,instruction,combine};
+ return {normalize,heading,role,speakerInstruction,pdfRows,instruction,combine};
 });

@@ -680,13 +680,13 @@ const CONTENT = (() => {
       night: [{ type: 'office', title: 'Night Prayer (Compline)', which: 'C', hour: 'compline' }]
     },
     byz: {
-      morning: [P('Sign of the Cross', T.cross), P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
-        P('Morning Troparion', T.morningTrop), { type: 'hourlink', title: 'Orthros (Matins) and the Hours', hour: 'orthros' }, 
+      morning: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
+        { type: 'byzpsalms', title: 'The Six Psalms', psalms: '3;37;62;87;102;142' }, { type: 'hourlink', title: 'Orthros (Matins) and the Hours', hour: 'orthros' },
         { type: 'quote', title: 'From the Fathers' }, { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Dismissal', T.dismissal)],
-      evening: [P('Sign of the Cross', T.cross), P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
-        P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe),
+      evening: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
+        { type: 'byzpsalms', title: 'Opening Psalm', psalms: '103' }, P('Lord, I Have Cried', T.lordcried), P('Phos Hilaron — O Gladsome Light', T.phos), P('Vouchsafe, O Lord', T.vouchsafe),
         { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Theotokion', T.theotokion), P('Song of Simeon', T.nunc), { type: 'hourlink', title: 'Full Vespers and Compline (Horologion)', hour: 'vespers' }, P('Dismissal', T.dismissal)],
-      night: [P('Sign of the Cross', T.cross), P('Blessing', T.bwg), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), P('Song of Simeon', T.nunc), P('Prayer before sleep', 'Into your hands, O Lord, I commend my spirit. Protect me through this night and grant me peaceful rest.'), { type: 'hourlink', title: 'Full Byzantine Compline (Horologion)', hour: 'compline' }]
+      night: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'byzpsalms', title: 'Psalms of Small Compline', psalms: '50;69;142' }, P('Prayer before sleep', 'Into your hands, O Lord, I commend my spirit. Protect me through this night and grant me peaceful rest.'), { type: 'hourlink', title: 'Full Byzantine Compline (Horologion)', hour: 'compline' }]
     },
     sarum: {
       // the Traditional tab is laid out by hour: Matins, Lauds, the Little Hours, Vespers, Compline
@@ -732,7 +732,7 @@ const CONTENT = (() => {
       { n: 'Sixth Hour', alt: 'Sext', at: 'Noon', start: 12, d: 'Remembering the Crucifixion.', hour: 'hours' },
       { n: 'Ninth Hour', alt: 'None', at: '3 pm', start: 15, d: 'Remembering the death of Christ.', hour: 'hours' },
       { n: 'Vespers', alt: 'Esperinos', at: 'Sunset', start: 17, d: 'Lord, I Have Cried; Phos Hilaron; Prokeimenon.', hour: 'vespers' },
-      { n: 'Compline', alt: 'Apodeipnon', at: 'Before sleep', start: 20, d: 'Psalms, Prayer of Manasseh, Forgive-Us Prayers.', hour: 'compline' }
+      { n: 'Compline', alt: 'Apodeipnon', at: 'Before sleep', start: 20, d: 'Small Compline: Psalms 50, 69 and 142, doxology, Creed, canon and prayers. Great Compline has a different order, including the Prayer of Manasseh.', hour: 'compline' }
     ],
     sarum: [
       { w: 'M', n: 'Matins', alt: 'Matutinae', at: 'Night', start: null, d: 'Night office with psalms and lessons.' },

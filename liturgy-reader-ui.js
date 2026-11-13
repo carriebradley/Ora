@@ -13,7 +13,7 @@
   function card(id,{church='ukrainian',date='',dayTitle=''}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
     const roman=id==='roman';
-    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" aria-label="Prayers of the day">
+    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" aria-label="Prayers of the day">
       ${roman?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
@@ -87,20 +87,7 @@
     for(let number=33;number<=113;number+=2){
       const page=await book.getPage(number);
       const items=(await page.getTextContent()).items;
-      // Reconstruct fixed-position PDF text by physical line instead of
-      // relying on fragment order or the inconsistent hasEOL flags.
-      const rows=new Map();
-      for(const item of items){
-        const value=String(item.str||'');if(!value.trim())continue;
-        const x=Number(item.transform?.[4]||0),y=Number(item.transform?.[5]||0);
-        const rowKey=Math.round(y*2)/2;
-        if(!rows.has(rowKey))rows.set(rowKey,[]);
-        rows.get(rowKey).push({x,text:value});
-      }
-      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([y,fragments])=>{
-        fragments.sort((a,b)=>a.x-b.x);
-        return {text:fragments.map(item=>item.text.trim()).filter(Boolean).join(' ').replace(/\s+/g,' ').trim(),y,page:number};
-      }).filter(Boolean);
+      const lines=LiturgicalFormat.pdfRows(items,number);
       const clean=combinePdfLines(lines).filter(line=>{
         if(/^\d{1,3}$/.test(line))return false;
         if(/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(line))return false;
@@ -130,13 +117,7 @@
     }
     for(let number=startPage;number<=endPage;number++){
       const page=await book.getPage(number),items=(await page.getTextContent()).items;
-      const rows=new Map();
-      for(const item of items){
-        const txt=String(item.str||'').trim();if(!txt)continue;
-        const x=Number(item.transform?.[4]||0),y=Number(item.transform?.[5]||0),key=Math.round(y*2)/2;
-        if(!rows.has(key))rows.set(key,[]);rows.get(key).push({x,text:txt});
-      }
-      const lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([y,parts])=>({text:parts.sort((a,b)=>a.x-b.x).map(x=>x.text).join(' ').replace(/\s+/g,' ').trim(),y,page:number})).filter(row=>row.text);
+      const lines=LiturgicalFormat.pdfRows(items,number);
       if(!lines.length)continue;
       const full=lines.map(row=>row.text).join(' ');
       if(!foundLiturgy){
@@ -151,7 +132,20 @@
         if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
         return true;
       });
-      if(clean.length)sections.push({heading:number===startPage&&startPage===30?'Divine Liturgy of St. John Chrysostom':null,lines:clean});
+      if(lines.some(row=>row.alternative)){
+        const groups=[];
+        for(const row of (end<0?lines:lines.slice(0,end))){
+          const kind=row.alternative||'';
+          if(groups.at(-1)?.alternative!==kind)groups.push({alternative:kind,rows:[]});
+          groups.at(-1).rows.push(row);
+        }
+        for(const group of groups){
+          const combined=combinePdfLines(group.rows).filter(line=>!/^\d{1,4}$/.test(line));
+          if(!combined.length)continue;
+          const heading=group.alternative?combined.shift():null;
+          sections.push({alternative:group.alternative,heading,lines:combined});
+        }
+      }else if(clean.length)sections.push({heading:number===startPage&&startPage===30?'Divine Liturgy of St. John Chrysostom':null,lines:clean});
       if(end>=0)break;
     }
     return foundLiturgy&&sections.length?sections:null;
@@ -176,9 +170,19 @@
     });
     toolbar.append(toggle);target.append(toolbar);
     const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
-    let lastLine=null,lastRole=null,lastMajor=null,lastHeading=null;
+    let lastLine=null,lastRole=null,lastMajor=null,lastHeading=null,pendingRole=null;
+    let container=target;
+    const date=target.closest('[data-day-date]')?.dataset.dayDate;
+    const sunday=date&&new Date(date+'T00:00:00Z').getUTCDay()===0;
     for(const section of sections){
-      if(section.heading){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;target.append(h);lastMajor=section.heading;lastHeading=section.heading.toLowerCase();lastLine=null;lastRole=null;}
+      container=target;lastLine=null;lastRole=null;pendingRole=null;
+      if(section.alternative){
+        const choice=document.createElement('details');choice.className='byz-antiphon-option';
+        choice.open=section.alternative===(sunday?'sunday':'weekday');
+        const summary=document.createElement('summary');summary.textContent=section.heading||section.alternative;
+        choice.append(summary);target.append(choice);container=choice;
+      }
+      if(section.heading&&!section.alternative){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;container.append(h);lastMajor=section.heading;lastHeading=section.heading.toLowerCase();lastLine=null;lastRole=null;}
       for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
         const raw=section.lines[lineIndex];
         let text=String(raw||'').trim();
@@ -201,27 +205,30 @@
         if(heading)text=heading;
         if(!text)continue;
         if(/^(?:Liturgy of the Word|Liturgy of the Eucharist|Anaphora|Holy Communion)$/i.test(text)){
-          if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;target.append(h);lastMajor=text;lastHeading=text.toLowerCase();}
-          lastLine=null;lastRole=null;continue;
+          if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;container.append(h);lastMajor=text;lastHeading=text.toLowerCase();}
+          lastLine=null;lastRole=null;pendingRole=null;continue;
         }
         if(heading || headingPattern.test(text) || isPdfHeading(text)) {
           const normalized=normalizePdfLine(text);
           // PDFs repeat running headings at page breaks. Avoid a second
           // identical title, but retain headings that recur later in prayer.
           if(lastHeading!==normalized.toLowerCase()){
-            const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=normalized;target.append(h);
+            const h=document.createElement('h4');h.className='byz-prayer-heading';h.textContent=normalized;container.append(h);
           }
-          lastHeading=normalized.toLowerCase();lastLine=null;lastRole=null;continue;
+          lastHeading=normalized.toLowerCase();lastLine=null;lastRole=null;pendingRole=null;continue;
         }
-        const role=roleLine(text);
+        let role=roleLine(text);
         if(!role && liturgicalInstruction(text)){
           const rubric=document.createElement('p');
           rubric.className='byz-rubric';
           const flag=document.createElement('span');flag.className='byz-rubric-label';flag.textContent='Instruction';
           const words=document.createElement('span');words.textContent=text;
-          rubric.append(flag,words);target.append(rubric);
-          lastLine=null;lastRole=null;continue;
+          rubric.append(flag,words);container.append(rubric);
+          pendingRole=LiturgicalFormat.speakerInstruction(text);
+          lastLine=null;lastRole=null;pendingRole=null;continue;
         }
+        if(!role&&pendingRole)role={...pendingRole,words:text};
+        pendingRole=null;
         lastHeading=null;
         const p=document.createElement('p');
         p.className='byz-prayer-line';
@@ -230,6 +237,7 @@
           const speaker=document.createElement('span');
           speaker.className='byz-speaker';speaker.textContent=role.name;
           p.append(speaker);
+          if(role.cue){const cue=document.createElement('span');cue.className='byz-rubric';cue.textContent=role.cue;p.append(cue);}
           if(role.words){
             const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=role.words;p.append(words);
           }
@@ -237,7 +245,7 @@
         }else{
           p.textContent=text;lastRole=null;
         }
-        target.append(p);lastLine=p;
+        container.append(p);lastLine=p;
       }
     }
   }

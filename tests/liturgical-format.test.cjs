@@ -67,3 +67,19 @@ test('spoken prayer after a rubric ending in a colon remains readable',()=>{
  assert.match(blocks[1],/^Being God, You were present/);
  assert.match(blocks[1],/Paradise with the thief/);
 });
+
+test('source labels preserve quiet priest prayers, people and joint clergy',()=>{
+ assert.deepEqual(F.role('Priest (quietly): Fixture private prayer.'),{kind:'priest',name:'Priest',words:'Fixture private prayer.',cue:'quietly'});
+ assert.deepEqual(F.role('The People: Fixture response.'),{kind:'all',name:'People',words:'Fixture response.'});
+ assert.equal(F.role('Priest and Deacon: Fixture joint prayer.').kind,'clergy');
+ assert.equal(F.speakerInstruction('The Deacon censes the table saying:').kind,'deacon');
+ assert.equal(F.speakerInstruction('The Priest says:').kind,'priest');
+ assert.equal(F.speakerInstruction('The priest bows.'),null);
+});
+test('parallel ordinary antiphons keep complete columns before common prayers',()=>{
+ const item=(str,x,y,width=100)=>({str,width,height:12,transform:[1,0,0,12,x,y]});
+ const rows=F.pdfRows([item('First Antiphon',20,750),item('Sunday',20,720,40),item('(Ordinary)',65,720,65),item('Weekday (Ordinary)',200,720),item('ALL: Left fixture',20,690),item('ALL: Right fixture',200,690),item('left continuation.',20,675),item('right continuation.',200,675),item('PRIEST: Fixture common prayer across the full page.',20,640,340)],1);
+ assert.deepEqual(rows.map(r=>r.alternative||'common'),['common','sunday','sunday','sunday','weekday','weekday','weekday','common']);
+ assert.deepEqual(F.combine(rows.filter(r=>r.alternative==='sunday')),['Sunday (Ordinary)','ALL: Left fixture left continuation.']);
+ assert.doesNotMatch(F.combine(rows.filter(r=>r.alternative==='sunday')).join(' '),/Right|right/);
+});

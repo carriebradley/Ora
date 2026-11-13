@@ -111,6 +111,7 @@ details>summary{cursor:pointer}
 details.credits>summary{list-style:none;display:flex;align-items:center}details.credits>summary::-webkit-details-marker{display:none}details.credits>summary::after{content:"Show";margin-left:auto;font-size:.8rem;color:var(--accent)}details.credits[open]>summary::after{content:"Hide"}
 a{color:var(--accent)}
 .asv{font-family:var(--serif);font-size:calc(1.02rem * var(--reading-scale));line-height:1.68;padding:2px 0 10px}.asv sup{font-size:.65em;color:var(--muted);margin-right:2px}
+.divine-office-card .sec{font-size:calc(1.02rem * var(--reading-scale))}
 .sec{margin:14px 0;font-family:var(--serif);font-size:calc(1rem * var(--reading-scale));line-height:1.65}.sec>b{display:block;font-family:var(--sans,inherit);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}.psalm{margin:6px 0 12px}.ant{margin:10px 0 2px;font-style:italic}.ant i{color:var(--muted)}
 .note{background:var(--line);border-radius:10px;padding:10px 12px;font-size:.9rem;line-height:1.5;margin:8px 0}
 .glance .gl{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;row-gap:10px;align-items:center;padding:15px 0;border-top:1px solid var(--line);font-size:.9rem}
@@ -182,7 +183,7 @@ nav button.on b{color:inherit}
 .art .muted{line-height:1.5}
 @media(max-width:370px){.prayer-minor button,.seg.hrs.prayer-minor button{font-size:.78rem;padding-left:3px;padding-right:3px}}
 .justice-intro{display:flex;align-items:center;gap:13px;padding:15px 16px;margin-bottom:14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(120deg,color-mix(in srgb,var(--gold) 10%,var(--card)),var(--card))}.justice-intro svg{width:30px;height:30px}.justice-intro strong{font-size:.78rem;letter-spacing:.08em}.justice-intro p{font-family:var(--serif);font-size:.95rem;line-height:1.45;color:var(--muted);margin:5px 0 0}.justice-ecology .lab{margin-bottom:12px}.justice-library>summary{padding:5px 0}.justice-library .seg{margin-top:15px!important}
-.office-readings-text{font-size:1rem;line-height:1.6}.office-readings-text .asv,.office-readings-text .asv p{font-family:var(--serif);font-size:1.1rem!important;line-height:1.7!important}.office-readings-text .oortx-slot p{font-size:1.1rem!important;line-height:1.7!important}.office-readings-text details>summary{padding:5px 0}.office-readings-text .muted{line-height:1.55}
+.office-readings-text{font-size:1rem;line-height:1.6}.office-readings-text .asv,.office-readings-text .asv p{font-family:var(--serif);font-size:calc(1.02rem * var(--reading-scale))!important;line-height:1.7!important}.office-readings-text .oortx-slot p{font-size:calc(1.02rem * var(--reading-scale))!important;line-height:1.7!important}.office-readings-text details>summary{padding:5px 0}.office-readings-text .muted{line-height:1.55}
 .justice-intro svg{color:var(--gold)}.justice-charity .lab,.justice-voice .lab,.justice-reading .lab,.justice-teaching .lab{margin-bottom:12px}
 
 /* One continuous, softly framed Divine Office reader. */
@@ -251,6 +252,7 @@ nav button.on b{color:inherit}
 .simple-liturgical-text .reader-byzantine-prayers .byz-prayer-words{display:block;min-width:0}
 .simple-liturgical-text .reader-byzantine-prayers .byz-role-all .byz-prayer-words{font-weight:600}
 @media(max-width:420px){.simple-liturgical-text .reader-byzantine-prayers .byz-prayer-line[class*="byz-role-"]{padding-left:10px}}
+.byz-antiphon-option{margin:18px 0;padding:12px;border:1px solid var(--line);border-radius:10px}.byz-antiphon-option>summary{font-family:var(--serif);font-weight:600;cursor:pointer;margin-bottom:10px}.roman-reading-credit{font-family:var(--sans);font-size:.78rem;line-height:1.5}.byz-office-guide{margin:0 0 18px;color:var(--muted);font-size:.84rem;line-height:1.6}.byz-office-guide summary{cursor:pointer}.byz-office-guide ol{padding-left:1.4em}.byz-office-guide li{margin:8px 0}.byz-fixed-psalms summary{cursor:pointer;font-family:var(--serif)}.byz-fixed-psalms .tx{margin:14px 0}
 /* Liturgical rubrics remain on-device, visually separate and hidden by default. */
 .simple-liturgical-text .reader-byzantine-prayers .byz-reader-preferences{display:flex;justify-content:flex-end;margin:0 0 15px}
 .simple-liturgical-text .reader-byzantine-prayers .byz-rubrics-toggle{appearance:none;background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-family:var(--sans,system-ui,sans-serif);font-size:.78rem;line-height:1.3;cursor:pointer}
@@ -427,6 +429,7 @@ nav button.on b{color:inherit}
 <script src="sarum.js"></script>
 <script src="data.js"></script>
 <script src="content.js"></script>
+<script src="byzantine-office.js"></script>
 <script src="sacred-art.js"></script>
 <script src="liturgical-colors.js"></script>
 <script src="byzlect.js"></script>
@@ -436,6 +439,7 @@ nav button.on b{color:inherit}
 <script src="roman-office-texts-data.js"></script>
 <script src="roman-office-texts.js"></script>
 <script src="roman-office.js"></script>
+<script src="roman-short-readings.js"></script>
 <script src="hours.js"></script>
 <script src="liturgy-schedule.js"></script>
 <script src="epub-reader.js"></script>

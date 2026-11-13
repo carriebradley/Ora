@@ -76,5 +76,5 @@ test('verified Vespers short readings use complete bundled public-domain passage
  const ordinary=evening('2026-12-29');
  assert.equal(R.properReading(L,ordinary.d,'V',us,ordinary.first),null);
  assert.equal(R.properReading(L,date('2026-12-25'),'L',us),null);
- assert.match(H.modern(L,date('2026-11-15'),'V',us),/Short reading \(traditional chapter\)/);
+ assert.match(H.modern(L,date('2026-11-15'),'V',us),/Short reading · 2 Corinthians 1:3-4/);
 });

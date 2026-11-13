@@ -307,3 +307,12 @@ and Epiphany-transfer context, First/Second Vespers, memorial weekday psalmody,
 and apostle feast psalmody. All 90 unit tests pass locally. Mobile and published
 browser checks include O Wisdom, O Emmanuel, Christmas December 30, Wednesday
 after Epiphany, Matthias Vespers, and Peter/Paul First Vespers.
+
+### November 13: appointed short readings
+
+Added 191 public-domain Douay–Rheims–Challoner passages selected from the checked
+First Edition reading references. The 462-office audit now resolves an appointed
+short reading in 445 offices. Remaining gaps include unresolved proper sources
+and Judith's Greek/Vulgate numbering alignment. Full-verse expansions are
+labelled. See [the prayer/reader review](PRAYER-AND-READER-REVIEW-2026-11-13.md)
+for boundaries, provenance and remaining content limits.

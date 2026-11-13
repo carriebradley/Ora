@@ -2,6 +2,13 @@ const assert=require('node:assert/strict');
 const path=require('node:path');
 module.exports=async function(page,base,artifacts){
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
+  for(const kind of ['morning','readings','evening','night']){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=${kind}`);
+    assert.equal(await page.locator('.prayer-opening').count(),1);
+    assert.equal(await page.locator('.prayer-opening .tx').innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
+    assert.equal(await page.evaluate(()=>document.querySelector('.prayer-opening').compareDocumentPosition(document.querySelector('#st0'))&Node.DOCUMENT_POSITION_FOLLOWING),4);
+  }
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
   const official=page.locator('#st0');
   assert.match(await official.innerText(),/I lift up my heart to you, O Lord/);
   assert.match(await official.innerText(),/Give us your Spirit, Lord/);

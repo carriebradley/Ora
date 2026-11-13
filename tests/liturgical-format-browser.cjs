@@ -49,6 +49,23 @@ module.exports=async(page,base,artifacts,violations)=>{
   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=originalGet;LiturgyReader.load=originalLoad;}
  });
  assert.match(await page.locator('.reader-inline-text').innerText(),/Fixture Presanctified opening/,'Presanctified has a distinct opening boundary');
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  document.querySelector('.liturgical-text').dataset.textId='melkite-chrysostom';
+  const item=(str,x,y,width=100)=>({str,width,height:12,transform:[1,0,0,12,x,y]});
+  const items=[item('The Divine Liturgy',20,780),item('PRIEST: Blessed is the Kingdom. Fixture opening.',20,755,340),item('First Antiphon',20,730),item('Sunday (Ordinary)',20,700),item('Weekday (Ordinary)',200,700),item('ALL: Fixture Sunday words',20,670),item('ALL: Fixture weekday words',200,670),item('continued left.',20,655),item('continued right.',200,655),item('The Priest says:',20,620,330),item('Fixture common prayer without a printed label.',20,600,330),item('Priest (quietly): Fixture quiet prayer.',20,570,330)];
+  LiturgyReader.get=async id=>({id,name:'fixture-columns.pdf',format:'pdf',pages:1,updated:3,blob:new Blob()});
+  LiturgyReader.load=async()=>({numPages:1,getPage:async()=>({getTextContent:async()=>({items})}),destroy:async()=>{}});
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ const choices=page.locator('.byz-antiphon-option');assert.equal(await choices.count(),2);
+ assert.equal(await choices.nth(0).evaluate(el=>el.open),false);
+ assert.equal(await choices.nth(1).evaluate(el=>el.open),true);
+ assert.match(await choices.nth(1).innerText(),/weekday words continued right/);
+ assert.doesNotMatch(await choices.nth(1).innerText(),/Sunday words|continued left/);
+ assert.equal(await page.locator('.byz-role-priest').count(),3);
+ assert.equal(await page.locator('.byz-prayer-line .byz-rubric').isVisible(),false);
+ await page.locator('.byz-rubrics-toggle').click();assert.equal(await page.locator('.byz-prayer-line .byz-rubric').isVisible(),true);
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };
