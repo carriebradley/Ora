@@ -30,7 +30,7 @@
   const fmtShort = s => { const d = P(s); return `${L.DN[d.getUTCDay()].slice(0, 3)}, ${L.MN[d.getUTCMonth()].slice(0, 3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
   const fmtLong = s => { const d = P(s); return `${L.DN[d.getUTCDay()]}, ${L.MN[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
   const hash = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
-  const COLORS = { y: '#d4a017', w: '#f0e8da', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
+  const COLORS = { blue: LiturgicalColors.blue, y: '#d4a017', w: '#f0e8da', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
   const col = c => COLORS[c] || COLORS.g;
   const MAJOR = /Solemnity|Principal|Great Feast|Triduum|Holy Week|Class I$/;
   const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
@@ -122,24 +122,13 @@
     const eligible = C.QUOTES.filter(q => quoteEligible(q, rite));
     return pick(eligible, v.iso + rite, st.quoteShift, tagsFor(v), null);
   };
-  // Select art by tradition and period, retaining seasonal rotation.
-  const PRE1500_WEST_ART = new Set([
-    'The Last Supper', 'Pietà', 'The Annunciation', 'Ghent Altarpiece',
-    'Adoration of the Magi', 'The Baptism of Christ',
-    'The Descent from the Cross', 'The Resurrection', 'Holy Trinity'
-  ]);
-  const artEligible = (a, rite) => rite === 'byz' ? a.tr === 'East'
-    : rite === 'sarum' ? a.tr === 'West' && PRE1500_WEST_ART.has(a.t)
-    : a.tr === 'West';
+  // Seasonal works lead the deck; Another can reach every eligible artwork.
   const artFor = (v, rite) => {
-    const eligible = C.ART.filter(a => artEligible(a, rite));
-    const selected = pick(eligible, v.iso + 'art' + rite, st.artShift, tagsFor(v), null);
-    if (!selected) return null;
-    const known = st.art[selected.q];
-    if (!known || known === 'loading' || known.img) return selected;
-    // If the selected work has no verified image, try another within the same tradition.
-    const alternates = eligible.filter(x => x.q !== selected.q && !(st.art[x.q] && st.art[x.q] !== 'loading' && !st.art[x.q].img));
-    return alternates.length ? pick(alternates, v.iso + 'art-fallback' + rite, st.artShift, tagsFor(v), null) : selected;
+    const ordered = SacredArt.order(C.ART, rite, v.iso, tagsFor(v));
+    if (!ordered.length) return null;
+    const start = ((st.artShift % ordered.length) + ordered.length) % ordered.length;
+    const deck = ordered.slice(start).concat(ordered.slice(0, start));
+    return deck.find(a => !st.art[a.q] || st.art[a.q] === 'loading' || st.art[a.q].img) || ordered[start];
   };
 
   /* ---------- readings ---------- */
@@ -322,6 +311,8 @@
   }
   async function loadArt(a) {
     if (!a || st.art[a.q] !== undefined) return;
+    // Museum catalogue records pin the image to the caption's exact object.
+    if(a.image){st.art[a.q]={img:a.image,url:a.source,source:a.credit,license:a.license};return;}
     const k='ora.art3.'+a.q, cached=store.get(k,null);
     if(cached && (cached.img || (cached.at && Date.now()-cached.at<864e5))){st.art[a.q]=cached;return;}
     st.art[a.q]='loading';
@@ -335,11 +326,11 @@
   function artHTML(a,big){
     if(!a)return '<p class="muted">Artwork unavailable.</p>';
     loadArt(a);const m=st.art[a.q];
-    let h='<div class="art">';
+    let h=`<figure class="art" data-art-key="${esc(a.q)}">`;
     h+=m?.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="ph" hidden>Image unavailable. Choose Another to view a different work.</div>` : `<div class="ph">${m==='loading'?'Finding a verified artwork…':'No verified image available. Choose Another.'}</div>`;
-    h+=`<h3 class="artwork-title">${esc(a.t)}</h3><div class="muted">${esc(a.a)} · ${a.tr==='East'?'Eastern':'Western'} tradition</div><p class="muted" style="font-size:.92rem;line-height:1.55;margin:12px 0">${esc(a.p)}</p>`;
-    if(m?.source && m.img)h+=`<p class="muted" style="font-size:.73rem;margin:3px 0">Image: ${esc(m.source)}${m.license?' · '+esc(m.license):''}</p>`;
-    h+=`<div class="row"><button class="btn sm" data-act="artnext">Another</button>${m?.url?`<a class="btn sm" target="_blank" rel="noopener noreferrer" href="${esc(m.url)}">About this work</a>`:''}${speakBtn(`${a.t}. ${a.a}. ${a.p}`)}</div></div>`;
+    h+=`<figcaption class="artwork-caption"><h3 class="artwork-title">${esc(a.t)}</h3><p class="artwork-artist">${esc(a.a)}</p><dl class="artwork-facts"><div><dt>Created</dt><dd>${esc(a.created)}</dd></div><div><dt>Origin</dt><dd>${esc(a.origin)}</dd></div></dl><p class="artwork-description">${esc(a.p)}</p></figcaption>`;
+    if(m?.source && m.img)h+=`<p class="artwork-credit">Image: ${esc(m.source)}${m.license?' · '+esc(m.license):''}</p>`;
+    h+=`<div class="row"><button class="btn sm" data-act="artnext">Another</button><a class="btn sm" target="_blank" rel="noopener noreferrer" href="${esc(a.source)}">About this work</a>${speakBtn(`${a.t}. ${a.a}. Created ${a.created}. Origin: ${a.origin}. ${a.p}`)}</div></figure>`;
     return h;
   }
 
@@ -386,13 +377,13 @@
   }
   function cardRoman(v) {
     const r = v.roman;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(LiturgicalColors.display(r))}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
       <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast ? chip(r.fast, 'fast') : ''}</div>
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
   function cardByz(v) {
     const r = v.byz;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(LiturgicalColors.display(r))}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
       <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
@@ -406,7 +397,7 @@
   }
   function cardSarum(v) {
     const r = v.sarum;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(r.color)}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(LiturgicalColors.display(r))}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
       ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
       ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
@@ -497,6 +488,7 @@
     return {kind, badge, detail:[...new Set(summary)].join(' · '), martyr, holySpirit, roseSunday, feast, minor, fast, melkiteCommemoration};
   }
   function observanceColor(r, rite) {
+    if (LiturgicalColors.marian(r)) return 'blue';
     const x = status(r, rite);
     if (x.holySpirit || x.martyr) return 'r';
     if (x.roseSunday) return 'rose';
@@ -1332,12 +1324,12 @@
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
-      const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(v[k].color)}"></span>`).join('');
+      const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(LiturgicalColors.display(v[k]))}"></span>`).join('');
       const f = (st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && (v.byz.fastSeason || /Strict|^Fast and/.test(v.byz.fast)));
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitence and fasting</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyr or Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> Off-white · Memorials</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Feasts and solemnities</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Joyful Sundays</span></div>';
+    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitence and fasting</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyr or Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> Off-white · Memorials</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Feasts and solemnities</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Joyful Sundays</span><span><i class="key-dot" style="--key:#3b729f"></i> Blue · Marian feasts</span></div>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
@@ -1681,7 +1673,12 @@
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
       case 'qnext': st.quoteShift++; break;
       case 'pnext': st.popeShift++; break;
-      case 'artnext': st.artShift++; break;
+      case 'artnext': {
+        const deck=SacredArt.order(C.ART,S.rite,st.date,tagsFor(dayInfo(st.date)));
+        const key=b.closest('.art')?.dataset.artKey;
+        const index=deck.findIndex(a=>a.q===key);
+        st.artShift=index<0?st.artShift+1:index+1;break;
+      }
       case 'mprev': st.month.m--; if (st.month.m < 0) { st.month.m = 11; st.month.y--; } break;
       case 'mnext': st.month.m++; if (st.month.m > 11) { st.month.m = 0; st.month.y++; } break;
       case 'layer': st.layers[v] = !st.layers[v]; break;
@@ -1710,7 +1707,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v267';
+  const APP_BUILD = 'ora-v268';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

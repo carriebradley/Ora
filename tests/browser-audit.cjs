@@ -24,6 +24,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.equal(metrics[1],'24px');assert.equal(metrics[3],'start');
   results.push(`${rite}/${tab}`);
  }
+ await require('./sacred-art-browser.cjs')(page,base,artifacts);
+ await require('./liturgical-colors-browser.cjs')(page,base);
  await require('./roman-office-browser.cjs')(page,base,artifacts);
  await require('./swipe-browser.cjs')(browser,base);
  await require('./justice-browser.cjs')(page,base,artifacts);

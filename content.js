@@ -3,37 +3,599 @@
  * Scripture canticles, Keble 1834 for Phos Hilaron). Extend freely — the app picks by season/date.
  */
 const CONTENT = (() => {
-  /* ---------- artworks (image + metadata fetched live from Wikipedia by search query) ---------- */
+  /* ---------- artworks (curated dates/origins; pinned museum images or verified live lookup) ---------- */
   // tags: advent christmas epiphany lent holyweek easter pentecost marian transfiguration dormition michaelmas nicholas general
   const ART = [
-    { t: 'Christ Pantocrator', a: 'Icon, St Catherine’s Monastery, Sinai · 6th c.', tr: 'East', tags: ['general', 'epiphany'], q: 'Christ Pantocrator Sinai icon', wt: 'Christ Pantocrator (Sinai)', fm: 'pantocrator|sinai|sinay|vsederzhitel|pantokrator', p: "An early surviving panel icon from Sinai, painted in encaustic, with subtly differing expressions on the two sides of Christ’s face." },
-    { t: 'The Holy Trinity', a: 'Andrei Rublev · c. 1411', tr: 'East', tags: ['general', 'pentecost'], q: 'Trinity Andrei Rublev icon', wt: 'Trinity (Andrei Rublev)', fm: 'rublev|trinity|troitsa', p: "Rublev depicts three angels seated around a table, drawing on the hospitality of Abraham in Genesis 18." },
-    { t: 'Theotokos of Vladimir', a: 'Byzantine icon · c. 1131', tr: 'East', tags: ['marian', 'advent', 'christmas'], q: 'Theotokos of Vladimir icon', wt: 'Theotokos of Vladimir', fm: 'vladimir', p: "An Eleusa, or Virgin of Tenderness, icon in which the Christ Child presses his cheek against Mary's." },
-    { t: 'Our Lady of Częstochowa', a: 'Icon, Jasna Góra, Poland', tr: 'East', tags: ['marian'], q: 'Our Lady of Czestochowa icon', wt: 'Black Madonna of Częstochowa', fm: 'cz[eę]stochow|madonna|jasna', p: "The revered icon at Jasna Góra is distinguished by two visible scars on Mary's right cheek." },
-    { t: 'The Harrowing of Hell (Anastasis)', a: 'Chora Church, Constantinople · c. 1315', tr: 'East', tags: ['easter', 'holyweek'], q: 'Anastasis fresco Chora Church', wt: 'Harrowing of Hell', fm: 'chora|anastasis|kariye', p: "In the Chora fresco, the risen Christ grasps Adam and Eve by the wrists and raises them from their tombs." },
-    { t: 'Deësis mosaic', a: 'Hagia Sophia · c. 1261', tr: 'East', tags: ['general', 'advent'], q: 'Deësis mosaic Hagia Sophia', wt: 'Deesis', fm: 'de[eë]sis|deisis', p: "The monumental Byzantine mosaic shows Christ between the Virgin Mary and John the Baptist, who intercede before him." },
-    { t: 'Hodegetria', a: 'Byzantine icon type', tr: 'East', tags: ['marian'], q: 'Hodegetria icon', wt: 'Hodegetria', fm: 'hodegetria', p: "In this icon type, the Mother of God gestures toward Christ, identifying him as the way to salvation." },
-    { t: 'Dormition of the Theotokos', a: 'Byzantine tradition', tr: 'East', tags: ['dormition', 'marian'], q: 'Dormition of the Mother of God icon', wt: 'Dormition of the Mother of God', fm: 'dormition|koimesis|uspen', p: "Dormition icons commonly show the apostles around Mary's bier and Christ holding a small, swaddled figure representing her soul." },
-    { t: 'The Last Supper', a: 'Leonardo da Vinci · 1495–98', tr: 'West', tags: ['holyweek', 'general'], q: 'The Last Supper Leonardo da Vinci', wt: 'The Last Supper (Leonardo)', fm: 'last.?supper|leonardo|cenacolo|ultima', p: "Leonardo arranges the apostles in groups of three at the moment Christ announces that one of them will betray him." },
-    { t: 'Pietà', a: 'Michelangelo · 1498–99', tr: 'West', tags: ['holyweek', 'lent'], q: 'Pietà Michelangelo St Peter’s Basilica', wt: 'Pietà (Michelangelo)', fm: 'piet', p: "Michelangelo carved the youthful Mary holding Christ's body from a single block of marble for St Peter's Basilica." },
-    { t: 'The Return of the Prodigal Son', a: 'Rembrandt · c. 1669', tr: 'West', tags: ['lent', 'general'], q: 'Return of the Prodigal Son Rembrandt', wt: 'The Return of the Prodigal Son (Rembrandt)', fm: 'prodigal|rembrandt', p: "Rembrandt places the kneeling son at the center of a quiet reunion, illuminated against a dark background." },
-    { t: 'The Calling of Saint Matthew', a: 'Caravaggio · 1599–1600', tr: 'West', tags: ['general'], q: 'Calling of Saint Matthew Caravaggio', wt: 'The Calling of Saint Matthew', fm: 'matthew|matteo|calling', p: "Caravaggio uses a beam of light and Christ's pointing hand to mark the call of Matthew at the tax table." },
-    { t: 'The Annunciation', a: 'Fra Angelico · c. 1440', tr: 'West', tags: ['advent', 'marian'], q: 'Annunciation Fra Angelico San Marco', wt: 'Annunciation (Fra Angelico, San Marco)', fm: 'angelico|annunciat', p: "Painted for the convent of San Marco, this fresco sets Gabriel and Mary beneath a restrained Renaissance loggia." },
-    { t: 'Sistine Madonna', a: 'Raphael · 1512', tr: 'West', tags: ['marian', 'advent'], q: 'Sistine Madonna Raphael', wt: 'Sistine Madonna', fm: 'sistine|sixtin|raffael|raphael', p: "Raphael frames the Virgin and Child with opening curtains, Saints Sixtus and Barbara, and two cherubs below." },
-    { t: 'Christ Crucified', a: 'Diego Velázquez · c. 1632', tr: 'West', tags: ['lent', 'holyweek'], q: 'Christ Crucified Velázquez Prado', wt: 'Christ Crucified (Velázquez)', fm: 'cristo|vel[aá]zquez|crucif', p: "Velázquez isolates the crucified Christ against a dark background, emphasizing stillness and the body's naturalistic detail." },
-    { t: 'Isenheim Altarpiece (Crucifixion)', a: 'Matthias Grünewald · c. 1512–16', tr: 'West', tags: ['lent', 'holyweek'], q: 'Isenheim Altarpiece Grünewald Crucifixion', wt: 'Isenheim Altarpiece', fm: 'isenheim|gr[uü]newald', p: "Created for a hospital monastery at Isenheim, the altarpiece presents Christ's suffering with unusually stark physical detail." },
-    { t: 'The Incredulity of Saint Thomas', a: 'Caravaggio · c. 1601–02', tr: 'West', tags: ['easter'], q: 'Incredulity of Saint Thomas Caravaggio', wt: 'The Incredulity of Saint Thomas (Caravaggio)', fm: 'thomas|incredul|tommaso', p: "Caravaggio brings Thomas's hand close to Christ's wound, concentrating the scene into a tightly grouped encounter." },
-    { t: 'Supper at Emmaus', a: 'Caravaggio · 1601', tr: 'West', tags: ['easter'], q: 'Supper at Emmaus Caravaggio National Gallery', wt: 'Supper at Emmaus (Caravaggio, London)', fm: 'emmaus', p: "Caravaggio depicts the moment the disciples recognize Christ at a meal, using dramatic gestures and a carefully arranged table." },
-    { t: 'Ghent Altarpiece', a: 'Jan & Hubert van Eyck · 1432', tr: 'West', tags: ['easter', 'general'], q: 'Ghent Altarpiece Adoration of the Mystic Lamb', wt: 'Ghent Altarpiece', fm: 'ghent|gent|eyck|lamb', p: "The many-paneled altarpiece centers on the Adoration of the Mystic Lamb, with groups gathering in a detailed landscape." },
-    { t: 'The Mystic Nativity', a: 'Sandro Botticelli · 1500', tr: 'West', tags: ['christmas'], q: 'Mystic Nativity Botticelli', wt: 'The Mystical Nativity', fm: 'nativity|botticelli', p: "Botticelli combines the Nativity with dancing angels and scenes of reconciliation in a deliberately visionary composition." },
-    { t: 'Adoration of the Magi', a: 'Gentile da Fabriano · 1423', tr: 'West', tags: ['epiphany'], q: 'Adoration of the Magi Gentile da Fabriano', wt: 'Adoration of the Magi (Gentile da Fabriano)', fm: 'gentile|magi|strozzi', p: "This richly detailed International Gothic altarpiece was commissioned for the Strozzi chapel in Florence." },
-    { t: 'The Baptism of Christ', a: 'Piero della Francesca · c. 1450', tr: 'West', tags: ['epiphany'], q: 'Baptism of Christ Piero della Francesca', wt: 'The Baptism of Christ (Piero della Francesca)', fm: 'piero|baptism', p: "Piero balances Christ's baptism with a white dove above him and a carefully ordered landscape behind." },
-    { t: 'Saint Francis in Meditation', a: 'Francisco de Zurbarán · c. 1635–39', tr: 'West', tags: ['general', 'lent'], q: 'Saint Francis in Meditation Zurbarán', wt: 'Saint Francis in Meditation', fm: 'zurbar|francis', p: "Zurbarán uses a dark habit, stark light, and a skull to depict Francis absorbed in contemplation." },
-    { t: 'The Descent from the Cross', a: 'Rogier van der Weyden · c. 1435', tr: 'West', tags: ['holyweek'], q: 'Descent from the Cross Rogier van der Weyden Prado', wt: 'The Descent from the Cross (van der Weyden)', fm: 'weyden|descent|deposition', p: "Van der Weyden echoes the curve of Christ's fallen body in Mary's swooning figure within a shallow painted space." },
-    { t: 'Pentecost', a: 'El Greco · c. 1600', tr: 'West', tags: ['pentecost'], q: 'Pentecost El Greco Prado', wt: 'Pentecost (El Greco)', fm: 'greco|pentecost', p: "El Greco's elongated figures and vivid color convey the descent of the Holy Spirit upon the gathered disciples." },
-    { t: 'The Resurrection', a: 'Piero della Francesca · c. 1460', tr: 'West', tags: ['easter'], q: 'Resurrection Piero della Francesca Sansepolcro', wt: 'Resurrection (Piero della Francesca)', fm: 'resurrect|piero', p: "Piero depicts the risen Christ stepping from the tomb above four sleeping soldiers in Sansepolcro." },
-    { t: 'Holy Trinity', a: 'Masaccio · c. 1427', tr: 'West', tags: ['general'], q: 'Holy Trinity Masaccio Santa Maria Novella', wt: 'Holy Trinity (Masaccio)', fm: 'masaccio|trinit', p: 'Below the cross lies a skeleton: “I was what you are; you will be what I am.” How do you hold that?' }
-  ];
+  {
+    "t": "Christ Pantocrator",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general",
+      "epiphany"
+    ],
+    "q": "Christ Pantocrator Sinai icon",
+    "wt": "Christ Pantocrator (Sinai)",
+    "fm": "pantocrator|sinai|sinay|vsederzhitel|pantokrator",
+    "p": "An early surviving panel icon from Sinai, painted in encaustic, with subtly differing expressions on the two sides of Christ’s face.",
+    "created": "6th century",
+    "origin": "Saint Catherine’s Monastery, Sinai, Egypt; original workshop uncertain",
+    "source": "https://www.sinaimonastery.com/st-catherine/index.php/en/treasures/icons"
+  },
+  {
+    "t": "The Holy Trinity",
+    "a": "Andrei Rublev",
+    "tr": "East",
+    "tags": [
+      "general",
+      "pentecost"
+    ],
+    "q": "Trinity Andrei Rublev icon",
+    "wt": "Trinity (Andrei Rublev)",
+    "fm": "rublev|trinity|troitsa",
+    "p": "Rublev depicts three angels seated around a table, drawing on the hospitality of Abraham in Genesis 18.",
+    "created": "ca. 1422–1427",
+    "origin": "Trinity–Sergius Monastery, Sergiev Posad, Russia",
+    "source": "https://www.tretyakovgallery.ru/about/history/p-m-tretyakov-priobretaet-ikony-iz-sobraniya-i-l-silina/"
+  },
+  {
+    "t": "Theotokos of Vladimir",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "marian",
+      "advent",
+      "christmas"
+    ],
+    "q": "Theotokos of Vladimir icon",
+    "wt": "Theotokos of Vladimir",
+    "fm": "vladimir",
+    "p": "An Eleusa, or Virgin of Tenderness, icon in which the Christ Child presses his cheek against Mary's.",
+    "created": "Early 12th century",
+    "origin": "Constantinople (Istanbul, Turkey)",
+    "source": "https://en.wikipedia.org/wiki/Theotokos_of_Vladimir"
+  },
+  {
+    "t": "Our Lady of Częstochowa",
+    "a": "Unknown icon painter",
+    "tr": "East",
+    "tags": [
+      "marian"
+    ],
+    "q": "Our Lady of Czestochowa icon",
+    "wt": "Black Madonna of Częstochowa",
+    "fm": "cz[eę]stochow|madonna|jasna",
+    "p": "The revered icon at Jasna Góra is distinguished by two visible scars on Mary's right cheek.",
+    "created": "ca. early 14th century",
+    "origin": "Origin uncertain; preserved at Jasna Góra, Częstochowa, Poland",
+    "source": "https://en.wikipedia.org/wiki/Black_Madonna_of_Cz%C4%99stochowa"
+  },
+  {
+    "t": "The Harrowing of Hell (Anastasis)",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "easter",
+      "holyweek"
+    ],
+    "q": "Anastasis fresco Chora Church",
+    "wt": "Harrowing of Hell",
+    "fm": "chora|anastasis|kariye",
+    "p": "In the Chora fresco, the risen Christ grasps Adam and Eve by the wrists and raises them from their tombs.",
+    "created": "ca. 1316–1321",
+    "origin": "Chora Church, Constantinople (Istanbul, Turkey)",
+    "source": "https://smarthistory.org/chora-church/"
+  },
+  {
+    "t": "Deësis mosaic",
+    "a": "Unknown Byzantine mosaicists",
+    "tr": "East",
+    "tags": [
+      "general",
+      "advent"
+    ],
+    "q": "Deësis mosaic Hagia Sophia",
+    "wt": "Deesis",
+    "fm": "de[eë]sis|deisis",
+    "p": "The monumental Byzantine mosaic shows Christ between the Virgin Mary and John the Baptist, who intercede before him.",
+    "created": "ca. 1261",
+    "origin": "Hagia Sophia, Constantinople (Istanbul, Turkey)",
+    "source": "https://smarthistory.org/deesis-christ-with-the-virgin-mary-and-john-the-baptist-hagia-sophia-istanbul/"
+  },
+  {
+    "t": "Hodegetria · Virgin and Child",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "marian"
+    ],
+    "q": "met-artwork-463984",
+    "created": "Mid-10th–mid-11th century",
+    "origin": "Probably Constantinople (Istanbul, Turkey)",
+    "source": "https://www.metmuseum.org/art/collection/search/463984",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/463984/969117/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "A finely carved ivory icon shows Mary holding Christ and directing attention toward him."
+  },
+  {
+    "t": "Dormition of the Theotokos · Koimesis",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "dormition",
+      "marian"
+    ],
+    "q": "met-artwork-464013",
+    "created": "Late 10th century",
+    "origin": "Probably Constantinople (Istanbul, Turkey)",
+    "source": "https://www.metmuseum.org/art/collection/search/464013",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/464013/969516/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "This ivory relief depicts the apostles around Mary and Christ receiving her soul."
+  },
+  {
+    "t": "The Last Supper",
+    "a": "Leonardo da Vinci",
+    "tr": "West",
+    "tags": [
+      "holyweek",
+      "general"
+    ],
+    "q": "The Last Supper Leonardo da Vinci",
+    "wt": "The Last Supper (Leonardo)",
+    "fm": "last.?supper|leonardo|cenacolo|ultima",
+    "p": "Leonardo arranges the apostles in groups of three at the moment Christ announces that one of them will betray him.",
+    "created": "1495–1498",
+    "origin": "Santa Maria delle Grazie, Milan, Italy",
+    "source": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+  },
+  {
+    "t": "Pietà",
+    "a": "Michelangelo",
+    "tr": "West",
+    "tags": [
+      "holyweek",
+      "lent"
+    ],
+    "q": "Pietà Michelangelo St Peter’s Basilica",
+    "wt": "Pietà (Michelangelo)",
+    "fm": "piet",
+    "p": "Michelangelo carved the youthful Mary holding Christ's body from a single block of marble for St Peter's Basilica.",
+    "created": "1498–1499",
+    "origin": "Rome, Italy; made for Saint Peter’s Basilica",
+    "source": "https://www.turismoroma.it/en/itineraries/michelangelo"
+  },
+  {
+    "t": "The Return of the Prodigal Son",
+    "a": "Rembrandt",
+    "tr": "West",
+    "tags": [
+      "lent",
+      "general"
+    ],
+    "q": "Return of the Prodigal Son Rembrandt",
+    "wt": "The Return of the Prodigal Son (Rembrandt)",
+    "fm": "prodigal|rembrandt",
+    "p": "Rembrandt places the kneeling son at the center of a quiet reunion, illuminated against a dark background.",
+    "created": "ca. 1668–1669",
+    "origin": "Netherlands; exact workshop not documented",
+    "source": "https://www.hermitagefoundation.co.uk/prodigal-son-rembrandt"
+  },
+  {
+    "t": "The Calling of Saint Matthew",
+    "a": "Caravaggio",
+    "tr": "West",
+    "tags": [
+      "general"
+    ],
+    "q": "Calling of Saint Matthew Caravaggio",
+    "wt": "The Calling of Saint Matthew",
+    "fm": "matthew|matteo|calling",
+    "p": "Caravaggio uses a beam of light and Christ's pointing hand to mark the call of Matthew at the tax table.",
+    "created": "1599–1600",
+    "origin": "Contarelli Chapel, San Luigi dei Francesi, Rome, Italy",
+    "source": "https://turismoroma.it/en/node/18610"
+  },
+  {
+    "t": "The Annunciation",
+    "a": "Fra Angelico",
+    "tr": "West",
+    "tags": [
+      "advent",
+      "marian"
+    ],
+    "q": "Annunciation Fra Angelico San Marco",
+    "wt": "Annunciation (Fra Angelico, San Marco)",
+    "fm": "angelico|annunciat",
+    "p": "Painted for the convent of San Marco, this fresco sets Gabriel and Mary beneath a restrained Renaissance loggia.",
+    "created": "ca. 1440–1445",
+    "origin": "Convent of San Marco, Florence, Italy",
+    "source": "https://en.wikipedia.org/wiki/Annunciation_(Fra_Angelico,_San_Marco)"
+  },
+  {
+    "t": "Sistine Madonna",
+    "a": "Raphael",
+    "tr": "West",
+    "tags": [
+      "marian",
+      "advent"
+    ],
+    "q": "Sistine Madonna Raphael",
+    "wt": "Sistine Madonna",
+    "fm": "sistine|sixtin|raffael|raphael",
+    "p": "Raphael frames the Virgin and Child with opening curtains, Saints Sixtus and Barbara, and two cherubs below.",
+    "created": "1512–1513",
+    "origin": "Made for San Sisto, Piacenza, Italy",
+    "source": "https://www.skd.museum/fileadmin/userfiles/SKD_allgemein/Publikationen/Jahresberichte/SKD-annual-report-2012.pdf"
+  },
+  {
+    "t": "Christ Crucified",
+    "a": "Diego Velázquez",
+    "tr": "West",
+    "tags": [
+      "lent",
+      "holyweek"
+    ],
+    "q": "Christ Crucified Velázquez Prado",
+    "wt": "Christ Crucified (Velázquez)",
+    "fm": "cristo|vel[aá]zquez|crucif",
+    "p": "Velázquez isolates the crucified Christ against a dark background, emphasizing stillness and the body's naturalistic detail.",
+    "created": "ca. 1632",
+    "origin": "Convent of San Plácido, Madrid, Spain",
+    "source": "https://www.museodelprado.es/en/the-collection/art-work/the-crucified-christ/72cbb57e-f622-4531-9b25-27ff0a9559d7"
+  },
+  {
+    "t": "Isenheim Altarpiece (Crucifixion)",
+    "a": "Matthias Grünewald",
+    "tr": "West",
+    "tags": [
+      "lent",
+      "holyweek"
+    ],
+    "q": "Isenheim Altarpiece Grünewald Crucifixion",
+    "wt": "Isenheim Altarpiece",
+    "fm": "isenheim|gr[uü]newald",
+    "p": "Created for a hospital monastery at Isenheim, the altarpiece presents Christ's suffering with unusually stark physical detail.",
+    "created": "1512–1516",
+    "origin": "Antonite monastery, Isenheim, Alsace (France)",
+    "source": "https://www.musee-unterlinden.com/en/oeuvres/the-isenheim-altarpiece/"
+  },
+  {
+    "t": "The Incredulity of Saint Thomas",
+    "a": "Caravaggio",
+    "tr": "West",
+    "tags": [
+      "easter"
+    ],
+    "q": "Incredulity of Saint Thomas Caravaggio",
+    "wt": "The Incredulity of Saint Thomas (Caravaggio)",
+    "fm": "thomas|incredul|tommaso",
+    "p": "Caravaggio brings Thomas's hand close to Christ's wound, concentrating the scene into a tightly grouped encounter.",
+    "created": "ca. 1601–1602",
+    "origin": "Rome, Italy; made for Vincenzo Giustiniani",
+    "source": "https://en.wikipedia.org/wiki/The_Incredulity_of_Saint_Thomas_(Caravaggio)"
+  },
+  {
+    "t": "Supper at Emmaus",
+    "a": "Caravaggio",
+    "tr": "West",
+    "tags": [
+      "easter"
+    ],
+    "q": "Supper at Emmaus Caravaggio National Gallery",
+    "wt": "Supper at Emmaus (Caravaggio, London)",
+    "fm": "emmaus",
+    "p": "Caravaggio depicts the moment the disciples recognize Christ at a meal, using dramatic gestures and a carefully arranged table.",
+    "created": "1601",
+    "origin": "Rome, Italy",
+    "source": "https://www.nationalgallery.org.uk/paintings/michelangelo-merisi-da-caravaggio-the-supper-at-emmaus"
+  },
+  {
+    "t": "Ghent Altarpiece",
+    "a": "Jan & Hubert van Eyck",
+    "tr": "West",
+    "tags": [
+      "easter",
+      "general"
+    ],
+    "q": "Ghent Altarpiece Adoration of the Mystic Lamb",
+    "wt": "Ghent Altarpiece",
+    "fm": "ghent|gent|eyck|lamb",
+    "p": "The many-paneled altarpiece centers on the Adoration of the Mystic Lamb, with groups gathering in a detailed landscape.",
+    "created": "1432",
+    "origin": "Saint Bavo’s Cathedral, Ghent, Belgium",
+    "source": "https://www.sintbaafskathedraal.be/en/history/the-ghent-altarpiece/"
+  },
+  {
+    "t": "The Mystic Nativity",
+    "a": "Sandro Botticelli",
+    "tr": "West",
+    "tags": [
+      "christmas"
+    ],
+    "q": "Mystic Nativity Botticelli",
+    "wt": "The Mystical Nativity",
+    "fm": "nativity|botticelli",
+    "p": "Botticelli combines the Nativity with dancing angels and scenes of reconciliation in a deliberately visionary composition.",
+    "created": "1500",
+    "origin": "Florence, Italy",
+    "source": "https://www.nationalgallery.org.uk/paintings/sandro-botticelli-mystic-nativity"
+  },
+  {
+    "t": "Adoration of the Magi",
+    "a": "Gentile da Fabriano",
+    "tr": "West",
+    "tags": [
+      "epiphany"
+    ],
+    "q": "Adoration of the Magi Gentile da Fabriano",
+    "wt": "Adoration of the Magi (Gentile da Fabriano)",
+    "fm": "gentile|magi|strozzi",
+    "p": "This richly detailed International Gothic altarpiece was commissioned for the Strozzi chapel in Florence.",
+    "created": "1423",
+    "origin": "Strozzi Chapel, Santa Trinita, Florence, Italy",
+    "source": "https://www.uffizi.it/en/artworks/adoration-of-the-magi"
+  },
+  {
+    "t": "The Baptism of Christ",
+    "a": "Piero della Francesca",
+    "tr": "West",
+    "tags": [
+      "epiphany"
+    ],
+    "q": "Baptism of Christ Piero della Francesca",
+    "wt": "The Baptism of Christ (Piero della Francesca)",
+    "fm": "piero|baptism",
+    "p": "Piero balances Christ's baptism with a white dove above him and a carefully ordered landscape behind.",
+    "created": "ca. 1437–1445",
+    "origin": "Made for San Giovanni Battista, Sansepolcro, Italy",
+    "source": "https://www.nationalgallery.org.uk/paintings/piero-della-francesca-the-baptism-of-christ"
+  },
+  {
+    "t": "Saint Francis in Meditation",
+    "a": "Francisco de Zurbarán",
+    "tr": "West",
+    "tags": [
+      "general",
+      "lent"
+    ],
+    "q": "Saint Francis in Meditation Zurbarán",
+    "wt": "Saint Francis in Meditation",
+    "fm": "zurbar|francis",
+    "p": "Zurbarán uses a dark habit, stark light, and a skull to depict Francis absorbed in contemplation.",
+    "created": "ca. 1635–1639",
+    "origin": "Spain; original commission unknown",
+    "source": "https://www.nationalgallery.org.uk/paintings/francisco-de-zurbaran-saint-francis-in-meditation-1"
+  },
+  {
+    "t": "The Descent from the Cross",
+    "a": "Rogier van der Weyden",
+    "tr": "West",
+    "tags": [
+      "holyweek"
+    ],
+    "q": "Descent from the Cross Rogier van der Weyden Prado",
+    "wt": "The Descent from the Cross (van der Weyden)",
+    "fm": "weyden|descent|deposition",
+    "p": "Van der Weyden echoes the curve of Christ's fallen body in Mary's swooning figure within a shallow painted space.",
+    "created": "ca. 1435",
+    "origin": "Chapel of Our Lady Outside the Walls, Leuven, Belgium",
+    "source": "https://en.wikipedia.org/wiki/The_Descent_from_the_Cross_(van_der_Weyden)"
+  },
+  {
+    "t": "Pentecost",
+    "a": "El Greco",
+    "tr": "West",
+    "tags": [
+      "pentecost"
+    ],
+    "q": "Pentecost El Greco Prado",
+    "wt": "Pentecost (El Greco)",
+    "fm": "greco|pentecost",
+    "p": "El Greco's elongated figures and vivid color convey the descent of the Holy Spirit upon the gathered disciples.",
+    "created": "ca. 1600",
+    "origin": "Doña María de Aragón college chapel, Madrid, Spain",
+    "source": "https://en.wikipedia.org/wiki/Pentecost_(El_Greco)"
+  },
+  {
+    "t": "The Resurrection",
+    "a": "Piero della Francesca",
+    "tr": "West",
+    "tags": [
+      "easter"
+    ],
+    "q": "Resurrection Piero della Francesca Sansepolcro",
+    "wt": "Resurrection (Piero della Francesca)",
+    "fm": "resurrect|piero",
+    "p": "Piero depicts the risen Christ stepping from the tomb above four sleeping soldiers in Sansepolcro.",
+    "created": "ca. 1460",
+    "origin": "Palazzo della Residenza, Sansepolcro, Italy",
+    "source": "https://www.museocivicosansepolcro.it/collezzioni.aspx"
+  },
+  {
+    "t": "Holy Trinity",
+    "a": "Masaccio",
+    "tr": "West",
+    "tags": [
+      "general"
+    ],
+    "q": "Holy Trinity Masaccio Santa Maria Novella",
+    "wt": "Holy Trinity (Masaccio)",
+    "fm": "masaccio|trinit",
+    "p": "Below the cross lies a skeleton: “I was what you are; you will be what I am.” How do you hold that?",
+    "created": "ca. 1425–1427",
+    "origin": "Santa Maria Novella, Florence, Italy",
+    "source": "https://archivio.smn.it/arte/ch04.htm"
+  },
+  {
+    "t": "Saint Demetrios",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general"
+    ],
+    "q": "met-artwork-465946",
+    "created": "950–1000",
+    "origin": "Byzantine Empire; exact workshop unknown",
+    "source": "https://www.metmuseum.org/art/collection/search/465946",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/465946/951196/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "The military saint stands in a carved ivory icon, recalling his veneration as the patron of Thessaloniki."
+  },
+  {
+    "t": "Virgin Eleousa · Mosaic Icon",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "marian",
+      "advent"
+    ],
+    "q": "met-artwork-474336",
+    "created": "Early 14th century",
+    "origin": "Probably Constantinople (Istanbul, Turkey)",
+    "source": "https://www.metmuseum.org/art/collection/search/474336",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/474336/2311579/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "Tiny mosaic pieces form an intimate image of the Virgin of Compassion and the Christ Child."
+  },
+  {
+    "t": "Four Feast Icons",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "epiphany",
+      "easter",
+      "nicholas"
+    ],
+    "q": "met-artwork-479796",
+    "created": "Early 15th century",
+    "origin": "Possibly Crete, Greece",
+    "source": "https://www.metmuseum.org/art/collection/search/479796",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/479796/1712114/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "Four painted panels show John and Prochoros, Christ’s Baptism, the Anastasis, and Saint Nicholas."
+  },
+  {
+    "t": "Deësis · Ivory Icon",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general",
+      "advent"
+    ],
+    "q": "met-artwork-464014",
+    "created": "Mid-10th century",
+    "origin": "Probably Constantinople (Istanbul, Turkey)",
+    "source": "https://www.metmuseum.org/art/collection/search/464014",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/464014/931556/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "Christ appears between the Virgin Mary and John the Baptist, who intercede before him."
+  },
+  {
+    "t": "Christ and the Virgin · Pendant Icon",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general",
+      "marian"
+    ],
+    "q": "met-artwork-466272",
+    "created": "ca. 1100",
+    "origin": "Constantinople (Istanbul, Turkey)",
+    "source": "https://www.metmuseum.org/art/collection/search/466272",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/466272/945951/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "A small gold-and-enamel devotional pendant bears Christ Pantokrator and the praying Virgin on its two sides."
+  },
+  {
+    "t": "Christ Pantokrator · Stone Icon",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general"
+    ],
+    "q": "met-artwork-466046",
+    "created": "ca. 1350 or later",
+    "origin": "Probably Greece",
+    "source": "https://www.metmuseum.org/art/collection/search/466046",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/466046/939465/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "Christ blesses the viewer in a small green steatite icon, a material widely used for personal devotion."
+  },
+  {
+    "t": "Saint Peter · Enamel Medallion",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general"
+    ],
+    "q": "met-artwork-464543",
+    "created": "ca. 1100",
+    "origin": "Constantinople (Istanbul, Turkey)",
+    "source": "https://www.metmuseum.org/art/collection/search/464543",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/464543/941786/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "Saint Peter appears in a gold-and-enamel medallion originally associated with an icon frame."
+  },
+  {
+    "t": "Saints Peter and Paul",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "general"
+    ],
+    "q": "met-artwork-330100",
+    "created": "Late 14th–15th century",
+    "origin": "Byzantine Empire; exact workshop unknown",
+    "source": "https://www.metmuseum.org/art/collection/search/330100",
+    "image": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/330100/702380/main-image",
+    "credit": "The Metropolitan Museum of Art",
+    "license": "Public domain",
+    "p": "The two apostles face one another in a carved steatite plaque."
+  },
+  {
+    "t": "The New Testament Trinity",
+    "a": "Unknown Byzantine artist",
+    "tr": "East",
+    "tags": [
+      "pentecost",
+      "general"
+    ],
+    "q": "cleveland-artwork-2016.32",
+    "created": "ca. 1450",
+    "origin": "Constantinople (Istanbul, Turkey)",
+    "source": "https://www.clevelandart.org/art/2016.32",
+    "image": "https://openaccess-cdn.clevelandart.org/2016.32/2016.32_web.jpg",
+    "credit": "Cleveland Museum of Art",
+    "license": "CC0",
+    "p": "Christ and the Ancient of Days are enthroned beneath the dove of the Holy Spirit, flanked by two hymnographers."
+  },
+  {
+    "t": "Mother of God and Infant Christ",
+    "a": "Attributed to Angelos Akotantos",
+    "tr": "East",
+    "tags": [
+      "marian"
+    ],
+    "q": "cleveland-artwork-2010.154",
+    "created": "ca. 1425–1450",
+    "origin": "Candia (Heraklion, Crete) or Constantinople",
+    "source": "https://www.clevelandart.org/art/2010.154",
+    "image": "https://openaccess-cdn.clevelandart.org/2010.154/2010.154_web.jpg",
+    "credit": "Cleveland Museum of Art",
+    "license": "CC0",
+    "p": "Mary and Christ touch cheeks in a painted icon of tenderness, with rich gold details against the dark robes."
+  }
+];
 
   /* ---------- quotations: saints recognized by the Catholic Church, East and West ---------- */
   // Wording is a modern English rendering of public-domain translations; each cites the work. tags optional.

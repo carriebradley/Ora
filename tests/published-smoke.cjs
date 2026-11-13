@@ -64,6 +64,18 @@ module.exports=async function(browser,artifacts){
       await page.setViewportSize({width,height:844});
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Divine Liturgy opening fits the phone');
     }
+    for(const rite of ['roman','byz','sarum']){
+      await page.goto(`${base}index.html?tab=today&rite=${rite}&date=2026-11-13`);
+      assert.equal(await page.locator('.artwork-facts dd').count(),2,'published art has date and origin');
+      assert.ok((await page.locator('.artwork-facts dd').last().innerText()).trim());
+      for(const width of [320,390]){
+        await page.setViewportSize({width,height:844});
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'published art caption fits');
+      }
+    }
+    await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
+    assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#3b729f','published Marian accent is blue');
+    assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian feasts/);
     assert.deepEqual(errors,[],'published app JavaScript errors');
     fs.writeFileSync(path.join(artifacts,'published-results.json'),JSON.stringify({url:base,build:expected,widths:[320,390],colorSchemes:['light','dark'],hours:['morning','evening','night'],errors},null,2));
     console.log(`Published ${expected}: Lauds, Vespers and Compline passed at 320/390px in light/dark mode.`);

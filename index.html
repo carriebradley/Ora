@@ -392,6 +392,14 @@ nav button.on b{color:inherit}
 .pope-card .pope-source-link{font-size:.8rem;margin-top:5px}
 /* Compact USCCB audio player inside the daily readings card. */
 .readings-audio-player{display:block;width:100%;max-width:100%;height:88px;border:0;border-radius:10px;margin:10px 0 18px;overflow:hidden}
+/* Compact sacred-art captions, with dates and origin kept distinct. */
+.art{margin:0;min-width:0}.artwork-caption{padding:0;margin:13px 0 12px}
+.art .artwork-title{margin:0 0 5px;font-size:1.12rem;line-height:1.35;overflow-wrap:break-word}
+.artwork-artist{font-size:.85rem;line-height:1.45;color:var(--muted);margin:0 0 11px}
+.artwork-facts{margin:0;padding:9px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:.82rem;line-height:1.5}
+.artwork-facts>div{display:grid;grid-template-columns:4.1em minmax(0,1fr);gap:10px;align-items:baseline}
+.artwork-facts>div+div{margin-top:5px}.artwork-facts dt{color:var(--muted);font-weight:500}.artwork-facts dd{margin:0;min-width:0;overflow-wrap:break-word}
+.artwork-description{color:var(--muted);font-size:.91rem;line-height:1.55;margin:12px 0 0}.artwork-credit{color:var(--muted);font-size:.72rem;line-height:1.45;margin:0 0 9px;overflow-wrap:break-word}
 </style>
 </head>
 <body>
@@ -419,6 +427,8 @@ nav button.on b{color:inherit}
 <script src="sarum.js"></script>
 <script src="data.js"></script>
 <script src="content.js"></script>
+<script src="sacred-art.js"></script>
+<script src="liturgical-colors.js"></script>
 <script src="byzlect.js"></script>
 <script src="justice.js"></script>
 <script src="justice-readings.js"></script>
