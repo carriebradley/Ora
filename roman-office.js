@@ -1,4 +1,4 @@
-/* Roman Office date planning. Facts/rules only; no ICEL prayer translations.
+/* Roman Office date planning and public-domain Scripture; no ICEL prayer translations.
  * Reference: current First Edition; GILH 88, 92, 133–137, 204–233;
  * Universal Norms 61; USCCB 2027 calendar. See the dated Office audit. */
 (function(root,factory){
@@ -82,5 +82,31 @@
       return ['p62(2-9)','c210','p149'];
     return null;
   }
-  return {reference,psalterWeek,evening,night,properPsalmody};
+  // Douay–Rheims–Challoner Scripture, checked against the chapter witnesses
+  // linked in the audit. Bundled so these short readings also work offline.
+  const readings={
+    galatians:{ref:'Galatians 4:4-5',text:'But when the fulness of the time was come, God sent his Son, made of a woman, made under the law: That he might redeem them who were under the law: that we might receive the adoption of sons.'},
+    john:{ref:'1 John 1:1-3',text:'That which was from the beginning, which we have heard, which we have seen with our eyes, which we have looked upon, and our hands have handled, of the word of life: For the life was manifested; and we have seen and do bear witness, and declare unto you the life eternal, which was with the Father, and hath appeared to us: That which we have seen and have heard, we declare unto you, that you also may have fellowship with us, and our fellowship may be with the Father, and with his Son Jesus Christ.'},
+    corinthians:{ref:'2 Corinthians 8:9',text:'For you know the grace of our Lord Jesus Christ, that being rich he became poor, for your sakes; that through his poverty you might be rich.'},
+    philippians:{ref:'Philippians 2:6-7',text:'Who being in the form of God, thought it not robbery to be equal with God: But emptied himself, taking the form of a servant, being made in the likeness of men, and in habit found as a man.'},
+    timothy:{ref:'2 Timothy 1:9-10',text:'Who hath delivered us and called us by his holy calling, not according to our works, but according to his own purpose and grace, which was given us in Christ Jesus before the times of the world. But is now made manifest by the illumination of our Saviour Jesus Christ, who hath destroyed death, and hath brought to light life and incorruption by the gospel:'},
+    titus:{ref:'Titus 3:4-5',text:'But when the goodness and kindness of God our Saviour appeared: Not by the works of justice, which we have done, but according to his mercy, he saved us, by the laver of regeneration, and renovation of the Holy Ghost;'},
+    acts:{ref:'Acts 10:37-38',text:'You know the word which hath been published through all Judea: for it began from Galilee, after the baptism which John preached, Jesus of Nazareth: how God anointed him with the Holy Ghost, and with power, who went about doing good, and healing all that were oppressed by the devil, for God was with him.'},
+    peter:{ref:'1 Peter 4:13-14',text:'But if you partake of the sufferings of Christ, rejoice that when his glory shall be revealed, you may also be glad with exceeding joy. If you be reproached for the name of Christ, you shall be blessed: for that which is of the honour, glory, and power of God, and that which is his Spirit, resteth upon you.'},
+    romans:{ref:'Romans 5:20-21',text:'Now the law entered in, that sin might abound. And where sin abounded, grace did more abound. That as sin hath reigned to death; so also grace might reign by justice unto life everlasting, through Jesus Christ our Lord.'}
+  };
+  for(const reading of Object.values(readings))Object.freeze(Object.assign(reading,{translation:'Douay-Rheims',rights:'public-domain'}));
+  function properReading(L,date,which,options={},first=false){
+    if(which!=='V')return null;
+    const day=L.roman(date,options);
+    if(/Nativity of the Lord \(Christmas\)/.test(day.title))return first?readings.galatians:readings.john;
+    if(/Mary, the Holy Mother of God/.test(day.title))return readings.galatians;
+    if(/Holy Family of Jesus/.test(day.title))return first?readings.corinthians:readings.philippians;
+    if(/Epiphany of the Lord/.test(day.title))return first?readings.timothy:readings.titus;
+    if(/Baptism of the Lord/.test(day.title))return readings.acts;
+    if(!first&&/Immaculate Conception of the Blessed Virgin Mary/.test(day.title))return readings.romans;
+    if(day.rank==='Memorial'&&/^Saint Josaphat,/.test(day.title))return readings.peter;
+    return null;
+  }
+  return {reference,psalterWeek,evening,night,properPsalmody,properReading};
 });

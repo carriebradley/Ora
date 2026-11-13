@@ -46,3 +46,35 @@ test('modern Psalm headings match the appointed reference numbering and leave hi
  const traditional=H.hour(L,date('2026-11-12'),'V');
  assert.match(traditional,/Douay psalm numbers/);
 });
+
+test('verified Vespers short readings use complete bundled public-domain passages',()=>{
+ const R=require('../roman-office.js');
+ const appointed=[
+  ['2026-11-12','1 Peter 4:13-14',/resteth upon you\.$/],
+  ['2026-12-24','Galatians 4:4-5',/adoption of sons\.$/],
+  ['2026-12-25','1 John 1:1-3',/his Son Jesus Christ\.$/],
+  ['2026-12-26','2 Corinthians 8:9',/you might be rich\.$/],
+  ['2026-12-27','Philippians 2:6-7',/found as a man\.$/],
+  ['2026-12-31','Galatians 4:4-5',/adoption of sons\.$/],
+  ['2027-01-01','Galatians 4:4-5',/adoption of sons\.$/],
+  ['2027-01-02','2 Timothy 1:9-10',/by the gospel:$/],
+  ['2027-01-03','Titus 3:4-5',/renovation of the Holy Ghost;$/],
+  ['2027-01-09','Acts 10:37-38',/God was with him\.$/],
+  ['2027-01-10','Acts 10:37-38',/God was with him\.$/],
+  ['2026-12-08','Romans 5:20-21',/Jesus Christ our Lord\.$/]
+ ];
+ for(const [iso,ref,ending]of appointed){
+  const plan=evening(iso),reading=R.properReading(L,plan.d,'V',us,plan.first);
+  assert.equal(reading.ref,ref,iso);assert.match(reading.text,ending,iso);
+  assert.equal(reading.rights,'public-domain');assert.equal(reading.translation,'Douay-Rheims');
+  const html=H.modern(L,date(iso),'V',us);
+  assert.ok(html.includes('Short reading · '+ref),iso);
+  assert.ok(html.includes(reading.text.replace(/&/g,'&amp;')),iso);
+  assert.doesNotMatch(html,/Short reading \(traditional chapter\)/,iso);
+ }
+ // Shared octave psalmody does not imply a shared daily short reading.
+ const ordinary=evening('2026-12-29');
+ assert.equal(R.properReading(L,ordinary.d,'V',us,ordinary.first),null);
+ assert.equal(R.properReading(L,date('2026-12-25'),'L',us),null);
+ assert.match(H.modern(L,date('2026-11-15'),'V',us),/Short reading \(traditional chapter\)/);
+});

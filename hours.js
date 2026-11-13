@@ -187,7 +187,9 @@
       const [, rest] = it.split(/^b:/), [label, ...refs] = rest.split('|'); return canticleBlock(label, refs.join('|'));
     }).join('') + '</div>';
     const cap = (which === 'L' ? tmp.C || (dow === 0 ? sun.C : '') : '') || D.cap;
-    if (cap) h += `<div class="sec"><b>Short reading (traditional chapter)</b>${lines(cap)}</div>`;
+    const properReading=RO.properReading(L,d,which,options,first);
+    if(properReading)h += `<div class="sec"><b>Short reading · ${esc(properReading.ref)}</b><div>${esc(properReading.text)}</div></div>`;
+    else if (cap) h += `<div class="sec"><b>Short reading (traditional chapter)</b>${lines(cap)}</div>`;
     if (D.resp) h += `<div class="sec"><b>Short responsory (traditional)</b>${lines(D.resp)}</div>`;
     h += `<div class="sec"><b>${which === 'L' ? 'Benedictus' : 'Magnificat'}</b>${canticle(which === 'L' ? '231' : '232',true)}</div>`;
     h += devotionalIntercessions(which);

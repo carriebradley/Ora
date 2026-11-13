@@ -118,3 +118,22 @@ DivineOffice's reusable prayer bodies and volume/page directions were inspected.
 Modern Roman Lauds/Vespers headings now display **modern psalm numbers** while keeping the source's Vulgate identifiers internally. This includes the combined/split Vulgate Psalms 113, 114/115 and 146/147. Traditional/Sarum rendering and its source numbering are preserved. This fixes a misleading heading such as “Psalm 112” when the appointed modern reference is Psalm 113.
 
 The new regression file covers 14 dated evening assignments, both Epiphany transfer choices, and rendered psalm numbering. Browser checks cover Christmas, Holy Family and Epiphany phases at a narrow phone width; the published smoke check also opens Christmas Eve and Epiphany First Vespers. The full Office's appointed antiphons, short readings, responsories, intercessions and collects remain separate work. A verified psalm-reference set is not certification of the complete Office.
+
+### Verified Christmas-season Vespers short readings
+
+The next batch replaces the historical weekday chapter on these specifically verified Vespers. Each passage is bundled in **public-domain Douay–Rheims–Challoner wording**, not copied from the publisher's modern translation, and remains available offline.
+
+| Observance | First Vespers | Second Vespers |
+|---|---|---|
+| Christmas | Galatians 4:4–5 | 1 John 1:1–3 |
+| Holy Family | 2 Corinthians 8:9 | Philippians 2:6–7 |
+| Mary, Mother of God | Galatians 4:4–5 | Galatians 4:4–5 |
+| Epiphany | 2 Timothy 1:9–10 | Titus 3:4–5 |
+| Baptism of the Lord | Acts 10:37–38 | Acts 10:37–38 |
+| Immaculate Conception | Still outstanding in this pass | Romans 5:20–21 |
+
+Appointment witnesses are the corresponding DivineOffice prayer bodies linked in the preceding table. Public-domain wording was checked against [Galatians 4](https://www.drbo.org/chapter/55004.htm), [1 John 1](https://www.drbo.org/chapter/69001.htm), [2 Corinthians 8](https://www.drbo.org/chapter/54008.htm), [Philippians 2](https://www.drbo.org/chapter/57002.htm), [2 Timothy 1](https://www.drbo.org/chapter/62001.htm), [Titus 3](https://www.drbo.org/chapter/63003.htm), [Acts 10](https://www.drbo.org/chapter/51010.htm), and [Romans 5](https://www.drbo.org/chapter/52005.htm). Commentary and verse annotations from those pages were excluded.
+
+The resolver distinguishes first/second Vespers and the observed feast; it does not infer an octave day's short reading merely because it shares Christmas psalmody. Eleven dated Vespers checks verify the appointed reference, final verse, public-domain provenance and replacement of the historical chapter. The browser audit opens Christmas Eve for the first time **offline** and verifies its bundled reading; published checks include Christmas I and II reading references. Other daily short readings, approved responsories, intercessions and proper collects remain outstanding.
+
+The immediate November 12 checkpoint also now receives its missing Vespers reading: **1 Peter 4:13–14** for Saint Josaphat, verified against the [dated 2026 DivineOffice prayer body](https://divineoffice.org/1112-ep2/) and bundled from the [public-domain 1 Peter 4 witness](https://www.drbo.org/chapter/67004.htm). This brings the reading tests to twelve dated Vespers. The previously noted disagreement between witnesses on other November 12 parts is not resolved by this reading correction.

@@ -27,7 +27,8 @@ module.exports=async function(browser,artifacts){
       for(const [kind,date,pattern]of [
         ['morning','2027-01-17',/Blessed art thou in the holy temple/],
         ['evening','2026-11-12',/Magnificat/i],
-        ['evening','2026-12-24',/Philippians 2/],
+        ['evening','2026-12-24',/Galatians 4:4-5/i],
+        ['evening','2026-12-25',/1 John 1:1-3/i],
         ['evening','2027-01-02',/1 Timothy 3/],
         ['night','2027-03-30',/Regina Caeli/i]
       ]){

@@ -126,6 +126,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.evaluate(async()=>{for(const file of ['matins.json','fathers.json','oortext.json']){const r=await fetch(file);if(!r.ok)throw new Error(file);await r.json();}});
  await context.setOffline(true);
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-15`);assert.match(await page.locator('#app').innerText(),/St. Martin's Lent/);
+ await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-12-24&kind=evening`);
+ assert.match(await page.locator('#st0').innerText(),/Galatians 4:4-5/i);
+ assert.match(await page.locator('#st0').innerText(),/adoption of sons/);
  const offline=await page.evaluate(async()=>{const out={};for(const f of ['matins.json','fathers.json','oortext.json']){const r=await fetch(f);out[f]=[r.status,Object.keys(await r.json()).length]}return out});
  assert.equal(offline['oortext.json'][1],64);assert.equal(offline['matins.json'][0],200);
  assert.deepEqual(errors,[]);
