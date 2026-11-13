@@ -51,5 +51,17 @@
     return {index,kind:solemnity?(context.first?'solemnity-i':'solemnity-ii'):sunday?(context.first?'sunday-i':'sunday-ii'):'weekday',observance:day.title,
       easter:day.season==='Easter Time',alleluia:!['Lent','Holy Week','Paschal Triduum'].includes(day.season),reference};
   }
-  return {reference,psalterWeek,evening,night};
+  function properPsalmody(L,date,which,options={}){
+    const day=L.roman(date,options),easter=L.westernEaster(date.getUTCFullYear()),offset=days(date,easter);
+    // Proper of Seasons through the Second Sunday of Easter; references only.
+    if(offset>=0&&offset<=7){
+      if(which==='L')return ['p62(2-9)','c210','p149'];
+      if(which==='V')return ['p109(1-5,7)','p113(1-8)','b:Canticle · Revelation 19|Revelation 19:1-7'];
+    }
+    // Agnes is a memorial with proper psalmody, not the ordinary weekday set.
+    if(which==='L'&&day.rank==='Memorial'&&/^Saint Agnes,/.test(day.title))
+      return ['p62(2-9)','c210','p149'];
+    return null;
+  }
+  return {reference,psalterWeek,evening,night,properPsalmody};
 });

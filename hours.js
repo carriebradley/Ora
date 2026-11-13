@@ -136,8 +136,9 @@
     // Lauds on solemnities, feasts, and the Easter/Christmas octaves uses
     // Sunday Week I psalmody, not the psalms of the ordinary weekday.
     const observance=context.observance;
+    const proper=RO.properPsalmody(L,d,which,options);
     const festiveMorning=which==='L'&&(
-      /^(?:Solemnity|Feast(?: of the Lord)?)$/.test(observance.rank)
+      !!proper || /^(?:Solemnity|Feast(?: of the Lord)?)$/.test(observance.rank)
       || /within the Octave of (?:Easter|Christmas)/i.test(observance.title)
     );
     const items = which === 'L' ? (festiveMorning ? MP[1][0] : MP[pw][dow])
@@ -145,8 +146,8 @@
     // Sunday Evening Prayer II takes 1 Peter 2:21-24 in Lent rather than
     // the Revelation 19 canticle used at other times of the year.
     const season=observance.season;
-    let selected=which==='V' && dow===0 && !first && ['Lent','Holy Week'].includes(season)
-      ? [items[0],items[1],LENT_V] : items;
+    let selected=proper || (which==='V' && dow===0 && !first && ['Lent','Holy Week'].includes(season)
+      ? [items[0],items[1],LENT_V] : items);
     // Holy Saturday has proper Lauds, not Saturday Week II.
     if(which==='L' && L.iso(d)===L.iso(L.add(L.westernEaster(d.getUTCFullYear()),-1)))
       selected=['p63',B('Canticle · Isaiah 38','Isaiah 38:10-14','Isaiah 38:17-20'),'p150'];

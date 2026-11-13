@@ -97,3 +97,21 @@ test('seasonal hymns follow modern Lent and Pentecost boundaries',()=>{
   const afterPentecost=H.modern(L,date('2027-05-18'),'L',us);
   assert.ok(!afterPentecost.includes(H.H.seas.Pasch.L.split('\n')[0]));
 });
+
+test('Agnes retains her proper morning psalmody without generalizing to other memorials',()=>{
+  const agnes=H.modernPsalmody(L,date('2027-01-21'),'L',us);
+  assert.deepEqual(agnes.items,['p62(2-9)','c210','p149']);
+  assert.equal(L.roman(date('2027-01-21'),us).rank,'Memorial');
+  const josaphat=H.modernPsalmody(L,date('2026-11-12'),'L',us);
+  assert.equal(josaphat.items[0],'p142(1-11)');
+});
+
+test('Easter octave and its closing Sunday retain proper Lauds and Vespers psalmody',()=>{
+  for(let d=date('2027-03-28');d<=date('2027-04-04');d=L.add(d,1)){
+    assert.deepEqual(H.modernPsalmody(L,d,'L',us).items,['p62(2-9)','c210','p149'],L.iso(d));
+    const evening=H.modernPsalmody(L,d,'V',us).items;
+    assert.deepEqual(evening.slice(0,2),['p109(1-5,7)','p113(1-8)'],L.iso(d));
+    assert.match(evening[2],/Revelation 19:1-7/);
+  }
+  assert.notDeepEqual(H.modernPsalmody(L,date('2027-04-06'),'V',us).items.slice(0,2),['p109(1-5,7)','p113(1-8)']);
+});
