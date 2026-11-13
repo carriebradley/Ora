@@ -120,6 +120,13 @@
     const items = which === 'L' ? MP[pw][dow] : dow === 0 ? (first ? EP1[pw] : SUN_V[pw]) : EP[pw][dow];
     return {d,first,dow,pw,items};
   }
+  function devotionalIntercessions(which) {
+    // Original devotional petitions; not the copyrighted ICEL intercessions.
+    const groups=which==='L'
+      ? ['Guide the Church in faith, hope and charity.','Protect those who suffer and strengthen those who care for them.','Grant peace to our families and justice for the oppressed.','Guide our thoughts, words and deeds this day.']
+      : ['Grant rest to those who are weary.','Bring reconciliation to those who are divided.','Remember the sick, the lonely, and those in danger.','Welcome the faithful departed into your mercy.'];
+    return '<div class="sec"><b>Intercessions (devotional)</b>'+groups.map(line=>'<p>'+line+'<br><span class="roman-response">— Lord, hear our prayer.</span></p>').join('')+'</div>';
+  }
   function modern(L, date, which) {
     const {d,first,dow,pw,items}=modernPsalmody(L,date,which);
     const trad = hour(L, date, which), wk = week(L, d), tmp = H.temp[`${wk}-${dow}`] || {}, sun = H.temp[`${wk}-0`] || {}, D = H.days[dow][which];
@@ -129,7 +136,7 @@
     h += `<div class="sec"><b>Opening</b>${lines(H.g['Deus in adjutorium'])}</div>`;
     if (hymn) h += `<div class="sec"><b>Hymn (traditional)</b>${lines(hymn)}</div>`;
     h += '<div class="sec"><b>Psalmody</b>' + items.map(it => {
-      if (it[0] === 'p') { const pp = psalm(it.slice(1))[0], ant = pp && pp.rows[0] ? vclean(pp.rows[0][2]).replace(/\s*\*\s*/g, ' ') : ''; return (ant ? `<div class="ant"><i>Ant.</i> ${esc(ant)}</div>` : '') + psalmHTML(it.slice(1)); }
+      if (it[0] === 'p') { const pp = psalm(it.slice(1))[0], ant = pp && pp.rows[0] ? vclean(pp.rows[0][2]).replace(/\s*\*\s*/g, ' ') : ''; return (ant ? `<div class="ant"><i>Scriptural refrain:</i> ${esc(ant)}</div>` : '') + psalmHTML(it.slice(1)) + (ant ? `<div class="ant"><i>Scriptural refrain:</i> ${esc(ant)}</div>` : ''); }
       if (it[0] === 'c') return canticle(it.slice(1));
       const [, rest] = it.split(/^b:/), [label, ...refs] = rest.split('|'); return canticleBlock(label, refs.join('|'));
     }).join('') + '</div>';
@@ -137,9 +144,10 @@
     if (cap) h += `<div class="sec"><b>Short reading (traditional chapter)</b>${lines(cap)}</div>`;
     if (D.resp) h += `<div class="sec"><b>Short responsory (traditional)</b>${lines(D.resp)}</div>`;
     h += `<div class="sec"><b>${which === 'L' ? 'Benedictus' : 'Magnificat'}</b>${canticle(which === 'L' ? '231' : '232')}</div>`;
+    h += devotionalIntercessions(which);
     h += `<div class="sec"><b>Our Father</b><div>Our Father, who art in heaven, hallowed be thy name; thy kingdom come; thy will be done on earth as it is in heaven. Give us this day our daily bread; and forgive us our trespasses as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.</div></div>`;
     if (coll) h += `<div class="sec"><b>Collect (traditional)</b>${lines('Let us pray.')}${lines(coll)}</div>`;
-    h += `<div class="sec"><b>Conclusion</b>${lines(H.g.Dominus.split('\n').slice(0, 2).join('\n'))}<br>${lines(H.g['Benedicamus Domino'])}</div>`;
+    h += '<div class="sec"><b>Conclusion (individual recitation)</b><p>May the Lord bless us, protect us from every evil, and bring us to everlasting life. Amen.</p></div>';
     return h;
   }
 

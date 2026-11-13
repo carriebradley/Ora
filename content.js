@@ -115,7 +115,7 @@ const CONTENT = (() => {
       readings: [{ type: 'oor', title: 'Office of Readings' }],
       evening: [{ type: 'office', title: 'Evening Prayer (Vespers)', which: 'V', hour: 'vespers' }],
       // The examination of conscience is permitted before Compline.
-      night: [P('Sign of the Cross', T.cross), P('Examination of conscience', 'In silence, review the day before God. Give thanks for what was good, ask forgiveness for your sins, and entrust tomorrow to his care.'), { type: 'office', title: 'Night Prayer (Compline)', which: 'C', hour: 'compline' }]
+      night: [{ type: 'office', title: 'Night Prayer (Compline)', which: 'C', hour: 'compline' }]
     },
     byz: {
       morning: [P('Sign of the Cross', T.cross), P('Blessing', T.bwg), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
