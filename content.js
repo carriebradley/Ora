@@ -688,7 +688,7 @@ const CONTENT = (() => {
         { type: 'byzpsalms', title: 'The Praises', psalms: '148;149;150' },
         { type: 'hourlink', title: 'Doxology, aposticha and conclusion · service book', hour: 'orthros' },
         { type: 'quote', title: 'From the Fathers' }, { type: 'silence', title: 'Jesus Prayer', seconds: 180, text: T.jesus }, P('Dismissal', T.dismissal)],
-      evening: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our),
+      evening: [P('Sign of the Cross', T.cross), P('Reader’s opening', T.dismissal), P('O Heavenly King', T.heavenly), P('Trisagion Prayers', T.trisagion), P('Our Father', T.our), { type: 'calendar', title: 'Today in the Church' },
         { type: 'byzfixed', title: 'Come, let us worship', key: 'comeWorship' },
         { type: 'byzpsalms', title: 'Opening Psalm', psalms: '103' },
         { type: 'byzpsalms', title: 'Lord, I have cried', psalms: '140;141;129;116' },
