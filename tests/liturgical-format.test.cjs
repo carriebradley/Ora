@@ -113,3 +113,17 @@ test('joint clergy instruction cues retain both speakers',()=>{
  assert.equal(F.speakerInstruction('The Deacon says:').kind,'deacon');
  assert.equal(F.speakerInstruction('The priest bows.'),null);
 });
+
+test('celebrant, protodeacon and lector cues preserve named voices',()=>{
+ for(const [speaker,kind,name] of [
+  ['Celebrant','priest','Priest'],
+  ['Protodeacon','deacon','Deacon'],
+  ['Lector','other','Lector']
+ ]){
+  assert.deepEqual(F.speakerInstruction('The '+speaker+' says:'),{kind,name,words:''});
+  assert.deepEqual(F.role(speaker+': Fixture prayer.'),{kind,name,words:'Fixture prayer.'});
+  assert.equal(F.instruction('The '+speaker+' says:'),true);
+  assert.equal(F.instruction(speaker+': Fixture prayer.'),false);
+ }
+ assert.equal(F.speakerInstruction('The priest blesses the congregation.'),null);
+});
