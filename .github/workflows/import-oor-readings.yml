@@ -1,6 +1,11 @@
 name: Import public-domain Office readings
 on:
   workflow_dispatch:
+  push:
+    branches: [ora-st-martin-reading-20261114]
+    paths:
+      - 'tools/import_oor_public_domain.py'
+      - '.github/workflows/import-oor-readings.yml'
 permissions:
   contents: write
 jobs:
@@ -11,13 +16,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Test historical reading parser
+        run: python -m unittest discover -s tests -p 'test_oor_public_domain_import.py'
       - name: Import and validate historical reading
         run: python tools/import_oor_public_domain.py
+      - name: Refresh Office reading availability report
+        run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
       - name: Commit verified text updates
         run: |
-          if git diff --quiet -- oortext.json; then exit 0; fi
+          if git diff --quiet -- oortext.json docs/office-of-readings-availability.json; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add oortext.json
+          git add oortext.json docs/office-of-readings-availability.json
           git commit -m "Import verified public-domain Office reading text"
           git push

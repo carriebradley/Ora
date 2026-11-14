@@ -45,7 +45,9 @@ class Extract(HTMLParser):
             name = " ".join("".join(self.heading).split()).lower()
             if re.search(r"letter\s*(?:3|iii)\b", name):
                 self.capture = True
-            elif self.capture:
+            # A subtitle may be another heading; only a subsequent letter
+            # ends this letter's text.
+            elif self.capture and re.search(r"letter\s*(?:[4-9]|iv|v|vi)\b", name):
                 self.finished = True
                 self.capture = False
             self.in_heading = False
@@ -53,7 +55,17 @@ class Extract(HTMLParser):
             text = " ".join("".join(self.para).split())
             if len(text) > 35:
                 self.paragraphs.append(text)
+                if text.endswith("while you read them."):
+                    self.finished = True
+                    self.capture = False
             self.in_paragraph = False
+
+def valid_letter(paras):
+    """Reject incomplete captures and other letters without requiring arbitrary paragraph counts."""
+    joined = " ".join(paras)
+    return (len(paras) >= 3 and len(joined) > 4500
+            and all(word in joined for word in ("Martin", "Bassula", "Condate", "Abraham"))
+            and joined.endswith("while you read them."))
 
 def main():
     path = ROOT / "oortext.json"
@@ -62,8 +74,7 @@ def main():
     if KEY in data:
         existing = data[KEY]
         if (isinstance(existing, dict) and isinstance(existing.get("p"), list)
-                and len(existing["p"]) >= 15
-                and any("Martin" in p for p in existing["p"])):
+                and valid_letter(existing["p"])):
             print(f"Validated existing {KEY}; no import necessary")
             return
         raise RuntimeError(f"Existing {KEY} is incomplete; refusing to overwrite")
@@ -73,7 +84,7 @@ def main():
     parser = Extract()
     parser.feed(html)
     paras = parser.paragraphs
-    if len(paras) < 15 or not any("Martin" in p for p in paras):
+    if not valid_letter(paras):
         raise RuntimeError(f"Source layout or content failed validation: {len(paras)} paragraphs")
     data[KEY] = {
         "p": paras,
