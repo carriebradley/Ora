@@ -41,8 +41,8 @@ module.exports=async function(page,base,artifacts){
     await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=readings`);
     await page.locator('.oortx-slot').filter({hasText:pattern}).waitFor();
     const slot=page.locator('.oortx-slot').first();assert.match(await slot.innerText(),/Responsory/);
-    assert.equal(await slot.locator('.roman-office-credit').count(),1);
-    assert.match(await slot.innerText(),/No ICEL affiliation or endorsement/);
+    assert.equal(await slot.locator('.roman-office-credit').count(),2);
+    assert.match(await slot.locator('.oortx-source').textContent(),/No ICEL affiliation or endorsement/);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   }
   for(const colorScheme of ['light','dark']){
