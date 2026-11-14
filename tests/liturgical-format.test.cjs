@@ -92,3 +92,13 @@ test('Melkite long tracked title is repaired across three physical rows',()=>{
  assert.deepEqual(F.combine([rubric,'PRIEST AND DEACON: Fixture prayer.']),[rubric,'PRIEST AND DEACON: Fixture prayer.']);
  assert.equal(F.instruction('The priest and the deacon are your servants, O Lord.'),false);
 });
+
+test('additional Byzantine minister labels stay distinct from prayer text',()=>{
+ for(const [label,expected] of [['Subdeacon','Subdeacon'],['Server','Server'],['Acolyte','Acolyte']]){
+  assert.deepEqual(F.role(label+': Fixture words.'),{kind:'other',name:expected,words:'Fixture words.'});
+  assert.deepEqual(F.speakerInstruction('The '+label+' says:'),{kind:'other',name:expected,words:''});
+  assert.equal(F.instruction(label+': Fixture words.'),false);
+ }
+ assert.equal(F.role('SUBDEACON: Fixture words.').name,'Subdeacon');
+ assert.deepEqual(F.combine(['SUBDEACON: Fixture petition.','SERVER: Fixture response.']),['SUBDEACON: Fixture petition.','SERVER: Fixture response.']);
+});
