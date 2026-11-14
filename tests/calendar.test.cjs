@@ -84,7 +84,7 @@ test('All 63 original Office readings remain unchanged; Polycarp is connected', 
   const texts = JSON.parse(fs.readFileSync(require.resolve('../oortext.json'), 'utf8'));
   const hashes = require('./completed-readings.sha256.json');
   assert.equal(Object.keys(hashes).length, 63);
-  assert.equal(Object.keys(texts).length, 71);
+  assert.equal(Object.keys(texts).length, 84);
   for (const [k, expected] of Object.entries(hashes)) {
     const sorted = Object.fromEntries(Object.entries(texts[k]).sort(([a], [b]) => a.localeCompare(b)));
     assert.equal(crypto.createHash('sha256').update(JSON.stringify(sorted)).digest('hex'), expected, k);

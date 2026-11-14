@@ -37,11 +37,11 @@ function worker() {
   return { context, caches, lifecycle, request };
 }
 
-test('First installation bundles all 71 Office readings for offline use', async () => {
+test('First installation bundles all 84 Office readings for offline use', async () => {
   const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
   const response = await w.request('oortext.json');
   assert.equal(response.status, 200);
-  assert.equal(Object.keys(await response.json()).length, 71);
+  assert.equal(Object.keys(await response.json()).length, 84);
 });
 
 test('Upgrade migrates downloaded texts and leaves unrelated application caches intact', async () => {
@@ -60,7 +60,7 @@ test('An old persistent Office library cannot hide the newly bundled reading', a
   const w = worker(), data = await w.caches.open('ora-data-v1');
   await data.put('oortext.json', Response.json({ old: 'library' }));
   await w.lifecycle('install'); await w.lifecycle('activate');
-  assert.equal(Object.keys(await (await w.request('oortext.json')).json()).length, 71);
+  assert.equal(Object.keys(await (await w.request('oortext.json')).json()).length, 84);
 });
 
 test('If migration runs out of storage, previously downloaded texts remain available', async () => {

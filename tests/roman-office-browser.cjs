@@ -37,7 +37,7 @@ module.exports=async function(page,base,artifacts){
     assert.doesNotMatch(text,/Intercessions \(devotional\)|Short reading \(traditional chapter\)|Scriptural refrain:/);
     assert.equal(await page.locator('.prayer-opening').count(),1);
   }
-  for(const [date,pattern]of [['2026-11-17',/Elizabeth recognized and loved Christ/],['2026-11-29',/On the twofold coming of Christ/],['2026-11-30',/We have found the Messiah/],['2026-12-01',/The marvel of the Incarnation/],['2026-12-07',/By the grace of your words/],['2027-03-23',/By one death and resurrection/],['2027-03-24',/The perfection of love/]]){
+  for(const [date,pattern]of [['2026-12-02',/God’s Word will come to us/],['2026-12-04',/Desire for the vision of God/],['2026-12-05',/We hope for what we do not see/],['2026-12-06',/The voice in the wilderness/],['2026-12-09',/God’s promises are held out/],['2026-12-10',/Love desires to see God/],['2026-12-13',/The voice is John/],['2026-12-15',/On humility and peace/],['2026-11-17',/Elizabeth recognized and loved Christ/],['2026-11-29',/On the twofold coming of Christ/],['2026-11-30',/We have found the Messiah/],['2026-12-01',/The marvel of the Incarnation/],['2026-12-07',/By the grace of your words/],['2027-03-23',/By one death and resurrection/],['2027-03-24',/The perfection of love/]]){
     await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=readings`);
     await page.locator('.oortx-slot').filter({hasText:pattern}).waitFor();
     const slot=page.locator('.oortx-slot').first();assert.match(await slot.innerText(),/Responsory/);
