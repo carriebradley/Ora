@@ -127,3 +127,10 @@ test('celebrant, protodeacon and lector cues preserve named voices',()=>{
  }
  assert.equal(F.speakerInstruction('The priest blesses the congregation.'),null);
 });
+
+test('PDF line joining does not erase printed compound hyphens',()=>{
+ assert.deepEqual(F.combine(['Only-','begotten Son, have mercy.']),['Only-begotten Son, have mercy.']);
+ assert.deepEqual(F.combine(['life‐','giving Cross.']),['life‐giving Cross.']);
+ assert.deepEqual(F.combine(['Prayer to the','Mother of God.']),['Prayer to the Mother of God.']);
+ assert.equal(F.normalize('incorrupt\u00adible'),'incorruptible');
+});

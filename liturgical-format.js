@@ -75,7 +75,10 @@
    const followsRubric=/[:：]\s*$/.test(current)&&instruction(current)&&!instruction(text)&&!role(text);
    if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
    if(!current)current=text;
-   else if(/[-\u2010]$/.test(current)&&/^[a-z]/.test(text))current=current.slice(0,-1)+text;
+   // Keep a printed hard hyphen: without the source typography we cannot
+   // distinguish a wrapped compound (Only-begotten) from a divided word.
+   // Discretionary soft hyphens are removed by normalize().
+   else if(/[-\u2010]$/.test(current)&&/^[a-z]/.test(text))current+=text;
    else current+=' '+text;
    if(heading(text)||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text))flush();last=typeof raw==='object'?raw:null;
   }
