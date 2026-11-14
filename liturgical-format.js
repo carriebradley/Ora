@@ -12,7 +12,7 @@
   return {kind,name,words:m[4].trim(),...(m[2]||m[3]?{cue:(m[2]||m[3]).trim()}: {})};
  }
  function speakerInstruction(text){
-  const m=String(text).match(/^(?:the )?(priest(?:\s+and\s+(?:the\s+)?deacon)?|celebrant|deacon|protodeacon|bishop|reader|lector|cantor|choir|subdeacon|server|acolyte)\s+(?:[^:]*?\s+)?(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming)\s*(?:(quietly|silently|aloud|in a low voice|in a loud voice)|\(([^)]*)\))?\s*:\s*$/i);
+  const m=String(text).match(/^(?:the )?(priest(?:\s+and\s+(?:the\s+)?deacon)?|celebrant|deacon|protodeacon|bishop|reader|lector|cantor|choir|subdeacon|server|acolyte)\s+(?:[^:]*?\s+)?(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming|sings?|singing|chants?|chanting)\s*(?:(quietly|silently|aloud|in a low voice|in a loud voice)|\(([^)]*)\))?\s*:\s*$/i);
   if(!m)return null;
   const speaker=role(m[1].replace(/\s+and\s+the\s+/i,' and ')+':');
   const cue=m[2]||m[3];
