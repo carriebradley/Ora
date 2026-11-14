@@ -1492,8 +1492,14 @@
       if (!x) {
         const [author,work] = slot.dataset.k.split('|');
         const martin = /Sulpicius Severus/i.test(author) && /^Letter 3$/i.test(work);
-        const url = martin ? 'https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_XI/Sulpitius_Severus/Letters/Letter_III' : 'https://www.ccel.org/fathers';
-        slot.innerHTML = '<p class="muted" style="font-size:.88rem;line-height:1.55">A verified translation of this appointed excerpt has not yet been bundled. The reference above is preserved; no substitute text is shown.</p><p><a target="_blank" rel="noopener noreferrer" href="'+url+'">'+(martin ? 'Read public-domain Letter III (1894 translation)' : 'Browse public-domain Church Fathers translations')+'</a></p>';
+        const url = martin ? 'https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_XI/Sulpitius_Severus/Letters/Letter_III' : null;
+        // Search for the indexed author and work, not an invented modern Office excerpt.
+        const query = [author, work, 'English translation'].filter(Boolean).join(' ');
+        const search = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+        slot.innerHTML = '<p class="muted" style="font-size:.88rem;line-height:1.55">A verified translation of this appointed excerpt has not yet been bundled. The reference above is preserved; no substitute text is shown.</p>' +
+          (url ? '<p><a target="_blank" rel="noopener noreferrer" href="'+url+'">Read public-domain Letter III (1894 translation)</a></p>' : '') +
+          '<p><a target="_blank" rel="noopener noreferrer" href="'+esc(search)+'">Search for this author and work</a></p>' +
+          '<p class="muted" style="font-size:.76rem">Search results are external references, not verified texts appointed for this date.</p>';
         return;
       }
       const notice=x.rights==='icel-web-policy'?`<p class="roman-office-credit">First Edition · ${esc(x.acknowledgment)}</p>`:'';
@@ -1745,7 +1751,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v273';
+  const APP_BUILD = 'ora-v274';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
