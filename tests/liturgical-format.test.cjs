@@ -151,3 +151,11 @@ test('voice cues in source directions stay attached to the following speaker',()
  }
  assert.equal(F.speakerInstruction('The priest walks toward the altar.'),null);
 });
+
+test('spoken proclamations are rubrics when attributed to a minister',()=>{
+ for(const line of ['The deacon proclaims aloud:','The priest exclaims:','The reader recites:','The cantor chants:']){
+  assert.equal(F.instruction(line),true,line);
+  assert.ok(F.speakerInstruction(line),line);
+ }
+ for(const line of ['Deacon: Let us attend.','Reader: Wisdom.'])assert.equal(F.instruction(line),false,line);
+});
