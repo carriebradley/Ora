@@ -56,6 +56,17 @@ class Extract(HTMLParser):
             self.in_paragraph = False
 
 def main():
+    path = ROOT / "oortext.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    # A fixed historical work should not be re-fetched daily or overwritten.
+    if KEY in data:
+        existing = data[KEY]
+        if (isinstance(existing, dict) and isinstance(existing.get("p"), list)
+                and len(existing["p"]) >= 15
+                and any("Martin" in p for p in existing["p"])):
+            print(f"Validated existing {KEY}; no import necessary")
+            return
+        raise RuntimeError(f"Existing {KEY} is incomplete; refusing to overwrite")
     req = urllib.request.Request(URL, headers={"User-Agent": "Ora-Devotional-Text-Importer/1.0 (historical source attribution)"})
     with urllib.request.urlopen(req, timeout=30) as response:
         html = response.read().decode("utf-8")
@@ -64,8 +75,6 @@ def main():
     paras = parser.paragraphs
     if len(paras) < 15 or not any("Martin" in p for p in paras):
         raise RuntimeError(f"Source layout or content failed validation: {len(paras)} paragraphs")
-    path = ROOT / "oortext.json"
-    data = json.loads(path.read_text(encoding="utf-8"))
     data[KEY] = {
         "p": paras,
         "src": "Sulpicius Severus, Letter III (complete historical letter, not the exact modern Office excerpt). Alexander Roberts, trans., Nicene and Post-Nicene Fathers, Series II, vol. 11 (1894). Source: " + URL
