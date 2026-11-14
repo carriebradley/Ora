@@ -1502,8 +1502,15 @@
           '<p class="muted" style="font-size:.76rem">Search results are external references, not verified texts appointed for this date.</p>';
         return;
       }
-      const notice=x.rights==='icel-web-policy'?`<p class="roman-office-credit">First Edition · ${esc(x.acknowledgment)}</p>`:'';
-      slot.innerHTML = notice+(x.title?`<h4>${esc(x.title)}</h4>`:'')+x.p.map(p => `<p style="font-family:var(--serif);font-size:1.1rem;line-height:1.7;margin:.65em 0">${esc(p).replace(/\[(\d+(?::\d+)?)\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + (x.responsory?`<div class="step"><div class="t">Responsory${x.responsoryRef?' · '+esc(x.responsoryRef):''}</div><div class="tx">${esc(x.responsory)}</div></div>`:'') + `<p class="muted" style="font-size:.74rem">${esc(x.src)}</p>`;
+      const icel=x.rights==='icel-web-policy';
+      // Required ICEL notices remain visible at both ends of the reading.
+      // Longer provenance belongs in a closed disclosure, not the prayer flow.
+      const notice=icel?`<p class="roman-office-credit">First Edition · ${esc(x.acknowledgment)}</p>`:'';
+      const sourceLink=typeof x.sourceUrl==='string'&&/^https:\/\//i.test(x.sourceUrl)
+        ?` <a href="${esc(x.sourceUrl)}" target="_blank" rel="noopener noreferrer">View source</a>`:'';
+      const provenance=x.src||x.sourceUrl
+        ?`<details class="oortx-source"><summary class="muted">Translation and source</summary><p class="muted" style="font-size:.76rem;line-height:1.5">${esc(x.src||'')}${sourceLink}</p></details>`:'';
+      slot.innerHTML = notice+(x.title?`<h4>${esc(x.title)}</h4>`:'')+x.p.map(p => `<p style="font-family:var(--serif);font-size:1.1rem;line-height:1.7;margin:.65em 0">${esc(p).replace(/\\[(\\d+(?::\\d+)?)\\]/g, '<sup class="muted">$1</sup>')}</p>`).join('') + (x.responsory?`<div class="step"><div class="t">Responsory${x.responsoryRef?' · '+esc(x.responsoryRef):''}</div><div class="tx">${esc(x.responsory)}</div></div>`:'') + notice + provenance;
     }).catch(() => { slot.innerHTML = '<p class="muted" style="font-size:.8rem">The text could not be loaded. Ora needs to be online the first time you open it.</p>'; });
   }, true);
   /* ---------- Sarum Matins: the texts (matins.json) are loaded the first time Matins is opened ---------- */
@@ -1751,7 +1758,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v275';
+  const APP_BUILD = 'ora-v276';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
