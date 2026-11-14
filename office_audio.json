@@ -440,5 +440,39 @@
 "u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-sun-np2.w2-w4.mp3?prayer=NightPrayer&date=20261122&episode=202611229",
 "t": "Night Prayer"
 }
+},
+"2026-11-23": {
+"Invitatory": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ip-ord-w02-w04-mon.psalm024.mp3?prayer=Invitatory&date=20261123&episode=202611231",
+"t": "Invitatory"
+},
+"OfficeOfReadings": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-w34-mon-or.mp3?prayer=OfficeOfReadings&date=20261123&episode=202611232",
+"t": "Office of Readings"
+},
+"MorningPrayer": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-w02-mon-mp.mp3?prayer=MorningPrayer&date=20261123&episode=202611233",
+"t": "Morning Prayer"
+},
+"MidmorningPrayer": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-w02-mon-dp1.mp3?prayer=MidmorningPrayer&date=20261123&episode=202611234",
+"t": "Midmorning Prayer"
+},
+"MiddayPrayer": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-w02-mon-dp2.mp3?prayer=MiddayPrayer&date=20261123&episode=202611235",
+"t": "Midday Prayer"
+},
+"MidafternoonPrayer": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-w02-mon-dp3.mp3?prayer=MidafternoonPrayer&date=20261123&episode=202611236",
+"t": "Midafternoon Prayer"
+},
+"EveningPrayer": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-w02-mon-ep2.mp3?prayer=EveningPrayer&date=20261123&episode=202611237",
+"t": "Evening Prayer"
+},
+"NightPrayer": {
+"u": "https://media.blubrry.com/divineoffice/traffic.libsyn.com/divineoffice/divine-ord-mon-np.w2-w4.mp3?prayer=NightPrayer&date=20261123&episode=202611238",
+"t": "Night Prayer"
+}
 }
 }
