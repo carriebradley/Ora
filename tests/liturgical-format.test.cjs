@@ -102,3 +102,14 @@ test('additional Byzantine minister labels stay distinct from prayer text',()=>{
  assert.equal(F.role('SUBDEACON: Fixture words.').name,'Subdeacon');
  assert.deepEqual(F.combine(['SUBDEACON: Fixture petition.','SERVER: Fixture response.']),['SUBDEACON: Fixture petition.','SERVER: Fixture response.']);
 });
+
+test('joint clergy instruction cues retain both speakers',()=>{
+ for(const line of ['The Priest and Deacon say:','The priest and the deacon pray:']){
+  const speaker=F.speakerInstruction(line);
+  assert.equal(speaker?.kind,'clergy',line);
+  assert.equal(speaker?.name,'Priest and Deacon',line);
+  assert.equal(speaker?.words,'',line);
+ }
+ assert.equal(F.speakerInstruction('The Deacon says:').kind,'deacon');
+ assert.equal(F.speakerInstruction('The priest bows.'),null);
+});
