@@ -6,14 +6,17 @@
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
  function heading(text){return heads.has(compact(text))||/^Antiphon:\s*Psalm\s*\d+$/i.test(text);}
  function role(text){
-  const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
+  const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
   const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
   const name=label==='PRIEST AND DEACON'?'Priest and Deacon':kind==='priest'?(/BISHOP/.test(label)?'Bishop':'Priest'):kind==='deacon'?'Deacon':label[0]+label.slice(1).toLowerCase();
   return {kind,name,words:m[4].trim(),...(m[2]||m[3]?{cue:(m[2]||m[3]).trim()}: {})};
  }
  function speakerInstruction(text){
-  const m=String(text).match(/^(?:the )?(priest|deacon|bishop|reader|cantor|choir)\s+(?:[^:]*?\s+)?(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming)\s*(?:\([^)]*\))?\s*:\s*$/i);
-  return m?role(m[1]+':'):null;
+  const m=String(text).match(/^(?:the )?(priest(?:\s+and\s+(?:the\s+)?deacon)?|celebrant|deacon|protodeacon|bishop|reader|lector|cantor|choir|subdeacon|server|acolyte)\s+(?:[^:]*?\s+)?(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming|sings?|singing|chants?|chanting)\s*(?:(quietly|silently|aloud|in a low voice|in a loud voice)|\(([^)]*)\))?\s*:\s*$/i);
+  if(!m)return null;
+  const speaker=role(m[1].replace(/\s+and\s+the\s+/i,' and ')+':');
+  const cue=m[2]||m[3];
+  return cue?{...speaker,cue:cue.trim()}:speaker;
  }
  // Preserve parallel alternatives as separate columns; never interleave prayers.
  function pdfRows(items,page){
@@ -50,7 +53,7 @@
   // Episcopal ceremony notes are directions, not prayers or responses.
   if(/^(?:the (?:first|second|third) (?:protopresbyter|concelebrant)|having received the blessing|the bishop (?:elevating|holding|raising)|the (?:priest|deacon|bishop)\s*,\s*(?:raising|holding|turning)|singing, crying, exclaiming and saying|the (?:protodeacon|deacon) opens the royal doors)\b/i.test(s))return true;
   if(/^[([](?:stand|sit|kneel|bow|quietly|silently|aloud|repeat|all stand|the priest|the deacon)\b/i.test(s))return true;
-  if(/^(?:the |a |an )?(?:priest|deacon|protodeacon|bishop|celebrant|server|reader|cantor|choir|people|faithful|congregation|clergy|concelebrants|subdeacon|acolyte)\s+(?:then\s+|now\s+)?(?:stands?|sits?|kneels?|bows?|turns?|takes?|makes?|offers?|sings?|chants?|says?|prays?|recites?|enters?|exits?|proceeds?|raises?|continues?|responds?|places?|opens?|closes?|incenses?|censes?|blesses?|kisses?|holds?|lifts?|moves?|faces?|approaches?|departs?|receives?|distributes?|reads?|begins?|repeats?|goes?|comes?|removes?|puts?|washes?|covers?|uncovers?|pours?|carries?|gives?|hands?|returns?|walks?|crosses?)\b/i.test(s))return true;
+  if(/^(?:the |a |an )?(?:priest|deacon|protodeacon|bishop|celebrant|server|reader|lector|cantor|choir|people|faithful|congregation|clergy|concelebrants|subdeacon|acolyte)\s+(?:then\s+|now\s+)?(?:stands?|sits?|kneels?|bows?|turns?|takes?|makes?|offers?|sings?|chants?|says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming|enters?|exits?|proceeds?|raises?|continues?|responds?|places?|opens?|closes?|incenses?|censes?|blesses?|kisses?|holds?|lifts?|moves?|faces?|approaches?|departs?|receives?|distributes?|reads?|begins?|repeats?|goes?|comes?|removes?|puts?|washes?|covers?|uncovers?|pours?|carries?|gives?|hands?|returns?|walks?|crosses?)\b/i.test(s))return true;
   if(/^(?:during|after|before|while|when|then|meanwhile|at this point|at the conclusion|as the|following the|if the|once the)\s+(?:the |this |these |a |an )?(?:priest|deacon|bishop|celebrant|litany|hymn|prayer|entrance|gospel|people|choir|faithful|clergy|singing|chanting|reading|communion|gifts|service|troparion|antiphon|procession|holy doors|royal doors)\b/i.test(s))return true;
   return /^(?:on Sundays|on weekdays|on feast days|on great feasts|if there is|instead of|the royal doors|the holy doors|the iconostasis|the following prayer is|this prayer is)\b/i.test(s);
  }
@@ -75,7 +78,10 @@
    const followsRubric=/[:：]\s*$/.test(current)&&instruction(current)&&!instruction(text)&&!role(text);
    if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
    if(!current)current=text;
-   else if(/[-\u2010]$/.test(current)&&/^[a-z]/.test(text))current=current.slice(0,-1)+text;
+   // Keep a printed hard hyphen: without the source typography we cannot
+   // distinguish a wrapped compound (Only-begotten) from a divided word.
+   // Discretionary soft hyphens are removed by normalize().
+   else if(/[-\u2010]$/.test(current)&&/^[a-z]/.test(text))current+=text;
    else current+=' '+text;
    if(heading(text)||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text))flush();last=typeof raw==='object'?raw:null;
   }

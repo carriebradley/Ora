@@ -92,3 +92,70 @@ test('Melkite long tracked title is repaired across three physical rows',()=>{
  assert.deepEqual(F.combine([rubric,'PRIEST AND DEACON: Fixture prayer.']),[rubric,'PRIEST AND DEACON: Fixture prayer.']);
  assert.equal(F.instruction('The priest and the deacon are your servants, O Lord.'),false);
 });
+
+test('additional Byzantine minister labels stay distinct from prayer text',()=>{
+ for(const [label,expected] of [['Subdeacon','Subdeacon'],['Server','Server'],['Acolyte','Acolyte']]){
+  assert.deepEqual(F.role(label+': Fixture words.'),{kind:'other',name:expected,words:'Fixture words.'});
+  assert.deepEqual(F.speakerInstruction('The '+label+' says:'),{kind:'other',name:expected,words:''});
+  assert.equal(F.instruction(label+': Fixture words.'),false);
+ }
+ assert.equal(F.role('SUBDEACON: Fixture words.').name,'Subdeacon');
+ assert.deepEqual(F.combine(['SUBDEACON: Fixture petition.','SERVER: Fixture response.']),['SUBDEACON: Fixture petition.','SERVER: Fixture response.']);
+});
+
+test('joint clergy instruction cues retain both speakers',()=>{
+ for(const line of ['The Priest and Deacon say:','The priest and the deacon pray:']){
+  const speaker=F.speakerInstruction(line);
+  assert.equal(speaker?.kind,'clergy',line);
+  assert.equal(speaker?.name,'Priest and Deacon',line);
+  assert.equal(speaker?.words,'',line);
+ }
+ assert.equal(F.speakerInstruction('The Deacon says:').kind,'deacon');
+ assert.equal(F.speakerInstruction('The priest bows.'),null);
+});
+
+test('celebrant, protodeacon and lector cues preserve named voices',()=>{
+ for(const [speaker,kind,name] of [
+  ['Celebrant','priest','Priest'],
+  ['Protodeacon','deacon','Deacon'],
+  ['Lector','other','Lector']
+ ]){
+  assert.deepEqual(F.speakerInstruction('The '+speaker+' says:'),{kind,name,words:''});
+  assert.deepEqual(F.role(speaker+': Fixture prayer.'),{kind,name,words:'Fixture prayer.'});
+  assert.equal(F.instruction('The '+speaker+' says:'),true);
+  assert.equal(F.instruction(speaker+': Fixture prayer.'),false);
+ }
+ assert.equal(F.speakerInstruction('The priest blesses the congregation.'),null);
+});
+
+test('PDF line joining does not erase printed compound hyphens',()=>{
+ assert.deepEqual(F.combine(['Only-','begotten Son, have mercy.']),['Only-begotten Son, have mercy.']);
+ assert.deepEqual(F.combine(['life‐','giving Cross.']),['life‐giving Cross.']);
+ assert.deepEqual(F.combine(['Prayer to the','Mother of God.']),['Prayer to the Mother of God.']);
+ assert.equal(F.normalize('incorrupt\u00adible'),'incorruptible');
+});
+
+test('voice cues in source directions stay attached to the following speaker',()=>{
+ for(const [line,kind,cue] of [
+  ['The priest says quietly:','priest','quietly'],
+  ['The priest prays in a low voice:','priest','in a low voice'],
+  ['The deacon proclaims aloud:','deacon','aloud'],
+  ['The choir sings silently:','other','silently'],
+  ['The bishop says (softly):','priest','softly']
+ ]){
+  const speaker=F.speakerInstruction(line);
+  assert.equal(speaker?.kind,kind,line);
+  assert.equal(speaker?.cue,cue,line);
+  assert.equal(speaker?.words,'',line);
+  assert.equal(F.instruction(line),true,line);
+ }
+ assert.equal(F.speakerInstruction('The priest walks toward the altar.'),null);
+});
+
+test('spoken proclamations are rubrics when attributed to a minister',()=>{
+ for(const line of ['The deacon proclaims aloud:','The priest exclaims:','The reader recites:','The cantor chants:']){
+  assert.equal(F.instruction(line),true,line);
+  assert.ok(F.speakerInstruction(line),line);
+ }
+ for(const line of ['Deacon: Let us attend.','Reader: Wisdom.'])assert.equal(F.instruction(line),false,line);
+});
