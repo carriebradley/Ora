@@ -1,0 +1,37 @@
+name: Import Ambrose historical Office excerpts
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ora-ambrose-mysteries-v277
+    paths:
+      - tools/import_oor_ambrose_mysteries.py
+      - tests/test_oor_ambrose_mysteries.py
+      - .github/workflows/import-oor-ambrose.yml
+permissions:
+  contents: write
+jobs:
+  import-ambrose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate numbered-excerpt parser
+        run: python -m unittest discover -s tests -p test_oor_ambrose_mysteries.py
+      - name: Import the historical translation if source matches all sections
+        run: python tools/import_oor_ambrose_mysteries.py
+      - name: Refresh audited Office reading inventory
+        run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
+      - name: Commit only verified data
+        run: |
+          if git diff --quiet -- oortext.json docs/office-of-readings-availability.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add oortext.json docs/office-of-readings-availability.json
+          git commit -m "Import numbered Ambrose On the Mysteries historical translation"
+          git push
