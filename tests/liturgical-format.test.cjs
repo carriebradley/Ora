@@ -134,3 +134,20 @@ test('PDF line joining does not erase printed compound hyphens',()=>{
  assert.deepEqual(F.combine(['Prayer to the','Mother of God.']),['Prayer to the Mother of God.']);
  assert.equal(F.normalize('incorrupt\u00adible'),'incorruptible');
 });
+
+test('voice cues in source directions stay attached to the following speaker',()=>{
+ for(const [line,kind,cue] of [
+  ['The priest says quietly:','priest','quietly'],
+  ['The priest prays in a low voice:','priest','in a low voice'],
+  ['The deacon proclaims aloud:','deacon','aloud'],
+  ['The choir sings silently:','other','silently'],
+  ['The bishop says (softly):','priest','softly']
+ ]){
+  const speaker=F.speakerInstruction(line);
+  assert.equal(speaker?.kind,kind,line);
+  assert.equal(speaker?.cue,cue,line);
+  assert.equal(speaker?.words,'',line);
+  assert.equal(F.instruction(line),true,line);
+ }
+ assert.equal(F.speakerInstruction('The priest walks toward the altar.'),null);
+});
