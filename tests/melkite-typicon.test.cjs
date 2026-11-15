@@ -3,6 +3,12 @@ test('November monthly typicon verifies only its twelve dated Melkite appointmen
  for(const day of ['01','08','13','14','15','16','21','22','25','26','29','30']){
   const d='2026-11-'+day;assert.equal(S.service(d,'melkite').verification,'verified');assert.equal(S.service(d,'melkite').id,'chrysostom');
  }
+ for(const day of ['2026-01-04','2026-06-07','2026-12-06']){
+  assert.equal(S.service(day,'melkite').verification,'verified');
+  assert.match(S.service(day,'melkite').note,/monthly typicon/);
+ }
+ assert.equal(S.service('2026-01-30','melkite').verification,'calculated');
+ assert.equal(S.service('2026-12-24','melkite').verification,'calculated');
  assert.equal(S.service('2026-11-12','melkite').verification,'calculated');
  assert.equal(S.service('2026-11-13','ukrainian').verification,'calculated');
  assert.equal(M.typicon('2027-11-13'),null);

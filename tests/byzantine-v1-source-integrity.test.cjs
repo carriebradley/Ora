@@ -25,6 +25,8 @@ test('all dated Ukrainian and Melkite hymns match an available church-specific s
  assert.ok(Object.keys(ukrainian.days).length>=72,'Unexpectedly lost Ukrainian dated hymns');
  assert.equal(Object.keys(melkite.coverage).length,12,'Expected each Newton monthly typicon');
  assert.ok(Object.keys(melkite.days).length>=63,'Unexpectedly lost year-round Melkite dated hymns');
+ assert.deepEqual([...S.monthlyChrysostomDates].sort(),Object.keys(melkite.days).sort(),
+  'Verified appointment list must match the exact dated typikon import');
  assert.ok(!melkite.days['2026-01-30']&&!melkite.days['2026-12-24'],'quarantined dates cannot be appointed');
  assert.equal(melkite.coverage.January.quarantined[0].date,'2026-01-30');
  assert.equal(melkite.coverage.December.quarantined[0].date,'2026-12-24');
@@ -97,6 +99,9 @@ test('2026 service selector never silently claims a verified appointment without
   if(M.typicon(iso)){
    assert.equal(me.verification,'verified',iso+' typicon not respected');
    assert.equal(me.id,M.typicon(iso).liturgy,iso+' typicon service mismatched');
+  }else if(S.monthlyChrysostomDates.includes(iso)){
+   assert.equal(me.verification,'verified',iso+' dated Chrysostom heading ignored');
+   assert.equal(me.id,'chrysostom');
   }else assert.equal(me.verification,'calculated',iso+' claims unverified Melkite appointment');
   if(iso==='2026-12-24'){
    assert.equal(ua.id,'unknown');

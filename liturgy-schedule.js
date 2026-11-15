@@ -4,6 +4,75 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./melkite.js'));else root.LiturgySchedule=factory(root.Melkite);})(typeof self!=='undefined'?self:this,function(Melkite){
   const basil=new Set(['2026-01-01','2026-01-05','2026-02-22','2026-03-01','2026-03-08','2026-03-15','2026-03-22','2026-04-02','2026-04-04','2026-12-24']);
   const names={chrysostom:'Divine Liturgy of St. John Chrysostom',basil:'Divine Liturgy of St. Basil the Great',presanctified:'Liturgy of the Presanctified Gifts',none:'No Divine Liturgy prescribed',unknown:'Divine Liturgy · calendar unavailable'};
+  // Exact dates whose Newton monthly typikon names St. John Chrysostom.
+  // Keep synchronized with the dated, source-checked annual hymn import.
+  const monthlyChrysostomDates=Object.freeze([
+    '2026-01-04',
+    '2026-01-18',
+    '2026-02-01',
+    '2026-02-02',
+    '2026-02-08',
+    '2026-02-15',
+    '2026-03-21',
+    '2026-03-25',
+    '2026-03-29',
+    '2026-04-05',
+    '2026-04-12',
+    '2026-04-19',
+    '2026-04-23',
+    '2026-04-25',
+    '2026-04-26',
+    '2026-05-03',
+    '2026-05-14',
+    '2026-05-17',
+    '2026-05-24',
+    '2026-05-31',
+    '2026-06-04',
+    '2026-06-07',
+    '2026-06-14',
+    '2026-06-21',
+    '2026-06-23',
+    '2026-06-24',
+    '2026-06-28',
+    '2026-06-29',
+    '2026-07-05',
+    '2026-07-12',
+    '2026-07-19',
+    '2026-07-20',
+    '2026-08-02',
+    '2026-08-06',
+    '2026-08-09',
+    '2026-08-15',
+    '2026-08-16',
+    '2026-08-23',
+    '2026-08-30',
+    '2026-09-01',
+    '2026-09-06',
+    '2026-09-08',
+    '2026-09-13',
+    '2026-09-14',
+    '2026-09-20',
+    '2026-09-26',
+    '2026-09-27',
+    '2026-10-01',
+    '2026-10-04',
+    '2026-10-11',
+    '2026-10-18',
+    '2026-10-25',
+    '2026-10-26',
+    '2026-11-01',
+    '2026-11-08',
+    '2026-11-15',
+    '2026-11-21',
+    '2026-11-22',
+    '2026-11-29',
+    '2026-12-06',
+    '2026-12-13',
+    '2026-12-20',
+    '2026-12-27'
+  ]);
+  const confirmedMonthlyDates=new Set(monthlyChrysostomDates);
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
   function service(iso,church='ukrainian'){
     if(!['ukrainian','melkite','ruthenian'].includes(church))return {id:'unknown',title:names.unknown,note:'No Byzantine service rules are configured for this tradition.',verification:'unavailable',source:''};
     if(iso instanceof Date)iso=Number.isNaN(iso.getTime())?'':iso.toISOString().slice(0,10);
@@ -32,9 +101,12 @@
     if(church==='melkite'&&Melkite?.typicon(iso)){
       id=Melkite.typicon(iso).liturgy;title=names[id];verification='verified';
       note='Appointed in the November 2026 monthly typicon prepared by Rev. Protodeacon Saleem Naber, Christ the Savior Melkite Catholic Church, Yonkers. Parish service times vary.';
+    }else if(church==='melkite'&&id==='chrysostom'&&confirmedMonthlyDates.has(iso)){
+      verification='verified';
+      note='St. John Chrysostom is identified in the Diocese of Newton’s '+monthNames[Number(iso.slice(5,7))-1]+' 2026 monthly typicon. Parish service times and local directions vary.';
     }
     const source=church==='ukrainian'?'https://eeparchy.com/calendar/'+iso:church==='melkite'?'https://melkite.org/liturgical-resources':'https://mci.archpitt.org/LiturgicalCalendar2026.html';
     return {id,title,note,verification,source};
   }
-  return {service};
+  return {service,monthlyChrysostomDates};
 });
