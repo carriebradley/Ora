@@ -77,9 +77,15 @@
     },
     "December": {
       "headings": 9,
-      "hymnDates": 5,
+      "hymnDates": 4,
       "source": "https://melkite.org/wp-content/uploads/2025/12/December-2026.docx",
-      "quarantined": []
+      "quarantined": [
+        {
+          "date": "2026-12-24",
+          "reason": "Chrysostom heading conflicts with Newton Nativity Vesperal Basil order",
+          "reference": "https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf"
+        }
+      ]
     }
   },
   "days": {
@@ -1297,27 +1303,6 @@
       "unresolved": [
         "Patronal hymn determined locally"
       ]
-    },
-    "2026-12-24": {
-      "church": "melkite",
-      "iso": "2026-12-24",
-      "source": "https://melkite.org/liturgical-resources",
-      "typicon": "December-2026.docx",
-      "groups": {
-        "troparia": [
-          "Troparion of the Nativity, (Tone 4) (Three times): Your Nativity, O Christ our God, has shed the light of knowledge upon the world. Through it, those who had been star-worshipers learned through a star to worship You, O Sun of Justice, and to recognize in You the One Who rises and Who comes from on high. O Lord glory to You!",
-          "Kondakion of the Nativity (Tone 3): Today the Virgin gives birth to the One Who surpasses all essences, and the earth offers a cave to God, the Inaccessible One. Angels sing His glory together with the shepherds: for to us is born a Child, God in all eternity"
-        ],
-        "prokeimenon": [
-          "PROKIMENON: (Tone 7) Ps. 63: 11, 2",
-          "The just shall rejoice in the Lord and place his hope in Him. All those with an upright heart shall be praised. Stichon: O God, hear my voice when I pray to You; save my life from the dreadful enemy."
-        ],
-        "alleluia": [
-          "Alleluia: (Tone 1) Ps. 18:2,3",
-          "The heavens declare God’s glory, and the firmament proclaims the work of His hands.",
-          "Stichon: Day pours out the word to day, and night to night imparts knowledge."
-        ]
-      }
     },
     "2026-12-27": {
       "church": "melkite",
