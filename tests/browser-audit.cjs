@@ -33,6 +33,10 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   const row=page.locator('.gl[data-v="byz"]');
   assert.equal(await row.locator('.gb').innerText(),badge,'Melkite rank on '+date);
   assert.ok((await row.innerText()).length>18,'Melkite day title on '+date);
+  if(date==='2026-11-15'){
+   assert.match(await row.innerText(),/Eighth Sunday after the Holy Cross Beginning of the Nativity Fast/);
+   assert.doesNotMatch(await row.innerText(),/EIGHTH SUNDAY AFTER THE HOLY CROSS/);
+  }
  }
  // Each verified Byzantine bio must replace the missing-bio placeholder.
  for(const church of ['ukrainian','melkite']){

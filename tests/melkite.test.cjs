@@ -49,6 +49,6 @@ test('Dated Newton Sunday and feast appointments retain liturgical rank on Today
   assert.equal(melkite(iso).rank,'Great Feast',iso+' retains its great feast rank');
  }
  assert.equal(melkite('2026-12-08').rank,'Diocesan calendar','ordinary Melkite saint still uses diocesan commemoration');
- assert.match(melkite('2026-11-15').title,/Eighth Sunday after the Holy Cross/i);
+ assert.equal(melkite('2026-11-15').title,'Eighth Sunday after the Holy Cross Beginning of the Nativity Fast');
  assert.match(melkite('2026-11-15').fastSeason,/Nativity Fast/);
 });

@@ -72,6 +72,12 @@
   // normalize commemorations at the import boundary for all app views.
   const titleCase = value => {
     const s = String(value || ''), letters = s.match(/[A-Za-z]/g) || [];
+    // Newton occasionally prints a mixed heading: an ALL-CAPS feast followed
+    // by a normally cased season note. Normalize the heading separately while
+    // retaining the source's original words in the appended note.
+    const mixed = s.match(/^([A-Z][A-Z\s'’\-]+)\s+([A-Z][a-z].*)$/);
+    if (mixed && /[A-Z]{4,}\s+[A-Z]{4,}/.test(mixed[1]))
+      return titleCase(mixed[1].trim()) + ' ' + mixed[2];
     if (letters.length < 5 || (s.match(/[A-Z]/g) || []).length / letters.length < .85) return s;
     const minor = new Set(['of','the','and','in','on','at','to','for','from','with','by']);
     return s.toLocaleLowerCase('en').replace(/\b[a-z]+(?:['’][a-z]+)?\b/g, (word, offset) =>

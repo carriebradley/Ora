@@ -33,6 +33,10 @@ Roman Ascension, Corpus Christi and Epiphany transfers and Sarum Lady-Day transf
 
 The active feed workflow is `.github/workflows/readings.yml`. The verification workflow is `.github/workflows/verify.yml`. External Scripture, art, audio and large text downloads need an initial successful connection; installing Ora does not download every external resource.
 
+## Version 1 testing
+
+Before marking Version 1 complete, follow the [iPhone acceptance checklist](docs/ORA-V1-IPHONE-ACCEPTANCE.md) after the automated release gate passes. The real-device check is essential for installed Safari behavior and private PDF/EPUB persistence; these are not covered by Chromium alone.
+
 ## Sources and reproduction
 
 Newton calendar facts are attributed by date/page. Full copyrighted liturgical translations are linked to their publishers rather than imported without permission. Roman daily readings use the USCCB feed under its published website conditions. Public-domain Douay, patristic and historical Sarum sources and modern quotation links are credited within the app. See [release report](docs/ORA-RELEASE-2026-11-11.md) for exact source checks, limitations and remaining blockers.
