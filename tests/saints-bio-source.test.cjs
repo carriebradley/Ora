@@ -570,3 +570,23 @@ test('July Roman named saints have sourced short cards, with Sunday precedence',
  assert.match(section,/Scripture does not identify her with the unnamed sinful woman/);
  assert.match(section,/Their names are not given in the canonical Gospels/);
 });
+
+test('Roman August saints have sourced short cards and respect Sunday precedence',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const names={'08-01':'Alphonsus','08-08':'Dominic','08-10':'Lawrence','08-11':'Clare',
+  '08-14':'Maximilian Kolbe','08-24':'Bartholomew','08-27':'Monica','08-28':'Augustine','08-29':'John the Baptist'};
+ for(const [md,name] of Object.entries(names)){
+  const row=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(row.startsWith("'"+md+"':"),md);
+  assert.ok(row.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const bio=row.match(/bio: "([^"]+)"/);
+  assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
+  assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
+    .some(t=>new RegExp(name,'i').test(t)),md+' must be the primary commemoration in some year');
+ }
+ assert.doesNotMatch(L.roman(new Date('2027-08-29T00:00:00Z')).title,/John the Baptist/,
+  'Sunday outranks the Passion memorial');
+ assert.match(L.roman(new Date('2027-08-10T00:00:00Z')).title,/Lawrence/);
+ assert.ok(roman.includes('this identification is not established with certainty'));
+});
