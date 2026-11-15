@@ -32,6 +32,12 @@ CHRY = re.compile(r"^(?:Divine\s+)?Liturgy of (?:St\.?|Saint) John Chrysostom\s*
 PROK_STOP = re.compile(r"^(?:READING from|ALLELUIA\s*:|Gospel\s*:)",re.I)
 ALL_STOP = re.compile(r"^(?:Gospel\s*:|Homily\b)",re.I)
 CYRILLIC_ARABIC = re.compile(r"[\u0400-\u052f\u0600-\u06ff]")
+# Some DOCX paragraphs run straight into the next *reading heading*.
+# Remove the known heading suffix only; never guess or invent prayer words.
+EMBEDDED_READING = re.compile(r"\s+Reading from (?:the )?(?:Epistle|Gospel)\b.*$",re.I)
+
+def devotional_verses(lines):
+    return [EMBEDDED_READING.sub("",s).strip() for s in lines]
 
 def document_url(month):
     if month not in MONTHS:
@@ -88,8 +94,8 @@ def extract_month(doc,month,quarantined=None):
         if choices: groups["troparia"] = choices
         prok = verses(lines,PROK,PROK_STOP)
         alleluia = verses(lines,ALLELUIA,ALL_STOP)
-        if prok: groups["prokeimenon"] = prok
-        if alleluia: groups["alleluia"] = alleluia
+        if prok: groups["prokeimenon"] = devotional_verses(prok)
+        if alleluia: groups["alleluia"] = devotional_verses(alleluia)
         if not groups:
             continue
         for kind,words in groups.items():

@@ -59,6 +59,10 @@ class MultiMonthTypikonTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"No dated January"):
             list(year.split_days(MockDocument(["Sunday, February 1, 2026"]),"January"))
 
+    def test_inline_reading_header_is_not_prayer_text(self):
+        sentence="The just shall rejoice in God. Reading from the Epistle of Paul to the Hebrews"
+        self.assertEqual(year.devotional_verses([sentence]),["The just shall rejoice in God."])
+
     def test_missing_or_unknown_source_is_rejected(self):
         with self.assertRaises(ValueError):
             year.extract_month(MockDocument(["Nothing usable"]),"December")
