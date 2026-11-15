@@ -1,0 +1,36 @@
+name: Import Leo Sermon 95 Office excerpts
+on:
+  workflow_dispatch:
+  push:
+    branches: [ora-leo-beatitudes-v279]
+    paths:
+      - tools/import_oor_leo_95.py
+      - tests/test_oor_leo_95.py
+      - .github/workflows/import-oor-leo-95.yml
+permissions:
+  contents: write
+jobs:
+  import-leo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate sermon-section parser
+        run: python -m unittest discover -s tests -p test_oor_leo_95.py
+      - name: Extract five historical English Office excerpts
+        run: python tools/import_oor_leo_95.py
+      - name: Refresh reading inventory
+        run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
+      - name: Commit verified readings and inventory
+        run: |
+          if git diff --quiet -- oortext.json docs/office-of-readings-availability.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add oortext.json docs/office-of-readings-availability.json
+          git commit -m "Import Leo the Great Sermon 95 numbered Office passages"
+          git push
