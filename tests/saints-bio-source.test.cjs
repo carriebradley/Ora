@@ -501,3 +501,28 @@ test('2027 Lent suppresses the February Scholastica and Polycarp saint cards',()
  assert.match(selector,/const titles = S\.rite === 'byz'/);
  assert.match(selector,/: \[title\];/);
 });
+
+test('Roman March through May saint cards follow titles and precedence',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const expected={'03-19':'Joseph','04-25':'Mark','04-29':'Catherine of Siena','05-02':'Athanasius','05-03':'Philip and James','05-14':'Matthias'};
+ for(const [md,saint] of Object.entries(expected)){
+  const entry=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(entry.startsWith("'"+md+"':"),md);
+  assert.ok(entry.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const bio=entry.match(/bio: "([^"]+)"/);
+  assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
+  let observed=false;
+  for(let year=2025;year<=2040;year++){
+   const day=L.roman(new Date(year+'-'+md+'T00:00:00Z'));
+   if(day.title.includes(saint)){observed=true;break;}
+  }
+  assert.ok(observed,md+' observed on some primary Roman calendar date');
+ }
+ assert.match(L.roman(new Date('2027-03-19T00:00:00Z')).title,/Saint Joseph/);
+ assert.match(L.roman(new Date('2027-04-29T00:00:00Z')).title,/Catherine of Siena/);
+ assert.doesNotMatch(L.roman(new Date('2027-04-25T00:00:00Z')).title,/Saint Mark/,'Easter Sunday outranks evangelist');
+ assert.doesNotMatch(L.roman(new Date('2027-05-02T00:00:00Z')).title,/Athanasius/,'Easter Sunday outranks the memorial');
+ assert.match(L.roman(new Date('2027-05-03T00:00:00Z')).title,/Philip and James/);
+ assert.match(L.roman(new Date('2027-05-14T00:00:00Z')).title,/Matthias/);
+});

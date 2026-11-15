@@ -1304,6 +1304,13 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '03-19': { match: /Saint Joseph, Spouse/i, name: "Saint Joseph, Husband of Mary", meta: "First century · Husband of Mary and Guardian of Jesus", bio: "Joseph, a descendant of David, was entrusted with the care of Mary and Jesus. Matthew’s Gospel portrays him as a just man who followed God’s guidance, protected his family, and took them to Egypt when Herod threatened the child.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-joseph-husband-of-mary/" },
+      '04-25': { match: /Saint Mark, Evangelist/i, name: "Saint Mark the Evangelist", meta: "First century · Evangelist", bio: "Mark is associated with the Gospel that bears his name and appears among the companions of Paul and Barnabas in Acts. Ancient Christian tradition also connects him with the Apostle Peter and the Church of Alexandria.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-mark/" },
+      '04-29': { match: /Catherine of Siena/i, name: "Saint Catherine of Siena", meta: "1347–1380 · Dominican and Doctor of the Church", bio: "Catherine was a Dominican tertiary, spiritual writer, and advocate for peace and reform in the Church. She corresponded with popes and political leaders and urged the papacy’s return to Rome. Her Dialogue remains a major work of Catholic spirituality.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-catherine-of-siena/" },
+      '05-02': { match: /Athanasius/i, name: "Saint Athanasius of Alexandria", meta: "c. 296–373 · Bishop and Doctor of the Church", bio: "Athanasius served as Bishop of Alexandria and defended Christ’s full divinity against Arian teaching. Repeatedly exiled during theological and political conflicts, he also wrote an influential Life of Saint Anthony.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-athanasius/" },
+      '05-03': { match: /Philip and James/i, name: "Saint Philip the Apostle", meta: "First century · Apostle", bio: "Philip was called by Jesus and invited Nathanael to meet him. The Gospel of John records his questions and conversations with Christ. The Roman calendar commemorates him together with Saint James the Lesser.", source: "https://www.franciscanmedia.org/saint-of-the-day/saints-philip-and-james/" },
+      '05-14': { match: /Matthias/i, name: "Saint Matthias the Apostle", meta: "First century · Apostle", bio: "Matthias was chosen by lot to join the Eleven Apostles after the death of Judas. According to Acts, he had accompanied Jesus’ followers from the beginning and could witness to the Resurrection.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-matthias/" },
+
       '02-05': { match: /Agatha/i, name: "Saint Agatha of Sicily", meta: "d. c. 251 · Virgin and Martyr", bio: "Agatha was a Christian martyr from Sicily, traditionally associated with Catania. She suffered persecution in the third century. Details of her imprisonment and trials survive largely in later accounts, but her veneration is ancient.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-agatha/" },
       '02-06': { match: /Paul Miki/i, name: "Saint Paul Miki", meta: "d. 1597 · Jesuit and Martyr of Japan", bio: "Paul Miki was a Japanese Jesuit who preached Christianity in his homeland. He and twenty-five companions, including laypeople and religious, were crucified at Nagasaki in 1597. The Roman Church commemorates them together.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-paul-miki-and-companions/" },
       '02-10': { match: /Scholastica/i, name: "Saint Scholastica", meta: "c. 480–c. 547 · Nun", bio: "Scholastica, sister of Saint Benedict, is remembered for her dedication to prayer and religious life. Gregory the Great recounts a final meeting between them and presents their devotion as an example of Christian love.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-scholastica/" },
@@ -2208,7 +2215,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v310';
+  const APP_BUILD = 'ora-v311';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
