@@ -1959,6 +1959,24 @@
     'Augustine|On Psalm 148, 1-2': [
       ['Exposition on Psalm 148, sections 1–2', 'https://www.newadvent.org/fathers/1801148.htm']
     ],
+    'Augustine|On Psalm 33, 7-8': [
+      ['Exposition on Psalm 33, sections 7–8', 'https://www.newadvent.org/fathers/1801033.htm']
+    ],
+    'Augustine|On Psalm 48, 7': [
+      ['Exposition on Psalm 48', 'https://www.newadvent.org/fathers/1801048.htm']
+    ],
+    'Augustine|On Psalm 60, 2-3': [
+      ['Exposition on Psalm 60', 'https://www.newadvent.org/fathers/1801060.htm']
+    ],
+    'Augustine|On Psalm 61, 4': [
+      ['Exposition on Psalm 61', 'https://www.newadvent.org/fathers/1801061.htm']
+    ],
+    'Augustine|On Psalm 85, 1': [
+      ['Exposition on Psalm 85', 'https://www.newadvent.org/fathers/1801085.htm']
+    ],
+    'Augustine|On Psalm 96, 14-15': [
+      ['Exposition on Psalm 96', 'https://www.newadvent.org/fathers/1801096.htm']
+    ],
     'Augustine|Confessions 9, 10-11': [
       ['Confessions, Book IX, chapters 10–11', 'https://www.newadvent.org/fathers/110109.htm']
     ],
@@ -2264,7 +2282,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v314';
+  const APP_BUILD = 'ora-v315';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

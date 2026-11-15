@@ -54,3 +54,24 @@ test('missing Athanasius and Tertullian readings link to their actual patristic 
  for(const key of ['Athanasius of Alexandria|On the Incarnation of the Word 8-9','Athanasius of Alexandria|On the Incarnation of the Word 10','Tertullian|On Prayer 28-29'])
   assert.ok(missing.includes(key),'Source links do not falsely mark readings available: '+key);
 });
+
+test('additional Augustine psalm links are verified and ambiguous Psalm 33 section 29 stays unlinked',()=>{
+ const app=require('node:fs').readFileSync(require.resolve('../app.js'),'utf8');
+ const map=app.slice(app.indexOf('const OOR_PUBLIC_DOMAIN_SOURCES'),app.indexOf('let oortxP = null;'));
+ for(const [key,leaf]of [
+  ['Augustine|On Psalm 33, 7-8','1801033.htm'],
+  ['Augustine|On Psalm 48, 7','1801048.htm'],
+  ['Augustine|On Psalm 60, 2-3','1801060.htm'],
+  ['Augustine|On Psalm 61, 4','1801061.htm'],
+  ['Augustine|On Psalm 85, 1','1801085.htm'],
+  ['Augustine|On Psalm 96, 14-15','1801096.htm']
+ ]){
+  const i=map.indexOf("'"+key+"'");
+  assert.ok(i>=0,key);
+  assert.ok(map.slice(i,i+210).includes('https://www.newadvent.org/fathers/'+leaf),key);
+ }
+ assert.ok(!map.includes("'Augustine|On Psalm 33, 29'"),
+  'Do not imply section 29 is present in New Advent Psalm 33 edition');
+ const inventory=require('../docs/office-of-readings-availability.json');
+ assert.equal(inventory.available,105,'external links are not internally available translations');
+});
