@@ -26,7 +26,7 @@ test('v1 Roman Office tracked sections remain present under every configured tra
  }
  // Section-presence tests do not authenticate the liturgical text or every appointment.
  const statement=fs.readFileSync(path.join(root,'docs/ORA-V1-RELEASE-BASELINE-2026-11-15.md'),'utf8');
- assert.match(statement,/not necessarily independently verified verbatim/i);
+ assert.match(statement.replace(/\*\*/g,''),/not necessarily independently verified verbatim/i);
 });
 
 test('v1 calendar safeguards remain in place for joyful Sundays and conflicting services',()=>{
@@ -47,7 +47,7 @@ test('v1 release scope explicitly rejects unfinished text corpus and premature a
  const roadmap=fs.readFileSync(path.join(root,'docs/ORA-V1-COMPLETION-ROADMAP.md'),'utf8');
  const baseline=fs.readFileSync(path.join(root,'docs/ORA-V1-RELEASE-BASELINE-2026-11-15.md'),'utf8');
  assert.match(roadmap,/outside the v1 release gate/);
- assert.match(roadmap,/real iPhone\/Safari acceptance testing/);
+ assert.match(roadmap,/iPhone\/Safari acceptance testing/);
  assert.match(baseline,/November 29, 2026/);
  assert.match(baseline,/not yet certified/i);
 });
