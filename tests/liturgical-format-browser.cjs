@@ -67,5 +67,73 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.equal(await page.locator('.byz-prayer-line .byz-rubric').isVisible(),false);
  await page.locator('.byz-rubrics-toggle').click();assert.equal(await page.locator('.byz-prayer-line .byz-rubric').isVisible(),true);
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
+
+ // The recognized bilingual Edmonton booklet should use the exact same
+ // continuous text presentation as Melkite, without extracting Ukrainian-
+ // language facing pages or the later appendices.
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ await page.evaluate(async()=>{
+   const get=LiturgyReader.get,load=LiturgyReader.load;
+   const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
+   const content={
+     33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.'],
+     35:['First Antiphon','ALL: Fixture Ukrainian antiphon.'],
+     69:['DEACON 1: Fixture Eucharistic invitation.'],
+     83:['BISHOP: Fixture anaphora.'],
+     99:['ALL: Fixture Communion response.'],
+     113:['ALL: Fixture conclusion.'],
+     34:['Ukrainian facing-language page must never appear'],
+     115:['Appendix content must never appear']
+   };
+   LiturgyReader.get=async id=>({id,name:'edmonton-fixture.pdf',format:'pdf',pages:140,page:1,updated:100,blob:new Blob()});
+   LiturgyReader.load=async()=>({numPages:140,getPage:async number=>({
+     getTextContent:async()=>({items:(number===4?
+       ['Official translation of the Ukrainian Greek Catholic Church: St. John Chrysostom']:
+       content[number]||[]).map((s,i)=>row(s,760-i*34))})
+   }),destroy:async()=>{}});
+   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ const ukrainian=page.locator('.reader-inline-text');
+ assert.equal(await ukrainian.locator('.byz-major-heading').first().innerText(),'Divine Liturgy of St. John Chrysostom');
+ assert.deepEqual(await ukrainian.locator('.byz-major-heading').allTextContents(),[
+   'Divine Liturgy of St. John Chrysostom','Liturgy of the Word',
+   'Liturgy of the Eucharist','Anaphora','Holy Communion'
+ ]);
+ assert.match(await ukrainian.innerText(),/Fixture Ukrainian litany/);
+ assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon/);
+ assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows/);
+ assert.equal(await ukrainian.locator('.byz-role-deacon').count(),2);
+ assert.equal(await ukrainian.locator('.byz-role-priest .byz-speaker').first().innerText(),'Priest 1');
+ assert.equal(await ukrainian.locator('.byz-role-deacon .byz-speaker').first().innerText(),'Deacon 2');
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
+ for(const width of [320,390]){
+   await page.setViewportSize({width,height:844});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Edmonton text must fit mobile width');
+   assert.equal(await page.evaluate(()=>getComputedStyle(document.querySelector('.liturgy-opening .tx')).fontSize),
+     await page.evaluate(()=>getComputedStyle(document.querySelector('.byz-prayer-words')).fontSize),
+     'Ukrainian prayers retain Melkite reading type scale');
+ }
+ await page.setViewportSize({width:390,height:844});
+ await ukrainian.locator('.byz-rubrics-toggle').click();
+ assert.equal(await ukrainian.locator('.byz-rubric').first().isVisible(),true);
+ await ukrainian.locator('.byz-rubrics-toggle').click();
+ assert.equal(await ukrainian.locator('.byz-rubric').first().isVisible(),false);
+ // A different user-owned Ukrainian PDF may not have the Edmonton page
+ // count; generic prayer detection must still produce the same UI.
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  LiturgyReader.get=async id=>({id,name:'ukrainian-other.pdf',format:'pdf',pages:1,page:1,updated:101,blob:new Blob()});
+  LiturgyReader.load=async()=>({numPages:1,getPage:async()=>({
+   getTextContent:async()=>({items:[
+    {str:'The Divine Liturgy',transform:[1,0,0,12,20,700]},
+    {str:'PRIEST: Blessed is the Kingdom. Fixture generic Ukrainian PDF.',transform:[1,0,0,12,20,670]},
+    {str:'ALL: Fixture generic response.',transform:[1,0,0,12,20,630]}
+   ]})
+  }),destroy:async()=>{}});
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ assert.match(await ukrainian.innerText(),/Fixture generic Ukrainian PDF/);
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'generic Ukrainian PDF uses continuous text');
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };
