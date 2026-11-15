@@ -16,3 +16,5 @@ Eight original, concise source-backed biographies (50 words maximum) have been a
 Full combined feast titles remain in Calendar even when Today shows a short card about the first named saint/archangel. Source dates follow the Roman calendar and any higher Sunday precedence; 2027 September 5 is a Sunday, so the optional Teresa memorial is not promoted.
 
 No separate Saint of the Day card is generated for the Nativity of Mary (Sep 8), the Exaltation of the Cross (Sep 14), or Our Lady of Sorrows (Sep 15) because they are liturgical feasts, not biographies of a different saint.
+
+**Optional memorial note:** The September 5 commemoration of Saint Teresa of Calcutta is an *optional memorial*. Ora's default Roman setting retains the weekday as the primary Liturgical Day and lists Teresa under the available commemorations. Its biography record is prepared but is not shown in the primary Today saint card unless an optional-observance selection feature is implemented. On Sunday September 5, 2027 it is outranked entirely. This follows the GIRM 355 choice rather than silently deciding an optional observance on the user's behalf.

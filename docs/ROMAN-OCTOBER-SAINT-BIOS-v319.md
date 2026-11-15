@@ -12,6 +12,6 @@ Seven short original biographies (each under 50 words) extend Roman coverage thr
 | Oct 18 | Luke the Evangelist | https://www.franciscanmedia.org/saint-of-the-day/saint-luke/ |
 | Oct 28 | Simon and Jude, primary card Simon | https://www.franciscanmedia.org/saint-of-the-day/saints-simon-and-jude/ |
 
-October 9 has multiple **distinct** optional memorials, including Denis, John Leonardi and (since 2026) John Henry Newman. Ora's present default ordering selects Denis as the primary title, but Calendar preserves the other options. The short card does not pretend all options are celebrated at once.
+October 9 has multiple **distinct** optional memorials, including Denis, John Leonardi and (since 2026) John Henry Newman. Ora currently defaults to the **weekday** on ordinary weekdays with optional memorials and lists Denis, John Leonardi, and John Henry Newman as available options in Calendar. A Denis biography record is prepared, but the primary Today saint card does not activate it without an explicit observance choice. The app does not pretend any option was selected.
 
 The Denis biography distinguishes uncertain historical details from later traditions. October 17, 2027 is a Sunday, so the Roman card does not override it with the optional Ignatius memorial. Liturgical titles, rank and prayers remain unchanged.

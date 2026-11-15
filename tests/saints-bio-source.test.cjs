@@ -606,7 +606,7 @@ test('Roman September saints match their appointments, combined feasts, and Sund
   const bio=row.match(/bio: "([^"]+)"/);
   assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
   assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
-    .some(title=>title.includes(name)),md+' must be appointed as the primary feast in some year');
+    .some(title=>title.includes(name)) || md==='09-05',md+' is primary except for its explicitly optional memorial');
  }
  assert.doesNotMatch(L.roman(new Date('2027-09-05T00:00:00Z')).title,/Teresa of Calcutta/,
   'Sunday displaces the optional memorial');
@@ -627,14 +627,20 @@ test('Roman October biographies follow primary feast precedence and preserve oth
   const bio=row.match(/bio: "([^"]+)"/);
   assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
   assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
-    .some(title=>title.includes(name)),md+' must be primarily appointed in one of 2025-2036');
+    .some(title=>title.includes(name)) || md==='10-09',md+' is primary except for its explicitly optional memorial');
  }
  assert.doesNotMatch(L.roman(new Date('2027-10-17T00:00:00Z')).title,/Ignatius/,
   'Sunday in Ordinary Time displaces Ignatius of Antioch');
  assert.match(L.roman(new Date('2027-10-18T00:00:00Z')).title,/Saint Luke/);
  assert.match(L.roman(new Date('2027-10-28T00:00:00Z')).title,/Simon and Jude/);
  const opts=L.roman(new Date('2027-10-09T00:00:00Z'));
- assert.match(opts.title,/Denis/);
- assert.ok(opts.also.some(x=>/John Leonardi|John Henry Newman/.test(x.title)),
-  'Other October 9 optional memorials remain listed');
+ assert.doesNotMatch(opts.title,/Denis|John Leonardi|John Henry Newman/,
+  'Unchosen optional memorials must not replace the weekday');
+ for(const saint of ['Denis','John Leonardi','John Henry Newman']){
+  assert.ok(opts.also.some(x=>x.title.includes(saint)&&/Optional commemoration/.test(x.note)),
+   'Calendar must list the choice of '+saint+' without auto-selecting it');
+ }
+ const teresa=L.roman(new Date('2026-09-05T00:00:00Z'));
+ assert.doesNotMatch(teresa.title,/Teresa of Calcutta/);
+ assert.ok(teresa.also.some(x=>/Teresa of Calcutta/.test(x.title)&&/Optional commemoration/.test(x.note)));
 });
