@@ -252,5 +252,16 @@ module.exports=async(page,base,artifacts,violations)=>{
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated propers fit mobile width');
  }
  await page.setViewportSize({width:390,height:844});
+ // Preserve the baseline church for subsequent browser suites. The next
+ // reader test expects the Ukrainian (non-prefixed) service-book slots.
+ await page.evaluate(()=>{
+   const settings=JSON.parse(localStorage.getItem('ora.settings'));
+   settings.byzChurch='ukrainian';
+   settings.byzLiturgyChurch='ukrainian';
+   localStorage.setItem('ora.settings',JSON.stringify(settings));
+ });
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ assert.match(await page.locator('.simple-liturgy-title').innerText(),/Twenty-fifth Sunday after Pentecost/i);
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };
