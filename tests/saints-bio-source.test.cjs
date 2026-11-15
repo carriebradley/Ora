@@ -22,3 +22,9 @@ test('November 16-20 source-backed Byzantine biography set and correct precedenc
  assert.match(app,/Commemorated in the selected liturgical calendar/);
  assert.match(app,/saint\.source \? /);
 });
+
+test('Marian feast titles alone do not create a Saint of the Day biography',()=>{
+ assert.match(app,/const marianTitle = \/.*mother of god.*theotokos.*virgin mary.*blessed virgin.*our lady/);
+ assert.match(app,/const namedSaint =/);
+ assert.match(app,/!marianTitle\.test\(item\) \|\| namedSaint\.test\(item\)/);
+});

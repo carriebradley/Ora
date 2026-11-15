@@ -1095,7 +1095,12 @@
       ? byzantineCommemorations(displayTitle(item))
       : westernCommemorations(item));
     const recognized = /\b(?:saint|saints|st\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist|prophet|venerable|blessed|father|mother)\b/i;
-    const primary = commemorations.find(item => recognized.test(item)) || '';
+    // Marian feasts belong on the Liturgical Day card; they are not individual
+    // saint biographies. Retain separately named saints (e.g. Saint Anna).
+    const marianTitle = /\\b(?:mother of god|theotokos|virgin mary|blessed virgin|our lady)\\b/i;
+    const namedSaint = /\\b(?:saint|saints|st\\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|evangelist|prophet|venerable)\\b/i;
+    const primary = commemorations.find(item =>
+      recognized.test(item) && (!marianTitle.test(item) || namedSaint.test(item))) || '';
     if (!entry && !primary) return '';
     const saint = entry || {
       name: primary,
@@ -1825,7 +1830,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v283';
+  const APP_BUILD = 'ora-v284';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
