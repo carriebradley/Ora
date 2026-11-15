@@ -1080,6 +1080,48 @@
       bio: 'Andrew, a fisherman and brother of Saint Peter, was among the first to follow Jesus and brought Peter to meet him (John 1:35–42). Christian tradition remembers his missionary preaching and martyrdom.',
       source: 'https://www.oca.org/saints/lives/2026/11/30/103450-apostle-andrew-the-holy-and-all-praised-first-called'
     },
+    '12-01': {
+      match: /Nahum/i,
+      name: 'Holy Prophet Nahum',
+      meta: 'Seventh century BC · Old Testament prophet',
+      bio: 'Nahum is one of the Twelve Minor Prophets. The biblical book bearing his name announces the downfall of Nineveh and condemns oppression and cruelty. Few reliable details about his personal life are known.',
+      source: 'https://www.oca.org/saints/lives/2026/12/01/103452-prophet-nahum'
+    },
+    '12-02': {
+      match: /Habakkuk|Abbacum|Avakkum/i,
+      name: 'Holy Prophet Habakkuk',
+      meta: 'Old Testament · One of the Twelve Minor Prophets',
+      bio: 'Habakkuk wrestles with the problem of injustice and hears God’s call to live by faith. His book ends with a prayer of trust despite suffering and uncertainty.',
+      source: 'https://www.oca.org/saints/lives/2026/12/02/103455-prophet-habakkuk'
+    },
+    '12-03': {
+      match: /Zephaniah|Sophonias/i,
+      name: 'Holy Prophet Zephaniah',
+      meta: 'Seventh century BC · Old Testament prophet',
+      bio: 'Zephaniah prophesied during the reign of King Josiah of Judah. His book warns against injustice and idolatry, calls the people to repentance, and promises that God will restore the faithful.',
+      source: 'https://www.oca.org/saints/lives/2026/12/03/103465-prophet-zephaniah'
+    },
+    '12-04': {
+      match: /Barbara/i,
+      name: 'Holy Great-Martyr Barbara',
+      meta: 'Early Christian martyr · Heliopolis, according to tradition',
+      bio: 'Barbara is remembered as a young Christian who refused to renounce her faith and suffered martyrdom. Details of her life come mainly from later tradition, but her veneration is widespread in Eastern and Western Christianity.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/04'
+    },
+    '12-05': {
+      match: /Sabbas|Sabas|Savva/i,
+      name: 'Saint Sabbas the Sanctified',
+      meta: '439–532 · Monk and Founder',
+      bio: 'Born in Cappadocia, Sabbas became a monk and later founded the Great Lavra in the Judean desert. His community helped shape Palestinian monastic life and the liturgical traditions of the Eastern Churches.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/05'
+    },
+    '12-06': {
+      match: /Nicholas/i,
+      name: 'Saint Nicholas the Wonderworker',
+      meta: 'Fourth century · Bishop of Myra',
+      bio: 'Nicholas was bishop of Myra in Lycia. Remembered for generosity to people in poverty and for defending those treated unjustly, he became one of Christianity’s most beloved saints and a patron of travelers.',
+      source: 'https://www.oca.org/saints/lives/2026/12/06/103484-saint-nicholas-the-wonderworker-archbishop-of-myra-in-lycia'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1913,7 +1955,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v291';
+  const APP_BUILD = 'ora-v292';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

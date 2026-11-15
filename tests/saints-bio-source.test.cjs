@@ -110,3 +110,24 @@ test('Nov 26-30 biographies match Ukrainian and Melkite appointment titles',()=>
   }
  }
 });
+
+test('December 1-6 primary Byzantine saints match both Catholic typika',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js');
+ const marker='const SHARED_BYZANTINE_SAINT_BIOS = ';
+ const begin=app.indexOf(marker),end=app.indexOf('\n  };',begin);
+ assert.ok(begin>=0&&end>begin);
+ const entries=vm.runInNewContext('('+app.slice(begin+marker.length,end+4)+')');
+ const names={'12-01':'Nahum','12-02':'Habakkuk','12-03':'Zephaniah',
+  '12-04':'Barbara','12-05':'Sabbas','12-06':'Nicholas'};
+ for(const [md,name] of Object.entries(names)){
+  const entry=entries[md];
+  assert.ok(entry&&entry.name.includes(name),md);
+  assert.ok(entry.source.startsWith('https://www.oca.org/saints/'),md);
+  assert.ok(entry.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite']){
+   const day=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+   const titles=[day.title,...(day.also||[]).map(item=>item.title)];
+   assert.ok(titles.some(title=>entry.match.test(title)),church+' '+md+': '+titles.join(' / '));
+  }
+ }
+});
