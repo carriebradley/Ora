@@ -270,6 +270,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-22');
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  daily=page.locator('.byz-liturgy-variations');
+ await daily.locator('summary').click();
  await daily.locator('.byz-proper-group p').first().waitFor();
  assert.notEqual(await daily.locator('.byz-proper-group p').first().innerText(),firstSundayHymn,
   'Ukrainian appointed hymns change with the selected Sunday');
