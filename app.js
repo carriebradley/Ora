@@ -1084,16 +1084,19 @@
     const tradition = S.rite === 'byz' ? S.byzChurch : S.rite;
     const calendar = S.rite === 'byz' ? v.byz : S.rite === 'sarum' ? v.sarum : v.roman;
     const title = String(calendar?.title || '');
+    // A feast's primary title may be seasonal, with the commemorated saints
+    // stored under calendar.also (notably in the Melkite monthly typikon).
+    const titles = [title, ...(calendar?.also || []).map(item => String(item?.title || ''))];
     const listed = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
-    const entry = listed && listed.match.test(title) ? listed : null;
-    // If a verified biography is not yet available, retain the card for a
-    // named saint without inventing biographical facts or an image.
-    const commemorations = S.rite === 'byz'
-      ? byzantineCommemorations(displayTitle(title))
-      : westernCommemorations(title);
-    const primary = commemorations[0] || '';
-    const recognized = /\b(?:saint|saints|st\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist)\b/i.test(primary);
-    if (!entry && !recognized) return '';
+    const entry = listed && titles.some(item => listed.match.test(item)) ? listed : null;
+    // Prefer the first actual saint over an unrelated Sunday or pre-feast
+    // heading. Never invent facts when no sourced biography is present.
+    const commemorations = titles.flatMap(item => S.rite === 'byz'
+      ? byzantineCommemorations(displayTitle(item))
+      : westernCommemorations(item));
+    const recognized = /\b(?:saint|saints|st\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist|prophet|venerable|blessed|father|mother)\b/i;
+    const primary = commemorations.find(item => recognized.test(item)) || '';
+    if (!entry && !primary) return '';
     const saint = entry || {
       name: primary,
       meta: 'Commemorated in the selected liturgical calendar',
