@@ -1122,6 +1122,34 @@
       bio: 'Nicholas was bishop of Myra in Lycia. Remembered for generosity to people in poverty and for defending those treated unjustly, he became one of Christianity’s most beloved saints and a patron of travelers.',
       source: 'https://www.oca.org/saints/lives/2026/12/06/103484-saint-nicholas-the-wonderworker-archbishop-of-myra-in-lycia'
     },
+    '12-07': {
+      match: /Ambrose/i,
+      name: 'Saint Ambrose of Milan',
+      meta: 'c. 340–397 · Bishop and Church Father',
+      bio: 'Ambrose was governor of Milan before becoming its bishop in 374. Renowned for preaching, defending Nicene Christianity, and caring for the poor, he also helped guide Saint Augustine toward baptism.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/07'
+    },
+    '12-08': {
+      match: /Patapius|Patapios/i,
+      name: 'Saint Patapius of Thebes',
+      meta: 'Early Byzantine period · Monk and Ascetic',
+      bio: 'Patapius was an Egyptian monk remembered for prayer, hospitality, and counsel to those seeking spiritual help. According to tradition, he later lived near Constantinople, where people sought his prayers for healing.',
+      source: 'https://www.oca.org/saints/lives/2026/12/08/103494-venerable-patapius-of-thebes'
+    },
+    '12-09': {
+      match: /\bAnn(?:a)?\b/i,
+      name: 'Saint Anna, Mother of the Theotokos',
+      meta: 'Mother of the Virgin Mary · Honored in Church tradition',
+      bio: 'According to ancient Christian tradition, Anna and her husband Joachim prayed for a child for many years. She became the mother of the Virgin Mary; the Byzantine Churches honor the conception of Mary by Saint Anna on December 9.',
+      source: 'https://www.oca.org/saints/lives/1952/12/09/103506-conception-of-the-most-holy-theotokos-by-saint-anna'
+    },
+    '12-10': {
+      match: /Menas|Mena\b/i,
+      name: 'Holy Martyr Menas of Alexandria',
+      meta: 'Early fourth century · Martyr',
+      bio: 'According to tradition, Menas was a Roman official who came to profess Christianity in Alexandria. He was martyred with Hermogenes and Eugraphus during persecution under Emperor Maximian.',
+      source: 'https://www.oca.org/saints/lives/2026/12/10/103511-martyrs-menas-hermogenes-and-eugraphus-of-alexandria'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1955,7 +1983,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v292';
+  const APP_BUILD = 'ora-v293';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

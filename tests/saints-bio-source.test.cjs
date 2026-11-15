@@ -131,3 +131,22 @@ test('December 1-6 primary Byzantine saints match both Catholic typika',()=>{
   }
  }
 });
+
+test('December 7-10 shared Byzantine cards match the appointed saint in both churches',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js');
+ const marker='const SHARED_BYZANTINE_SAINT_BIOS = ';
+ const start=app.indexOf(marker),end=app.indexOf('\n  };',start);
+ assert.ok(start>=0&&end>start);
+ const bios=vm.runInNewContext('('+app.slice(start+marker.length,end+4)+')');
+ for(const [md,name] of Object.entries({'12-07':'Ambrose','12-08':'Patapius','12-09':'Anna','12-10':'Menas'})){
+  const entry=bios[md];
+  assert.ok(entry&&entry.name.includes(name),md);
+  assert.ok(entry.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite']){
+   const c=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+   const titles=[c.title,...(c.also||[]).map(item=>item.title)];
+   assert.ok(titles.some(t=>entry.match.test(t)),church+' '+md+' titles: '+titles.join(' | '));
+  }
+ }
+ assert.ok(!bios['12-09'].match.test('Annunciation of the Lord'),'Anna is not Annunciation');
+});
