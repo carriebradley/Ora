@@ -12,7 +12,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - run: node --test --test-isolation=none tests/*.test.cjs
+      - name: Node regression suite
+        shell: bash
+        run: |
+          set -o pipefail
+          node --test --test-isolation=none tests/*.test.cjs 2>&1 | tee /tmp/ora-test-log.txt
       - run: npm install --prefix /tmp/ora-tools playwright@1.56.1 axe-core@4.11.0
       - name: Select browser
         run: |
@@ -39,6 +43,9 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            const testPath = '/tmp/ora-test-log.txt';
+            const testText = fs.existsSync(testPath) ? fs.readFileSync(testPath, 'utf8').slice(-22000) : 'Node regression suite did not run.';
+            await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Node regression diagnostics', status: 'completed', conclusion: 'neutral', output: {title: 'Ora Node test output', summary: '\`\`\`text\\n' + testText + '\\n\`\`\`'}});
             const path = '/tmp/ora-browser-audit/browser-log.txt';
             const text = fs.existsSync(path) ? fs.readFileSync(path, 'utf8').slice(-20000) : 'Browser step did not start.';
             await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Browser diagnostics', status: 'completed', conclusion: 'neutral', output: {title: 'Ora browser audit output', summary: '```text\n' + text + '\n```'}});
