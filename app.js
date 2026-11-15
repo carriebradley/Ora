@@ -1384,7 +1384,6 @@
       ...WESTERN_SHARED_SAINT_BIOS,
       '11-08': { match: /Four Crowned Martyrs/i, name: "The Four Crowned Martyrs", meta: "Early fourth century · Martyrs of Roman tradition", bio: "An ancient group of martyrs was honored at Rome under the name Four Crowned Martyrs. Their exact identities are uncertain; later accounts associate their commemoration with Christian stonecutters who refused an idolatrous commission.", source: "https://www.newadvent.org/cathen/06163a.htm" },
       '11-09': { match: /Theodore/i, name: "Saint Theodore of Amasea", meta: "d. c. 306 · Soldier and Martyr", bio: "Theodore, a Christian soldier at Amasea in Asia Minor, was martyred during the persecution of the early fourth century. Known as Theodore Tiro, he is honored in both Eastern and Western Christian traditions.", source: "https://www.newadvent.org/cathen/14573a.htm" },
-      '11-29': { match: /Saturninus.*Sisinnius/i, name: "Saints Saturninus and Sisinnius", meta: "Early fourth century · Martyrs at Rome", bio: "Saturninus and the deacon Sisinnius are remembered as martyrs at Rome under Emperor Maximian. Their commemoration is distinct from Saturninus, the bishop and martyr of Toulouse.", source: "https://novenaregina.com/lives-of-the-saints/ss-saturninus-and-sisinnius-of-rome" },
       '12-21': { match: /Thomas,? Apostle/i, name: "Saint Thomas the Apostle", meta: "First century · One of the Twelve Apostles", bio: "Thomas first doubted the news of Jesus’ Resurrection, then confessed the risen Christ as his Lord and God. Ancient Christian tradition associates his missionary preaching with India.", source: "https://www.newadvent.org/cathen/14658b.htm" },
       '11-03': { match: /Malachy(?: of Armagh)?/i, name: "Saint Malachy of Armagh", meta: "1094–1148 · Archbishop and Reformer", bio: "Malachy worked to reform Church life in Ireland and helped establish the Cistercian abbey at Mellifont. He died at Clairvaux in 1148 while visiting Saint Bernard.", source: "https://www.newadvent.org/cathen/09565a.htm" },
       '11-06': { match: /Leonard/i, name: "Saint Leonard of Noblac", meta: "Early medieval · Venerated as patron of prisoners", bio: "Leonard has long been honored at Noblac near Limoges, particularly as a patron of prisoners. The familiar accounts of his life were written centuries later and cannot be securely verified.", source: "https://www.newadvent.org/cathen/09178b.htm" },
@@ -2172,7 +2171,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v301';
+  const APP_BUILD = 'ora-v302';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

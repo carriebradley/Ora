@@ -325,7 +325,6 @@ test('Traditional group martyrs and St Thomas retain source-backed short biograp
  const rows=[
   ['11-08','The Four Crowned Martyrs','Four Crowned Martyrs'],
   ['11-09','Saint Theodore of Amasea','Theodore'],
-  ['11-29','Saints Saturninus and Sisinnius','Saturninus'],
   ['12-21','Saint Thomas the Apostle','Thomas']
  ];
  for(const [md,name,calendarName] of rows){
@@ -344,5 +343,14 @@ test('Traditional group martyrs and St Thomas retain source-backed short biograp
   assert.ok(found,'At least one Sarum year must primarily appoint '+calendarName+' on '+md);
  }
  assert.ok(section.includes('Their exact identities are uncertain'));
- assert.ok(section.includes('distinct from Saturninus, the bishop and martyr of Toulouse'));
+});
+
+test('Outranked Sarum Saturninus and Sisinnius remain Calendar-only in Advent',()=>{
+ const S=require('../sarum.js');
+ const section=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
+ assert.ok(!section.includes("'11-29':"),'There is no unreachable saint-specific Today biography');
+ for(let year=2025;year<=2036;year++){
+  const day=S.sarum(new Date(year+'-11-29T00:00:00Z'));
+  assert.doesNotMatch(day.title,/Saturninus|Sisinnius/i,'Advent takes precedence '+year);
+ }
 });
