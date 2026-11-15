@@ -590,3 +590,27 @@ test('Roman August saints have sourced short cards and respect Sunday precedence
  assert.match(L.roman(new Date('2027-08-10T00:00:00Z')).title,/Lawrence/);
  assert.ok(roman.includes('this identification is not established with certainty'));
 });
+
+test('Roman September saints match their appointments, combined feasts, and Sunday precedence',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const appointed={
+  '09-03':'Gregory the Great','09-05':'Teresa of Calcutta','09-09':'Peter Claver',
+  '09-16':'Cornelius','09-21':'Matthew','09-27':'Vincent de Paul',
+  '09-29':'Michael','09-30':'Jerome'
+ };
+ for(const [md,name] of Object.entries(appointed)){
+  const row=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(row.startsWith("'"+md+"':"),md);
+  assert.ok(row.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const bio=row.match(/bio: "([^"]+)"/);
+  assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
+  assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
+    .some(title=>title.includes(name)),md+' must be appointed as the primary feast in some year');
+ }
+ assert.doesNotMatch(L.roman(new Date('2027-09-05T00:00:00Z')).title,/Teresa of Calcutta/,
+  'Sunday displaces the optional memorial');
+ assert.match(L.roman(new Date('2027-09-29T00:00:00Z')).title,/Michael, Gabriel and Raphael/);
+ assert.ok(roman.includes('name: "Pope Saint Cornelius"'));
+ assert.ok(roman.includes('name: "Saint Michael the Archangel"'));
+});
