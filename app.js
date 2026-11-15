@@ -1241,6 +1241,20 @@
       bio: 'Joseph, of the house of David, cared for Mary and the infant Jesus. The Gospel of Matthew recounts his obedience to the angel’s warnings and the family’s flight into Egypt. Byzantine Christians commemorate him with David and James after Christmas.',
       source: 'https://www.oca.org/saints/all-lives/2026/12/27'
     },
+    '12-28': {
+      match: /Martyrs.*Nicomedia|Martyrs.*burned.*Nicomedia/i,
+      name: 'Holy Martyrs of Nicomedia',
+      meta: 'Early fourth century · Martyrs',
+      bio: 'Christian tradition remembers believers who perished when a church was set on fire during persecution at Nicomedia. Historical and calendar sources differ on the number of martyrs, but honor their witness to Christ.',
+      source: 'https://www.oca.org/saints/lives/2026/12/28/103664-20000-martyrs-of-nicomedia'
+    },
+    '12-29': {
+      match: /Holy Children|Holy Innocents|Innocents/i,
+      name: 'Holy Innocents of Bethlehem',
+      meta: 'First century · Children martyred under Herod',
+      bio: 'The Gospel of Matthew recounts King Herod ordering the killing of young boys in Bethlehem in his attempt to destroy the newborn Jesus. The Church remembers these children as the Holy Innocents.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/29'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1259,12 +1273,23 @@
     bio: 'Clement was an early bishop of Rome, remembered among the Apostolic Fathers. His letter to the Corinthians urged peace and unity in the Church; later tradition honors him as a martyr.',
     source: 'https://www.vatican.va/content/benedict-xvi/en/audiences/2007/documents/hf_ben-xvi_aud_20070307.html'
   };
+
+  // The Catholic calendars differ by one day: Melkite December 30 and
+  // Ukrainian December 31. Do not infer missing Edmonton December 30 data.
+  const BYZANTINE_BIO_MELANIA = {
+    match: /Melania|Melany/i,
+    name: 'Saint Melania the Younger',
+    meta: 'c. 383–439 · Roman Ascetic',
+    bio: 'Melania and her husband Apinianus gave away much of their wealth to support people in poverty and religious communities. She later embraced monastic life in the Holy Land and is remembered for charity and prayer.',
+    source: 'https://www.oca.org/saints/all-lives/2026/12/31'
+  };
   const TODAY_SAINT_BIOS = {
     roman: {
       '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     ukrainian: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-31': BYZANTINE_BIO_MELANIA,
       '12-26': {
         match: /Euthymius/i,
         name: 'Holy Hieromartyr Euthymius of Sardis',
@@ -1307,6 +1332,7 @@
     },
     melkite: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-30': BYZANTINE_BIO_MELANIA,
       '12-19': SHARED_BYZANTINE_SAINT_BIOS['12-20'],
       '12-15': {
         match: /Eleutherius/i,
@@ -2103,7 +2129,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v296';
+  const APP_BUILD = 'ora-v297';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

@@ -229,3 +229,30 @@ test('Christmas week biographies do not turn Nativity or Marian feast into a mad
  const day=L.byzantine(new Date('2026-12-26T00:00:00Z'),{byzChurch:'ukrainian',byzSource:'edmonton'});
  assert.ok([day.title,...day.also.map(e=>e.title)].some(t=>/Euthymius/.test(t)));
 });
+
+test('End of December retains martyrs, Innocents, and differing Melania dates',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js');
+ const marker='const SHARED_BYZANTINE_SAINT_BIOS = ',a=app.indexOf(marker),b=app.indexOf('\n  };',a);
+ const shared=vm.runInNewContext('('+app.slice(a+marker.length,b+4)+')');
+ for(const md of ['12-28','12-29']){
+  const bio=shared[md];
+  assert.ok(bio,md);
+  assert.ok(bio.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite']){
+   const c=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+   assert.ok([c.title,...(c.also||[]).map(e=>e.title)].some(title=>bio.match.test(title)),church+' '+md);
+  }
+ }
+ assert.ok(!/\b(?:2000|20,000)\b/.test(shared['12-28'].bio));
+ const segment=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const ua=segment.slice(segment.indexOf('    ukrainian: {'),segment.indexOf('    melkite: {'));
+ const me=segment.slice(segment.indexOf('    melkite: {'),segment.indexOf('    sarum: {'));
+ assert.ok(ua.includes("'12-31': BYZANTINE_BIO_MELANIA"));
+ assert.ok(!ua.includes("'12-30':"),'Edmonton December 30 date is unverified');
+ assert.ok(me.includes("'12-30': BYZANTINE_BIO_MELANIA"));
+ assert.ok(!me.includes("'12-31':"),'Melkite leave-taking does not invent named saint');
+ const ua31=L.byzantine(new Date('2026-12-31T00:00:00Z'),{byzChurch:'ukrainian',byzSource:'edmonton'});
+ const me30=L.byzantine(new Date('2026-12-30T00:00:00Z'),{byzChurch:'melkite'});
+ assert.match(ua31.title,/Melania/);
+ assert.match(me30.title,/Melany/);
+});
