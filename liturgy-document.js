@@ -1,0 +1,110 @@
+/* Compose a continuous, date-aware service from a saved local prayer book.
+ * Ordinary prayers are immutable. Dated hymns are inserted only between
+ * unambiguous source headings; never guess or replace private PDF wording. */
+(function(root,factory){
+  if(typeof module==='object'&&module.exports)module.exports=factory();
+  else root.LiturgyDocument=factory();
+})(typeof self!=='undefined'?self:this,function(){
+  'use strict';
+  const labels={
+    troparia:'Troparia and Kontakia',
+    prokeimenon:'Prokeimenon',
+    alleluia:'Alleluia',
+    communion:'Communion Hymn'
+  };
+  const rules={
+    troparia:{
+      after:/^(?:Little Entrance|Entrance with the Gospel)$/i,
+      before:/^Trisagion(?: Hymn| Prayer)?$/i,
+      conflict:/^(?:Troparia(?:\s*(?:and|&)\s*Kontakia)?|Troparion(?:s)?(?:\s+of\b.*)?|Kontakion(?:s)?(?:\s+of\b.*)?)$/i
+    },
+    prokeimenon:{
+      after:/^Trisagion(?: Hymn| Prayer)?$/i,
+      before:/^(?:Epistle|Epistle Reading|Apostle|Apostolic Reading)$/i,
+      conflict:/^(?:Prokeimenon|Prokimenon)(?:\b.*)?$/i
+    },
+    alleluia:{
+      after:/^(?:Epistle|Epistle Reading|Apostle|Apostolic Reading)$/i,
+      before:/^(?:Gospel|Gospel Reading)$/i,
+      conflict:/^Alleluia(?:\b.*)?$/i
+    },
+    communion:{
+      after:/^(?:One is Holy|Prayer Before Holy Communion)$/i,
+      before:/^(?:Holy Communion|Distribution of Holy Communion)$/i,
+      conflict:/^(?:Communion Hymn|Communion Verse|Kinonikon)(?:\b.*)?$/i
+    }
+  };
+  const isoPattern=/^2026-\d{2}-\d{2}$/;
+  function validRecord(record,{church,iso,id,seasonal=false}={}){
+    if(seasonal||id!=='chrysostom'&&id!=='melkite-chrysostom')return false;
+    if(!record||record.church!==church||!isoPattern.test(iso||''))return false;
+    if(church==='ukrainian')
+      return record.source==='https://eeparchy.com/calendar/'+iso;
+    if(church==='melkite')
+      return record.source==='https://melkite.org/liturgical-resources' &&
+        record.typicon==='November-2026.docx' && iso.startsWith('2026-11-');
+    return false;
+  }
+  function headings(sections){
+    const found=[];
+    let n=0;
+    sections.forEach((part,sectionIndex)=>{
+      if(part.alternative)return;
+      if(part.heading)found.push({text:String(part.heading).trim(),sectionIndex,lineIndex:-1,n:n++});
+      (part.lines||[]).forEach((line,lineIndex)=>{
+        found.push({text:String(line).trim(),sectionIndex,lineIndex,n:n++});
+      });
+    });
+    return found;
+  }
+  function safeLines(lines){
+    return Array.isArray(lines)&&lines.length>0&&lines.length<=40&&
+      lines.every(line=>typeof line==='string'&&line.trim().length>0&&line.length<=1200&&
+        !/[\u0400-\u052f\u0600-\u06ff]/u.test(line));
+  }
+  function compose(sections,record,context){
+    const original=(sections||[]).map(part=>({...part,lines:[...(part.lines||[])]}));
+    const remaining=Object.keys(labels).filter(key=>safeLines(record?.groups?.[key]));
+    if(!validRecord(record,context))return {sections:original,placed:[],remaining:[]};
+    const points=headings(original),insertions=new Map(),placed=[];
+    for(const key of Object.keys(rules)){
+      const lines=record?.groups?.[key];
+      if(!safeLines(lines))continue;
+      const rule=rules[key];
+      const beginnings=points.filter(p=>rule.after.test(p.text));
+      const endings=points.filter(p=>rule.before.test(p.text));
+      if(beginnings.length!==1||endings.length!==1)continue;
+      const start=beginnings[0],finish=endings[0];
+      if(start.n>=finish.n||finish.n-start.n>120)continue;
+      const conflict=points.some(p=>p.n>start.n&&p.n<finish.n&&rule.conflict.test(p.text));
+      if(conflict)continue;
+      // The source may not have an explicit place for a given hymn. In that
+      // case preserve the original and leave that hymn in the daily panel.
+      const item={dailyProper:key,heading:labels[key],lines:lines.slice()};
+      const location=finish.sectionIndex+'|'+finish.lineIndex;
+      if(!insertions.has(location))insertions.set(location,[]);
+      insertions.get(location).push(item);
+      placed.push(key);
+    }
+    if(!placed.length)return {sections:original,placed,remaining};
+    const out=[];
+    for(let i=0;i<original.length;i++){
+      const part=original[i];
+      const before=insertions.get(i+'|-1');
+      if(before)out.push(...before);
+      let heading=part.heading,buffer=[];
+      const flush=()=>{
+        if(heading||buffer.length)out.push({...part,heading,lines:buffer});
+        buffer=[];heading=null;
+      };
+      for(let line=0;line<part.lines.length;line++){
+        const at=insertions.get(i+'|'+line);
+        if(at){flush();out.push(...at);}
+        buffer.push(part.lines[line]);
+      }
+      flush();
+    }
+    return {sections:out,placed,remaining:remaining.filter(key=>!placed.includes(key))};
+  }
+  return {compose,labels,validRecord};
+});

@@ -1,0 +1,42 @@
+name: Import official Melkite November 2026 hymns
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - tools/import_melkite_propers.py
+      - tests/test_melkite_propers.py
+      - .github/workflows/import-melkite-propers.yml
+permissions:
+  contents: write
+concurrency:
+  group: ora-melkite-propers-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install document reader
+        run: pip install python-docx
+      - name: Test DOCX parser with fictional data
+        run: python -m unittest discover -s tests -p test_melkite_propers.py
+      - name: Extract English dated hymns from Newton typicon
+        run: python tools/import_melkite_propers.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify dated data and project
+        run: node --test --test-isolation=none tests/*.test.cjs
+      - name: Commit extracted hymns
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add melkite-propers-2026-11.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Import verified dated Melkite hymn texts from Newton typicon'
+            git push
+          fi
