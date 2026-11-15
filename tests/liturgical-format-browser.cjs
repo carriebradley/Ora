@@ -220,5 +220,37 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await ukrainian.innerText(),/No selectable English text was found/i);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'scanned PDF does not return inline page buttons');
 
+ // The daily Liturgy variations must update for the chosen date and church.
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ let daily=page.locator('.byz-liturgy-variations');
+ assert.equal(await daily.count(),1);
+ assert.match(await daily.locator('summary').innerText(),/Today.s changing parts.*Tone 8/);
+ await daily.locator('summary').click();
+ assert.match(await daily.innerText(),/Ephesians 4:1-6/,'Ukrainian Edmonton Epistle');
+ assert.match(await daily.innerText(),/Luke 10:25-37/,'Ukrainian Edmonton Gospel');
+ assert.equal(await daily.locator('a').getAttribute('href'),'https://eeparchy.com/calendar/2026-11-15');
+ await page.evaluate(()=>{
+  const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='melkite';s.byzLiturgyChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));
+ });
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ daily=page.locator('.byz-liturgy-variations');
+ await daily.locator('summary').click();
+ assert.match(await daily.innerText(),/Ephesians 4:1-7/,'Melkite Newton Epistle differs from Edmonton');
+ assert.match(await daily.innerText(),/Luke 10:25-37/);
+ assert.doesNotMatch(await daily.innerText(),/Mark 16:9-20/,'Orthros Gospel must not show as Divine Liturgy Gospel');
+ assert.equal(await daily.locator('a').getAttribute('href'),'https://melkite.org/liturgical-resources');
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-22');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ daily=page.locator('.byz-liturgy-variations');
+ await daily.locator('summary').click();
+ assert.match(await daily.innerText(),/Ephesians 5:8-19/,'Melkite epistle updates on the next Sunday');
+ assert.match(await daily.innerText(),/Luke 12:16-22/);
+ for(const width of [320,390]){
+  await page.setViewportSize({width,height:844});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated propers fit mobile width');
+ }
+ await page.setViewportSize({width:390,height:844});
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };

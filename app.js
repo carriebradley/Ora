@@ -1632,6 +1632,37 @@
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
     return `<section class="card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
+  // The appointed variable prayers belong to the selected church's dated
+  // calendar. Keep them distinct from the ordinary service text stored
+  // privately on the phone. Never substitute another church's propers.
+  function byzLiturgyDailyChanges(iso,church,day,service){
+    const melkite=church==='melkite',dated=melkite?Melkite.entry(iso):Edmonton.entry(iso);
+    const readingDay=byzDay(iso,church);
+    const refs=(readingDay?.sets||[]).flatMap(group=>group.r||[]).filter(pair=>
+      /^(?:Epistle|Gospel|Apostle)$/i.test(pair[0]));
+    const source=melkite?'https://melkite.org/liturgical-resources':
+      (dated?.source||'https://eeparchy.com/calendar');
+    const sourceName=melkite?'Melkite Eparchy of Newton · calendar and typikon':
+      'Ukrainian Catholic Eparchy of Edmonton · dated calendar';
+    const note=service.verification==='source-conflict'
+      ?'The service appointment has a source conflict; consult the eparchy before selecting a book.'
+      :service.verification==='calculated'
+      ?'The service-book appointment is calculated, not independently verified against this date’s typikon.'
+      :service.verification==='unavailable'
+      ?'A verified service-book appointment is unavailable for this date.'
+      :'The service-book appointment follows the available liturgical source.';
+    const items=refs.map(([label,ref])=>'<div class="reading-heading">'+
+      '<span class="reading-label">'+esc(label)+'</span>'+
+      '<span class="reading-reference">'+esc(ref)+'</span></div>').join('');
+    return '<details class="byz-liturgy-variations">'+
+      '<summary>Today’s changing parts'+(day.tone?' · Tone '+Number(day.tone):'')+'</summary>'+
+      '<p class="muted">Your saved '+(melkite?'Melkite':'Ukrainian')+
+      ' service book supplies the ordinary prayers. Antiphons, troparia, kontakia, prokeimenon, Alleluia, Scripture readings and Communion hymns vary by Sunday, feast, and season. Ora lists available daily reading references; it does not substitute unverified hymns.</p>'+
+      (items||'<p class="muted">No verified Epistle or Gospel reference is bundled for this date.</p>')+
+      '<p class="muted">'+esc(dated?'Dated church calendar references.':'A dated church calendar is unavailable for this date.')+' '+esc(note)+'</p>'+
+      '<a class="btn sm" target="_blank" rel="noopener noreferrer" href="'+esc(source)+'">'+
+      esc(sourceName)+' · appointed propers</a></details>';
+  }
   function viewLiturgy() {
     const v=dayInfo(st.date);loadReadings(st.date);
     const byzantine=st.liturgyView==='byz';
@@ -1643,6 +1674,7 @@
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
       ${byzantine?`<p class="service-summary"><strong>${esc(service.title)}</strong></p>`:''}
+      ${byzantine?byzLiturgyDailyChanges(st.date,S.byzLiturgyChurch,day,service):''}
       ${reader}
       <button class="btn sm" data-act="goReadings" data-v="${byzantine?'byz':'roman'}">Open the day’s readings</button>
     </section>`;
@@ -2423,7 +2455,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v332';
+  const APP_BUILD = 'ora-v333';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
