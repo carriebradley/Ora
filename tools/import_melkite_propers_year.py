@@ -42,10 +42,11 @@ def paragraphs(doc):
     # Word paragraph order is kept. Do not interpret unpublished page layout.
     return [re.sub(r"\s+", " ", p.text or "").strip() for p in doc.paragraphs]
 
-def split_days(doc, month):
+def split_days(doc, month, quarantined=None):
     if month not in MONTHS: raise ValueError("Unknown source month")
     lines = paragraphs(doc)
     marks = []
+    invalid = set()
     for i, line in enumerate(lines):
         match = DATE_HEADING.match(line)
         if not match: continue
@@ -54,7 +55,13 @@ def split_days(doc, month):
             continue
         day = date(YEAR, MONTHS.index(month)+1, int(num))
         if WEEKDAYS[day.weekday()].lower() != weekday.lower():
-            raise ValueError("Conflicting source weekday for " + day.isoformat())
+            # Never attach a possibly mistyped heading's hymns to the date.
+            # Still use the boundary to prevent its prayers leaking into the
+            # preceding date. Disclose source conflicts in coverage metadata.
+            invalid.add(day.isoformat())
+            if quarantined is not None:
+                quarantined.append({"date":day.isoformat(),
+                    "printedWeekday":weekday,"actualWeekday":WEEKDAYS[day.weekday()]})
         if marks and marks[-1][1] == day.isoformat():
             raise ValueError("Repeated day heading: " + day.isoformat())
         marks.append((i, day.isoformat()))
@@ -64,12 +71,13 @@ def split_days(doc, month):
         raise ValueError("Non-adjacent repeated source day in " + month)
     for i,(begin,iso) in enumerate(marks):
         end = marks[i+1][0] if i+1 < len(marks) else len(lines)
-        yield iso, lines[begin:end]
+        if iso not in invalid:
+            yield iso, lines[begin:end]
 
-def extract_month(doc,month):
+def extract_month(doc,month,quarantined=None):
     records = {}
     dates = []
-    for iso, lines in split_days(doc,month):
+    for iso, lines in split_days(doc,month,quarantined=quarantined):
         dates.append(iso)
         # This importer is for dated Chrysostom hymns, not the Basil,
         # Presanctified, Vespers, Orthros or weekday service readings.
@@ -123,7 +131,8 @@ def assemble(fetch=fetch_month, november_baseline="melkite-propers-2026-11.json"
     all_days = {}
     coverage = {}
     for month in MONTHS:
-        month_days, seen = extract_month(fetch(month), month)
+        quarantined=[]
+        month_days, seen = extract_month(fetch(month), month, quarantined=quarantined)
         if month == "November":
             verify_november(month_days,november_baseline)
         if not month_days:
@@ -132,7 +141,7 @@ def assemble(fetch=fetch_month, november_baseline="melkite-propers-2026-11.json"
             raise ValueError("Duplicate dates between monthly documents")
         all_days.update(month_days)
         coverage[month] = {"headings":len(seen),"hymnDates":len(month_days),
-                           "source":document_url(month)}
+                           "source":document_url(month),"quarantined":quarantined}
     return {"schema":1,"year":YEAR,"source":INDEX,"coverage":coverage,
             "days":dict(sorted(all_days.items()))}
 

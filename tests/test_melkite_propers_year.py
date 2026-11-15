@@ -43,8 +43,19 @@ class MultiMonthTypikonTests(unittest.TestCase):
         self.assertNotIn("fictional service",str(b))
 
     def test_invalid_weekday_and_wrong_month_are_not_adopted(self):
-        with self.assertRaisesRegex(ValueError,"Conflicting source weekday"):
-            list(year.split_days(MockDocument(["Sunday, February 2, 2026"]),"February"))
+        flagged=[]
+        pairs=list(year.split_days(MockDocument([
+            "Sunday, February 1, 2026",
+            "PRIEST: First day's fictional words",
+            "Sunday, February 2, 2026",
+            "PRIEST: Wrong-weekday prayer must be quarantined",
+            "Sunday, February 8, 2026",
+            "PRIEST: Next valid day's fictional words"
+        ]),"February",quarantined=flagged))
+        self.assertEqual([d for d,_ in pairs],["2026-02-01","2026-02-08"])
+        self.assertNotIn("Wrong-weekday",str(pairs))
+        self.assertEqual(flagged[0]["date"],"2026-02-02")
+        self.assertEqual(flagged[0]["actualWeekday"],"Monday")
         with self.assertRaisesRegex(ValueError,"No dated January"):
             list(year.split_days(MockDocument(["Sunday, February 1, 2026"]),"January"))
 
