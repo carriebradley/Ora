@@ -1304,6 +1304,13 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '06-01': { match: /Justin,? Martyr/i, name: "Saint Justin Martyr", meta: "c. 100–c. 165 · Philosopher and Martyr", bio: "Justin studied Greek philosophy before becoming a Christian. He defended the faith in writings addressed to Roman authorities and explained Christian worship and belief to outsiders. He was executed in Rome for refusing to renounce Christ.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-justin-martyr/" },
+      '06-03': { match: /Charles Lwanga/i, name: "Saint Charles Lwanga", meta: "d. 1886 · Ugandan Martyr", bio: "Charles Lwanga served at the court of King Mwanga in Uganda. He supported younger Christian pages and helped them resist abuse and persecution. He was martyred at Namugongo and is commemorated with his companions.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-charles-lwanga-and-companions/" },
+      '06-11': { match: /Barnabas/i, name: "Saint Barnabas the Apostle", meta: "First century · Companion of Saint Paul", bio: "Barnabas, a Christian from Cyprus, supported Paul’s acceptance among the apostles and helped build the Church at Antioch. The Acts of the Apostles recounts their missionary journeys and efforts to preach to Gentiles.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-barnabas/" },
+      '06-13': { match: /Anthony of Padua/i, name: "Saint Anthony of Padua", meta: "1195–1231 · Franciscan Priest and Doctor", bio: "Born in Lisbon, Anthony entered the Franciscans and became renowned for preaching and teaching Scripture. He spent much of his ministry in Italy and France, and died near Padua. The Church later named him a Doctor of the Church.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-anthony-of-padua/" },
+      '06-24': { match: /Nativity of Saint John the Baptist/i, name: "Saint John the Baptist", meta: "First century · Prophet and Forerunner of Christ", bio: "John, son of Zechariah and Elizabeth, prepared the way for Jesus through preaching and a baptism of repentance. The Gospels recount his birth and mission; the Roman Church celebrates his nativity on June 24.", source: "https://www.franciscanmedia.org/saint-of-the-day/nativity-of-saint-john-the-baptist/" },
+      '06-29': { match: /Peter and Paul/i, name: "Saint Peter the Apostle", meta: "First century · Apostle and Witness to Christ", bio: "Peter was a fisherman called by Jesus to become an apostle. After denying Jesus, he received the risen Lord’s commission to care for his followers. The Roman Church celebrates Peter and Paul together on June 29.", source: "https://www.franciscanmedia.org/saint-of-the-day/saints-peter-and-paul/" },
+
       '03-19': { match: /Saint Joseph, Spouse/i, name: "Saint Joseph, Husband of Mary", meta: "First century · Husband of Mary and Guardian of Jesus", bio: "Joseph, a descendant of David, was entrusted with the care of Mary and Jesus. Matthew’s Gospel portrays him as a just man who followed God’s guidance, protected his family, and took them to Egypt when Herod threatened the child.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-joseph-husband-of-mary/" },
       '04-25': { match: /Saint Mark, Evangelist/i, name: "Saint Mark the Evangelist", meta: "First century · Evangelist", bio: "Mark is associated with the Gospel that bears his name and appears among the companions of Paul and Barnabas in Acts. Ancient Christian tradition also connects him with the Apostle Peter and the Church of Alexandria.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-mark/" },
       '04-29': { match: /Catherine of Siena/i, name: "Saint Catherine of Siena", meta: "1347–1380 · Dominican and Doctor of the Church", bio: "Catherine was a Dominican tertiary, spiritual writer, and advocate for peace and reform in the Church. She corresponded with popes and political leaders and urged the papacy’s return to Rome. Her Dialogue remains a major work of Catholic spirituality.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-catherine-of-siena/" },
@@ -2257,7 +2264,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v313';
+  const APP_BUILD = 'ora-v314';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

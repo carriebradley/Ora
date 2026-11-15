@@ -526,3 +526,25 @@ test('Roman March through May saint cards follow titles and precedence',()=>{
  assert.match(L.roman(new Date('2027-05-03T00:00:00Z')).title,/Philip and James/);
  assert.match(L.roman(new Date('2027-05-14T00:00:00Z')).title,/Matthias/);
 });
+
+test('June Roman saints have concise biographies with proper feast-date precedence',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const expected={'06-01':'Justin','06-03':'Charles Lwanga','06-11':'Barnabas',
+  '06-13':'Anthony of Padua','06-24':'John the Baptist','06-29':'Peter and Paul'};
+ for(const [md,saint] of Object.entries(expected)){
+  const card=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(card.startsWith("'"+md+"':"),md);
+  assert.ok(card.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const bio=card.match(/bio: "([^"]+)"/);
+  assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
+  assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
+   .some(t=>t.includes(saint)),md+' is a primary commemoration in at least one year');
+ }
+ assert.doesNotMatch(L.roman(new Date('2026-06-13T00:00:00Z')).title,/Anthony of Padua/,
+  'Immaculate Heart Saturday may displace Anthony in 2026');
+ assert.match(L.roman(new Date('2027-06-13T00:00:00Z')).season,/Ordinary Time/,
+  'calendar still supplies its appropriate season');
+ assert.match(L.roman(new Date('2027-06-24T00:00:00Z')).title,/Nativity of Saint John the Baptist/);
+ assert.match(L.roman(new Date('2027-06-29T00:00:00Z')).title,/Peter and Paul/);
+});
