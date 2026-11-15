@@ -279,6 +279,13 @@ module.exports=async(page,base,artifacts,violations)=>{
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated hymns fit iPhone');
  }
  await page.setViewportSize({width:390,height:844});
+ // A source conflict must not display hymns as an appointed service.
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ daily=page.locator('.byz-liturgy-variations');
+ assert.equal(await daily.locator('.byz-daily-propers').count(),0,'no dated hymns on an unresolved Divine Liturgy appointment');
+ await daily.locator('summary').click();
+ assert.match(await daily.innerText(),/Service appointment needs confirmation/);
 
  await page.evaluate(()=>{
   const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='melkite';s.byzLiturgyChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));

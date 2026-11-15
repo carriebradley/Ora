@@ -1680,8 +1680,12 @@
     const items=refs.map(([label,ref])=>'<div class="reading-heading">'+
       '<span class="reading-label">'+esc(label)+'</span>'+
       '<span class="reading-reference">'+esc(ref)+'</span></div>').join('');
-    if(!melkite&&dated)hydrateUkrainianPropers(iso);
-    const dailyHymns=!melkite&&dated?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'"></div>':'';
+    // A dated source can contain hymn text even when no Divine Liturgy is
+    // appointed. Do not offer those hymns as an appointed service on
+    // aliturgical or source-conflict days.
+    const appointment=dated&&!['none','unknown'].includes(service.id)&&service.verification!=='source-conflict';
+    if(!melkite&&appointment)hydrateUkrainianPropers(iso);
+    const dailyHymns=!melkite&&appointment?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'"></div>':'';
     const caution=service.verification==='source-conflict'
       ?'<p class="muted">Service appointment needs confirmation with the eparchy.</p>'
       :!dated?'<p class="muted">Daily appointments are not verified for this date.</p>':'';
@@ -2485,7 +2489,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v338';
+  const APP_BUILD = 'ora-v339';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
