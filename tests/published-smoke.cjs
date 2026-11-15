@@ -82,7 +82,7 @@ module.exports=async function(browser,artifacts){
       await page.goto(`${base}index.html?tab=today&rite=roman&date=${date}`);
       const card=page.locator('.gl[data-v="roman"]');
       assert.equal(await card.locator('.gb').innerText(),badge,date+' rose Sunday badge');
-      assert.match((await card.innerText()).replace(/\\s+/g,' '),title,date+' correct joy Sunday');
+      assert.match((await card.innerText()).replace(/\s+/g,' '),title,date+' correct joy Sunday');
       assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#d9899e',date+' Roman rose accent');
       for(const width of [320,390]){
         await page.setViewportSize({width,height:844});
