@@ -378,17 +378,17 @@ test('titled EPUB appendices and copyright chapters never resume as prayer',()=>
  assert.match(ordinary.flatMap(s=>s.lines).join(' '),/Blessed is the Kingdom/);
 });
 
-test('Melkite iPhone reader hides ceremonial and phonetic notes without losing prayers',()=>{
+test('Melkite iPhone reader hides ceremonial notes without losing prayers',()=>{
  const directions=[
   'The Deacon replaces his hat and intones the Litany of Peace in a strong voice while standing before the Holy Doors.',
   'The Priest unfolds the Antimension.',
   'The choir and the celebrants alternate in singing the Trisagion Hymn: the',
-  'He proclaims:',
-  'Arabic: Qud---doo---son---il---laah,',
-  'Greek: A---gi---os o The---os,'
+  'He proclaims:'
  ];
  for(const line of directions)assert.equal(F.instruction(line),true,line);
- for(const prayer of ['Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.',
+ for(const prayer of ['Arabic: Qud---doo---son---il---laah,',
+  'Greek: A---gi---os o The---os,',
+  'Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.',
   'Lord Jesus Christ: look upon Your servants the catechumens who have bowed',
   'All: Lord, have mercy.'])assert.equal(F.instruction(prayer),false,prayer);
  assert.equal(F.normalize('T H E T R I S A G I O N H Y M N'),'The Trisagion Hymn');
@@ -398,4 +398,13 @@ test('Melkite iPhone reader hides ceremonial and phonetic notes without losing p
   'Lord, have mercy.');
  assert.equal(F.displayPrayer('Holy Immortal One, have mercy on us. (Three times)'),
   'Holy Immortal One, have mercy on us.');
+});
+
+test('PDF catechumen prayer stays one paragraph across vertical gap',()=>{
+ const rows=[{text:'PRIEST: Lord Jesus Christ: look upon Your servants the catechumens who have bowed',page:22,y:500,height:12},
+ {text:'their heads to You, and in due time make them worthy of regeneration.',page:22,y:449,height:12},
+ {text:'ALL: Amen.',page:22,y:420,height:12}];
+ assert.deepEqual(F.combine(rows),['PRIEST: Lord Jesus Christ: look upon Your servants the catechumens who have bowed their heads to You, and in due time make them worthy of regeneration.','ALL: Amen.']);
+ assert.equal(F.instruction('Arabic: Qud---doo---son---il---laah,'),false);
+ assert.equal(F.instruction('Greek: A---gi---os o The---os,'),false);
 });

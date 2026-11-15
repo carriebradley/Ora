@@ -262,6 +262,21 @@
         lastHeading=null;
         const p=document.createElement('p');
         p.className='byz-prayer-line';
+        // Keep sung phonetic versions, but distinguish them visually from
+        // the English prayer without changing their source spelling.
+        const transliteration=text.match(/^(Arabic|Greek)\s*:\s*(.+)$/i);
+        if(transliteration&&!role){
+          p.classList.add('byz-transliteration');
+          const language=document.createElement('span');
+          language.className='byz-transliteration-label';
+          language.textContent=transliteration[1];
+          const words=document.createElement('span');
+          words.className='byz-transliteration-words';
+          words.textContent=LiturgicalFormat.displayPrayer(transliteration[2]);
+          p.append(language,words);
+          container.append(p);lastLine=p;lastRole=null;
+          continue;
+        }
         if(role){
           p.classList.add('byz-role-'+role.kind);
           const speaker=document.createElement('span');

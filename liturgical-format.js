@@ -102,10 +102,7 @@
   // Edition-specific stage directions seen in the privately saved Melkite
   // liturgy; never treat the actual Trisagion words as a direction.
   if(/^(?:the deacon replaces his hat and intones|the priest unfolds the antimension|the choir and the celebrants alternate in singing|he proclaims:)(?:\b|\s|$)/i.test(s))return true;
-  // Optional phonetic transcriptions of prayers already printed in English.
-  // Remove only explicitly labelled transliterations, not Greek/Arabic words
-  // within an actual English prayer.
-  if(/^(?:Arabic|Greek)\s*:\s*\S/i.test(s))return true;
+  // Preserve explicitly labeled Arabic/Greek sung transliterations.
   // Ceremonial instructions printed in the Melkite 2009 source can start
   // with participles or with a pronoun rather than "The priest".
   if(/^(?:when the time comes for celebrating|bowing his uncovered head|blessing the deacon|l ifting the holy gospel|lifting the holy gospel|he (?:kisses|uncovers|replaces|bows|takes|turns|enters|leaves)|they (?:bow|enter|stand|make|return|revere|proceed)|it is permitted to chant|following the homily|during the distribution of the antidoron|the following (?:hymn|petitions|prayer)|on the feasts of the lord)\b/i.test(s))return true;
@@ -166,7 +163,10 @@
    // A rubric ending in ':' introduces spoken words in the next paragraph.
    // Never let the prayer be swallowed into the hidden instruction.
    const followsRubric=/[:：]\s*$/.test(current)&&instruction(current)&&!instruction(text)&&!role(text);
-   if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON(?:\s*\d+)?|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
+   // PDF vertical spacing is not a paragraph boundary when a lowercase
+   // continuation completes the same prayer sentence.
+   const continuesSentence=!!current&&!/[.!?;:]\s*[”’"']?$/.test(current.trim())&&/^[a-z]/.test(text);
+   if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!continuesSentence&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON(?:\s*\d+)?|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
    if(!current)current=text;
    // Keep a printed hard hyphen: without the source typography we cannot
    // distinguish a wrapped compound (Only-begotten) from a divided word.
