@@ -41,6 +41,14 @@
  }
  function heading(text){return heads.has(compact(text))||/^Antiphon:\s*Psalm\s*\d+$/i.test(text);}
  function role(text){
+  // Preserve direct speech following an editorial speaker cue. Otherwise the
+  // rubric classifier hides the entire line, including the spoken prayer.
+  // A bare cue ending at ':' remains a rubric for the following line.
+  const spoken=String(text).match(/^\s*(?:the\s+)?(priest|celebrant|bishop|deacon|protodeacon|reader|lector|cantor|choir|people|faithful|congregation)\s+(?:says?|prays?|recites?|proclaims?|exclaims?|sings?|chants?)\s*:\s*(\S.*)$/i);
+  if(spoken){
+   const minister=role(spoken[1]+':');
+   if(minister)return {...minister,words:spoken[2].trim()};
+  }
   const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON(?:\s*\d+)?|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
   const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
   const number=label.match(/\b\d+\b/)?.[0]||'';
