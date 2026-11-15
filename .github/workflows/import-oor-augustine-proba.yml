@@ -1,0 +1,37 @@
+name: Import Augustine Letter 130 Office excerpts
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ora-augustine-proba-v278
+    paths:
+      - tools/import_oor_augustine_proba.py
+      - tests/test_oor_augustine_proba.py
+      - .github/workflows/import-oor-augustine-proba.yml
+permissions:
+  contents: write
+jobs:
+  import-augustine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify chapter-numbered excerpt parser
+        run: python -m unittest discover -s tests -p test_oor_augustine_proba.py
+      - name: Import six historical excerpts
+        run: python tools/import_oor_augustine_proba.py
+      - name: Regenerate Office reading inventory
+        run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
+      - name: Commit verified additions
+        run: |
+          if git diff --quiet -- oortext.json docs/office-of-readings-availability.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add oortext.json docs/office-of-readings-availability.json
+          git commit -m "Import Augustine Letter 130 numbered Office excerpts"
+          git push
