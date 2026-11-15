@@ -175,7 +175,7 @@
       for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['gospel', 'Gospel']]) if (r[k]) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
     if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a><a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
-    if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. Used with permission via the USCCB daily readings feed. All rights reserved.</p>`;
+    if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. All rights reserved. Ora has not verified separate digital-application reproduction permission; see the official USCCB page for the approved readings.</p>`;
     return h;
   }
   /* OCA lists the same Pascha-based Epistle/Gospel cycle by Orthodox date. For the movable season, map this day to the
@@ -2423,7 +2423,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v326';
+  const APP_BUILD = 'ora-v327';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

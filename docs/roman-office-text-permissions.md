@@ -109,3 +109,7 @@ including the US Sunday transfer. The source's changing outer date banner is
 excluded; the inner heading and psalm references were inspected. Inaccessible
 sources remain listed in the section audit rather than being filled from an
 unrelated feast or weekday.
+
+## Version 1 public release review remains open (November 15, 2026)
+
+The [USCCB 2025 publication guidelines](https://www.usccb.org/committees/divine-worship/policies/guidelines-for-the-publication-of-liturgical-books), effective November 29, 2026, state in introduction nos. 8–12 and devotional nos. 55–63 that public digital devotional materials may require ecclesiastical authentication/review and rights-holder licensing. The [ICEL noncommercial Internet policy](https://www.icelweb.org/PubPolicy.PDF), p. 25, is conditional and does not establish that Ora's current offline PWA distribution meets every USCCB requirement. This record **does not assert** that an Ora-specific approval, imprimatur, or grant has been obtained. See [the publication-rights decision](ORA-V1-PUBLICATION-RIGHTS.md) before declaring Version 1 released.

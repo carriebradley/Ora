@@ -39,7 +39,7 @@ Before marking Version 1 complete, follow the [iPhone acceptance checklist](docs
 
 ## Sources and reproduction
 
-Newton calendar facts are attributed by date/page. Full copyrighted liturgical translations are linked to their publishers rather than imported without permission. Roman daily readings use the USCCB feed under its published website conditions. Public-domain Douay, patristic and historical Sarum sources and modern quotation links are credited within the app. See [release report](docs/ORA-RELEASE-2026-11-11.md) for exact source checks, limitations and remaining blockers.
+Newton calendar facts are attributed by date/page. Ora includes some ICEL First Edition Office prayers under ICEL's conditional free-website policy, but the USCCB's publication/authentication requirements are separate. Roman daily readings are presently imported from the official USCCB RSS feed into a publicly downloadable JSON file; whether that accumulated use in an installable PWA is licensed has **not** been verified. The public-release decision and alternatives are documented in [the Version 1 rights review](docs/ORA-V1-PUBLICATION-RIGHTS.md). Complete copyrighted liturgical service books are not bundled by Ora; private books stay on the user's device. Public-domain Douay, patristic and historical Sarum sources and modern quotation links are credited within the app. See [release report](docs/ORA-RELEASE-2026-11-11.md) for exact source checks, limitations and remaining blockers.
 
 ## Verification
 

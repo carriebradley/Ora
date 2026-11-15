@@ -48,8 +48,9 @@ A complete official Roman Liturgy of the Hours, a complete Melkite/UGCC variable
 ### P3 — Rights, labels, and content coverage
 1. Keep Scripture, Office readings, full liturgical translations, and source editions distinguished; copyright status, publisher permission and ecclesiastical approval are separate questions.
 2. Verify current conditions for public PWA publication and offline caching before bundling restricted official translations, especially with the approaching USCCB effective date of November 29, 2026. Never infer rights from private devotional intent alone.
-3. Use linked publisher resources or the private on-device reader when rights/translation identity cannot be verified.
-4. Maintain the Office of Readings inventory as an honest count of indexed, bundled and missing references. Do not block v1 on importing all remaining patristic texts.
+3. Treat USCCB's RSS-display website allowance and digital-application licensing as distinct: the existing fetch job stores up to 800 days in public `readings.json`, so an Ora-specific permission or a lower-risk source/reference-only alternative must be resolved before declaring a fully cleared public release. See `docs/ORA-V1-PUBLICATION-RIGHTS.md`.
+4. Use linked publisher resources or the private on-device reader when rights/translation identity cannot be verified.
+5. Maintain the Office of Readings inventory as an honest count of indexed, bundled and missing references. Do not block v1 on importing all remaining patristic texts.
 
 ### P4 — Release verification
 1. Run the Node regression suite, browser/mobile audit and GitHub Pages published-build checks against the actual final commit.

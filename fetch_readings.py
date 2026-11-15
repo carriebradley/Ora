@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Fetch the official USCCB daily-readings RSS feed and merge it into readings.json.
 
-USCCB's permissions page allows displaying the daily readings from this feed on a website that
-does not require users to give anything of value. The feed's copyright notice must be shown with
+USCCB's permissions page permits RSS display on qualifying free websites, but separately
+addresses digital applications and requires licensing for those. Ora currently republishes a
+history of feed content in readings.json; rights for that distribution are **not verified**.
+See docs/ORA-V1-PUBLICATION-RIGHTS.md before treating the app as cleared for release.
+The feed's copyright notice must be shown with
 the text (the app does this). Run daily (see .github/workflows/readings.yml) — the feed only holds
 ~10 days, so readings.json accumulates history.
 
