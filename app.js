@@ -1958,6 +1958,21 @@
     'Augustine|Confessions 7, 10.18; 10, 27': [
       ['Confessions, Book VII', 'https://www.newadvent.org/fathers/110107.htm'],
       ['Confessions, Book X', 'https://www.newadvent.org/fathers/110110.htm']
+    ],
+    'Athanasius of Alexandria|On the Incarnation of the Word 8-9': [
+      ['On the Incarnation of the Word, sections 8–9', 'https://www.newadvent.org/fathers/2802.htm']
+    ],
+    'Athanasius of Alexandria|On the Incarnation of the Word 10': [
+      ['On the Incarnation of the Word, section 10', 'https://www.newadvent.org/fathers/2802.htm']
+    ],
+    'Athanasius of Alexandria|The Life of Saint Anthony 2-4': [
+      ['Life of Saint Anthony, sections 2–4', 'https://www.newadvent.org/fathers/2811.htm']
+    ],
+    'Tertullian|On Prayer 28-29': [
+      ['On Prayer, chapters 28–29', 'https://www.newadvent.org/fathers/0322.htm']
+    ],
+    'Tertullian|On the Prescription of Heretics 20, 1-9; 21, 3; 22, 8-10': [
+      ['Prescription Against Heretics, chapters 20–22', 'https://www.newadvent.org/fathers/0311.htm']
     ]
   });
   let oortxP = null;
@@ -2242,7 +2257,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v312';
+  const APP_BUILD = 'ora-v313';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

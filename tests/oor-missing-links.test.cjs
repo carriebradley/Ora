@@ -35,3 +35,22 @@ test('missing Augustine readings have direct verified historical source links wi
  assert.match(app,/A verified translation of this appointed excerpt has not yet been bundled/);
  assert.match(app,/Search results are external references, not verified texts appointed for this date/);
 });
+
+test('missing Athanasius and Tertullian readings link to their actual patristic works',()=>{
+ const app=require('node:fs').readFileSync(require.resolve('../app.js'),'utf8');
+ const source=app.slice(app.indexOf('const OOR_PUBLIC_DOMAIN_SOURCES'),app.indexOf('let oortxP = null;'));
+ for(const [entry,link] of [
+  ['Athanasius of Alexandria|On the Incarnation of the Word 8-9','2802.htm'],
+  ['Athanasius of Alexandria|On the Incarnation of the Word 10','2802.htm'],
+  ['Athanasius of Alexandria|The Life of Saint Anthony 2-4','2811.htm'],
+  ['Tertullian|On Prayer 28-29','0322.htm'],
+  ['Tertullian|On the Prescription of Heretics 20, 1-9; 21, 3; 22, 8-10','0311.htm']
+ ]){
+  const pos=source.indexOf("'"+entry+"'");
+  assert.ok(pos>=0,entry);
+  assert.ok(source.slice(pos,pos+260).includes('https://www.newadvent.org/fathers/'+link),entry);
+ }
+ const missing=require('../docs/office-of-readings-availability.json').missingReferences;
+ for(const key of ['Athanasius of Alexandria|On the Incarnation of the Word 8-9','Athanasius of Alexandria|On the Incarnation of the Word 10','Tertullian|On Prayer 28-29'])
+  assert.ok(missing.includes(key),'Source links do not falsely mark readings available: '+key);
+});
