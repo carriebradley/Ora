@@ -1,1 +1,130 @@
-{"schema":1,"days":{}}
+{
+  "schema": 1,
+  "days": {
+    "2026-11-01": {
+      "church": "melkite",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 6): The angelic powers were around Your tomb, * and the guards became as dead; * and Mary stood at the tomb, * seeking Your spotless body; * Then You despoiled Hades without being tried by it, * and You met the Virgin O Bestower of life. * O Lord, who rose from the dead, * glory to You!",
+          "Troparion of Cosmas and Damian (Tone 8): O Holy Moneyless Ones and Wonderworkers, heal us of our diseases. Freely you have received: freely give.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 6) Ps.27: 9, 1",
+          "O Lord, save your people and bless your inheritance!",
+          "Stichon: To you, O Lord, I have called: O my Rock, be not deaf to me!"
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 6) Ps.90: 1, 2",
+          "He who dwells in the shelter of the Most High abides in the shadow of the God of heaven.",
+          "Stichon: He will say to the Lord, “My wall, my refuge, my God in whom I will trust!”"
+        ]
+      }
+    },
+    "2026-11-08": {
+      "church": "melkite",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 7): You destroyed Death by Your cross. * You opened paradise to the thief. * You changed the weeping of the myrrh bearers, * and commanded Your apostles to proclaim * that You, have risen O Christ God, * granting to the world great mercy.",
+          "Troparion of the Holy Archangels (Tone 4): Captains and Leaders of the armies of heaven, unworthy as we are, we beseech you without cease to surround us with your intercessions and cover us beneath the shelter of the glory of your ethereal wings. We bend out knee and cry out with perseverance: “Deliver us from danger, O Princes of the Powers on high!”",
+          "Kondakion Presentation of the Blessed Virgin (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasure of God’s glory, enters today in the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 4)",
+          "You make spirits your messengers and flaming fires you attendants.",
+          "Stichon: Bless the Lord, O my soul! May all that is in me bless his holy name!"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-15": {
+      "church": "melkite",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 8)): You descended from on high O compassionate One, * and consented to burial for three days * that You might free us form suffering. * O Lord, our life and our resurrection, * glory to You.!",
+          "Kondakion Presentation of the Blessed Virgin (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasure of God’s glory, enters today in the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 8) Ps.75: 12, 2",
+          "Make vows to the Lord your God and fulfill them;",
+          "Let all round about him bring gifts to the awesome Lord.",
+          "Stichon: God is renowned in Judah; in Israel, great is his name."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 8) Ps.94: 1, 2",
+          "Come, let us rejoice in the Lord; Let us sing joyfully to God our Savior!",
+          "Stichon: Let us greet his presence with thanksgiving; let us joyfully sing psalms to him!"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-21": {
+      "church": "melkite",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Presentation: (Tone 4) (three times): Today is the prelude to God’s munificence, and the announcement of the salvation of men: in the Temple of God the Virgin is seen openly, foretelling to all the coming of Christ. Wherefore let us cry out to her with all our strength: “Joy to you, Fulfillment of the Creator’s Plan!”",
+          "Kondakion of the Presentation (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasury of God’s glory, enters today into the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "Prokimenon:",
+          "My soul magnifies the Lord and my spirit rejoices in God my Savior.",
+          "Stichon: Because He has regarded the lowliness of His handmaid, for behold, henceforth all generations shall call me blessed."
+        ],
+        "alleluia": [
+          "Alleluia: Ps. 44:11, 13",
+          "Listen, daughter, and behold and lend your ear, and forget your people and your father’s house.",
+          "Stichon: The rich among the people shall seek Your favor."
+        ]
+      }
+    },
+    "2026-11-22": {
+      "church": "melkite",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 1): After the stone was sealed by the Jews * and the while the soldiers were watching Your spotless body, * You rose, O Savior, on the third day, * bestowing life to the world. * Therefore, the heavenly powers cried out to You, O Giver of life: *“Glory to Your resurrection, O Christ! * Glory to Your kingdom! * Glory to Your economy, * O You Who alone are the lover of mankind!”",
+          "Troparion of the Presentation of the Virgin (Tone 4): Today is the prelude to God’s munificence, and the announcement of the salvation of men: in the Temple of God the Virgin is seen openly, foretelling to all the coming of Christ. Wherefore let us cry out to her with all our strength: “Joy to you, Fulfillment of the Creator’s Plan!”",
+          "Kondakion of the Presentation (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasury of God’s glory, enters today into the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 1) Ps.32: 22,1",
+          "May Your kindness, O Lord, be upon us, for we have hoped in You.",
+          "Stichon: Exult, you just, in the Lord; praise from the upright is fitting."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps. 17: 48, 50",
+          "O God, You granted me retribution and made peoples subject to me and saved me from my raging enemies.",
+          "Stichon: Therefore, I will proclaim You, O Lord, among the nations, and I will sing praise to Your name."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-29": {
+      "church": "melkite",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (2nd tone): When You descended to death, O immortal Life, * You destroyed Hades by the splendor of Your divinity. * And when You raised the dead from below the earth, * all the heavenly powers cried out to you: * “O Giver of life, Christ our God, glory to You!”",
+          "Troparion of Paramon and Philumenes: (Tone 4): Your martyrs, O Lord, received the crown of immortality from you O our God, on account of their struggles. Armed with your strength, they have vanquished their persecutors and crushed the powerless arrogance of demons. Through their supplications. O Christ God save our souls.",
+          "Kondakion of the Preparation of the Nativity of our Lord (Tone 3): Today the Virgin is on her way to the cave where she will give birth in a manner beyond understanding to the Word who is, in all eternity. Rejoice, therefore, universe, when you hear it heralded: with the angles and the shepherds, glorify Him who chose to be seen as a new-born Babe, while remaining God in all eternity."
+        ]
+      }
+    }
+  }
+}
