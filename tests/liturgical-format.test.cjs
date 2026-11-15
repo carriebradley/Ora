@@ -167,6 +167,7 @@ test('PDF-derived Byzantine prayers read without chant breaks or stray punctuati
 });
 
 
+test('spoken proclamations are rubrics when attributed to a minister',()=>{
  for(const line of ['The deacon proclaims aloud:','The priest exclaims:','The reader recites:','The cantor chants:']){
   assert.equal(F.instruction(line),true,line);
   assert.ok(F.speakerInstruction(line),line);
