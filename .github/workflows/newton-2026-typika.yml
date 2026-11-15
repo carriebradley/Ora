@@ -24,7 +24,19 @@ jobs:
       - name: Test source and date boundary safeguards
         run: python -m unittest discover -s tests -p 'test_melkite_propers*.py'
       - name: Parse all 12 official monthly documents
-        run: python tools/import_melkite_propers_year.py
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/import_melkite_propers_year.py 2>&1 | tee /tmp/newton-typika-audit.txt
+      - name: Record Newton import diagnostics
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs=require('fs');
+            const path='/tmp/newton-typika-audit.txt';
+            const log=fs.existsSync(path)?fs.readFileSync(path,'utf8').slice(-14000):'No import log available.';
+            await github.rest.checks.create({owner:context.repo.owner,repo:context.repo.repo,head_sha:context.sha,name:'Newton monthly DOCX import diagnostics',status:'completed',conclusion:'neutral',output:{title:'Newton source import report',summary:'\x60\x60\x60text\n'+log+'\n\x60\x60\x60'}});
       - name: Check output structure and 2026 coverage
         run: |
           python - <<'PY'
