@@ -1111,6 +1111,13 @@
       '11-13': { match:/John Chrysostom/i, name:'Saint John Chrysostom', meta:'c. 347–407 · Archbishop of Constantinople', bio:'John Chrysostom was celebrated for his preaching, biblical teaching, and concern for the poor. The Byzantine liturgical tradition especially remembers him through the Divine Liturgy bearing his name.', source:'https://www.britannica.com/biography/Saint-John-Chrysostom' }
     },
     sarum: {
+      '11-15': {
+        match: /Machut(?:us|is)?|Maclovius|Malo/i,
+        name: 'Saint Machutus (Malo)',
+        meta: 'Early medieval · Bishop of Aleth',
+        bio: 'Malo was a Welsh monk and missionary who became Bishop of Aleth in Brittany. Remembered for his preaching and monastic life, he gave his name to the city of Saint-Malo, France.',
+        source: 'https://www.vaticannews.va/en/saints/11/15/saint-malo.html'
+      },
       '11-14': {
         match: /Laurence O['’]?Toole|Lawrence O['’]?Toole/i,
         name: 'Saint Laurence O’Toole',
@@ -1138,15 +1145,15 @@
     const recognized = /\b(?:saint|saints|st\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist|prophet|venerable|blessed|father|mother)\b/i;
     // Marian feasts belong on the Liturgical Day card; they are not individual
     // saint biographies. Retain separately named saints (e.g. Saint Anna).
-    const marianTitle = /\\b(?:mother of god|theotokos|virgin mary|blessed virgin|our lady)\\b/i;
-    const namedSaint = /\\b(?:saint|saints|st\\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|evangelist|prophet|venerable)\\b/i;
+    const marianTitle = /\b(?:mother of god|theotokos|virgin mary|blessed virgin|our lady)\b/i;
+    const namedSaint = /\b(?:saint|saints|st\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|evangelist|prophet|venerable)\b/i;
     const primary = commemorations.find(item =>
       recognized.test(item) && (!marianTitle.test(item) || namedSaint.test(item))) || '';
     if (!entry && !primary) return '';
     const saint = entry || {
       name: displayTitle(primary),
-      meta: 'Commemorated in the selected liturgical calendar',
-      bio: 'This saint is commemorated today. A verified biographical summary has not yet been added to Ora.'
+      meta: 'Commemorated in the selected calendar',
+      bio: 'A verified short biography is not yet available.'
     };
     const label = tradition === 'ukrainian' ? 'Ukrainian' : tradition === 'melkite' ? 'Melkite' : tradition === 'sarum' ? 'Traditional' : 'Roman';
     return `<section class="card today-saint-bio">
@@ -1871,7 +1878,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v288';
+  const APP_BUILD = 'ora-v289';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

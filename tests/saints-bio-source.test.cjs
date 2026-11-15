@@ -19,7 +19,7 @@ test('November 16-20 source-backed Byzantine biography set and correct precedenc
  assert.match(app,/melkite: \{[\s\S]*?'11-20': \{\s+match: \/Gregory/);
  assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
  assert.match(app,/calendar\?\.also/);
- assert.match(app,/Commemorated in the selected liturgical calendar/);
+ assert.match(app,/Commemorated in the selected calendar/);
  assert.match(app,/saint\.source \? /);
 });
 
@@ -61,4 +61,30 @@ test('Curated Saint of the Day cards remain short',()=>{
    const words=bio.trim().split(/\s+/);
    assert.ok(words.length<=50,'Biography exceeds 50 words: '+bio.slice(0,55));
  }
+});
+
+test('Traditional November 15 St. Machutus (Malo) card has a brief verified biography',()=>{
+ const sarum=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')));
+ const entry=sarum.slice(sarum.indexOf("'11-15':"),sarum.indexOf("'11-14':"));
+ assert.ok(entry.includes('match: /Machut'));
+ assert.ok(entry.includes("name: 'Saint Machutus (Malo)'"));
+ assert.ok(entry.includes('vaticannews.va/en/saints/11/15/saint-malo.html'));
+ const match=entry.match(/bio: '([^']+)'/);
+ assert.ok(match);
+ assert.ok(match[1].split(/\s+/).length<=50);
+});
+
+test('Marian safeguard uses real word boundaries and keeps separately named saints',()=>{
+ const vm=require('node:vm');
+ const getMatcher=name=>{
+   const token='const '+name+' = ';
+   assert.ok(app.includes(token),'missing '+name);
+   return vm.runInNewContext(app.split(token)[1].split(';')[0].trim());
+ };
+ const marian=getMatcher('marianTitle'),named=getMatcher('namedSaint');
+ assert.ok(marian.test('The Entrance of the Mother of God'));
+ assert.ok(marian.test('Dormition of the Theotokos'));
+ assert.ok(!named.test('The Entrance of the Mother of God'));
+ assert.ok(named.test('Saint Anna, Mother of the Virgin Mary'));
+ assert.ok(!marian.test('Abbot Motherwell'));
 });
