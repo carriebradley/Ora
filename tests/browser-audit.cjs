@@ -10,7 +10,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  const base=process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/';
  // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
  for(const church of ['ukrainian','melkite']){
-  await page.goto(`${base}index.html?tab=today&date=2026-11-14&rite=byz&byzChurch=${church}`);
+  await page.goto(`${base}index.html?tab=calendar&date=2026-11-14&rite=byz`);
+  await page.locator(`[data-act="byzchoice"][data-v="${church}"]`).click();
+  await page.goto(`${base}index.html?tab=today&date=2026-11-14&rite=byz`);
   await page.waitForTimeout(200);
   const card=page.locator('.today-saint-bio');
   assert.equal(await card.count(),1,`${church} Philip saint card`);
