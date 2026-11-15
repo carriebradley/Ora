@@ -96,7 +96,6 @@
 6/9|Saint Ephrem, Deacon and Doctor|O|w
 6/11|Saint Barnabas, Apostle|M|r
 6/13|Saint Anthony of Padua, Priest and Doctor of the Church|M|w
-6/13|Saint Anthony of Padua, Priest and Doctor|M|w
 6/24|Nativity of Saint John the Baptist|S|w
 6/29|Saints Peter and Paul, Apostles|S|r
 7/3|Saint Thomas, Apostle|F|r
@@ -389,7 +388,6 @@
 4/11|Saint Leo the Great|3|w
 4/21|Saint Anselm|3|w
 4/23|Saint George, Martyr|3|r
-4/21|Saint Anselm, Bishop and Doctor|O|w
 4/25|Saint Mark, Evangelist (Major Litany)|2|r
 4/29|Saint Peter of Verona, Martyr|3|r
 4/30|Saint Catherine of Siena, Virgin|3|w
@@ -402,9 +400,9 @@
 5/25|Saint Gregory VII, Pope|3|w
 5/26|Saint Philip Neri|3|w
 5/31|Queenship of the Blessed Virgin Mary|2|w
-6/9|Saint Ephrem, Deacon and Doctor|O|w
 6/11|Saint Barnabas, Apostle|3|r
 6/13|Saint Anthony of Padua|3|w
+6/18|Saint Ephrem the Syrian, Deacon and Doctor|3|w
 6/24|Nativity of Saint John the Baptist|1|w
 6/29|Saints Peter and Paul, Apostles|1|r
 6/30|Commemoration of Saint Paul|2|r
