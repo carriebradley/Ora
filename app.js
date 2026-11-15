@@ -1286,6 +1286,7 @@
   // Sourced western biographies used only when the selected rite actually
   // observes the named saint, never solely because the civil date matches.
   const WESTERN_SHARED_SAINT_BIOS = {
+      '11-11': { match: /Martin of Tours/i, name: "Saint Martin of Tours", meta: "c. 316–397 · Bishop", bio: "Martin left military service to embrace monastic life and became Bishop of Tours. He is remembered for sharing his cloak with a man in need and for his compassion toward the poor.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-martin-of-tours/" },
     '11-22': { match: /Cecilia/i, name: "Saint Cecilia", meta: "Early Christian era · Virgin and Martyr", bio: "Cecilia was a Christian martyr venerated in Rome from antiquity. She is the patron saint of musicians; the familiar details of her life come mainly from later traditions.", source: "https://www.newadvent.org/cathen/03471b.htm" },
     '11-30': { match: /Andrew/i, name: "Saint Andrew the Apostle", meta: "First century · Apostle", bio: "Andrew, a fisherman and brother of Simon Peter, was among the first disciples to follow Jesus. According to John’s Gospel, he introduced his brother to Christ.", source: "https://www.newadvent.org/cathen/01471a.htm" },
     '12-06': { match: /Nicholas/i, name: "Saint Nicholas of Myra", meta: "Fourth century · Bishop of Myra", bio: "Nicholas was bishop of Myra in Asia Minor. Stories of his generosity, especially toward people in poverty, helped establish his enduring place in Christian devotion.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-nicholas/" },
@@ -1299,7 +1300,6 @@
       ...WESTERN_SHARED_SAINT_BIOS,
       '11-04': { match: /Charles Borromeo/i, name: "Saint Charles Borromeo", meta: "1538–1584 · Archbishop of Milan", bio: "Charles Borromeo helped implement the reforms of the Council of Trent as Archbishop of Milan. He promoted education for clergy and cared for the sick and poor during a plague.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-charles-borromeo/" },
       '11-10': { match: /Leo the Great/i, name: "Saint Leo the Great", meta: "d. 461 · Pope and Doctor of the Church", bio: "Leo served as Bishop of Rome from 440 to 461. He defended Christian teaching about Christ and guided the Church during a period of political and religious upheaval.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-leo-the-great/" },
-      '11-11': { match: /Martin of Tours/i, name: "Saint Martin of Tours", meta: "c. 316–397 · Bishop", bio: "Martin left military service to embrace monastic life and became Bishop of Tours. He is remembered for sharing his cloak with a man in need and for his compassion toward the poor.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-martin-of-tours/" },
       '11-13': { match: /Frances Xavier Cabrini/i, name: "Saint Frances Xavier Cabrini", meta: "1850–1917 · Foundress and Missionary", bio: "Mother Cabrini founded the Missionary Sisters of the Sacred Heart and served Italian immigrants in the United States. She established schools, hospitals, and orphanages and became the first naturalized U.S. citizen canonized.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-frances-xavier-cabrini/" },
       '12-03': { match: /Francis Xavier/i, name: "Saint Francis Xavier", meta: "1506–1552 · Jesuit Missionary", bio: "A companion of Saint Ignatius of Loyola and an early Jesuit, Francis Xavier traveled widely in Asia to preach Christianity. His ministry took him to India and Japan; he died before reaching mainland China.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-xavier/" },
       '12-14': { match: /John of the Cross/i, name: "Saint John of the Cross", meta: "1542–1591 · Carmelite and Doctor", bio: "John of the Cross worked with Teresa of Ávila to reform the Carmelite Order. His poetry and spiritual writings explore purification, contemplation, and union with God.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-of-the-cross/" },
@@ -1382,6 +1382,10 @@
     },
     sarum: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      // These dates keep the already sourced biographies when the named feast
+      // or octave actually outranks the temporal calendar; Sundays remain primary.
+      '11-18': WESTERN_SHARED_SAINT_BIOS['11-11'],
+      '12-07': WESTERN_SHARED_SAINT_BIOS['11-30'],
       '11-08': { match: /Four Crowned Martyrs/i, name: "The Four Crowned Martyrs", meta: "Early fourth century · Martyrs of Roman tradition", bio: "An ancient group of martyrs was honored at Rome under the name Four Crowned Martyrs. Their exact identities are uncertain; later accounts associate their commemoration with Christian stonecutters who refused an idolatrous commission.", source: "https://www.newadvent.org/cathen/06163a.htm" },
       '11-09': { match: /Theodore/i, name: "Saint Theodore of Amasea", meta: "d. c. 306 · Soldier and Martyr", bio: "Theodore, a Christian soldier at Amasea in Asia Minor, was martyred during the persecution of the early fourth century. Known as Theodore Tiro, he is honored in both Eastern and Western Christian traditions.", source: "https://www.newadvent.org/cathen/14573a.htm" },
       '12-21': { match: /Thomas,? Apostle/i, name: "Saint Thomas the Apostle", meta: "First century · One of the Twelve Apostles", bio: "Thomas first doubted the news of Jesus’ Resurrection, then confessed the risen Christ as his Lord and God. Ancient Christian tradition associates his missionary preaching with India.", source: "https://www.newadvent.org/cathen/14658b.htm" },
@@ -2171,7 +2175,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v302';
+  const APP_BUILD = 'ora-v303';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

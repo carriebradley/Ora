@@ -354,3 +354,26 @@ test('Outranked Sarum Saturninus and Sisinnius remain Calendar-only in Advent',(
   assert.doesNotMatch(day.title,/Saturninus|Sisinnius/i,'Advent takes precedence '+year);
  }
 });
+
+test('Traditional Martinmas and Saint Martin/Andrew octaves reuse sourced biographies only when observed',()=>{
+ const S=require('../sarum.js');
+ const shared=app.slice(app.indexOf('const WESTERN_SHARED_SAINT_BIOS'),app.indexOf('const TODAY_SAINT_BIOS'));
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const sarum=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
+ assert.match(shared,/['"]11-11['"]:\s*\{ match: \/Martin of Tours\/i/);
+ assert.ok(shared.includes('saint-martin-of-tours/'));
+ assert.ok(sarum.includes("'11-18': WESTERN_SHARED_SAINT_BIOS['11-11']"));
+ assert.ok(sarum.includes("'12-07': WESTERN_SHARED_SAINT_BIOS['11-30']"));
+ assert.ok(roman.includes('...WESTERN_SHARED_SAINT_BIOS'),'Roman November 11 keeps its existing biography through the shared map');
+ for(const [md,saint] of [['11-11','Martin'],['11-18','Martin'],['12-07','Andrew']]){
+  let observed=false;
+  for(let year=2025;year<=2036;year++){
+   const day=S.sarum(new Date(year+'-'+md+'T00:00:00Z'));
+   if(new RegExp(saint,'i').test(day.title)){observed=true;break;}
+  }
+  assert.ok(observed,md+' must have an observed Sarum date within the test years');
+ }
+ // A displaced saint is never resurrected by the Today card just because its date matches.
+ assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
+ assert.match(app,/: \[title\];/);
+});
