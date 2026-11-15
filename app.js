@@ -1304,6 +1304,13 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '02-05': { match: /Agatha/i, name: "Saint Agatha of Sicily", meta: "d. c. 251 · Virgin and Martyr", bio: "Agatha was a Christian martyr from Sicily, traditionally associated with Catania. She suffered persecution in the third century. Details of her imprisonment and trials survive largely in later accounts, but her veneration is ancient.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-agatha/" },
+      '02-06': { match: /Paul Miki/i, name: "Saint Paul Miki", meta: "d. 1597 · Jesuit and Martyr of Japan", bio: "Paul Miki was a Japanese Jesuit who preached Christianity in his homeland. He and twenty-five companions, including laypeople and religious, were crucified at Nagasaki in 1597. The Roman Church commemorates them together.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-paul-miki-and-companions/" },
+      '02-10': { match: /Scholastica/i, name: "Saint Scholastica", meta: "c. 480–c. 547 · Nun", bio: "Scholastica, sister of Saint Benedict, is remembered for her dedication to prayer and religious life. Gregory the Great recounts a final meeting between them and presents their devotion as an example of Christian love.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-scholastica/" },
+      '02-14': { match: /Cyril and Methodius/i, name: "Saint Cyril", meta: "c. 827–869 · Missionary to the Slavs", bio: "Cyril and his brother Methodius preached Christianity among Slavic peoples and translated liturgical texts into their language. Cyril helped develop a Slavic alphabet; the brothers' work shaped Christian worship and learning across Eastern Europe.", source: "https://www.franciscanmedia.org/saint-of-the-day/saints-cyril-and-methodius/" },
+      '02-22': { match: /Chair of Saint Peter/i, name: "Saint Peter the Apostle", meta: "First century · Apostle and Bishop", bio: "Simon Peter was called by Jesus to be an apostle and to strengthen his fellow disciples. The Feast of the Chair of Saint Peter celebrates his pastoral office and the Church's continuing ministry of unity.", source: "https://www.franciscanmedia.org/saint-of-the-day/chair-of-saint-peter/" },
+      '02-23': { match: /Polycarp/i, name: "Saint Polycarp of Smyrna", meta: "c. 69–c. 155 · Bishop and Martyr", bio: "Polycarp led the Christian community in Smyrna and knew early apostolic teachers. His Letter to the Philippians survives, and an early account of his martyrdom records his steadfast confession of Christ under persecution.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-polycarp/" },
+
       '01-24': { match: /Francis de Sales/i, name: "Saint Francis de Sales", meta: "1567–1622 · Bishop and Doctor", bio: "Francis de Sales served as Bishop of Geneva and wrote about the call to holiness in everyday life. His gentle pastoral approach and spiritual writings, including Introduction to the Devout Life, influenced generations of Catholics.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-de-sales/" },
       '01-25': { match: /Conversion of Saint Paul/i, name: "Saint Paul the Apostle", meta: "First century · Apostle to the Gentiles", bio: "Paul's encounter with the risen Christ on the road to Damascus transformed him from a persecutor of Christians into a preacher of the Gospel. The Acts of the Apostles recounts his conversion.", source: "https://www.franciscanmedia.org/saint-of-the-day/conversion-of-saint-paul/" },
       '01-26': { match: /Timothy and Titus/i, name: "Saint Timothy", meta: "First century · Bishop and Companion of Paul", bio: "Timothy traveled with Saint Paul and helped guide the early Christian communities. Letters addressed to him encourage perseverance, sound teaching, and faithful pastoral leadership. The Roman calendar commemorates him with Saint Titus.", source: "https://www.franciscanmedia.org/saint-of-the-day/saints-timothy-and-titus/" },
@@ -2201,7 +2208,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v309';
+  const APP_BUILD = 'ora-v310';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

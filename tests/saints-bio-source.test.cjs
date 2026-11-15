@@ -463,3 +463,41 @@ test('Late January Roman cards respect named primary commemoration and Sunday pr
  const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
  assert.match(selector,/: \[title\];/,'Sunday takes precedence over a displaced saint');
 });
+
+test('Roman February biographies are sourced, concise, and match valid feast years',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const names={
+  '02-05':'Agatha','02-06':'Paul Miki','02-10':'Scholastica',
+  '02-14':'Cyril and Methodius','02-22':'Chair of Saint Peter','02-23':'Polycarp'
+ };
+ for(const [md,name] of Object.entries(names)){
+  const row=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(row.startsWith("'"+md+"':"),md);
+  assert.ok(row.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const biography=row.match(/bio: "([^"]+)"/);
+  assert.ok(biography&&biography[1].trim().split(/\s+/).length<=50,md);
+  let appointed=false;
+  for(let year=2025;year<=2035;year++){
+   const today=L.roman(new Date(year+'-'+md+'T00:00:00Z'));
+   if(today.title.includes(name)){appointed=true;break;}
+  }
+  assert.ok(appointed,md+' must be observed as the primary Roman feast in some year');
+ }
+});
+test('2027 Lent suppresses the February Scholastica and Polycarp saint cards',()=>{
+ const L=require('../calendar.js');
+ const get=date=>L.roman(new Date(date+'T00:00:00Z'));
+ assert.match(get('2027-02-10').title,/Ash Wednesday/);
+ assert.doesNotMatch(get('2027-02-10').title,/Scholastica/);
+ assert.match(get('2027-02-14').title,/First Sunday of Lent/i);
+ assert.doesNotMatch(get('2027-02-14').title,/Cyril|Methodius/);
+ assert.equal(get('2027-02-23').season,'Lent');
+ assert.doesNotMatch(get('2027-02-23').title,/Polycarp/);
+ assert.match(get('2027-02-22').title,/Chair of Saint Peter/);
+ assert.match(get('2028-02-10').title,/Scholastica/);
+ assert.match(get('2028-02-23').title,/Polycarp/);
+ const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
+ assert.match(selector,/const titles = S\.rite === 'byz'/);
+ assert.match(selector,/: \[title\];/);
+});
