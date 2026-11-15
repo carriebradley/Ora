@@ -548,3 +548,25 @@ test('June Roman saints have concise biographies with proper feast-date preceden
  assert.match(L.roman(new Date('2027-06-24T00:00:00Z')).title,/Nativity of Saint John the Baptist/);
  assert.match(L.roman(new Date('2027-06-29T00:00:00Z')).title,/Peter and Paul/);
 });
+
+test('July Roman named saints have sourced short cards, with Sunday precedence',()=>{
+ const L=require('../calendar.js');
+ const section=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const names={'07-11':'Benedict','07-14':'Kateri Tekakwitha','07-15':'Bonaventure',
+  '07-22':'Mary Magdalene','07-25':'James','07-26':'Joachim and Anne',
+  '07-29':'Martha, Mary and Lazarus','07-31':'Ignatius of Loyola'};
+ for(const [md,word]of Object.entries(names)){
+  const line=section.slice(section.indexOf("'"+md+"':"));
+  assert.ok(line.startsWith("'"+md+"':"),md);
+  assert.ok(line.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const body=line.match(/bio: "([^"]+)"/);
+  assert.ok(body&&body[1].trim().split(/\s+/).length<=50,md);
+  assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
+   .some(t=>t.includes(word)),md+' must be observed in one of 2025–2036');
+ }
+ assert.match(L.roman(new Date('2027-07-22T00:00:00Z')).title,/Mary Magdalene/);
+ assert.doesNotMatch(L.roman(new Date('2027-07-25T00:00:00Z')).title,/Saint James/,
+  'Sunday in Ordinary Time outranks the apostle feast');
+ assert.match(section,/Scripture does not identify her with the unnamed sinful woman/);
+ assert.match(section,/Their names are not given in the canonical Gospels/);
+});
