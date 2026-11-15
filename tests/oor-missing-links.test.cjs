@@ -75,3 +75,23 @@ test('additional Augustine psalm links are verified and ambiguous Psalm 33 secti
  const inventory=require('../docs/office-of-readings-availability.json');
  assert.equal(inventory.available,105,'external links are not internally available translations');
 });
+
+test('Six Basil and Athanasius source links do not count as bundled Office readings',()=>{
+ const app=require('node:fs').readFileSync(require.resolve('../app.js'),'utf8');
+ const source=app.slice(app.indexOf('const OOR_PUBLIC_DOMAIN_SOURCES'),app.indexOf('let oortxP = null;'));
+ const missing=new Set(require('../docs/office-of-readings-availability.json').missingReferences);
+ for(const [key,url] of [
+  ['Athanasius of Alexandria|Against the Pagans 40-42','2801.htm'],
+  ['Athanasius of Alexandria|Against the Pagans 42-43','2801.htm'],
+  ['Athanasius of Alexandria|Letter to Epictetus 5-9','2806059.htm'],
+  ['Basil the Great|On the Holy Spirit 9, 22-23','3203.htm'],
+  ['Basil the Great|On the Holy Spirit 15, 35-36','3203.htm'],
+  ['Basil the Great|On the Holy Spirit 26, 61-64','3203.htm']
+ ]){
+  const p=source.indexOf("'"+key+"'");
+  assert.ok(p>=0,key);
+  assert.ok(source.slice(p,p+260).includes('https://www.newadvent.org/fathers/'+url),key);
+  assert.ok(missing.has(key),'The historical edition is not a bundled appointed Office reading: '+key);
+ }
+ assert.match(app,/These historical source editions may use different wording or section boundaries/);
+});

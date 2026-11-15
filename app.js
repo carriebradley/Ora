@@ -2034,6 +2034,24 @@
     ],
     'Tertullian|On the Prescription of Heretics 20, 1-9; 21, 3; 22, 8-10': [
       ['Prescription Against Heretics, chapters 20–22', 'https://www.newadvent.org/fathers/0311.htm']
+    ],
+    'Athanasius of Alexandria|Against the Pagans 40-42': [
+      ['Against the Heathen, sections 40–42', 'https://www.newadvent.org/fathers/2801.htm']
+    ],
+    'Athanasius of Alexandria|Against the Pagans 42-43': [
+      ['Against the Heathen, sections 42–43', 'https://www.newadvent.org/fathers/2801.htm']
+    ],
+    'Athanasius of Alexandria|Letter to Epictetus 5-9': [
+      ['Letter to Epictetus (Letter 59), sections 5–9', 'https://www.newadvent.org/fathers/2806059.htm']
+    ],
+    'Basil the Great|On the Holy Spirit 9, 22-23': [
+      ['On the Holy Spirit, chapter 9, sections 22–23', 'https://www.newadvent.org/fathers/3203.htm']
+    ],
+    'Basil the Great|On the Holy Spirit 15, 35-36': [
+      ['On the Holy Spirit, chapter 15, sections 35–36', 'https://www.newadvent.org/fathers/3203.htm']
+    ],
+    'Basil the Great|On the Holy Spirit 26, 61-64': [
+      ['On the Holy Spirit, chapter 26, sections 61–64', 'https://www.newadvent.org/fathers/3203.htm']
     ]
   });
   let oortxP = null;
@@ -2318,7 +2336,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v319';
+  const APP_BUILD = 'ora-v320';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
