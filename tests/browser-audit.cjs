@@ -8,6 +8,15 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR:',e.message)});
  await context.route('**/*',route=>route.request().url().startsWith(process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/')?route.continue():route.abort());
  const base=process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/';
+ // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
+ for(const church of ['ukrainian','melkite']){
+  await page.goto(`${base}index.html?tab=today&date=2026-11-14&rite=byz&byzChurch=${church}`);
+  await page.waitForTimeout(200);
+  const card=page.locator('.today-saint-bio');
+  assert.equal(await card.count(),1,`${church} Philip saint card`);
+  assert.match(await card.innerText(),/Holy Apostle Philip/);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ }
  for (const rite of ['roman','byz','sarum']) for(const tab of ['today','pray','readings','liturgy','justice','calendar','more']) {
   await page.goto(`${base}index.html?tab=${tab}&date=2026-11-15&rite=${rite}&kind=morning`);
   await page.waitForTimeout(150);

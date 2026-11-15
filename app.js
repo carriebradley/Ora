@@ -1020,10 +1020,12 @@
       '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     ukrainian: {
+      '11-14': { match:/Philip/i, name:'Holy Apostle Philip', meta:'First century · One of the Twelve Apostles', bio:'Philip was called by Jesus in Galilee and brought Nathanael to meet Christ. He also appears in the Gospel accounts of the feeding of the multitude and the Last Supper. The Byzantine Churches commemorate him on November 14, immediately before the beginning of Philip’s Fast.', source:'https://mci.archpitt.org/liturgy/November.html' },
       '11-12': { match:/Josaphat/i, name:'Holy Hieromartyr Josaphat', meta:'c. 1580–1623 · Archbishop of Polotsk', bio:'Josaphat was an Eastern Catholic bishop who worked for ecclesial unity while preserving Byzantine Christian worship. Killed in Vitebsk in 1623, he remains an important figure in the history of the Ukrainian Greek Catholic Church.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     melkite: {
       '11-12': { match:/John the Merciful/i, name:'Saint John the Merciful', meta:'d. c. 619 · Patriarch of Alexandria', bio:'John served as Patriarch of Alexandria and became renowned for his care of people in poverty. His generous almsgiving reflected his conviction that service to the needy was central to Christian life.', source:'https://www.oca.org/saints/lives/2026/11/12/103286-saint-john-the-merciful-patriarch-of-alexandria' },
+      '11-14': { match:/Philip/i, name:'Holy Apostle Philip', meta:'First century · One of the Twelve Apostles', bio:'Called by Christ in Galilee, Philip brought Nathanael to Jesus and became one of the Twelve Apostles. The Byzantine calendar commemorates him on November 14; in the Melkite tradition he is remembered alongside Saint Gregory Palamas.', source:'https://melkitetypikon.org/' },
       '11-13': { match:/John Chrysostom/i, name:'Saint John Chrysostom', meta:'c. 347–407 · Archbishop of Constantinople', bio:'John Chrysostom was celebrated for his preaching, biblical teaching, and concern for the poor. The Byzantine liturgical tradition especially remembers him through the Divine Liturgy bearing his name.', source:'https://www.britannica.com/biography/Saint-John-Chrysostom' }
     },
     sarum: {
@@ -1033,18 +1035,32 @@
   function todaySaintBio(v) {
     const tradition = S.rite === 'byz' ? S.byzChurch : S.rite;
     const calendar = S.rite === 'byz' ? v.byz : S.rite === 'sarum' ? v.sarum : v.roman;
-    const entry = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
-    if (!entry || !entry.match.test(String(calendar?.title || ''))) return '';
+    const title = String(calendar?.title || '');
+    const listed = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
+    const entry = listed && listed.match.test(title) ? listed : null;
+    // If a verified biography is not yet available, retain the card for a
+    // named saint without inventing biographical facts or an image.
+    const commemorations = S.rite === 'byz'
+      ? byzantineCommemorations(displayTitle(title))
+      : westernCommemorations(title);
+    const primary = commemorations[0] || '';
+    const recognized = /\\b(?:saint|saints|st\\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist)\\b/i.test(primary);
+    if (!entry && !recognized) return '';
+    const saint = entry || {
+      name: primary,
+      meta: 'Commemorated in the selected liturgical calendar',
+      bio: 'This saint is commemorated today. A verified biographical summary has not yet been added to Ora.'
+    };
     const label = tradition === 'ukrainian' ? 'Ukrainian' : tradition === 'melkite' ? 'Melkite' : tradition === 'sarum' ? 'Traditional' : 'Roman';
     return `<section class="card today-saint-bio">
       <div class="lab">${todayAccent('bio')}<span class="grow">Saint of the Day</span><span class="saint-bio-rite">${label}</span></div>
-      <h2 class="saint-bio-name">${esc(entry.name)}</h2>
-      <p class="saint-bio-meta">${esc(entry.meta)}</p>
+      <h2 class="saint-bio-name">${esc(saint.name)}</h2>
+      <p class="saint-bio-meta">${esc(saint.meta)}</p>
       <div class="saint-bio-body">
-        ${entry.image ? `<a class="saint-bio-image-link" href="${esc(entry.imageCredit || entry.source)}" target="_blank" rel="noopener noreferrer" aria-label="View image source for ${esc(entry.name)}"><img class="saint-bio-image" src="${esc(entry.image)}" alt="Traditional sacred portrait of ${esc(entry.name)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
-        <p class="saint-bio-copy">${esc(entry.bio)}</p>
+        ${saint.image ? `<a class="saint-bio-image-link" href="${esc(saint.imageCredit || saint.source)}" target="_blank" rel="noopener noreferrer" aria-label="View image source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(saint.image)}" alt="Traditional sacred portrait of ${esc(saint.name)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
+        <p class="saint-bio-copy">${esc(saint.bio)}</p>
       </div>
-      <a class="saint-bio-source" target="_blank" rel="noopener noreferrer" href="${esc(entry.source)}">Learn more about this saint</a>
+      ${saint.source ? `<a class="saint-bio-source" target="_blank" rel="noopener noreferrer" href="${esc(saint.source)}">Learn more about this saint</a>` : ""}
     </section>`;
   }
   function viewToday() {
@@ -1758,7 +1774,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v280';
+  const APP_BUILD = 'ora-v281-saints';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
