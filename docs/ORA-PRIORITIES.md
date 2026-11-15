@@ -58,3 +58,6 @@ P1: Hide stray paired PDF folios (for example `10 11`) from the continuous Byzan
 
 ## Applied November 15 — v345
 P1: Saved Byzantine EPUB service books now read as one continuous document, matching PDFs. The prayer display skips explicit editorial front matter, ends before a labeled appendix, preserves recognized internal prayer headings and printed speaker roles, and excludes rubrics. Original books, per-book storage and bookmarks stay unchanged. Unit and mobile browser regression fixtures cover this behavior.
+
+## November 15 — candidate v346
+P1: The dated-liturgy composer detects existing printed Troparion, Kontakion and Kondakion lines even when the heading includes a saint, tone, or minister attribution, avoiding duplicate daily hymns. The day-specific Melkite prayer display also hides known import punctuation artifacts (`Tone 8))`, `You.!`) while preserving the source dataset. This change is only considered released after GitHub verification and Pages checks pass.

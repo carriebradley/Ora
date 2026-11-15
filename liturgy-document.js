@@ -16,7 +16,7 @@
     troparia:{
       after:/^(?:Little Entrance|Entrance with the Gospel)$/i,
       before:/^Trisagion(?: Hymn| Prayer)?$/i,
-      conflict:/^(?:Troparia(?:\s*(?:and|&)\s*Kontakia)?|Troparion(?:s)?(?:\s+of\b.*)?|Kontakion(?:s)?(?:\s+of\b.*)?)$/i
+      conflict:/^(?:Tropar(?:ion(?:s)?|ia)|Kontak(?:ion(?:s)?|ia)|Kondak(?:ion(?:s)?|ia))\b/i
     },
     prokeimenon:{
       after:/^Trisagion(?: Hymn| Prayer)?$/i,
@@ -66,7 +66,11 @@
   function displayLine(raw){
     return String(raw).replace(/^\s*(?:PROKIMENON|PROKEIMENON)\b/i,'Prokeimenon')
       .replace(/^\s*ALLELUIA\b/i,'Alleluia')
-      .replace(/\s*\*\s*/g,' ').replace(/\s{2,}/g,' ').replace(/\bgod\b/gi,'God').trim();
+      .replace(/\s*\*\s*/g,' ')
+      .replace(/\b(Tone\s+\d+)\)\)/gi,'$1)')
+      .replace(/\.!(?=\s|$)/g,'!')
+      .replace(/\s+([,.;:!?])/g,'$1')
+      .replace(/\s{2,}/g,' ').replace(/\bgod\b/gi,'God').trim();
   }
   // A private saved book can be parsed independently of downloaded daily
   // hymns. Fetch only the selected church's verified dataset, with one shared
@@ -101,7 +105,10 @@
       if(beginnings.length!==1||endings.length!==1)continue;
       const start=beginnings[0],finish=endings[0];
       if(start.n>=finish.n||finish.n-start.n>120)continue;
-      const collisions=points.filter(p=>p.n>start.n&&p.n<finish.n&&rule.conflict.test(p.text));
+      // Printed hymn headings can name a saint or tone, and may have a
+      // minister prefix. Such existing words always occupy the slot.
+      const collisions=points.filter(p=>p.n>start.n&&p.n<finish.n&&
+        rule.conflict.test(p.text.replace(/^(?:(?:priest|deacon|dcn)(?:\s+\d+)?|all|people|choir|cantor|reader|lector|faithful|congregation)\s*:\s*/i,'')));
       // A printed, genuinely empty slot can accept the appointed words;
       // a heading with any intervening prayer text must remain untouched.
       const slotNames={

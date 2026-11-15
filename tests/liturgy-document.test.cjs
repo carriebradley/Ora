@@ -90,3 +90,29 @@ test('reject improperly formatted or mixed-script source lines',()=>{
  assert.deepEqual(D.compose(sections,bad,context).placed,['alleluia']);
  assert.deepEqual(D.compose(sections,bad,context).remaining,['alleluia'].filter(()=>false));
 });
+
+
+test('tone-labelled existing troparia and kondakia are never duplicated',()=>{
+ for(const printed of [
+  'Troparion, Tone 8: Existing resurrection hymn.',
+  'Troparion of the Resurrection (Tone 8): Existing hymn.',
+  'ALL: Troparion of the Saint (Tone 4): Existing hymn.',
+  'Kondakion Presentation of the Virgin (Tone 4): Existing hymn.',
+  'CHOIR: Kontakion, Tone 8: Existing hymn.'
+ ]){
+  const book=[{heading:'Book',lines:['Little Entrance',printed,'Trisagion','Epistle','Gospel']}];
+  const result=D.compose(book,sample,context);
+  assert.equal(result.placed.includes('troparia'),false,printed);
+  assert.equal((joined(result).match(/Existing (?:resurrection )?hymn/g)||[]).length,1);
+  assert.ok(result.remaining.includes('troparia'));
+ }
+});
+
+test('Melkite dated hymns display without known import punctuation artifacts',()=>{
+ assert.equal(D.displayLine('Troparion of the Resurrection (Tone 8)): Glory to You.!'),
+  'Troparion of the Resurrection (Tone 8): Glory to You!');
+ assert.equal(D.displayLine('Kondakion: God is merciful. Alleluia!'),
+  'Kondakion: God is merciful. Alleluia!');
+ assert.equal(D.displayLine('Lord, hear me. Next prayer!'),
+  'Lord, hear me. Next prayer!');
+});

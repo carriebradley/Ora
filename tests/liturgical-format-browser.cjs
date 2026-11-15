@@ -308,6 +308,8 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await daily.locator('.byz-daily-propers').innerText(),/You came down from on high, O Merciful One/i);
  assert.equal((await daily.locator('.byz-daily-propers').innerText()).includes('*'),false,
   'Melkite hymns are formatted for quiet continuous reading');
+ assert.doesNotMatch(await daily.locator('.byz-daily-propers').innerText(),/Tone 8\)\)|You\.\!/,
+  'imported Melkite punctuation artifacts do not appear in the prayer view');
  assert.match(await daily.innerText(),/Luke 10:25-37/);
  assert.doesNotMatch(await daily.innerText(),/Mark 16:9-20/,'Orthros Gospel must not show as Divine Liturgy Gospel');
  assert.equal(await daily.locator('a').getAttribute('href'),'https://melkite.org/liturgical-resources');
