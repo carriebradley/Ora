@@ -73,6 +73,23 @@ module.exports=async function(browser,artifacts){
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'published art caption fits');
       }
     }
+    // The two rose Sundays must have their proper titles, dates, and liturgical
+    // colors on the actual deployed site, not merely in the calendar engine.
+    for(const [date,badge,title]of [
+      ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/],
+      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/]
+    ]){
+      await page.goto(`${base}index.html?tab=today&rite=roman&date=${date}`);
+      const card=page.locator('.gl[data-v="roman"]');
+      assert.equal(await card.locator('.gb').innerText(),badge,date+' rose Sunday badge');
+      assert.match((await card.innerText()).replace(/\\s+/g,' '),title,date+' correct joy Sunday');
+      assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#d9899e',date+' Roman rose accent');
+      for(const width of [320,390]){
+        await page.setViewportSize({width,height:844});
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,date+' rose day has no horizontal overflow');
+      }
+      await page.setViewportSize({width:390,height:844});
+    }
     await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
     assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#3b729f','published Marian accent is blue');
     assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian feasts/);
