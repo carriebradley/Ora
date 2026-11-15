@@ -318,3 +318,31 @@ test('Roman St. Charles Borromeo and Traditional November–December saints have
  }
  assert.ok(sarum.includes('evidence for his martyrdom remains uncertain'));
 });
+
+test('Traditional group martyrs and St Thomas retain source-backed short biographies',()=>{
+ const S=require('../sarum.js');
+ const section=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
+ const rows=[
+  ['11-08','The Four Crowned Martyrs','Four Crowned Martyrs'],
+  ['11-09','Saint Theodore of Amasea','Theodore'],
+  ['11-29','Saints Saturninus and Sisinnius','Saturninus'],
+  ['12-21','Saint Thomas the Apostle','Thomas']
+ ];
+ for(const [md,name,calendarName] of rows){
+  const block=section.slice(section.indexOf("'"+md+"':"));
+  assert.ok(block.startsWith("'"+md+"':"),md);
+  assert.ok(block.includes('name: "'+name+'"'),md);
+  const bio=block.match(/bio: "([^"]+)"/);
+  assert.ok(bio,md);
+  assert.ok(bio[1].trim().split(/\s+/).length<=50,md);
+  assert.ok(block.includes('source: "https://'),md);
+  let found=false;
+  for(let year=2025;year<=2036;year++){
+   const record=S.sarum(new Date(year+'-'+md+'T00:00:00Z'));
+   if(record.title.includes(calendarName)){found=true;break;}
+  }
+  assert.ok(found,'At least one Sarum year must primarily appoint '+calendarName+' on '+md);
+ }
+ assert.ok(section.includes('Their exact identities are uncertain'));
+ assert.ok(section.includes('distinct from Saturninus, the bishop and martyr of Toulouse'));
+});
