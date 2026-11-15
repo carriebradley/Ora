@@ -79,7 +79,7 @@
     if (mixed && /[A-Z]{4,}\s+[A-Z]{4,}/.test(mixed[1]))
       return titleCase(mixed[1].trim()) + ' ' + mixed[2];
     if (letters.length < 5 || (s.match(/[A-Z]/g) || []).length / letters.length < .85) return s;
-    const minor = new Set(['of','the','and','in','on','at','to','for','from','with','by']);
+    const minor = new Set(['of','the','and','in','on','at','to','for','from','with','by','after','before']);
     return s.toLocaleLowerCase('en').replace(/\b[a-z]+(?:['’][a-z]+)?\b/g, (word, offset) =>
       offset && minor.has(word) ? word : word[0].toUpperCase() + word.slice(1)
     ).replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii)\b/g, x => x.toUpperCase());
