@@ -1,0 +1,36 @@
+name: Import Gregory Dialogues Scholastica Office reading
+on:
+  workflow_dispatch:
+  push:
+    branches: [ora-scholastica-dialogues-v281]
+    paths:
+      - tools/import_oor_gregory_dialogues.py
+      - tests/test_oor_gregory_dialogues.py
+      - .github/workflows/import-oor-gregory-dialogues.yml
+permissions:
+  contents: write
+jobs:
+  import-dialogues:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate chapter boundaries and parser
+        run: python -m unittest discover -s tests -p test_oor_gregory_dialogues.py
+      - name: Import 1911 edition historic reading
+        run: python tools/import_oor_gregory_dialogues.py
+      - name: Refresh Office availability audit
+        run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
+      - name: Commit source-matched text and audit
+        run: |
+          if git diff --quiet -- oortext.json docs/office-of-readings-availability.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add oortext.json docs/office-of-readings-availability.json
+          git commit -m "Import Gregory Dialogues II.33 on St Scholastica"
+          git push
