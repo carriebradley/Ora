@@ -23,6 +23,8 @@ test('feed material remains explicitly distinguished from permission for install
  assert.match(importer,/rights for that distribution are \*\*not verified\*\*/i);
  assert.match(sw,/readings\.json/);
  assert.match(app,/fetch\('readings\.json'/);
- assert.match(app,/const APP_BUILD = 'ora-v327'/);
- assert.match(sw,/const V = 'ora-v327'/);
+ const appBuild=app.match(/const APP_BUILD = '(ora-v\d+)'/);
+ const workerBuild=sw.match(/const V = '(ora-v\d+)'/);
+ assert.ok(appBuild&&workerBuild,'Both scripts declare a build number');
+ assert.equal(appBuild[1],workerBuild[1]);
 });

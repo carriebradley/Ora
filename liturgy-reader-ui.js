@@ -21,7 +21,8 @@
         <p class="reader-status" role="status">Checking saved book…</p>
         <button class="btn" data-reader="open" disabled>Open original book</button>
         <label for="liturgical-file">Choose a PDF or EPUB</label>
-        <input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub">
+        <input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub" aria-describedby="reader-storage-note">
+        <p class="muted" id="reader-storage-note" style="font-size:.78rem;line-height:1.45;margin:8px 0">Books and bookmarks stay on this device. Keep the original PDF or EPUB elsewhere: clearing Safari website data or reinstalling Ora may erase the saved copy.</p>
         <button class="btn" data-reader="remove" disabled>Remove saved book</button>
       </details>
     </section>`;

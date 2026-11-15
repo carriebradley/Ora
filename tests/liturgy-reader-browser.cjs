@@ -8,6 +8,10 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const requests=[];const watch=r=>{if(['POST','PUT','PATCH'].includes(r.method()))requests.push(r.url());};page.on('request',watch);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11`);
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ const storageNote=page.locator('#reader-storage-note');
+ assert.match(await storageNote.innerText(),/Keep the original PDF or EPUB elsewhere/);
+ assert.equal(await page.locator('#liturgical-file').getAttribute('aria-describedby'),'reader-storage-note');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'storage warning fits phone');
  const ensureOffline=async()=>{if(!await page.locator('.reader-offline').evaluate(el=>el.open))await page.locator('.reader-offline > summary').click();};
  const choose=async(name)=>{await ensureOffline();await page.locator('#liturgical-file').setInputFiles({name,mimeType:'application/pdf',buffer:pdf()});await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);};
  await choose('<reader-test>.pdf');
