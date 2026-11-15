@@ -29,7 +29,7 @@ class BlockReader(HTMLParser):
             self.skip += 1
         if self.skip:
             return
-        if tag in ("p", "h2", "h3", "h4", "blockquote", "div") and self.active is None:
+        if tag in ("p", "h2", "h3", "h4", "blockquote") and self.active is None:
             self.active = tag
             self.parts = []
         elif tag == "br" and self.active is not None:
