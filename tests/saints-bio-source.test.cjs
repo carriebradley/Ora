@@ -614,3 +614,27 @@ test('Roman September saints match their appointments, combined feasts, and Sund
  assert.ok(roman.includes('name: "Pope Saint Cornelius"'));
  assert.ok(roman.includes('name: "Saint Michael the Archangel"'));
 });
+
+test('Roman October biographies follow primary feast precedence and preserve other optional memorials',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const expected={'10-01':'Therese of the Child Jesus','10-04':'Francis of Assisi',
+  '10-09':'Denis','10-15':'Teresa of Jesus','10-17':'Ignatius of Antioch','10-18':'Luke','10-28':'Simon and Jude'};
+ for(const [md,name] of Object.entries(expected)){
+  const row=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(row.startsWith("'"+md+"':"),md);
+  assert.ok(row.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const bio=row.match(/bio: "([^"]+)"/);
+  assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
+  assert.ok(Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')).title)
+    .some(title=>title.includes(name)),md+' must be primarily appointed in one of 2025-2036');
+ }
+ assert.doesNotMatch(L.roman(new Date('2027-10-17T00:00:00Z')).title,/Ignatius/,
+  'Sunday in Ordinary Time displaces Ignatius of Antioch');
+ assert.match(L.roman(new Date('2027-10-18T00:00:00Z')).title,/Saint Luke/);
+ assert.match(L.roman(new Date('2027-10-28T00:00:00Z')).title,/Simon and Jude/);
+ const opts=L.roman(new Date('2027-10-09T00:00:00Z'));
+ assert.match(opts.title,/Denis/);
+ assert.ok(opts.also.some(x=>/John Leonardi|John Henry Newman/.test(x.title)),
+  'Other October 9 optional memorials remain listed');
+});

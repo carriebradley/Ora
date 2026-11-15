@@ -1304,6 +1304,14 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '10-01': { match: /Therese of the Child Jesus|Thérèse of the Child Jesus/i, name: "Saint Thérèse of Lisieux", meta: "1873–1897 · Carmelite Nun and Doctor", bio: "Thérèse entered Carmel at fifteen and taught a path of holiness through ordinary acts of love and trust in God. Her writings, collected as Story of a Soul, influenced Catholics worldwide.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-therese-of-lisieux/" },
+      '10-04': { match: /Francis of Assisi/i, name: "Saint Francis of Assisi", meta: "c. 1181–1226 · Founder of the Franciscans", bio: "Francis renounced wealth and embraced a life of poverty, prayer, and service. He founded the Franciscan movement and sought peace and reconciliation, including through his encounter with Sultan al-Kamil.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-of-assisi/" },
+      '10-09': { match: /Saint Denis/i, name: "Saint Denis of Paris", meta: "Third century · Bishop and Martyr", bio: "Denis is honored as an early bishop and martyr of Paris. His historical biography is uncertain, and familiar stories about carrying his severed head belong to later legend. The Roman calendar lists other optional memorials on this date.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-denis-and-companions/" },
+      '10-15': { match: /Teresa of Jesus/i, name: "Saint Teresa of Ávila", meta: "1515–1582 · Carmelite and Doctor", bio: "Teresa of Ávila reformed Carmelite life and founded new convents dedicated to prayer and simplicity. Her writings, including The Interior Castle, explore spiritual growth and contemplative prayer.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-teresa-of-avila/" },
+      '10-17': { match: /Ignatius of Antioch/i, name: "Saint Ignatius of Antioch", meta: "d. c. 107 · Bishop and Martyr", bio: "Ignatius, Bishop of Antioch, wrote seven letters while being taken to Rome for execution. He urged Christian communities toward unity, faithfulness, and care for one another. His letters are among the earliest post-apostolic Christian writings.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-ignatius-of-antioch/" },
+      '10-18': { match: /Saint Luke/i, name: "Saint Luke the Evangelist", meta: "First century · Evangelist", bio: "Luke is traditionally credited with the Gospel bearing his name and the Acts of the Apostles. Both works emphasize God's mercy, concern for the poor, and the spread of the Gospel beyond Israel.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-luke/" },
+      '10-28': { match: /Simon and Jude/i, name: "Saint Simon the Apostle", meta: "First century · Apostle", bio: "Simon, called the Zealot in the apostolic lists, was one of the Twelve chosen by Jesus. Little else is known about his life with certainty. The Roman Church commemorates him together with Saint Jude.", source: "https://www.franciscanmedia.org/saint-of-the-day/saints-simon-and-jude/" },
+
       '09-03': { match: /Gregory the Great/i, name: "Pope Saint Gregory the Great", meta: "c. 540–604 · Pope and Doctor", bio: "Gregory was a monk who became Bishop of Rome in 590. He organized aid for the poor, sent missionaries to England, and wrote the influential Pastoral Rule on the responsibilities of bishops.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-gregory-the-great/" },
       '09-05': { match: /Teresa of Calcutta/i, name: "Saint Teresa of Calcutta", meta: "1910–1997 · Foundress and Servant of the Poor", bio: "Teresa founded the Missionaries of Charity in Kolkata, India, to care for people facing poverty, illness, and abandonment. She received the Nobel Peace Prize in 1979 and was canonized in 2016.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-teresa-of-calcutta/" },
       '09-09': { match: /Peter Claver/i, name: "Saint Peter Claver", meta: "1580–1654 · Jesuit Priest and Missionary", bio: "Peter Claver ministered in Cartagena, where enslaved Africans arrived after the Atlantic crossing. He brought food, medicine, and pastoral care to those forced into slavery, affirming their dignity amid a brutal colonial system.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-peter-claver/" },
@@ -2310,7 +2318,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v318';
+  const APP_BUILD = 'ora-v319';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
