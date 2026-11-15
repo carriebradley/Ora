@@ -95,3 +95,26 @@ test('Six Basil and Athanasius source links do not count as bundled Office readi
  }
  assert.match(app,/These historical source editions may use different wording or section boundaries/);
 });
+
+test('eleven Cyprian and Ambrose historical editions link without pretending the Office text is bundled',()=>{
+ const fs=require('node:fs');
+ const app=fs.readFileSync(require.resolve('../app.js'),'utf8');
+ const map=app.slice(app.indexOf('const OOR_PUBLIC_DOMAIN_SOURCES'),app.indexOf('let oortxP = null;'));
+ const missing=new Set(require('../docs/office-of-readings-availability.json').missingReferences);
+ const cases=[
+  ['Ambrose of Milan|On Virgins 1, 2.5.7-9','34071.htm'],
+  ['Ambrose of Milan|On the Death of his Brother Satyrus 2','34032.htm'],
+  ['Cyprian|On Mortality 18.24.26','050707.htm'],
+  ...['1-3','4-6','8-9','11-12','13-15','18.22','23-24','28-30'].map(section=>
+   ["Cyprian|On the Lord's Prayer "+section,'050704.htm'])
+ ];
+ assert.equal(cases.length,11);
+ for(const [key,leaf] of cases){
+  const pos=map.indexOf(JSON.stringify(key));
+  assert.ok(pos>=0,'Missing direct source: '+key);
+  assert.ok(map.slice(pos,pos+270).includes('https://www.newadvent.org/fathers/'+leaf),key);
+  assert.ok(missing.has(key),'Link is not a bundled appointed excerpt: '+key);
+ }
+ assert.match(app,/These historical source editions may use different wording or section boundaries/);
+ assert.equal(require('../docs/office-of-readings-availability.json').available,105);
+});

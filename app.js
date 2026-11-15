@@ -2052,6 +2052,39 @@
     ],
     'Basil the Great|On the Holy Spirit 26, 61-64': [
       ['On the Holy Spirit, chapter 26, sections 61–64', 'https://www.newadvent.org/fathers/3203.htm']
+    ],
+    "Ambrose of Milan|On Virgins 1, 2.5.7-9": [
+      ["Concerning Virginity, Book I", 'https://www.newadvent.org/fathers/34071.htm']
+    ],
+    "Ambrose of Milan|On the Death of his Brother Satyrus 2": [
+      ["On the Death of Satyrus, Book II", 'https://www.newadvent.org/fathers/34032.htm']
+    ],
+    "Cyprian|On Mortality 18.24.26": [
+      ["On Mortality (Treatise 7), sections 18, 24 and 26", 'https://www.newadvent.org/fathers/050707.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 1-3": [
+      ["On the Lord's Prayer (Treatise 4), sections 1–3", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 4-6": [
+      ["On the Lord's Prayer (Treatise 4), sections 4–6", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 8-9": [
+      ["On the Lord's Prayer (Treatise 4), sections 8–9", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 11-12": [
+      ["On the Lord's Prayer (Treatise 4), sections 11–12", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 13-15": [
+      ["On the Lord's Prayer (Treatise 4), sections 13–15", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 18.22": [
+      ["On the Lord's Prayer (Treatise 4), sections 18 and 22", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 23-24": [
+      ["On the Lord's Prayer (Treatise 4), sections 23–24", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Cyprian|On the Lord's Prayer 28-30": [
+      ["On the Lord's Prayer (Treatise 4), sections 28–30", 'https://www.newadvent.org/fathers/050704.htm']
     ]
   });
   let oortxP = null;
@@ -2336,7 +2369,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v320';
+  const APP_BUILD = 'ora-v321';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
