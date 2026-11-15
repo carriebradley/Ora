@@ -62,3 +62,6 @@ When the saved service book has one *empty* named variable-hymn slot and the
 next established service heading immediately follows it, Ora can fill that
 slot in place without repeating its heading. A slot containing any printed
 prayer text is not overwritten; ambiguous headings remain unresolved.
+
+## v342 — Ukrainian prayer punctuation / chant marks
+The continuous document reader now normalizes prayer text at the display boundary: chant pause asterisks disappear, extra spaces before punctuation are removed, and spacing inside parentheses and typographic quotations is tightened. The saved PDF or EPUB and parsed liturgical source are left unchanged. Speaker names, source annotations, rubrics, headings, hyphenated words and substantive punctuation are preserved. This applies to Ukrainian and Melkite prayer text in the unified reader, including source-extracted material and date-specific propers. Fictional test fixtures cover English lines with hymn asterisks, commas, exclamation marks, parentheses, and unlabelled prayer lines; real private PDFs remain local to each device.

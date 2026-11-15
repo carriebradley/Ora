@@ -282,11 +282,11 @@
           p.append(speaker);
           if(role.cue){const cue=document.createElement('span');cue.className='byz-rubric';cue.textContent=role.cue;p.append(cue);}
           if(role.words){
-            const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=role.words;p.append(words);
+            const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=LiturgicalFormat.displayPrayer(role.words);p.append(words);
           }
           lastRole=role.kind;
         }else{
-          p.textContent=text;lastRole=null;
+          p.textContent=LiturgicalFormat.displayPrayer(text);lastRole=null;
         }
         container.append(p);lastLine=p;
       }

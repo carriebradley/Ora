@@ -152,7 +152,21 @@ test('voice cues in source directions stay attached to the following speaker',()
  assert.equal(F.speakerInstruction('The priest walks toward the altar.'),null);
 });
 
-test('spoken proclamations are rubrics when attributed to a minister',()=>{
+test('PDF-derived Byzantine prayers read without chant breaks or stray punctuation',()=>{
+ const raw='ALL: Bless * the Lord , O my soul ! Glory to You ; now and ever .';
+ const parsed=F.role(raw);
+ const display=F.displayPrayer(parsed.words);
+ assert.equal(display,'Bless the Lord, O my soul! Glory to You; now and ever.');
+ assert.equal(F.displayPrayer('Peace * to all. * And to your spirit.'),'Peace to all. And to your spirit.');
+ assert.equal(F.displayPrayer('O Lord ( who loves mankind ) , hear us .'),'O Lord (who loves mankind), hear us.');
+ assert.equal(F.displayPrayer('Holy God… Holy Mighty! (Psalm 103:24)'),'Holy God… Holy Mighty! (Psalm 103:24)');
+ assert.equal(F.displayPrayer('Only-begotten Son, have mercy.'),'Only-begotten Son, have mercy.');
+ assert.equal(F.displayPrayer('The words * of prayer.'),'The words of prayer.');
+ assert.equal(F.normalize(raw),raw,'the original parsed words must not be changed in memory');
+ assert.equal(F.displayPrayer('ALL: \u201cGod be with you.\u201d'),'ALL: “God be with you.”');
+});
+
+
  for(const line of ['The deacon proclaims aloud:','The priest exclaims:','The reader recites:','The cantor chants:']){
   assert.equal(F.instruction(line),true,line);
   assert.ok(F.speakerInstruction(line),line);

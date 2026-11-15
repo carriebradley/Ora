@@ -4,6 +4,23 @@
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
+ // Device-only display cleanup for PDF extraction and chant typography.
+ // Never rewrite the saved PDF or the underlying liturgical text. Asterisks
+ // mark chant pauses; they are not words to be read in quiet prayer.
+ // Do not flatten sentence punctuation, ellipses, verse citations or hymnal
+ // accents. In particular, a hyphenated compound is never changed here.
+ function displayPrayer(input){
+  return String(input??'')
+   .replace(/[\u200b\u200c\u200d\u2060\ufeff]/g,'')
+   .replace(/[\u2002-\u200a\u202f]/g,' ')
+   .replace(/\u00ad/g,'')
+   .replace(/\s*[*\u2217\uff0a]+\s*/g,' ')
+   .replace(/\s+([,.;:!?])/g,'$1')
+   .replace(/([(\u2018\u201c])\s+/g,'$1')
+   .replace(/\s+([)\u2019\u201d])/g,'$1')
+   .replace(/[ \t]{2,}/g,' ')
+   .trim();
+ }
  const LOWER_TITLE_WORDS=new Set(['of','the','and','in','on','at','to','for','from','with','by','after','before','as','or','a','an','de','du','des','la','le']);
  const TITLE_ACRONYMS=new Set(['US','UK','USA','USCCB','UGCC','OCA','ICEL','PDF','EPUB','NRSVCE','RSVCE','NABRE','NRSV','RSV','KJV','ESV','AD','BC','EU']);
  const TITLE_CAPS=/(?<![\p{L}])[\p{Lu}]{2,}(?:['’]\p{Lu}+)?(?:-\p{Lu}+)*(?![\p{L}])/gu;
@@ -151,5 +168,5 @@
   for(const part of result)part.lines=(part.lines||[]).filter(s=>!/^(?:WE\s+LEAVE\s+THE\s+WORLD(?:\s+STAND)?|STAND)$/i.test(s.trim()));
   return [{heading:'Liturgy of the Word',lines:[]},...result];
  }
- return {normalize,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine,englishPdfItems,startAtOpeningBlessing};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine,englishPdfItems,startAtOpeningBlessing};
 });

@@ -95,7 +95,7 @@ module.exports=async(page,base,artifacts,violations)=>{
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.'],
-     35:['First Antiphon','ALL: Fixture Ukrainian antiphon.'],
+     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
      83:['BISHOP: Fixture anaphora.'],
      99:['ALL: Fixture Communion response.'],
@@ -119,6 +119,9 @@ module.exports=async(page,base,artifacts,violations)=>{
  ]);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian litany/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon/);
+ assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
+ assert.match(await ukrainian.innerText(),/For You are holy now and ever\./);
+ assert.doesNotMatch(await ukrainian.innerText(),/\*/, 'Ukrainian continuous prayer text hides PDF chant-break asterisks');
  assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows/);
  assert.equal(await ukrainian.locator('.byz-role-deacon').count(),2);
  assert.equal(await ukrainian.locator('.byz-role-priest .byz-speaker').first().innerText(),'Priest 1');
