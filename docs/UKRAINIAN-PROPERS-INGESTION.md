@@ -24,13 +24,24 @@ failures preserve the previously verified record rather than inventing text;
 all-source failures stop the workflow. Historical coverage grows from the
 initial import and subsequent weeks, not from guessed calendar cycles.
 
-## Rendering gate
+## Reader integration and outstanding limits
 
-The imported file ukrainian-propers.json is data only and is not yet injected
-into the Divine Liturgy reader. Rendering will follow a source audit:
-confirm each record contains only the appointed prayer parts, exclude Gospel
-and Epistle prose, identify where insertion belongs in a user's saved year-round
-service text, and avoid duplicate prayers or ordinary-weekday antiphons on
-feast days. Keep source and editorial notes out of the spoken prayer flow.
+As of v339, Ora loads ukrainian-propers.json from its static site and renders
+verified dated hymn groups in the **Readings & propers** panel of the Ukrainian
+Divine Liturgy. The panel is collapsed by default and follows the continuous
+prayer book, preserving the opening prayer flow. Text is created with safe DOM
+text nodes; chant-break asterisks are omitted for quiet reading. The exact
+calendar date and the Ukrainian church designation are checked before any
+hymn group is shown. Aliturgical dates and conflicting service appointments
+do not receive an automatically selected hymn group.
 
-The existing v336 reader remains unchanged while import data is validated.
+This supplementary dated section does not assert that the hymns have been
+inserted at each precise liturgical location within an unknown privately saved
+PDF. Direct in-sequence substitution needs edition-specific verification.
+The Melkite service retains its distinct official monthly source and is not
+populated from Edmonton hymns.
+
+The initial 2026 source intake verified 72 dates, October 18 through
+December 28, 2026. The weekly updater retains successful records, checks a
+rolling 28-day back / 45-day forward window and does not manufacture texts
+for unsupported calendar years. Private saved PDF/EPUB files are not uploaded.
