@@ -141,6 +141,15 @@ def assemble(fetch=fetch_month, november_baseline="melkite-propers-2026-11.json"
         month_days, seen = extract_month(fetch(month), month, quarantined=quarantined)
         if month == "November":
             verify_november(month_days,november_baseline)
+        # Newton's published Nativity guide appoints Vespers with St. Basil
+        # on Thursday 24 December 2026. The monthly file's Chrysostom
+        # heading is inconsistent with that service; keep it out of the
+        # dated Chrysostom hymn reader pending source reconciliation.
+        if month == "December" and "2026-12-24" in month_days:
+            del month_days["2026-12-24"]
+            quarantined.append({"date":"2026-12-24",
+                "reason":"Chrysostom heading conflicts with Newton Nativity Vesperal Basil order",
+                "reference":"https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf"})
         if not month_days:
             raise ValueError(month+" contains no extractable Chrysostom hymns; investigate rather than invent")
         if set(month_days) & set(all_days):

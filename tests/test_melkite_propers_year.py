@@ -69,6 +69,12 @@ class MultiMonthTypikonTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             year.document_url("2027")
 
+    def test_monthly_conflict_is_quarantined_before_publication(self):
+        source=Path(__file__).resolve().parents[1]/"tools"/"import_melkite_propers_year.py"
+        code=source.read_text(encoding="utf-8")
+        self.assertIn('del month_days["2026-12-24"]',code)
+        self.assertIn("Nativity Vesperal Basil",code)
+
     def test_november_baseline_must_be_unchanged(self):
         records={"2026-11-15":{"iso":"2026-11-15","church":"melkite","groups":{"troparia":["test"]}}}
         with self.assertRaises(Exception):
