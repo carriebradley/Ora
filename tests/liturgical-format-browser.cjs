@@ -30,8 +30,8 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await text.innerText(),/Fixture appendix|stand before the Holy Table/);
  assert.equal(await text.locator('.byz-role-priest').count(),1);assert.equal(await text.locator('.byz-role-all').count(),1);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'whole-service view has no irrelevant page controls');
- await text.locator('.byz-rubrics-toggle').click();assert.equal(await text.locator('.byz-rubric').isVisible(),true);
- await text.locator('.byz-rubrics-toggle').click();assert.equal(await text.locator('.byz-rubric').isVisible(),false);
+ assert.equal(await text.locator('.byz-rubrics-toggle').count(),0,'no instruction controls in devotional reader');
+ assert.equal(await text.locator('.byz-rubric').count(),0,'no ceremonial directions in the prayer DOM');
  for(const colorScheme of ['light','dark']){
   await page.emulateMedia({colorScheme});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
@@ -81,8 +81,8 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await choices.nth(1).innerText(),/weekday words continued right/);
  assert.doesNotMatch(await choices.nth(1).innerText(),/Sunday words|continued left/);
  assert.equal(await page.locator('.byz-role-priest').count(),3);
- assert.equal(await page.locator('.byz-prayer-line .byz-rubric').isVisible(),false);
- await page.locator('.byz-rubrics-toggle').click();assert.equal(await page.locator('.byz-prayer-line .byz-rubric').isVisible(),true);
+ assert.equal(await page.locator('.byz-prayer-line .byz-rubric').count(),0,'voice cues never interrupt the prayers');
+ assert.equal(await page.locator('.byz-rubrics-toggle').count(),0,'no display-control for stage directions');
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
 
  // The recognized bilingual Edmonton booklet should use the exact same
@@ -94,8 +94,8 @@ module.exports=async(page,base,artifacts,violations)=>{
    const get=LiturgyReader.get,load=LiturgyReader.load;
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
-     33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.'],
-     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .'],
+     33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
+     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','ALL: Let us stand well before God.'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
      83:['BISHOP: Fixture anaphora.'],
      99:['ALL: Fixture Communion response.'],
@@ -122,7 +122,8 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
  assert.match(await ukrainian.innerText(),/For You are holy now and ever\./);
  assert.doesNotMatch(await ukrainian.innerText(),/\*/, 'Ukrainian continuous prayer text hides PDF chant-break asterisks');
- assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows/);
+ assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows|All stand\.|\(Sit\.\)/);
+ assert.match(await ukrainian.innerText(),/Let us stand well before God/, 'prayer language mentioning standing must be retained');
  assert.equal(await ukrainian.locator('.byz-role-deacon').count(),2);
  assert.equal(await ukrainian.locator('.byz-role-priest .byz-speaker').first().innerText(),'Priest 1');
  assert.equal(await ukrainian.locator('.byz-role-deacon .byz-speaker').first().innerText(),'Deacon 2');
@@ -135,10 +136,8 @@ module.exports=async(page,base,artifacts,violations)=>{
      'Ukrainian prayers retain Melkite reading type scale');
  }
  await page.setViewportSize({width:390,height:844});
- await ukrainian.locator('.byz-rubrics-toggle').click();
- assert.equal(await ukrainian.locator('.byz-rubric').first().isVisible(),true);
- await ukrainian.locator('.byz-rubrics-toggle').click();
- assert.equal(await ukrainian.locator('.byz-rubric').first().isVisible(),false);
+ assert.equal(await ukrainian.locator('.byz-rubrics-toggle').count(),0);
+ assert.equal(await ukrainian.locator('.byz-rubric').count(),0);
  // A different user-owned Ukrainian PDF may not have the Edmonton page
  // count; generic prayer detection must still produce the same UI.
  await page.evaluate(async()=>{
@@ -233,8 +232,8 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await seasonalMeta.innerText(),/Saved edition: Easter season/);
  await page.locator('.reader-offline > summary').click();
  assert.equal(await ukrainian.locator('.byz-major-heading').first().innerText(),'Liturgy of the Word');
- assert.equal(await ukrainian.locator('.byz-reader-preferences').evaluate(el=>el===el.parentElement.lastElementChild),true,
-  'instruction controls follow the prayer rather than precede it');
+ assert.equal(await ukrainian.locator('.byz-reader-preferences').count(),0,
+  'private devotional mode has no stage direction controls');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
  // Scanned/image-only PDFs cannot be converted into text without OCR; retain
  // access to Open original book and do not return to paged inline navigation.
@@ -334,5 +333,5 @@ module.exports=async(page,base,artifacts,violations)=>{
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  assert.match(await page.locator('.simple-liturgy-title').innerText(),/Twenty-fifth Sunday after Pentecost/i);
- console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
+ console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, no stage directions, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };

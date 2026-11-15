@@ -152,6 +152,24 @@ test('voice cues in source directions stay attached to the following speaker',()
  assert.equal(F.speakerInstruction('The priest walks toward the altar.'),null);
 });
 
+test('devotional mode classifies posture cues but preserves prayer words',()=>{
+ for(const direction of [
+  'Stand.', 'Sit.', 'Kneel.', 'All stand.', '(Sit.)',
+  'Please stand.', 'The people sit.', 'Stand for the Gospel.',
+  'The priest bows.', 'The deacon proclaims aloud:'
+ ])assert.equal(F.instruction(direction),true,direction);
+ for(const prayer of [
+  'Let us stand well before God.',
+  'ALL: Let us stand well before God.',
+  'Lord, make me stand firm in Your truth.',
+  'We stand before You with reverence.',
+  'PRIEST: Peace be with you.',
+  'For the peace of the world, fixture petition.'
+ ])assert.equal(F.instruction(prayer),false,prayer);
+ assert.equal(F.role('ALL: Lord, have mercy.').words,'Lord, have mercy.');
+ assert.equal(F.speakerInstruction('The Priest says:').name,'Priest');
+});
+
 test('PDF-derived Byzantine prayers read without chant breaks or stray punctuation',()=>{
  const raw='ALL: Bless * the Lord , O my soul ! Glory to You ; now and ever .';
  const parsed=F.role(raw);

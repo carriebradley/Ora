@@ -80,6 +80,10 @@
  }
  function instruction(text){
   const s=String(text||'').trim();if(!s||role(s))return false;
+  // Short posture directions must never be read as prayers. Do not match
+  // devotional sentences such as "Let us stand before You, O Lord."
+  if(/^\(?\s*(?:(?:the\s+)?(?:all|everyone|people|congregation|faithful|clergy|choir|priest|deacon|bishop|celebrant|reader)\s+)?(?:(?:please|now)\s+)?(?:stand(?:\s+up)?|sit(?:\s+down)?|kneel|bow|rise|be seated|remain (?:standing|seated|kneeling))(?:\s+(?:for the (?:gospel|reading)|in silence|together))?\s*[.)]?$/i.test(s))return true;
+  if(/^\(?\s*(?:stand|sit|kneel)\s*(?:or|\/)\s*(?:stand|sit|kneel)\s*[.)]?$/i.test(s))return true;
   if(/^(?:rubric|instructions?|note):/i.test(s))return true;
   // Ceremonial instructions printed in the Melkite 2009 source can start
   // with participles or with a pronoun rather than "The priest".

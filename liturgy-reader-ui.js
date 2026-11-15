@@ -196,19 +196,7 @@
   function renderEdmontonPrayerText(target,sections){
     target.replaceChildren();
     target.classList.add('reader-byzantine-prayers');
-    target.classList.remove('byz-show-rubrics');
-    const toolbar=document.createElement('div');
-    toolbar.className='byz-reader-preferences';
-    const toggle=document.createElement('button');
-    toggle.type='button';toggle.className='byz-rubrics-toggle';
-    toggle.textContent='Show liturgical instructions';
-    toggle.setAttribute('aria-pressed','false');
-    toggle.addEventListener('click',()=>{
-      const visible=target.classList.toggle('byz-show-rubrics');
-      toggle.setAttribute('aria-pressed',String(visible));
-      toggle.textContent=visible?'Hide liturgical instructions':'Show liturgical instructions';
-    });
-    toolbar.append(toggle);
+
     const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
     let lastLine=null,lastRole=null,lastMajor=null,lastHeading=null,pendingRole=null;
     let container=target;
@@ -262,11 +250,9 @@
         }
         let role=roleLine(text);
         if(!role && liturgicalInstruction(text)){
-          const rubric=document.createElement('p');
-          rubric.className='byz-rubric';
-          const flag=document.createElement('span');flag.className='byz-rubric-label';flag.textContent='Instruction';
-          const words=document.createElement('span');words.textContent=text;
-          rubric.append(flag,words);container.append(rubric);
+          // Only prayers and responses belong in Ora's reading view.
+          // Retain a printed minister attribution for the following prayer,
+          // but never display posture, gesture, movement or other rubrics.
           pendingRole=LiturgicalFormat.speakerInstruction(text);
           lastLine=null;lastRole=null;continue;
         }
@@ -280,7 +266,7 @@
           const speaker=document.createElement('span');
           speaker.className='byz-speaker';speaker.textContent=role.name;
           p.append(speaker);
-          if(role.cue){const cue=document.createElement('span');cue.className='byz-rubric';cue.textContent=role.cue;p.append(cue);}
+
           if(role.words){
             const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=LiturgicalFormat.displayPrayer(role.words);p.append(words);
           }
@@ -291,8 +277,6 @@
         container.append(p);lastLine=p;
       }
     }
-    // Optional instructions come after the prayers rather than before them.
-    target.append(toolbar);
   }
   // Compose the day's verified hymns around semantic headings in the user's
   // privately saved book. Unknown/seasonal editions remain unchanged.
@@ -307,13 +291,7 @@
          document.querySelector('.liturgical-text')!==section)return;
       const result=LiturgyDocument.compose(sections,record,{church,iso,id});
       if(!result.placed.length)return;
-      const showRubrics=preview.classList.contains('byz-show-rubrics');
       renderEdmontonPrayerText(preview,result.sections);
-      if(showRubrics){
-        preview.classList.add('byz-show-rubrics');
-        const toggle=preview.querySelector('.byz-rubrics-toggle');
-        if(toggle){toggle.textContent='Hide liturgical instructions';toggle.setAttribute('aria-pressed','true');}
-      }
       section.dataset.placedDaily=result.placed.join(',');
       const extra=document.querySelector('.byz-daily-propers[data-iso="'+iso+'"][data-church="'+church+'"]');
       for(const key of result.placed)extra?.querySelector('.byz-proper-group[data-proper="'+key+'"]')?.remove();
