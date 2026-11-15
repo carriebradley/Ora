@@ -377,3 +377,25 @@ test('titled EPUB appendices and copyright chapters never resume as prayer',()=>
  const ordinary=F.epubPrayerSections([{title:'Prayer of Thanksgiving — After Communion',blocks:[{text:'PRIEST: Blessed is the Kingdom.'}]}]);
  assert.match(ordinary.flatMap(s=>s.lines).join(' '),/Blessed is the Kingdom/);
 });
+
+test('Melkite iPhone reader hides ceremonial and phonetic notes without losing prayers',()=>{
+ const directions=[
+  'The Deacon replaces his hat and intones the Litany of Peace in a strong voice while standing before the Holy Doors.',
+  'The Priest unfolds the Antimension.',
+  'The choir and the celebrants alternate in singing the Trisagion Hymn: the',
+  'He proclaims:',
+  'Arabic: Qud---doo---son---il---laah,',
+  'Greek: A---gi---os o The---os,'
+ ];
+ for(const line of directions)assert.equal(F.instruction(line),true,line);
+ for(const prayer of ['Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.',
+  'Lord Jesus Christ: look upon Your servants the catechumens who have bowed',
+  'All: Lord, have mercy.'])assert.equal(F.instruction(prayer),false,prayer);
+ assert.equal(F.normalize('T H E T R I S A G I O N H Y M N'),'The Trisagion Hymn');
+ assert.equal(F.displayPrayer('the well-- -being of the holy Churches of God'),
+  'the well-being of the holy Churches of God');
+ assert.equal(F.displayPrayer('Lord, have mercy. (To be repeated after each petition)'),
+  'Lord, have mercy.');
+ assert.equal(F.displayPrayer('Holy Immortal One, have mercy on us. (Three times)'),
+  'Holy Immortal One, have mercy on us.');
+});

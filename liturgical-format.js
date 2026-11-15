@@ -4,6 +4,8 @@
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
+ // Some Melkite editions print heading letters with tracking and omit spaces.
+ heads.set(compact('The Trisagion Hymn'),'The Trisagion Hymn');
  // Device-only display cleanup for PDF extraction and chant typography.
  // Never rewrite the saved PDF or the underlying liturgical text. Asterisks
  // mark chant pauses; they are not words to be read in quiet prayer.
@@ -16,6 +18,9 @@
    .replace(/\u00ad/g,'')
    .replace(/\s*[*\u2217\uff0a]+\s*/g,' ')
    .replace(/\s+([,.;:!?])/g,'$1')
+   .replace(/-\s*-\s*-\s*/g,'-')
+   .replace(/\b(well)-\s*-\s*(being)\b/gi,'$1-$2')
+   .replace(/\s*\((?:To be repeated after each petition|Three times)\)\s*$/i,'')
    .replace(/([(\u2018\u201c])\s+/g,'$1')
    .replace(/\s+([)\u2019\u201d])/g,'$1')
    .replace(/[ \t]{2,}/g,' ')
@@ -94,6 +99,13 @@
   if(/^\(?\s*(?:(?:the\s+)?(?:all|everyone|people|congregation|faithful|clergy|choir|priest|deacon|bishop|celebrant|reader)\s+)?(?:(?:please|now)\s+)?(?:stand(?:\s+up)?|sit(?:\s+down)?|kneel|bow|rise|be seated|remain (?:standing|seated|kneeling))(?:\s+(?:for the (?:gospel|reading)|in silence|together))?\s*[.)]?$/i.test(s))return true;
   if(/^\(?\s*(?:stand|sit|kneel)\s*(?:or|\/)\s*(?:stand|sit|kneel)\s*[.)]?$/i.test(s))return true;
   if(/^(?:rubric|instructions?|note):/i.test(s))return true;
+  // Edition-specific stage directions seen in the privately saved Melkite
+  // liturgy; never treat the actual Trisagion words as a direction.
+  if(/^(?:the deacon replaces his hat and intones|the priest unfolds the antimension|the choir and the celebrants alternate in singing|he proclaims:)(?:\b|\s|$)/i.test(s))return true;
+  // Optional phonetic transcriptions of prayers already printed in English.
+  // Remove only explicitly labelled transliterations, not Greek/Arabic words
+  // within an actual English prayer.
+  if(/^(?:Arabic|Greek)\s*:\s*\S/i.test(s))return true;
   // Ceremonial instructions printed in the Melkite 2009 source can start
   // with participles or with a pronoun rather than "The priest".
   if(/^(?:when the time comes for celebrating|bowing his uncovered head|blessing the deacon|l ifting the holy gospel|lifting the holy gospel|he (?:kisses|uncovers|replaces|bows|takes|turns|enters|leaves)|they (?:bow|enter|stand|make|return|revere|proceed)|it is permitted to chant|following the homily|during the distribution of the antidoron|the following (?:hymn|petitions|prayer)|on the feasts of the lord)\b/i.test(s))return true;
