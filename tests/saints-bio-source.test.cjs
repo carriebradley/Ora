@@ -490,7 +490,7 @@ test('2027 Lent suppresses the February Scholastica and Polycarp saint cards',()
  const get=date=>L.roman(new Date(date+'T00:00:00Z'));
  assert.match(get('2027-02-10').title,/Ash Wednesday/);
  assert.doesNotMatch(get('2027-02-10').title,/Scholastica/);
- assert.match(get('2027-02-14').title,/First Sunday of Lent/i);
+ assert.match(get('2027-02-14').title,/(?:1st|First) Sunday of Lent/i);
  assert.doesNotMatch(get('2027-02-14').title,/Cyril|Methodius/);
  assert.equal(get('2027-02-23').season,'Lent');
  assert.doesNotMatch(get('2027-02-23').title,/Polycarp/);
