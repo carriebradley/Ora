@@ -95,7 +95,7 @@ test('Nov 26-30 biographies match Ukrainian and Melkite appointment titles',()=>
  const start=app.indexOf('const SHARED_BYZANTINE_SAINT_BIOS = ');
  const end=app.indexOf('\n  };',start);
  assert.ok(start>=0&&end>start);
- const object=app.slice(start+'const SHARED_BYZANTINE_SAINT_BIOS = '.length,end+5);
+ const object=app.slice(start+'const SHARED_BYZANTINE_SAINT_BIOS = '.length,end+4);
  const bios=vm.runInNewContext('('+object+')');
  const names={'11-26':'Alypius','11-27':'James','11-28':'Stephen','11-29':'Paramon','11-30':'Andrew'};
  for(const [md,name] of Object.entries(names)){
