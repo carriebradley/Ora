@@ -99,6 +99,10 @@
   if(/^\(?\s*(?:(?:the\s+)?(?:all|everyone|people|congregation|faithful|clergy|choir|priest|deacon|bishop|celebrant|reader)\s+)?(?:(?:please|now)\s+)?(?:stand(?:\s+up)?|sit(?:\s+down)?|kneel|bow|rise|be seated|remain (?:standing|seated|kneeling))(?:\s+(?:for the (?:gospel|reading)|in silence|together))?\s*[.)]?$/i.test(s))return true;
   if(/^\(?\s*(?:stand|sit|kneel)\s*(?:or|\/)\s*(?:stand|sit|kneel)\s*[.)]?$/i.test(s))return true;
   if(/^(?:rubric|instructions?|note):/i.test(s))return true;
+  // The saved Melkite ordinary contains prose about which optional antiphons
+  // to select. These are editorial explanations, not words to pray.
+  if(/^For pastoral reasons, if only one Antiphon is done\b/i.test(s))return true;
+  if(/^For Sundays and Commemorations of the Third Class\b/i.test(s))return true;
   // Edition-specific stage directions seen in the privately saved Melkite
   // liturgy; never treat the actual Trisagion words as a direction.
   if(/^(?:the deacon replaces his hat and intones|the priest unfolds the antimension|the choir and the celebrants alternate in singing|he proclaims:)(?:\b|\s|$)/i.test(s))return true;

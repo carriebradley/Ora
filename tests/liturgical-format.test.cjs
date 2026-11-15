@@ -417,3 +417,15 @@ test('Melkite inline proclamation keeps the actual doxology',()=>{
   'ALL: Amen.']);
  assert.equal(F.instruction('He proclaims:'),true);
 });
+
+test('Melkite antiphon selection commentary is not displayed as prayer',()=>{
+ for(const note of [
+  'For pastoral reasons, if only one Antiphon is done, the three Antiphon prayers may be distributed over the weekdays as follows: the first prayer, on Monday and Thursday; the second, on Tuesday and Friday and the third on Wednesday and Saturday.',
+  'For Sundays and Commemorations of the Third Class For pastoral reasons, the Antiphons may be varied on Sundays according to the different tones. We may use Through the prayers of the Theotokos for Tones 1 and 5.'
+ ])assert.equal(F.instruction(note),true,note);
+ for(const prayer of [
+  'The First Psalm of the Typika (Psalm 102)',
+  'Through the prayers of the Theotokos, O Savior, save us.',
+  'For the peace of the whole world, let us pray to the Lord.'
+ ])assert.equal(F.instruction(prayer),false,prayer);
+});
