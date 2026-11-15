@@ -112,3 +112,17 @@ test('App build and installed worker version agree', () => {
   const sw = fs.readFileSync(require.resolve('../sw.js'), 'utf8');
   assert.equal(app.match(/const APP_BUILD = '(ora-v\d+)'/)[1], sw.match(/const V = '(ora-v\d+)'/)[1]);
 });
+
+
+test('JSON refresh bypasses HTTP cache and retains the last valid offline copy', async () => {
+  const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
+  const calls = [];
+  w.context.fetch = async (_request, options) => {
+    calls.push(options);
+    return Response.json({ revision: 2 });
+  };
+  assert.deepEqual(await (await w.request('readings.json')).json(), { revision: 2 });
+  assert.equal(calls[0]?.cache, 'no-store');
+  w.context.fetch = async () => { throw new Error('offline'); };
+  assert.deepEqual(await (await w.request('readings.json')).json(), { revision: 2 });
+});

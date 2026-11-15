@@ -37,7 +37,7 @@ self.addEventListener('fetch', e => {
       // persistent copy cannot hide new readings when an upgrade is offline.
       const data = await caches.open(file === 'oortext.json' ? V : DATA);
       try {
-        const response = await fetch(e.request);
+        const response = await fetch(e.request, { cache: 'no-store' });
         if (!response.ok) throw new Error('HTTP ' + response.status);
         await response.clone().json();
         try { await data.put(e.request, response.clone()); } catch (_) { /* storage full: keep serving online */ }
