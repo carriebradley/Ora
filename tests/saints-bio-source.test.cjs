@@ -150,3 +150,29 @@ test('December 7-10 shared Byzantine cards match the appointed saint in both chu
  }
  assert.ok(!bios['12-09'].match.test('Annunciation of the Lord'),'Anna is not Annunciation');
 });
+
+test('December 11-15 saint biographies honor separate Ukrainian and Melkite precedence',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js');
+ const sharedTag='const SHARED_BYZANTINE_SAINT_BIOS = ';
+ const a=app.indexOf(sharedTag),b=app.indexOf('\n  };',a);
+ const shared=vm.runInNewContext('('+app.slice(a+sharedTag.length,b+4)+')');
+ const all=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const uk=all.slice(all.indexOf('    ukrainian: {'),all.indexOf('    melkite: {'));
+ const mk=all.slice(all.indexOf('    melkite: {'),all.indexOf('    sarum: {'));
+ const titles=(md,church)=>{
+  const c=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+  return [c.title,...(c.also||[]).map(e=>e.title)];
+ };
+ for(const md of ['12-11','12-12','12-13','12-14']){
+  const bio=shared[md];
+  assert.ok(bio,md);
+  assert.ok(bio.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite'])assert.ok(titles(md,church).some(t=>bio.match.test(t)),md+' '+church);
+ }
+ assert.ok(uk.includes("'12-15': {"));
+ assert.ok(uk.includes("name: 'Saint Stephen of Surozh'"));
+ assert.ok(mk.includes("'12-15': {"));
+ assert.ok(mk.includes("name: 'Holy Hieromartyr Eleutherius'"));
+ assert.ok(titles('12-15','ukrainian')[0].includes('Stephen'));
+ assert.ok(titles('12-15','melkite')[0].includes('Eleutherius'));
+});

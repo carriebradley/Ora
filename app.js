@@ -1150,6 +1150,34 @@
       bio: 'According to tradition, Menas was a Roman official who came to profess Christianity in Alexandria. He was martyred with Hermogenes and Eugraphus during persecution under Emperor Maximian.',
       source: 'https://www.oca.org/saints/lives/2026/12/10/103511-martyrs-menas-hermogenes-and-eugraphus-of-alexandria'
     },
+    '12-11': {
+      match: /Daniel the Stylite/i,
+      name: 'Saint Daniel the Stylite',
+      meta: 'c. 409–493 · Monk and Stylite',
+      bio: 'Daniel became a monk in Mesopotamia and later lived atop a pillar near Constantinople. His ascetic life and spiritual counsel attracted visitors, including rulers seeking guidance.',
+      source: 'https://www.oca.org/saints/lives/2026/12/11/103520-venerable-daniel-the-stylite-of-constantinople'
+    },
+    '12-12': {
+      match: /Spiridon|Spyridon/i,
+      name: 'Saint Spyridon the Wonderworker',
+      meta: 'Fourth century · Bishop of Tremithus',
+      bio: 'A former shepherd in Cyprus, Spyridon became Bishop of Tremithus. He was celebrated for humble pastoral service, charity to those in need, and miracles attributed to his prayers.',
+      source: 'https://www.oca.org/saints/lives/2026/12/12/103526-saint-spyridon-the-wonderworker-bishop-of-tremithus'
+    },
+    '12-13': {
+      match: /Eustrat/i,
+      name: 'Holy Martyr Eustratius',
+      meta: 'Early fourth century · Martyr at Sebaste',
+      bio: 'Eustratius was a Christian official who openly professed his faith during Diocletian’s persecution. Tradition remembers his martyrdom alongside Auxentius, Eugene, Mardarius, and Orestes at Sebaste.',
+      source: 'https://www.oca.org/saints/lives/2026/12/13/103531-martyrs-eustratius-auxentius-eugene-mardarius-and-orestes-at-seb'
+    },
+    '12-14': {
+      match: /Thyrs|Thyrces/i,
+      name: 'Holy Martyr Thyrsus',
+      meta: 'Third century · Martyr in Bithynia',
+      bio: 'According to Christian tradition, Thyrsus refused to offer pagan sacrifice during the persecution under Emperor Decius. He is honored with other martyrs, including Leucius and Callinicus.',
+      source: 'https://www.oca.org/saints/lives/2026/12/14/103541-martyrs-thyrsos-leukios-and-kallinikos'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1174,6 +1202,13 @@
     },
     ukrainian: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-15': {
+        match: /Stephen the Confessor|Stephen.*Surozh|Stephen.*Sourozh/i,
+        name: 'Saint Stephen of Surozh',
+        meta: 'Eighth century · Archbishop and Confessor',
+        bio: 'Stephen was Archbishop of Surozh in Crimea. Eastern tradition remembers him for defending sacred icons during the iconoclastic controversy and suffering imprisonment rather than abandoning their veneration.',
+        source: 'https://www.oca.org/saints/lives/2027/12/15/103551-saint-stephen-the-confessor-archbishop-of-sourozh-crimea'
+      },
       '11-23': {
         match: /Amphilochius|Amphilokhios/i,
         name: 'Saint Amphilochius of Iconium',
@@ -1195,6 +1230,13 @@
     },
     melkite: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-15': {
+        match: /Eleutherius/i,
+        name: 'Holy Hieromartyr Eleutherius',
+        meta: 'Second century · Bishop and Martyr',
+        bio: 'Eleutherius is remembered as an early bishop of Illyria who preached Christ despite persecution. According to tradition, he and his mother Evanthia were martyred during the reign of Emperor Hadrian.',
+        source: 'https://www.oca.org/saints/lives/2026/12/15/103548-hieromartyr-eleutherius-bishop-of-illyria-his-mother-martyr-evan'
+      },
       '11-23': {
         match: /Gregory(?:,? Bishop of Agrigent| of Agrigent)/i,
         name: 'Saint Gregory of Agrigentum',
@@ -1983,7 +2025,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v293';
+  const APP_BUILD = 'ora-v294';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
