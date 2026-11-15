@@ -362,7 +362,8 @@ test('Traditional Martinmas and Saint Martin/Andrew octaves reuse sourced biogra
  const sarum=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
  assert.match(shared,/['"]11-11['"]:\s*\{ match: \/Martin of Tours\/i/);
  assert.ok(shared.includes('saint-martin-of-tours/'));
- assert.ok(sarum.includes("'11-18': WESTERN_SHARED_SAINT_BIOS['11-11']"));
+ assert.ok(sarum.includes("'11-11': SARUM_BIO_MARTIN"));
+ assert.ok(sarum.includes("'11-18': SARUM_BIO_MARTIN"));
  assert.ok(sarum.includes("'12-07': WESTERN_SHARED_SAINT_BIOS['11-30']"));
  assert.ok(roman.includes('...WESTERN_SHARED_SAINT_BIOS'),'Roman November 11 keeps its existing biography through the shared map');
  for(const [md,saint] of [['11-11','Martin'],['11-18','Martin'],['12-07','Andrew']]){
@@ -376,4 +377,29 @@ test('Traditional Martinmas and Saint Martin/Andrew octaves reuse sourced biogra
  // A displaced saint is never resurrected by the Today card just because its date matches.
  assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
  assert.match(app,/: \[title\];/);
+});
+
+test('Sarum Martinmas and St Martin octave titles match their biography, not unrelated fast days',()=>{
+ const S=require('../sarum.js');
+ const match=/Martinmas|(?:St\.?|Saint)\s+Martin\b|Martin of Tours/i;
+ const positives=["Martinmas / Saint Martin's Lent","Octave Day of St. Martin","St. Martin, Bishop"];
+ for(const label of positives)assert.ok(match.test(label),label);
+ assert.ok(!match.test("Third Sunday of Advent"));
+ for(const md of ['11-11','11-18']){
+  let sawMartin=false;
+  for(let year=2025;year<=2036;year++){
+   const title=S.sarum(new Date(year+'-'+md+'T00:00:00Z')).title;
+   if(/Martinmas|St\.? Martin|Saint Martin/i.test(title)){
+    sawMartin=true;
+    assert.ok(match.test(title),year+' '+md+': '+title);
+   }
+  }
+  assert.ok(sawMartin,'Sarum Martin observance is actually selected for '+md);
+ }
+ const defs=app.slice(app.indexOf('const SARUM_BIO_MARTIN'),app.indexOf('const TODAY_SAINT_BIOS'));
+ assert.match(defs,/WESTERN_SHARED_SAINT_BIOS\['11-11'\]/);
+ assert.match(defs,/match: \/Martinmas\|/);
+ const dates=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
+ assert.match(dates,/'11-11': SARUM_BIO_MARTIN/);
+ assert.match(dates,/'11-18': SARUM_BIO_MARTIN/);
 });

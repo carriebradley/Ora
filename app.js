@@ -1295,6 +1295,12 @@
     '12-27': { match: /John.*(?:Apostle|Evangelist)|(?:Apostle|Evangelist).*John/i, name: "Saint John the Apostle", meta: "First century · Apostle and Evangelist", bio: "John, son of Zebedee and brother of James, followed Jesus and witnessed many central events of his ministry. Christian tradition associates him with the Fourth Gospel and the beloved disciple.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-the-evangelist/" },
     '12-28': { match: /Holy Innocents|Innocents/i, name: "The Holy Innocents", meta: "First century · Children of Bethlehem", bio: "Matthew’s Gospel recounts that Herod ordered the killing of young children in Bethlehem after the birth of Jesus. The Church honors these innocent children together as martyrs.", source: "https://www.franciscanmedia.org/saint-of-the-day/holy-innocents/" },
   };
+  // Sarum calls the same saint Martinmas or the Octave of St. Martin.
+  // Keep the sourced Roman biography but match the historical Sarum titles.
+  const SARUM_BIO_MARTIN = {
+    ...WESTERN_SHARED_SAINT_BIOS['11-11'],
+    match: /Martinmas|(?:St\.?|Saint)\s+Martin\b|Martin of Tours/i
+  };
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
@@ -1384,7 +1390,8 @@
       ...WESTERN_SHARED_SAINT_BIOS,
       // These dates keep the already sourced biographies when the named feast
       // or octave actually outranks the temporal calendar; Sundays remain primary.
-      '11-18': WESTERN_SHARED_SAINT_BIOS['11-11'],
+      '11-11': SARUM_BIO_MARTIN,
+      '11-18': SARUM_BIO_MARTIN,
       '12-07': WESTERN_SHARED_SAINT_BIOS['11-30'],
       '11-08': { match: /Four Crowned Martyrs/i, name: "The Four Crowned Martyrs", meta: "Early fourth century · Martyrs of Roman tradition", bio: "An ancient group of martyrs was honored at Rome under the name Four Crowned Martyrs. Their exact identities are uncertain; later accounts associate their commemoration with Christian stonecutters who refused an idolatrous commission.", source: "https://www.newadvent.org/cathen/06163a.htm" },
       '11-09': { match: /Theodore/i, name: "Saint Theodore of Amasea", meta: "d. c. 306 · Soldier and Martyr", bio: "Theodore, a Christian soldier at Amasea in Asia Minor, was martyred during the persecution of the early fourth century. Known as Theodore Tiro, he is honored in both Eastern and Western Christian traditions.", source: "https://www.newadvent.org/cathen/14573a.htm" },
@@ -2175,7 +2182,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v303';
+  const APP_BUILD = 'ora-v304';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
