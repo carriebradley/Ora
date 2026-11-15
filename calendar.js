@@ -198,7 +198,7 @@
 
     if (d >= adv && d < D(y, 12, 25)) {
       const wk = Math.floor(diff(d, adv) / 7) + 1;
-      if (sun) return T(`${ORD(wk)} Sunday of Advent`, 2, 'Sunday', wk === 3 ? 'rose' : 'v', 'Advent');
+      if (sun) return T(wk === 3 ? 'Gaudete Sunday — Third Sunday of Advent' : `${ORD(wk)} Sunday of Advent`, 2, 'Sunday', wk === 3 ? 'rose' : 'v', 'Advent');
       if (d >= D(y, 12, 17)) return T(`${wd}, December ${d.getUTCDate()} — weekday of Advent`, 9, 'Weekday', 'v', 'Advent');
       return T(`${wd} of the ${ORD(wk)} Week of Advent`, 12, 'Weekday', 'v', 'Advent');
     }
@@ -231,7 +231,7 @@
       const L1 = add(E, -42);
       if (d < L1) return T(`${wd} after Ash Wednesday`, 9, 'Weekday', 'v', 'Lent');
       const wk = Math.floor(diff(d, L1) / 7) + 1;
-      if (sun) { const s = diff(d, L1) / 7 + 1; return T(`${ORD(s)} Sunday of Lent`, 2, 'Sunday', s === 4 ? 'rose' : 'v', 'Lent'); }
+      if (sun) { const s = diff(d, L1) / 7 + 1; return T(s === 4 ? 'Laetare Sunday — Fourth Sunday of Lent' : `${ORD(s)} Sunday of Lent`, 2, 'Sunday', s === 4 ? 'rose' : 'v', 'Lent'); }
       return T(`${wd} of the ${ORD(wk)} Week of Lent`, 9, 'Weekday', 'v', 'Lent');
     }
     if (d <= pent) {                                            // Easter Time
@@ -496,7 +496,7 @@
 
     if (d >= adv && d < D(y, 12, 25)) {                         // Advent
       const wk = Math.floor(diff(d, adv) / 7) + 1;
-      if (sun) return T(`${ORD(wk)} Sunday of Advent`, 1, wk === 3 ? 'rose' : 'v', 'Advent', { priv: true });
+      if (sun) return T(wk === 3 ? 'Gaudete Sunday — Third Sunday of Advent' : `${ORD(wk)} Sunday of Advent`, 1, wk === 3 ? 'rose' : 'v', 'Advent', { priv: true });
       if (d.getUTCDate() === 24) return T('Vigil of the Nativity', 1, 'v', 'Advent', { priv: true });
       const e3 = add(adv, 14);
       const ember = [3, 5, 6].map(n => add(e3, n)).find(x => same(x, d));
@@ -542,7 +542,7 @@
       const L1 = add(E, -42);
       if (d < L1) return T(`${wd} after Ash Wednesday`, 3, 'v', 'Lent', { priv: true, fast: dow(d) === 5 ? 'Friday — abstinence' : '' });
       const wk = Math.floor(diff(d, L1) / 7) + 1;
-      if (sun) return T(`${ORD(diff(d, L1) / 7 + 1)} Sunday of Lent`, 1, wk === 4 ? 'rose' : 'v', 'Lent', { priv: true });
+      if (sun) return T(wk === 4 ? 'Laetare Sunday — Fourth Sunday of Lent' : `${ORD(diff(d, L1) / 7 + 1)} Sunday of Lent`, 1, wk === 4 ? 'rose' : 'v', 'Lent', { priv: true });
       if (wk === 1 && [3, 5, 6].includes(dow(d))) return T(`Ember ${wd} in Lent`, 2, 'v', 'Lent', { fast: 'Ember Day — fast and partial abstinence' });
       return T(`${wd} of the ${ORD(wk)} Week of Lent${wk === 5 ? ' (Passion Week)' : ''}`, 3, 'v', k > 14 ? 'Lent' : 'Passiontide', { priv: true });
     }

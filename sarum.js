@@ -1909,7 +1909,7 @@
       const x = { noteKey: 'Season of Advent' };
       const wed = emberWed(D(y, 12, 13)), eb = [0, 2, 3].map(n => add(wed, n)).find(z => same(z, d));
       if (d.getUTCDate() === 24 && d.getUTCMonth() === 11 && !sun) return T('Christmas Eve — Vigil Fast', 85, 'Vigil', 'v', 'Advent', { fast: 'Strict fast and abstinence', noteKey: 'Vigil Fast of Christmas', sk: 'xmasEve' });
-      if (sun) return T(`${ORD(wk)} Sunday of Advent`, wk === 1 ? 95 : 75, 'Sunday', 'v', 'Advent', Object.assign(x, { sk: 'adv' + wk }));
+      if (sun) return T(wk === 3 ? 'Gaudete Sunday — Third Sunday of Advent' : `${ORD(wk)} Sunday of Advent`, wk === 1 ? 95 : 75, 'Sunday', 'v', 'Advent', Object.assign(x, { sk: 'adv' + wk }));
       if (eb) return T(`${wd} — Winter Ember Day`, 45, 'Ember Day', 'v', 'Advent', Object.assign(x, em('Winter'), { noteKey: 'Winter Ember Days (Advent Fast)', sk: 'adv3-' + dow(d) }, d.getUTCMonth() === 11 && d.getUTCDate() === 23 && dow(d) === 6 ? { fast: 'Ember Day — Winter fast; Christmas vigil fast anticipated from Sunday' } : {}));
       if (d.getUTCMonth() === 11 && d.getUTCDate() === 23 && dow(d) === 6) Object.assign(x, { fast: 'Christmas vigil fast anticipated from Sunday', noteKey: 'Vigil Fast of Christmas' });
       return T(`${wd} of the ${ORD(wk)} Week of Advent`, 10, 'Weekday', 'v', 'Advent', Object.assign(x, { sfk: 'adv' + Math.min(wk, 4), swk: 'adv' + Math.min(wk, 4) + '-' + dow(d) }));
@@ -1957,7 +1957,7 @@
       const pt = k > -14 ? 'Passiontide' : 'Lent', key = k > -14 ? 'Passiontide' : 'Season of Lent (An Charghas)';
       if (d < L1) return T(`${wd} after Ash Wednesday`, 30, 'Lenten Day', 'v', 'Lent', { fast: lentFast, noteKey: key, sk: 'ash-' + dow(d) });
       const wk = Math.floor(diff(d, L1) / 7) + 1;
-      if (sun) { const s = diff(d, L1) / 7 + 1; return T(s === 1 ? '1st Sunday of Lent (Quadragesima)' : `${ORD(s)} Sunday of Lent`, 75, 'Sunday', 'v', pt, { noteKey: key, sk: 'q' + s }); }
+      if (sun) { const s = diff(d, L1) / 7 + 1; return T(s === 1 ? '1st Sunday of Lent (Quadragesima)' : s === 4 ? 'Laetare Sunday — Fourth Sunday of Lent' : `${ORD(s)} Sunday of Lent`, 75, 'Sunday', 'v', pt, { noteKey: key, sk: 'q' + s }); }
       if (wk === 1 && [3, 5, 6].includes(dow(d))) return T(`${wd} — Spring Ember Day`, 45, 'Ember Day', 'v', 'Lent', Object.assign(em('Spring'), { fast: 'Ember Day — Lenten fast; no meat, eggs or dairy', noteKey: 'Spring Ember Days (Lenten Fast)', sk: 'q1-' + dow(d) }));
       return T(`${wd} of the ${ORD(wk)} Week of Lent`, 30, 'Lenten Day', 'v', pt, { fast: lentFast, noteKey: key, sk: 'q' + wk + '-' + dow(d) });
     }

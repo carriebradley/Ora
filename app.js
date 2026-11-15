@@ -473,7 +473,7 @@
     const roseSunday = r.color === 'rose' && /Sunday/i.test(rk + ' ' + title);
     const rankLabel = /Solemnity/i.test(rk) ? 'Solemnity' : /Great Feast|Principal/i.test(rk) ? 'Major Feast' : feast ? 'Feast' : '';
     const melkiteCommemoration = rite === 'byz' && S.byzChurch === 'melkite' && rk === 'Diocesan calendar' && title !== 'Weekday' && !feast;
-    const badge = holySpirit ? 'Holy Spirit' : martyr ? 'Martyr' : roseSunday ? 'Sunday' :
+    const badge = holySpirit ? 'Holy Spirit' : martyr ? 'Martyr' : roseSunday ? (/Gaudete/i.test(title) ? 'Gaudete' : /Laetare/i.test(title) ? 'Laetare' : 'Sunday') :
       feast ? rankLabel : melkiteCommemoration ? 'Commemoration' : kind === 'fast' ? (/strict/i.test(fast) ? 'Strict Fast' : 'Fast Day') :
       kind === 'season' ? 'Fasting Season' : martin ? "St. Martin's Lent" :
       minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast' : 'Memorial') :
@@ -549,12 +549,12 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.detail;
+      const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.roseSunday ? r.title : x.detail;
       const shown = k === 'byz' ? (byzantineCommemorations(detail)[0] || detail) :
         k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
         westernCommemorations(detail)[0] || detail;
       const detailHTML = esc(displayTitle(shown));
-      const seasonLine = displayTitle(glanceSeason(r, k, v.iso));
+      const seasonLine = k === 'roman' && x.roseSunday ? '' : displayTitle(glanceSeason(r, k, v.iso));
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
@@ -1482,7 +1482,7 @@
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitence and fasting</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyr or Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> Off-white · Memorials</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Feasts and solemnities</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Joyful Sundays</span><span><i class="key-dot" style="--key:#3b729f"></i> Blue · Marian feasts</span></div>';
+    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitence and fasting</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyr or Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> Off-white · Memorials</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Feasts and solemnities</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Gaudete (Advent III) and Laetare (Lent IV)</span><span><i class="key-dot" style="--key:#3b729f"></i> Blue · Marian feasts</span></div>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
@@ -1878,7 +1878,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v289';
+  const APP_BUILD = 'ora-v290';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

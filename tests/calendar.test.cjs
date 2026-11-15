@@ -118,3 +118,43 @@ test('Roman Lauds and Vespers do not append duplicate canticles or devotions',()
  }
  assert.equal(ContentFlows.roman.night.some(step=>step.type==='office'&&step.which==='C'),true);
 });
+
+test('Gaudete and Laetare Sundays have correct dates, titles, and colors each year', () => {
+  for (const year of [2025, 2026, 2027, 2028, 2029, 2030]) {
+    const gaudete = L.add(L.advent(year), 14);
+    const laetare = L.add(L.westernEaster(year), -21);
+    const examples = [
+      [gaudete, /Gaudete Sunday — Third Sunday of Advent/, 'Advent'],
+      [laetare, /Laetare Sunday — Fourth Sunday of Lent/, 'Lent']
+    ];
+    for (const [day, name, season] of examples) {
+      const modern = L.roman(day);
+      const historical = L.extraordinary(day);
+      const traditional = S.sarum(day);
+      for (const [source, result] of [['Roman', modern], ['Extraordinary', historical], ['Traditional', traditional]]) {
+        assert.match(result.title, name, source + ' ' + L.iso(day));
+        assert.equal(result.season, season, source + ' ' + L.iso(day));
+      }
+      assert.equal(modern.color, 'rose', 'Roman rose on ' + L.iso(day));
+      assert.equal(historical.color, 'rose', '1962 Roman rose on ' + L.iso(day));
+      // Keep historical Sarum vestment rules independent of modern Roman rules.
+      assert.equal(traditional.color, 'v', 'Sarum violet preserved on ' + L.iso(day));
+    }
+    for (const candidate of [L.add(gaudete, -7), L.add(gaudete, 7), L.add(laetare, -7), L.add(laetare, 7)]) {
+      for (const label of [L.roman(candidate).title, S.sarum(candidate).title]) {
+        assert.doesNotMatch(label, /Gaudete Sunday|Laetare Sunday/, L.iso(candidate));
+      }
+    }
+  }
+  assert.equal(L.iso(L.add(L.advent(2026), 14)), '2026-12-13');
+  assert.equal(L.iso(L.add(L.westernEaster(2026), -21)), '2026-03-15');
+  assert.equal(L.iso(L.add(L.westernEaster(2027), -21)), '2027-03-07');
+  assert.equal(L.iso(L.add(L.advent(2027), 14)), '2027-12-12');
+});
+
+test('The Liturgical Day and rose legend name both joyful Sundays', () => {
+  const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
+  assert.match(app, /Rose · Gaudete \(Advent III\) and Laetare \(Lent IV\)/);
+  assert.match(app, /roseSunday \? \(\/Gaudete\/i\.test\(title\) \? 'Gaudete'/);
+  assert.match(app, /x\.roseSunday \? r\.title : x\.detail/);
+});
