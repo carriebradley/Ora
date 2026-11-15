@@ -33,6 +33,14 @@ jobs:
           echo "\`\`\`text" >> "$GITHUB_STEP_SUMMARY"
           tail -n 50 /tmp/ora-gregory-import.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
           echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
+          cp /tmp/ora-gregory-import.log docs/_gregory-import-diagnostic.txt 2>/dev/null || true
+          if test -f docs/_gregory-import-diagnostic.txt; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/_gregory-import-diagnostic.txt
+            git commit -m "Record historical source importer failure for diagnosis" || true
+            git push || true
+          fi
       - name: Refresh Office availability audit
         run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
       - name: Commit source-matched text and audit
