@@ -1,0 +1,36 @@
+name: Import Gregory Pastoral Rule Office excerpt
+on:
+  workflow_dispatch:
+  push:
+    branches: [ora-gregory-pastoral-v280]
+    paths:
+      - tools/import_oor_gregory_pastoral.py
+      - tests/test_oor_gregory_pastoral.py
+      - .github/workflows/import-oor-gregory-pastoral.yml
+permissions:
+  contents: write
+jobs:
+  import-gregory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify exact chapter parser
+        run: python -m unittest discover -s tests -p test_oor_gregory_pastoral.py
+      - name: Import historically translated passage
+        run: python tools/import_oor_gregory_pastoral.py
+      - name: Refresh reading inventory
+        run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
+      - name: Commit only verified readings
+        run: |
+          if git diff --quiet -- oortext.json docs/office-of-readings-availability.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add oortext.json docs/office-of-readings-availability.json
+          git commit -m "Import Gregory Pastoral Rule II.4 historical English Office reading"
+          git push

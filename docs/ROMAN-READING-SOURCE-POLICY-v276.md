@@ -34,3 +34,12 @@ For less distinctive names (Bibliotheca Catholica, Traditional Catholic Books, S
 3. Compare historical English translations from those archives, Project Gutenberg and Internet Archive against the stated sections, noting any missing sentences, modernizations or expanded context.
 4. Publish only a substantiated excerpt with rights/provenance confirmed. Label a different translation as an **alternative translation**; label a whole work as a **supplement**, not the appointed Office excerpt. Keep full bibliographic notes in the collapsed source disclosure.
 
+
+## Additional cross-checks found November 2026
+
+- [Catholic Resources: nonbiblical Office readings by author](https://www.catholic-resources.org/LoH/OfficeOfReadings-NonBiblical-Authors.html) and [by appointed reading](https://www.catholic-resources.org/LoH/OfficeOfReadings-NonBiblical-Readings.html): useful for verifying exact liturgical work and section numbering, especially when generic "sermon 46" search results belong to an unrelated work.
+- [New Advent: Gregory's Pastoral Rule](https://www.newadvent.org/fathers/3601.htm): book/chapter-separated historical English witness, translated by James Barmby in 1895.
+- [Migne Reading Room](https://www.mignereadingroom.org/interesting/): useful as a Latin *Patrologia Latina/Greek* reference crosswalk; do not assume its English opening lines constitute a verified full historical translation.
+- [WesleyScholar's Augustine Sermons 20–51](https://wesleyscholar.com/wp-content/uploads/2019/04/Augustine-Sermons-20-51.pdf): strong work-identity check for Sermon 46 *On the Shepherds*, but this appears to reproduce a modern translation and is **not approved for wholesale import** without reproduction rights. Never confuse the separate Augustine *Tractate 46 on John* with this sermon.
+
+Source reliability policy: prefer official appointment evidence, then match original text work/paragraphs and the particular English translator. Do not treat discovery indexes, PDF scans, or website presence as redistribution permission. Avoid hardcoded reading totals in automated tests; compare the indexed inventory and validate the exact new entries.
