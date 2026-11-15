@@ -418,3 +418,28 @@ test('December 30 Anysia bio belongs to the Ukrainian mode, not the Melkite Mela
  assert.match(L.byzantine(new Date('2026-12-30T00:00:00Z'),{byzChurch:'ukrainian',byzSource:'edmonton'}).title,/Anysia/);
  assert.ok(mk.includes("'12-30': BYZANTINE_BIO_MELANIA"),'Do not replace Melkite commemoration');
 });
+
+test('January Roman saint cards are sourced, short, and match observed Roman titles',()=>{
+ const L=require('../calendar.js');
+ const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const names={'01-02':'Basil the Great','01-04':'Elizabeth Ann Seton','01-05':'John Neumann','01-17':'Anthony','01-21':'Agnes'};
+ for(const [md,name] of Object.entries(names)){
+  const row=roman.slice(roman.indexOf("'"+md+"':"));
+  assert.ok(row.startsWith("'"+md+"':"),md);
+  assert.ok(row.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md+' source');
+  const biography=row.match(/bio: "([^"]+)"/);
+  assert.ok(biography,md);
+  assert.ok(biography[1].trim().split(/\s+/).length<=50,md);
+  let observed=false;
+  for(let year=2025;year<=2035;year++){
+   const day=L.roman(new Date(year+'-'+md+'T00:00:00Z'));
+   if(new RegExp(name,'i').test(day.title)){observed=true;break;}
+  }
+  assert.ok(observed,md+' is observed as the primary saint in some year');
+ }
+ assert.ok(roman.includes('Saint Basil the Great'));
+ assert.ok(roman.includes('Saint Agnes of Rome'));
+ const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
+ assert.match(selector,/const titles = S\.rite === 'byz'/);
+ assert.match(selector,/: \[title\];/);
+});

@@ -1304,6 +1304,12 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '01-02': { match: /Basil the Great/i, name: "Saint Basil the Great", meta: "c. 330–379 · Bishop and Doctor", bio: "Basil became Bishop of Caesarea and defended Christian teaching about the Trinity. He organized charitable care for the poor and sick, and his monastic writings profoundly influenced Eastern Christian life.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-basil-the-great/" },
+      '01-04': { match: /Elizabeth Ann Seton/i, name: "Saint Elizabeth Ann Seton", meta: "1774–1821 · Foundress and Educator", bio: "Elizabeth Ann Seton, a widowed mother of five, entered the Catholic Church in 1805. She founded the Sisters of Charity of Saint Joseph and helped establish Catholic education in the United States.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-elizabeth-ann-seton/" },
+      '01-05': { match: /John Neumann/i, name: "Saint John Neumann", meta: "1811–1860 · Bishop of Philadelphia", bio: "Born in Bohemia, John Neumann served immigrants as a missionary priest and Redemptorist. As Bishop of Philadelphia he expanded Catholic parish schools and founded new educational and charitable institutions.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-neumann/" },
+      '01-17': { match: /Anthony,? Abbot/i, name: "Saint Anthony of Egypt", meta: "c. 251–356 · Monk and Desert Father", bio: "After giving away his inheritance, Anthony pursued a life of prayer in the Egyptian desert. His ascetic example inspired generations of monks; Saint Athanasius later wrote an influential account of his life.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-anthony-of-egypt/" },
+      '01-21': { match: /Agnes/i, name: "Saint Agnes of Rome", meta: "Early fourth century · Virgin and Martyr", bio: "Agnes was a young Christian martyr venerated in Rome from antiquity. Most details of her life survive in later accounts, but her witness became an enduring example of courage and fidelity to Christ.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-agnes/" },
+
       '11-04': { match: /Charles Borromeo/i, name: "Saint Charles Borromeo", meta: "1538–1584 · Archbishop of Milan", bio: "Charles Borromeo helped implement the reforms of the Council of Trent as Archbishop of Milan. He promoted education for clergy and cared for the sick and poor during a plague.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-charles-borromeo/" },
       '11-10': { match: /Leo the Great/i, name: "Saint Leo the Great", meta: "d. 461 · Pope and Doctor of the Church", bio: "Leo served as Bishop of Rome from 440 to 461. He defended Christian teaching about Christ and guided the Church during a period of political and religious upheaval.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-leo-the-great/" },
       '11-13': { match: /Frances Xavier Cabrini/i, name: "Saint Frances Xavier Cabrini", meta: "1850–1917 · Foundress and Missionary", bio: "Mother Cabrini founded the Missionary Sisters of the Sacred Heart and served Italian immigrants in the United States. She established schools, hospitals, and orphanages and became the first naturalized U.S. citizen canonized.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-frances-xavier-cabrini/" },
@@ -2189,7 +2195,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v307';
+  const APP_BUILD = 'ora-v308';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
