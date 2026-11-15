@@ -6,7 +6,7 @@ These concise English bios are prepared in advance and stored with Ora for offli
 |---|---|---|---|
 | Nov 16 | Ukrainian, Melkite | Apostle and Evangelist Matthew | https://www.oca.org/saints/all-lives/2026/11/16 |
 | Nov 17 | Ukrainian, Melkite | Gregory the Wonderworker of Neocaesarea | https://www.oca.org/saints/lives/2026/11/17/103315-saint-gregory-wonderworker-of-neocaesarea |
-| Nov 18 | Ukrainian, Melkite | Plato / Platon of Ancyra | https://www.oca.org/saints/lives/2026/11/18/103321-martyr-platon-of-ancyra |
+| Nov 18 | Ukrainian, Melkite | Plato of Ancyra (Platon) | https://www.oca.org/saints/lives/2026/11/18/103321-martyr-platon-of-ancyra |
 | Nov 19 | Ukrainian, Melkite | Prophet Obadiah / Abadiah | https://www.oca.org/saints/lives/1950/11/19/103326-prophet-obadiah-abdia |
 | Nov 20 | Ukrainian | Blessed Josaphata Hordashevska | https://www.vatican.va/content/dam/wss/news_services/liturgy/saints/ns_lit_doc_20010627_hordashevska_en.html and https://ssmi.org/blessed-josaphata/ |
 | Nov 20 | Melkite | Gregory the Decapolite | https://www.oca.org/saints/lives/2026/11/20/103340-venerable-gregory-the-decapolite |
