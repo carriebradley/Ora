@@ -9,7 +9,7 @@ test('St Scholastica second reading matches Gregory Dialogues II.33 and excludes
  const ctx={self:{}};
  vm.runInNewContext(fs.readFileSync(require.resolve('../oor.js'),'utf8'),ctx);
  const key='Gregory the Great|Dialogues 2, 33';
- assert.ok(Object.values(ctx.self.OOR).some(e=>e.a==='Gregory the Great'&&e.w==='Dialogues 2, 33'));
+ assert.ok([...Object.values(ctx.self.OOR),...Object.values(ctx.self.OOR_SAINTS).flat()].some(e=>e.a==='Gregory the Great'&&e.w==='Dialogues 2, 33'));
  const entry=texts[key];
  assert.ok(entry);
  assert.equal(entry.edition,'historical-alternative');
