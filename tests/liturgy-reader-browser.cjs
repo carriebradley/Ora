@@ -8,7 +8,13 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const requests=[];const watch=r=>{if(['POST','PUT','PATCH'].includes(r.method()))requests.push(r.url());};page.on('request',watch);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-11`);
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ // The storage warning belongs to the collapsed "Manage saved book"
+ // disclosure; verify what a user actually sees once that panel is opened.
+ const manage=page.locator('.reader-offline');
+ assert.equal(await manage.evaluate(el=>el.open),false);
+ await manage.locator('summary').click();
  const storageNote=page.locator('#reader-storage-note');
+ assert.equal(await storageNote.isVisible(),true,'storage warning visible inside the open manager');
  assert.match(await storageNote.innerText(),/Keep the original PDF or EPUB elsewhere/);
  assert.equal(await page.locator('#liturgical-file').getAttribute('aria-describedby'),'reader-storage-note');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'storage warning fits phone');
