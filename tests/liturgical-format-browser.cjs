@@ -135,5 +135,45 @@ module.exports=async(page,base,artifacts,violations)=>{
  });
  assert.match(await ukrainian.innerText(),/Fixture generic Ukrainian PDF/);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'generic Ukrainian PDF uses continuous text');
+ // Reproduce the reported 26-page saved PDF: its edition cannot be identified,
+ // but all selectable pages must appear in one scroll without Previous/Next.
+ await page.evaluate(async()=>{
+   const get=LiturgyReader.get,load=LiturgyReader.load;
+   LiturgyReader.get=async id=>({id,name:'unknown-ukrainian.pdf',format:'pdf',pages:26,page:2,updated:102,blob:new Blob()});
+   LiturgyReader.load=async()=>({
+     numPages:26,
+     getPage:async number=>({
+       getTextContent:async()=>({items:[
+         {str:'Text from saved page '+number+'.',width:220,height:12,transform:[1,0,0,12,20,720]},
+         {str:'ALL: Response on saved page '+number+'.',width:220,height:12,transform:[1,0,0,12,20,680]}
+       ]})
+     }),
+     destroy:async()=>{}
+   });
+   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ assert.match(await ukrainian.innerText(),/Text from saved page 1/);
+ assert.match(await ukrainian.innerText(),/Text from saved page 26/);
+ assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/Continuous text from your saved PDF \(26 pages\)/);
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'all 26 pages appear without inline pagination');
+ assert.equal(await ukrainian.locator('.byz-role-all').count(),26);
+ for(const width of [320,390]){
+   await page.setViewportSize({width,height:844});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'unrecognized PDF stays within phone width');
+ }
+ await page.setViewportSize({width:390,height:844});
+ // Scanned/image-only PDFs cannot be converted into text without OCR; retain
+ // access to Open original book and do not return to paged inline navigation.
+ await page.evaluate(async()=>{
+   const get=LiturgyReader.get,load=LiturgyReader.load;
+   LiturgyReader.get=async id=>({id,name:'image-only.pdf',format:'pdf',pages:3,page:1,updated:103,blob:new Blob()});
+   LiturgyReader.load=async()=>({
+     numPages:3,getPage:async()=>({getTextContent:async()=>({items:[]})}),destroy:async()=>{}
+   });
+   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ assert.match(await ukrainian.innerText(),/no selectable text/i);
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'scanned PDF does not return inline page buttons');
+
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };

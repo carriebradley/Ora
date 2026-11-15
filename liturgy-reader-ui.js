@@ -157,6 +157,28 @@
     }
     return foundLiturgy&&sections.length?sections:null;
   }
+  // Unknown user-saved PDFs still deserve a full scrollable reading view.
+  // These bytes remain on-device. Preserve page order and never claim that
+  // an unrecognized PDF is a verified liturgical edition or an English service.
+  async function continuousSavedPdfText(book){
+    const sections=[];
+    for(let number=1;number<=book.numPages;number++){
+      const page=await book.getPage(number);
+      const content=await page.getTextContent();
+      const rows=LiturgicalFormat.pdfRows(content.items,number);
+      if(!rows.length)continue;
+      const lines=combinePdfLines(rows);
+      if(lines.length)sections.push({lines});
+    }
+    return sections.length?sections:null;
+  }
+  function unrecognizedPdfNotice(target,pages){
+    const note=document.createElement('p');
+    note.className='muted byz-unrecognized-pdf-note';
+    note.textContent='Continuous text from your saved PDF ('+pages+' pages). This edition was not identified; text and layout may differ from the original. Use Open original book for the complete PDF.';
+    target.insertBefore(note,target.firstChild);
+  }
+
   // Visual call-and-response cues, inferred only from labels printed in the
   // saved booklet. Do not invent speaker assignments for unlabelled lines.
   const roleLine=LiturgicalFormat.role,liturgicalInstruction=LiturgicalFormat.instruction;
@@ -294,13 +316,24 @@
           }else preview.textContent='The prayers could not be identified in this PDF. Open the original book below to read it.';
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
           status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
-          const liturgy=await prayerPreview(saved,book,async b=>
-            await edmontonPrayerText(b)||await standardPrayerText(b,section.dataset.textId));
+          const reading=await prayerPreview(saved,book,async b=>{
+            const liturgy=await edmontonPrayerText(b)||await standardPrayerText(b,section.dataset.textId);
+            if(liturgy)return {sections:liturgy,recognized:true};
+            return {sections:await continuousSavedPdfText(b),recognized:false};
+          });
           if(!section.isConnected||token!==hydrateVersion)return;
-          if(liturgy){
-            renderEdmontonPrayerText(preview,liturgy);continuous=true;
-            status.textContent='Ukrainian Divine Liturgy · saved privately on this device';
-          }else preview.textContent='The English liturgy could not be identified in this PDF. Open the original book below to read it.';
+          // Do not require a recognized edition merely to read the saved PDF
+          // without the Previous/Next page controls.
+          continuous=true;
+          if(reading?.sections){
+            renderEdmontonPrayerText(preview,reading.sections);
+            if(!reading.recognized)unrecognizedPdfNotice(preview,book.numPages);
+            status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · continuous text')+' · saved privately on this device';
+          }else{
+            preview.replaceChildren();
+            preview.textContent='This PDF has no selectable text. Open original book to view its pages or images.';
+            status.textContent='Saved PDF · open original book for images · saved on this device';
+          }
         }else if(book.kind==='epub'){const part=book.sections[selected-1];renderEdmontonPrayerText(preview,[{heading:part.title,lines:part.blocks.map(b=>b.kind==='instruction'?'Instruction: '+b.text:b.role==='all'?'ALL: '+b.text:b.text)}]);}
         else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}
         preview.hidden=false;if(controls)controls.hidden=continuous;if(controls)controls.querySelector('.reader-inline-page').textContent=`${book.kind==='epub'?'Section':'Page'} ${selected} of ${book.numPages}`;if(controls)controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;if(controls)controls.querySelector('[data-reader="inline-next"]').disabled=selected>=book.numPages;
