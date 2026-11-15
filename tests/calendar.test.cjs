@@ -171,8 +171,10 @@ test('Roman sanctoral has no duplicate Anthony and 1962 classes and dates are va
  const grouped={};
  for(const line of modern)(grouped[line.split('|')[0]]??=[]).push(line);
  assert.deepEqual(Object.keys(grouped).filter(x=>grouped[x].length>1),['10/9']);
- // The Immaculate Heart displaces the June 13 memorial in 2026.\n const roman=L.roman(L.D(2028,6,13));
- assert.match(roman.title,/Anthony of Padua/);\n assert.doesNotMatch(L.roman(L.D(2026,6,13)).title,/Anthony of Padua/);
+ // The Immaculate Heart displaces the June 13 memorial in 2026.
+ const roman=L.roman(L.D(2028,6,13));
+ assert.match(roman.title,/Anthony of Padua/);
+ assert.doesNotMatch(L.roman(L.D(2026,6,13)).title,/Anthony of Padua/);
  assert.equal([roman.title,...roman.also.map(x=>x.title)].filter(x=>/Anthony of Padua/.test(x)).length,1);
  for(const line of historical)assert.match(line.split('|')[2],/^[1-4]$/,'1962 invalid rank '+line);
  assert.equal(historical.filter(x=>x.startsWith('4/21|')).length,1);
