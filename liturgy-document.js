@@ -66,7 +66,7 @@
   function displayLine(raw){
     return String(raw).replace(/^\s*(?:PROKIMENON|PROKEIMENON)\b/i,'Prokeimenon')
       .replace(/^\s*ALLELUIA\b/i,'Alleluia')
-      .replace(/\s*\*\s*/g,' ').replace(/\s{2,}/g,' ').trim();
+      .replace(/\s*\*\s*/g,' ').replace(/\s{2,}/g,' ').replace(/\bgod\b/gi,'God').trim();
   }
   // A private saved book can be parsed independently of downloaded daily
   // hymns. Fetch only the selected church's verified dataset, with one shared

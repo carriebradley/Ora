@@ -90,7 +90,8 @@
     }
     for(const group of groups){
       const combined=combinePdfLines(group.rows).filter(line=>
-        !/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line));
+        !LiturgicalFormat.pdfFolioLine(line)&&
+        !/^(?:page \d+|table of contents|contents|notes|rubrics)$/i.test(line));
       if(!combined.length)continue;
       if(group.alternative){
         const name=group.alternative==='sunday'?'Sunday':'Weekday';
@@ -149,7 +150,7 @@
       }
       const end=lines.findIndex(line=>/^(?:appendix|appendices|glossary|acknowledg(?:e)?ments|prayers (?:before|after) (?:the )?(?:divine liturgy|liturgy)|private prayers|about (?:this|the) (?:book|translation))$/i.test(line.text)||/^APPENDIX(?:\d+)?$/.test(String(line.text).replace(/[^a-z0-9]/gi,'').toUpperCase()));
       const clean=combinePdfLines(end<0?lines:lines.slice(0,end)).filter(line=>{
-        if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
+        if(LiturgicalFormat.pdfFolioLine(line)||/^(?:page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
         return true;
       });
       addPrayerSections(sections,end<0?lines:lines.slice(0,end),

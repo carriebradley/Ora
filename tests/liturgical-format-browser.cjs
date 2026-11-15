@@ -95,7 +95,7 @@ module.exports=async(page,base,artifacts,violations)=>{
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
-     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','ALL: Let us stand well before God.'],
+     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
      83:['BISHOP: Fixture anaphora.'],
      99:['ALL: Fixture Communion response.'],
@@ -121,6 +121,9 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
  assert.match(await ukrainian.innerText(),/For You are holy now and ever\./);
+ assert.match(await ukrainian.innerText(),/For God is a great Lord and a great King over all the earth\./,'the Divine Liturgy always capitalizes God');
+ assert.doesNotMatch(await ukrainian.innerText(),/\b10 11\b/,'two adjacent printed PDF folios must be removed');
+ assert.match(await ukrainian.innerText(),/Entrance with the Gospel/,'the actual liturgy heading remains');
  assert.doesNotMatch(await ukrainian.innerText(),/\*/, 'Ukrainian continuous prayer text hides PDF chant-break asterisks');
  assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows|All stand\.|\(Sit\.\)/);
  assert.match(await ukrainian.innerText(),/Let us stand well before God/, 'prayer language mentioning standing must be retained');

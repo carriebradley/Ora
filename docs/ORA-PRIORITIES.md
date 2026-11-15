@@ -52,3 +52,6 @@ each implementation.
 P1: Remove stage/posture directions and instruction toggle from continuous
 Divine Liturgy; retain speakers, scripture references and actual prayer text.
 The original saved PDF/EPUB still contains the complete edition when opened.
+
+## Applied November 15 — v344
+P1: Hide stray paired PDF folios (for example `10 11`) from the continuous Byzantine Divine Liturgy. Keep real psalm citations and spoken verse references untouched. In the devotional display, normalize standalone `god` to `God` without changing saved PDFs or the surrounding liturgical words. Source-derived daily hymn panels use the same capitalization convention. Regression fixtures reproduce the reported iPhone fragment.

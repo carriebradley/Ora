@@ -19,6 +19,7 @@
    .replace(/([(\u2018\u201c])\s+/g,'$1')
    .replace(/\s+([)\u2019\u201d])/g,'$1')
    .replace(/[ \t]{2,}/g,' ')
+   .replace(/\bgod\b/gi,'God')
    .trim();
  }
  const LOWER_TITLE_WORDS=new Set(['of','the','and','in','on','at','to','for','from','with','by','after','before','as','or','a','an','de','du','des','la','le']);
@@ -118,13 +119,18 @@
   }
   return out;
  }
+ // Facing-page PDFs sometimes combine two printed folios on one row (10 11).
+ // Ignore those standalone numbering lines without deleting verse citations.
+ function pdfFolioLine(text){
+  return /^\d{1,4}(?:\s+\d{1,4})?$/.test(String(text||'').trim());
+ }
  function combine(lines){
   const out=[];let current='',last=null;
   const flush=()=>{if(current)out.push(current);current='';};
   for(let i=0;i<lines.length;i++){
    const raw=lines[i];let text=normalize(typeof raw==='string'?raw:raw.text);
    if(!text){flush();last=null;continue;}
-   if(/^\d{1,4}$/.test(text)||/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(text)||/^THE END OF THE DIVINE LITURGY$/i.test(text)||/^OF ST\. JOHN CHRYSOSTOM$/i.test(text))continue;
+   if(pdfFolioLine(text)||/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(text)||/^THE END OF THE DIVINE LITURGY$/i.test(text)||/^OF ST\. JOHN CHRYSOSTOM$/i.test(text))continue;
    if(/^[\s_\-\u2013\u2014]{8,}$/.test(text))continue;
    text=text.replace(/\s*_{8,}(?:\s*_{8,})*$/,'').trim();
    if(!text)continue;
@@ -172,5 +178,5 @@
   for(const part of result)part.lines=(part.lines||[]).filter(s=>!/^(?:WE\s+LEAVE\s+THE\s+WORLD(?:\s+STAND)?|STAND)$/i.test(s.trim()));
   return [{heading:'Liturgy of the Word',lines:[]},...result];
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine,englishPdfItems,startAtOpeningBlessing};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,startAtOpeningBlessing};
 });

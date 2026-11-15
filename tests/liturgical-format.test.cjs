@@ -285,6 +285,38 @@ test('Ukrainian prayers begin at the first blessing and drop seasonal cover head
  const u=[{lines:['Unknown booklet','No identifiable opening.']}];
  assert.deepEqual(F.startAtOpeningBlessing(u),u);
 });
+test('facing-page numerals are not devotional text',()=>{
+ const source=[
+  {text:'ALL: Son of God, save us who sing to You: Alleluia.',page:35,y:600,height:12},
+  {text:'10 11',page:35,y:80,height:12},
+  {text:'Entrance with the Gospel',page:37,y:780,height:12},
+  {text:'DEACON: Let us pray to the Lord.',page:37,y:750,height:12}
+ ];
+ assert.equal(F.pdfFolioLine('10 11'),true);
+ assert.equal(F.pdfFolioLine('11'),true);
+ for(const reference of ['10:11','Psalm 10:11','Verse 10 11','10–11','10 11 12'])
+  assert.equal(F.pdfFolioLine(reference),false,reference);
+ assert.deepEqual(F.combine(source),[
+  'ALL: Son of God, save us who sing to You: Alleluia.',
+  'Entrance with the Gospel',
+  'DEACON: Let us pray to the Lord.'
+ ]);
+ assert.deepEqual(F.combine(['10 11']),[]);
+ assert.deepEqual(F.combine(['Verse: Psalm 10:11','The Lord is King.']),[
+  'Verse: Psalm 10:11 The Lord is King.'
+ ]);
+});
+
+test('Divine Liturgy display capitalizes God without rewriting the source',()=>{
+ const source='Verse: For god is a great Lord and a great King over all the earth.';
+ assert.equal(F.displayPrayer(source),
+  'Verse: For God is a great Lord and a great King over all the earth.');
+ assert.equal(F.displayPrayer('GOD is merciful, and God is love.'),'God is merciful, and God is love.');
+ assert.equal(F.displayPrayer("God's mercy, the gods of the nations, godly conduct."),
+  "God's mercy, the gods of the nations, godly conduct.");
+ assert.equal(source.includes('god'),true,'original words are unchanged');
+});
+
 test('underscore separators from PDFs are not spoken lines',()=>{
  assert.deepEqual(F.combine(['ALL: Lord, have mercy.','________________________','DEACON: A new petition.']),['ALL: Lord, have mercy.','DEACON: A new petition.']);
  assert.deepEqual(F.combine(['ALL: Amen. __________________________']),['ALL: Amen.']);
