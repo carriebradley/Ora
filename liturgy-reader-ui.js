@@ -23,6 +23,7 @@
         <label for="liturgical-file">Choose a PDF or EPUB</label>
         <input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub" aria-describedby="reader-storage-note">
         <p class="muted" id="reader-storage-note" style="font-size:.78rem;line-height:1.45;margin:8px 0">Books and bookmarks stay on this device. Keep the original PDF or EPUB elsewhere: clearing Safari website data or reinstalling Ora may erase the saved copy.</p>
+        ${id==='chrysostom'?'<p class="muted byz-book-source">Year-round English booklet: <a href="https://abvmcalgary.com/site/wp-content/uploads/2025/04/PDF-Divine-Liturgy-Eng.pdf" target="_blank" rel="noopener noreferrer">Ukrainian Catholic St. John Chrysostom</a>. Download it and select the PDF above; your saved book is not replaced automatically.</p>':id==='melkite-chrysostom'?'<p class="muted byz-book-source">Year-round English booklet: <a href="https://melkite.org/faith/faith-worship/new-english-translation-of-the-divine-liturgy" target="_blank" rel="noopener noreferrer">Melkite Diocese of Newton · St. John Chrysostom</a>. Download the diocesan PDF and select it above.</p>':''}
         <button class="btn" data-reader="remove" disabled>Remove saved book</button>
       </details>
     </section>`;
@@ -179,6 +180,18 @@
     target.insertBefore(note,target.firstChild);
   }
 
+  async function isEaster2018Booklet(book){
+   if(book.numPages!==26)return false;
+   const page=await book.getPage(1);
+   const text=(await page.getTextContent()).items.map(i=>i.str).join(' ').replace(/\s+/g,' ');
+   return /Easter\s*Season/i.test(text)&&/St\.?\s*Josaphat/i.test(text)&&/2018/.test(text);
+  }
+  function showSeasonalBookletNote(target){
+   const p=document.createElement('p');p.className='muted byz-seasonal-booklet-note';
+   p.textContent='This is an Easter-season booklet. Its seasonal hymns and antiphons are not necessarily appointed for this date. For ordinary days, use the year-round English booklet in Manage saved Divine Liturgy book.';
+   target.insertBefore(p,target.firstChild.nextSibling);
+  }
+
   // Visual call-and-response cues, inferred only from labels printed in the
   // saved booklet. Do not invent speaker assignments for unlabelled lines.
   const roleLine=LiturgicalFormat.role,liturgicalInstruction=LiturgicalFormat.instruction;
@@ -317,9 +330,11 @@
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
           status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
           const reading=await prayerPreview(saved,book,async b=>{
+            const seasonal=await isEaster2018Booklet(b);
             const liturgy=await edmontonPrayerText(b)||await standardPrayerText(b,section.dataset.textId);
-            if(liturgy)return {sections:liturgy,recognized:true};
-            return {sections:await continuousSavedPdfText(b),recognized:false};
+            if(liturgy)return {sections:LiturgicalFormat.startAtOpeningBlessing(liturgy),recognized:true,seasonal};
+            const fallback=await continuousSavedPdfText(b);
+            return {sections:fallback?LiturgicalFormat.startAtOpeningBlessing(fallback):null,recognized:false,seasonal};
           });
           if(!section.isConnected||token!==hydrateVersion)return;
           // Do not require a recognized edition merely to read the saved PDF
@@ -327,6 +342,7 @@
           continuous=true;
           if(reading?.sections){
             renderEdmontonPrayerText(preview,reading.sections);
+            if(reading.seasonal)showSeasonalBookletNote(preview);
             if(!reading.recognized)unrecognizedPdfNotice(preview,book.numPages);
             status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · English-only continuous text')+' · saved privately on this device';
           }else{

@@ -190,6 +190,23 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(englishView,/[\u0400-\u052f]/u);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
  assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/English-only continuous text/);
+ // Seasonal 2018 booklet must enter at the prayer, not its cover or posture
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
+  LiturgyReader.get=async()=>({id:'chrysostom',name:'easter-booklet.pdf',format:'pdf',pages:26,page:1,updated:107,blob:new Blob()});
+  LiturgyReader.load=async()=>({numPages:26,getPage:async n=>({
+   getTextContent:async()=>({items:(n===1?['St. Josaphat Cathedral','Easter Season','April 2018']:
+    n===2?['DIVINE LITURGY','WE LEAVE THE WORLD STAND','Blessing','DEACON: Master, give the blessing.','PRIEST: Blessed be the kingdom.','ALL: Amen. ___________________','Great Litany','DEACON: In peace let us pray to the Lord.']:
+    n===3?['ALL: Lord, have mercy.']:[]).map((s,i)=>row(s,760-i*28))})
+  }),destroy:async()=>{}});
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ const result=await ukrainian.innerText();
+ assert.match(result,/Liturgy of the Word[\s\S]*Blessing[\s\S]*Master, give the blessing/);
+ assert.doesNotMatch(result,/WE LEAVE THE WORLD|St\. Josaphat Cathedral|April 2018|____/);
+ assert.match(await ukrainian.locator('.byz-seasonal-booklet-note').innerText(),/Easter-season booklet/);
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
  // Scanned/image-only PDFs cannot be converted into text without OCR; retain
  // access to Open original book and do not return to paged inline navigation.
  await page.evaluate(async()=>{

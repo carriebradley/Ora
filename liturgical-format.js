@@ -104,6 +104,9 @@
    const raw=lines[i];let text=normalize(typeof raw==='string'?raw:raw.text);
    if(!text){flush();last=null;continue;}
    if(/^\d{1,4}$/.test(text)||/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(text)||/^THE END OF THE DIVINE LITURGY$/i.test(text)||/^OF ST\. JOHN CHRYSOSTOM$/i.test(text))continue;
+   if(/^[\s_\-\u2013\u2014]{8,}$/.test(text))continue;
+   text=text.replace(/\s*_{8,}(?:\s*_{8,})*$/,'').trim();
+   if(!text)continue;
    // Repair only a known heading, including one split over two PDF rows.
    let candidate=text;
    for(let count=1;count<=5&&i+count<lines.length;count++){
@@ -127,5 +130,26 @@
   }
   flush();return out;
  }
- return {normalize,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine,englishPdfItems};
+ function startAtOpeningBlessing(sections){
+  if(!Array.isArray(sections))return sections;
+  let si=-1,li=-1;
+  for(let i=0;i<sections.length;i++){
+   const lines=sections[i]?.lines||[];
+   for(let j=0;j<lines.length;j++){
+    const row=lines[j];
+    if(/^(?:(?:deacon|dcn)\s*:\s*master[,\s]+give the blessing|(?:priest|celebrant)\s*:\s*blessed\s+(?:be|is)\s+the kingdom)/i.test(row)){si=i;li=j;break;}
+   }
+   if(si>=0)break;
+  }
+  if(si<0)return sections;
+  const first=sections[si].lines;
+  for(let j=li-1;j>=Math.max(0,li-4);j--){
+   if(/^Blessing$/i.test(first[j].trim())){li=j;break;}
+   if(role(first[j]))break;
+  }
+  const result=sections.slice(si).map((part,i)=>i===0?{...part,heading:null,lines:part.lines.slice(li)}:part);
+  for(const part of result)part.lines=(part.lines||[]).filter(s=>!/^(?:WE\s+LEAVE\s+THE\s+WORLD(?:\s+STAND)?|STAND)$/i.test(s.trim()));
+  return [{heading:'Liturgy of the Word',lines:[]},...result];
+ }
+ return {normalize,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine,englishPdfItems,startAtOpeningBlessing};
 });

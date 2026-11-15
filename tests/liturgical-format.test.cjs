@@ -237,3 +237,22 @@ test('bilingual Ukrainian text filtering preserves English responses on the same
  assert.equal(F.englishPdfItems([{str:'Господи, помилуй.'}]).length,0);
  assert.deepEqual(F.englishPdfItems([{str:'ALL: Amen.',width:10}]),[{str:'ALL: Amen.',width:10}]);
 });
+
+test('Ukrainian prayers begin at the first blessing and drop seasonal cover headings',()=>{
+ const s=[
+  {lines:['DIVINE LITURGY','Easter Season','St. Josaphat Cathedral April 2018']},
+  {lines:['WE LEAVE THE WORLD STAND','Blessing','DEACON: Master, give the blessing.','PRIEST: Blessed be the kingdom.','ALL: Amen.']},
+  {lines:['Great Litany','DEACON: In peace let us pray to the Lord.']}
+ ];
+ const clean=F.startAtOpeningBlessing(s),body=clean.flatMap(x=>x.lines).join(' ');
+ assert.equal(clean[0].heading,'Liturgy of the Word');
+ assert.match(body,/Blessing DEACON: Master, give the blessing/);
+ assert.match(body,/Great Litany DEACON/);
+ assert.doesNotMatch(body,/WE LEAVE|Easter Season|St\. Josaphat/);
+ const u=[{lines:['Unknown booklet','No identifiable opening.']}];
+ assert.deepEqual(F.startAtOpeningBlessing(u),u);
+});
+test('underscore separators from PDFs are not spoken lines',()=>{
+ assert.deepEqual(F.combine(['ALL: Lord, have mercy.','________________________','DEACON: A new petition.']),['ALL: Lord, have mercy.','DEACON: A new petition.']);
+ assert.deepEqual(F.combine(['ALL: Amen. __________________________']),['ALL: Amen.']);
+});
