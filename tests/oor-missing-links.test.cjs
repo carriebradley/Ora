@@ -150,3 +150,29 @@ test('Augustine Gospel of John tractate sources link directly to their historica
  assert.equal(inventory.indexed,562);
  assert.match(app,/These historical source editions may use different wording or section boundaries/);
 });
+
+test('seven additional Augustine treatise and Confessions editions remain external references',()=>{
+ const app=require('node:fs').readFileSync(require.resolve('../app.js'),'utf8');
+ const map=app.slice(app.indexOf('const OOR_PUBLIC_DOMAIN_SOURCES'),app.indexOf('let oortxP = null;'));
+ const inventory=require('../docs/office-of-readings-availability.json');
+ const missing=new Set(inventory.missingReferences);
+ const pairs=[
+  ['Against Faustus 20, 21','140620.htm'],
+  ['The City of God 10, 6','120110.htm'],
+  ['The Confessions 1, 1–2, 2.5, 5','110101.htm'],
+  ['The Confessions 10, 1, 1–2, 2; 5, 7','110110.htm'],
+  ['The Confessions 10, 26.37–29, 40','110110.htm'],
+  ['The Confessions 10, 43, 68-70','110110.htm'],
+  ['On the predestination of the saints','1512.htm']
+ ];
+ for(const [reference,leaf] of pairs){
+  const key='Augustine|'+reference,position=map.indexOf(JSON.stringify(key));
+  assert.ok(position>=0,key+' must offer a source link');
+  assert.ok(map.slice(position,position+250).includes('https://www.newadvent.org/fathers/'+leaf),key);
+  assert.ok(missing.has(key),'A historical source link must not be marked as an available Office excerpt: '+key);
+ }
+ assert.equal(inventory.available,105);
+ assert.equal(inventory.indexed,562);
+ assert.equal(inventory.bundled,105);
+ assert.match(app,/A verified translation of this appointed excerpt has not yet been bundled/);
+});

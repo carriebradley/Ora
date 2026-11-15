@@ -2118,6 +2118,27 @@
     ],
     "Augustine|On the first letter of John": [
       ["Homilies on the First Epistle of John — collection index", 'https://www.newadvent.org/fathers/1702.htm']
+    ],
+    "Augustine|Against Faustus 20, 21": [
+      ["Against Faustus, Book XX, chapters 20–21", 'https://www.newadvent.org/fathers/140620.htm']
+    ],
+    "Augustine|The City of God 10, 6": [
+      ["City of God, Book X, chapter 6", 'https://www.newadvent.org/fathers/120110.htm']
+    ],
+    "Augustine|The Confessions 1, 1–2, 2.5, 5": [
+      ["Confessions, Book I, historical edition", 'https://www.newadvent.org/fathers/110101.htm']
+    ],
+    "Augustine|The Confessions 10, 1, 1–2, 2; 5, 7": [
+      ["Confessions, Book X, historical edition", 'https://www.newadvent.org/fathers/110110.htm']
+    ],
+    "Augustine|The Confessions 10, 26.37–29, 40": [
+      ["Confessions, Book X, historical edition", 'https://www.newadvent.org/fathers/110110.htm']
+    ],
+    "Augustine|The Confessions 10, 43, 68-70": [
+      ["Confessions, Book X, historical edition", 'https://www.newadvent.org/fathers/110110.htm']
+    ],
+    "Augustine|On the predestination of the saints": [
+      ["On the Predestination of the Saints, historical edition index", 'https://www.newadvent.org/fathers/1512.htm']
     ]
   });
   let oortxP = null;
@@ -2402,7 +2423,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v322';
+  const APP_BUILD = 'ora-v323';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
