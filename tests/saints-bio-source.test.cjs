@@ -248,7 +248,7 @@ test('End of December retains martyrs, Innocents, and differing Melania dates',(
  const ua=segment.slice(segment.indexOf('    ukrainian: {'),segment.indexOf('    melkite: {'));
  const me=segment.slice(segment.indexOf('    melkite: {'),segment.indexOf('    sarum: {'));
  assert.ok(ua.includes("'12-31': BYZANTINE_BIO_MELANIA"));
- assert.ok(!ua.includes("'12-30':"),'Edmonton December 30 date is unverified');
+ assert.ok(ua.includes("'12-30': {"),'Verified December 30 Ukrainian martyr now has a short card');
  assert.ok(me.includes("'12-30': BYZANTINE_BIO_MELANIA"));
  assert.ok(!me.includes("'12-31':"),'Melkite leave-taking does not invent named saint');
  const ua31=L.byzantine(new Date('2026-12-31T00:00:00Z'),{byzChurch:'ukrainian',byzSource:'edmonton'});
@@ -402,4 +402,19 @@ test('Sarum Martinmas and St Martin octave titles match their biography, not unr
  const dates=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
  assert.match(dates,/'11-11': SARUM_BIO_MARTIN/);
  assert.match(dates,/'11-18': SARUM_BIO_MARTIN/);
+});
+
+test('December 30 Anysia bio belongs to the Ukrainian mode, not the Melkite Melania day',()=>{
+ const L=require('../calendar.js');
+ const src=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const uk=src.slice(src.indexOf('    ukrainian: {'),src.indexOf('    melkite: {'));
+ const mk=src.slice(src.indexOf('    melkite: {'),src.indexOf('    sarum: {'));
+ assert.match(uk,/'12-30': \{\s*match: \/Anysia\/i/);
+ assert.match(uk,/name: 'Holy Martyr Anysia of Thessalonica'/);
+ const biography=uk.match(/name: 'Holy Martyr Anysia of Thessalonica'[\s\S]*?bio: '([^']+)'/);
+ assert.ok(biography);
+ assert.ok(biography[1].trim().split(/\s+/).length<=50);
+ assert.ok(uk.includes('https://www.oca.org/saints/lives/2026/12/30/103691-virgin-martyr-anysia-at-thessalonica'));
+ assert.match(L.byzantine(new Date('2026-12-30T00:00:00Z'),{byzChurch:'ukrainian',byzSource:'edmonton'}).title,/Anysia/);
+ assert.ok(mk.includes("'12-30': BYZANTINE_BIO_MELANIA"),'Do not replace Melkite commemoration');
 });

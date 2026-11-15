@@ -1314,6 +1314,13 @@
     },
     ukrainian: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-30': {
+        match: /Anysia/i,
+        name: 'Holy Martyr Anysia of Thessalonica',
+        meta: 'Late third century · Virgin and Martyr',
+        bio: 'Anysia is remembered as a Christian woman of Thessalonica who gave her inheritance to those in need. According to tradition, she was killed during persecution after refusing to offer pagan sacrifice.',
+        source: 'https://www.oca.org/saints/lives/2026/12/30/103691-virgin-martyr-anysia-at-thessalonica'
+      },
       '12-31': BYZANTINE_BIO_MELANIA,
       '12-26': {
         match: /Euthymius/i,
@@ -2182,7 +2189,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v306';
+  const APP_BUILD = 'ora-v307';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

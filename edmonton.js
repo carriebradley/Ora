@@ -9,7 +9,7 @@
   const rankFor=(e,d,fallback)=>/Feast of the (Lord|Mother of God)/i.test(e.rank)?'Great Feast':e.rank||(/Holy Week/.test(fallback.rank)?fallback.rank:d.getUTCDay()===0?'Sunday':'Commemoration');
   function read(d){
     const day=entry(d);if(!day)return null;
-    return {sets:day.references.length?[{t:displayTitle(day.title),r:day.references.map(pair=>pair.slice())}]:[],notes:[day.references.length?'Reading references from the Ukrainian Catholic Eparchy of Edmonton’s dated page.':'Edmonton has not supplied usable reading references for this date. Consult its source page.']};
+    return {sets:day.references.length?[{t:displayTitle(day.title),r:day.references.map(pair=>pair.slice())}]:[],notes:[day.references.length?(day.readingSource?'Epistle and Gospel references checked against the Ukrainian Greek Catholic Church Patriarchal Liturgical Commission’s 2026 calendar: '+day.readingSource:'Reading references from the Ukrainian Catholic Eparchy of Edmonton’s dated page.'):'Edmonton has not supplied usable reading references for this date. Consult its source page.']};
   }
   function calendar(d,fallback){
     const date=iso(d),e=entry(date),fixed=data.fixed[date.slice(5)];
@@ -32,7 +32,7 @@
     else if(/Apostle[’']?s?[’']? Fast/i.test(rubric))fastSeason='Apostles’ Fast';
     else if(/Great Fast/i.test(rubric))fastSeason='Great Fast';
     return {...fallback,title:displayTitle(e.title),rank:rankFor(e,d,fallback),tone:e.tone,also:[],fast,fastSeason,
-      sourceKind:'edmonton',sourceUrl:e.source,sourceNote:'Ukrainian Catholic Eparchy of Edmonton · dated calendar.',
+      sourceKind:'edmonton',sourceUrl:e.source,sourceNote:e.readingSource?'Ukrainian Catholic Eparchy of Edmonton · monthly calendar; reading references checked against UGCC Patriarchal 2026 calendar.':'Ukrainian Catholic Eparchy of Edmonton · dated calendar.',
       fastingNote:'Edmonton’s calendar describes Canadian practice. For binding U.S. obligations, follow your own eparchy’s directions and personal exemptions.',
       canadianObligation:/Holy Day of obligation/i.test(rubric)};
   }
