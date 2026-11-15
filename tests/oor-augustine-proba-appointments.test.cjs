@@ -29,6 +29,6 @@ test('Augustine on prayer: six indexed selections preserve chapter boundaries an
   assert.ok(entry.p.every(p=>p.length>160),key);
  }
  assert.equal(inventory.bundled,Object.keys(texts).length);
- assert.equal(inventory.available,98);
- assert.equal(inventory.missing,464);
+ assert.equal(inventory.available,inventory.bundled);
+ assert.equal(inventory.available+inventory.missing,562);
 });

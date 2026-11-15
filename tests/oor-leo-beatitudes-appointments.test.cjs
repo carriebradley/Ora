@@ -28,6 +28,6 @@ test('five Leo the Great Beatitudes readings use exactly the appointed sermon se
   assert.ok(reading.p.every(p=>p.length>150),key);
  }
  assert.equal(inventory.bundled,Object.keys(texts).length);
- assert.equal(inventory.available,103);
- assert.equal(inventory.missing,459);
+ assert.equal(inventory.available,inventory.bundled);
+ assert.equal(inventory.available+inventory.missing,562);
 });
