@@ -1044,7 +1044,7 @@
       ? byzantineCommemorations(displayTitle(title))
       : westernCommemorations(title);
     const primary = commemorations[0] || '';
-    const recognized = /\\b(?:saint|saints|st\\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist)\\b/i.test(primary);
+    const recognized = /\b(?:saint|saints|st\.|apostle|martyr|hieromartyr|confessor|bishop|abbot|virgin|theologian|evangelist)\b/i.test(primary);
     if (!entry && !recognized) return '';
     const saint = entry || {
       name: primary,
