@@ -361,3 +361,19 @@ test('inline minister cues retain spoken prayers instead of hiding them as rubri
  assert.equal(F.role('PRIEST: Lord, have mercy.')?.words,'Lord, have mercy.');
  assert.equal(F.role('The priest says that the prayer is finished.'),null);
 });
+
+test('titled EPUB appendices and copyright chapters never resume as prayer',()=>{
+ const book=[
+  {title:'Copyright: Publisher Details',blocks:[{text:'Copyright metadata must not appear.'}]},
+  {title:'The Divine Liturgy',blocks:[{text:'PRIEST: Blessed is the Kingdom.'},{text:'ALL: Amen.'}]},
+  {title:'Appendix A — Editorial References',blocks:[{text:'Not a liturgical prayer.'}]},
+  {title:'Additional Prayer',blocks:[{text:'This should not resume after an appendix.'}]}
+ ];
+ const sections=F.epubPrayerSections(book);
+ const words=sections.flatMap(s=>s.lines).join(' ');
+ assert.match(words,/Blessed is the Kingdom/);
+ assert.match(words,/ALL: Amen/);
+ assert.doesNotMatch(words,/Copyright metadata|Not a liturgical prayer|This should not resume/);
+ const ordinary=F.epubPrayerSections([{title:'Prayer of Thanksgiving — After Communion',blocks:[{text:'PRIEST: Blessed is the Kingdom.'}]}]);
+ assert.match(ordinary.flatMap(s=>s.lines).join(' '),/Blessed is the Kingdom/);
+});

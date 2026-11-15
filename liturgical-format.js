@@ -190,7 +190,9 @@
  // the saved Byzantine edition intact and display its liturgical words as a
  // single document. Recognized internal subheadings retain their structure.
  function epubPrayerSections(parts){
-  const editorial=/^(?:table of contents|contents|copyright(?: notice)?|preface|foreword|introduction|acknowledg(?:e)?ments?|bibliography|references|sources?|explanatory notes?|glossary|index|appendix(?:es)?(?:\s+[a-z0-9]+)?|publisher'?s? notes?|editor'?s? notes?|about (?:this|the) (?:edition|book))$/i;
+  // Match titled editorial chapters with a numbered/lettered suffix, while
+  // leaving ordinary prayer sections and embedded references untouched.
+  const editorial=/^(?:table of contents|contents|copyright(?: notice)?|preface|foreword|introduction|acknowledg(?:e)?ments?|bibliography|references|sources?|explanatory notes?|glossary|index|appendix(?:es)?(?:\s+[a-z0-9]+)?|publisher'?s? notes?|editor'?s? notes?|about (?:this|the) (?:edition|book))(?:\s*[:—–-]\s*.+)?$/i;
   const out=[];
   for(const part of parts||[]){
    const title=String(part?.title||'').trim();
