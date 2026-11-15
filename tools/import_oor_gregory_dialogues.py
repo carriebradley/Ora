@@ -13,8 +13,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 URL = "https://www.tertullian.org/fathers/gregory_02_dialogues_book2.htm"
 KEY = "Gregory the Great|Dialogues 2, 33"
-START = re.compile(r"(?:Chapter\\s+(?:Thirty[-\\s]*three|XXXIII)\\s*[:. -]*)?of\\s+a\\s+miracle\\s+wrought\\s+by\\s+his\\s+sister\\s+Scholastica", re.I)
-END = re.compile(r"Chapter\\s+(?:Thirty[-\\s]*four|XXXIV)\\s*[:. -]*", re.I)
+START = re.compile(r"(?:Chapter\s+(?:Thirty[-\s]*three|XXXIII)\s*[:. -]*)?of\s+a\s+miracle\s+wrought\s+by\s+his\s+sister\s+Scholastica", re.I)
+END = re.compile(r"Chapter\s+(?:Thirty[-\s]*four|XXXIV)\s*[:. -]*", re.I)
 
 class BlockReader(HTMLParser):
     """Retain plain text and explicit paragraph boundaries, ignoring page layout."""
