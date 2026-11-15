@@ -1206,6 +1206,41 @@
       bio: 'Ignatius was Bishop of Antioch and an early Christian teacher. Traveling to Rome under arrest, he wrote letters urging unity and fidelity to Christ. He was martyred there and is honored as an Apostolic Father.',
       source: 'https://www.oca.org/saints/lives/2026/12/20/103594-hieromartyr-ignatius-the-god-bearer-bishop-of-antioch'
     },
+    '12-21': {
+      match: /Juliana/i,
+      name: 'Holy Martyr Juliana of Nicomedia',
+      meta: 'Early fourth century · Martyr',
+      bio: 'Juliana is remembered as a Christian woman of Nicomedia who refused to abandon her faith under persecution. According to tradition, she suffered martyrdom after rejecting pressure to renounce Christ.',
+      source: 'https://www.oca.org/saints/lives/2026/12/21/103601-virgin-martyr-juliana-of-nicomedia-and-500-men-and-130-women-wit'
+    },
+    '12-22': {
+      match: /Anastasia/i,
+      name: 'Holy Great-Martyr Anastasia',
+      meta: 'Early fourth century · Martyr',
+      bio: 'Anastasia was remembered for caring for imprisoned Christians and tending their wounds. Later tradition recounts her martyrdom during Diocletian’s persecution and honors her as the Deliverer from Poisons.',
+      source: 'https://www.oca.org/saints/lives/2026/12/22/103609-great-martyr-anastasia-the-deliverer-from-poisons-her-teacher-ma'
+    },
+    '12-23': {
+      match: /Ten Holy Martyrs of Crete/i,
+      name: 'The Ten Holy Martyrs of Crete',
+      meta: 'Third century · Martyrs',
+      bio: 'Ten Christians from Crete are remembered for refusing pagan sacrifice during persecution under Emperor Decius. Their witness is commemorated together rather than assigning the feast to one individual martyr.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/23'
+    },
+    '12-24': {
+      match: /Eugenia/i,
+      name: 'Holy Venerable-Martyr Eugenia',
+      meta: 'Early Christian era · Monastic Martyr',
+      bio: 'Eugenia is remembered in Christian tradition as a woman from Rome who embraced the monastic life in Alexandria. Later accounts describe her courageous confession of Christ and martyrdom.',
+      source: 'https://www.oca.org/saints/lives/2026/12/24/103631-nun-martyr-eugenia-of-rome'
+    },
+    '12-27': {
+      match: /Joseph the Betrothed|Holy Joseph|Righteous Joseph/i,
+      name: 'Saint Joseph the Betrothed',
+      meta: 'First century · Guardian of Jesus and Husband of Mary',
+      bio: 'Joseph, of the house of David, cared for Mary and the infant Jesus. The Gospel of Matthew recounts his obedience to the angel’s warnings and the family’s flight into Egypt. Byzantine Christians commemorate him with David and James after Christmas.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/27'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1230,6 +1265,13 @@
     },
     ukrainian: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-26': {
+        match: /Euthymius/i,
+        name: 'Holy Hieromartyr Euthymius of Sardis',
+        meta: 'Eighth–ninth century · Bishop and Confessor',
+        bio: 'Euthymius was Bishop of Sardis and defended the veneration of holy icons. He attended the Seventh Ecumenical Council and endured repeated exile and persecution during the iconoclastic controversy.',
+        source: 'https://www.oca.org/saints/lives/2026/12/26/103649-hieromartyr-euthymius-bishop-of-sardis'
+      },
       '12-19': {
         match: /Boniface/i,
         name: 'Holy Martyr Boniface',
@@ -2061,7 +2103,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v295';
+  const APP_BUILD = 'ora-v296';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

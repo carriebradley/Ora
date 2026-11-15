@@ -203,3 +203,29 @@ test('December 16-20 primary saints retain distinct December 19 commemorations',
  const melk=L.byzantine(dec19,{byzChurch:'melkite'});
  assert.ok([melk.title,...melk.also.map(e=>e.title)].some(t=>bios['12-20'].match.test(t)));
 });
+
+test('Christmas week biographies do not turn Nativity or Marian feast into a made-up saint',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js');
+ const key='const SHARED_BYZANTINE_SAINT_BIOS = ';
+ const first=app.indexOf(key),end=app.indexOf('\n  };',first);
+ const bios=vm.runInNewContext('('+app.slice(first+key.length,end+4)+')');
+ for(const md of ['12-21','12-22','12-23','12-24','12-27']){
+  const entry=bios[md];
+  assert.ok(entry,md);
+  assert.ok(entry.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite']){
+   const c=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+   assert.ok([c.title,...(c.also||[]).map(e=>e.title)].some(t=>entry.match.test(t)),church+' '+md);
+  }
+ }
+ assert.equal(bios['12-25'],undefined);
+ assert.equal(bios['12-26'],undefined);
+ const block=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const uk=block.slice(block.indexOf('    ukrainian: {'),block.indexOf('    melkite: {'));
+ const mk=block.slice(block.indexOf('    melkite: {'),block.indexOf('    sarum: {'));
+ assert.ok(uk.includes("'12-26': {"));
+ assert.ok(uk.includes("name: 'Holy Hieromartyr Euthymius of Sardis'"));
+ assert.ok(!mk.includes("'12-26':"),'Melkite December 26 is a Marian Synaxis');
+ const day=L.byzantine(new Date('2026-12-26T00:00:00Z'),{byzChurch:'ukrainian',byzSource:'edmonton'});
+ assert.ok([day.title,...day.also.map(e=>e.title)].some(t=>/Euthymius/.test(t)));
+});
