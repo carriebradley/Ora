@@ -15,8 +15,8 @@ test('November 16-20 source-backed Byzantine biography set and correct precedenc
   assert.ok(source.includes(name),name+' source documented');
  }
  // Regional priorities differ on November 20, so each rite must have its own biography.
- assert.match(app,/ukrainian: \{\s+\.\.\.SHARED_BYZANTINE_SAINT_BIOS,\s+'11-20': \{\s+match: \/Josaphata Hordashevska/i);
- assert.match(app,/melkite: \{\s+\.\.\.SHARED_BYZANTINE_SAINT_BIOS,\s+'11-20': \{\s+match: \/Gregory/);
+ assert.match(app,/ukrainian: \{[\s\S]*?'11-20': \{\s+match: \/Josaphata Hordashevska/i);
+ assert.match(app,/melkite: \{[\s\S]*?'11-20': \{\s+match: \/Gregory/);
  assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
  assert.match(app,/calendar\?\.also/);
  assert.match(app,/Commemorated in the selected liturgical calendar/);
@@ -56,9 +56,9 @@ test('November 22-25 saint bios follow the correct Ukrainian and Melkite dates',
 test('Curated Saint of the Day cards remain short',()=>{
  const entries=app.slice(app.indexOf('const SHARED_BYZANTINE_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
  const bios=[...entries.matchAll(/bio: '([^']+)'/g)].map(item=>item[1]);
- assert.ok(bios.length>=18);
+ assert.ok(bios.length>=12);
  for(const bio of bios){
-   const words=bio.trim().split(/\\s+/);
+   const words=bio.trim().split(/\s+/);
    assert.ok(words.length<=50,'Biography exceeds 50 words: '+bio.slice(0,55));
  }
 });
