@@ -443,3 +443,23 @@ test('January Roman saint cards are sourced, short, and match observed Roman tit
  assert.match(selector,/const titles = S\.rite === 'byz'/);
  assert.match(selector,/: \[title\];/);
 });
+
+test('Late January Roman cards respect named primary commemoration and Sunday precedence',()=>{
+ const L=require('../calendar.js');
+ const romans=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
+ const names={'01-24':'Francis de Sales','01-25':'Conversion of Saint Paul','01-26':'Timothy and Titus','01-28':'Thomas Aquinas','01-31':'John Bosco'};
+ for(const [md,title] of Object.entries(names)){
+  const entry=romans.slice(romans.indexOf("'"+md+"':"));
+  assert.ok(entry.startsWith("'"+md+"':"),md);
+  assert.ok(entry.includes('source: "https://www.franciscanmedia.org/saint-of-the-day/'),md);
+  const bio=entry.match(/bio: "([^"]+)"/);
+  assert.ok(bio&&bio[1].trim().split(/\s+/).length<=50,md);
+  const selected=Array.from({length:12},(_,i)=>L.roman(new Date((2025+i)+'-'+md+'T00:00:00Z')));
+  assert.ok(selected.some(day=>day.title.includes(title)),md+' has an observed Roman title');
+ }
+ assert.ok(romans.includes('name: "Saint Timothy"'));
+ assert.ok(romans.includes('name: "Saint Paul the Apostle"'));
+ assert.doesNotMatch(L.roman(new Date('2027-01-31T00:00:00Z')).title,/John Bosco/);
+ const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
+ assert.match(selector,/: \[title\];/,'Sunday takes precedence over a displaced saint');
+});

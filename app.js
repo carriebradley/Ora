@@ -1304,6 +1304,12 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '01-24': { match: /Francis de Sales/i, name: "Saint Francis de Sales", meta: "1567–1622 · Bishop and Doctor", bio: "Francis de Sales served as Bishop of Geneva and wrote about the call to holiness in everyday life. His gentle pastoral approach and spiritual writings, including Introduction to the Devout Life, influenced generations of Catholics.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-de-sales/" },
+      '01-25': { match: /Conversion of Saint Paul/i, name: "Saint Paul the Apostle", meta: "First century · Apostle to the Gentiles", bio: "Paul's encounter with the risen Christ on the road to Damascus transformed him from a persecutor of Christians into a preacher of the Gospel. The Acts of the Apostles recounts his conversion.", source: "https://www.franciscanmedia.org/saint-of-the-day/conversion-of-saint-paul/" },
+      '01-26': { match: /Timothy and Titus/i, name: "Saint Timothy", meta: "First century · Bishop and Companion of Paul", bio: "Timothy traveled with Saint Paul and helped guide the early Christian communities. Letters addressed to him encourage perseverance, sound teaching, and faithful pastoral leadership. The Roman calendar commemorates him with Saint Titus.", source: "https://www.franciscanmedia.org/saint-of-the-day/saints-timothy-and-titus/" },
+      '01-28': { match: /Thomas Aquinas/i, name: "Saint Thomas Aquinas", meta: "1225–1274 · Dominican and Doctor", bio: "Thomas Aquinas was a Dominican friar, theologian, and philosopher. His writings, especially the Summa Theologiae, explore the relationship between faith and reason and remain influential in Catholic theology.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-thomas-aquinas/" },
+      '01-31': { match: /John Bosco/i, name: "Saint John Bosco", meta: "1815–1888 · Priest and Educator", bio: "John Bosco devoted his ministry in Turin to educating and supporting young people, particularly those living in poverty. He founded the Salesians and advocated a compassionate approach to teaching and formation.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-bosco/" },
+
       '01-02': { match: /Basil the Great/i, name: "Saint Basil the Great", meta: "c. 330–379 · Bishop and Doctor", bio: "Basil became Bishop of Caesarea and defended Christian teaching about the Trinity. He organized charitable care for the poor and sick, and his monastic writings profoundly influenced Eastern Christian life.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-basil-the-great/" },
       '01-04': { match: /Elizabeth Ann Seton/i, name: "Saint Elizabeth Ann Seton", meta: "1774–1821 · Foundress and Educator", bio: "Elizabeth Ann Seton, a widowed mother of five, entered the Catholic Church in 1805. She founded the Sisters of Charity of Saint Joseph and helped establish Catholic education in the United States.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-elizabeth-ann-seton/" },
       '01-05': { match: /John Neumann/i, name: "Saint John Neumann", meta: "1811–1860 · Bishop of Philadelphia", bio: "Born in Bohemia, John Neumann served immigrants as a missionary priest and Redemptorist. As Bishop of Philadelphia he expanded Catholic parish schools and founded new educational and charitable institutions.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-neumann/" },
@@ -2195,7 +2201,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v308';
+  const APP_BUILD = 'ora-v309';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
