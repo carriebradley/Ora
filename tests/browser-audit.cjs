@@ -19,6 +19,19 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.match(await card.innerText(),/Holy Apostle Philip/);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  }
+ // Each verified Byzantine bio must replace the missing-bio placeholder.
+ for(const church of ['ukrainian','melkite']){
+  await page.goto(`${base}index.html?tab=more&date=2026-11-16&rite=byz`);
+  await page.locator(`[data-act="byzchoice"][data-v="${church}"]`).click();
+  for(const [day,name] of [['16','Matthew'],['17','Gregory the Wonderworker'],['18','Plato'],['19','Obadiah'],['20',church==='ukrainian'?'Josaphata':'Gregory the Decapolite']]){
+    await page.goto(`${base}index.html?tab=today&date=2026-11-${day}&rite=byz`);
+    const card=page.locator('.today-saint-bio');
+    assert.equal(await card.count(),1,`${church} November ${day} biography visible`);
+    assert.match(await card.locator('.saint-bio-name').innerText(),new RegExp(name,'i'));
+    assert.doesNotMatch(await card.innerText(),/verified biographical summary has not yet been added/i);
+    assert.match(await card.locator('a.saint-bio-source').getAttribute('href'),/^https:\/\//);
+  }
+ }
  for (const rite of ['roman','byz','sarum']) for(const tab of ['today','pray','readings','liturgy','justice','calendar','more']) {
   await page.goto(`${base}index.html?tab=${tab}&date=2026-11-15&rite=${rite}&kind=morning`);
   await page.waitForTimeout(150);

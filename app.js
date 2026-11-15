@@ -1015,15 +1015,63 @@
     return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:block;flex:none;margin:0">'+shapes[kind]+'</svg>';
   }
   // Curated, sourced examples. A missing or mismatched feast never receives an invented bio.
+  // A verified shared source is used for both Byzantine Catholic calendars,
+  // but the calendar match is still checked for each date and church.
+  const SHARED_BYZANTINE_SAINT_BIOS = {
+    '11-16': {
+      match: /Matthew/i,
+      name: 'Holy Apostle and Evangelist Matthew',
+      meta: 'First century · Apostle and Evangelist',
+      bio: 'Matthew, also called Levi, was a tax collector when Jesus called him to become a disciple. The Gospels recount that he left his place of work and followed Christ, then welcomed Jesus to a meal with other tax collectors. Christian tradition associates him with the Gospel according to Matthew, which proclaims Jesus as the promised Messiah. Byzantine Catholics commemorate the Apostle on November 16.',
+      source: 'https://www.oca.org/saints/all-lives/2026/11/16'
+    },
+    '11-17': {
+      match: /Gregory the Wonderworker|Gregory of Neo.?caesarea/i,
+      name: 'Saint Gregory the Wonderworker',
+      meta: 'c. 213–c. 270 · Bishop of Neocaesarea',
+      bio: 'Gregory of Neocaesarea studied under Origen before becoming bishop in his native region of Asia Minor. Remembered as the Wonderworker, he preached the Christian faith and cared for his community during difficult years of persecution. Accounts of his life associate him with remarkable miracles and a strong devotion to the Holy Trinity. His feast is celebrated on November 17 in the Byzantine calendar.',
+      source: 'https://www.oca.org/saints/lives/2026/11/17/103315-saint-gregory-wonderworker-of-neocaesarea'
+    },
+    '11-18': {
+      match: /Plato|Platon/i,
+      name: 'Holy Martyr Plato of Ancyra',
+      meta: 'Early Christian martyr · Ancyra in Galatia',
+      bio: 'Plato was a Christian from Ancyra in Asia Minor, remembered for publicly preaching the Gospel. According to the traditional account of his martyrdom, he was arrested, pressured to offer sacrifice to the pagan gods, and refused to renounce Christ despite imprisonment and torture. He is commemorated with the martyr Romanus on November 18 in the Byzantine Churches.',
+      source: 'https://www.oca.org/saints/lives/2026/11/18/103321-martyr-platon-of-ancyra'
+    },
+    '11-19': {
+      match: /Obadiah|Abadiah|Abdia/i,
+      name: 'Holy Prophet Obadiah',
+      meta: 'Old Testament · One of the Twelve Minor Prophets',
+      bio: 'Obadiah is counted among the Twelve Minor Prophets, and the short biblical book bearing his name announces judgment against pride and violence while expressing hope for God’s kingdom. Eastern Christian tradition also associates him with the faithful servant who sheltered the Lord’s prophets during the reign of Ahab, although the historical identification is uncertain. He is commemorated on November 19.',
+      source: 'https://www.oca.org/saints/lives/1950/11/19/103326-prophet-obadiah-abdia'
+    }
+  };
   const TODAY_SAINT_BIOS = {
     roman: {
       '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     ukrainian: {
+      ...SHARED_BYZANTINE_SAINT_BIOS,
+      '11-20': {
+        match: /Josaphata Hordashevska/i,
+        name: 'Blessed Josaphata Hordashevska',
+        meta: '1869–1919 · Co-founder of the Sisters Servants of Mary Immaculate',
+        bio: 'Born Michaelina Hordashevska in Lviv, she took the religious name Josaphata and helped establish the Sisters Servants of Mary Immaculate in 1892. She formed a community devoted to serving people through education, care for the sick, and practical works of charity in Ukrainian communities. She persevered through difficult circumstances and died in 1919. Beatified by Pope John Paul II in 2001, she is especially beloved in the Ukrainian Greek Catholic Church.',
+        source: 'https://www.vatican.va/content/dam/wss/news_services/liturgy/saints/ns_lit_doc_20010627_hordashevska_en.html'
+      },
       '11-14': { match:/Philip/i, name:'Holy Apostle Philip', meta:'First century · One of the Twelve Apostles', bio:'Philip was called by Jesus in Galilee and brought Nathanael to meet Christ. He also appears in the Gospel accounts of the feeding of the multitude and the Last Supper. The Byzantine Churches commemorate him on November 14, immediately before the beginning of Philip’s Fast.', source:'https://mci.archpitt.org/liturgy/November.html' },
       '11-12': { match:/Josaphat/i, name:'Holy Hieromartyr Josaphat', meta:'c. 1580–1623 · Archbishop of Polotsk', bio:'Josaphat was an Eastern Catholic bishop who worked for ecclesial unity while preserving Byzantine Christian worship. Killed in Vitebsk in 1623, he remains an important figure in the history of the Ukrainian Greek Catholic Church.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     melkite: {
+      ...SHARED_BYZANTINE_SAINT_BIOS,
+      '11-20': {
+        match: /Gregory (?:the )?Decapolit|Gregory of Decapolis/i,
+        name: 'Saint Gregory the Decapolite',
+        meta: 'Eighth–ninth century · Monk and Confessor',
+        bio: 'Gregory was born in the region of the Decapolis and pursued a life of prayer and ascetic discipline. He journeyed through parts of the Byzantine world, strengthening Christians who faced persecution during the controversy over sacred icons. Remembered for his defense of the veneration of icons and his spiritual counsel, he spent time in Constantinople and near Thessaloniki. The Melkite calendar commemorates him on November 20.',
+        source: 'https://www.oca.org/saints/lives/2026/11/20/103340-venerable-gregory-the-decapolite'
+      },
       '11-12': { match:/John the Merciful/i, name:'Saint John the Merciful', meta:'d. c. 619 · Patriarch of Alexandria', bio:'John served as Patriarch of Alexandria and became renowned for his care of people in poverty. His generous almsgiving reflected his conviction that service to the needy was central to Christian life.', source:'https://www.oca.org/saints/lives/2026/11/12/103286-saint-john-the-merciful-patriarch-of-alexandria' },
       '11-14': { match:/Philip/i, name:'Holy Apostle Philip', meta:'First century · One of the Twelve Apostles', bio:'Called by Christ in Galilee, Philip brought Nathanael to Jesus and became one of the Twelve Apostles. The Byzantine calendar commemorates him on November 14; in the Melkite tradition he is remembered alongside Saint Gregory Palamas.', source:'https://melkitetypikon.org/' },
       '11-13': { match:/John Chrysostom/i, name:'Saint John Chrysostom', meta:'c. 347–407 · Archbishop of Constantinople', bio:'John Chrysostom was celebrated for his preaching, biblical teaching, and concern for the poor. The Byzantine liturgical tradition especially remembers him through the Divine Liturgy bearing his name.', source:'https://www.britannica.com/biography/Saint-John-Chrysostom' }
@@ -1774,7 +1822,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v282';
+  const APP_BUILD = 'ora-v283';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
