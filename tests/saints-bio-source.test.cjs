@@ -288,3 +288,33 @@ test('Traditional seasonal biographies match their documented Sarum saints',()=>
   assert.match([day.title,...(day.also||[]).map(x=>x.title)].join(' '),new RegExp(word,'i'),md);
  }
 });
+
+
+test('Roman St. Charles Borromeo and Traditional November–December saints have short, sourced cards',()=>{
+ const L=require('../calendar.js'), S=require('../sarum.js');
+ const entries=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const roman=entries.slice(entries.indexOf('    roman: {'),entries.indexOf('    ukrainian: {'));
+ const sarum=entries.slice(entries.indexOf('    sarum: {'));
+ assert.ok(roman.includes("'11-04':"));
+ assert.ok(roman.includes('saint-charles-borromeo/'));
+ assert.match(L.roman(new Date('2026-11-04T00:00:00Z')).title,/Charles Borromeo/);
+ for(const [date,name] of Object.entries({
+  '11-03':'Malachy of Armagh','11-06':'Leonard of Noblac','11-13':'Brice of Tours',
+  '11-24':'Chrysogonus','11-26':'Linus','12-31':'Sylvester I'
+ })){
+  const card=sarum.slice(sarum.indexOf("'"+date+"':"));
+  assert.ok(card.startsWith("'"+date+"':"),date);
+  assert.ok(card.includes('name: "Saint '+name+'"')||
+   card.includes('name: "Pope Saint '+name+'"'),date+' name');
+  assert.ok(card.includes('source: "https://'),date+' source');
+  const summary=card.match(/bio: "([^"]+)"/);
+  assert.ok(summary,date+' biography');
+  assert.ok(summary[1].trim().split(/\s+/).length<=50,date+' length');
+  const appointment=S.sarum(new Date('2026-'+date+'T00:00:00Z'));
+  assert.ok(appointment.title,date+' Sarum appointment');
+ }
+ for(const [date,bio] of [['11-23','BYZANTINE_BIO_CLEMENT'],['11-25','BYZANTINE_BIO_CATHERINE']]){
+  assert.ok(sarum.includes("'"+date+"': "+bio),date);
+ }
+ assert.ok(sarum.includes('evidence for his martyrdom remains uncertain'));
+});

@@ -1297,6 +1297,7 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '11-04': { match: /Charles Borromeo/i, name: "Saint Charles Borromeo", meta: "1538–1584 · Archbishop of Milan", bio: "Charles Borromeo helped implement the reforms of the Council of Trent as Archbishop of Milan. He promoted education for clergy and cared for the sick and poor during a plague.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-charles-borromeo/" },
       '11-10': { match: /Leo the Great/i, name: "Saint Leo the Great", meta: "d. 461 · Pope and Doctor of the Church", bio: "Leo served as Bishop of Rome from 440 to 461. He defended Christian teaching about Christ and guided the Church during a period of political and religious upheaval.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-leo-the-great/" },
       '11-11': { match: /Martin of Tours/i, name: "Saint Martin of Tours", meta: "c. 316–397 · Bishop", bio: "Martin left military service to embrace monastic life and became Bishop of Tours. He is remembered for sharing his cloak with a man in need and for his compassion toward the poor.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-martin-of-tours/" },
       '11-13': { match: /Frances Xavier Cabrini/i, name: "Saint Frances Xavier Cabrini", meta: "1850–1917 · Foundress and Missionary", bio: "Mother Cabrini founded the Missionary Sisters of the Sacred Heart and served Italian immigrants in the United States. She established schools, hospitals, and orphanages and became the first naturalized U.S. citizen canonized.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-frances-xavier-cabrini/" },
@@ -1381,6 +1382,14 @@
     },
     sarum: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '11-03': { match: /Malachy(?: of Armagh)?/i, name: "Saint Malachy of Armagh", meta: "1094–1148 · Archbishop and Reformer", bio: "Malachy worked to reform Church life in Ireland and helped establish the Cistercian abbey at Mellifont. He died at Clairvaux in 1148 while visiting Saint Bernard.", source: "https://www.newadvent.org/cathen/09565a.htm" },
+      '11-06': { match: /Leonard/i, name: "Saint Leonard of Noblac", meta: "Early medieval · Venerated as patron of prisoners", bio: "Leonard has long been honored at Noblac near Limoges, particularly as a patron of prisoners. The familiar accounts of his life were written centuries later and cannot be securely verified.", source: "https://www.newadvent.org/cathen/09178b.htm" },
+      '11-13': { match: /Brice/i, name: "Saint Brice of Tours", meta: "d. 444 · Bishop of Tours", bio: "Brice succeeded Saint Martin as Bishop of Tours in 397. After a period of controversy and exile, he returned to his diocese and continued serving until his death.", source: "https://www.newadvent.org/cathen/15002a.htm" },
+      '11-23': BYZANTINE_BIO_CLEMENT,
+      '11-24': { match: /Chrysogonus/i, name: "Saint Chrysogonus", meta: "Early fourth century · Martyr at Aquileia", bio: "Chrysogonus was an early Christian martyr venerated at Aquileia, probably during Diocletian’s persecution. Devotion to him spread to Rome, where a church bears his name; accounts connecting him to Saint Anastasia are later traditions.", source: "https://www.newadvent.org/cathen/03742b.htm" },
+      '11-25': BYZANTINE_BIO_CATHERINE,
+      '11-26': { match: /Linus/i, name: "Pope Saint Linus", meta: "First century · Early Bishop of Rome", bio: "Early episcopal lists place Linus immediately after Saint Peter as Bishop of Rome. Traditional calendars call him a martyr, although the historical evidence for his martyrdom remains uncertain.", source: "https://www.newadvent.org/cathen/09272b.htm" },
+      '12-31': { match: /Silvester|Sylvester/i, name: "Pope Saint Sylvester I", meta: "d. 335 · Bishop of Rome", bio: "Sylvester served as Bishop of Rome from 314 to 335, during Constantine’s reign and the Church’s emergence from imperial persecution. His pontificate saw the construction of major Christian basilicas in Rome.", source: "https://www.vaticannews.va/en/saints/12/31/st--sylvester-i--pope.html" },
       '11-16': { match: /Edmund.*(?:Archbishop|Canterbury)|St\. Edmund, Archbishop/i, name: 'Saint Edmund Rich', meta: 'c. 1175–1240 · Archbishop of Canterbury', bio: 'Edmund taught at Oxford before becoming Archbishop of Canterbury in 1234. He defended the independence of the Church in conflicts with Henry III and died in France in 1240.', source: 'https://www.newadvent.org/cathen/05294a.htm' },
       '11-17': { match: /Hugh.*(?:Bishop|Lincoln)/i, name: 'Saint Hugh of Lincoln', meta: 'c. 1135–1200 · Bishop', bio: 'Hugh was a Carthusian monk who became Bishop of Lincoln in 1186. He was known for pastoral care, defending the rights of the Church, and supporting the building of Lincoln Cathedral.', source: 'https://www.newadvent.org/cathen/07519c.htm' },
       '11-20': { match: /Edmund.*(?:King|Martyr)/i, name: 'Saint Edmund the Martyr', meta: 'd. 870 · King of East Anglia', bio: 'Edmund ruled East Anglia and was killed during a Danish invasion. Later accounts remember him refusing to renounce his Christian faith; his shrine at Bury St Edmunds became a major pilgrimage destination.', source: 'https://www.newadvent.org/cathen/05295a.htm' },
@@ -2159,7 +2168,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v299';
+  const APP_BUILD = 'ora-v300';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
