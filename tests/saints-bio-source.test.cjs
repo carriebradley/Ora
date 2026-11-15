@@ -17,7 +17,8 @@ test('November 16-20 source-backed Byzantine biography set and correct precedenc
  // Regional priorities differ on November 20, so each rite must have its own biography.
  assert.match(app,/ukrainian: \{\s+\.\.\.SHARED_BYZANTINE_SAINT_BIOS,\s+'11-20': \{\s+match: \/Josaphata Hordashevska/i);
  assert.match(app,/melkite: \{\s+\.\.\.SHARED_BYZANTINE_SAINT_BIOS,\s+'11-20': \{\s+match: \/Gregory/);
- assert.match(app,/const entry = listed && listed\.match\.test\(title\) \? listed : null/);
+ assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
+ assert.match(app,/calendar\?\.also/);
  assert.match(app,/Commemorated in the selected liturgical calendar/);
  assert.match(app,/saint\.source \? /);
 });
