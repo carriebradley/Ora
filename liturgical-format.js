@@ -178,5 +178,34 @@
   for(const part of result)part.lines=(part.lines||[]).filter(s=>!/^(?:WE\s+LEAVE\s+THE\s+WORLD(?:\s+STAND)?|STAND)$/i.test(s.trim()));
   return [{heading:'Liturgy of the Word',lines:[]},...result];
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,startAtOpeningBlessing};
+ // EPUB books are organized by spine sections rather than PDF pages. Keep
+ // the saved Byzantine edition intact and display its liturgical words as a
+ // single document. Recognized internal subheadings retain their structure.
+ function epubPrayerSections(parts){
+  const editorial=/^(?:table of contents|contents|copyright(?: notice)?|preface|foreword|introduction|acknowledg(?:e)?ments?|bibliography|references|sources?|explanatory notes?|glossary|index|appendix(?:es)?(?:\s+[a-z0-9]+)?|publisher'?s? notes?|editor'?s? notes?|about (?:this|the) (?:edition|book))$/i;
+  const out=[];
+  for(const part of parts||[]){
+   const title=String(part?.title||'').trim();
+   if(editorial.test(title)){
+    // Back matter must never resume as if it were another prayer.
+    if(out.length)break;
+    continue;
+   }
+   let current={heading:title?displayTitle(title):null,lines:[]};
+   for(const block of part?.blocks||[]){
+    const words=String(block?.text||'').trim();
+    if(!words)continue;
+    if(block.tag==='h4'&&heading(words)){
+     if(current.lines.length)out.push(current);
+     current={heading:normalize(words),lines:[]};
+     continue;
+    }
+    current.lines.push(block.kind==='instruction'?'Instruction: '+words:
+     block.role==='all'&&!role(words)?'ALL: '+words:words);
+   }
+   if(current.lines.length)out.push(current);
+  }
+  return startAtOpeningBlessing(out);
+ }
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,startAtOpeningBlessing,epubPrayerSections};
 });

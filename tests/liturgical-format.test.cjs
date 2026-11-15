@@ -321,3 +321,23 @@ test('underscore separators from PDFs are not spoken lines',()=>{
  assert.deepEqual(F.combine(['ALL: Lord, have mercy.','________________________','DEACON: A new petition.']),['ALL: Lord, have mercy.','DEACON: A new petition.']);
  assert.deepEqual(F.combine(['ALL: Amen. __________________________']),['ALL: Amen.']);
 });
+
+test('saved Byzantine EPUBs become a continuous prayer document without editorial sections',()=>{
+ const sections=F.epubPrayerSections([
+  {title:'Copyright',blocks:[{text:'Publisher metadata.'}]},
+  {title:'DIVINE LITURGY',blocks:[{text:'Introductory note.'}]},
+  {title:'BLESSING',blocks:[{text:'DEACON: Master, give the blessing.'},{text:'PRIEST: Blessed is the Kingdom.'},{kind:'instruction',text:'The priest bows.'},{role:'all',text:'Amen.'}]},
+  {title:'The Prayer Sequence',blocks:[{tag:'h4',text:'The Litany of Peace'},{text:'DEACON: In peace let us pray to the Lord.'},{text:'ALL: Lord, have mercy.'}]},
+  {title:'Appendix',blocks:[{text:'Fixture appendix.'}]},
+  {title:'Afterword',blocks:[{text:'Unrelated end matter.'}]}
+ ]);
+ const body=sections.flatMap(part=>part.lines).join(' ');
+ assert.match(body,/DEACON: Master, give the blessing/);
+ assert.match(body,/ALL: Amen\./);
+ assert.match(body,/DEACON: In peace let us pray to the Lord/);
+ assert.match(body,/Instruction: The priest bows/,'rubric stays marked so the prayer renderer can hide it');
+ assert.doesNotMatch(body,/Publisher metadata|Introductory note|Fixture appendix|Unrelated end matter/);
+ assert.equal(sections[0].heading,'Liturgy of the Word');
+ assert.equal(sections.at(-1).heading,'The Litany of Peace');
+ assert.deepEqual(F.epubPrayerSections([{title:'First Prayer',blocks:[{role:'all',text:'ALL: Amen.'}]}])[0].lines,['ALL: Amen.'],'do not double-label printed responses');
+});

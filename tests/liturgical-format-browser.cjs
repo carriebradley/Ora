@@ -336,5 +336,31 @@ module.exports=async(page,base,artifacts,violations)=>{
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  assert.match(await page.locator('.simple-liturgy-title').innerText(),/Twenty-fifth Sunday after Pentecost/i);
+
+ // A saved Byzantine EPUB is read as one continuous service. It is never
+ // mutated, and its non-devotional source notes stay out of the prayer view.
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  const parts=[
+   {title:'Copyright',blocks:[{text:'Fixture EPUB rights note.'}]},
+   {title:'BLESSING',blocks:[{text:'DEACON: Master, give the blessing.'},{text:'PRIEST: Blessed is the Kingdom. Fixture EPUB opening.'},{kind:'instruction',text:'The priest bows.'},{role:'all',text:'Amen.'}]},
+   {title:'LITANY OF PEACE',blocks:[{text:'DEACON: Fixture EPUB second-section petition.'},{text:'ALL: Lord, have mercy.'}]},
+   {title:'Appendix',blocks:[{text:'Fixture EPUB appendix must not appear.'}]}
+  ];
+  LiturgyReader.get=async id=>({id,name:'fixture.epub',format:'epub',pages:parts.length,page:1,updated:450,blob:new Blob()});
+  LiturgyReader.load=async()=>({kind:'epub',numPages:parts.length,sections:parts,destroy:async()=>{}});
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ const epubPrayer=page.locator('.reader-inline-text');
+ assert.match(await epubPrayer.innerText(),/Fixture EPUB opening/);
+ assert.match(await epubPrayer.innerText(),/Fixture EPUB second-section petition/,'all EPUB prayer sections appear in one document');
+ assert.match(await epubPrayer.innerText(),/Amen\./);
+ assert.doesNotMatch(await epubPrayer.innerText(),/rights note|priest bows|appendix must not appear/i,'hide editorial notes and rubrics');
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'Byzantine EPUBs have no Next-page buttons');
+ for(const width of [320,390]){
+  await page.setViewportSize({width,height:844});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'EPUB prayers fit narrow phones');
+ }
+ await page.setViewportSize({width:390,height:844});
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, no stage directions, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };

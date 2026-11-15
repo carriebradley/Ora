@@ -55,3 +55,6 @@ The original saved PDF/EPUB still contains the complete edition when opened.
 
 ## Applied November 15 — v344
 P1: Hide stray paired PDF folios (for example `10 11`) from the continuous Byzantine Divine Liturgy. Keep real psalm citations and spoken verse references untouched. In the devotional display, normalize standalone `god` to `God` without changing saved PDFs or the surrounding liturgical words. Source-derived daily hymn panels use the same capitalization convention. Regression fixtures reproduce the reported iPhone fragment.
+
+## Applied November 15 — v345
+P1: Saved Byzantine EPUB service books now read as one continuous document, matching PDFs. The prayer display skips explicit editorial front matter, ends before a labeled appendix, preserves recognized internal prayer headings and printed speaker roles, and excludes rubrics. Original books, per-book storage and bookmarks stay unchanged. Unit and mobile browser regression fixtures cover this behavior.

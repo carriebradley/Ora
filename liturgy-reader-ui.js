@@ -360,7 +360,11 @@
             preview.textContent='No selectable English text was found in this PDF. Open original book to view it. If this file contains only Ukrainian, use an English-language edition instead.';
             status.textContent='Saved PDF · open original book for images · saved on this device';
           }
-        }else if(book.kind==='epub'){const part=book.sections[selected-1];renderEdmontonPrayerText(preview,[{heading:part.title,lines:part.blocks.map(b=>b.kind==='instruction'?'Instruction: '+b.text:b.role==='all'?'ALL: '+b.text:b.text)}]);}
+        }else if(book.kind==='epub'){
+          const prayers=LiturgicalFormat.epubPrayerSections(book.sections);
+          renderEdmontonPrayerText(preview,prayers);
+          continuous=true;
+        }
         else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}
         preview.hidden=false;if(controls)controls.hidden=continuous;if(controls)controls.querySelector('.reader-inline-page').textContent=`${book.kind==='epub'?'Section':'Page'} ${selected} of ${book.numPages}`;if(controls)controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;if(controls)controls.querySelector('[data-reader="inline-next"]').disabled=selected>=book.numPages;
       }catch(_){if(section.isConnected&&token===hydrateVersion){preview.textContent='Preview unavailable. Use Open saved text to view this book.';preview.hidden=false;}}
