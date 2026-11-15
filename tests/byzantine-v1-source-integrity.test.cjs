@@ -48,7 +48,7 @@ test('all dated Ukrainian and Melkite hymns match an available church-specific s
      assert.equal(typeof line,'string');
      assert.ok(line.trim().length>0&&line.length<=1200,iso+' empty or overlong hymn');
      assert.doesNotMatch(line,/[\u0400-\u052f\u0600-\u06ff]/u,iso+' non-English text');
-     assert.doesNotMatch(D.displayLine(line),/\*|(?<![A-Za-z])god(?![A-Za-z])/i,
+     assert.doesNotMatch(D.displayLine(line),/\*|(?<![A-Za-z])god(?![A-Za-z])/,
       iso+' displayed text contains a chant marker or lowercase God');
     }
    }
