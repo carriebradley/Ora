@@ -30,8 +30,35 @@ test('Marian feast titles alone do not create a Saint of the Day biography',()=>
 });
 
 test('November 14 Traditional feast has a verified Laurence O’Toole biography',()=>{
- assert.match(app, /sarum: \\{\\s+'11-14': \\{/);
- assert.match(app, /match: \\/Laurence O\\[/);
- assert.match(app, /name: 'Saint Laurence O’Toole'/);
- assert.match(app, /dublindiocese\\.ie\\/the-story-of-st-laurence-otoole/);
+ const sarum=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')));
+ assert.ok(sarum.includes("'11-14': {"));
+ assert.ok(sarum.includes("name: 'Saint Laurence O’Toole'"));
+ assert.ok(sarum.includes("dublindiocese.ie/the-story-of-st-laurence-otoole"));
+});
+
+test('November 22-25 saint bios follow the correct Ukrainian and Melkite dates',()=>{
+ const section=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const uk=section.slice(section.indexOf('    ukrainian: {'),section.indexOf('    melkite: {'));
+ const mk=section.slice(section.indexOf('    melkite: {'),section.indexOf('    sarum: {'));
+ const shared=app.slice(app.indexOf('const SHARED_BYZANTINE_SAINT_BIOS'),app.indexOf('const BYZANTINE_BIO_CATHERINE'));
+ assert.ok(shared.includes("'11-22': {"));
+ assert.ok(shared.includes("name: 'Holy Apostle Philemon'"));
+ for(const block of [uk,mk])assert.ok(block.includes('...SHARED_BYZANTINE_SAINT_BIOS'));
+ assert.ok(uk.includes("name: 'Saint Amphilochius of Iconium'"));
+ assert.ok(mk.includes("name: 'Saint Gregory of Agrigentum'"));
+ assert.ok(uk.includes("'11-24': BYZANTINE_BIO_CATHERINE"));
+ assert.ok(uk.includes("'11-25': BYZANTINE_BIO_CLEMENT"));
+ assert.ok(mk.includes("'11-24': BYZANTINE_BIO_CLEMENT"));
+ assert.ok(mk.includes("'11-25': BYZANTINE_BIO_CATHERINE"));
+ assert.ok(!section.includes("'11-21':"),'Marian feast alone should not generate a biography');
+});
+
+test('Curated Saint of the Day cards remain short',()=>{
+ const entries=app.slice(app.indexOf('const SHARED_BYZANTINE_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const bios=[...entries.matchAll(/bio: '([^']+)'/g)].map(item=>item[1]);
+ assert.ok(bios.length>=18);
+ for(const bio of bios){
+   const words=bio.trim().split(/\\s+/);
+   assert.ok(words.length<=50,'Biography exceeds 50 words: '+bio.slice(0,55));
+ }
 });

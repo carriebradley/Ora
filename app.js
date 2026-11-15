@@ -1022,30 +1022,54 @@
       match: /Matthew/i,
       name: 'Holy Apostle and Evangelist Matthew',
       meta: 'First century · Apostle and Evangelist',
-      bio: 'Matthew, also called Levi, was a tax collector when Jesus called him to become a disciple. The Gospels recount that he left his place of work and followed Christ, then welcomed Jesus to a meal with other tax collectors. Christian tradition associates him with the Gospel according to Matthew, which proclaims Jesus as the promised Messiah. Byzantine Catholics commemorate the Apostle on November 16.',
+      bio: 'Called by Jesus from his work as a tax collector, Matthew became one of the Twelve Apostles. Christian tradition associates him with the Gospel that bears his name.',
       source: 'https://www.oca.org/saints/all-lives/2026/11/16'
     },
     '11-17': {
       match: /Gregory the Wonderworker|Gregory of Neo.?caesarea/i,
       name: 'Saint Gregory the Wonderworker',
       meta: 'c. 213–c. 270 · Bishop of Neocaesarea',
-      bio: 'Gregory of Neocaesarea studied under Origen before becoming bishop in his native region of Asia Minor. Remembered as the Wonderworker, he preached the Christian faith and cared for his community during difficult years of persecution. Accounts of his life associate him with remarkable miracles and a strong devotion to the Holy Trinity. His feast is celebrated on November 17 in the Byzantine calendar.',
+      bio: 'Gregory studied under Origen and became bishop of Neocaesarea in Asia Minor. Remembered as the Wonderworker, he defended the Christian faith and is honored in Eastern tradition for miracles attributed to his prayers.',
       source: 'https://www.oca.org/saints/lives/2026/11/17/103315-saint-gregory-wonderworker-of-neocaesarea'
     },
     '11-18': {
       match: /Plato|Platon/i,
       name: 'Holy Martyr Plato of Ancyra',
       meta: 'Early Christian martyr · Ancyra in Galatia',
-      bio: 'Plato was a Christian from Ancyra in Asia Minor, remembered for publicly preaching the Gospel. According to the traditional account of his martyrdom, he was arrested, pressured to offer sacrifice to the pagan gods, and refused to renounce Christ despite imprisonment and torture. He is commemorated with the martyr Romanus on November 18 in the Byzantine Churches.',
+      bio: 'Plato of Ancyra was a Christian martyr remembered for preaching Christ openly. According to tradition, he endured imprisonment and torture rather than offer sacrifice to pagan gods.',
       source: 'https://www.oca.org/saints/lives/2026/11/18/103321-martyr-platon-of-ancyra'
     },
     '11-19': {
       match: /Obadiah|Abadiah|Abdia/i,
       name: 'Holy Prophet Obadiah',
       meta: 'Old Testament · One of the Twelve Minor Prophets',
-      bio: 'Obadiah is counted among the Twelve Minor Prophets, and the short biblical book bearing his name announces judgment against pride and violence while expressing hope for God’s kingdom. Eastern Christian tradition also associates him with the faithful servant who sheltered the Lord’s prophets during the reign of Ahab, although the historical identification is uncertain. He is commemorated on November 19.',
+      bio: 'Obadiah is one of the Twelve Minor Prophets. The book bearing his name condemns pride and violence and proclaims God’s coming kingdom; later tradition connects him with a servant of King Ahab, though that identification is uncertain.',
       source: 'https://www.oca.org/saints/lives/1950/11/19/103326-prophet-obadiah-abdia'
-    }
+    },
+    '11-22': {
+      match: /Philemon/i,
+      name: 'Holy Apostle Philemon',
+      meta: 'First century · Disciple of Saint Paul',
+      bio: 'Philemon was a Christian of Colossae addressed personally in a letter by Saint Paul. Tradition remembers him and his wife Apphia for hosting a house church and caring for fellow Christians.',
+      source: 'https://www.oca.org/saints/lives/2026/11/22/103359-apostles-of-the-seventy-philemon-and-archippus-martyr-apphia-wif'
+    },
+  };
+
+  // Both Catholic calendars honor these saints, but on different dates.
+  // Catholic appointment data determines the date; links below supply biography only.
+  const BYZANTINE_BIO_CATHERINE = {
+    match: /Catherine|Katherine/i,
+    name: 'Holy Great-Martyr Catherine of Alexandria',
+    meta: 'Early fourth century · Martyr',
+    bio: 'According to Christian tradition, Catherine was a learned young woman of Alexandria who refused to renounce Christ and suffered martyrdom. She is honored as a Great-Martyr, although many details of her traditional life cannot be independently verified.',
+    source: 'https://www.newadvent.org/cathen/03445a.htm'
+  };
+  const BYZANTINE_BIO_CLEMENT = {
+    match: /Clement/i,
+    name: 'Saint Clement of Rome',
+    meta: 'First century · Bishop of Rome and Apostolic Father',
+    bio: 'Clement was an early bishop of Rome, remembered among the Apostolic Fathers. His letter to the Corinthians urged peace and unity in the Church; later tradition honors him as a martyr.',
+    source: 'https://www.vatican.va/content/benedict-xvi/en/audiences/2007/documents/hf_ben-xvi_aud_20070307.html'
   };
   const TODAY_SAINT_BIOS = {
     roman: {
@@ -1053,11 +1077,20 @@
     },
     ukrainian: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '11-23': {
+        match: /Amphilochius|Amphilokhios/i,
+        name: 'Saint Amphilochius of Iconium',
+        meta: 'c. 340–394 · Bishop and Church Father',
+        bio: 'A fourth-century bishop of Iconium and friend of Saint Basil the Great, Amphilochius defended the divinity of the Holy Spirit. Basil dedicated his treatise On the Holy Spirit to him.',
+        source: 'https://www.newadvent.org/cathen/01438a.htm'
+      },
+      '11-24': BYZANTINE_BIO_CATHERINE,
+      '11-25': BYZANTINE_BIO_CLEMENT,
       '11-20': {
         match: /Josaphata Hordashevska/i,
         name: 'Blessed Josaphata Hordashevska',
         meta: '1869–1919 · Co-founder of the Sisters Servants of Mary Immaculate',
-        bio: 'Born Michaelina Hordashevska in Lviv, she took the religious name Josaphata and helped establish the Sisters Servants of Mary Immaculate in 1892. She formed a community devoted to serving people through education, care for the sick, and practical works of charity in Ukrainian communities. She persevered through difficult circumstances and died in 1919. Beatified by Pope John Paul II in 2001, she is especially beloved in the Ukrainian Greek Catholic Church.',
+        bio: 'Born in Lviv, Josaphata Hordashevska co-founded the Sisters Servants of Mary Immaculate in 1892. She dedicated her life to education, care for the sick, and serving Ukrainian communities. Pope John Paul II beatified her in 2001.',
         source: 'https://www.vatican.va/content/dam/wss/news_services/liturgy/saints/ns_lit_doc_20010627_hordashevska_en.html'
       },
       '11-14': { match:/Philip/i, name:'Holy Apostle Philip', meta:'First century · One of the Twelve Apostles', bio:'Philip was called by Jesus in Galilee and brought Nathanael to meet Christ. He also appears in the Gospel accounts of the feeding of the multitude and the Last Supper. The Byzantine Churches commemorate him on November 14, immediately before the beginning of Philip’s Fast.', source:'https://mci.archpitt.org/liturgy/November.html' },
@@ -1065,11 +1098,20 @@
     },
     melkite: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '11-23': {
+        match: /Gregory(?:,? Bishop of Agrigent| of Agrigent)/i,
+        name: 'Saint Gregory of Agrigentum',
+        meta: 'Sixth–seventh century · Bishop of Agrigentum',
+        bio: 'Gregory was bishop of Agrigentum in Sicily and is remembered in Eastern Christian tradition for his pastoral care. Accounts of his life describe pilgrimages and a return to serve his diocese.',
+        source: 'https://www.oca.org/saints/lives/2026/11/23/103376-saint-gregory-bishop-of-agrigentum'
+      },
+      '11-24': BYZANTINE_BIO_CLEMENT,
+      '11-25': BYZANTINE_BIO_CATHERINE,
       '11-20': {
         match: /Gregory (?:the )?Decapolit|Gregory of Decapolis/i,
         name: 'Saint Gregory the Decapolite',
         meta: 'Eighth–ninth century · Monk and Confessor',
-        bio: 'Gregory was born in the region of the Decapolis and pursued a life of prayer and ascetic discipline. He journeyed through parts of the Byzantine world, strengthening Christians who faced persecution during the controversy over sacred icons. Remembered for his defense of the veneration of icons and his spiritual counsel, he spent time in Constantinople and near Thessaloniki. The Melkite calendar commemorates him on November 20.',
+        bio: 'Gregory the Decapolite was a ninth-century monk remembered for ascetic prayer, travels through the Byzantine world, and defense of the veneration of icons. Eastern Christians honor him as a confessor of the faith.',
         source: 'https://www.oca.org/saints/lives/2026/11/20/103340-venerable-gregory-the-decapolite'
       },
       '11-12': { match:/John the Merciful/i, name:'Saint John the Merciful', meta:'d. c. 619 · Patriarch of Alexandria', bio:'John served as Patriarch of Alexandria and became renowned for his care of people in poverty. His generous almsgiving reflected his conviction that service to the needy was central to Christian life.', source:'https://www.oca.org/saints/lives/2026/11/12/103286-saint-john-the-merciful-patriarch-of-alexandria' },
@@ -1837,7 +1879,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v286';
+  const APP_BUILD = 'ora-v287';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
