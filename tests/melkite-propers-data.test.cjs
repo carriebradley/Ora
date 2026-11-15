@@ -29,3 +29,26 @@ test('Melkite dated hymn imports are isolated from Ukrainian and Scripture',()=>
   assert.deepEqual(Object.keys(data.days[iso].groups),['troparia','prokeimenon','alleluia']);
  }
 });
+
+
+test('Newton year-round hymns preserve November and quarantine disputed dates',()=>{
+ const year=JSON.parse(fs.readFileSync(path.join(__dirname,'..','melkite-propers-2026.json'),'utf8'));
+ const november=JSON.parse(fs.readFileSync(path.join(__dirname,'..','melkite-propers-2026-11.json'),'utf8'));
+ assert.equal(year.schema,1);
+ assert.equal(year.year,2026);
+ assert.equal(Object.keys(year.coverage).length,12);
+ assert.equal(Object.keys(year.days).length,63);
+ assert.equal(year.days['2026-01-30'],undefined);
+ assert.equal(year.days['2026-12-24'],undefined);
+ assert.equal(year.coverage.January.quarantined[0].date,'2026-01-30');
+ assert.equal(year.coverage.December.quarantined[0].date,'2026-12-24');
+ for(const [iso,rec] of Object.entries(november.days))assert.deepEqual(year.days[iso],rec,'November source preserved: '+iso);
+ for(const [iso,rec] of Object.entries(year.days)){
+  assert.equal(rec.church,'melkite');
+  assert.equal(rec.iso,iso);
+  assert.match(rec.typicon,/^[A-Za-z]+-2026\.docx$/);
+  assert.equal(rec.source,'https://melkite.org/liturgical-resources');
+  for(const lines of Object.values(rec.groups))for(const line of lines)
+   assert.doesNotMatch(line,/Reading from (?:the )?(?:Epistle|Gospel)/i,'Scripture header in '+iso);
+ }
+});

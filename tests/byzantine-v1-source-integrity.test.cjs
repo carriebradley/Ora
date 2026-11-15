@@ -7,7 +7,7 @@ const E=require('../edmonton-2026.js');
 const M=require('../melkite.js');
 const S=require('../liturgy-schedule.js');
 const ukrainian=require('../ukrainian-propers.json');
-const melkite=require('../melkite-propers-2026-11.json');
+const melkite=require('../melkite-propers-2026.json');
 
 const days2026=Array.from({length:365},(_,i)=>
  new Date(Date.UTC(2026,0,1+i)).toISOString().slice(0,10));
@@ -23,7 +23,11 @@ test('all dated Ukrainian and Melkite hymns match an available church-specific s
  assert.equal(ukrainian.schema,1);
  assert.equal(melkite.schema,1);
  assert.ok(Object.keys(ukrainian.days).length>=72,'Unexpectedly lost Ukrainian dated hymns');
- assert.ok(Object.keys(melkite.days).length>=6,'Unexpectedly lost Melkite dated hymns');
+ assert.equal(Object.keys(melkite.coverage).length,12,'Expected each Newton monthly typicon');
+ assert.ok(Object.keys(melkite.days).length>=63,'Unexpectedly lost year-round Melkite dated hymns');
+ assert.ok(!melkite.days['2026-01-30']&&!melkite.days['2026-12-24'],'quarantined dates cannot be appointed');
+ assert.equal(melkite.coverage.January.quarantined[0].date,'2026-01-30');
+ assert.equal(melkite.coverage.December.quarantined[0].date,'2026-12-24');
  const errors=[];
  for(const [church,dataset] of [['ukrainian',ukrainian],['melkite',melkite]]){
   const id=church==='ukrainian'?'chrysostom':'melkite-chrysostom';
@@ -37,8 +41,12 @@ test('all dated Ukrainian and Melkite hymns match an available church-specific s
     assert.equal(record.source,E.days[iso].source,iso+' does not match Edmonton URL');
    }else{
     assert.equal(record.iso,iso,iso+' lacks exact Melkite day identity');
-    assert.ok(M.typicon(iso),iso+' has hymns but no appointed Newton typicon record');
-    assert.equal(M.typicon(iso).liturgy,'chrysostom',iso+' requires a different service');
+    assert.ok(M.entry(iso),iso+' absent from Newton annual calendar');
+    const month=['January','February','March','April','May','June',
+     'July','August','September','October','November','December'][Number(iso.slice(5,7))-1];
+    assert.equal(record.typicon,month+'-2026.docx',iso+' must match its source month');
+    assert.equal(S.service(iso,'melkite').id,'chrysostom',iso+' requires a different service');
+    if(M.typicon(iso))assert.equal(M.typicon(iso).liturgy,'chrysostom',iso+' conflicts with verified monthly service');
    }
    const groups=Object.entries(record.groups||{});
    assert.ok(groups.length,'No appointed hymns: '+iso);
@@ -102,7 +110,7 @@ test('2026 service selector never silently claims a verified appointment without
 test('source conflicts and unappointed days stay outside the dated Liturgy view',()=>{
  const app=fs.readFileSync(require.resolve('../app.js'),'utf8');
  assert.match(app,/service\.verification!=='source-conflict'/);
- assert.match(app,/!\['none','unknown'\]\.includes\(service\.id\)/);
+ assert.match(app,/service\.id==='chrysostom'/);
  assert.equal(S.service('2026-04-03','ukrainian').id,'none');
  assert.equal(S.service('2026-12-24','ukrainian').verification,'source-conflict');
  // Edmonton's April 1 metadata contains both a generic "Divine Liturgy"

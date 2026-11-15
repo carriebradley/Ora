@@ -363,6 +363,9 @@
         }else if(book.kind==='epub'){
           const prayers=LiturgicalFormat.epubPrayerSections(book.sections);
           renderEdmontonPrayerText(preview,prayers);
+          // Apply exactly dated hymns to eligible EPUBs too. Unrecognized
+          // sections never receive guessed insertions; saved books remain immutable.
+          arrangeDailyHymns(section,preview,prayers);
           continuous=true;
         }
         else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}

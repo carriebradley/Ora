@@ -1676,7 +1676,7 @@
     // A dated source can contain hymn text even when no Divine Liturgy is
     // appointed. Do not offer those hymns as an appointed service on
     // aliturgical or source-conflict days.
-    const appointment=dated&&!['none','unknown'].includes(service.id)&&service.verification!=='source-conflict';
+    const appointment=dated&&service.id==='chrysostom'&&service.verification!=='source-conflict';
     if(appointment)hydrateByzantinePropers(iso,church);
     const dailyHymns=appointment?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'" data-church="'+esc(church)+'"></div>':'';
     const caution=service.verification==='source-conflict'
@@ -1954,6 +1954,7 @@
         ${felireMore()}
       </div></details>
       <details class="more-source-sub"><summary>Liturgical documents</summary><div class="more-source-content">
+        <p class="muted"><b>Melkite dated hymns:</b> English troparia, prokeimena, and Alleluia verses are imported from the Eparchy of Newton’s twelve 2026 monthly typika. Only 63 clearly dated Chrysostom records are eligible; the conflicting January 30 heading and December 24 service are withheld. Missing words are never inferred. The original monthly Word documents and any other unresolved source details remain available at <a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Newton’s liturgical resources</a>.</p>
         <p class="muted"><b>Prayer reader notes:</b> The Roman Gloria and creed are available for personal prayer but are not appointed at every Mass. The English Melkite <a href="https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf" target="_blank" rel="noopener noreferrer">2009 draft Divine Liturgy</a> has not been verified as the currently approved edition. Saved prayer books remain private on your device.</p>
         <p class="muted">Official publisher resources for personal reading. These open in the publisher's website.</p><h3>Ukrainian Catholic</h3><p><a href="https://eeparchy.com/calendar" target="_blank" rel="noopener noreferrer">Edmonton · calendar and daily liturgical texts</a></p><p><a href="https://nweparchy.ca/menaion/" target="_blank" rel="noopener noreferrer">New Westminster · fixed Menaion</a></p><h3>Melkite Catholic</h3><p><a href="https://melkite.org/liturgical-resources" target="_blank" rel="noopener noreferrer">Melkite liturgical resources</a></p><h3>Additional Ruthenian references</h3><p class="muted">A separate local calendar and translation; these do not supply the selected Edmonton calendar.</p><p><a href="https://mci.archpitt.org/servicebooks/DivineLiturgies.pdf" target="_blank" rel="noopener noreferrer">Divine Liturgies of St. John Chrysostom and St. Basil</a></p><p><a href="https://mci.archpitt.org/Publications.html" target="_blank" rel="noopener noreferrer">Metropolitan Cantor Institute · service books and publications</a></p><p><a href="https://mci.archpitt.org/LiturgicalCalendar2026.html" target="_blank" rel="noopener noreferrer">Ruthenian liturgical calendar · 2026</a></p><h3>Roman</h3><p><a href="https://www.liturgyoffice.org.uk/Missal/Text/MCFL.pdf" target="_blank" rel="noopener noreferrer">Order of Mass · England and Wales</a></p><p><a href="https://www.usccb.org/prayer-and-worship/the-mass/order-of-mass" target="_blank" rel="noopener noreferrer">USCCB · Order of Mass resources</a></p>
         <details class="more-source-sub more-source-nested"><summary>Divine Office texts</summary><div class="more-source-content">
@@ -2482,7 +2483,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v347';
+  const APP_BUILD = 'ora-v348';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

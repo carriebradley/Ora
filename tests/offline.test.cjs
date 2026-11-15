@@ -13,7 +13,7 @@ function worker() {
       match: async r => entries.get(key(r))?.clone(),
       put: async (r, value) => entries.set(key(r), value.clone()),
       keys: async () => [...entries.keys()].map(url => ({ url })),
-      addAll: async list => { for (const path of list) entries.set(key(path), new Response(path === 'oortext.json' ? fs.readFileSync(require.resolve('../oortext.json')) : '<html>Ora</html>')); }
+      addAll: async list => { for (const path of list) entries.set(key(path), new Response(['oortext.json','melkite-propers-2026.json'].includes(path) ? fs.readFileSync(require.resolve('../'+path)) : '<html>Ora</html>')); }
     };
   };
   const caches = {
@@ -125,4 +125,17 @@ test('JSON refresh bypasses HTTP cache and retains the last valid offline copy',
   assert.equal(calls[0]?.cache, 'no-store');
   w.context.fetch = async () => { throw new Error('offline'); };
   assert.deepEqual(await (await w.request('readings.json')).json(), { revision: 2 });
+});
+
+
+test('Installed app includes year-round Melkite hymns offline without changing local saved books', async()=>{
+ const w=worker(); await w.lifecycle('install');await w.lifecycle('activate');
+ const saved=await w.request('melkite-propers-2026.json');
+ assert.equal(saved.status,200);
+ const data=await saved.json();
+ assert.equal(Object.keys(data.coverage).length,12);
+ assert.equal(Object.keys(data.days).length,63);
+ assert.equal(data.days['2026-12-24'],undefined);
+ assert.ok(!fs.readFileSync(require.resolve('../sw.js'),'utf8').includes("'melkite-propers-2026-11.json'"),
+  'outdated month-only source is not pre-cached as the live year-round source');
 });

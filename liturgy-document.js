@@ -35,6 +35,8 @@
     }
   };
   const isoPattern=/^2026-\d{2}-\d{2}$/;
+  const sourceMonths=Object.freeze(['January','February','March','April','May','June',
+    'July','August','September','October','November','December']);
   function validRecord(record,{church,iso,id,seasonal=false}={}){
     const expectedId=church==='ukrainian'?'chrysostom':church==='melkite'?'melkite-chrysostom':null;
     if(seasonal||!expectedId||id!==expectedId)return false;
@@ -43,7 +45,9 @@
       return record.source==='https://eeparchy.com/calendar/'+iso;
     if(church==='melkite')
       return record.iso===iso && record.source==='https://melkite.org/liturgical-resources' &&
-        record.typicon==='November-2026.docx' && iso.startsWith('2026-11-');
+        !!sourceMonths[Number(iso.slice(5,7))-1] &&
+        record.typicon===sourceMonths[Number(iso.slice(5,7))-1]+'-2026.docx' &&
+        !['2026-01-30','2026-12-24'].includes(iso);
     return false;
   }
   function headings(sections){
@@ -75,7 +79,7 @@
   // A private saved book can be parsed independently of downloaded daily
   // hymns. Fetch only the selected church's verified dataset, with one shared
   // promise per church so the prayer reader and companion panel agree.
-  const sourceFiles={ukrainian:'ukrainian-propers.json',melkite:'melkite-propers-2026-11.json'};
+  const sourceFiles={ukrainian:'ukrainian-propers.json',melkite:'melkite-propers-2026.json'};
   const bookPromises={};
   async function loadRecord(church,iso){
     const filename=sourceFiles[church];

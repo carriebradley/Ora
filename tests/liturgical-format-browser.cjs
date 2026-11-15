@@ -327,6 +327,27 @@ module.exports=async(page,base,artifacts,violations)=>{
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated propers fit mobile width');
  }
  await page.setViewportSize({width:390,height:844});
+
+ // Newton's annual hymns must follow the selected month, not November alone.
+ for(const [date,title] of [
+  ['2026-01-04',/Troparion of the resurrection \(Tone 5\)/i],
+  ['2026-06-07',/Troparion of the Resurrection,? \(Tone 1\)/i],
+  ['2026-12-13',/Troparion of the resurrection \(Tone 4\)/i]
+ ]){
+  await page.goto(base+'index.html?tab=liturgy&rite=byz&date='+date);
+  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+  daily=page.locator('.byz-liturgy-variations');
+  await daily.locator('summary').click();
+  await daily.locator('.byz-proper-group p').first().waitFor();
+  assert.match(await daily.locator('.byz-daily-propers').innerText(),title,'Melkite hymn for '+date);
+  assert.equal(await daily.locator('.byz-daily-propers').getAttribute('data-church'),'melkite');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ }
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ assert.match(await page.locator('.service-summary').innerText(),/Basil the Great/);
+ assert.equal(await page.locator('.byz-daily-propers').count(),0,
+  'quarantined December 24 Chrysostom hymns cannot appear in the Basil service');
  // Preserve the baseline church for subsequent browser suites. The next
  // reader test expects the Ukrainian (non-prefixed) service-book slots.
  await page.evaluate(()=>{
@@ -346,7 +367,8 @@ module.exports=async(page,base,artifacts,violations)=>{
   const parts=[
    {title:'Copyright',blocks:[{text:'Fixture EPUB rights note.'}]},
    {title:'BLESSING',blocks:[{text:'DEACON: Master, give the blessing.'},{text:'PRIEST: Blessed is the Kingdom. Fixture EPUB opening.'},{kind:'instruction',text:'The priest bows.'},{role:'all',text:'Amen.'}]},
-   {title:'LITANY OF PEACE',blocks:[{text:'DEACON: Fixture EPUB second-section petition.'},{text:'ALL: Lord, have mercy.'}]},
+   {title:'LITANY OF PEACE',blocks:[{text:'DEACON: Fixture EPUB second-section petition.'},{text:'ALL: Lord, have mercy.'},
+    {text:'Little Entrance'},{text:'Trisagion'},{text:'Epistle'},{text:'Gospel'},{text:'One is Holy'},{text:'Holy Communion'}]},
    {title:'Appendix',blocks:[{text:'Fixture EPUB appendix must not appear.'}]}
   ];
   LiturgyReader.get=async id=>({id,name:'fixture.epub',format:'epub',pages:parts.length,page:1,updated:450,blob:new Blob()});
@@ -357,6 +379,9 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await epubPrayer.innerText(),/Fixture EPUB opening/);
  assert.match(await epubPrayer.innerText(),/Fixture EPUB second-section petition/,'all EPUB prayer sections appear in one document');
  assert.match(await epubPrayer.innerText(),/Amen\./);
+ await epubPrayer.locator('.byz-daily-proper-heading').first().waitFor();
+ assert.match(await epubPrayer.innerText(),/Troparion, Tone 8/,
+  'an eligible continuous EPUB receives the exact day’s hymns, not only PDFs');
  assert.doesNotMatch(await epubPrayer.innerText(),/rights note|priest bows|appendix must not appear/i,'hide editorial notes and rubrics');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'Byzantine EPUBs have no Next-page buttons');
  for(const width of [320,390]){
