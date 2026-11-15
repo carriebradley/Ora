@@ -16,3 +16,8 @@ Ordinary Sunday/weekday antiphon alternatives in a privately saved service book 
 
 ## v336 — feast ranks beyond the first word
 The closed-by-default rule also covers qualified feast ranks, including **Polyeleos Feast** and **All-Night Vigil Feast**, rather than relying on a rank beginning with “Feast.” Ordinary Sundays and weekdays continue to open their corresponding alternatives; tests cover these cases independently.
+
+## v338 — real dated Ukrainian hymn text
+The Edmonton daily-propers importer now builds a separate Ukrainian-only JSON dataset. The original 72-day intake covers October 18 through December 28, 2026. The selected calendar date can show its actual troparia and kontakia, prokeimenon, Alleluia verses and Communion hymn inside the existing **Readings & propers** expander, after the continuous private service book. This avoids interrupting the prayer opening or incorrectly interleaving text into an unrecognized PDF. Text nodes (never injected HTML) preserve the original words while removing chant-break asterisks for quiet reading. Date/source/church validation prevents an unrelated or Melkite entry from appearing in the Ukrainian view.
+
+These are the day's verified *additional hymn texts*, not a claim that every variable prayer has been placed in its exact order within the saved liturgy. The external source remains one optional link at the end of the section. The Melkite side continues using its own source links until a separately validated Melkite proper-text importer exists. Browser assertions check actual hymn rendering and strict church separation; imported JSON has its own structural audit.

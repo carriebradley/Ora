@@ -9,7 +9,7 @@ Run locally with `python3 -m http.server 8765`, then open `http://localhost:8765
 - Today: the selected tradition's day, fasting observance, quote and sacred art.
 - Pray: Roman and Byzantine morning, evening and night prayer; Traditional/Sarum hours. Roman hours are clearly labeled devotional adaptations, not the complete official modern Liturgy of the Hours. Text-to-speech sessions are currently disabled; linked Divine Office audio is separate.
 - Readings: Roman daily readings, Byzantine references/text when available, and Traditional/Sarum Mass readings.
-- Liturgy: separate Roman Mass and Divine Liturgy prayer readers. Scripture stays in Readings; publisher references are consolidated in More.
+- Liturgy: separate Roman Mass and Divine Liturgy prayer readers. Scripture stays in Readings; publisher references are consolidated in More. For dates with verified Edmonton source data, the Ukrainian Liturgy has English troparia, kontakia, prokeimenon, Alleluia verses and Communion hymn in the optional dated propers section; the Melkite calendar remains independent.
 - Justice: Catholic social teaching and spiritual readings.
 - More: Calendar, heritage material, settings and source credits.
 

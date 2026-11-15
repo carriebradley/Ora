@@ -256,8 +256,30 @@ module.exports=async(page,base,artifacts,violations)=>{
   'optional daily sources appear after the prayer book');
  await daily.locator('summary').click();
  assert.match(await daily.innerText(),/Ephesians 4:1-6/,'Ukrainian Edmonton Epistle');
+ await daily.locator('.byz-proper-group').first().waitFor();
+ assert.deepEqual(await daily.locator('.byz-proper-group h3').allTextContents(),[
+   'Troparia and Kontakia','Prokeimenon','Alleluia','Communion Hymn'
+ ],'the Ukrainian calendar provides actual dated English hymns in the optional propers section');
+ assert.match(await daily.locator('.byz-daily-propers').innerText(),/Troparion, Tone 8/);
+ assert.equal((await daily.locator('.byz-daily-propers').innerText()).includes('*'),false,
+  'chant asterisks are hidden for continuous reading');
+
  assert.match(await daily.innerText(),/Luke 10:25-37/,'Ukrainian Edmonton Gospel');
  assert.equal(await daily.locator('a').getAttribute('href'),'https://eeparchy.com/calendar/2026-11-15');
+ const firstSundayHymn=await daily.locator('.byz-proper-group p').first().innerText();
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-22');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ daily=page.locator('.byz-liturgy-variations');
+ await daily.locator('.byz-proper-group p').first().waitFor();
+ assert.notEqual(await daily.locator('.byz-proper-group p').first().innerText(),firstSundayHymn,
+  'Ukrainian appointed hymns change with the selected Sunday');
+ assert.match(await daily.locator('.byz-daily-propers').innerText(),/Troparion, Tone 1/);
+ for(const width of [320,390]){
+   await page.setViewportSize({width,height:844});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated hymns fit iPhone');
+ }
+ await page.setViewportSize({width:390,height:844});
+
  await page.evaluate(()=>{
   const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='melkite';s.byzLiturgyChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));
  });
@@ -266,6 +288,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  daily=page.locator('.byz-liturgy-variations');
  await daily.locator('summary').click();
  assert.match(await daily.innerText(),/Ephesians 4:1-7/,'Melkite Newton Epistle differs from Edmonton');
+ assert.equal(await daily.locator('.byz-daily-propers').count(),0,'Ukrainian hymns must never appear in the Melkite liturgy');
  assert.match(await daily.innerText(),/Luke 10:25-37/);
  assert.doesNotMatch(await daily.innerText(),/Mark 16:9-20/,'Orthros Gospel must not show as Divine Liturgy Gospel');
  assert.equal(await daily.locator('a').getAttribute('href'),'https://melkite.org/liturgical-resources');
