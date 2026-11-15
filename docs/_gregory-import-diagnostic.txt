@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/home/runner/work/Ora/Ora/tools/import_oor_gregory_dialogues.py", line 102, in <module>
+    main()
+  File "/home/runner/work/Ora/Ora/tools/import_oor_gregory_dialogues.py", line 96, in main
+    updated,added=import_reading(html,old)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Ora/Ora/tools/import_oor_gregory_dialogues.py", line 65, in import_reading
+    paragraphs = parse(html)
+                 ^^^^^^^^^^^
+  File "/home/runner/work/Ora/Ora/tools/import_oor_gregory_dialogues.py", line 49, in parse
+    raise ValueError("Chapter 33 heading not found")
+ValueError: Chapter 33 heading not found
