@@ -256,3 +256,18 @@ test('End of December retains martyrs, Innocents, and differing Melania dates',(
  assert.match(ua31.title,/Melania/);
  assert.match(me30.title,/Melany/);
 });
+
+test('Western saint cards use only the primary observance, not displaced commemorations',()=>{
+ const L=require('../calendar.js'),S=require('../sarum.js');
+ const ordinary=L.roman(new Date('2026-11-22T00:00:00Z'));
+ assert.doesNotMatch(ordinary.title,/Cecilia/);
+ assert.ok((ordinary.also||[]).some(e=>/Cecilia/.test(e.title)));
+ const western=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
+ assert.match(western,/const titles = S\.rite === 'byz'/);
+ assert.match(western,/: \[title\];/);
+ const m=app.slice(app.indexOf('const WESTERN_SHARED_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ for(const day of ['11-22','11-30','12-06','12-13','12-26','12-27','12-28'])
+   assert.ok(m.includes("'"+day+"':"),day);
+ assert.ok(m.includes('...WESTERN_SHARED_SAINT_BIOS'));
+ assert.match(S.sarum(new Date('2026-11-30T00:00:00Z')).title,/Andrew/);
+});

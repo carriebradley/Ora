@@ -1283,8 +1283,26 @@
     bio: 'Melania and her husband Apinianus gave away much of their wealth to support people in poverty and religious communities. She later embraced monastic life in the Holy Land and is remembered for charity and prayer.',
     source: 'https://www.oca.org/saints/all-lives/2026/12/31'
   };
+  // Sourced western biographies used only when the selected rite actually
+  // observes the named saint, never solely because the civil date matches.
+  const WESTERN_SHARED_SAINT_BIOS = {
+    '11-22': { match: /Cecilia/i, name: "Saint Cecilia", meta: "Early Christian era · Virgin and Martyr", bio: "Cecilia was a Christian martyr venerated in Rome from antiquity. She is the patron saint of musicians; the familiar details of her life come mainly from later traditions.", source: "https://www.newadvent.org/cathen/03471b.htm" },
+    '11-30': { match: /Andrew/i, name: "Saint Andrew the Apostle", meta: "First century · Apostle", bio: "Andrew, a fisherman and brother of Simon Peter, was among the first disciples to follow Jesus. According to John’s Gospel, he introduced his brother to Christ.", source: "https://www.newadvent.org/cathen/01471a.htm" },
+    '12-06': { match: /Nicholas/i, name: "Saint Nicholas of Myra", meta: "Fourth century · Bishop of Myra", bio: "Nicholas was bishop of Myra in Asia Minor. Stories of his generosity, especially toward people in poverty, helped establish his enduring place in Christian devotion.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-nicholas/" },
+    '12-13': { match: /Luc(?:y|ia)/i, name: "Saint Lucy of Syracuse", meta: "d. c. 304 · Virgin and Martyr", bio: "Lucy was a Christian martyr from Syracuse in Sicily. Later traditions describe her determination to remain faithful under persecution; the Church also honors her as patroness of eyesight.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-lucy/" },
+    '12-26': { match: /Stephen/i, name: "Saint Stephen, First Martyr", meta: "First century · Deacon and Martyr", bio: "Stephen, among the seven chosen to serve the early Church, boldly proclaimed Christ before the council in Jerusalem. Acts records his death by stoning and his prayer for his persecutors.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-stephen/" },
+    '12-27': { match: /John.*(?:Apostle|Evangelist)|(?:Apostle|Evangelist).*John/i, name: "Saint John the Apostle", meta: "First century · Apostle and Evangelist", bio: "John, son of Zebedee and brother of James, followed Jesus and witnessed many central events of his ministry. Christian tradition associates him with the Fourth Gospel and the beloved disciple.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-the-evangelist/" },
+    '12-28': { match: /Holy Innocents|Innocents/i, name: "The Holy Innocents", meta: "First century · Children of Bethlehem", bio: "Matthew’s Gospel recounts that Herod ordered the killing of young children in Bethlehem after the birth of Jesus. The Church honors these innocent children together as martyrs.", source: "https://www.franciscanmedia.org/saint-of-the-day/holy-innocents/" },
+  };
   const TODAY_SAINT_BIOS = {
     roman: {
+      ...WESTERN_SHARED_SAINT_BIOS,
+      '11-10': { match: /Leo the Great/i, name: "Saint Leo the Great", meta: "d. 461 · Pope and Doctor of the Church", bio: "Leo served as Bishop of Rome from 440 to 461. He defended Christian teaching about Christ and guided the Church during a period of political and religious upheaval.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-leo-the-great/" },
+      '11-11': { match: /Martin of Tours/i, name: "Saint Martin of Tours", meta: "c. 316–397 · Bishop", bio: "Martin left military service to embrace monastic life and became Bishop of Tours. He is remembered for sharing his cloak with a man in need and for his compassion toward the poor.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-martin-of-tours/" },
+      '11-13': { match: /Frances Xavier Cabrini/i, name: "Saint Frances Xavier Cabrini", meta: "1850–1917 · Foundress and Missionary", bio: "Mother Cabrini founded the Missionary Sisters of the Sacred Heart and served Italian immigrants in the United States. She established schools, hospitals, and orphanages and became the first naturalized U.S. citizen canonized.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-frances-xavier-cabrini/" },
+      '12-03': { match: /Francis Xavier/i, name: "Saint Francis Xavier", meta: "1506–1552 · Jesuit Missionary", bio: "A companion of Saint Ignatius of Loyola and an early Jesuit, Francis Xavier traveled widely in Asia to preach Christianity. His ministry took him to India and Japan; he died before reaching mainland China.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-xavier/" },
+      '12-14': { match: /John of the Cross/i, name: "Saint John of the Cross", meta: "1542–1591 · Carmelite and Doctor", bio: "John of the Cross worked with Teresa of Ávila to reform the Carmelite Order. His poetry and spiritual writings explore purification, contemplation, and union with God.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-john-of-the-cross/" },
+      '12-07': SHARED_BYZANTINE_SAINT_BIOS['12-07'],
       '11-12': { match:/Josaphat/i, name:'Saint Josaphat', meta:'c. 1580–1623 · Bishop and Martyr', bio:'Archbishop of Polotsk in the Ruthenian Church, Josaphat worked to strengthen communion between Eastern Christians and Rome. He was killed at Vitebsk in 1623 and is remembered as a martyr for Christian unity.', image:'https://commons.wikimedia.org/wiki/Special:FilePath/St_Josaphat_Saint_of_Ruthenia.jpg', imageCredit:'https://commons.wikimedia.org/wiki/File:St_Josaphat_Saint_of_Ruthenia.jpg', source:'https://www.britannica.com/biography/Saint-Josaphat-Kuntsevych' }
     },
     ukrainian: {
@@ -1362,6 +1380,7 @@
       '11-13': { match:/John Chrysostom/i, name:'Saint John Chrysostom', meta:'c. 347–407 · Archbishop of Constantinople', bio:'John Chrysostom was celebrated for his preaching, biblical teaching, and concern for the poor. The Byzantine liturgical tradition especially remembers him through the Divine Liturgy bearing his name.', source:'https://www.britannica.com/biography/Saint-John-Chrysostom' }
     },
     sarum: {
+      ...WESTERN_SHARED_SAINT_BIOS,
       '11-15': {
         match: /Machut(?:us|is)?|Maclovius|Malo/i,
         name: 'Saint Machutus (Malo)',
@@ -1385,7 +1404,12 @@
     const title = String(calendar?.title || '');
     // A feast's primary title may be seasonal, with the commemorated saints
     // stored under calendar.also (notably in the Melkite monthly typikon).
-    const titles = [title, ...(calendar?.also || []).map(item => String(item?.title || ''))];
+    // Roman and Traditional commemorations displaced by a higher Sunday or
+    // feast must not become the primary Saint of the Day.
+    // Byzantine typika may hold the named saint in calendar.also.
+    const titles = S.rite === 'byz'
+      ? [title, ...(calendar?.also || []).map(item => String(item?.title || ''))]
+      : [title];
     const listed = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
     const entry = listed && titles.some(item => listed.match.test(item)) ? listed : null;
     // Prefer the first actual saint over an unrelated Sunday or pre-feast
@@ -2129,7 +2153,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v297';
+  const APP_BUILD = 'ora-v298';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
