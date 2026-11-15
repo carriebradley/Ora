@@ -271,3 +271,20 @@ test('Western saint cards use only the primary observance, not displaced commemo
  assert.ok(m.includes('...WESTERN_SHARED_SAINT_BIOS'));
  assert.match(S.sarum(new Date('2026-11-30T00:00:00Z')).title,/Andrew/);
 });
+
+test('Traditional seasonal biographies match their documented Sarum saints',()=>{
+ const S=require('../sarum.js');
+ const code=app.slice(app.indexOf('    sarum: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('function todaySaintBio'));
+ for(const [md,name]of Object.entries({
+  '11-16':'Edmund Rich','11-17':'Hugh of Lincoln','11-20':'Edmund the Martyr',
+  '12-04':'Osmund of Salisbury','12-12':'Finnian of Clonard','12-29':'Thomas Becket'
+ })){
+  const entry=code.slice(code.indexOf("'"+md+"':"));
+  assert.ok(entry.startsWith("'"+md+"':"),md);
+  assert.ok(entry.includes("name: 'Saint "+name+"'"),md);
+  assert.ok(entry.includes('https://www.newadvent.org/cathen/'),md);
+  const day=S.sarum(new Date('2026-'+md+'T00:00:00Z'));
+  const word=name.split(' ')[0];
+  assert.match([day.title,...(day.also||[]).map(x=>x.title)].join(' '),new RegExp(word,'i'),md);
+ }
+});

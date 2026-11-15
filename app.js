@@ -1381,6 +1381,12 @@
     },
     sarum: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      '11-16': { match: /Edmund.*(?:Archbishop|Canterbury)|St\. Edmund, Archbishop/i, name: 'Saint Edmund Rich', meta: 'c. 1175–1240 · Archbishop of Canterbury', bio: 'Edmund taught at Oxford before becoming Archbishop of Canterbury in 1234. He defended the independence of the Church in conflicts with Henry III and died in France in 1240.', source: 'https://www.newadvent.org/cathen/05294a.htm' },
+      '11-17': { match: /Hugh.*(?:Bishop|Lincoln)/i, name: 'Saint Hugh of Lincoln', meta: 'c. 1135–1200 · Bishop', bio: 'Hugh was a Carthusian monk who became Bishop of Lincoln in 1186. He was known for pastoral care, defending the rights of the Church, and supporting the building of Lincoln Cathedral.', source: 'https://www.newadvent.org/cathen/07519c.htm' },
+      '11-20': { match: /Edmund.*(?:King|Martyr)/i, name: 'Saint Edmund the Martyr', meta: 'd. 870 · King of East Anglia', bio: 'Edmund ruled East Anglia and was killed during a Danish invasion. Later accounts remember him refusing to renounce his Christian faith; his shrine at Bury St Edmunds became a major pilgrimage destination.', source: 'https://www.newadvent.org/cathen/05295a.htm' },
+      '12-04': { match: /Osmund/i, name: 'Saint Osmund of Salisbury', meta: 'd. 1099 · Bishop of Sarum', bio: 'Osmund became Bishop of Sarum in 1078 and organized the cathedral community at Old Sarum. He is closely associated with the development of the Sarum liturgical tradition.', source: 'https://www.newadvent.org/cathen/11340a.htm' },
+      '12-12': { match: /Finnian.*Clonard/i, name: 'Saint Finnian of Clonard', meta: 'Sixth century · Abbot and Teacher', bio: 'Finnian founded the famous monastic school at Clonard, Ireland. The tradition remembers him as a teacher of many saints, including figures later called the Twelve Apostles of Ireland.', source: 'https://www.newadvent.org/cathen/04064a.htm' },
+      '12-29': { match: /Thomas Becket/i, name: 'Saint Thomas Becket', meta: '1118–1170 · Archbishop of Canterbury and Martyr', bio: 'Becket was Archbishop of Canterbury and resisted royal interference in Church affairs. He was killed in Canterbury Cathedral on December 29, 1170, and his shrine became a major medieval pilgrimage destination.', source: 'https://www.newadvent.org/cathen/14676a.htm' },
       '11-15': {
         match: /Machut(?:us|is)?|Maclovius|Malo/i,
         name: 'Saint Machutus (Malo)',
@@ -2153,7 +2159,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v298';
+  const APP_BUILD = 'ora-v299';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
