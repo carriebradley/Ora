@@ -147,6 +147,9 @@
   for(let i=0;i<lines.length;i++){
    const raw=lines[i];let text=normalize(typeof raw==='string'?raw:raw.text);
    if(!text){flush();last=null;continue;}
+   // Some printed minister cues prefix the spoken doxology. Strip only
+   // the editorial cue, not the prayer that follows its colon.
+   text=text.replace(/^He proclaims:\s+(?=\S)/i,'');
    if(pdfFolioLine(text)||/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(text)||/^THE END OF THE DIVINE LITURGY$/i.test(text)||/^OF ST\. JOHN CHRYSOSTOM$/i.test(text))continue;
    if(/^[\s_\-\u2013\u2014]{8,}$/.test(text))continue;
    text=text.replace(/\s*_{8,}(?:\s*_{8,})*$/,'').trim();

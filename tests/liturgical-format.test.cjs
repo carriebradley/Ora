@@ -408,3 +408,12 @@ test('PDF catechumen prayer stays one paragraph across vertical gap',()=>{
  assert.equal(F.instruction('Arabic: Qud---doo---son---il---laah,'),false);
  assert.equal(F.instruction('Greek: A---gi---os o The---os,'),false);
 });
+
+test('Melkite inline proclamation keeps the actual doxology',()=>{
+ const rows=['He proclaims: That with us they too may glorify Your most noble and magnificent name.',
+  'ALL: Amen.'];
+ assert.deepEqual(F.combine(rows),[
+  'That with us they too may glorify Your most noble and magnificent name.',
+  'ALL: Amen.']);
+ assert.equal(F.instruction('He proclaims:'),true);
+});
