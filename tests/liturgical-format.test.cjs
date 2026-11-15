@@ -184,3 +184,17 @@ test('the same calendar title formatter is used throughout the Today, Calendar a
  assert.match(app,/esc\(displayTitle\(x\.title\)\)/);
  assert.match(app,/esc\(displayTitle\(m\.title\)\)/);
 });
+
+test('single-observance Calendar headings and chips use the shared capitalization rule',()=>{
+ const fs=require('node:fs'),app=fs.readFileSync(require.resolve('../app.js'),'utf8');
+ const branch='if (entries.length < 2) return esc(entries[0] || displayTitle(title || \'\'));';
+ assert.equal(app.split(branch).length-1,2,'Both Western and Byzantine single titles must normalize');
+ assert.ok(app.includes('esc(displayTitle(t))'),'Calendar chips use display capitalization');
+ for(const [raw,expected] of [
+  ['GREAT-MARTYR BARBARA','Great-Martyr Barbara'],
+  ['HOLY PROPHET NAHUM','Holy Prophet Nahum'],
+  ['NATIVITY FAST','Nativity Fast'],
+  ['ALL-NIGHT VIGIL FEAST','All-Night Vigil Feast'],
+  ['USCCB','USCCB']
+ ])assert.equal(F.displayTitle(raw),expected);
+});

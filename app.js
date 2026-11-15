@@ -335,7 +335,7 @@
   /* ---------- UI pieces ---------- */
   const hasTTS = false; // computer-voice read-aloud switched off (set to typeof speechSynthesis !== 'undefined' to bring it back)
   const speakBtn = text => hasTTS ? `<button class="listen" data-act="say" data-say="${encodeURIComponent(text)}">🔊 Listen</button>` : '';
-  const chip = (t, cls = '') => t ? `<span class="chip ${cls}">${esc(t)}</span>` : '';
+  const chip = (t, cls = '') => t ? `<span class="chip ${cls}">${esc(displayTitle(t))}</span>` : '';
   const chipsFor = r => chip(r.rank, MAJOR.test(r.rank || '') ? 'major' : '') + (r.season && r.season !== r.rank ? chip(r.season) : '');
   function alsoHTML(a) { return a && a.length ? `<ul class="also">${a.slice(0, 5).map(x => `<li>${esc(displayTitle(x.title))} <i>— ${esc(x.note)}</i></li>`).join('')}</ul>` : ''; }
   function spokenCard(r, extra) { return `${r.title}. ${r.rank || ''}. ${r.season || ''}. ${r.fast || ''} ${extra || ''}`; }
@@ -527,7 +527,7 @@
   }
   function byzantineCommemorationsHTML(title) {
     const entries = byzantineCommemorations(title).map(displayTitle);
-    if (entries.length < 2) return esc(title || '');
+    if (entries.length < 2) return esc(entries[0] || displayTitle(title || ''));
     return '<div class="byz-commemorations">' + entries.map((item, index) =>
       '<div class="byz-commemoration' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
     ).join('') + '</div>';
@@ -540,7 +540,7 @@
   }
   function calendarCommemorationsHTML(title) {
     const entries = westernCommemorations(title).map(displayTitle);
-    if (entries.length < 2) return esc(title || '');
+    if (entries.length < 2) return esc(entries[0] || displayTitle(title || ''));
     return '<div class="calendar-observances">' + entries.map((item,index) =>
       '<div class="calendar-observance' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
     ).join('') + '</div>';
@@ -2182,7 +2182,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v304';
+  const APP_BUILD = 'ora-v305';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
