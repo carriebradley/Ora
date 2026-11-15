@@ -42,7 +42,7 @@
     if(church==='ukrainian')
       return record.source==='https://eeparchy.com/calendar/'+iso;
     if(church==='melkite')
-      return record.source==='https://melkite.org/liturgical-resources' &&
+      return record.iso===iso && record.source==='https://melkite.org/liturgical-resources' &&
         record.typicon==='November-2026.docx' && iso.startsWith('2026-11-');
     return false;
   }

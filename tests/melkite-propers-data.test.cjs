@@ -8,6 +8,7 @@ test('Melkite dated hymn imports are isolated from Ukrainian and Scripture',()=>
  for(const [iso,entry] of Object.entries(data.days)){
   assert.match(iso,/^2026-11-\d{2}$/);
   assert.equal(entry.church,'melkite');
+  assert.equal(entry.iso,iso,'Every imported Melkite proper must identify its date');
   assert.equal(entry.source,'https://melkite.org/liturgical-resources');
   assert.equal(entry.typicon,'November-2026.docx');
   const keys=Object.keys(entry.groups);

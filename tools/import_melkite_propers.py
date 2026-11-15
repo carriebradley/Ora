@@ -77,7 +77,7 @@ def extract(doc):
         if al:groups['alleluia']=al
         # No generic Kinonikon is relabelled a daily Communion proper.
         if not groups:continue
-        record={'church':'melkite','source':INDEX,'typicon':'November-2026.docx','groups':groups}
+        record={'church':'melkite','iso':iso,'source':INDEX,'typicon':'November-2026.docx','groups':groups}
         if unresolved:record['unresolved']=unresolved
         days[iso]=record
     for iso in ('2026-11-15','2026-11-22'):

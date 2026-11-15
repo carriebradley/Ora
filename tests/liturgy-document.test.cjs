@@ -79,10 +79,12 @@ test('never combine Ukrainian and Melkite editions, years or seasonal booklets',
  assert.deepEqual(D.compose(sections,sample,{...context,iso:'2026-11-22'}).placed,[]);
  assert.deepEqual(D.compose(sections,sample,{...context,seasonal:true}).placed,[]);
  assert.deepEqual(D.compose(sections,sample,{...context,id:'basil'}).placed,[]);
- const melkite={...sample,church:'melkite',source:'https://melkite.org/liturgical-resources',typicon:'November-2026.docx'};
+ const melkite={...sample,church:'melkite',iso:'2026-11-15',source:'https://melkite.org/liturgical-resources',typicon:'November-2026.docx'};
  assert.deepEqual(D.compose(sections,melkite,{...context,church:'melkite',id:'melkite-chrysostom'}).placed,
   ['troparia','prokeimenon','alleluia','communion']);
  assert.deepEqual(D.compose(sections,melkite,{...context,church:'melkite',id:'melkite-chrysostom',iso:'2026-12-01'}).placed,[]);
+ assert.deepEqual(D.compose(sections,melkite,{...context,church:'melkite',id:'melkite-chrysostom',iso:'2026-11-16'}).placed,[],
+  'a valid November typicon source URL cannot authorize hymns for another date');
 });
 
 test('reject improperly formatted or mixed-script source lines',()=>{

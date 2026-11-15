@@ -36,6 +36,7 @@ test('all dated Ukrainian and Melkite hymns match an available church-specific s
     assert.equal(E.withheld[iso],undefined,iso+' is a quarantined Edmonton date');
     assert.equal(record.source,E.days[iso].source,iso+' does not match Edmonton URL');
    }else{
+    assert.equal(record.iso,iso,iso+' lacks exact Melkite day identity');
     assert.ok(M.typicon(iso),iso+' has hymns but no appointed Newton typicon record');
     assert.equal(M.typicon(iso).liturgy,'chrysostom',iso+' requires a different service');
    }

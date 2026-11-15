@@ -38,6 +38,7 @@ class MelkiteProperImportTests(unittest.TestCase):
         self.assertEqual(set(days),{'2026-11-15','2026-11-22'})
         day=days['2026-11-15']
         self.assertEqual(day['church'],'melkite')
+        self.assertEqual(day['iso'],'2026-11-15')
         self.assertEqual(set(day['groups']),{'troparia','prokeimenon','alleluia'})
         text=str(day)
         self.assertIn('Fictional long prayer words',text)
