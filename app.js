@@ -1077,6 +1077,13 @@
       '11-13': { match:/John Chrysostom/i, name:'Saint John Chrysostom', meta:'c. 347–407 · Archbishop of Constantinople', bio:'John Chrysostom was celebrated for his preaching, biblical teaching, and concern for the poor. The Byzantine liturgical tradition especially remembers him through the Divine Liturgy bearing his name.', source:'https://www.britannica.com/biography/Saint-John-Chrysostom' }
     },
     sarum: {
+      '11-14': {
+        match: /Laurence O['’]?Toole|Lawrence O['’]?Toole/i,
+        name: 'Saint Laurence O’Toole',
+        meta: '1128–1180 · Archbishop of Dublin · Patron of Dublin',
+        bio: 'Laurence O’Toole, also known as Lorcán Ua Tuathail, entered the monastery at Glendalough after spending part of his childhood as a hostage. He later became its abbot and was appointed Archbishop of Dublin in 1162. He was known for his prayer, assistance to the poor, reform of the Church, and efforts to make peace during the Anglo-Norman invasion of Ireland. He died in Eu, Normandy, on November 14, 1180, while on a diplomatic mission and was canonized in 1225.',
+        source: 'https://www.dublindiocese.ie/the-story-of-st-laurence-otoole/'
+      },
       '11-12': { match:/Begnet/i, name:'Saint Begnet', meta:'Early Irish saint · Patron of Dalkey', bio:'Little is known with certainty about Begnet’s life. She is remembered in the Christian heritage of Dalkey, Ireland, where churches and local traditions preserve her name.', source:'https://www.dalkeyheritage.com/' }
     }
   };
@@ -1830,7 +1837,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v284';
+  const APP_BUILD = 'ora-v285';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

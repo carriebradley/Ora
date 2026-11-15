@@ -28,3 +28,10 @@ test('Marian feast titles alone do not create a Saint of the Day biography',()=>
  assert.match(app,/const namedSaint =/);
  assert.match(app,/!marianTitle\.test\(item\) \|\| namedSaint\.test\(item\)/);
 });
+
+test('November 14 Traditional feast has a verified Laurence O’Toole biography',()=>{
+ assert.match(app, /sarum: \\{\\s+'11-14': \\{/);
+ assert.match(app, /match: \\/Laurence O\\[/);
+ assert.match(app, /name: 'Saint Laurence O’Toole'/);
+ assert.match(app, /dublindiocese\\.ie\\/the-story-of-st-laurence-otoole/);
+});
