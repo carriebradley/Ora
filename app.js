@@ -475,7 +475,7 @@
     const melkiteCommemoration = rite === 'byz' && S.byzChurch === 'melkite' && rk === 'Diocesan calendar' && title !== 'Weekday' && !feast;
     const badge = holySpirit ? 'Holy Spirit' : martyr ? 'Martyr' : roseSunday ? (/Gaudete/i.test(title) ? 'Gaudete' : /Laetare/i.test(title) ? 'Laetare' : 'Sunday') :
       feast ? rankLabel : melkiteCommemoration ? 'Commemoration' : kind === 'fast' ? (/strict/i.test(fast) ? 'Strict Fast' : 'Fast Day') :
-      kind === 'season' ? 'Fasting Season' : martin ? "St. Martin's Lent" :
+      martin ? "St. Martin's Lent" : rk === 'Sunday' ? 'Sunday' : kind === 'season' ? 'Fasting Season' :
       minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast' : 'Memorial') :
       rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary Day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
@@ -2423,7 +2423,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v323';
+  const APP_BUILD = 'ora-v324';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

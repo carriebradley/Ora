@@ -35,3 +35,20 @@ test('Melkite data never silently repeats in 2027 and the other traditions remai
  assert.match(L.byzantine(new Date('2026-12-08'),{byzChurch:'ruthenian'}).title,/Conception/);
  assert.equal(L.byzantine(new Date('2026-04-05'),{byzChurch:'melkite'}).fast,'','dagger is not a fasting rule');
 });
+
+test('Dated Newton Sunday and feast appointments retain liturgical rank on Today',()=>{
+ const L=require('../calendar.js');
+ const date=s=>new Date(s+'T00:00:00Z');
+ const melkite=s=>L.byzantine(date(s),{byzChurch:'melkite'});
+ for(const iso of ['2026-02-22','2026-11-15','2026-11-22','2026-12-13']){
+  const day=melkite(iso);
+  assert.equal(day.rank,'Sunday',iso+' Sunday must not be just a commemoration');
+  assert.ok(day.title&&day.sourcePage,iso+' keeps Newton observance and provenance');
+ }
+ for(const iso of ['2026-01-06','2026-04-05','2026-11-21','2026-12-25']){
+  assert.equal(melkite(iso).rank,'Great Feast',iso+' retains its great feast rank');
+ }
+ assert.equal(melkite('2026-12-08').rank,'Diocesan calendar','ordinary Melkite saint still uses diocesan commemoration');
+ assert.match(melkite('2026-11-15').title,/Eighth Sunday after the Holy Cross/i);
+ assert.match(melkite('2026-11-15').fastSeason,/Nativity Fast/);
+});

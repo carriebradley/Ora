@@ -19,6 +19,21 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.match(await card.innerText(),/Holy Apostle Philip/);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  }
+ // Melkite's dated Sunday and Great Feasts must never show a generic
+ // weekday commemoration badge merely because the source is diocesan.
+ await page.goto(`${base}index.html?tab=more&date=2026-11-15&rite=byz`);
+ await page.locator('[data-act="byzchoice"][data-v="melkite"]').click();
+ for(const [date,badge] of [
+  ['2026-11-15','Sunday'],
+  ['2026-11-21','Major Feast'],
+  ['2026-12-08','Commemoration'],
+  ['2026-12-25','Major Feast']
+ ]){
+  await page.goto(`${base}index.html?tab=today&date=${date}&rite=byz`);
+  const row=page.locator('.gl[data-v="byz"]');
+  assert.equal(await row.locator('.gb').innerText(),badge,'Melkite rank on '+date);
+  assert.ok((await row.innerText()).length>18,'Melkite day title on '+date);
+ }
  // Each verified Byzantine bio must replace the missing-bio placeholder.
  for(const church of ['ukrainian','melkite']){
   await page.goto(`${base}index.html?tab=more&date=2026-11-16&rite=byz`);

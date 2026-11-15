@@ -26,7 +26,7 @@ Roman Ascension, Corpus Christi and Epiphany transfers and Sarum Lady-Day transf
 | `tools/import_melkite_calendar.py` | Reproducible import from the supplied calendar PDF; requires PyMuPDF |
 | `sarum.js`, `sarummass.js` | Traditional calendar and Mass texts |
 | `hours.js`, `content.js` | Prayer texts, devotional adaptations and prayer flows |
-| `oor.js`, `oortext.json` | Office of Readings index and 64 bundled public-domain second readings |
+| `oor.js`, `oortext.json` | Office of Readings index and 105 bundled second-reading records (historical alternatives and permitted translations; not the complete official Office) |
 | `app.js`, `index.html` | UI |
 | `sw.js` | Versioned offline app shell and persistent downloaded texts |
 | `fetch_readings.py`, `fetch_divineoffice.py`, `fetch_angelus.py` | Scheduled content updates |

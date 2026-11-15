@@ -105,7 +105,16 @@
     const notes = ['Melkite Catholic Diocese of Newton · 2026 calendar · page '+e.page+'. Seasonal fasts describe the observance; follow your parish’s directions and personal exemptions.'];
     if (md >= '06-20' && md <= '06-28') notes.push('The calendar also marks the shorter Apostles’ Fast from June 20.');
     if (md >= '12-10' && md <= '12-24') notes.push('The calendar also marks the shorter Nativity Fast from December 10.');
-    return {...fallback,title:titleCase(e.observance || e.saints || 'Weekday'),rank:'Diocesan calendar',tone:e.tone??typicon(date)?.tone??0,also:e.observance && e.saints ? [{title:titleCase(e.saints),rank:'Commemoration'}] : [],fast,fastSeason,fastingNote:notes.join(' '),sourcePage:e.page};
+    // Keep Newton's dated observance authoritative. The computed Byzantine cycle
+    // supplies a feast *rank* only when Newton actually names an observance;
+    // incidental calculated saints must not outrank the diocesan entry.
+    const observed = e.observance || '';
+    const computedRank = fallback.rank || '';
+    const rank = /\bSunday\b/i.test(observed)
+      ? (computedRank === 'Great Feast' ? 'Great Feast' : 'Sunday')
+      : observed && /^(Great Feast|Feast|Holy Week|Holy Day|Vigil)$/.test(computedRank)
+        ? computedRank : 'Diocesan calendar';
+    return {...fallback,title:titleCase(e.observance || e.saints || 'Weekday'),rank,tone:e.tone??typicon(date)?.tone??0,also:e.observance && e.saints ? [{title:titleCase(e.saints),rank:'Commemoration'}] : [],fast,fastSeason,fastingNote:notes.join(' '),sourcePage:e.page};
   }
   return {entry,read,calendar,typicon,typiconSource,source:data};
 });
