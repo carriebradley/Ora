@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  checks: write
 jobs:
   import:
     runs-on: ubuntu-latest
