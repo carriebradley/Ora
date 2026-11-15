@@ -173,23 +173,21 @@
     }
     return sections.length?sections:null;
   }
-  function unrecognizedPdfNotice(target,pages){
-    const note=document.createElement('p');
-    note.className='muted byz-unrecognized-pdf-note';
-    note.textContent='English-only continuous text from your saved PDF ('+pages+' pages). Ukrainian-script passages are hidden here. This edition was not identified; use Open original book for the full PDF.';
-    target.insertBefore(note,target.firstChild);
-  }
-
   async function isEaster2018Booklet(book){
    if(book.numPages!==26)return false;
    const page=await book.getPage(1);
    const text=(await page.getTextContent()).items.map(i=>i.str).join(' ').replace(/\s+/g,' ');
    return /Easter\s*Season/i.test(text)&&/St\.?\s*Josaphat/i.test(text)&&/2018/.test(text);
   }
-  function showSeasonalBookletNote(target){
+  // Editorial details stay in the collapsed saved-book manager, never
+  // between a prayer heading and the spoken words.
+  function showSeasonalBookletNote(section){
+   const manager=section.querySelector('.reader-offline');
+   if(!manager)return;
+   manager.querySelector('.byz-seasonal-booklet-note')?.remove();
    const p=document.createElement('p');p.className='muted byz-seasonal-booklet-note';
-   p.textContent='This is an Easter-season booklet. Its seasonal hymns and antiphons are not necessarily appointed for this date. For ordinary days, use the year-round English booklet in Manage saved Divine Liturgy book.';
-   target.insertBefore(p,target.firstChild.nextSibling);
+   p.textContent='Saved edition: Easter season. For other dates, a year-round English booklet is available above.';
+   manager.append(p);
   }
 
   // Visual call-and-response cues, inferred only from labels printed in the
@@ -210,7 +208,7 @@
       toggle.setAttribute('aria-pressed',String(visible));
       toggle.textContent=visible?'Hide liturgical instructions':'Show liturgical instructions';
     });
-    toolbar.append(toggle);target.append(toolbar);
+    toolbar.append(toggle);
     const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
     let lastLine=null,lastRole=null,lastMajor=null,lastHeading=null,pendingRole=null;
     let container=target;
@@ -290,9 +288,12 @@
         container.append(p);lastLine=p;
       }
     }
+    // Optional instructions come after the prayers rather than before them.
+    target.append(toolbar);
   }
   async function hydrate(){
     const token=++hydrateVersion,section=document.querySelector('.liturgical-text');if(!section)return;
+    section.querySelector('.byz-seasonal-booklet-note')?.remove();
     const status=section.querySelector('.reader-status'),preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls'),tools=null;
     try{const saved=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected||token!==hydrateVersion)return;
       status.textContent=saved?`${saved.name} · ${saved.pages} ${saved.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
@@ -342,8 +343,7 @@
           continuous=true;
           if(reading?.sections){
             renderEdmontonPrayerText(preview,reading.sections);
-            if(reading.seasonal)showSeasonalBookletNote(preview);
-            if(!reading.recognized)unrecognizedPdfNotice(preview,book.numPages);
+            if(reading.seasonal)showSeasonalBookletNote(section);
             status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · English-only continuous text')+' · saved privately on this device';
           }else{
             preview.replaceChildren();

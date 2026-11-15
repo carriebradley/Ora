@@ -154,7 +154,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  });
  assert.match(await ukrainian.innerText(),/Text from saved page 1/);
  assert.match(await ukrainian.innerText(),/Text from saved page 26/);
- assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/English-only continuous text from your saved PDF \(26 pages\)/);
+ assert.equal(await ukrainian.locator('.byz-unrecognized-pdf-note').count(),0,'unrecognized-book note does not interrupt the prayers');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'all 26 pages appear without inline pagination');
  assert.equal(await ukrainian.locator('.byz-role-all').count(),26);
  for(const width of [320,390]){
@@ -189,7 +189,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(englishView,/In peace let us pray/);
  assert.doesNotMatch(englishView,/[\u0400-\u052f]/u);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
- assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/English-only continuous text/);
+ assert.equal(await ukrainian.locator('.byz-unrecognized-pdf-note').count(),0);
  // Seasonal 2018 booklet must enter at the prayer, not its cover or posture
  await page.evaluate(async()=>{
   const get=LiturgyReader.get,load=LiturgyReader.load;
@@ -205,7 +205,16 @@ module.exports=async(page,base,artifacts,violations)=>{
  const result=await ukrainian.innerText();
  assert.match(result,/Liturgy of the Word[\s\S]*Blessing[\s\S]*Master, give the blessing/);
  assert.doesNotMatch(result,/WE LEAVE THE WORLD|St\. Josaphat Cathedral|April 2018|____/);
- assert.match(await ukrainian.locator('.byz-seasonal-booklet-note').innerText(),/Easter-season booklet/);
+ assert.equal(await ukrainian.locator('.byz-seasonal-booklet-note').count(),0,'seasonal metadata is not in prayer text');
+ const seasonalMeta=page.locator('.reader-offline .byz-seasonal-booklet-note');
+ assert.equal(await seasonalMeta.count(),1,'seasonal source detail stays available in saved-book manager');
+ assert.equal(await seasonalMeta.isVisible(),false,'source detail is collapsed by default');
+ await page.locator('.reader-offline > summary').click();
+ assert.match(await seasonalMeta.innerText(),/Saved edition: Easter season/);
+ await page.locator('.reader-offline > summary').click();
+ assert.equal(await ukrainian.locator('.byz-major-heading').first().innerText(),'Liturgy of the Word');
+ assert.equal(await ukrainian.locator('.byz-reader-preferences').evaluate(el=>el===el.parentElement.lastElementChild),true,
+  'instruction controls follow the prayer rather than precede it');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
  // Scanned/image-only PDFs cannot be converted into text without OCR; retain
  // access to Open original book and do not return to paged inline navigation.
@@ -225,7 +234,9 @@ module.exports=async(page,base,artifacts,violations)=>{
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  let daily=page.locator('.byz-liturgy-variations');
  assert.equal(await daily.count(),1);
- assert.match(await daily.locator('summary').innerText(),/Today.s changing parts.*Tone 8/);
+ assert.match(await daily.locator('summary').innerText(),/Readings & propers.*Tone 8/);
+ assert.equal(await page.locator('.liturgical-text').evaluate(el=>el.compareDocumentPosition(document.querySelector('.byz-liturgy-variations')) & Node.DOCUMENT_POSITION_FOLLOWING ? true : false),true,
+  'optional daily sources appear after the prayer book');
  await daily.locator('summary').click();
  assert.match(await daily.innerText(),/Ephesians 4:1-6/,'Ukrainian Edmonton Epistle');
  assert.match(await daily.innerText(),/Luke 10:25-37/,'Ukrainian Edmonton Gospel');

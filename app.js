@@ -1635,33 +1635,27 @@
   // The appointed variable prayers belong to the selected church's dated
   // calendar. Keep them distinct from the ordinary service text stored
   // privately on the phone. Never substitute another church's propers.
+  // Keep optional dated information after the prayer, not in its opening.
   function byzLiturgyDailyChanges(iso,church,day,service){
     const melkite=church==='melkite',dated=melkite?Melkite.entry(iso):Edmonton.entry(iso);
-    const readingDay=byzDay(iso,church);
+    const readingDay=dated?byzDay(iso,church):null;
     const refs=(readingDay?.sets||[]).flatMap(group=>group.r||[]).filter(pair=>
       /^(?:Epistle|Gospel|Apostle)$/i.test(pair[0]));
     const source=melkite?'https://melkite.org/liturgical-resources':
       (dated?.source||'https://eeparchy.com/calendar');
-    const sourceName=melkite?'Melkite Eparchy of Newton · calendar and typikon':
-      'Ukrainian Catholic Eparchy of Edmonton · dated calendar';
-    const note=service.verification==='source-conflict'
-      ?'The service appointment has a source conflict; consult the eparchy before selecting a book.'
-      :service.verification==='calculated'
-      ?'The service-book appointment is calculated, not independently verified against this date’s typikon.'
-      :service.verification==='unavailable'
-      ?'A verified service-book appointment is unavailable for this date.'
-      :'The service-book appointment follows the available liturgical source.';
+    const sourceName=melkite?'Melkite calendar and propers':'Ukrainian calendar and propers';
     const items=refs.map(([label,ref])=>'<div class="reading-heading">'+
       '<span class="reading-label">'+esc(label)+'</span>'+
       '<span class="reading-reference">'+esc(ref)+'</span></div>').join('');
+    const caution=service.verification==='source-conflict'
+      ?'<p class="muted">Service appointment needs confirmation with the eparchy.</p>'
+      :!dated?'<p class="muted">Daily appointments are not verified for this date.</p>':'';
     return '<details class="byz-liturgy-variations">'+
-      '<summary>Today’s changing parts'+(day.tone?' · Tone '+Number(day.tone):'')+'</summary>'+
-      '<p class="muted">Your saved '+(melkite?'Melkite':'Ukrainian')+
-      ' service book supplies the ordinary prayers. Antiphons, troparia, kontakia, prokeimenon, Alleluia, Scripture readings and Communion hymns vary by Sunday, feast, and season. Ora lists available daily reading references; it does not substitute unverified hymns.</p>'+
-      (items||'<p class="muted">No verified Epistle or Gospel reference is bundled for this date.</p>')+
-      '<p class="muted">'+esc(dated?'Dated church calendar references.':'A dated church calendar is unavailable for this date.')+' '+esc(note)+'</p>'+
+      '<summary>Readings &amp; propers'+(day.tone?' · Tone '+Number(day.tone):'')+'</summary>'+
+      (items||'<p class="muted">Daily reading references are unavailable.</p>')+
+      caution+
       '<a class="btn sm" target="_blank" rel="noopener noreferrer" href="'+esc(source)+'">'+
-      esc(sourceName)+' · appointed propers</a></details>';
+      esc(sourceName)+'</a></details>';
   }
   function viewLiturgy() {
     const v=dayInfo(st.date);loadReadings(st.date);
@@ -1674,8 +1668,8 @@
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
       ${byzantine?`<p class="service-summary"><strong>${esc(service.title)}</strong></p>`:''}
-      ${byzantine?byzLiturgyDailyChanges(st.date,S.byzLiturgyChurch,day,service):''}
       ${reader}
+      ${byzantine?byzLiturgyDailyChanges(st.date,S.byzLiturgyChurch,day,service):''}
       <button class="btn sm" data-act="goReadings" data-v="${byzantine?'byz':'roman'}">Open the day’s readings</button>
     </section>`;
   }
@@ -2455,7 +2449,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v333';
+  const APP_BUILD = 'ora-v334';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
