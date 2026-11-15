@@ -16,6 +16,14 @@ The Roman, Ukrainian Greek Catholic (Edmonton-first), Melkite Greek Catholic (Ne
 
 A complete official Roman Liturgy of the Hours, a complete Melkite/UGCC variable office, a full annual corpus of Fathers' readings, and complete imported copyrighted Mass/Divine Liturgy books are **outside the v1 release gate**. They remain optional future enhancements. This is a truthful scope decision, not a claim those texts already exist.
 
+## Baseline confirmed on November 15, 2026
+
+- `main` at initial acceptance: `dab9e5b8bdca3ca3bd19220ea8be4a00802856cd`; prior app build `ora-v323` passed Node and Pages verification. The roadmap change itself triggers a new workflow, which must be checked separately.
+- `docs/roman-office-section-coverage-2026-2027.json` currently records 462/462 structurally present Morning/Evening sections in all eight configured transfer combinations. This is not an official complete Liturgy of the Hours certification.
+- The historical source imports are not a Version 1 release gate: 105/562 indexed unique second readings are internally bundled as of this review.
+- Older pull requests #31 (Byzantine minister labels) and #42 (Gregory Scholastica) overlap functionality already on the main branch; do not merge them blindly. Close or reconcile with current code before the final release.
+- Remaining independent checks: Edmonton's quarantined dated data and December 24 conflict, Newton typikon service appointment confirmation, real iPhone/Safari and private book behavior, and the public text reproduction/review policy.
+
 ## Execution order
 
 ### P0 — Freeze, baseline, and triage
@@ -32,7 +40,7 @@ A complete official Roman Liturgy of the Hours, a complete Melkite/UGCC variable
 
 ### P2 — Core user workflows and quality
 1. End-to-end tests for switching tradition/church, using Today > Pray > Readings > Liturgy > Calendar, deep links, font settings, contrast, touch behavior, correct titles, saint card and artwork behavior.
-2. Reconcile remaining Roman proper-prayer witnesses/source IDs and remove silent unverified fallbacks. Current older audit identified 14 missing proper-prayer witnesses and 15 source IDs: re-count before acting.
+2. Preserve current structural Roman Office coverage: the checked 2026-11-12 through 2027-06-30 report has 462/462 sampled Morning/Evening offices with all tracked sections present across eight transfer combinations. Re-run the audit before release; section presence does not independently certify appointed translations or exact proper selections.
 3. Check private PDF/EPUB handling for save, restore, replacement protection, text selection, speaker labels, rubrics, reading size, and offline behavior.
 4. Test cache upgrades: app build and service worker match, last valid downloaded texts retained, no empty cards from missing network resources, no loss of saved local books.
 5. Finish mobile visual and accessibility audit (320 and 390px; light/dark; user font setting).
