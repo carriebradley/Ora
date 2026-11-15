@@ -53,3 +53,12 @@ The PDF parser cannot reliably identify all liturgical section headings in
 every edition. Full in-place integration for **every** date and service is
 not yet verified, nor are the November Melkite weekday hymns complete.
 Expand source/edition coverage rather than supplying guessed words.
+
+## v341 — loader fix and safe empty slots
+The source loader is explicitly exported to both the application and its
+private-book reader. A regression test checks the export and normalization of
+uppercase prokeimenon/Alleluia headings and chant-break asterisks.
+When the saved service book has one *empty* named variable-hymn slot and the
+next established service heading immediately follows it, Ora can fill that
+slot in place without repeating its heading. A slot containing any printed
+prayer text is not overwritten; ambiguous headings remain unresolved.

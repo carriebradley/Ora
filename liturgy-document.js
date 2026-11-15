@@ -63,6 +63,30 @@
       lines.every(line=>typeof line==='string'&&line.trim().length>0&&line.length<=1200&&
         !/[\u0400-\u052f\u0600-\u06ff]/u.test(line));
   }
+  function displayLine(raw){
+    return String(raw).replace(/^\s*(?:PROKIMENON|PROKEIMENON)\b/i,'Prokeimenon')
+      .replace(/^\s*ALLELUIA\b/i,'Alleluia')
+      .replace(/\s*\*\s*/g,' ').replace(/\s{2,}/g,' ').trim();
+  }
+  // A private saved book can be parsed independently of downloaded daily
+  // hymns. Fetch only the selected church's verified dataset, with one shared
+  // promise per church so the prayer reader and companion panel agree.
+  const sourceFiles={ukrainian:'ukrainian-propers.json',melkite:'melkite-propers-2026-11.json'};
+  const bookPromises={};
+  async function loadRecord(church,iso){
+    const filename=sourceFiles[church];
+    if(!filename||!/^2026-\d{2}-\d{2}$/.test(iso||''))return null;
+    if(!bookPromises[church]){
+      bookPromises[church]=fetch('./'+filename,{cache:'no-store'})
+        .then(res=>{if(!res.ok)throw new Error('Dated hymns unavailable');return res.json();})
+        .catch(()=>{delete bookPromises[church];return null;});
+    }
+    const data=await bookPromises[church];
+    if(data?.schema!==1)return null;
+    const record=data.days?.[iso];
+    const id=church==='ukrainian'?'chrysostom':'melkite-chrysostom';
+    return validRecord(record,{iso,church,id})?record:null;
+  }
   function compose(sections,record,context){
     const original=(sections||[]).map(part=>({...part,lines:[...(part.lines||[])]}));
     const remaining=Object.keys(labels).filter(key=>safeLines(record?.groups?.[key]));
@@ -77,11 +101,21 @@
       if(beginnings.length!==1||endings.length!==1)continue;
       const start=beginnings[0],finish=endings[0];
       if(start.n>=finish.n||finish.n-start.n>120)continue;
-      const conflict=points.some(p=>p.n>start.n&&p.n<finish.n&&rule.conflict.test(p.text));
-      if(conflict)continue;
+      const collisions=points.filter(p=>p.n>start.n&&p.n<finish.n&&rule.conflict.test(p.text));
+      // A printed, genuinely empty slot can accept the appointed words;
+      // a heading with any intervening prayer text must remain untouched.
+      const slotNames={
+        troparia:/^Troparia(?:\s*(?:and|&)\s*Kontakia)?$/i,
+        prokeimenon:/^(?:Prokeimenon|Prokimenon)$/i,
+        alleluia:/^Alleluia$/i,
+        communion:/^(?:Communion Hymn|Communion Verse|Kinonikon)$/i
+      };
+      const emptySlot=collisions.length===1&&slotNames[key].test(collisions[0].text)&&
+        !points.some(p=>p.n>collisions[0].n&&p.n<finish.n);
+      if(collisions.length&&!emptySlot)continue;
       // The source may not have an explicit place for a given hymn. In that
       // case preserve the original and leave that hymn in the daily panel.
-      const item={dailyProper:key,heading:labels[key],lines:lines.slice()};
+      const item={dailyProper:key,heading:emptySlot?null:labels[key],lines:lines.map(displayLine)};
       const location=finish.sectionIndex+'|'+finish.lineIndex;
       if(!insertions.has(location))insertions.set(location,[]);
       insertions.get(location).push(item);
@@ -107,5 +141,5 @@
     }
     return {sections:out,placed,remaining:remaining.filter(key=>!placed.includes(key))};
   }
-  return {compose,labels,validRecord};
+  return {compose,labels,validRecord,displayLine,loadRecord};
 });

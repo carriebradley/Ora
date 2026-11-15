@@ -24,6 +24,26 @@ const sample={
 const context={church:'ukrainian',iso:'2026-11-15',id:'chrysostom'};
 const joined=result=>result.sections.map(part=>[part.heading,...part.lines].filter(Boolean).join(' / ')).join('\n');
 
+test('document module loads dated records and normalizes prayer typography',()=>{
+ assert.equal(typeof D.loadRecord,'function');
+ assert.equal(D.displayLine('PROKIMENON: (Tone 8)'), 'Prokeimenon: (Tone 8)');
+ assert.equal(D.displayLine('ALLELUIA: (Tone 1)'), 'Alleluia: (Tone 1)');
+ assert.equal(D.displayLine('The angels* give thanks * to God.'),'The angels give thanks to God.');
+});
+
+test('a genuinely empty printed hymn placeholder can receive dated words without duplicate headings',()=>{
+ const placeholder=[{heading:'Liturgy of the Word',lines:[
+  'Little Entrance','Troparia and Kontakia','Trisagion','Epistle','Gospel']}];
+ const result=D.compose(placeholder,sample,context);
+ assert.ok(result.placed.includes('troparia'));
+ const phrase=joined(result);
+ assert.equal((phrase.match(/Troparia and Kontakia/g)||[]).length,1);
+ assert.ok(phrase.indexOf('Troparion, Tone 8')>phrase.indexOf('Troparia and Kontakia'));
+ assert.ok(phrase.indexOf('Trisagion')>phrase.indexOf('Troparion, Tone 8'));
+ assert.equal(JSON.stringify(placeholder[0].lines),
+  JSON.stringify(['Little Entrance','Troparia and Kontakia','Trisagion','Epistle','Gospel']));
+});
+
 test('compose inserts date-specific hymns in their established positions without mutating ordinary prayers',()=>{
  const old=JSON.stringify(sections),result=D.compose(sections,sample,context);
  assert.deepEqual(result.placed,['troparia','prokeimenon','alleluia','communion']);
