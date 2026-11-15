@@ -2085,6 +2085,39 @@
     ],
     "Cyprian|On the Lord's Prayer 28-30": [
       ["On the Lord's Prayer (Treatise 4), sections 28–30", 'https://www.newadvent.org/fathers/050704.htm']
+    ],
+    "Augustine|On the Gospel of John 123, 5": [
+      ["Tractate 123 on John, section 5", 'https://www.newadvent.org/fathers/1701123.htm']
+    ],
+    "Augustine|On the Gospel of John 124, 5": [
+      ["Tractate 124 on John, section 5", 'https://www.newadvent.org/fathers/1701124.htm']
+    ],
+    "Augustine|On the Gospel of John 124, 5.7": [
+      ["Tractate 124 on John, sections 5 and 7", 'https://www.newadvent.org/fathers/1701124.htm']
+    ],
+    "Augustine|On the Gospel of John 15, 10-12.16-17": [
+      ["Tractate 15 on John, sections 10–12 and 16–17", 'https://www.newadvent.org/fathers/1701015.htm']
+    ],
+    "Augustine|On the Gospel of John 17, 7-9": [
+      ["Tractate 17 on John, sections 7–9", 'https://www.newadvent.org/fathers/1701017.htm']
+    ],
+    "Augustine|On the Gospel of John 26, 4-6": [
+      ["Tractate 26 on John, sections 4–6", 'https://www.newadvent.org/fathers/1701026.htm']
+    ],
+    "Augustine|On the Gospel of John 34, 8-9": [
+      ["Tractate 34 on John, sections 8–9", 'https://www.newadvent.org/fathers/1701034.htm']
+    ],
+    "Augustine|On the Gospel of John 35, 8-9": [
+      ["Tractate 35 on John, sections 8–9", 'https://www.newadvent.org/fathers/1701035.htm']
+    ],
+    "Augustine|On the Gospel of John 65, 1-3": [
+      ["Tractate 65 on John, sections 1–3", 'https://www.newadvent.org/fathers/1701065.htm']
+    ],
+    "Augustine|On the First Letter of John 1, 1.3": [
+      ["Homily 1 on the First Epistle of John, sections 1 and 3", 'https://www.newadvent.org/fathers/170201.htm']
+    ],
+    "Augustine|On the first letter of John": [
+      ["Homilies on the First Epistle of John — collection index", 'https://www.newadvent.org/fathers/1702.htm']
     ]
   });
   let oortxP = null;
@@ -2369,7 +2402,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v321';
+  const APP_BUILD = 'ora-v322';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

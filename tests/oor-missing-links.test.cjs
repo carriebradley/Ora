@@ -118,3 +118,35 @@ test('eleven Cyprian and Ambrose historical editions link without pretending the
  assert.match(app,/These historical source editions may use different wording or section boundaries/);
  assert.equal(require('../docs/office-of-readings-availability.json').available,105);
 });
+
+test('Augustine Gospel of John tractate sources link directly to their historical edition',()=>{
+ const fs=require('node:fs');
+ const app=fs.readFileSync(require.resolve('../app.js'),'utf8');
+ const map=app.slice(app.indexOf('const OOR_PUBLIC_DOMAIN_SOURCES'),app.indexOf('let oortxP = null;'));
+ const inventory=require('../docs/office-of-readings-availability.json');
+ const missing=new Set(inventory.missingReferences);
+ const cases=[
+  ['On the Gospel of John 123, 5','1701123.htm'],
+  ['On the Gospel of John 124, 5','1701124.htm'],
+  ['On the Gospel of John 124, 5.7','1701124.htm'],
+  ['On the Gospel of John 15, 10-12.16-17','1701015.htm'],
+  ['On the Gospel of John 17, 7-9','1701017.htm'],
+  ['On the Gospel of John 26, 4-6','1701026.htm'],
+  ['On the Gospel of John 34, 8-9','1701034.htm'],
+  ['On the Gospel of John 35, 8-9','1701035.htm'],
+  ['On the Gospel of John 65, 1-3','1701065.htm'],
+  ['On the First Letter of John 1, 1.3','170201.htm'],
+  ['On the first letter of John','1702.htm']
+ ];
+ assert.equal(cases.length,11);
+ for(const [work,path] of cases){
+  const key='Augustine|'+work,position=map.indexOf(JSON.stringify(key));
+  assert.ok(position>=0,'A direct historical source is required for '+key);
+  assert.ok(map.slice(position,position+240).includes('https://www.newadvent.org/fathers/'+path),key);
+  assert.ok(missing.has(key),'A source link is not a bundled appointed reading: '+key);
+ }
+ assert.equal(inventory.available,105);
+ assert.equal(inventory.bundled,105);
+ assert.equal(inventory.indexed,562);
+ assert.match(app,/These historical source editions may use different wording or section boundaries/);
+});
