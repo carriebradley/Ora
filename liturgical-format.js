@@ -4,6 +4,23 @@
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
+ const LOWER_TITLE_WORDS=new Set(['of','the','and','in','on','at','to','for','from','with','by','after','before','as','or','a','an','de','du','des','la','le']);
+ const TITLE_ACRONYMS=new Set(['US','UK','USA','USCCB','UGCC','OCA','ICEL','PDF','EPUB','NRSVCE','RSVCE','NABRE','NRSV','RSV','KJV','ESV','AD','BC','EU']);
+ const TITLE_CAPS=/(?<![\p{L}])[\p{Lu}]{2,}(?:['’]\p{Lu}+)?(?:-\p{Lu}+)*(?![\p{L}])/gu;
+ const TITLE_ROMAN=/^(?=[MDCLXVI]+$)M{0,4}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/;
+ // Display formatting only: normalize even an ALL-CAPS phrase followed by
+ // mixed-case text, without changing proper names, acronyms, or Roman numerals.
+ function displayTitle(input){
+  const text=String(input??'');
+  return text.replace(TITLE_CAPS,(word,offset)=>{
+   if(TITLE_ACRONYMS.has(word)||TITLE_ROMAN.test(word))return word;
+   const prefix=text.slice(0,offset).trimEnd(),atStart=!prefix||/[(:;.!?—–]$/.test(prefix);
+   return word.toLocaleLowerCase('en').split('-').map((part,index)=>
+    LOWER_TITLE_WORDS.has(part)&&!(atStart&&index===0)
+     ?part:part.charAt(0).toLocaleUpperCase('en')+part.slice(1)
+   ).join('-');
+  });
+ }
  function heading(text){return heads.has(compact(text))||/^Antiphon:\s*Psalm\s*\d+$/i.test(text);}
  function role(text){
   const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
@@ -87,5 +104,5 @@
   }
   flush();return out;
  }
- return {normalize,heading,role,speakerInstruction,pdfRows,instruction,combine};
+ return {normalize,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine};
 });

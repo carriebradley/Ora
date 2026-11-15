@@ -159,3 +159,28 @@ test('spoken proclamations are rubrics when attributed to a minister',()=>{
  }
  for(const line of ['Deacon: Let us attend.','Reader: Wisdom.'])assert.equal(F.instruction(line),false,line);
 });
+
+test('calendar and feast headings normalize uppercase words without touching prayers',()=>{
+ const cases=[
+  ['EIGHTH SUNDAY AFTER THE HOLY CROSS Beginning of the Nativity Fast','Eighth Sunday after the Holy Cross Beginning of the Nativity Fast'],
+  ['THE HOLY APOSTLE PHILIP','The Holy Apostle Philip'],
+  ['NATIVITY FAST (PHILIP’S FAST)','Nativity Fast (Philip’s Fast)'],
+  ['Feast of St. JOHN XXIII in the USA','Feast of St. John XXIII in the USA'],
+  ['MOTHER-OF-GOD','Mother-of-God'],
+  ['FÊTE DE LA SAINTE FAMILLE','Fête de la Sainte Famille'],
+  ['St. Machutus (Malo), Bishop and Confessor','St. Machutus (Malo), Bishop and Confessor']
+ ];
+ for(const [source,expected] of cases)assert.equal(F.displayTitle(source),expected,source);
+ assert.equal(F.normalize('LORD, HAVE MERCY.'),'LORD, HAVE MERCY.','prayer text remains untouched');
+});
+
+test('the same calendar title formatter is used throughout the Today, Calendar and readings views',()=>{
+ const fs=require('node:fs');
+ const app=fs.readFileSync(require.resolve('../app.js'),'utf8');
+ assert.match(app,/const displayTitle = LiturgicalFormat\.displayTitle/);
+ assert.match(app,/const detailHTML = esc\(displayTitle\(shown\)\)/);
+ assert.match(app,/byzantineCommemorations\(title\)\.map\(displayTitle\)/);
+ assert.match(app,/westernCommemorations\(title\)\.map\(displayTitle\)/);
+ assert.match(app,/esc\(displayTitle\(x\.title\)\)/);
+ assert.match(app,/esc\(displayTitle\(m\.title\)\)/);
+});

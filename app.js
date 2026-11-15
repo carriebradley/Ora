@@ -7,17 +7,9 @@
   /* ---------- helpers ---------- */
   const $ = (s, r = document) => r.querySelector(s);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  // Normalize source-calendar headings only when substantially ALL CAPS.
-  // Do not alter Scripture, prayers, acronyms or mixed-case source titles.
-  const displayTitle = input => {
-    const title = String(input || '');
-    const letters = title.match(/[A-Za-z]/g) || [];
-    if (letters.length < 5 || (title.match(/[A-Z]/g) || []).length / letters.length < .85) return title;
-    const small = new Set(['of','the','and','in','on','at','to','for','from','with','by']);
-    return title.toLocaleLowerCase('en').replace(/\b[a-z]+(?:['’][a-z]+)?\b/g, (word, offset) =>
-      offset && small.has(word) ? word : word.charAt(0).toLocaleUpperCase('en') + word.slice(1)
-    ).replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii)\b/g, x => x.toUpperCase());
-  };
+  // Calendar and feast labels share a display-only capitalization rule.
+  // Underlying calendar data, Scripture, and prayers remain untouched.
+  const displayTitle = LiturgicalFormat.displayTitle;
   const pad = n => String(n).padStart(2, '0');
   const store = {
     get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
@@ -172,7 +164,7 @@
     let h = '';
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
-      if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(r.full.title)}</h3>`;
+      if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>`;
       if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
       for (const s of r.full.sections) {
         h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${simple ? '' : speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
@@ -345,7 +337,7 @@
   const speakBtn = text => hasTTS ? `<button class="listen" data-act="say" data-say="${encodeURIComponent(text)}">🔊 Listen</button>` : '';
   const chip = (t, cls = '') => t ? `<span class="chip ${cls}">${esc(t)}</span>` : '';
   const chipsFor = r => chip(r.rank, MAJOR.test(r.rank || '') ? 'major' : '') + (r.season && r.season !== r.rank ? chip(r.season) : '');
-  function alsoHTML(a) { return a && a.length ? `<ul class="also">${a.slice(0, 5).map(x => `<li>${esc(x.title)} <i>— ${esc(x.note)}</i></li>`).join('')}</ul>` : ''; }
+  function alsoHTML(a) { return a && a.length ? `<ul class="also">${a.slice(0, 5).map(x => `<li>${esc(displayTitle(x.title))} <i>— ${esc(x.note)}</i></li>`).join('')}</ul>` : ''; }
   function spokenCard(r, extra) { return `${r.title}. ${r.rank || ''}. ${r.season || ''}. ${r.fast || ''} ${extra || ''}`; }
 
   // Compact fasting markers describe the calendar's stated observance; see More for discipline distinctions.
@@ -434,7 +426,7 @@
     const first = big && sa.r ? sa : sea, second = sa || sea;
     const cite = (lab, val) => `<div style="margin:8px 0 2px"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${lab}</div><div>${val}</div></div>`;
     const textDetails = entry => entry && entry.a && entry.w ? `<details class="oortx" open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">Second reading text</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
-    let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(r.title)}</p>`;
+    let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(displayTitle(r.title))}</p>`;
     if (first && first.r) {
       h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
       h += `<details open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">First reading text</summary><div class="asv" data-tr="dra" data-ref="${esc(first.q)}" style="font-family:var(--serif);font-size:1.02rem;line-height:1.55"></div></details>`;
@@ -452,8 +444,8 @@
   }
   function sarumMassHTML(v) {
     const m = v.sarum.mass;
-    if (!m) return `<h3 class="reading-main-title traditional-reading-title">${esc(v.sarum.title)}</h3><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
-    let h = `<h3 class="reading-main-title traditional-reading-title">${esc(m.title)}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
+    if (!m) return `<h3 class="reading-main-title traditional-reading-title">${esc(displayTitle(v.sarum.title))}</h3><p class="muted">No traditional Mass is given for this day. Warren’s Sarum Missal has no Mass that matches this day’s feast, and no Irish proper has been found.</p>`;
+    let h = `<h3 class="reading-main-title traditional-reading-title">${esc(displayTitle(m.title))}</h3>${m.note ? `<details class="srcd"><summary>About this text</summary><p>${esc(m.note)}</p></details>` : ''}`;
     for (const p of m.parts) {
       if (p.ref) h += `<div class="reading-heading"><div class="reading-label">${esc(p.k)}</div><div class="reading-reference">${esc(p.pr)}</div></div>${p.inc ? `<p class="muted"><i>${esc(p.inc)}</i></p>` : ''}<div class="asv" data-tr="dra" data-ref="${esc(p.ref)}"></div>`;
       else h += `<div class="reading-heading"><div class="reading-label">${esc(p.k)}</div></div><p style="white-space:pre-line;font-family:var(--serif);font-size:1.02rem;line-height:1.55">${esc(p.tx)}</p>`;
@@ -534,7 +526,7 @@
       .map(item => item.trim().replace(/[;.]+$/, '').trim()).filter(Boolean);
   }
   function byzantineCommemorationsHTML(title) {
-    const entries = byzantineCommemorations(title);
+    const entries = byzantineCommemorations(title).map(displayTitle);
     if (entries.length < 2) return esc(title || '');
     return '<div class="byz-commemorations">' + entries.map((item, index) =>
       '<div class="byz-commemoration' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
@@ -547,7 +539,7 @@
       .map(part => part.trim().replace(/[;.]+$/, '').trim()).filter(Boolean);
   }
   function calendarCommemorationsHTML(title) {
-    const entries = westernCommemorations(title);
+    const entries = westernCommemorations(title).map(displayTitle);
     if (entries.length < 2) return esc(title || '');
     return '<div class="calendar-observances">' + entries.map((item,index) =>
       '<div class="calendar-observance' + (index ? ' subsequent' : '') + '">' + esc(item) + '</div>'
@@ -561,8 +553,8 @@
       const shown = k === 'byz' ? (byzantineCommemorations(detail)[0] || detail) :
         k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
         westernCommemorations(detail)[0] || detail;
-      const detailHTML = esc(shown);
-      const seasonLine = glanceSeason(r, k, v.iso);
+      const detailHTML = esc(displayTitle(shown));
+      const seasonLine = displayTitle(glanceSeason(r, k, v.iso));
       const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
@@ -1152,7 +1144,7 @@
       recognized.test(item) && (!marianTitle.test(item) || namedSaint.test(item))) || '';
     if (!entry && !primary) return '';
     const saint = entry || {
-      name: primary,
+      name: displayTitle(primary),
       meta: 'Commemorated in the selected liturgical calendar',
       bio: 'This saint is commemorated today. A verified biographical summary has not yet been added to Ora.'
     };
@@ -1879,7 +1871,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v287';
+  const APP_BUILD = 'ora-v288';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
