@@ -137,8 +137,9 @@ test('Gaudete and Laetare Sundays have correct dates, titles, and colors each ye
       }
       assert.equal(modern.color, 'rose', 'Roman rose on ' + L.iso(day));
       assert.equal(historical.color, 'rose', '1962 Roman rose on ' + L.iso(day));
-      // Keep historical Sarum vestment rules independent of modern Roman rules.
-      assert.equal(traditional.color, 'v', 'Sarum violet preserved on ' + L.iso(day));
+      // Historical Sarum uses red when the Sunday Mass is celebrated; do not
+      // impose modern Roman violet/rose vestment colors on its calendar.
+      assert.equal(traditional.color, 'r', 'Sarum Sunday red preserved on ' + L.iso(day));
     }
     for (const candidate of [L.add(gaudete, -7), L.add(gaudete, 7), L.add(laetare, -7), L.add(laetare, 7)]) {
       for (const label of [L.roman(candidate).title, S.sarum(candidate).title]) {
