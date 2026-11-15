@@ -176,3 +176,30 @@ test('December 11-15 saint biographies honor separate Ukrainian and Melkite prec
  assert.ok(titles('12-15','ukrainian')[0].includes('Stephen'));
  assert.ok(titles('12-15','melkite')[0].includes('Eleutherius'));
 });
+
+test('December 16-20 primary saints retain distinct December 19 commemorations',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js');
+ const marker='const SHARED_BYZANTINE_SAINT_BIOS = ';
+ const a=app.indexOf(marker),b=app.indexOf('\n  };',a);
+ const bios=vm.runInNewContext('('+app.slice(a+marker.length,b+4)+')');
+ for(const md of ['12-16','12-17','12-18','12-20']){
+  const saint=bios[md];
+  assert.ok(saint,md);
+  assert.ok(saint.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite']){
+   const day=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+   const titles=[day.title,...(day.also||[]).map(e=>e.title)];
+   assert.ok(titles.some(t=>saint.match.test(t)),church+' '+md+': '+titles.join(' | '));
+  }
+ }
+ const section=app.slice(app.indexOf('const TODAY_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
+ const uk=section.slice(section.indexOf('    ukrainian: {'),section.indexOf('    melkite: {'));
+ const mk=section.slice(section.indexOf('    melkite: {'),section.indexOf('    sarum: {'));
+ assert.ok(uk.includes("'12-19': {"));
+ assert.ok(uk.includes("name: 'Holy Martyr Boniface'"));
+ assert.ok(mk.includes("'12-19': SHARED_BYZANTINE_SAINT_BIOS['12-20']"));
+ const dec19=new Date('2026-12-19T00:00:00Z');
+ assert.match(L.byzantine(dec19,{byzChurch:'ukrainian',byzSource:'edmonton'}).title,/Boniface/);
+ const melk=L.byzantine(dec19,{byzChurch:'melkite'});
+ assert.ok([melk.title,...melk.also.map(e=>e.title)].some(t=>bios['12-20'].match.test(t)));
+});

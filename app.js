@@ -1178,6 +1178,34 @@
       bio: 'According to Christian tradition, Thyrsus refused to offer pagan sacrifice during the persecution under Emperor Decius. He is honored with other martyrs, including Leucius and Callinicus.',
       source: 'https://www.oca.org/saints/lives/2026/12/14/103541-martyrs-thyrsos-leukios-and-kallinikos'
     },
+    '12-16': {
+      match: /Haggai|Aggaeus/i,
+      name: 'Holy Prophet Haggai',
+      meta: 'Sixth century BC · Old Testament prophet',
+      bio: 'Haggai encouraged the people returning from exile to rebuild the Temple in Jerusalem. His prophecies call the community to renew its devotion to God and promise hope for the future.',
+      source: 'https://www.oca.org/saints/lives/2026/12/16/103556-prophet-haggai'
+    },
+    '12-17': {
+      match: /Prophet Daniel/i,
+      name: 'Holy Prophet Daniel',
+      meta: 'Old Testament · Prophet in Babylon',
+      bio: 'Daniel remained faithful to God while living in exile at the Babylonian court. The biblical book bearing his name recounts his courage, wisdom, and visions of God’s reign.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/17'
+    },
+    '12-18': {
+      match: /Sebastian/i,
+      name: 'Holy Martyr Sebastian',
+      meta: 'Late third century · Martyr at Rome',
+      bio: 'Sebastian was a Christian soldier remembered for aiding fellow believers during Roman persecution. According to tradition, he survived an attempted execution by arrows but was later martyred for his faith.',
+      source: 'https://www.oca.org/saints/all-lives/2026/12/18'
+    },
+    '12-20': {
+      match: /Ignatius/i,
+      name: 'Holy Hieromartyr Ignatius of Antioch',
+      meta: 'c. 35–c. 107 · Bishop and Apostolic Father',
+      bio: 'Ignatius was Bishop of Antioch and an early Christian teacher. Traveling to Rome under arrest, he wrote letters urging unity and fidelity to Christ. He was martyred there and is honored as an Apostolic Father.',
+      source: 'https://www.oca.org/saints/lives/2026/12/20/103594-hieromartyr-ignatius-the-god-bearer-bishop-of-antioch'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1202,6 +1230,13 @@
     },
     ukrainian: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-19': {
+        match: /Boniface/i,
+        name: 'Holy Martyr Boniface',
+        meta: 'Early fourth century · Martyr',
+        bio: 'According to tradition, Boniface went to Cilicia seeking the relics of Christian martyrs. Witnessing their courage, he professed his own faith and was martyred, becoming an example of repentance.',
+        source: 'https://www.oca.org/saints/all-lives/2026/12/19'
+      },
       '12-15': {
         match: /Stephen the Confessor|Stephen.*Surozh|Stephen.*Sourozh/i,
         name: 'Saint Stephen of Surozh',
@@ -1230,6 +1265,7 @@
     },
     melkite: {
       ...SHARED_BYZANTINE_SAINT_BIOS,
+      '12-19': SHARED_BYZANTINE_SAINT_BIOS['12-20'],
       '12-15': {
         match: /Eleutherius/i,
         name: 'Holy Hieromartyr Eleutherius',
@@ -2025,7 +2061,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v294';
+  const APP_BUILD = 'ora-v295';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
