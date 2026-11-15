@@ -1939,6 +1939,27 @@
     });
   }
   /* ---------- Office of Readings: full second-reading texts (oortext.json, individually credited translations), loaded when first opened ---------- */
+  // Verified public-domain historical editions for missing Office readings.
+  // These are *not* the approved ICEL Office translation or a substitute for
+  // the appointed excerpt, which is still marked unavailable in Ora.
+  const OOR_PUBLIC_DOMAIN_SOURCES = Object.freeze({
+    'Augustine|On Psalm 127, 2': [
+      ['Exposition on Psalm 127, section 2', 'https://www.newadvent.org/fathers/1801127.htm']
+    ],
+    'Augustine|On Psalm 140, 4-6': [
+      ['Exposition on Psalm 140, sections 4–6', 'https://www.newadvent.org/fathers/1801140.htm']
+    ],
+    'Augustine|On Psalm 148, 1-2': [
+      ['Exposition on Psalm 148, sections 1–2', 'https://www.newadvent.org/fathers/1801148.htm']
+    ],
+    'Augustine|Confessions 9, 10-11': [
+      ['Confessions, Book IX, chapters 10–11', 'https://www.newadvent.org/fathers/110109.htm']
+    ],
+    'Augustine|Confessions 7, 10.18; 10, 27': [
+      ['Confessions, Book VII', 'https://www.newadvent.org/fathers/110107.htm'],
+      ['Confessions, Book X', 'https://www.newadvent.org/fathers/110110.htm']
+    ]
+  });
   let oortxP = null;
   const loadOorText = () => oortxP || (oortxP = fetch('oortext.json').then(r => { if (!r.ok) throw new Error('x'); return r.json(); }).catch(e => { oortxP = null; throw e; }));
   document.addEventListener('toggle', ev => {
@@ -1950,11 +1971,17 @@
         const [author,work] = slot.dataset.k.split('|');
         const martin = /Sulpicius Severus/i.test(author) && /^Letter 3$/i.test(work);
         const url = martin ? 'https://en.wikisource.org/wiki/Nicene_and_Post-Nicene_Fathers:_Series_II/Volume_XI/Sulpitius_Severus/Letters/Letter_III' : null;
+        const publicDomainSources = OOR_PUBLIC_DOMAIN_SOURCES[slot.dataset.k] || [];
+        const publicDomainLinks = publicDomainSources.map(([label, link]) =>
+          '<p><a target="_blank" rel="noopener noreferrer" href="'+esc(link)+'">Read source edition: '+esc(label)+'</a></p>'
+        ).join('');
         // Search for the indexed author and work, not an invented modern Office excerpt.
         const query = [author, work, 'English translation'].filter(Boolean).join(' ');
         const search = 'https://www.google.com/search?q=' + encodeURIComponent(query);
         slot.innerHTML = '<p class="muted" style="font-size:.88rem;line-height:1.55">A verified translation of this appointed excerpt has not yet been bundled. The reference above is preserved; no substitute text is shown.</p>' +
           (url ? '<p><a target="_blank" rel="noopener noreferrer" href="'+url+'">Read public-domain Letter III (1894 translation)</a></p>' : '') +
+          publicDomainLinks +
+          (publicDomainSources.length ? '<p class="muted" style="font-size:.76rem">These historical source editions may use different wording or section boundaries from the officially appointed Office reading.</p>' : '') +
           '<p><a target="_blank" rel="noopener noreferrer" href="'+esc(search)+'">Search for this author and work</a></p>' +
           '<p class="muted" style="font-size:.76rem">Search results are external references, not verified texts appointed for this date.</p>';
         return;
@@ -2215,7 +2242,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v311';
+  const APP_BUILD = 'ora-v312';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
