@@ -10,10 +10,10 @@
     return prayerPreviews.get(saved.id).promise;
   }
   function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
-  function card(id,{church='ukrainian',date='',dayTitle=''}={}){
+  function card(id,{church='ukrainian',date='',dayTitle='',dayRank=''}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
     const roman=id==='roman';
-    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" aria-label="Prayers of the day">
+    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" aria-label="Prayers of the day">
       ${roman?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
@@ -214,11 +214,14 @@
     let container=target;
     const date=target.closest('[data-day-date]')?.dataset.dayDate;
     const sunday=date&&new Date(date+'T00:00:00Z').getUTCDay()===0;
+    // On feasts the ordinary antiphons must not be mistaken for appointed propers.
+    const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
+    const festal=/^(?:Great Feast|Feast|Holy Week|Holy Day|Vigil)\b/i.test(specialRank);
     for(const section of sections){
       container=target;lastLine=null;lastRole=null;pendingRole=null;
       if(section.alternative){
         const choice=document.createElement('details');choice.className='byz-antiphon-option';
-        choice.open=section.alternative===(sunday?'sunday':'weekday');
+        choice.open=!festal&&section.alternative===(sunday?'sunday':'weekday');
         const summary=document.createElement('summary');summary.textContent=section.heading||section.alternative;
         choice.append(summary);target.append(choice);container=choice;
       }

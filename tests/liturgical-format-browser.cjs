@@ -56,8 +56,20 @@ module.exports=async(page,base,artifacts,violations)=>{
   const items=[item('The Divine Liturgy',20,780),item('PRIEST: Blessed is the Kingdom. Fixture opening.',20,755,340),item('First Antiphon',20,730),item('Sunday (Ordinary)',20,700),item('Weekday (Ordinary)',200,700),item('ALL: Fixture Sunday words',20,670),item('ALL: Fixture weekday words',200,670),item('continued left.',20,655),item('continued right.',200,655),item('The Priest says:',20,620,330),item('Fixture common prayer without a printed label.',20,600,330),item('Priest (quietly): Fixture quiet prayer.',20,570,330)];
   LiturgyReader.get=async id=>({id,name:'fixture-columns.pdf',format:'pdf',pages:1,updated:3,blob:new Blob()});
   LiturgyReader.load=async()=>({numPages:1,getPage:async()=>({getTextContent:async()=>({items})}),destroy:async()=>{}});
-  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+  try{
+   await LiturgicalText.hydrate();
+   const section=document.querySelector('.liturgical-text');
+   section.dataset.dayRank='Great Feast';
+   await LiturgicalText.hydrate();
+   window.__oraFestalAntiphonStates=[...section.querySelectorAll('.byz-antiphon-option')].map(el=>el.open);
+   section.dataset.dayRank='Diocesan calendar';
+   await LiturgicalText.hydrate();
+  }finally{LiturgyReader.get=get;LiturgyReader.load=load;}
  });
+ assert.deepEqual(await page.evaluate(()=>window.__oraFestalAntiphonStates),[false,false],
+  'feasts must not silently select ordinary Sunday or weekday antiphons');
+ assert.equal(await page.locator('.liturgical-text').getAttribute('data-day-title'),await page.locator('.simple-liturgy-title').innerText(),
+  'Byzantine reader receives the selected Byzantine observance, not the Roman title');
  const choices=page.locator('.byz-antiphon-option');assert.equal(await choices.count(),2);
  assert.equal(await choices.nth(0).evaluate(el=>el.open),false);
  assert.equal(await choices.nth(1).evaluate(el=>el.open),true);

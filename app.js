@@ -1663,7 +1663,7 @@
     const service=LiturgySchedule.service(st.date,S.byzLiturgyChurch);
     const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
     const bookId=byzantine&&['chrysostom','basil','presanctified'].includes(service.id)&&S.byzLiturgyChurch==='melkite'?'melkite-'+service.id:byzantine?service.id:'roman';
-    const reader=LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:v.roman.title});
+    const reader=LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:day.title,dayRank:byzantine?day.rank:''});
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
@@ -2449,7 +2449,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v334';
+  const APP_BUILD = 'ora-v335';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
