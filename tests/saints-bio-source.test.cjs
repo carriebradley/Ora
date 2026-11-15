@@ -88,3 +88,25 @@ test('Marian safeguard uses real word boundaries and keeps separately named sain
  assert.ok(named.test('Saint Anna, Mother of the Virgin Mary'));
  assert.ok(!marian.test('Abbot Motherwell'));
 });
+
+test('Nov 26-30 biographies match Ukrainian and Melkite appointment titles',()=>{
+ const vm=require('node:vm'),L=require('../calendar.js'),D=require('../data.js');
+ L.setData(D);
+ const start=app.indexOf('const SHARED_BYZANTINE_SAINT_BIOS = ');
+ const end=app.indexOf('\n  };',start);
+ assert.ok(start>=0&&end>start);
+ const object=app.slice(start+'const SHARED_BYZANTINE_SAINT_BIOS = '.length,end+5);
+ const bios=vm.runInNewContext('('+object+')');
+ const names={'11-26':'Alypius','11-27':'James','11-28':'Stephen','11-29':'Paramon','11-30':'Andrew'};
+ for(const [md,name] of Object.entries(names)){
+  const bio=bios[md];
+  assert.ok(bio&&bio.name.includes(name),md);
+  assert.ok(bio.source.startsWith('https://www.oca.org/saints/lives/2026/11/'+md.slice(3)),md);
+  assert.ok(bio.bio.trim().split(/\s+/).length<=50,md);
+  for(const church of ['ukrainian','melkite']){
+   const day=L.byzantine(new Date('2026-'+md+'T00:00:00Z'),{byzChurch:church,byzSource:'edmonton'});
+   const titles=[day.title,...(day.also||[]).map(x=>x.title)];
+   assert.ok(titles.some(t=>bio.match.test(t)),church+' '+md+' '+titles.join(' | '));
+  }
+ }
+});

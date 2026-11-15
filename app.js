@@ -1045,6 +1045,41 @@
       bio: 'Philemon was a Christian of Colossae addressed personally in a letter by Saint Paul. Tradition remembers him and his wife Apphia for hosting a house church and caring for fellow Christians.',
       source: 'https://www.oca.org/saints/lives/2026/11/22/103359-apostles-of-the-seventy-philemon-and-archippus-martyr-apphia-wif'
     },
+    '11-26': {
+      match: /Alypius|Alipius/i,
+      name: 'Saint Alypius the Stylite',
+      meta: 'Seventh century · Monk and Stylite',
+      bio: 'Alypius was a monk from Paphlagonia remembered for living and praying atop a pillar near Adrianopolis. According to his traditional Life, he founded a church honoring Saint Euphemia and guided communities gathered around him.',
+      source: 'https://www.oca.org/saints/lives/2026/11/26/103397-venerable-alypius-the-stylite-of-adrianopolis'
+    },
+    '11-27': {
+      match: /James (?:the |of )?(?:Persian|Persia)/i,
+      name: 'Holy Great-Martyr James the Persian',
+      meta: 'Early fifth century · Martyr',
+      bio: 'James served at the Persian royal court. According to his traditional Life, he renounced his faith under pressure, repented, and later confessed Christ despite torture, becoming known as James the Persian.',
+      source: 'https://www.oca.org/saints/lives/2026/11/27/103402-greatmartyr-james-the-persian'
+    },
+    '11-28': {
+      match: /Stephen (?:the )?(?:New|Latter)/i,
+      name: 'Saint Stephen the New',
+      meta: 'Eighth century · Monk and Martyr',
+      bio: 'Stephen the New was a monk near Constantinople who resisted the eighth-century persecution of sacred icons. He was imprisoned and killed after defending their veneration and is honored as a monastic martyr.',
+      source: 'https://www.oca.org/saints/lives/2026/11/28/103412-monastic-martyr-and-confessor-stephen-the-new'
+    },
+    '11-29': {
+      match: /Paramon/i,
+      name: 'Holy Martyr Paramon',
+      meta: 'Third century · Martyr of Bithynia',
+      bio: 'According to Christian tradition, Paramon openly protested the imprisonment of hundreds of Christians in Bithynia during the persecution of Decius. He was martyred alongside those he defended.',
+      source: 'https://www.oca.org/saints/lives/2026/11/29/103442-martyr-paramon-and-370-martyrs-in-bithynia'
+    },
+    '11-30': {
+      match: /Andrew/i,
+      name: 'Holy Apostle Andrew the First-Called',
+      meta: 'First century · Apostle',
+      bio: 'Andrew, a fisherman and brother of Saint Peter, was among the first to follow Jesus and brought Peter to meet him (John 1:35–42). Christian tradition remembers his missionary preaching and martyrdom.',
+      source: 'https://www.oca.org/saints/lives/2026/11/30/103450-apostle-andrew-the-holy-and-all-praised-first-called'
+    },
   };
 
   // Both Catholic calendars honor these saints, but on different dates.
@@ -1878,7 +1913,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v290';
+  const APP_BUILD = 'ora-v291';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
