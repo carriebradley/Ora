@@ -216,7 +216,7 @@
     const sunday=date&&new Date(date+'T00:00:00Z').getUTCDay()===0;
     // On feasts the ordinary antiphons must not be mistaken for appointed propers.
     const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
-    const festal=/^(?:Great Feast|Feast|Holy Week|Holy Day|Vigil)\b/i.test(specialRank);
+    const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
     for(const section of sections){
       container=target;lastLine=null;lastRole=null;pendingRole=null;
       if(section.alternative){

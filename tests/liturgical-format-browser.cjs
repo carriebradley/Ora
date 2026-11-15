@@ -62,12 +62,17 @@ module.exports=async(page,base,artifacts,violations)=>{
    section.dataset.dayRank='Great Feast';
    await LiturgicalText.hydrate();
    window.__oraFestalAntiphonStates=[...section.querySelectorAll('.byz-antiphon-option')].map(el=>el.open);
+   section.dataset.dayRank='Polyeleos Feast';
+   await LiturgicalText.hydrate();
+   window.__oraPolyeleosAntiphonStates=[...section.querySelectorAll('.byz-antiphon-option')].map(el=>el.open);
    section.dataset.dayRank='Diocesan calendar';
    await LiturgicalText.hydrate();
   }finally{LiturgyReader.get=get;LiturgyReader.load=load;}
  });
  assert.deepEqual(await page.evaluate(()=>window.__oraFestalAntiphonStates),[false,false],
   'feasts must not silently select ordinary Sunday or weekday antiphons');
+ assert.deepEqual(await page.evaluate(()=>window.__oraPolyeleosAntiphonStates),[false,false],
+  'the Polyeleos Feast rank also needs appointed propers');
  assert.equal(await page.locator('.liturgical-text').getAttribute('data-day-title'),await page.locator('.simple-liturgy-title').innerText(),
   'Byzantine reader receives the selected Byzantine observance, not the Roman title');
  const choices=page.locator('.byz-antiphon-option');assert.equal(await choices.count(),2);

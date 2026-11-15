@@ -13,3 +13,6 @@ The main Divine Liturgy view no longer displays PDF extraction disclaimers or se
 
 ## v335 — feast-safe ordinary antiphons
 Ordinary Sunday/weekday antiphon alternatives in a privately saved service book continue to default to the calendar weekday on ordinary days. If the selected Byzantine rank is Great Feast, Feast, Holy Week, Holy Day or Vigil, both alternatives remain collapsed rather than pretending one is the appointed festal text. The dated propers source remains available after the prayers. The reader now receives the selected Byzantine day title (previously it received the Roman title). The browser test covers ordinary weekday selection and these feast safeguards.
+
+## v336 — feast ranks beyond the first word
+The closed-by-default rule also covers qualified feast ranks, including **Polyeleos Feast** and **All-Night Vigil Feast**, rather than relying on a rank beginning with “Feast.” Ordinary Sundays and weekdays continue to open their corresponding alternatives; tests cover these cases independently.
