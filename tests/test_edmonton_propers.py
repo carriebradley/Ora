@@ -41,6 +41,13 @@ class EdmontonPropersTests(unittest.TestCase):
         self.assertNotIn('Luke', str(day))
         self.assertNotIn('Other Office', str(day))
 
+    def test_english_lookalike_is_normalized(self):
+        html = ('<main><div class="liturgical-day-service-body">'
+                '<p>Troparia and Kontakia</p>'
+                '<p>Тeach us through mercy.</p></div></main>')
+        result = extract(html, '2026-11-20')
+        self.assertEqual(result['groups']['troparia'], ['Teach us through mercy.'])
+
     def test_fail_closed_when_no_liturgy_section(self):
         with self.assertRaisesRegex(ValueError, 'missing liturgical-day'):
             extract('<main><h2>Hours</h2></main>', '2026-11-15')

@@ -38,7 +38,8 @@ def extract(html, iso):
     groups = {name: [] for name in GROUPS}
     current = None
     for element in services[0].find_all(['p', 'h2', 'h3', 'h4', 'h5']):
-        text = clean(element.get_text(' ', strip=True))
+        # Normalize a verified Cyrillic lookalike in one otherwise English word.
+        text = clean(element.get_text(' ', strip=True)).replace('Тeach', 'Teach')
         if not text:
             continue
         if SCRIPTURE_HEADINGS.fullmatch(text):
