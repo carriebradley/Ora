@@ -341,3 +341,23 @@ test('saved Byzantine EPUBs become a continuous prayer document without editoria
  assert.equal(sections.at(-1).heading,'The Litany of Peace');
  assert.deepEqual(F.epubPrayerSections([{title:'First Prayer',blocks:[{role:'all',text:'ALL: Amen.'}]}])[0].lines,['ALL: Amen.'],'do not double-label printed responses');
 });
+
+test('inline minister cues retain spoken prayers instead of hiding them as rubrics',()=>{
+ for(const [line,kind,words] of [
+  ['The priest says: Blessed is the Kingdom.','priest','Blessed is the Kingdom.'],
+  ['The deacon chants: In peace let us pray to the Lord.','deacon','In peace let us pray to the Lord.'],
+  ['The reader proclaims: Wisdom!','other','Wisdom!'],
+  ['The choir sings: Amen.','other','Amen.']
+ ]){
+  const spoken=F.role(line);
+  assert.equal(spoken?.kind,kind,line);
+  assert.equal(spoken?.words,words,line);
+  assert.equal(F.instruction(line),false,'spoken prayer must remain visible: '+line);
+ }
+ for(const rubric of ['The priest says:', 'The deacon chants:', 'The priest bows.']){
+  assert.equal(F.role(rubric),null,rubric);
+  assert.equal(F.instruction(rubric),true,rubric);
+ }
+ assert.equal(F.role('PRIEST: Lord, have mercy.')?.words,'Lord, have mercy.');
+ assert.equal(F.role('The priest says that the prayer is finished.'),null);
+});
