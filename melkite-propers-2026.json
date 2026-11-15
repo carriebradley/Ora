@@ -1,0 +1,1351 @@
+{
+  "schema": 1,
+  "year": 2026,
+  "source": "https://melkite.org/liturgical-resources",
+  "coverage": {
+    "January": {
+      "headings": 8,
+      "hymnDates": 2,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/January-2026.docx",
+      "quarantined": [
+        {
+          "date": "2026-01-30",
+          "printedWeekday": "Thursday",
+          "actualWeekday": "Friday"
+        }
+      ]
+    },
+    "February": {
+      "headings": 6,
+      "hymnDates": 4,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/February-2026.docx",
+      "quarantined": []
+    },
+    "March": {
+      "headings": 7,
+      "hymnDates": 3,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/March-2026.docx",
+      "quarantined": []
+    },
+    "April": {
+      "headings": 9,
+      "hymnDates": 6,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/April-2026.docx",
+      "quarantined": []
+    },
+    "May": {
+      "headings": 6,
+      "hymnDates": 5,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/May-2026.docx",
+      "quarantined": []
+    },
+    "June": {
+      "headings": 8,
+      "hymnDates": 8,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/June-2026.docx",
+      "quarantined": []
+    },
+    "July": {
+      "headings": 4,
+      "hymnDates": 4,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/July-2026.docx",
+      "quarantined": []
+    },
+    "August": {
+      "headings": 8,
+      "hymnDates": 7,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/August-2026.docx",
+      "quarantined": []
+    },
+    "September": {
+      "headings": 8,
+      "hymnDates": 8,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/September-2026.docx",
+      "quarantined": []
+    },
+    "October": {
+      "headings": 9,
+      "hymnDates": 6,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/October-2026.docx",
+      "quarantined": []
+    },
+    "November": {
+      "headings": 11,
+      "hymnDates": 6,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/November-2026.docx",
+      "quarantined": []
+    },
+    "December": {
+      "headings": 9,
+      "hymnDates": 5,
+      "source": "https://melkite.org/wp-content/uploads/2025/12/December-2026.docx",
+      "quarantined": []
+    }
+  },
+  "days": {
+    "2026-01-04": {
+      "church": "melkite",
+      "iso": "2026-01-04",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "January-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 5): Let us, O faithful, praise and worship the word, coeternal with the Father and the Spirit, born of the Virgin for our Salvation, for He was pleased to be lifted in the flesh upon the cross, and to endure death, and to raise the dead by His glorious resurrection.",
+          "Troparion of the Preparation, (Tone 4): Make ready Zebulon and prepare Naphtali and you Jordan River, stop your flow and receive with a thrill of joy the Master coming to be baptized. Adam, rejoice with the first Mother, Eve, and hide not as you did of old in paradise: for Christ at the sight of your nakedness has come forth to clothe you with the robe of innocence. Indeed, Christ has come forth to renew the whole creation.",
+          "Troparion of the Disciples (Tone 3): O holy disciples, intercede with the Merciful God that he may grant our souls the forgiveness of sins.",
+          "Kondakion of the Preparation (Tone 4): Today the Lord Christ has appeared in the Jordan's waters, and He has cried out to John: Fear not of baptizing me, for by my own will I have indeed come to save Adam, the first created man."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 6)",
+          "O Lord, save your people and bless your inheritance.",
+          "Stichon: To you, O Lord, I have called: O my Rock, be not deaf to me!"
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 4)",
+          "May God have mercy on us and bless us.",
+          "Stichon: May he let his face shine upon us and have mercy on us."
+        ]
+      }
+    },
+    "2026-01-18": {
+      "church": "melkite",
+      "iso": "2026-01-18",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "January-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (7th tone): You destroyed Death by Your cross. You opened paradise to the thief. You changed the weeping of the myrrh- bearers, and commanded Your apostles to proclaim that You, O Christ God, have risen, granting to the world great mercy.",
+          "Troparion of Athanasios and Cyril: (Tone 4): Radiant with the works of Orthodoxy, you extinguished every false belief and teaching, becoming trophy-bearers and conquerors. Since you enriched all with true piety, greatly adoring the Church with magnificence, O Athanasios, and wise Cyril, you have both attained Christ God who grants great mercy unto all.",
+          "Kontakion of the Presentation of our Lord: (Tone 1): O Christ our God who through your birth have sanctified the virginal womb and have now blessed the arms of Simon, today You have come to save us. O Lord, when wars prevail, keep your people in peace and strengthen our Public Authorities in every good deed, for You alone are the lover of Mankind."
+        ],
+        "prokeimenon": [
+          "Prokimenon: Precious in the Lord's eyes is the death of his holy ones.",
+          "Stichon: How shall I make a return to the Lord for all the good he has done to me?"
+        ],
+        "alleluia": [
+          "Alleluia: Happy the man who fears the Lord!",
+          "He will joyfully agree with his commands.",
+          "Stichon: His holiness shall endure forever and ever"
+        ]
+      }
+    },
+    "2026-02-01": {
+      "church": "melkite",
+      "iso": "2026-02-01",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "February-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 1): While the stone was sealed by the Jews and soldiers were watching your sacred body, You rose, O Savior, on the third day, giving life to the world. Wherefore, O Giver of life, the powers of heaven cried out: Glory to your resurrection, O Christ. Glory to your kingdom, glory to your Plan of redemption, O You who alone are the Lover of mankind.",
+          "Troparion of the Preparation (Tone 1): The Host of angels look down from the balconies of heaven to behold upon earth the First-fruits of all creation carried to the temple -a suckling babe in the arms of a Mother all-pure. Together with us, they sing with joy a hymn in preparation for the feast.",
+          "Kontakion of the Feast, 1st. Tone: O Christ our God who through your birth have sanctified the virginal womb and have now blessed the arms of Simeon, today You have come to save us. O Lord, when wars prevail, keep your people in peace and strengthen our Public Authorities in every good deed, for You alone are the Lover of Mankind."
+        ],
+        "prokeimenon": [
+          "Prokimenon: (Tone 1) Psalm 32:22,1",
+          "May your kindness, O Lord, be upon us, for we have hoped in you.",
+          "Exult, you just, in the Lord; praise from the upright is fitting."
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 1) Psalm 17:48,50",
+          "O God, you granted me retribution and make peoples subject to me and saved me from my raging enemies.",
+          "Stichon: Therefore, I will proclaim you, O Lord, among the nations, and I will sing praise to your name."
+        ]
+      }
+    },
+    "2026-02-02": {
+      "church": "melkite",
+      "iso": "2026-02-02",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "February-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Encounter: (Tone 1) (3 times): Hail, O Woman full of grace, Virgin and Mother of God: from you has arisen the Sun of Justice, Christ our God, enlightening those who stand in darkness, In You too, O just Elder Simeon, rejoice, for you carried in your arms the Redeemer of our souls, our Resurrection.",
+          "Kondakion of the Feast: (Tone 1): O Christ our God who through your birth have sanctified the virginal womb and have now blessed the arms of Simeon, today You have come to save us. O Lord, when wars prevail, keep your people in peace and strengthen our Public Authorities in every good deed, for You alone are the Lover of Mankind."
+        ]
+      },
+      "unresolved": [
+        "Troparion of the Dead: (Tone 8) Unique Creator, Lord, who in the depth of your wisdom and love for mankind direct us all, giving to each one what is good for salvation grant rest to the soul of your servants, for they have put their trust in you, our creator, maker and God.",
+        "Patronal hymn determined locally",
+        "Kondakion of the Dead: (Tone 8) O Christ God, with the saints grant rest to the soul of your servants, in a place where there is no pain, no grief, no sighing, but ever lasting life."
+      ]
+    },
+    "2026-02-08": {
+      "church": "melkite",
+      "iso": "2026-02-08",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "February-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 1): When you descended to death, O Immortal Life, You destroyed Hades by the splendor of your Divinity, and when you raised the dead from under the ground, all the Powers of heaven cried out: O Christ our God, the giver of life, glory to you.",
+          "Troparion of the Encounter: (Tone 1): Hail, O Woman full of grace, Virgin and Mother of God: from you has arisen the Sun of Justice, Christ our God, enlightening those who stand in darkness, In You too, O just Elder Simeon, rejoice, for you carried in your arms the Redeemer of our souls, our Resurrection.",
+          "Kondakion of the Encounter: 1st. Tone: O Christ our God who through your birth have sanctified the virginal womb and have now blessed the arms of Simeon, today You have come to save us. O Lord, when wars prevail, keep your people in peace and strengthen our Public Authorities in every good deed, for You alone are the Lover of Mankind."
+        ],
+        "prokeimenon": [
+          "Prokimenon: (Tone 2) Psalm 117:14,18",
+          "My strength and my courage is the Lord, and he has been my Savior.",
+          "Stichon: The Lord has chastised me through his teaching, yet he has not delivered me to death."
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 2) Psalm 19:1; 27:9",
+          "The lord shall hear you on the day of distress; the name of the God of Jacob shall defend you.",
+          "Stichon: O Lord, save your people and bless your inheritance."
+        ]
+      }
+    },
+    "2026-02-15": {
+      "church": "melkite",
+      "iso": "2026-02-15",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "February-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 3): Let the heavens rejoice and the earth be glad! For the Lord has done a wondrous deed by his arm! He has crushed Death by his death becoming the first to rise from the dead. He has delivered us from the mouth of Hades and bestowed great mercy upon the world.",
+          "Kondakion of Cheese-fare, (Tone 6): O You who guide men toward wisdom, and give them intelligence and understanding, instructor of the ignorant and helper of the poor, strengthen and enlighten my heart, O Lord, give me word, O Word of the Father, for behold I will not refrain my lips from crying out to You: O merciful One, have mercy on me who have fallen."
+        ],
+        "prokeimenon": [
+          "Prokimenon: (Tone 3)",
+          "Sing praise to our God, sing praise!",
+          "Sing praise to our King, sing praise!",
+          "Stichon: All you peoples, clap your hands! Shout to God with cries of gladness."
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 3)",
+          "In you, O lord, I have hoped: let me never be put to shame.",
+          "In your Justice, save me and deliver me.",
+          "Stichon: Be for me a protecting God, a sheltering house to save me."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-03-21": {
+      "church": "melkite",
+      "iso": "2026-03-21",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "March-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Acathist Hymn: (Tone 8) (Three Times): As soon as the Archangel understood what he had been told in secret, he hastened to the house of Joseph and said to the Birgin all pure: “behold the One who made the heavens bow as He came down, He will be contained in you, whole and without undergoing change. As I see Him in your womb, in the likeness of a servant, I am bewildered and cry out. ‘Hail, O Bride and Maiden ever-pure!”",
+          "Kondakion of the Annunciation: (Tone 8): Triumphant leader to you belongs our prize of victory! And since you saved us from adversity we offer you our thanks. We are your people O mother of God! So as you have that invincible power, continue to deliver us from danger that we may cry out to you Hail, O Virgin and bride ever pure."
+        ]
+      }
+    },
+    "2026-03-25": {
+      "church": "melkite",
+      "iso": "2026-03-25",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "March-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Annunciation, (Tone 4) (Three times): Today is the beginning of our salvation and the revelation of the mystery that was planned from all eternity: the Son of God becomes the Son of the Virgin and Gabriel announces this grace. Let us join him in crying out to the Mother of God: Hail, O Woman full of grace! The Lord is with you.",
+          "Kondakion of the Annunciation: (Tone 8): Triumphant leader to you belongs our prize of victory! And since you saved us from adversity, we offer you our thanks. We are your people O mother of God! So as you have that invincible power, continue to deliver us from danger that we may cry out to you Hail, O Virgin and bride ever pure.",
+          "Troparion of Lazarus: (Tone 1) (Three times): O Christ God, when you raised Lazarus from the dead before the time of your Passion, you confirmed the future resurrection of all. We too, like the children of old, carry before you the symbols of victory and cry out to you, O Conqueror of death: “Hosanna in the highest! Blessed is he who comes in the name of the Lord”",
+          "Kondakion of Lazarus: (Tone 2): Christ the Joy of all, the Truth, Light, Life, and Resurrection of the world, appeared to men on earth in his great generosity, becoming a sign of resurrection, and granting divine forgiveness to all."
+        ]
+      }
+    },
+    "2026-03-29": {
+      "church": "melkite",
+      "iso": "2026-03-29",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "March-2026.docx",
+      "groups": {
+        "troparia": [
+          "Kondakion of the Feast: (Tone 6): O Christ God enthroned in heaven, and on earth riding upon an ass; You have accepted the praise of the angels and the hymns of the children who were crying out to You: “Blessed are You who come to restore Adam.”"
+        ]
+      }
+    },
+    "2026-04-05": {
+      "church": "melkite",
+      "iso": "2026-04-05",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "April-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of Pascha, (Tone 5) (3 times): Christ is risen from the dead and by His death He has trampled upon death; and has given life to those who were in the tomb.",
+          "Kondakion of Pascha: (Tone 2 or 8): Though You went down in the tomb, O immortal One, You overthrew the power of Hades and rose victorious, O Christ God. You greeted the ointment bearing women, saying “Rejoice!” You gave peace to Your apostles, and to those who had Fallen resurrection."
+        ]
+      }
+    },
+    "2026-04-12": {
+      "church": "melkite",
+      "iso": "2026-04-12",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "April-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of St. Thomas: (7th Tone) (3 times): While the tomb was sealed You shone forth from it, O Christ our Life, and while the doors remained closed, You stood among your Disciples, O Resurrection of all, and through them You restored a new spirit in us according to your great Mercy.",
+          "Kondakion of Pascha: (Tone 8): Though You went down in the tomb, O Immortal One, You overthrew the power of hades, and rose victorious, O Christ God, Your greeted the Ointment Bearing Women, saying: Rejoice! You gave peace to your Apostles, and to those who had fallen resurrection."
+        ]
+      }
+    },
+    "2026-04-19": {
+      "church": "melkite",
+      "iso": "2026-04-19",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "April-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 2): When You descended to death, O immortal Life, You destroyed Hades by the splendor of Your divinity. And when You raised the dead from below the earth, all the heavenly powers cried out to you: “O Giver of life, Christ our God, glory to You!”",
+          "Troparion of the Myrrh-bearers: (2nd Tone): The angel stood by the tomb and cried out to the Ointment-bearing Women: “Ointments are for the dead, but Christ has proved Himself free from corruption. Cry out, then: “The Lord is risen and has bestowed great mercy upon the world.”",
+          "Kondakion of Pascha: (Tone 2 or 8): Though You went down in the tomb, O Immortal One, You overthrew the power of Hades, and rose victorious, O Christ God, Your greeted the Ointment Bearing Women, saying: Rejoice! You gave peace to your Apostles, and to those who had fallen resurrection."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 2) Ps.19: 1, 10 The Lord shall hear you on the day of distress; the name of the God of Jacob shall defend you.",
+          "Stichon: O Lord, save your king and listen to us on whatever day we call upon you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-04-23": {
+      "church": "melkite",
+      "iso": "2026-04-23",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "April-2026.docx",
+      "groups": {
+        "troparia": [
+          "Kondakion of the Ointment-Bearing women (Tone 2): Trisagion or Instead of the Trisagion “All of you who have been baptized…"
+        ]
+      },
+      "unresolved": [
+        "Troparion of the Resurrection (Tone 2)",
+        "Troparion of Joseph of Arimathea (Tone 2)",
+        "Troparion of the Ointment-Bearing women (Tone 2)",
+        "Troparion of St. George (Tone 4)"
+      ]
+    },
+    "2026-04-25": {
+      "church": "melkite",
+      "iso": "2026-04-25",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "April-2026.docx",
+      "groups": {
+        "troparia": [
+          "Kondakion of the Ointment-Bearing women (Tone 2): Trisagion or Instead of the Trisagion: Holy God, Holy Mighty One…"
+        ]
+      },
+      "unresolved": [
+        "Troparion of the Resurrection (Tone 2)",
+        "Troparion of Joseph of Arimathea (Tone 2)",
+        "Troparion of the Ointment-Bearing women (Tone 2)",
+        "Troparion of St. Mark (Tone3) Troparion of George (Tone 4)"
+      ]
+    },
+    "2026-04-26": {
+      "church": "melkite",
+      "iso": "2026-04-26",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "April-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 3): Let all in heaven rejoice * and all on earth be glade, * for the Lord has exerted power with His arm: * by death He has trampled upon Death * and has become the firstborn of the dead. * He has delivered us from the bosom of Hades * and has granted to the world great mercy.",
+          "Kondakion of Pascha: (Tone 2 or 8): Though You went down in the tomb, O Immortal One, You overthrew the power of Hades, and rose victorious, O Christ God, You greeted the Ointment Bearing Women, saying: Rejoice! You gave peace to your Apostles, and to those who had fallen resurrection."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-05-03": {
+      "church": "melkite",
+      "iso": "2026-05-03",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "May-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 4): The women disciples of the Lord, * having learned from the angel the joyful announcement of the resurrection, * and having rejected the ancestral sentence, * proudly told the apostles: * Death is despoiled. Christ God is risen, * bestowing to the world great mercy.”",
+          "Kondakion of Pascha, (Tone 2 or 8): Though You went down in the tomb, O immortal One, You overthrew the power of Hades and rose victorious, O Christ God. You greeted the ointment bearing women, saying “Rejoice!” You gave peace to Your apostles, and to those who had Fallen resurrection."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 5) Ps.88: 2, 3",
+          "Your favor, O Lord, I will sing forever; from generation to generation, my mouth will proclaim your faithfulness. Stichon: For you have said, “My kindness is established forever.” In heaven you have confirmed your faithfulness."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-05-14": {
+      "church": "melkite",
+      "iso": "2026-05-14",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "May-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Ascension: (3 times): You ascended in glory, O Christ our God, and gladdened Your disciples by the promise of the Holy Spirit. Through Your blessing they were confirmed in their belief that You are the Son of God, the Redeemer of the world.",
+          "Kondakion of the Ascension: After fulfilling for us Your plan of redemption and joining the things of earth with those of heaven, O Christ our God, You gloriously ascended without abandoning us, but remained with us forever and reassured all who love You by telling them: “Behold, I am with you: no one has power against you.”"
+        ]
+      }
+    },
+    "2026-05-17": {
+      "church": "melkite",
+      "iso": "2026-05-17",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "May-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection: (Tone 6): The angelic powers were around Your tomb, * and the guards became as dead; * and Mary stood at the tomb, * seeking Your spotless body. * Then You despoiled Hades without being tried by it * and You met the Virgin, O Bestower of life. * O Lord, Who rose from the dead, * glory to You!",
+          "Troparion of the Ascension: (Tone 4): You ascended in glory, O Christ our God, and gladdened Your disciples by the promise of the Holy Spirit. Through Your blessing they were confirmed in their belief that You are the Son of God, the Redeemer of the world.",
+          "Kondakion of the Ascension: (Tone 6): After fulfilling for us Your plan of redemption and joining the things of earth with those of heaven, O Christ our God, You gloriously ascended without abandoning us, but remained with us forever and reassured all who love You by telling them: “Behold, I am with you: no one has power against you.”"
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Psalm 49:1,5",
+          "The God of gods, the Lord has spoken and summoned the earth",
+          "from the rising of the sun to its setting.",
+          "Stichon: Gather His faithful ones around Him, those who have made a covenant with Him through sacrifices."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-05-24": {
+      "church": "melkite",
+      "iso": "2026-05-24",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "May-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of Pentecost: (Tone 8), 3 times: Blessed are You, O Christ our God, who have filled the fishermen with wisdom by sending down the Holy Spirit upon them, and who through them, have caught in Your net the whole world, O Lover of mankind, glory to You.",
+          "Kondakion of Pentecost: (Tone 8): When the Most High came down and confused the tongues (in Babel), He divided the nations; but when He distributed the tongues of fire, He called all men to unity. Wherefore, we glorify the Holy spirit, with one accord."
+        ]
+      }
+    },
+    "2026-05-31": {
+      "church": "melkite",
+      "iso": "2026-05-31",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "May-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection, (Tone 8): You descended from on high, O compassionate One, * and consented to burial for three days * that You might free us from suffering. * O Lord, our life and our resurrection, * glory to You.!",
+          "Troparion of All Saints: (Tone 4): O Christ God, your church clothed with the blood of Your martyrs all over the world, as with purple and fine linen, cries out to You: send Your mercy upon Your people, grant peace to Your fold and extend Your great compassion upon our souls.",
+          "Kondakion of the Preparation for the Feast of the Divine Body: (Tone 4): O Faithful let us prepare our hearts as precious vessels to partake of the Lord’s Banquet, with pure dispositions, and let us offer a hymn of praise in preparation to this great festivity."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-04": {
+      "church": "melkite",
+      "iso": "2026-06-04",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Feast, (Tone 1) 3 times: Christ, having loved His own, loved them until the end and gave them His Body and Blood as food and drink. Wherefore let us offer Them our veneration and say with fear: “O Christ, glory to Your presence, glory to Your compassion, glory to Your condescension: for You alone are the Lover of Mankind.”",
+          "Troparion of Metrophanes: (Tone 4): O Father and hierarch Metrophanes, the holiness of your life has set you before our flock as a rule of faith, an example of meekness and a teacher of self-restraint. Wherefore you acquired greatness through humility and spiritual wealth through poverty. Pray to Christ God that he may save our souls.",
+          "Kondakion of the Feast, (Tone 2): O Christ, do not turn Your face away from me: for I partake of the bread which is Your Body and of the wine which is Your Blood. O Lord, let my sharing in these august mysteries be not for my judgment and condemnation, but for my eternal and everlasting life."
+        ],
+        "prokeimenon": [
+          "Prokimenon: (Tone I) Psalm 110:5, 4",
+          "He has given food to those who fear Him: He will be mindful forever of His covenant.",
+          "Stichon: He has won renown for His wondrous deeds; gracious and merciful is the Lord."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1), Psalm 88:6, 8",
+          "The heavens shall proclaim Your wonders, O Lord, and Your truth in the assembly of the saints.",
+          "Stichon: God is glorified in the assembly of the saints, great and awesome to all those around Him."
+        ]
+      }
+    },
+    "2026-06-07": {
+      "church": "melkite",
+      "iso": "2026-06-07",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection, (Tone 1): After the stone was sealed by the Jews * and the while the soldiers were watching Your spotless body, * You rose, O Savior, on the third day, * bestowing life to the world. * Therefore, the heavenly powers cried out to You, O Giver of life: * “Glory to Your resurrection, O Christ! * Glory to Your kingdom! * Glory to Your economy, * O You who alone are the lover of mankind!”",
+          "Troparion of the Divine Body: (Tone 1): Christ, having loved His own, loved them until the end and gave them His Body and Blood as food and drink. Wherefore let us offer them our veneration and say with fear: “O Christ, glory to Your presence, glory to Your compassion, glory to Your condescension: for You alone are the Lover of Mankind.”",
+          "Kondakion of the Feast: (Tone 2): O Christ, do not turn Your face away from me: for I partake of the bread which is Your Body and of the wine which is Your Blood. O Lord, let my sharing in these august mysteries be not for my judgment and condemnation, but for my eternal and everlasting life."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 1) Psalm 32:22,1",
+          "May Your kindness, O Lord, be upon us, for we have hoped in You. Stichon: Exult, you just, in the Lord; praise from the upright is fitting."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Psalm 17:48,506",
+          "O God, You granted me retribution and made peoples subject to me and saved me from my raging enemies. Stichon: Therefore, I will proclaim You, O Lord, among the nations and I will sing praise to Your name."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-14": {
+      "church": "melkite",
+      "iso": "2026-06-14",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 2): When You descended to death, O immortal Life, * You put Hades to death by the splendor of Your divinity. * And when You raised the dead from below the earth, * all the heavenly powers cried out to you: * “O Giver of life, Christ our God, glory to You!”",
+          "Kontakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-21": {
+      "church": "melkite",
+      "iso": "2026-06-21",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 3): Let all in heaven rejoice * and all on earth be glade, * for the Lord has exerted power with His arm: * by death He has trampled upon Death * and has become the firstborn of the dead. * He has delivered us from the bosom of Hades * and has granted to the world great mercy.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-23": {
+      "church": "melkite",
+      "iso": "2026-06-23",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Visitation: (Tone 1): Rejoice, pure Theotokos, for the Archangel has brought to you glad tidings. You did not boast of the great honors bestowed upon you, but humbly hastened to Zacharia’s house to serve the mother of the Forerunner. With her you glorified God who alone is Almighty and the Lover of mankind.",
+          "Kondakion of the Visitation: (Tone 6): The hosts of angels were amazed at your tenderness, O Theotokos, as they saw you hasten devotedly to Zacharia’s house in Judea to serve the mother of the Baptist, who was with child in her old age. You assisted her for three months in profound humility and great love. So, she cried out to you: Hail, O Bride, and Virgin ever pure!"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-24": {
+      "church": "melkite",
+      "iso": "2026-06-24",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Forerunner: (Tone 4): Prophet and Forerunner of the Coming of Christ, in spite of our eagerness to render you due honor, we fall short when singing your praise. Your glorious birth saved your mother from the shame of barrenness, retuned to your father the power of speech and heralded the worldwide preaching of the Incarnation of the Son of God.",
+          "Kontakion for the Holy Cross (Tone 4): O Christ our God, who chose by Your free volition to be elevated upon the Holy Cross, grant Your mercies to Your new people who are called by Your name, in Your power gladden the hearts of our public authorities, strengthen them in every good deed so that Your alliance may be for them a weapon of peace and a standard of victory!"
+        ],
+        "prokeimenon": [
+          "Prokimenon: (Tone 3)",
+          "The righteous shall rejoice in the Lord.",
+          "Stichon: O God, hear my cry when I pray to you"
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 3)",
+          "Blessed be the Lord God of Israel.",
+          "Stichon: And you, child, will be called the prophet of the Most High."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-28": {
+      "church": "melkite",
+      "iso": "2026-06-28",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 4): The women disciples of the Lord, * having learned from the angel the joyful announcement of the resurrection, * and having rejected the ancestral sentence, * proudly told the apostles: * Death is despoiled. Christ God is risen, * bestowing to the world great mercy.”",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-06-29": {
+      "church": "melkite",
+      "iso": "2026-06-29",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "June-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Apostles Peter and Paul (Tone 4): O princess of the apostles and Teachers of the world, intercede with the Master of All that he may give peace to the world and great mercy for our souls.",
+          "Kondakion: (Tone 2): O Lord, You have taken up to their eternal rest and to the enjoyment of your good things the two infallible preachers of divine truths and leaders of the apostles, for You have accepted their struggles and their death as being better than any holocaust, O You who alone know the secrets of hearts!"
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps. 88:6, 8",
+          "The heavens shall proclaim your wonders, 0 Lord, and your truth in the assembly of the saints. Stichon: God is glorified in the council of his saints, great and awesome to all those around him"
+        ]
+      }
+    },
+    "2026-07-05": {
+      "church": "melkite",
+      "iso": "2026-07-05",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "July-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 5): Let us, O faithful, * praise and worship the word, * coeternal with the Father and the Spirit, * born of the Virgin for our Salvation; * for He was pleased to be lifted in the flesh upon the cross * and to endure death * and to raise the dead by His glorious resurrection.",
+          "Troparion of Martha: (Tone 8): In you, Mother Martha was restored the likeness of God, for you carried your cross and followed Christ, you taught by your deeds how to spurn the body, for it passes away, and how to value the soul for it is immortal. Wherefor, your soul is forever in happiness with the angels.",
+          "Troparion of Athanasius: (Tone 3): O Athanasius, the angels were amazed at your deeds as you faced spiritual struggles and overcame the devils. You are worthy of all praise, and Christ rewarded you with a manifold grace. O Father, intercede with Christ God that he may save our souls.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-07-12": {
+      "church": "melkite",
+      "iso": "2026-07-12",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "July-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 6): The angelic powers were around Your tomb, * and the guards became as dead; * and Mary stood at the tomb, * seeking Your spotless body. * Then You despoiled Hades without being tried by it * and You met the Virgin, O Bestower of life. * O Lord, who rose from the dead, * glory to You!",
+          "Troparion of the Martyrs: (Tone 4): Your martyrs, O Lord, received the crown of immortality from you O our God, on account of their struggles. Armed with your strength, they have vanquished their persecutors and crushed the powerless arrogance of demons. Through their supplications. O Christ God save our souls.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 6) Ps.90: 1,2 He who dwells in the shelter of the Most High abides in the shadow of the God of heaven.",
+          "Stichon: He will say to the Lord, “My wall, my refuge, my God in whom I will trust!”"
+        ]
+      }
+    },
+    "2026-07-19": {
+      "church": "melkite",
+      "iso": "2026-07-19",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "July-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (7th tone): You destroyed Death by Your cross. * You opened paradise to the thief. * You changed the weeping of the myrrh bearers * and commanded Your apostles to proclaim * that You have risen, O Christ God, * granting to the world great mercy.",
+          "Troparion of the Fathers: (Tone 8): O Christ our God, you are above all glory, for you have established our Holy Fathers as radiant stars on earth, and through them you have guided us all to the true faith. Most Merciful One, glory to You!",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-07-20": {
+      "church": "melkite",
+      "iso": "2026-07-20",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "July-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of St. Elias: (Tone 4): O Glorious Elias, angelic in body, pillar of prophets, second herald of Christ, by sending grace upon Eliseus from high, dispels, cleanses lepers and overflows with healing for those who honor him.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-08-02": {
+      "church": "melkite",
+      "iso": "2026-08-02",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 1): After the stone was sealed by the Jews and the while the soldiers were watching Your spotless body, You rose, O Savior, on the third day, giving life to the world. Wherefore, the heavenly powers cried out to you, O Giver of life: “Glory to Your resurrection, O Christ! Glory to Your kingdom! Glory to Your economy, O You who alone are the lover of mankind!”",
+          "Troparion of Stephen (Tone 4): O protomartyr Stephen, your head was crowned with a kingly crown on account of all the struggles you endured for Christ or God. You beheld the vision of your Savior seated at the right hand of God. Do not cease to intercede with him for the salvation of our souls.",
+          "Kondakion of the Transfiguration, (BDW p.746), (PLC p.412), (ED p. 1496): O Christ God, you were transfigured on the Mountain, and your disciples saw as much of your glory as they could hold, so that seeing You crucified they would know You had willed to suffer your passion and would proclaim to the world that You as verily the Reflection of the Father."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 1) Ps.32: 22, 11",
+          "May your kindness, 0 Lord, be upon us, for we have hoped in you.",
+          "Stichon: Exult, you just, in the Lord; praise from the upright is fitting."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps.17: 48, 50",
+          "O God, you granted me retribution and made peoples subject to me and saved me from my raging enemies.",
+          "Stichon: Therefore, I will proclaim you, o Lord, among the nations, and I will sing praise to your name."
+        ]
+      }
+    },
+    "2026-08-06": {
+      "church": "melkite",
+      "iso": "2026-08-06",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Feast: (Tone 7), 3 times: You were transfigured on the mountain, O Christ God showing your disciples as much of your glory as they could hold. Let your eternal light shine also upon us sinners, through the prayer of the Mother of God, O Giver of light, glory to You.",
+          "Kondakion of the Feast: (Tone 7): O Christ God, you were transfigured on the Mountain, and your disciples saw as much of your glory as they could hold, so that seeing You crucified they would know You had willed to suffer your passion and would proclaim to the world that You as verily the Reflection of the Father."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone7) Ps.88 :12 ;143 :15",
+          "Yours are the heavens and yours is the earth; the world and its fullness you have founded.",
+          "Stichon: Blessed is the people whose God is the Lord!"
+        ]
+      }
+    },
+    "2026-08-09": {
+      "church": "melkite",
+      "iso": "2026-08-09",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 2): When You descended to death, O immortal Life, You destroyed Hades by the splendor of Your divinity. And when You raised the dead from below the earth, all the heavenly powers cried out to you: “O Giver of life, Christ our God, glory to You!”",
+          "Troparion of the Transfiguration: (Tone 7): You were transfigured on the mountain, O Christ God showing your disciples as much of your glory as they could hold. Let your eternal light shine also upon us sinners, through the prayer of the Mother of God, O Giver of light, glory to You.",
+          "Troparion of Matthias: (Tone 3): O Holy Apostle Matthias, intercede with God all merciful that He may grant us the remission of our sins.",
+          "Kondakion of the Transfiguration: (Tone 7): O Christ God, you were transfigured on the Mountain, and your disciples saw as much of your glory as they could hold, so that seeing You crucified they would know You had willed to suffer your passion and would proclaim to the world that You as verily the Reflection of the Father."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-08-15": {
+      "church": "melkite",
+      "iso": "2026-08-15",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Dormition: (Three Times): In giving birth, you have preserved your virginity and in falling asleep you did not forsake the world, O Mother of God. You have passed to life being the Mother of Life. Through your intercession, save our souls from death",
+          "Kondakion of the Dormition: Neither death nor the tomb could hold the Mother of God, our watchful Protectress and our unfailing hope. Since she is the Mother of Life. Christ who dwelt in her ever-virginal womb lifted her up to the eternal life"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 3) Lk.1: 46-48",
+          "My soul magnifies the Lord and my spirit rejoices in God my Savior.",
+          "Stichon: Because he has regarded the lowliness of his handmaid, for, behold, henceforth all generations shall call me blessed."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 8)",
+          "Arise, O Lord, and go up to your repose, you and the ark of your holiness.",
+          "Stichon: The Lord has made a truthful oath to David from which he shall never depart: “Of the fruit of your loins, I will place one upon your throne.”"
+        ]
+      }
+    },
+    "2026-08-16": {
+      "church": "melkite",
+      "iso": "2026-08-16",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 3): Let all in heaven rejoice and all on earth be glade, for the Lord has exerted power with His arm: By death He has trampled upon Death and has become the firstborn from the dead. He has delivered us from the bosom of Hades and has granted to the world great mercy.",
+          "Troparion of the Icon: (Tone 2): Before your most pure image, we bow in worship. O good One, begging forgiveness of our sins. O Christ God, because you chose of your own free will to ascend upon the cross in the flesh, in order to deliver from the enemy’s bondage those, you had created. For this reason, we cry out to you in thanksgiving. “You have filled all things with joy. O our Savior, when you came to save the world!”",
+          "Troparion of the Dormition: (Three Times): In giving birth, you have preserved your virginity and in falling asleep you did not forsake the world, O Mother of God. You have passed to life being the Mother of Life. Through your intercession, save our souls from death",
+          "Kondakion of the Dormition: Neither death nor the tomb could hold the Mother of God, our watchful Protectress and our unfailing hope. Since she is the Mother of Life. Christ who dwelt in her ever-virginal womb lifted her up to the eternal life"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-08-23": {
+      "church": "melkite",
+      "iso": "2026-08-23",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 4): The women disciples of the Lord, having learned from the angel the joyful announcement of the resurrection, and having rejected the ancestral sentence, proudly told the apostles: Death is despoiled. Christ God is risen, bestowing to the world great mercy.”",
+          "Troparion of the Dormition: (Tone 1): In giving birth you have preserved your virginity and in falling asleep you did not forsake the world, O Mother of God. You have passed to life being the Mother of Life. Through your intercession, save our souls from death",
+          "Kondakion of the Dormition: (Tone 2): Neither death nor the tomb could hold the Mother of God, our watchful Protectress and our unfailing hope. Since she is the Mother of Life. Christ who dwelt in her ever-virginal womb lifted her up to the eternal life"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-08-30": {
+      "church": "melkite",
+      "iso": "2026-08-30",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "August-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 5): Let us, O faithful, praise and worship the word, coeternal with the Father and the Spirit, born of the Virgin for our Salvation, for He was pleased to be lifted in the flesh upon the cross, and to endure death, and to raise the dead by His glorious resurrection.",
+          "Kondakion of the Nativity: Through your holy birth, O Immaculate One, Joachim and Anne were delivered from the shame of childlessness, and Adam and Eve from the corruption of death. Your people, redeemed from the debt of their sins, cry out to you to honor your birth: “the barren one gives birth to the Mother of God the Sustainer of our life!”"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-09-01": {
+      "church": "melkite",
+      "iso": "2026-09-01",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the New Year: (Tone 2): Maker of the Universe, O Lord who alone have power over seasons and times: bless this year with Your bounty, preserve our country in safety and keep Your people in peace, through the prayers of the Mother of God, and save us.",
+          "Troparion of the Theotokos: (Tone 7): Hail O Woman full of grace, ever-virgin Mother of God, harbor and protectress of the human kind: the Savior of the universe received flesh from you, for you are the only one to be both mother and virgin, forever blessed, forever glorified. Intercede with Christ God that He may grant peace to the whole inhabited earth.",
+          "Troparion of St. Simeon Stylite: (Tone 1): You became a column of endurance and rivaled the forefathers, O Holy One, becoming like Job in your sufferings, like Joseph in your trials, like the bodiless angels though you lived in the flesh. O SIMEON our Holy Father, intercede with Christ God that He may save our souls!",
+          "Kondakion of the New Year: (Tone 4): eternity, super substantial God of all, O Merciful One : bless the course of this year, and in Your boundless mercy, save all those who worship You our one and only Master and who cry out to You in fear: “O Savior, grant a happy year to all mankind!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON : Ps.146 : 5 ; 134 :3 - There is a second Prokimenon. See September 3, p.384.",
+          "Great is our Lord, and mighty in power.",
+          "To His wisdom there is no limit.",
+          "Stichon: Praise the Lord, for the Lord is good; sing to His name, for it is excellent."
+        ],
+        "alleluia": [
+          "ALLELUIA : Ps.64 : 2",
+          "To You we owe our hymn of praise,",
+          "O God, in Sion; to You must vows be fulfilled, You who hear prayers.",
+          "Stichon: Vows to You must be fulfilled in Jerusalem."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-09-06": {
+      "church": "melkite",
+      "iso": "2026-09-06",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 6): The angelic powers were around Your tomb, * and the guards became as dead; * and Mary stood at the tomb, * seeking Your spotless body; * Then You despoiled Hades without being tried by it, * and You met the Virgin O Bestower of life. * O Lord, who rose from the dead, * glory to You!",
+          "Troparion of Michael: (Tone 4): O Captain and Leader of the armies of heaven, unworthy as we are, we beseech you without cease to surround us with your intercessions and cover us beneath the shelter of th wings of your ethereal glory. We bend our knee and cry out with perseverance. “Deliver us from danger, O Prince of the Powers on high!”",
+          "Kondakion of the Nativity of the Theotokos: (Tone 4): Through your holy birth, O Immaculate One, Joachim and Anne were delivered from the shame of childlessness, and Adam and Eve from the corruption of death. Your people, redeemed from the debt of their sins, cry out to you to honor your birth: “the barren one gives birth to the Mother of God the Sustainer of our life!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (7th Tone) Psalm 63:11, 2",
+          "The just shall rejoice in the Lord and place his hope in Him. All those with an upright heart shall be praised."
+        ],
+        "alleluia": [
+          "ALLELUIA: (4th Tone) Ps 91:13, 14",
+          "The righteous shall flourish like a palm tree and shall grow like the cedar of Lebanon.",
+          "Stichon: Those who are planted in the house of the Lord shall flourish in the courts of our God."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-09-08": {
+      "church": "melkite",
+      "iso": "2026-09-08",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Nativity: (Tone 4): Your Nativity, O Mother of God, heralded joy to the whole universe, for from you rose the Sun of Justice, Christ our God. He canceled the curse and poured forth His grace: He vanquished death and granted us eternal life.",
+          "Kondakion of the Nativity: (Tone 4): Through your holy birth, O Immaculate One, Joachim and Anne were delivered from the shame of childlessness, and Adam and Eve from the corruption of death. Your people, redeemed from the debt of their sins, cry out to you to honor your birth: “the barren one gives birth to the Mother of God the Sustainer of our life!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 3) Lk.1: 46-48",
+          "My soul magnifies the Lord and my spirit rejoices in God my Savior.",
+          "Stichon: Because He has regarded the lowliness of His handmaid, for, behold, henceforth all generations shall call me blessed."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 7) Ps 44:11, 13",
+          "Listen, daughter, and behold and lend your ear, and forget your people and your father’s house.",
+          "Stichon: The rich among the people shall seek your favor."
+        ]
+      }
+    },
+    "2026-09-13": {
+      "church": "melkite",
+      "iso": "2026-09-13",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 7): You destroyed Death by Your cross. * You opened paradise to the thief. * You changed the weeping of the myrrh-bearers, * and commanded Your apostles to proclaim * that You, have risen O Christ God, * granting to the world great mercy.",
+          "Troparion of the Preparation: (Tone 2): We offer you, O Lord, as a means of intercession, the life-giving Cross, a sign of your bounty you have given us in spite of our unworthiness, save our country and your people who offer you their supplications through your Mother, O You who alone are the Lover of Mankind!",
+          "Troparion of the Dedication: (Tone 4): As You had shown from on high the splendor of the firmament, so did You show on earth the splendor of the dwelling-place of your holy glory. Make it stand firm for ever and ever, and accept the supplications which we offer there to You, unceasingly, through your Mother, O You the Life and Resurrection of all!",
+          "Kondakion of the Dedication: (Tone 4): You have made of the Church a resplendent heaven, enlightening all the faithful: wherefore we stand in the midst of this holy dwelling-place and cry out to you: “Make firm this house, O Lord!”"
+        ],
+        "alleluia": [
+          "ALLELUIA:",
+          "On the Holy Mountain is his city cherished by the Lord.",
+          "The Lord prefers the gates of Zion to all Jacob’s dwellings.",
+          "Stichon: Of you are told glorious things,",
+          "O City of God!"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-09-14": {
+      "church": "melkite",
+      "iso": "2026-09-14",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Feast: (Tone 1) (3 times) As modified by our Synod: “O Lord, save Your people and bless Your inheritance, granting peace to the world. And preserve Your community by the power of Your Cross.”",
+          "Kondakion of the Feast: (Tone 4): O Christ God, who chose by Your free volition to be elevated upon the holy cross, grant Your mercies to Your new people who are called by Your name. In Your power gladden the hearts of our public authorities. Strengthen them in every good deed so that Your true alliance may be for them a weapon of peace and a standard of victory."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 7) Ps 98:5,1",
+          "Exalt the Lord our God, and worship at His footstool, for He is holy.",
+          "Stichon: The Lord is reigning: let the people’s rage; He is enthroned upon the Cherubim: let the earth quake."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps.73: 2, 12",
+          "Remember Your congregation which You have acquired from the beginning: You redeemed the scepter of Your inheritance.",
+          "Stichon: God is our King forever: He brought about salvation in the midst of the earth."
+        ]
+      }
+    },
+    "2026-09-20": {
+      "church": "melkite",
+      "iso": "2026-09-20",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (8th tone): You descended from on high O compassionate One, * and consented to burial for three days * that You might free us form suffering. * O Lord, our life and our resurrection, * glory to You.!",
+          "Troparion of the Holy Cross: (Tone 1): “O Lord, save your people and bless your inheritance, granting peace to the world. And preserve your community by the power of your Cross.”",
+          "Troparion of the Martyrs: (Tone 4): Your martyrs, O Lord, received the crown of immortality from you O our God, on account of their struggles. Armed with your strength, they have vanquished their persecutors, and crushed the powerless arrogance of demons. Through their supplications, O Christ God, save our souls.",
+          "Kondakion of the Holy Cross: O Christ God, who chose by Your free volition to be elevated upon the holy cross, grant Your mercies to Your new people who are called by Your name. In Your power gladden the hearts of our public authorities. Strengthen them in every good deed so that Your true alliance may be for them a weapon of peace and a standard of victory."
+        ]
+      }
+    },
+    "2026-09-26": {
+      "church": "melkite",
+      "iso": "2026-09-26",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of St. John (Tone 2): Apostle beloved of Christ God, hasten to deliver a people that lacks any other defense: for He accepted that you lay your head on his breast: He will also accept your prayer. Pray Him, then, O Theologian, that He may disperse haughty nations, and beg that He may grant us peace and abundant mercy.",
+          "Kondakion: (Tone 8): O Christ God, with the saints, grant rest to the soul of Your servant in a place where there is no pain, no grief no sighing, but everlasting life."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 8) Ps.18: 5, 2",
+          "Through all the earth, their voice resounds, and to the ends of the world their message.",
+          "Stichon: The heavens declare God’s glory and the firmament proclaims the work of his hands."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps.88: 6, 8",
+          "The heavens shall proclaim Your wonders, O Lord, and Your truth in the assembly of the saints.",
+          "Stichon: God is glorified in the council of His saints, great and awesome to all those around him."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-09-27": {
+      "church": "melkite",
+      "iso": "2026-09-27",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "September-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 1): After the stone was sealed by the Jews * and the while the soldiers were watching Your spotless body, * You rose, O Savior, on the third day, * bestowing life to the world. * Therefore, the heavenly powers cried out to You, O Giver of life: *“Glory to Your resurrection, O Christ! * Glory to Your kingdom! * Glory to Your economy, * O You Who alone are the lover of mankind!”",
+          "Troparion of the Martyrs: (Tone 4): Your martyrs, O Lord, received the crown of immortality from you O our God, on account of their struggles. Armed with your strength, they have vanquished their persecutors, and crushed the powerless arrogance of demons. Through their supplications, O Christ God, save our souls.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 1) Ps.32: 22, 1",
+          "May Your kindness, O Lord, be upon us, for we have hoped in You.",
+          "Stichon: Exult, you just, in the Lord; praise from the upright is fitting."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps.17: 48, 50",
+          "O God, You granted me retribution and made peoples subject to me and saved me from my raging enemies.",
+          "Stichon: Therefore, I will proclaim you, O Lord, among the nations, and I will sing praise to Your name."
+        ]
+      }
+    },
+    "2026-10-01": {
+      "church": "melkite",
+      "iso": "2026-10-01",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "October-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Protection, (Tone 2): O Gracious Virgin, you protect all who in faith flee under your powerful arm. We have none to plead for us before God but you, in time of adversity and tribulation, we sinners who stoop down under the weight of our sins. Mother of God the Most High, we bend our knees to you and implore you, deliver your servants from all kinds of trouble.",
+          "Troparion of St. Ananias, (Tone 3): O Holy Apostle Ananias, intercede with God all-merciful that He may grant us the remission of our sins.",
+          "Troparion of St. Romanus, (Tone 8): In you, O Holy Father Romanus, the faithful image of God shone forth, for you carried your cross and followed Christ. You taught by your deeds how to spurn the body, for it passes away, and how to value the soul, for it is immortal. Wherefore your soul is forever in happiness with the angels.",
+          "Kondakion of the Protection, (Tone 8): We choose you as a shelter and a protection for our life, O Mother of God, O pure Virgin, lead us to safe repose, Channel of all good things and firm support of the faithful, O you who indeed are alone worthy of our praise."
+        ],
+        "prokeimenon": [
+          "Prokimenon: (Tone 3) Ps 31:11, 1, p14",
+          "Be glad in the Lord, and rejoice, you just; exult, all you upright of heart.",
+          "Stichon: Happy are those whose faults are taken away, and whose sins are covered."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-10-04": {
+      "church": "melkite",
+      "iso": "2026-10-04",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "October-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 2): When You descended to death, O immortal Life, * You destroyed Hades by the splendor of Your divinity. * And when You raised the dead from below the earth, * all the heavenly powers cried out to you: * “O Giver of life, Christ our God, glory to You!”",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 2) Ps.117: 14, 18",
+          "My strength and my courage is the Lord, and he has been my Savior.",
+          "Stichon: The Lord has chastised me through his teaching, yet he has not delivered me to death."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 2) Ps.19: 1, 10",
+          "The Lord shall hear you on the day of distress; the name of the God of Jacob shall defend you.",
+          "Stichon: O Lord, save your king and listen to us on whatever day we call upon you."
+        ]
+      },
+      "unresolved": [
+        "Troparion of Hierotheos (Tone 4)",
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-10-11": {
+      "church": "melkite",
+      "iso": "2026-10-11",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "October-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 3): Let all in heaven rejoice * and all on earth be glade * for the Lord has exerted power with His arm: * by death He has trampled upon Death * and has become the firstborn from the dead. * He has delivered us from the bosom of Hades * and has granted to the world great mercy.",
+          "Troparion of the Fathers: (Tone 8): O Christ our God, you are infinitely glorified for You established our fathers as radiant stars on earth. Through them, you led us to the true faith. O Most Merciful One, glory to You!",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 4) Dn. 3: 26, 27",
+          "Blessed are you, O Lord, God of our fathers, and your name is worthy of praise and glorious forever.",
+          "Stichon: For you are just in all you have done to us, and all your works are true and your ways right."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 7) Ps.43: 2; 33: 18",
+          "O God, our ears have heard, our fathers have declared to us the deeds you did in their days, in the days of old.",
+          "Stichon: The just cried out, and the Lord heard them, and he delivered them from all their trials."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-10-18": {
+      "church": "melkite",
+      "iso": "2026-10-18",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "October-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection: (Tone 4): The women disciples of the Lord, * having learned from the angel the joyful announcement of the resurrection, * and having rejected the ancestral sentence, * proudly told the apostles: * “Death is despoiled. Christ God is risen, * bestowing to the world great mercy.”",
+          "Troparion of St. Luke: (Tone 3): O Holy Apostle Luke, intercede with God all-merciful that He may grant us the remission of our sins.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1)",
+          "The heavens shall proclaim your wonders, O Lord, and your truth in the assembly of the saints.",
+          "Stichon: God is glorified in the council of his saints, great and awesome to all those around him."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-10-25": {
+      "church": "melkite",
+      "iso": "2026-10-25",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "October-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 5): Let us, O faithful, * praise and worship the word, * coeternal with the Father and the Spirit, * born of the Virgin for our Salvation; * for He was pleased to be lifted in the flesh upon the cross * and to endure death * and to raise the dead * by His glorious resurrection.",
+          "Troparion of the Martyrs: (Tone 4): Your martyrs, O Lord, received the crown of immortality from you O our God, on account of their struggles. Armed with your strength, they have vanquished their persecutors and crushed the powerless arrogance of demons. Through their supplications. O Christ God save our souls.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 5) Ps.11: 8, 2",
+          "You, O Lord, will keep us and preserve us always from this generation.",
+          "Stichon: Save me, O Lord, for there is no longer any holy man, for truthfulness has vanished from among the children of men."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 5) Ps.88: 2, 3",
+          "Your favor, O Lord, I will sing forever; from generation to generation, my mouth will proclaim your faithfulness.",
+          "Stichon: For you have said, “My kindness is established forever.”",
+          "In heaven you have confirmed your faithfulness."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-10-26": {
+      "church": "melkite",
+      "iso": "2026-10-26",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "October-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Holy Martyr Demetrios: (Tone 3): O Victorious Demetrius, you were given to the world as a powerful protector against dangers and an invincible soldier of Christ. As you inspired Nestor to overcome the pride of Lyaios, so intercede with Christ God that He may grant us his mercy",
+          "Troparion of the earthquake: (Tone 8): O Christ our God, who look upon the earth, and it quakes: deliver us from the dreadful menace of earthquakes and send down upon us your abundant mercy through the intercession of the Mother of God, for you are the only Lover of Mankind.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-01": {
+      "church": "melkite",
+      "iso": "2026-11-01",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 6): The angelic powers were around Your tomb, * and the guards became as dead; * and Mary stood at the tomb, * seeking Your spotless body; * Then You despoiled Hades without being tried by it, * and You met the Virgin O Bestower of life. * O Lord, who rose from the dead, * glory to You!",
+          "Troparion of Cosmas and Damian (Tone 8): O Holy Moneyless Ones and Wonderworkers, heal us of our diseases. Freely you have received: freely give.",
+          "Kondakion: O never failing Protectress of Christians and their ever-present intercessor before the Creator, despise not the petitions of us sinners, but in your goodness extend your help to us who call upon you with confidence. Hasten, O Mother of God, to intercede for us, for you have always protected those who honor you."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 6) Ps.27: 9, 1",
+          "O Lord, save your people and bless your inheritance!",
+          "Stichon: To you, O Lord, I have called: O my Rock, be not deaf to me!"
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 6) Ps.90: 1, 2",
+          "He who dwells in the shelter of the Most High abides in the shadow of the God of heaven.",
+          "Stichon: He will say to the Lord, “My wall, my refuge, my God in whom I will trust!”"
+        ]
+      }
+    },
+    "2026-11-08": {
+      "church": "melkite",
+      "iso": "2026-11-08",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 7): You destroyed Death by Your cross. * You opened paradise to the thief. * You changed the weeping of the myrrh bearers, * and commanded Your apostles to proclaim * that You, have risen O Christ God, * granting to the world great mercy.",
+          "Troparion of the Holy Archangels (Tone 4): Captains and Leaders of the armies of heaven, unworthy as we are, we beseech you without cease to surround us with your intercessions and cover us beneath the shelter of the glory of your ethereal wings. We bend out knee and cry out with perseverance: “Deliver us from danger, O Princes of the Powers on high!”",
+          "Kondakion Presentation of the Blessed Virgin (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasure of God’s glory, enters today in the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 4)",
+          "You make spirits your messengers and flaming fires you attendants.",
+          "Stichon: Bless the Lord, O my soul! May all that is in me bless his holy name!"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-15": {
+      "church": "melkite",
+      "iso": "2026-11-15",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 8)): You descended from on high O compassionate One, * and consented to burial for three days * that You might free us form suffering. * O Lord, our life and our resurrection, * glory to You.!",
+          "Kondakion Presentation of the Blessed Virgin (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasure of God’s glory, enters today in the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 8) Ps.75: 12, 2",
+          "Make vows to the Lord your God and fulfill them;",
+          "Let all round about him bring gifts to the awesome Lord.",
+          "Stichon: God is renowned in Judah; in Israel, great is his name."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 8) Ps.94: 1, 2",
+          "Come, let us rejoice in the Lord; Let us sing joyfully to God our Savior!",
+          "Stichon: Let us greet his presence with thanksgiving; let us joyfully sing psalms to him!"
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-21": {
+      "church": "melkite",
+      "iso": "2026-11-21",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Presentation: (Tone 4) (three times): Today is the prelude to God’s munificence, and the announcement of the salvation of men: in the Temple of God the Virgin is seen openly, foretelling to all the coming of Christ. Wherefore let us cry out to her with all our strength: “Joy to you, Fulfillment of the Creator’s Plan!”",
+          "Kondakion of the Presentation (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasury of God’s glory, enters today into the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "Prokimenon:",
+          "My soul magnifies the Lord and my spirit rejoices in God my Savior.",
+          "Stichon: Because He has regarded the lowliness of His handmaid, for behold, henceforth all generations shall call me blessed."
+        ],
+        "alleluia": [
+          "Alleluia: Ps. 44:11, 13",
+          "Listen, daughter, and behold and lend your ear, and forget your people and your father’s house.",
+          "Stichon: The rich among the people shall seek Your favor."
+        ]
+      }
+    },
+    "2026-11-22": {
+      "church": "melkite",
+      "iso": "2026-11-22",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 1): After the stone was sealed by the Jews * and the while the soldiers were watching Your spotless body, * You rose, O Savior, on the third day, * bestowing life to the world. * Therefore, the heavenly powers cried out to You, O Giver of life: *“Glory to Your resurrection, O Christ! * Glory to Your kingdom! * Glory to Your economy, * O You Who alone are the lover of mankind!”",
+          "Troparion of the Presentation of the Virgin (Tone 4): Today is the prelude to God’s munificence, and the announcement of the salvation of men: in the Temple of God the Virgin is seen openly, foretelling to all the coming of Christ. Wherefore let us cry out to her with all our strength: “Joy to you, Fulfillment of the Creator’s Plan!”",
+          "Kondakion of the Presentation (Tone 4): The most pure Temple of the Savior, His most precious bridal chamber, the Virgin, sacred treasury of God’s glory, enters today into the house of the Lord, bringing with her the grace of the divine Spirit. Wherefore the angels of God are singing: “Behold the heavenly tabernacle!”"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 1) Ps.32: 22,1",
+          "May Your kindness, O Lord, be upon us, for we have hoped in You.",
+          "Stichon: Exult, you just, in the Lord; praise from the upright is fitting."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1) Ps. 17: 48, 50",
+          "O God, You granted me retribution and made peoples subject to me and saved me from my raging enemies.",
+          "Stichon: Therefore, I will proclaim You, O Lord, among the nations, and I will sing praise to Your name."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-11-29": {
+      "church": "melkite",
+      "iso": "2026-11-29",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "November-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (2nd tone): When You descended to death, O immortal Life, * You destroyed Hades by the splendor of Your divinity. * And when You raised the dead from below the earth, * all the heavenly powers cried out to you: * “O Giver of life, Christ our God, glory to You!”",
+          "Troparion of Paramon and Philumenes: (Tone 4): Your martyrs, O Lord, received the crown of immortality from you O our God, on account of their struggles. Armed with your strength, they have vanquished their persecutors and crushed the powerless arrogance of demons. Through their supplications. O Christ God save our souls.",
+          "Kondakion of the Preparation of the Nativity of our Lord (Tone 3): Today the Virgin is on her way to the cave where she will give birth in a manner beyond understanding to the Word who is, in all eternity. Rejoice, therefore, universe, when you hear it heralded: with the angles and the shepherds, glorify Him who chose to be seen as a new-born Babe, while remaining God in all eternity."
+        ]
+      }
+    },
+    "2026-12-06": {
+      "church": "melkite",
+      "iso": "2026-12-06",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "December-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 3): Let all in heaven rejoice * and all on earth be glade * for the Lord has exerted power with His arm: * by death He has trampled upon Death * and has become the firstborn from the dead. * He has delivered us from the bosom of Hades * and has granted to the world great mercy.",
+          "Troparion of St. Nicholas (Tone 4): O Father and Pontiff Nicholas, the holiness of your life was set before your flock as a rule of faith, an example of meekness and a teaching of temperance; wherefore you acquired greatness through humility and spiritual wealth through poverty. Pray to Christ God that He may save our souls.",
+          "Kondakion of the Preparation for the Nativity of Our Lord (Tone 3): Today the Virgin is on her way to the cave where she will give birth in a manner beyond understanding to the Word who is, in all eternity. Rejoice, therefore, universe, when you hear it heralded: with the angels and the shepherds, glorify Him who chose to be seen as a new-born Babe, while remaining God in all eternity."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone I)",
+          "Precious in the Lord’s eyes is the death of his holy ones.",
+          "Stichon: How shall I make a return to the Lord for all the good he has done to me?"
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 1)",
+          "Your priests, O Lord, shall be clothed with holiness, and your saintly ones shall shout for joy.",
+          "Stichon: For the Lord has elected Sion, he has chosen it for his dwelling."
+        ]
+      }
+    },
+    "2026-12-13": {
+      "church": "melkite",
+      "iso": "2026-12-13",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "December-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 4): The women disciples of the Lord, * having learned from the angel the joyful announcement of the resurrection, * and having rejected the ancestral sentence, * proudly told the apostles: * “Death is despoiled. Christ God is risen, * bestowing to the world great mercy.”",
+          "Troparion of the Ancestors: (Tone 2): Through faith, You have justified Your Ancestors, O Christ our God, and through them You have espoused in advance the Church set apart from the Gentiles. The saints rejoice in glory because, from the seed of these Ancestors, has come forth the glorious fruit, who gave You birth without seed. Through their intercession, O Christ God, save our souls",
+          "Kondakion of the Preparation of the Nativity of our Lord (Tone 3): Today the Virgin is on her way to the cave where she will give birth in a manner beyond understanding to the Word Who is, in all eternity. Rejoice, therefore, universe, when you hear it heralded: with the angles and the shepherds, glorify Him Who chose to be seen as a new-born Babe, while remaining God in all eternity."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: Blessed are You, O Lord, God of our fathers, and Your name is worthy praise and glorious forever.",
+          "Stichon: For You are just in all You have done to us, and all Your works are true and Your ways right."
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 4) Ps. 98:6, 33:18",
+          "Moses and Aaron were among His priests and Samuel among those who called upon His name.",
+          "Stichon: The just cried out, and the Lord heard them, and He delivered them from all their trials."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-12-20": {
+      "church": "melkite",
+      "iso": "2026-12-20",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "December-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the resurrection (Tone 5): Let us, O faithful, * praise and worship the word, * coeternal with the Father and the Spirit, * born of the Virgin for our Salvation; * for He was pleased to be lifted in the flesh upon the cross * and to endure death * and to raise the dead * by His glorious resurrection.",
+          "Troparion of the Preparation: (Tone): Bethlehem, make ready, for Eden has been opened for all. Ephrata, be alert, for the Tree of Life has blossomed forth from the Virgin in a cave. Her womb has become a spiritual Paradise wherein the divine Fruit was planted, and if we eat it, we shall live and not die like Adam. Christ is coming forth to bring back to life the likeness that had been lost in the beginning.",
+          "Troparion of the Ancestors of Christ: (Tone 2): Faith can accomplish great things. Through it, the Three Holy Children rejoice in the flames as if they had been in refreshing water, and Daniel in the midst of lions is like a shepherd among his sheep. Through their intercession, O Christ God, save our souls",
+          "Kondakion of the Preparation of the Nativity of our Lord :(Tone 3): Today the Virgin is on her way to the cave where she will give birth in a manner beyond understanding to the Word Who is, in all eternity. Rejoice, therefore, universe, when you hear it heralded: with the angles and the shepherds, glorify Him Who chose to be seen as a new-born Babe, while remaining God in all eternity."
+        ],
+        "prokeimenon": [
+          "PROKIMENON: Dn. 3:26,27",
+          "Blessed are You, O Lord, God of our fathers, and Your name is worthy of praise and glorious forever.",
+          "Stichon: For You are just in all You have done to us, and all Your works are true and Your ways right."
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 4) Ps. 43:2, 33: 18",
+          "O God, our ears have heard, our fathers have declared to us the deeds You did in their days, in the days of old.",
+          "Stichon: The just cried out, and the Lord heard them, and He delivered them from all their trials."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    },
+    "2026-12-24": {
+      "church": "melkite",
+      "iso": "2026-12-24",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "December-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Nativity, (Tone 4) (Three times): Your Nativity, O Christ our God, has shed the light of knowledge upon the world. Through it, those who had been star-worshipers learned through a star to worship You, O Sun of Justice, and to recognize in You the One Who rises and Who comes from on high. O Lord glory to You!",
+          "Kondakion of the Nativity (Tone 3): Today the Virgin gives birth to the One Who surpasses all essences, and the earth offers a cave to God, the Inaccessible One. Angels sing His glory together with the shepherds: for to us is born a Child, God in all eternity"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 7) Ps. 63: 11, 2",
+          "The just shall rejoice in the Lord and place his hope in Him. All those with an upright heart shall be praised. Stichon: O God, hear my voice when I pray to You; save my life from the dreadful enemy. Reading from the Epistle of St. Paul to the Hebrews"
+        ],
+        "alleluia": [
+          "Alleluia: (Tone 1) Ps. 18:2,3",
+          "The heavens declare God’s glory, and the firmament proclaims the work of His hands.",
+          "Stichon: Day pours out the word to day, and night to night imparts knowledge."
+        ]
+      }
+    },
+    "2026-12-27": {
+      "church": "melkite",
+      "iso": "2026-12-27",
+      "source": "https://melkite.org/liturgical-resources",
+      "typicon": "December-2026.docx",
+      "groups": {
+        "troparia": [
+          "Troparion of the Resurrection (Tone 6): The angelic powers were around Your tomb, * and the guards became as dead; * and Mary stood at the tomb, * seeking Your spotless body; * Then You despoiled Hades without being tried by it, * and You met the Virgin O Bestower of life. * O Lord, who rose from the dead, * glory to You!",
+          "Troparion of the Nativity of our Lord, (Tone 4): Your Nativity, O Christ our God, has shed the light of knowledge upon the world. Through it, those who had been star-worshipers learned through a star to worship You, O Sun of Justice, and to recognize in You the One who rises and who comes from on high. O Lord glory to You!",
+          "Troparion of St. Joseph (Tone 2): O Joseph, proclaim to David, the ancestor of Christ our God, the great miracles you have witnessed: you have seen the Virgin with child, given praise with the shepherds, adored with the wise men, and an angel of the Lord has appeared to you. Intercede with Christ God that He may save our Souls.",
+          "Troparion of Stephen (Tone 4): Because of all you have endured for Christ our God, you have been given a royal crown, O First and Holy Martyr Stephen! You have put your persecutors to shame and seen your Savior enthroned at the right hand of the Father. Do not cease to intercede for the salvation of our souls.",
+          "Kondakion of the Nativity of Our Lord (Tone 3): Today the Virgin gives birth to the One who surpasses al essences, and the earth offers a cave to God, the Inaccessible One. Angels sing his glory together with the shepherd: for to us is born a Child, God in all eternity"
+        ],
+        "prokeimenon": [
+          "PROKIMENON: (Tone 4)",
+          "You make spirits your messengers and flaming fire your attendants.",
+          "Stichon: Bless the Lord, O my soul! May all that is in me bless his holy name."
+        ],
+        "alleluia": [
+          "ALLELUIA: (Tone 2)",
+          "Give praise to the Lord from the heavens, praise him in the heights.",
+          "Stichon: Praise him, all you his angels, praise him, all you, his powers."
+        ]
+      },
+      "unresolved": [
+        "Patronal hymn determined locally"
+      ]
+    }
+  }
+}
