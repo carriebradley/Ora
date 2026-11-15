@@ -154,7 +154,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  });
  assert.match(await ukrainian.innerText(),/Text from saved page 1/);
  assert.match(await ukrainian.innerText(),/Text from saved page 26/);
- assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/Continuous text from your saved PDF \(26 pages\)/);
+ assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/English-only continuous text from your saved PDF \(26 pages\)/);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'all 26 pages appear without inline pagination');
  assert.equal(await ukrainian.locator('.byz-role-all').count(),26);
  for(const width of [320,390]){
@@ -162,6 +162,34 @@ module.exports=async(page,base,artifacts,violations)=>{
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'unrecognized PDF stays within phone width');
  }
  await page.setViewportSize({width:390,height:844});
+ // Mixed-language 26-page file: Ukrainian and English share lines and pages.
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  const item=(str,x,y)=>({str,width:155,height:12,transform:[1,0,0,12,x,y]});
+  LiturgyReader.get=async id=>({id,name:'bilingual-26.pdf',format:'pdf',pages:26,page:2,updated:104,blob:new Blob()});
+  LiturgyReader.load=async()=>({
+   numPages:26,getPage:async n=>({
+    getTextContent:async()=>({items:n%2?[
+      item('Господи, помилуй.',20,720),
+      item('ALL: Lord, have mercy on page '+n+'.',230,720),
+      item('ДИЯКОН: У мирі Господеві помолімся.',20,680),
+      item('DEACON: In peace let us pray.',230,680),
+      item('ALL: Amen. / ВСІ: Амінь.',20,640)
+    ]:[
+      item('Слава Тобі, Господи, слава Тобі.',20,720),
+      item('PRIEST: Glory to You, O Lord, page '+n+'.',230,720)
+    ]})
+   }),destroy:async()=>{}
+  });
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ const englishView=await ukrainian.innerText();
+ assert.match(englishView,/Lord, have mercy on page 1/);
+ assert.match(englishView,/Glory to You, O Lord, page 26/);
+ assert.match(englishView,/In peace let us pray/);
+ assert.doesNotMatch(englishView,/[\u0400-\u052f]/u);
+ assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
+ assert.match(await ukrainian.locator('.byz-unrecognized-pdf-note').innerText(),/English-only continuous text/);
  // Scanned/image-only PDFs cannot be converted into text without OCR; retain
  // access to Open original book and do not return to paged inline navigation.
  await page.evaluate(async()=>{
@@ -172,7 +200,7 @@ module.exports=async(page,base,artifacts,violations)=>{
    });
    try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
  });
- assert.match(await ukrainian.innerText(),/no selectable text/i);
+ assert.match(await ukrainian.innerText(),/No selectable English text was found/i);
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'scanned PDF does not return inline page buttons');
 
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, hidden rubrics, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');

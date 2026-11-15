@@ -216,3 +216,24 @@ test('Ukrainian numbered clergy use distinct readable speaker names',()=>{
   {text:'ALL: Fixture response.',page:35,y:565,height:12}
  ]),['DEACON 2: Fixture petition on the next line.','ALL: Fixture response.']);
 });
+
+test('bilingual Ukrainian text filtering preserves English responses on the same PDF row',()=>{
+ const items=[
+  {str:'Господи, помилуй.',transform:[1,0,0,12,20,720]},
+  {str:'ALL: Lord, have mercy.',transform:[1,0,0,12,240,720]},
+  {str:'PRIEST: Господи, помилуй',transform:[1,0,0,12,20,700]},
+  {str:'DEACON: In peace let us pray / ДИЯКОН: В мирі Господеві помолімся',transform:[1,0,0,12,20,680]},
+  {str:'Українською: Господи, помилуй. ALL: Amen.',transform:[1,0,0,12,20,660]},
+  {str:'PRIEST: Glory to You, O Lord.',transform:[1,0,0,12,20,640]}
+ ];
+ const filtered=F.englishPdfItems(items);
+ const combined=F.pdfRows(filtered,1).map(r=>r.text).join(' ');
+ assert.doesNotMatch(combined,/[\u0400-\u052f]/u);
+ assert.match(combined,/ALL: Lord, have mercy/);
+ assert.match(combined,/DEACON: In peace let us pray/);
+ assert.match(combined,/ALL: Amen/);
+ assert.match(combined,/PRIEST: Glory to You, O Lord/);
+ assert.doesNotMatch(combined,/PRIEST:\s+DEACON:/);
+ assert.equal(F.englishPdfItems([{str:'Господи, помилуй.'}]).length,0);
+ assert.deepEqual(F.englishPdfItems([{str:'ALL: Amen.',width:10}]),[{str:'ALL: Amen.',width:10}]);
+});

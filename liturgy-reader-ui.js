@@ -110,7 +110,7 @@
     for(let number=33;number<=113;number+=2){
       const page=await book.getPage(number);
       const items=(await page.getTextContent()).items;
-      const rows=LiturgicalFormat.pdfRows(items,number).filter(row=>
+      const rows=LiturgicalFormat.pdfRows(LiturgicalFormat.englishPdfItems(items),number).filter(row=>
         !/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(row.text));
       const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
       addPrayerSections(sections,rows,heading);
@@ -136,7 +136,7 @@
     }
     for(let number=startPage;number<=endPage;number++){
       const page=await book.getPage(number),items=(await page.getTextContent()).items;
-      const lines=LiturgicalFormat.pdfRows(items,number);
+      const lines=LiturgicalFormat.pdfRows(id==='chrysostom'?LiturgicalFormat.englishPdfItems(items):items,number);
       if(!lines.length)continue;
       const full=lines.map(row=>row.text).join(' ');
       if(!foundLiturgy){
@@ -165,7 +165,7 @@
     for(let number=1;number<=book.numPages;number++){
       const page=await book.getPage(number);
       const content=await page.getTextContent();
-      const rows=LiturgicalFormat.pdfRows(content.items,number);
+      const rows=LiturgicalFormat.pdfRows(LiturgicalFormat.englishPdfItems(content.items),number);
       if(!rows.length)continue;
       const lines=combinePdfLines(rows);
       if(lines.length)sections.push({lines});
@@ -175,7 +175,7 @@
   function unrecognizedPdfNotice(target,pages){
     const note=document.createElement('p');
     note.className='muted byz-unrecognized-pdf-note';
-    note.textContent='Continuous text from your saved PDF ('+pages+' pages). This edition was not identified; text and layout may differ from the original. Use Open original book for the complete PDF.';
+    note.textContent='English-only continuous text from your saved PDF ('+pages+' pages). Ukrainian-script passages are hidden here. This edition was not identified; use Open original book for the full PDF.';
     target.insertBefore(note,target.firstChild);
   }
 
@@ -328,10 +328,10 @@
           if(reading?.sections){
             renderEdmontonPrayerText(preview,reading.sections);
             if(!reading.recognized)unrecognizedPdfNotice(preview,book.numPages);
-            status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · continuous text')+' · saved privately on this device';
+            status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · English-only continuous text')+' · saved privately on this device';
           }else{
             preview.replaceChildren();
-            preview.textContent='This PDF has no selectable text. Open original book to view its pages or images.';
+            preview.textContent='No selectable English text was found in this PDF. Open original book to view it. If this file contains only Ukrainian, use an English-language edition instead.';
             status.textContent='Saved PDF · open original book for images · saved on this device';
           }
         }else if(book.kind==='epub'){const part=book.sections[selected-1];renderEdmontonPrayerText(preview,[{heading:part.title,lines:part.blocks.map(b=>b.kind==='instruction'?'Instruction: '+b.text:b.role==='all'?'ALL: '+b.text:b.text)}]);}

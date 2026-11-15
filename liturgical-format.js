@@ -75,6 +75,28 @@
   if(/^(?:during|after|before|while|when|then|meanwhile|at this point|at the conclusion|as the|following the|if the|once the)\s+(?:the |this |these |a |an )?(?:priest|deacon|bishop|celebrant|litany|hymn|prayer|entrance|gospel|people|choir|faithful|clergy|singing|chanting|reading|communion|gifts|service|troparion|antiphon|procession|holy doors|royal doors)\b/i.test(s))return true;
   return /^(?:on Sundays|on weekdays|on feast days|on great feasts|if there is|instead of|the royal doors|the holy doors|the iconostasis|the following prayer is|this prayer is)\b/i.test(s);
  }
+ // English-only device-local display for bilingual Ukrainian PDFs.
+ // Filter PDF items before merging coordinates: a single horizontal line
+ // may contain Ukrainian on the left and English on the right.
+ const CYRILLIC=/[\u0400-\u052f\u1c80-\u1c8f\u2de0-\u2dff\ua640-\ua69f]/u;
+ const CYRILLIC_RUN=/[\u0400-\u052f\u1c80-\u1c8f\u2de0-\u2dff\ua640-\ua69f]+/gu;
+ function englishPdfItems(items){
+  const out=[];
+  for(const item of items||[]){
+   const text=String(item.str??'');
+   if(!CYRILLIC.test(text)){if(text.trim())out.push(item);continue;}
+   // A PDF library may place both languages in one text item.
+   // Retain only Latin fragments, without inventing a translation.
+   const english=text.split(/\s+(?:\/|\||•)\s+|\r?\n|\t/).map(part=>{
+    const clean=CYRILLIC.test(part)?part.replace(CYRILLIC_RUN,' '):part;
+    return clean.replace(/^[\s,.;:—–-]+|[\s,;:—–-]+$/g,'').trim();
+   }).filter(part=>/[A-Za-z]{2}/.test(part)&&
+    !/^(?:priest|bishop|deacon|dcn|all|people|choir|cantor|reader|verse)(?:\s+\d+)?\s*:?$/i.test(part));
+   const str=english.join(' ').trim();
+   if(str)out.push({...item,str});
+  }
+  return out;
+ }
  function combine(lines){
   const out=[];let current='',last=null;
   const flush=()=>{if(current)out.push(current);current='';};
@@ -105,5 +127,5 @@
   }
   flush();return out;
  }
- return {normalize,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine};
+ return {normalize,displayTitle,heading,role,speakerInstruction,pdfRows,instruction,combine,englishPdfItems};
 });
