@@ -296,7 +296,13 @@ module.exports=async(page,base,artifacts,violations)=>{
  daily=page.locator('.byz-liturgy-variations');
  await daily.locator('summary').click();
  assert.match(await daily.innerText(),/Ephesians 4:1-7/,'Melkite Newton Epistle differs from Edmonton');
- assert.equal(await daily.locator('.byz-daily-propers').count(),0,'Ukrainian hymns must never appear in the Melkite liturgy');
+ await daily.locator('.byz-proper-group').first().waitFor();
+ assert.equal(await daily.locator('.byz-daily-propers').getAttribute('data-church'),'melkite',
+  'Melkite uses its own dated prayer text, not Ukrainian hymns');
+ assert.match(await daily.locator('.byz-daily-propers').innerText(),/Troparion of the Resurrection \(Tone 8\)/i);
+ assert.doesNotMatch(await daily.locator('.byz-daily-propers').innerText(),/You came down from on high, O Merciful One/i);
+ assert.equal((await daily.locator('.byz-daily-propers').innerText()).includes('*'),false,
+  'Melkite hymns are formatted for quiet continuous reading');
  assert.match(await daily.innerText(),/Luke 10:25-37/);
  assert.doesNotMatch(await daily.innerText(),/Mark 16:9-20/,'Orthros Gospel must not show as Divine Liturgy Gospel');
  assert.equal(await daily.locator('a').getAttribute('href'),'https://melkite.org/liturgical-resources');
@@ -305,6 +311,9 @@ module.exports=async(page,base,artifacts,violations)=>{
  daily=page.locator('.byz-liturgy-variations');
  await daily.locator('summary').click();
  assert.match(await daily.innerText(),/Ephesians 5:8-19/,'Melkite epistle updates on the next Sunday');
+ await daily.locator('.byz-proper-group').first().waitFor();
+ assert.match(await daily.locator('.byz-daily-propers').innerText(),/Troparion of the resurrection \(Tone 1\)/i,
+  'Melkite November 22 has its own dated hymn');
  assert.match(await daily.innerText(),/Luke 12:16-22/);
  for(const width of [320,390]){
   await page.setViewportSize({width,height:844});

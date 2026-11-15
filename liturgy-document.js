@@ -36,7 +36,8 @@
   };
   const isoPattern=/^2026-\d{2}-\d{2}$/;
   function validRecord(record,{church,iso,id,seasonal=false}={}){
-    if(seasonal||id!=='chrysostom'&&id!=='melkite-chrysostom')return false;
+    const expectedId=church==='ukrainian'?'chrysostom':church==='melkite'?'melkite-chrysostom':null;
+    if(seasonal||!expectedId||id!==expectedId)return false;
     if(!record||record.church!==church||!isoPattern.test(iso||''))return false;
     if(church==='ukrainian')
       return record.source==='https://eeparchy.com/calendar/'+iso;

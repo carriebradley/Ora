@@ -1632,28 +1632,21 @@
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
     return `<section class="card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
-  // Dated English Ukrainian hymns are imported from verified Edmonton pages.
-  // No cross-church fallback; keep translations and appointments distinct.
-  let ukrainianPropersPromise=null;
-  function hydrateUkrainianPropers(iso){
-    if(!ukrainianPropersPromise){
-      ukrainianPropersPromise=fetch('./ukrainian-propers.json',{cache:'no-store'})
-        .then(response=>{if(!response.ok)throw new Error('Propers unavailable');return response.json();})
-        .catch(()=>{ukrainianPropersPromise=null;return null;});
-    }
-    ukrainianPropersPromise.then(data=>{
-      const target=document.querySelector('.byz-daily-propers[data-iso="'+iso+'"]');
-      if(!target||st.date!==iso||S.byzLiturgyChurch!=='ukrainian')return;
-      const entry=data?.days?.[iso];
-      if(data?.schema!==1||entry?.church!=='ukrainian'||
-        entry.source!=='https://eeparchy.com/calendar/'+iso)return;
-      const labels={troparia:'Troparia and Kontakia',prokeimenon:'Prokeimenon',
-        alleluia:'Alleluia',communion:'Communion Hymn'};
+  // Supplemental daily parts are kept separate by sui iuris church and date.
+  // Any part successfully placed in the document must not be repeated below.
+  function hydrateByzantinePropers(iso,church){
+    LiturgyDocument.loadRecord(church,iso).then(entry=>{
+      const target=document.querySelector('.byz-daily-propers[data-iso="'+iso+'"][data-church="'+church+'"]');
+      const owner=document.querySelector('.liturgical-text');
+      if(!target||!owner||!entry||st.date!==iso||S.byzLiturgyChurch!==church)return;
       target.replaceChildren();
-      for(const [key,label] of Object.entries(labels)){
+      const placed=(owner.dataset.placedDaily||'').split(',');
+      for(const [key,label] of Object.entries(LiturgyDocument.labels)){
+        if(placed.includes(key))continue;
         const lines=entry.groups?.[key];
         if(!Array.isArray(lines)||!lines.length)continue;
-        const part=document.createElement('section');part.className='byz-proper-group';
+        const part=document.createElement('section');
+        part.className='byz-proper-group';part.dataset.proper=key;
         const heading=document.createElement('h3');heading.textContent=label;part.append(heading);
         for(const raw of lines){
           if(typeof raw!=='string'||!raw.trim())continue;
@@ -1684,8 +1677,8 @@
     // appointed. Do not offer those hymns as an appointed service on
     // aliturgical or source-conflict days.
     const appointment=dated&&!['none','unknown'].includes(service.id)&&service.verification!=='source-conflict';
-    if(!melkite&&appointment)hydrateUkrainianPropers(iso);
-    const dailyHymns=!melkite&&appointment?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'"></div>':'';
+    if(appointment)hydrateByzantinePropers(iso,church);
+    const dailyHymns=appointment?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'" data-church="'+esc(church)+'"></div>':'';
     const caution=service.verification==='source-conflict'
       ?'<p class="muted">Service appointment needs confirmation with the eparchy.</p>'
       :!dated?'<p class="muted">Daily appointments are not verified for this date.</p>':'';
@@ -2489,7 +2482,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v339';
+  const APP_BUILD = 'ora-v340';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

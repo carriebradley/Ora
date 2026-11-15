@@ -225,7 +225,7 @@
         const summary=document.createElement('summary');summary.textContent=section.heading||section.alternative;
         choice.append(summary);target.append(choice);container=choice;
       }
-      if(section.heading&&!section.alternative){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=section.heading;container.append(h);lastMajor=section.heading;lastHeading=section.heading.toLowerCase();lastLine=null;lastRole=null;}
+      if(section.heading&&!section.alternative){const h=document.createElement(section.dailyProper?'h4':'h3');h.className=section.dailyProper?'byz-prayer-heading byz-daily-proper-heading':'byz-major-heading';h.textContent=section.heading;container.append(h);lastMajor=section.heading;lastHeading=section.heading.toLowerCase();lastLine=null;lastRole=null;}
       for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
         const raw=section.lines[lineIndex];
         let text=String(raw||'').trim();
@@ -294,9 +294,35 @@
     // Optional instructions come after the prayers rather than before them.
     target.append(toolbar);
   }
+  // Compose the day's verified hymns around semantic headings in the user's
+  // privately saved book. Unknown/seasonal editions remain unchanged.
+  function arrangeDailyHymns(section,preview,sections,{recognized=true,seasonal=false}={}){
+    const id=section.dataset.textId;
+    if(!recognized||seasonal||!['chrysostom','melkite-chrysostom'].includes(id)||
+       typeof LiturgyDocument==='undefined')return;
+    const church=id.startsWith('melkite-')?'melkite':'ukrainian';
+    const iso=section.dataset.dayDate,request=hydrateVersion;
+    LiturgyDocument.loadRecord(church,iso).then(record=>{
+      if(!record||!section.isConnected||request!==hydrateVersion||
+         document.querySelector('.liturgical-text')!==section)return;
+      const result=LiturgyDocument.compose(sections,record,{church,iso,id});
+      if(!result.placed.length)return;
+      const showRubrics=preview.classList.contains('byz-show-rubrics');
+      renderEdmontonPrayerText(preview,result.sections);
+      if(showRubrics){
+        preview.classList.add('byz-show-rubrics');
+        const toggle=preview.querySelector('.byz-rubrics-toggle');
+        if(toggle){toggle.textContent='Hide liturgical instructions';toggle.setAttribute('aria-pressed','true');}
+      }
+      section.dataset.placedDaily=result.placed.join(',');
+      const extra=document.querySelector('.byz-daily-propers[data-iso="'+iso+'"][data-church="'+church+'"]');
+      for(const key of result.placed)extra?.querySelector('.byz-proper-group[data-proper="'+key+'"]')?.remove();
+    });
+  }
   async function hydrate(){
     const token=++hydrateVersion,section=document.querySelector('.liturgical-text');if(!section)return;
     section.querySelector('.byz-seasonal-booklet-note')?.remove();
+    delete section.dataset.placedDaily;
     const status=section.querySelector('.reader-status'),preview=section.querySelector('.reader-inline-text'),controls=section.querySelector('.reader-inline-controls'),tools=null;
     try{const saved=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected||token!==hydrateVersion)return;
       status.textContent=saved?`${saved.name} · ${saved.pages} ${saved.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
@@ -329,6 +355,7 @@
           if(!section.isConnected||token!==hydrateVersion)return;
           if(liturgy){
             renderEdmontonPrayerText(preview,liturgy);continuous=true;
+            arrangeDailyHymns(section,preview,liturgy);
             status.textContent=labels[section.dataset.textId]+' · saved privately on this device';
           }else preview.textContent='The prayers could not be identified in this PDF. Open the original book below to read it.';
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
@@ -346,6 +373,7 @@
           continuous=true;
           if(reading?.sections){
             renderEdmontonPrayerText(preview,reading.sections);
+            arrangeDailyHymns(section,preview,reading.sections,{recognized:reading.recognized,seasonal:reading.seasonal});
             if(reading.seasonal)showSeasonalBookletNote(section);
             status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · English-only continuous text')+' · saved privately on this device';
           }else{
