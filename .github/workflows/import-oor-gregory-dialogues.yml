@@ -23,7 +23,16 @@ jobs:
       - name: Validate chapter boundaries and parser
         run: python -m unittest discover -s tests -p test_oor_gregory_dialogues.py
       - name: Import 1911 edition historic reading
-        run: python tools/import_oor_gregory_dialogues.py
+        run: |
+          set -o pipefail
+          python tools/import_oor_gregory_dialogues.py 2>&1 | tee /tmp/ora-gregory-import.log
+      - name: Explain import errors
+        if: failure()
+        run: |
+          echo "### Gregory importer diagnostic" >> "$GITHUB_STEP_SUMMARY"
+          echo "\`\`\`text" >> "$GITHUB_STEP_SUMMARY"
+          tail -n 50 /tmp/ora-gregory-import.log >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+          echo "\`\`\`" >> "$GITHUB_STEP_SUMMARY"
       - name: Refresh Office availability audit
         run: node tools/audit_oor_texts.cjs > docs/office-of-readings-availability.json
       - name: Commit source-matched text and audit

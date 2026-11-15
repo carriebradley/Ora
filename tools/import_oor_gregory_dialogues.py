@@ -17,64 +17,49 @@ START = re.compile(r"Chapter\s+Thirty[- ]three\s*:\s*of a miracle wrought by his
 END = re.compile(r"Chapter\s+Thirty[- ]four\s*:", re.I)
 
 class BlockReader(HTMLParser):
+    """Retain plain text and explicit paragraph boundaries, ignoring page layout."""
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.active = None
         self.parts = []
-        self.blocks = []
         self.skip = 0
 
     def handle_starttag(self, tag, attrs):
-        if tag in ("script", "style"):
+        if tag in ("script", "style", "nav"):
             self.skip += 1
-        if self.skip:
-            return
-        if tag in ("p", "h2", "h3", "h4", "blockquote") and self.active is None:
-            self.active = tag
-            self.parts = []
-        elif tag == "br" and self.active is not None:
-            self.parts.append(" ")
+        if not self.skip and tag in ("p", "h2", "h3", "h4", "blockquote", "br"):
+            self.parts.append("\n\n")
 
     def handle_data(self, data):
-        if not self.skip and self.active:
+        if not self.skip:
             self.parts.append(data)
 
     def handle_endtag(self, tag):
-        if tag in ("script", "style") and self.skip:
+        if tag in ("script", "style", "nav") and self.skip:
             self.skip -= 1
-            return
-        if self.skip or self.active != tag:
-            return
-        body = " ".join("".join(self.parts).split())
-        if body:
-            self.blocks.append(body)
-        self.active = None
-        self.parts = []
+        elif not self.skip and tag in ("p", "h2", "h3", "h4", "blockquote"):
+            self.parts.append("\n\n")
 
 def parse(html):
     parser = BlockReader()
     parser.feed(html)
-    starts = [i for i,b in enumerate(parser.blocks) if START.search(b)]
-    ends = [i for i,b in enumerate(parser.blocks) if END.search(b)]
-    if not starts or not ends:
-        raise ValueError("Chapter 33/34 boundaries not found")
-    start = starts[-1]
-    stop = next((i for i in ends if i>start), None)
-    if stop is None or stop-start<3:
-        raise ValueError("Incomplete chapter 33 boundary")
-    chapter = parser.blocks[start+1:stop]
-    chapter = [b for b in chapter if len(b)>50 and not b.startswith(("Notes:", "Footnotes:"))]
-    text = " ".join(chapter).lower()
-    if not 1300 < len(text) < 14000:
-        raise ValueError(f"Unexpected chapter size: {len(text)}")
-    for word in ("scholastica", "benedict", "prayer", "rain"):
-        if word not in text:
-            raise ValueError("The Scholastica narrative is incomplete: "+word)
-    if "chapter thirty-four" in text:
-        raise ValueError("Adjacent chapter was included")
-    if len(chapter)<4:
-        raise ValueError("Too few prayer-reading paragraphs")
-    return chapter
+    text = "".join(parser.parts)
+    # Prefer the chapter in the book body over the duplicate navigation title.
+    starts = list(START.finditer(text))
+    if not starts:
+        raise ValueError("Chapter 33 heading not found")
+    for start in reversed(starts):
+        next_heading = END.search(text, start.end())
+        if not next_heading:
+            continue
+        raw = text[start.end():next_heading.start()]
+        paragraphs = [" ".join(p.split()) for p in re.split(r"\n\s*\n", raw)]
+        paragraphs = [p for p in paragraphs if len(p) > 50]
+        body = " ".join(paragraphs).lower()
+        if 1300 < len(body) < 14000 and len(paragraphs) >= 4 and all(
+            term in body for term in ("scholastica", "benedict", "prayer", "rain")
+        ):
+            return paragraphs
+    raise ValueError("No complete Scholastica chapter between verified headings")
 
 def import_reading(html, old):
     paragraphs = parse(html)
