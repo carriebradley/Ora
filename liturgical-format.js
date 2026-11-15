@@ -23,9 +23,10 @@
  }
  function heading(text){return heads.has(compact(text))||/^Antiphon:\s*Psalm\s*\d+$/i.test(text);}
  function role(text){
-  const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
+  const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON(?:\s*\d+)?|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
   const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
-  const name=label==='PRIEST AND DEACON'?'Priest and Deacon':kind==='priest'?(/BISHOP/.test(label)?'Bishop':'Priest'):kind==='deacon'?'Deacon':label[0]+label.slice(1).toLowerCase();
+  const number=label.match(/\b\d+\b/)?.[0]||'';
+  const name=label==='PRIEST AND DEACON'?'Priest and Deacon':kind==='priest'?(/BISHOP/.test(label)?'Bishop':'Priest')+(number?' '+number:''):kind==='deacon'?'Deacon'+(number?' '+number:''):label[0]+label.slice(1).toLowerCase();
   return {kind,name,words:m[4].trim(),...(m[2]||m[3]?{cue:(m[2]||m[3]).trim()}: {})};
  }
  function speakerInstruction(text){
@@ -93,7 +94,7 @@
    // A rubric ending in ':' introduces spoken words in the next paragraph.
    // Never let the prayer be swallowed into the hidden instruction.
    const followsRubric=/[:：]\s*$/.test(current)&&instruction(current)&&!instruction(text)&&!role(text);
-   if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
+   if(followsRubric||/^(?:Sunday|Weekday)\s*\(Ordinary\)/i.test(text)||heading(text)||role(text)||instruction(text)||(gap>Math.max(20,(raw.height||12)*1.7)&&!/^(?:BISHOP|PRIEST(?:\s*\d+)?|DEACON(?:\s*\d+)?|DCN(?:\s*\d+)?|ALL|CHOIR|CLERGY):\s*$/i.test(current)))flush();
    if(!current)current=text;
    // Keep a printed hard hyphen: without the source typography we cannot
    // distinguish a wrapped compound (Only-begotten) from a divided word.

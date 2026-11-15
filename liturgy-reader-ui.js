@@ -77,27 +77,45 @@
   // Combine physical PDF lines without joining distinct responses. Tracking
   // spaces and soft hyphenation are artifacts of the PDF, not prayer text.
   const normalizePdfLine=LiturgicalFormat.normalize,isPdfHeading=LiturgicalFormat.heading,combinePdfLines=LiturgicalFormat.combine;
+  // Shared layout parser; keep source-specific PDF page ranges separate.
+  function addPrayerSections(sections,rows,heading=null){
+    if(heading)sections.push({heading,lines:[]});
+    if(!rows.length)return;
+    const groups=[];
+    for(const row of rows){
+      const alternative=row.alternative||'';
+      if(groups.at(-1)?.alternative!==alternative)groups.push({alternative,rows:[]});
+      groups.at(-1).rows.push(row);
+    }
+    for(const group of groups){
+      const combined=combinePdfLines(group.rows).filter(line=>
+        !/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line));
+      if(!combined.length)continue;
+      if(group.alternative){
+        const name=group.alternative==='sunday'?'Sunday':'Weekday';
+        const choice=/^(?:Sunday|Weekday)\b/i.test(combined[0])?combined.shift():name;
+        if(combined.length)sections.push({alternative:group.alternative,heading:choice,lines:combined});
+      }else sections.push({lines:combined});
+    }
+  }
   async function edmontonPrayerText(book){
     if(book.numPages!==140)return null;
     const marker=await book.getPage(4);
     const meta=(await marker.getTextContent()).items.map(x=>x.str).join(' ').replace(/\s+/g,' ');
     if(!/official translation of the Ukrainian Greek/i.test(meta)||!/Chrysostom/i.test(meta))return null;
-    const sections=[];
-    // PDF pages 33-113 (one-based, odd pages) are the English liturgy proper.
-    // Page 115 starts additional personal prayers and page 31 episcopal preparation.
+    const sections=[{heading:'Divine Liturgy of St. John Chrysostom',lines:[]}];
+    // This 2012 edition alternates Ukrainian and English. The English proper
+    // is on odd, one-based PDF pages 33–113. Omit facing-language pages and
+    // the appendix, but keep the printed words and optional antiphons.
     for(let number=33;number<=113;number+=2){
       const page=await book.getPage(number);
       const items=(await page.getTextContent()).items;
-      const lines=LiturgicalFormat.pdfRows(items,number);
-      const clean=combinePdfLines(lines).filter(line=>{
-        if(/^\d{1,3}$/.test(line))return false;
-        if(/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(line))return false;
-        return true;
-      });
+      const rows=LiturgicalFormat.pdfRows(items,number).filter(row=>
+        !/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(row.text));
       const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
-      sections.push({heading,lines:clean});
+      addPrayerSections(sections,rows,heading);
     }
-    return sections;
+    return sections.reduce((n,part)=>n+part.lines.length,0)>=3?sections:null;
   }
 
   // Generic PDF reading view for a user's private Melkite copy. Unlike the
@@ -133,20 +151,8 @@
         if(/^(?:\d{1,4}|page \d+|table of contents|contents|notes|rubrics)$/i.test(line))return false;
         return true;
       });
-      if(lines.some(row=>row.alternative)){
-        const groups=[];
-        for(const row of (end<0?lines:lines.slice(0,end))){
-          const kind=row.alternative||'';
-          if(groups.at(-1)?.alternative!==kind)groups.push({alternative:kind,rows:[]});
-          groups.at(-1).rows.push(row);
-        }
-        for(const group of groups){
-          const combined=combinePdfLines(group.rows).filter(line=>!/^\d{1,4}$/.test(line));
-          if(!combined.length)continue;
-          const heading=group.alternative?combined.shift():null;
-          sections.push({alternative:group.alternative,heading,lines:combined});
-        }
-      }else if(clean.length)sections.push({heading:number===startPage&&startPage===30?'Divine Liturgy of St. John Chrysostom':null,lines:clean});
+      addPrayerSections(sections,end<0?lines:lines.slice(0,end),
+        number===startPage&&startPage===30?'Divine Liturgy of St. John Chrysostom':null);
       if(end>=0)break;
     }
     return foundLiturgy&&sections.length?sections:null;
@@ -288,15 +294,13 @@
           }else preview.textContent='The prayers could not be identified in this PDF. Open the original book below to read it.';
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
           status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
-          const liturgy=await prayerPreview(saved,book,edmontonPrayerText);
+          const liturgy=await prayerPreview(saved,book,async b=>
+            await edmontonPrayerText(b)||await standardPrayerText(b,section.dataset.textId));
           if(!section.isConnected||token!==hydrateVersion)return;
           if(liturgy){
             renderEdmontonPrayerText(preview,liturgy);continuous=true;
-            status.textContent='Edmonton Divine Liturgy · saved privately on this device';
-          }else{
-            const page=await book.getPage(selected),content=await page.getTextContent();
-            preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'No selectable text on this page.';
-          }
+            status.textContent='Ukrainian Divine Liturgy · saved privately on this device';
+          }else preview.textContent='The English liturgy could not be identified in this PDF. Open the original book below to read it.';
         }else if(book.kind==='epub'){const part=book.sections[selected-1];renderEdmontonPrayerText(preview,[{heading:part.title,lines:part.blocks.map(b=>b.kind==='instruction'?'Instruction: '+b.text:b.role==='all'?'ALL: '+b.text:b.text)}]);}
         else{const page=await book.getPage(selected),content=await page.getTextContent();if(!section.isConnected||token!==hydrateVersion)return;preview.textContent=content.items.map(item=>item.str+(item.hasEOL?'\n':' ')).join('').trim()||'This page has no selectable text. Use Open saved text for the original page.';}
         preview.hidden=false;if(controls)controls.hidden=continuous;if(controls)controls.querySelector('.reader-inline-page').textContent=`${book.kind==='epub'?'Section':'Page'} ${selected} of ${book.numPages}`;if(controls)controls.querySelector('[data-reader="inline-prev"]').disabled=selected<=1;if(controls)controls.querySelector('[data-reader="inline-next"]').disabled=selected>=book.numPages;

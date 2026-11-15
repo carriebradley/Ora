@@ -8,7 +8,7 @@ test('PDF headings and paragraphs survive tracked letters and physical line brea
 test('rubrics never consume unlabelled petitions or parenthesized responses',()=>{
  for(const s of ['For the peace of the world, fixture petition.','(Amen.)','Lord, fixture prayer.','ALL: The priest fixture quotation.'])assert.equal(F.instruction(s),false,s);
  for(const s of ['The priest bows.','After the entrance, the deacon continues.','(All stand.)','Instruction: Fixture direction.'])assert.equal(F.instruction(s),true,s);
- assert.deepEqual(F.role('DCN 2: Fixture petition.'),{kind:'deacon',name:'Deacon',words:'Fixture petition.'});
+ assert.deepEqual(F.role('DCN 2: Fixture petition.'),{kind:'deacon',name:'Deacon 2',words:'Fixture petition.'});
  assert.equal(F.role('Fixture prayer.'),null);
 });
 test('Roman source rubrics stay hidden, including an entirely instructional section',()=>{
@@ -197,4 +197,22 @@ test('single-observance Calendar headings and chips use the shared capitalizatio
   ['ALL-NIGHT VIGIL FEAST','All-Night Vigil Feast'],
   ['USCCB','USCCB']
  ])assert.equal(F.displayTitle(raw),expected);
+});
+
+test('Ukrainian numbered clergy use distinct readable speaker names',()=>{
+ for(const [line,name,kind] of [
+  ['PRIEST 1: Fixture opening.','Priest 1','priest'],
+  ['PRIEST 2: Fixture reply.','Priest 2','priest'],
+  ['DEACON 1: Fixture petition.','Deacon 1','deacon'],
+  ['DCN 2: Fixture petition.','Deacon 2','deacon'],
+  ['ALL: Amen.','All','all']
+ ]){
+  const role=F.role(line);
+  assert.equal(role?.name,name,line);assert.equal(role?.kind,kind,line);
+ }
+ assert.deepEqual(F.combine([
+  {text:'DEACON 2:',page:35,y:620,height:12},
+  {text:'Fixture petition on the next line.',page:35,y:590,height:12},
+  {text:'ALL: Fixture response.',page:35,y:565,height:12}
+ ]),['DEACON 2: Fixture petition on the next line.','ALL: Fixture response.']);
 });
