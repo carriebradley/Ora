@@ -1,0 +1,48 @@
+name: Validate all 2026 Newton monthly typika
+on:
+  push:
+    branches:
+      - research/newton-2026-monthly-typika
+    paths:
+      - tools/import_melkite_propers_year.py
+      - tests/test_melkite_propers_year.py
+      - .github/workflows/newton-2026-typika.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Word document parser
+        run: pip install python-docx
+      - name: Test source and date boundary safeguards
+        run: python -m unittest discover -s tests -p 'test_melkite_propers*.py'
+      - name: Parse all 12 official monthly documents
+        run: python tools/import_melkite_propers_year.py
+      - name: Check output structure and 2026 coverage
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('melkite-propers-2026.json').read_text())
+          assert x['schema']==1 and x['year']==2026
+          assert len(x['coverage'])==12
+          assert all(x['coverage'][name]['hymnDates']>0 for name in x['coverage'])
+          assert all(key==rec['iso'] for key,rec in x['days'].items())
+          print('Newton 2026:',len(x['days']),'Chrysostom hymn dates, 12 source months')
+          PY
+      - name: Commit candidate data to research branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add melkite-propers-2026.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Stage 2026 Newton monthly hymns for verification'
+            git push
+          fi
