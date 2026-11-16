@@ -53,9 +53,9 @@ function audit(input){
 // Locate the first difference even when a PDF and the reader wrap text on
 // different lines. Exact prefix and suffix matching preserves prayer words.
 // The excerpt is a review pointer, never an automatic correction.
-function firstDivergence(sourceLines,renderedLines){
- const words=lines=>lines.flatMap((line,i)=>(line.match(/\S+/g)||[]).map(text=>({text,line:i+1,key:text.toLocaleLowerCase('en')})));
- const source=words(sourceLines),rendered=words(renderedLines);
+function firstDivergence(sourceLines,renderedLines,sourceNumbers,renderedNumbers){
+ const words=(lines,numbers)=>lines.flatMap((line,i)=>(line.match(/\S+/g)||[]).map(text=>({text,line:numbers?.[i]??i+1,key:text.toLocaleLowerCase('en')})));
+ const source=words(sourceLines,sourceNumbers),rendered=words(renderedLines,renderedNumbers);
  let first=0;
  while(first<source.length&&first<rendered.length&&source[first].key===rendered[first].key)first++;
  let endSource=source.length,endRendered=rendered.length;
@@ -75,10 +75,10 @@ function firstDivergence(sourceLines,renderedLines){
 // Align exact words across physical line breaks, never fuzzy variants.
 // Myers' bounded edit path supports many small changes within long prayers.
 // If a large mismatch cannot be aligned safely, report it as unresolved.
-function multipleDivergences(sourceLines,renderedLines,firstDifference){
- const tokens=lines=>lines.flatMap((line,i)=>(line.match(/\S+/g)||[])
-  .map(text=>({text,line:i+1,key:text.toLocaleLowerCase('en')})));
- const a=tokens(sourceLines),b=tokens(renderedLines),n=a.length,m=b.length;
+function multipleDivergences(sourceLines,renderedLines,firstDifference,sourceNumbers,renderedNumbers){
+ const tokens=(lines,numbers)=>lines.flatMap((line,i)=>(line.match(/\S+/g)||[])
+  .map(text=>({text,line:numbers?.[i]??i+1,key:text.toLocaleLowerCase('en')})));
+ const a=tokens(sourceLines,sourceNumbers),b=tokens(renderedLines,renderedNumbers),n=a.length,m=b.length;
  const excerpt=(entries,index)=>entries.slice(Math.max(0,index-3),Math.min(entries.length,index+8)).map(x=>x.text).join(' ');
  const maxEdits=192;
  let frontier=new Map([[1,0]]);
@@ -151,14 +151,17 @@ function comparePassages(source,rendered){
  const normalizeSpeaker=s=>s.replace(/^\s*(?:the\s+)?(?:celebrant|priest(?:\s+1)?)\s*:\s*/i,'Priest: ')
   .replace(/^\s*(?:dcn|deacon)\s*:\s*/i,'Deacon: ')
   .replace(/^\s*(?:people|faithful|congregation|all)\s*:\s*/i,'All: ');
- const src=String(source||'').split(/\r?\n/).map(x=>normalizeSpeaker(x.trim())).filter(Boolean);
- const view=String(rendered||'').split(/\r?\n/).map(x=>normalizeSpeaker(x.trim())).filter(Boolean);
+ const rows=text=>String(text||'').split(/\r?\n/)
+  .map((raw,i)=>({line:i+1,text:normalizeSpeaker(raw.trim())})).filter(row=>row.text);
+ const srcRows=rows(source),viewRows=rows(rendered);
+ const src=srcRows.map(row=>row.text),view=viewRows.map(row=>row.text);
+ const sourceNumbers=srcRows.map(row=>row.line),renderedNumbers=viewRows.map(row=>row.line);
  // Identical continuous text is equivalent regardless of physical PDF line
  // breaks. Keep punctuation and word order intact; do not use fuzzy matching.
  if(normalize(src.join(' '))===normalize(view.join(' ')))
   return {sourceLines:src.length,renderedLines:view.length,findings:[]};
- const firstDifference=firstDivergence(src,view);
- const {differences,diffTruncated}=multipleDivergences(src,view,firstDifference);
+ const firstDifference=firstDivergence(src,view,sourceNumbers,renderedNumbers);
+ const {differences,diffTruncated}=multipleDivergences(src,view,firstDifference,sourceNumbers,renderedNumbers);
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
   const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);
@@ -169,19 +172,19 @@ function comparePassages(source,rendered){
  for(let i=0;i<src.length;i++){
   const key=normalize(src[i]);const count=(seen.get(key)||0)+1;seen.set(key,count);
   const hits=positions.get(key)||[];
-  if(!hits.length){findings.push({kind:'missing',sourceLine:i+1,text:src[i]});continue;}
-  if(count>hits.length){findings.push({kind:'insufficient-occurrences',sourceLine:i+1,text:src[i],expectedAtLeast:count,found:hits.length});continue;}
+  if(!hits.length){findings.push({kind:'missing',sourceLine:sourceNumbers[i],text:src[i]});continue;}
+  if(count>hits.length){findings.push({kind:'insufficient-occurrences',sourceLine:sourceNumbers[i],text:src[i],expectedAtLeast:count,found:hits.length});continue;}
   const next=hits.find(pos=>pos>previous);
   if(next===undefined){
-   findings.push({kind:'out-of-order',sourceLine:i+1,text:src[i],renderedLines:hits});
+   findings.push({kind:'out-of-order',sourceLine:sourceNumbers[i],text:src[i],renderedLines:hits.map(pos=>renderedNumbers[pos-1])});
   }else previous=next;
  }
  for(const [key,hits] of positions){
   const expected=seen.get(key)||0;
-  if(expected&&hits.length>expected)findings.push({kind:'extra-occurrences',text:view[hits[0]-1],expected,found:hits.length,renderedLines:hits});
+  if(expected&&hits.length>expected)findings.push({kind:'extra-occurrences',text:view[hits[0]-1],expected,found:hits.length,renderedLines:hits.map(pos=>renderedNumbers[pos-1])});
   // A completely new displayed line is not necessarily an error (for
   // example an appointed proper), but must be explicitly reviewed.
-  if(!expected)findings.push({kind:'unexpected-rendered',text:view[hits[0]-1],renderedLines:hits});
+  if(!expected)findings.push({kind:'unexpected-rendered',text:view[hits[0]-1],renderedLines:hits.map(pos=>renderedNumbers[pos-1])});
  }
  return {sourceLines:src.length,renderedLines:view.length,findings,firstDifference,differences,diffTruncated};
 }
