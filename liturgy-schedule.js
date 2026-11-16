@@ -94,6 +94,7 @@
     if(church!=='ruthenian'&&id!=='unknown')note+=' Calculated common Byzantine service cycle; local Ukrainian or Melkite directions and parish schedules must be checked.';
     let verification=id==='unknown'?'unavailable':church==='ruthenian'?'reference':'calculated';
     let title=names[id];
+    let detailSource='',detailSourceLabel='',sourceDiscrepancy='';
     // Great Wednesday's two statements in Edmonton are compatible:
     // no Eucharistic Divine Liturgy, but the Presanctified Gifts are
     // explicitly appointed for Wednesday evening. Not a guessed cycle.
@@ -103,7 +104,10 @@
     }
     if(church==='ukrainian'&&iso==='2026-12-24'){
       id='unknown';verification='source-conflict';title='Divine Liturgy · confirm Edmonton directions';
-      note='Source conflict: the usual cycle calls for St. Basil, while Edmonton’s dated page says no Divine Liturgy. The service has not been selected automatically. Confirm the eparchy’s directions.';
+      note='Source conflict: Edmonton’s dated December 24 calendar says the Divine Liturgy is not served, whereas the UGCC Patriarchal Liturgical Commission’s official 2026 calendar appoints Vespers with the Divine Liturgy of St. Basil the Great. No service has been selected automatically; confirm the local eparchy’s directions.';
+      sourceDiscrepancy='Edmonton says no Divine Liturgy on Christmas Eve; the UGCC 2026 national calendar appoints Vespers with St. Basil. Ora has not selected either service or assigned dated hymns. Confirm local directions.';
+      detailSource='https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/';
+      detailSourceLabel='UGCC 2026 service calendar';
     }
     if(church==='melkite'&&Melkite?.typicon(iso)){
       id=Melkite.typicon(iso).liturgy;title=names[id];verification='verified';
@@ -116,7 +120,6 @@
     // the 2026 Paramony (Christmas is Friday), but the December 2026
     // monthly typicon contains a conflicting Chrysostom heading. Preserve
     // the appointed Vesperal book without claiming the sources agree.
-    let detailSource='',detailSourceLabel='',sourceDiscrepancy='';
     // Newton's 2026 annual calendar confirms the Three Hierarchs on Friday
     // January 30. Its January monthly typicon prints Thursday instead.
     // This validates the feast, not the unreviewed dated hymn selection.

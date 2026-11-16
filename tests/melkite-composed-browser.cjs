@@ -178,5 +178,27 @@ module.exports=async(page,base,artifacts)=>{
  assert.equal(await hierarchs.locator('a[href="https://melkite.org/wp-content/uploads/2025/12/January-2026.docx"]').count(),1);
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-01-29');
  assert.doesNotMatch(await page.locator('.byz-liturgy-variations').textContent(),/typicon labels January 30/);
- console.log('Melkite on-screen composition, Nativity and Three Hierarchs source safeguards passed.');
+ // The Ukrainian Edmonton calendar and UGCC national calendar disagree on
+ // December 24. Unlike Newton's case, do not select Basil automatically.
+ const originalSettings=await page.evaluate(()=>localStorage.getItem('ora.settings'));
+ await page.evaluate(()=>{
+  const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');
+  s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));
+ });
+ try{
+  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
+  assert.match(await page.locator('.service-summary').textContent(),/confirm Edmonton directions/);
+  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'unknown');
+  const sources=page.locator('.byz-liturgy-variations');
+  const body=await sources.textContent();
+  assert.match(body,/Edmonton says no Divine Liturgy/);
+  assert.match(body,/UGCC 2026 national calendar appoints Vespers with St. Basil/);
+  assert.equal(await page.locator('.byz-daily-propers .byz-proper-group').count(),0);
+  assert.equal(await sources.locator('a[href="https://eeparchy.com/calendar/2026-12-24"]').count(),1);
+  assert.equal(await sources.locator('a[href="https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/"]').count(),1);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ }finally{
+  await page.evaluate(saved=>saved===null?localStorage.removeItem('ora.settings'):localStorage.setItem('ora.settings',saved),originalSettings);
+ }
+ console.log('Melkite and Ukrainian Nativity source conflict, prayer and hymn separation passed.');
 };

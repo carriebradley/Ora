@@ -62,3 +62,24 @@ test('December 30 Edmonton month view and UGCC national calendar restore an inde
  assert.equal(E.source.withheld[date],undefined);
  assert.deepEqual(record.services,[],'No service schedule is inferred from the monthly view');
 });
+
+test('Edmonton Christmas Eve contradicts the UGCC national 2026 Vesperal Basil service and remains unassigned',()=>{
+ const eve='2026-12-24',entry=E.entry(eve),s=S.service(eve,'ukrainian');
+ assert.ok(entry,'Edmonton date remains present');
+ assert.match(entry.rubric,/Divine Liturgy is not served today/);
+ assert.deepEqual(entry.services,['Divine Liturgy'],'a generic source-section heading is not a reliable appointment');
+ assert.deepEqual(entry.references,[]);
+ assert.equal(s.id,'unknown');
+ assert.equal(s.verification,'source-conflict');
+ assert.equal(s.source,'https://eeparchy.com/calendar/'+eve);
+ assert.equal(s.detailSource,'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/');
+ assert.match(s.note,/UGCC Patriarchal Liturgical Commission/);
+ assert.match(s.sourceDiscrepancy,/not selected either service or assigned dated hymns/);
+ for(const iso of ['2026-12-23','2026-12-25']){
+  assert.notEqual(S.service(iso,'ukrainian').verification,'source-conflict',iso+' should not inherit the eve conflict');
+  assert.equal(S.service(iso,'ukrainian').detailSource,undefined);
+ }
+ assert.equal(S.service(eve,'melkite').id,'basil');
+ assert.notEqual(S.service(eve,'melkite').detailSource,s.detailSource);
+ assert.equal(S.service('2027-12-24','ukrainian').id,'unknown','2026 evidence must not be reused in later years');
+});

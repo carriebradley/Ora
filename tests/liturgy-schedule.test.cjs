@@ -22,7 +22,15 @@ test('Unspecified service church follows Ukrainian Edmonton and preserves Melkit
  const ordinary=serviceForChurch('2026-11-12');
  assert.equal(ordinary.verification,'calculated');
  assert.match(ordinary.source,/eeparchy\.com/);
- assert.equal(serviceForChurch('2026-12-24').verification,'source-conflict');
+ const edmontonEve=serviceForChurch('2026-12-24');
+ assert.equal(edmontonEve.verification,'source-conflict');
+ assert.equal(edmontonEve.id,'unknown','never choose an Edmonton service on contradictory sources');
+ assert.match(edmontonEve.note,/Edmonton.*not served/);
+ assert.match(edmontonEve.note,/UGCC.*Vespers.*St. Basil/);
+ assert.equal(edmontonEve.detailSource,'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/');
+ assert.equal(edmontonEve.detailSourceLabel,'UGCC 2026 service calendar');
+ assert.match(edmontonEve.sourceDiscrepancy,/Edmonton says no Divine Liturgy/);
  assert.equal(serviceForChurch('2026-12-24','melkite').id,'basil');
+ assert.notEqual(serviceForChurch('2026-12-24','melkite').detailSource,edmontonEve.detailSource);
  assert.match(serviceForChurch('2026-11-12','melkite').source,/melkite\.org/);
 });

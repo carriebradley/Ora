@@ -1680,9 +1680,9 @@
     if(appointment)hydrateByzantinePropers(iso,church);
     const dailyHymns=appointment?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'" data-church="'+esc(church)+'"></div>':'';
     const caution=service.verification==='source-conflict'
-      ?'<p class="muted">'+esc(melkite&&iso==='2026-12-24'
+      ?'<p class="muted">'+esc(service.sourceDiscrepancy||(melkite&&iso==='2026-12-24'
         ?'Newton appoints Vesperal St. Basil, not a morning Liturgy; the December typicon also names Chrysostom. Confirm local directions.'
-        :'Service appointment needs confirmation with the eparchy.')+'</p>'
+        :'Service appointment needs confirmation with the eparchy.'))+'</p>'
       :service.sourceDiscrepancy?'<p class="muted">'+esc(service.sourceDiscrepancy)+'</p>'
       :!dated?'<p class="muted">Daily appointments are not verified for this date.</p>':'';
     return '<details class="byz-liturgy-variations">'+

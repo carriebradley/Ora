@@ -112,6 +112,9 @@ test('2026 service selector never silently claims a verified appointment without
   if(iso==='2026-12-24'){
    assert.equal(ua.id,'unknown');
    assert.equal(ua.verification,'source-conflict');
+   assert.equal(ua.detailSource,'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/');
+   assert.match(ua.sourceDiscrepancy,/Edmonton.*UGCC 2026 national calendar/);
+   assert.equal(ukrainian.days[iso],undefined,'unverified Christmas Eve hymns are withheld');
   }else if(iso==='2026-04-01'){
    assert.equal(ua.id,'presanctified');
    assert.equal(ua.verification,'verified','Edmonton explicitly appoints Great Wednesday Presanctified Gifts');
