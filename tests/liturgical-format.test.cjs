@@ -429,3 +429,16 @@ test('Melkite antiphon selection commentary is not displayed as prayer',()=>{
   'For the peace of the whole world, let us pray to the Lord.'
  ])assert.equal(F.instruction(prayer),false,prayer);
 });
+
+test('Melkite tracked Gospel heading and editorial movements',()=>{
+ assert.equal(F.normalize('T H E H O L Y G O S P E L'),'The Holy Gospel');
+ assert.equal(F.normalize('T H E T R O P A R I A & K O N T A K I A'),'The Troparia & Kontakia');
+ for(const note of [
+  'The Deacon, standing before the Holy Doors, takes the censer from the server and censes the Holy Table.',
+  'The Priest hands the Deacon the Holy Gospel.',
+  'The Epistle Reader, turning again to the Altar, chants the Alleluia verses as follows:',
+  'On the Feasts of the Nativity of our Lord and the Theophany, their octaves, and their leave-takings (unless it is a Sunday)'
+ ])assert.equal(F.instruction(note),true,note);
+ assert.equal(F.displayPrayer('Peace □ be to all.'),'Peace be to all.');
+ assert.equal(F.instruction('Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.'),false);
+});

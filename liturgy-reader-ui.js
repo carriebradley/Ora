@@ -200,6 +200,10 @@
 
     const headingPattern=/^(?:Great Litany|Litany of Peace|Small Litany|First Antiphon|Second Antiphon|Third Antiphon|Antiphon:\s*Psalm\s*\d+|Entrance Antiphon|Entrance with the Gospel|Little Entrance|Great Entrance|Prayer of Entrance|Trisagion(?: Hymn| Prayer)?|Prayer of the Trisagion|Only-Begotten Son|Cherubic Hymn|Prayer Before the Gospel|Prayer for the Faithful|Troparia(?:\s*&\s*Kontakia)?|Creed|Symbol of Faith|Prayer of the Cherubic Hymn|Litany for the Gifts|Anaphora|Holy Anaphora|Confession of Love|Thanksgiving|Remembrance|Epiclesis|The Lord.s Prayer|One is Holy|Communion Hymn|Prayer Before Holy Communion|Holy Communion|Blessing with the Holy Gifts|Prayer of Thanksgiving|Prayer Behind the Ambo|Dismissal)$/i;
     let lastLine=null,lastRole=null,lastMajor=null,lastHeading=null,pendingRole=null;
+    // A printed annual hymn index is not an appointed prayer for today.
+    // Skip it until the next recognized service heading. Keep the source
+    // book and the separate date-specific proper records untouched.
+    let inReferenceTable=false;
     let container=target;
     const date=target.closest('[data-day-date]')?.dataset.dayDate;
     const sunday=date&&new Date(date+'T00:00:00Z').getUTCDay()===0;
@@ -236,6 +240,15 @@
         }
         if(heading)text=heading;
         if(!text)continue;
+        const normalizedHeading=normalizePdfLine(text);
+        if(/^Table of Kontakia for the Year\b/i.test(text)){
+          inReferenceTable=true;pendingRole=null;continue;
+        }
+        if(inReferenceTable){
+          if(!(headingPattern.test(normalizedHeading)||isPdfHeading(normalizedHeading)||
+               /^(?:The Holy Gospel|The Trisagion Hymn|The Epistle|The Great Entrance|The Cherubic Hymn|Liturgy of the Eucharist)$/i.test(normalizedHeading)))continue;
+          inReferenceTable=false;
+        }
         if(/^(?:Divine Liturgy of St\. John Chrysostom|Liturgy of the Word|Liturgy of the Eucharist|Anaphora|Holy Communion)$/i.test(text)){
           if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;container.append(h);lastMajor=text;lastHeading=text.toLowerCase();}
           lastLine=null;lastRole=null;pendingRole=null;continue;
