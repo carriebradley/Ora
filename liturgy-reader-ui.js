@@ -241,24 +241,23 @@
         if(heading)text=heading;
         if(!text)continue;
         const normalizedHeading=normalizePdfLine(text);
-        // The printed annual selection directions start before the table
-        // itself. Suppress the whole editorial block, not just its rows.
-        if(/^The celebrant\(s\) alternate with the Choir\b/i.test(text)){
-          inReferenceTable=true;pendingRole=null;continue;
-        }
-        if(/^Table of Kontakia for the Year\b/i.test(text)){
+        // Only the exact source-verified boundary ends an annual reference
+        // table. Generic headings inside the table must never resume prayer.
+        const boundary=LiturgicalFormat.melkiteReferenceBoundary(text);
+        if(boundary==='kontakia-start'||boundary==='hirmoi-start'){
           inReferenceTable=true;pendingRole=null;continue;
         }
         if(inReferenceTable){
-          if(!(headingPattern.test(normalizedHeading)||isPdfHeading(normalizedHeading)||
-               /^(?:The Holy Gospel|The Trisagion Hymn|The Epistle|The Great Entrance|The Cherubic Hymn|Liturgy of the Eucharist)$/i.test(normalizedHeading)))continue;
-          inReferenceTable=false;
+          if(boundary==='kontakia-end'||boundary==='hirmoi-end'){
+            inReferenceTable=false;
+          }else continue;
         }
         if(/^(?:Divine Liturgy of St\. John Chrysostom|Liturgy of the Word|Liturgy of the Eucharist|Anaphora|Holy Communion)$/i.test(text)){
           if(text!==lastMajor){const h=document.createElement('h3');h.className='byz-major-heading';h.textContent=text;container.append(h);lastMajor=text;lastHeading=text.toLowerCase();}
           lastLine=null;lastRole=null;pendingRole=null;continue;
         }
-        if(heading || headingPattern.test(text) || isPdfHeading(text)) {
+        if(heading || headingPattern.test(text) || isPdfHeading(text) ||
+           boundary==='kontakia-end') {
           const normalized=normalizePdfLine(text);
           // PDFs repeat running headings at page breaks. Avoid a second
           // identical title, but retain headings that recur later in prayer.

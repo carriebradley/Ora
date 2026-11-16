@@ -450,3 +450,16 @@ test('annual Kontakia editorial block is excluded before the table heading',()=>
  assert.match(reader,/Table of Kontakia for the Year/);
  assert.match(reader,/inReferenceTable=true/);
 });
+
+test('Newton annual Kontakia table ends before genuine Trisagion prayers',()=>{
+ const B=F.melkiteReferenceBoundary;
+ assert.equal(B('The celebrant(s) alternate with the Choir the singing of the hymns as indicated'),'kontakia-start');
+ assert.equal(B('Table of Kontakia for the Year'),'kontakia-start');
+ for(const line of ['Final Kontakion for Fixed Feasts:','Final Kontakion for ordinary Saturdays',
+  'O Never-Failing Protectress of Christians'])assert.equal(B(line),null);
+ assert.equal(B('The Trisagion Prayer of St. John Chrysostom'),'kontakia-end');
+ assert.equal(B('The Trisagion Prayer of St. Basil the Great'),'kontakia-end');
+ assert.equal(B('Table of Hirmoi for the Year'),'hirmoi-start');
+ assert.equal(B('During the singing of the Hirmos, the Priest continues:'),'hirmoi-end');
+ assert.equal(B('Priest: For the holy prophet and forerunner John the Baptist'),null);
+});

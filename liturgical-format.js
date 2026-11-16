@@ -187,6 +187,20 @@
   }
   flush();return out;
  }
+ // Source-verified boundaries in Newton's 2009 Chrysostom ordinary.
+ // The printed year tables are reference material, but the two Trisagion
+ // prayers following the Kontakia table are genuine liturgical alternatives.
+ function melkiteReferenceBoundary(text){
+  const s=normalize(text);
+  if(/^The celebrant\(s\) alternate with the Choir\b/i.test(s)||
+     /^Table of Kontakia for the Year\b/i.test(s))return 'kontakia-start';
+  if(/^The Trisagion Prayer of St\.? (?:John Chrysostom|Basil the Great)\b/i.test(s))
+    return 'kontakia-end';
+  if(/^Table of Hirmoi for the Year\b/i.test(s))return 'hirmoi-start';
+  if(/^During the singing of the Hirmos, the Priest continues\b/i.test(s))
+    return 'hirmoi-end';
+  return null;
+ }
  function startAtOpeningBlessing(sections){
   if(!Array.isArray(sections))return sections;
   let si=-1,li=-1;
@@ -239,5 +253,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,startAtOpeningBlessing,epubPrayerSections};
 });
