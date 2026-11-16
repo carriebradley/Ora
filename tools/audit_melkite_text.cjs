@@ -32,11 +32,43 @@ function audit(input){
  if(table)findings.push({line:rows.at(-1)?.line||0,kind:'unclosed-reference-table',detail:table});
  return {lines:rows.length,boundaries,findings};
 }
-if(require.main===module){
- const file=process.argv[2];
- if(!file){console.error('Usage: node tools/audit_melkite_text.cjs extracted.txt');process.exit(2);}
- const report=audit(fs.readFileSync(file,'utf8'));
- console.log(JSON.stringify(report,null,2));
- if(report.findings.length)process.exitCode=1;
+
+// Compare explicitly chosen prayer lines with a rendered text export.
+// The caller must first exclude rubrics and optional unappointed alternatives.
+// Exact normalized matching is conservative: a mismatch requires review.
+function comparePassages(source,rendered){
+ const normalize=s=>String(s||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('en');
+ const src=String(source||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ const view=String(rendered||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ const counts=new Map(),positions=new Map();
+ for(let i=0;i<view.length;i++){
+  const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);
+  if(!positions.has(key))positions.set(key,[]);
+  positions.get(key).push(i+1);
+ }
+ const findings=[],seen=new Map();let previous=0;
+ for(let i=0;i<src.length;i++){
+  const key=normalize(src[i]);const count=(seen.get(key)||0)+1;seen.set(key,count);
+  const hits=positions.get(key)||[];
+  if(!hits.length){findings.push({kind:'missing',sourceLine:i+1,text:src[i]});continue;}
+  if(count>hits.length){findings.push({kind:'insufficient-occurrences',sourceLine:i+1,text:src[i],expectedAtLeast:count,found:hits.length});continue;}
+  const next=hits.find(pos=>pos>previous);
+  if(next===undefined){
+   findings.push({kind:'out-of-order',sourceLine:i+1,text:src[i],renderedLines:hits});
+  }else previous=next;
+ }
+ for(const [key,hits] of positions){
+  const expected=seen.get(key)||0;
+  if(expected&&hits.length>expected)findings.push({kind:'extra-occurrences',text:view[hits[0]-1],expected,found:hits.length,renderedLines:hits});
+ }
+ return {sourceLines:src.length,renderedLines:view.length,findings};
 }
-module.exports={audit};
+if(require.main===module){
+ const file=process.argv[2],rendered=process.argv[3];
+ if(!file){console.error('Usage: node tools/audit_melkite_text.cjs extracted.txt [rendered-prayers.txt]');process.exit(2);}
+ const report=audit(fs.readFileSync(file,'utf8'));
+ if(rendered)report.comparison=comparePassages(fs.readFileSync(file,'utf8'),fs.readFileSync(rendered,'utf8'));
+ console.log(JSON.stringify(report,null,2));
+ if(report.findings.length||report.comparison?.findings.length)process.exitCode=1;
+}
+module.exports={audit,comparePassages};

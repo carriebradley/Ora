@@ -14,3 +14,18 @@ test('Melkite audit flags source defects without rewriting source',()=>{
 test('Melkite audit flags unclosed reference block',()=>{
  assert.equal(audit('Table of Hirmoi for the Year\nAn annual reference').findings[0].kind,'unclosed-reference-table');
 });
+
+test('Melkite passage comparison detects missing, reordered and duplicated prayer lines',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const src='Priest: Blessed is the Kingdom.\nAll: Amen.\nDeacon: In peace let us pray.';
+ const ok=comparePassages(src,src);
+ assert.deepEqual(ok.findings,[]);
+ assert.deepEqual(comparePassages(src,'Priest: Blessed is the Kingdom.\nDeacon: In peace let us pray.').findings.map(x=>x.kind),['missing']);
+ assert.ok(comparePassages(src,'Deacon: In peace let us pray.\nAll: Amen.\nPriest: Blessed is the Kingdom.').findings.some(x=>x.kind==='out-of-order'));
+ assert.deepEqual(comparePassages(src,src+'\nAll: Amen.').findings.map(x=>x.kind),['extra-occurrences']);
+});
+test('Repeated source responses are not automatically marked as duplicates',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const src='All: Lord, have mercy.\nAll: Lord, have mercy.';
+ assert.deepEqual(comparePassages(src,src).findings,[]);
+});
