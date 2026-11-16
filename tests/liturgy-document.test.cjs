@@ -206,3 +206,74 @@ test('a reversed major liturgical heading safely suspends dated hymn placement',
   assert.deepEqual(outcome.sections,book,'keep private source unchanged');
  }
 });
+
+
+test('all 63 Newton hymn dates place at printed Trisagion and Gospel titles without changing prayer text',()=>{
+ const dataset=require('../melkite-propers-2026.json');
+ const book=[{heading:'Liturgy of the Word',lines:[
+  'PRIEST: Blessed is the Kingdom.','ALL: Lord, have mercy.',
+  'Little Entrance','The Trisagion Hymn',
+  'ALL: Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.',
+  'Epistle','The Holy Gospel','Liturgy of the Eucharist',
+  'One is Holy','Holy Communion'
+ ]}];
+ const original=book.flatMap(s=>[s.heading,...s.lines]);
+ for(const [iso,record] of Object.entries(dataset.days)){
+  const result=D.compose(book,record,{church:'melkite',id:'melkite-chrysostom',iso});
+  assert.deepEqual(result.placed,Object.keys(record.groups),iso+' did not place all its unambiguous groups');
+  assert.deepEqual(result.sections.filter(s=>!s.dailyProper)
+   .flatMap(s=>[s.heading,...s.lines].filter(Boolean)),original,
+   iso+' changed the printed title or source prayer wording');
+  assert.deepEqual(result.remaining,[],iso+' left placeable hymns separate');
+  const txt=joined(result);
+  assert.ok(txt.indexOf('Troparion')<txt.indexOf('The Trisagion Hymn'),iso+' troparia inserted too late');
+  assert.ok(txt.indexOf('The Trisagion Hymn')<txt.indexOf('The Holy Gospel'),iso+' headings reversed');
+ }
+});
+
+test('printed and shortened duplicate title anchors are treated as ambiguous',()=>{
+ const dataset=require('../melkite-propers-2026.json');
+ const record=dataset.days['2026-11-15'];
+ const ctx={church:'melkite',id:'melkite-chrysostom',iso:'2026-11-15'};
+ const duplicates=[{heading:'Liturgy of the Word',lines:[
+  'Little Entrance','Trisagion Hymn','The Trisagion Hymn',
+  'Epistle','The Holy Gospel','Gospel','One is Holy','Holy Communion'
+ ]}];
+ const outcome=D.compose(duplicates,record,ctx);
+ assert.deepEqual(outcome.placed,[]);
+ assert.deepEqual(outcome.sections,duplicates);
+ const sectionHead=[{heading:'The Trisagion Hymn',lines:['Epistle','The Holy Gospel']}];
+ assert.equal(D.compose(sectionHead,record,ctx).placed.includes('prokeimenon'),true);
+});
+
+test('Trisagion prayers and longer Gospel descriptions never authorize an inferred hymn position',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const ctx={church:'melkite',id:'melkite-chrysostom',iso:'2026-11-15'};
+ for(const title of [
+  'The Trisagion Prayer of St. John Chrysostom',
+  'The Trisagion Prayer of St. Basil the Great',
+  'The Trisagion Hymn and Its History'
+ ]){
+  const book=[{heading:'Liturgy of the Word',lines:['Little Entrance',title,'Epistle','The Holy Gospel']}];
+  const output=D.compose(book,record,ctx);
+  assert.equal(output.placed.includes('troparia'),false,title);
+  assert.equal(output.placed.includes('prokeimenon'),false,title);
+ }
+ const book=[{heading:'Liturgy of the Word',lines:[
+  'Little Entrance','The Trisagion Hymn','Epistle','The Holy Gospel according to Luke'
+ ]}];
+ assert.equal(D.compose(book,record,ctx).placed.includes('alleluia'),false);
+});
+
+test('printed The Holy Gospel heading participates in the structural order check',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const ctx={church:'melkite',id:'melkite-chrysostom',iso:'2026-11-15'};
+ const book=[{heading:'Liturgy of the Word',lines:[
+  'Little Entrance','The Holy Gospel','The Trisagion Hymn',
+  'Epistle','One is Holy','Holy Communion'
+ ]}];
+ const result=D.compose(book,record,ctx);
+ assert.deepEqual(result.placed,[]);
+ assert.deepEqual(result.remaining,Object.keys(record.groups));
+ assert.deepEqual(result.sections,book);
+});

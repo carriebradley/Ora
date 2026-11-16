@@ -85,3 +85,21 @@ the Trisagion, a repeated litany response, Eucharistic words and Communion.
 Malformed order cases are tested separately. This is a structural safeguard,
 not verification of the user's device-local PDF or a new liturgical
 translation.
+
+
+## Exact printed Newton heading aliases
+
+The Newton liturgy prints "The Trisagion Hymn" and "The Holy Gospel" in
+places where the compositor originally expected the shorter headings
+"Trisagion Hymn" and "Gospel". These two exact printed titles now share
+structural matching anchors with the shorter names. The source text and
+rendered headings themselves are preserved without modification.
+
+The compositor intentionally does not equate the two genuine alternative
+Trisagion **prayers** with the Trisagion **hymn**. An ambiguous duplicate
+(canonical plus printed variant) cannot authorize insertion. It also checks
+the printed Gospel title in the global service-order safeguard. Tests run
+all 63 date-specific 2026 Newton hymn records against a fictional service
+using the printed variants and test duplicate titles, prayer-heading false
+positives, section headings and reversed service order. No device-local
+PDF was accessed or rewritten.

@@ -50,14 +50,24 @@
         !['2026-01-30','2026-12-24'].includes(iso);
     return false;
   }
+  // Exact printed title variants already recognized by the source formatter.
+  // Their structural aliases never rewrite any displayed heading or prayer.
+  const sourceHeadingAliases=new Map([
+    ['The Trisagion Hymn','Trisagion Hymn'],
+    ['The Holy Gospel','Gospel']
+  ].map(([printed,short])=>[printed.toLocaleLowerCase('en'),short]));
+  function headingAnchor(value){
+    const text=String(value).trim();
+    return sourceHeadingAliases.get(text.toLocaleLowerCase('en'))||text;
+  }
   function headings(sections){
     const found=[];
     let n=0;
     sections.forEach((part,sectionIndex)=>{
       if(part.alternative)return;
-      if(part.heading)found.push({text:String(part.heading).trim(),sectionIndex,lineIndex:-1,n:n++});
+      if(part.heading)found.push({text:String(part.heading).trim(),anchor:headingAnchor(part.heading),sectionIndex,lineIndex:-1,n:n++});
       (part.lines||[]).forEach((line,lineIndex)=>{
-        found.push({text:String(line).trim(),sectionIndex,lineIndex,n:n++});
+        found.push({text:String(line).trim(),anchor:headingAnchor(line),sectionIndex,lineIndex,n:n++});
       });
     });
     return found;
@@ -122,7 +132,7 @@
     ];
     let latestStage=0;
     for(const point of points){
-      const match=milestones.find(([pattern])=>pattern.test(point.text));
+      const match=milestones.find(([pattern])=>pattern.test(point.anchor));
       if(!match)continue;
       if(match[1]<latestStage)return {sections:original,placed:[],remaining};
       latestStage=match[1];
@@ -131,8 +141,8 @@
       const lines=record?.groups?.[key];
       if(!safeLines(lines))continue;
       const rule=rules[key];
-      const beginnings=points.filter(p=>rule.after.test(p.text));
-      const endings=points.filter(p=>rule.before.test(p.text));
+      const beginnings=points.filter(p=>rule.after.test(p.anchor));
+      const endings=points.filter(p=>rule.before.test(p.anchor));
       if(beginnings.length!==1||endings.length!==1)continue;
       const start=beginnings[0],finish=endings[0];
       if(start.n>=finish.n||finish.n-start.n>120)continue;
