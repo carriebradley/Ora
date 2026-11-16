@@ -82,3 +82,12 @@ The compositor now preserves the marker during hymn insertion and fallback.
 It never assigns the identity to an unrecognized book. New tests cover
 successful placement, no-placement, mismatched-day and unknown-source cases.
 The source PDF and prayer wording remain unchanged.
+
+## Source line numbers with blank separators
+
+Both `sourceLine` and `renderedLine` in comparison diagnostics refer to physical
+line numbers in their respective input text files, including blank separators.
+Previously, skipped blank lines shifted review pointers; the auditor now keeps
+those original positions for changed-word spans, missing or reordered lines,
+and unexpected or repeated displayed responses. Blank lines still do not count
+as spoken prayers or trigger wording differences.
