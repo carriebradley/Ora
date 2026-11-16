@@ -112,6 +112,9 @@ test('2026 service selector never silently claims a verified appointment without
   if(iso==='2026-12-24'){
    assert.equal(ua.id,'unknown');
    assert.equal(ua.verification,'source-conflict');
+  }else if(iso==='2026-04-01'){
+   assert.equal(ua.id,'presanctified');
+   assert.equal(ua.verification,'verified','Edmonton explicitly appoints Great Wednesday Presanctified Gifts');
   }else assert.equal(ua.verification,'calculated',iso+' claims unverified Ukrainian appointment');
  }
  assert.equal(S.service('2027-01-01','ukrainian').id,'unknown');
@@ -129,4 +132,6 @@ test('source conflicts and unappointed days stay outside the dated Liturgy view'
  // generic label into evidence of a Chrysostom Eucharistic appointment.
  assert.match(E.days['2026-04-01'].rubric,/Divine Liturgy is not celebrated/);
  assert.equal(S.service('2026-04-01','ukrainian').id,'presanctified');
+ assert.equal(S.service('2026-04-01','ukrainian').verification,'verified');
+ assert.match(S.service('2026-04-01','ukrainian').note,/Wednesday evening/);
 });

@@ -94,6 +94,13 @@
     if(church!=='ruthenian'&&id!=='unknown')note+=' Calculated common Byzantine service cycle; local Ukrainian or Melkite directions and parish schedules must be checked.';
     let verification=id==='unknown'?'unavailable':church==='ruthenian'?'reference':'calculated';
     let title=names[id];
+    // Great Wednesday's two statements in Edmonton are compatible:
+    // no Eucharistic Divine Liturgy, but the Presanctified Gifts are
+    // explicitly appointed for Wednesday evening. Not a guessed cycle.
+    if(church==='ukrainian'&&iso==='2026-04-01'){
+      id='presanctified';title=names[id];verification='verified';
+      note='Edmonton appoints the Liturgy of the Presanctified Gifts on Great Wednesday evening. Its no-Divine-Liturgy note refers to a Eucharistic celebration, not the Presanctified service. Parish times may vary.';
+    }
     if(church==='ukrainian'&&iso==='2026-12-24'){
       id='unknown';verification='source-conflict';title='Divine Liturgy · confirm Edmonton directions';
       note='Source conflict: the usual cycle calls for St. Basil, while Edmonton’s dated page says no Divine Liturgy. The service has not been selected automatically. Confirm the eparchy’s directions.';

@@ -37,7 +37,11 @@ test('missing and conflicting dates are explicit; no Canadian obligation is impo
 test('calculated service schedules state their limits and do not repeat in other years',()=>{
  for(const church of ['ukrainian','melkite'])for(const date of ['2026-02-24','2026-03-09','2026-03-19','2026-04-01']){
   assert.equal(S.service(date,church).id,'presanctified');
-  assert.match(S.service(date,church).note,/Calculated common Byzantine/);
+  if(church==='ukrainian'&&date==='2026-04-01'){
+   assert.equal(S.service(date,church).verification,'verified');
+   assert.match(S.service(date,church).note,/Edmonton appoints.*Presanctified.*Wednesday evening/);
+   assert.match(S.service(date,church).note,/no-Divine-Liturgy note/);
+  }else assert.match(S.service(date,church).note,/Calculated common Byzantine/);
  }
  assert.equal(S.service('2027-04-01','ukrainian').id,'unknown');
 });
