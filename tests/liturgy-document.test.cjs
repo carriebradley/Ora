@@ -378,3 +378,32 @@ test('Melkite composition preserves fixed prayers byte-for-byte across all dated
  assert.deepEqual(after,fixed,'dated hymns must never remove, duplicate, rewrite or reorder fixed prayer lines');
  assert.deepEqual(result.placed,Object.keys(record.groups));
 });
+
+test('Melkite multi-section service retains every minister and repeated prayer through dated composition',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const context={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ const original=[
+  {heading:'Liturgy of the Word',lines:[
+   'PRIEST: Blessed is the Kingdom of the Father and of the Son and of the Holy Spirit.',
+   'Great Litany','DEACON: In peace let us pray to the Lord.',
+   'ALL: Lord, have mercy.','ALL: Lord, have mercy.',
+   'Little Entrance','The Trisagion Hymn','ALL: Holy God, Holy Mighty One.',
+   'Epistle','The Holy Gospel'
+  ]},
+  {heading:'Liturgy of the Eucharist',lines:[
+   'Anaphora','PRIEST: Remember, O Lord, those who bring offerings.',
+   'DEACON: Let us stand well.','ALL: Lord, have mercy.',
+   'One is Holy','Holy Communion','ALL: Receive the Body of Christ.','Dismissal'
+  ]}
+ ];
+ const snapshot=JSON.stringify(original);
+ const result=D.compose(original,record,context);
+ assert.equal(JSON.stringify(original),snapshot,'composition must not mutate either source section');
+ const fixedBefore=original.flatMap(section=>section.lines);
+ const fixedAfter=result.sections.filter(section=>!section.dailyProper).flatMap(section=>section.lines);
+ assert.deepEqual(fixedAfter,fixedBefore,'all fixed prayers and role labels must survive in original order');
+ assert.equal(fixedAfter.filter(line=>line==='ALL: Lord, have mercy.').length,3);
+ assert.deepEqual(result.placed,Object.keys(record.groups));
+ assert.ok(result.sections.findIndex(section=>section.heading==='Liturgy of the Eucharist')>
+  result.sections.findIndex(section=>section.heading==='Liturgy of the Word'));
+});
