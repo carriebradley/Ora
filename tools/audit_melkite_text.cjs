@@ -60,6 +60,9 @@ function comparePassages(source,rendered){
  for(const [key,hits] of positions){
   const expected=seen.get(key)||0;
   if(expected&&hits.length>expected)findings.push({kind:'extra-occurrences',text:view[hits[0]-1],expected,found:hits.length,renderedLines:hits});
+  // A completely new displayed line is not necessarily an error (for
+  // example an appointed proper), but must be explicitly reviewed.
+  if(!expected)findings.push({kind:'unexpected-rendered',text:view[hits[0]-1],renderedLines:hits});
  }
  return {sourceLines:src.length,renderedLines:view.length,findings};
 }

@@ -29,3 +29,11 @@ test('Repeated source responses are not automatically marked as duplicates',()=>
  const src='All: Lord, have mercy.\nAll: Lord, have mercy.';
  assert.deepEqual(comparePassages(src,src).findings,[]);
 });
+
+test('Melkite comparison reports unexpected displayed prayers without removing them',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: Blessed is the Kingdom.\nAll: Amen.';
+ const rendered=source+'\nChoir: Unappointed seasonal hymn.';
+ assert.deepEqual(comparePassages(source,rendered).findings.map(x=>x.kind),['unexpected-rendered']);
+ assert.equal(comparePassages(source,rendered).findings[0].text,'Choir: Unappointed seasonal hymn.');
+});
