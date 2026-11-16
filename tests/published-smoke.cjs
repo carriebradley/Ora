@@ -6,22 +6,40 @@ module.exports=async function(browser,artifacts){
   const expected=fs.readFileSync(require.resolve('../sw.js'),'utf8').match(/const V = '(ora-v\d+)'/)[1];
   const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
   const errors=[];
+  let step='initialization',currentUrl=base,lastDeployment=null,page=null;
+  const checkpoint=(label,url=currentUrl)=>{
+    step=label;currentUrl=url;
+    const record={expected,sha:process.env.GITHUB_SHA||null,step,url,at:new Date().toISOString(),deployment:lastDeployment};
+    fs.writeFileSync(path.join(artifacts,'published-progress.json'),JSON.stringify(record,null,2));
+    console.log(`[published-smoke] ${label}: ${url}`);
+  };
+  const visit=async(url,label)=>{
+    checkpoint(label,url);
+    await page.goto(url);
+  };
   try{
+    checkpoint('waiting for published build',base);
     await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
     let ready=false;
     for(let attempt=0;attempt<18;attempt++){
       try{
         const response=await context.request.get(base+'sw.js?audit='+Date.now(),{timeout:10000,headers:{'Cache-Control':'no-cache'}});
         const app=await context.request.get(base+'app.js?audit='+Date.now(),{timeout:10000,headers:{'Cache-Control':'no-cache'}});
-        ready=response.ok()&&app.ok()&&(await response.text()).includes(`const V = '${expected}'`)
-          &&(await app.text()).includes(`const APP_BUILD = '${expected}'`);
-      }catch(_){/* Pages may still be deploying. */}
+        const workerText=await response.text(),appText=await app.text();
+        lastDeployment={
+          workerStatus:response.status(),appStatus:app.status(),
+          workerBuild:workerText.match(/const V = '(ora-v\d+)'/)?.[1]||null,
+          appBuild:appText.match(/const APP_BUILD = '(ora-v\d+)'/)?.[1]||null
+        };
+        ready=response.ok()&&app.ok()&&lastDeployment.workerBuild===expected&&lastDeployment.appBuild===expected;
+      }catch(e){lastDeployment={attempt:attempt+1,error:String(e)};}
       if(ready)break;
-      if(attempt%3===0)console.log(`Waiting for published ${expected}, attempt ${attempt+1}/18`);
+      if(attempt%3===0)checkpoint(`waiting for published ${expected}, attempt ${attempt+1}/18`,base);
       await new Promise(resolve=>setTimeout(resolve,10000));
     }
     assert.ok(ready,'Pages must serve this build before the published mobile check');
-    const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+    checkpoint('published build ready',base);
+    page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
     for(const colorScheme of ['light','dark']){
       await page.emulateMedia({colorScheme});
       for(const [kind,date,pattern]of [
@@ -44,7 +62,7 @@ module.exports=async function(browser,artifacts){
         ['evening','2027-05-16',/marriage of the Lamb is come/],
         ['night','2027-03-30',/Regina Caeli/i]
       ]){
-        await page.goto(`${base}index.html?tab=pray&rite=roman&kind=${kind}&date=${date}`);
+        await visit(`${base}index.html?tab=pray&rite=roman&kind=${kind}&date=${date}`,`Roman ${kind} ${date} ${colorScheme}`);
         await page.locator('#st0').waitFor();
         assert.match(await page.locator('#st0').innerText(),pattern);
         for(const width of [390,320]){
@@ -52,11 +70,12 @@ module.exports=async function(browser,artifacts){
           assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${kind}/${width}/${colorScheme} overflow`);
         }
         await page.setViewportSize({width:390,height:844});
+        checkpoint(`Roman ${kind} ${date} ${colorScheme} screenshot`);
         await page.screenshot({path:path.join(artifacts,`published-${date}-${kind}-${colorScheme}.png`),fullPage:true});
       }
     }
 
-    await page.goto(`${base}index.html?tab=liturgy&rite=byz&date=2026-11-15`);
+    await visit(`${base}index.html?tab=liturgy&rite=byz&date=2026-11-15`,'Byzantine Divine Liturgy');
     await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
     assert.equal(await page.locator('.liturgy-opening .t').innerText(),'Sign of the Cross');
     assert.equal(await page.locator('.liturgy-opening .tx').innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
@@ -65,7 +84,7 @@ module.exports=async function(browser,artifacts){
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Divine Liturgy opening fits the phone');
     }
     for(const rite of ['roman','byz','sarum']){
-      await page.goto(`${base}index.html?tab=today&rite=${rite}&date=2026-11-13`);
+      await visit(`${base}index.html?tab=today&rite=${rite}&date=2026-11-13`,`Artwork ${rite}`);
       assert.equal(await page.locator('.artwork-facts dd').count(),2,'published art has date and origin');
       assert.ok((await page.locator('.artwork-facts dd').last().innerText()).trim());
       for(const width of [320,390]){
@@ -79,7 +98,7 @@ module.exports=async function(browser,artifacts){
       ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/],
       ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/]
     ]){
-      await page.goto(`${base}index.html?tab=today&rite=roman&date=${date}`);
+      await visit(`${base}index.html?tab=today&rite=roman&date=${date}`,`Rose Sunday ${date}`);
       const card=page.locator('.gl[data-v="roman"]');
       assert.equal(await card.locator('.gb').innerText(),badge,date+' rose Sunday badge');
       assert.match((await card.innerText()).replace(/\s+/g,' '),title,date+' correct joy Sunday');
@@ -90,11 +109,25 @@ module.exports=async function(browser,artifacts){
       }
       await page.setViewportSize({width:390,height:844});
     }
-    await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
+    await visit(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`,'Marian calendar accent');
     assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#3b729f','published Marian accent is blue');
     assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian feasts/);
     assert.deepEqual(errors,[],'published app JavaScript errors');
     fs.writeFileSync(path.join(artifacts,'published-results.json'),JSON.stringify({url:base,build:expected,widths:[320,390],colorSchemes:['light','dark'],hours:['morning','evening','night'],errors},null,2));
+    checkpoint('published smoke passed');
     console.log(`Published ${expected}: Lauds, Vespers and Compline passed at 320/390px in light/dark mode.`);
+  }catch(err){
+    const failure={
+      expected,sha:process.env.GITHUB_SHA||null,step,
+      url:page?.url()||currentUrl,deployment:lastDeployment,errors,
+      error:err?.stack||String(err),at:new Date().toISOString()
+    };
+    fs.writeFileSync(path.join(artifacts,'published-failure.json'),JSON.stringify(failure,null,2));
+    console.error('[published-smoke] FAILURE\n'+JSON.stringify(failure,null,2));
+    if(page){
+      try{await page.screenshot({path:path.join(artifacts,'published-failure.png'),fullPage:true,timeout:5000});}
+      catch(screenshotError){console.error('[published-smoke] Screenshot unavailable:',String(screenshotError));}
+    }
+    throw err;
   }finally{await context.close();}
 };
