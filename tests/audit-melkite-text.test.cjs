@@ -53,3 +53,36 @@ test('Melkite audit recognizes equivalent minister labels but not changed minist
  assert.deepEqual(comparePassages('DCN: In peace let us pray.','Deacon: In peace let us pray.').findings,[]);
  assert.ok(comparePassages('Deacon: In peace let us pray.','Priest: In peace let us pray.').findings.length>0);
 });
+
+test('Melkite comparison pinpoints a changed prayer word despite wrapped source lines',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: Blessed is the Kingdom of the Father\nand of the Son and of the Holy Spirit.\nAll: Amen.';
+ const rendered='Priest: Blessed is the Kingdom of the Father and of the Son and of the Holy Ghost.\nAll: Amen.';
+ const report=comparePassages(source,rendered);
+ assert.ok(report.findings.length>0,'changed prayer words still require review');
+ assert.equal(report.firstDifference.sourceLine,2);
+ assert.equal(report.firstDifference.renderedLine,1);
+ assert.equal(report.firstDifference.sourceDifferingWords,1);
+ assert.equal(report.firstDifference.renderedDifferingWords,1);
+ assert.match(report.firstDifference.sourceExcerpt,/Spirit/);
+ assert.match(report.firstDifference.renderedExcerpt,/Ghost/);
+});
+test('Melkite comparison locates an omitted word without inventing replacement wording',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const report=comparePassages('Priest: In peace let us pray.\nAll: Amen.','Priest: In peace let pray.\nAll: Amen.');
+ assert.ok(report.findings.length>0);
+ assert.equal(report.firstDifference.sourceDifferingWords,1);
+ assert.equal(report.firstDifference.renderedDifferingWords,0);
+ assert.match(report.firstDifference.sourceExcerpt,/us pray/);
+});
+test('Melkite comparison still identifies changed ministers and omitted final responses',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const minister=comparePassages('Deacon: In peace let us pray.','Priest: In peace let us pray.');
+ assert.ok(minister.findings.length>0);
+ assert.match(minister.firstDifference.sourceExcerpt,/Deacon/);
+ const omitted=comparePassages('Priest: Blessed is the Kingdom.\nAll: Amen.','Priest: Blessed is the Kingdom.');
+ assert.ok(omitted.findings.some(x=>x.kind==='missing'));
+ assert.equal(omitted.firstDifference.sourceDifferingWords,2);
+ assert.equal(omitted.firstDifference.renderedDifferingWords,0);
+ assert.equal(comparePassages('All: Amen.','People: Amen.').firstDifference,undefined);
+});

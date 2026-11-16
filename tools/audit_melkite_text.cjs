@@ -33,6 +33,28 @@ function audit(input){
  return {lines:rows.length,boundaries,findings};
 }
 
+// Locate the first difference even when a PDF and the reader wrap text on
+// different lines. Exact prefix and suffix matching preserves prayer words.
+// The excerpt is a review pointer, never an automatic correction.
+function firstDivergence(sourceLines,renderedLines){
+ const words=lines=>lines.flatMap((line,i)=>(line.match(/\S+/g)||[]).map(text=>({text,line:i+1,key:text.toLocaleLowerCase('en')})));
+ const source=words(sourceLines),rendered=words(renderedLines);
+ let first=0;
+ while(first<source.length&&first<rendered.length&&source[first].key===rendered[first].key)first++;
+ let endSource=source.length,endRendered=rendered.length;
+ while(endSource>first&&endRendered>first&&source[endSource-1].key===rendered[endRendered-1].key){
+  endSource--;endRendered--;
+ }
+ const excerpt=(entries,i)=>entries.slice(Math.max(0,i-3),Math.min(entries.length,i+8)).map(x=>x.text).join(' ');
+ return {
+  sourceLine:source[Math.min(first,source.length-1)]?.line||null,
+  renderedLine:rendered[Math.min(first,rendered.length-1)]?.line||null,
+  sourceWord:first+1,renderedWord:first+1,
+  sourceDifferingWords:endSource-first,renderedDifferingWords:endRendered-first,
+  sourceExcerpt:excerpt(source,first),renderedExcerpt:excerpt(rendered,first)
+ };
+}
+
 // Compare explicitly chosen prayer lines with a rendered text export.
 // The caller must first exclude rubrics and optional unappointed alternatives.
 // Exact normalized matching is conservative: a mismatch requires review.
@@ -49,6 +71,7 @@ function comparePassages(source,rendered){
  // breaks. Keep punctuation and word order intact; do not use fuzzy matching.
  if(normalize(src.join(' '))===normalize(view.join(' ')))
   return {sourceLines:src.length,renderedLines:view.length,findings:[]};
+ const firstDifference=firstDivergence(src,view);
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
   const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);
@@ -73,7 +96,7 @@ function comparePassages(source,rendered){
   // example an appointed proper), but must be explicitly reviewed.
   if(!expected)findings.push({kind:'unexpected-rendered',text:view[hits[0]-1],renderedLines:hits});
  }
- return {sourceLines:src.length,renderedLines:view.length,findings};
+ return {sourceLines:src.length,renderedLines:view.length,findings,firstDifference};
 }
 if(require.main===module){
  const file=process.argv[2],rendered=process.argv[3];
