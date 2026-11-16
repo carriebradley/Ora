@@ -188,7 +188,8 @@ module.exports=async(page,base,artifacts)=>{
  try{
   await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
   assert.match(await page.locator('.service-summary').textContent(),/confirm Edmonton directions/);
-  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'unknown');
+  assert.equal(await page.locator('.liturgical-text').count(),0,'no service reader can be appointed while Edmonton sources conflict');
+  assert.match(await page.locator('.simple-liturgy').textContent(),/No service book for this date/);
   const sources=page.locator('.byz-liturgy-variations');
   const body=await sources.textContent();
   assert.match(body,/Edmonton says no Divine Liturgy/);
