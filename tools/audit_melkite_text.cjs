@@ -49,6 +49,32 @@ function comparePassages(source,rendered){
  // breaks. Keep punctuation and word order intact; do not use fuzzy matching.
  if(normalize(src.join(' '))===normalize(view.join(' ')))
   return {sourceLines:src.length,renderedLines:view.length,findings:[]};
+ // Partial paragraph matches: compare word sequences in order across line
+ // breaks. Only activate when at least one side wraps a paragraph and the
+ // other does not. Keep the exact-line diagnostics for ordinary comparisons.
+ const words=s=>normalize(s).match(/\S+/g)||[];
+ const srcWords=words(src.join(' ')),viewWords=words(view.join(' '));
+ const wrappingLikely=src.length!==view.length;
+ // Preserve line-level missing and unexpected findings when a complete
+ // source or rendered line is already present in the other side.
+ // Require evidence of an actual line merge before word-level diagnosis.
+ // Otherwise a missing complete line must remain a 'missing' finding.
+ const mergedLine=src.some(line=>!view.includes(line)&&view.some(v=>v.startsWith(line+' ')))||
+  view.some(line=>!src.includes(line)&&src.some(v=>v.startsWith(line+' ')));
+ if(wrappingLikely&&mergedLine&&srcWords.length&&viewWords.length){
+  const lexical=arr=>arr.map(w=>w.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,'')).filter(Boolean);
+  const sourceLex=lexical(srcWords),renderedLex=lexical(viewWords);
+  const sourceSet=new Map(),renderedSet=new Map();
+  for(const w of sourceLex)sourceSet.set(w,(sourceSet.get(w)||0)+1);
+  for(const w of renderedLex)renderedSet.set(w,(renderedSet.get(w)||0)+1);
+  const sameCounts=sourceSet.size===renderedSet.size&&[...sourceSet].every(([w,n])=>renderedSet.get(w)===n);
+  if(sameCounts&&sourceLex.join(' ')!==renderedLex.join(' '))
+   return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'word-order-mismatch',detail:'Words match but their sequence differs across wrapped paragraphs'}]};
+  let j=0;
+  while(j<srcWords.length&&j<viewWords.length&&srcWords[j]===viewWords[j])j++;
+  if(j>0&&j<srcWords.length)
+   return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'partial-word-mismatch',wordOffset:j+1,sourceWord:srcWords[j],renderedWord:viewWords[j]||null}]};
+ }
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
   const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);
