@@ -55,18 +55,21 @@ function comparePassages(source,rendered){
  const words=s=>normalize(s).match(/\S+/g)||[];
  const srcWords=words(src.join(' ')),viewWords=words(view.join(' '));
  const wrappingLikely=src.length!==view.length;
- // Extra complete lines are reported by the exact-line comparator below.
- const extraCompleteLines=view.length>src.length&&src.every(line=>view.includes(line));
- if(wrappingLikely&&!extraCompleteLines&&srcWords.length&&viewWords.length){
+ // Preserve line-level missing and unexpected findings when a complete
+ // source or rendered line is already present in the other side.
+ const hasExactLine=src.some(line=>view.includes(line))||view.some(line=>src.includes(line));
+ if(wrappingLikely&&!hasExactLine&&srcWords.length&&viewWords.length){
+  // For word-order diagnostics, compare words independently of punctuation
+  // attached to their original positions (e.g. "Son." becoming "Son").
+  const lexical=arr=>arr.map(w=>w.replace(/^[^\\p{L}\\p{N}]+|[^\\p{L}\\p{N}]+$/gu,'')).filter(Boolean);
+  const sourceLex=lexical(srcWords),renderedLex=lexical(viewWords);
   const sourceSet=new Map(),renderedSet=new Map();
-  for(const w of srcWords)sourceSet.set(w,(sourceSet.get(w)||0)+1);
-  for(const w of viewWords)renderedSet.set(w,(renderedSet.get(w)||0)+1);
+  for(const w of sourceLex)sourceSet.set(w,(sourceSet.get(w)||0)+1);
+  for(const w of renderedLex)renderedSet.set(w,(renderedSet.get(w)||0)+1);
   const sameCounts=sourceSet.size===renderedSet.size&&[...sourceSet].every(([w,n])=>renderedSet.get(w)===n);
-  if(sameCounts&&srcWords.join(' ')!==viewWords.join(' ')){
+  if(sameCounts&&sourceLex.join(' ')!==renderedLex.join(' ')){
    return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'word-order-mismatch',detail:'Words match but their sequence differs across wrapped paragraphs'}]};
   }
-  // Avoid declaring a harmless split a missing line when its words occur in
-  // the same order; still flag a changed or omitted word explicitly.
   let j=0;
   for(const w of srcWords){if(viewWords[j]===w)j++;else break;}
   if(j>0&&j<srcWords.length){
