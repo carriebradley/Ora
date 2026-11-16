@@ -443,12 +443,11 @@ test('Melkite tracked Gospel heading and editorial movements',()=>{
  assert.equal(F.instruction('Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.'),false);
 });
 
-test('annual Kontakia editorial block is excluded before the table heading',()=>{
- const fs=require('node:fs');
- const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
- assert.ok(reader.includes('The celebrant\\(s\\) alternate with the Choir'));
- assert.match(reader,/Table of Kontakia for the Year/);
- assert.match(reader,/inReferenceTable=true/);
+test('annual Kontakia editorial block uses explicit source boundaries',()=>{
+ const B=F.melkiteReferenceBoundary;
+ assert.equal(B('The celebrant(s) alternate with the Choir'),'kontakia-start');
+ assert.equal(B('Table of Kontakia for the Year'),'kontakia-start');
+ assert.equal(B('The Trisagion Prayer of St. John Chrysostom'),'kontakia-end');
 });
 
 test('Newton annual Kontakia table ends before genuine Trisagion prayers',()=>{
