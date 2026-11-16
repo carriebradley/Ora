@@ -494,3 +494,39 @@ test('bare minister label at a page break is retained for the next prayer',()=>{
  assert.deepEqual(F.role('DEACON:'),{kind:'deacon',name:'Deacon',words:''});
  assert.equal(F.role('PRIEST: Blessed is the Kingdom.')?.words,'Blessed is the Kingdom.');
 });
+
+test('Newton 2009 source audit: genuine prayers survive both annual tables',()=>{
+ // Eparchy of Newton, LITURGY2009.pdf, printed pp. 39-43 and 66-68.
+ // Source: https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf
+ // These are selected exact source anchors, not a full-book transcription.
+ const rows=[
+  {text:'The celebrant(s) alternate with the Choir',expect:'kontakia-start'},
+  {text:'Table of Kontakia for the Year',expect:'kontakia-start'},
+  {text:'Final Kontakion for ordinary Sundays and Weekdays',expect:null},
+  {text:'The Trisagion Prayer of St. John Chrysostom',expect:'kontakia-end'},
+  {text:'O Holy of Holies, our only holy God',expect:null,prayer:true},
+  {text:'The Trisagion Prayer of St. Basil the Great',expect:'kontakia-end'},
+  {text:'God, the Holy, who rest among the saints',expect:null,prayer:true},
+  {text:'Table of Hirmoi for the Year',expect:'hirmoi-start'},
+  {text:'From 21 to 25 November: The Presentation of Our Lady',expect:null},
+  {text:'During the singing of the Hirmos, the Priest continues:',expect:'hirmoi-end'},
+  {text:'Priest: For the holy prophet and forerunner John the Baptist',expect:null,prayer:true}
+ ];
+ let table=null,visible=[];
+ for(const row of rows){
+  const boundary=F.melkiteReferenceBoundary(row.text);
+  assert.equal(boundary,row.expect,row.text);
+  if(boundary==='kontakia-start'||boundary==='hirmoi-start'){table=boundary;continue;}
+  if(table){
+   if(boundary==='kontakia-end'||boundary==='hirmoi-end')table=null;
+   else continue;
+  }
+  visible.push(row.text);
+  if(row.prayer)assert.equal(F.instruction(row.text),false,'real prayer suppressed: '+row.text);
+ }
+ assert.equal(table,null,'source audit must not leave reader inside reference table');
+ for(const anchor of ['O Holy of Holies','God, the Holy','For the holy prophet']){
+  assert.ok(visible.some(line=>line.includes(anchor)),'missing genuine prayer '+anchor);
+ }
+ assert.ok(!visible.some(line=>line.startsWith('From 21 to 25 November')));
+});
