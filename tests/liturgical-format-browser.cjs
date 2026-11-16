@@ -398,6 +398,7 @@ module.exports=async(page,base,artifacts,violations)=>{
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  }
  await require('./melkite-composed-browser.cjs')(page,base,artifacts);
+ await require('./melkite-newton-browser.cjs')(page,base,artifacts);
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  assert.match(await page.locator('.service-summary').innerText(),/Basil the Great/);
