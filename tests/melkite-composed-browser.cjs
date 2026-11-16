@@ -93,5 +93,68 @@ module.exports=async(page,base,artifacts)=>{
   await page.screenshot({path:path.join(artifacts,'melkite-composed-'+
    (protectedPrayer?'protected':'normal')+'.png'),fullPage:true});
  }
+
+ // Replacing an otherwise valid service with a book without unique structural
+ // headings must restore all the day's dated hymns to Readings & propers.
+ // Ordinary words, roles and repeated responses must remain intact.
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  const lines=[
+   'PRIEST: Blessed is the Kingdom. Fixture no-slot opening.',
+   'Great Litany','DEACON: Fixture no-slot petition.',
+   'ALL: Lord, have mercy.','ALL: Lord, have mercy.',
+   'PRIEST: Fixture no-slot Anaphora prayer.',
+   'ALL: Fixture no-slot Communion response.'
+  ];
+  const parts=[
+   {title:'Copyright',blocks:[{text:'Fixture no-slot editorial note.'}]},
+   {title:'BLESSING',blocks:lines.map(text=>({text}))},
+   {title:'Appendix',blocks:[{text:'Fixture no-slot appendix.'}]}
+  ];
+  LiturgyReader.get=async id=>({
+   id,name:'fictional-melkite-no-slots.epub',format:'epub',
+   pages:3,page:1,updated:902,blob:new Blob()
+  });
+  LiturgyReader.load=async()=>({
+   kind:'epub',numPages:3,sections:parts,destroy:async()=>{}
+  });
+  try{await LiturgicalText.hydrate();}
+  finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ await page.waitForFunction(()=>{
+  const section=document.querySelector('.liturgical-text');
+  const extra=document.querySelector(
+   '.byz-daily-propers[data-church="melkite"][data-iso="2026-11-15"]');
+  return section?.dataset.placedDaily==='' &&
+   extra?.querySelectorAll('.byz-proper-group').length===3;
+ },null,{timeout:15000});
+ const noSlotPreview=page.locator('.reader-inline-text');
+ const noSlotText=await noSlotPreview.innerText();
+ assert.match(noSlotText,/Fixture no-slot opening/,'ordinary opening remains');
+ assert.match(noSlotText,/Fixture no-slot Anaphora prayer/,'ordinary Anaphora remains');
+ assert.match(noSlotText,/Fixture no-slot Communion response/,'ordinary Communion remains');
+ assert.equal(await noSlotPreview.locator('.byz-daily-proper-heading').count(),0,
+  'do not insert hymns without verified structural boundaries');
+ assert.equal(await noSlotPreview.locator('.byz-role-all .byz-prayer-words')
+  .filter({hasText:'Lord, have mercy.'}).count(),2,
+  'repeated petitions survive when no hymn is placeable');
+ assert.doesNotMatch(noSlotText,/editorial note|no-slot appendix/i);
+ const allExtra=page.locator(
+  '.byz-daily-propers[data-church="melkite"][data-iso="2026-11-15"]');
+ assert.deepEqual(await allExtra.locator('.byz-proper-group').evaluateAll(nodes=>
+  nodes.map(node=>node.dataset.proper)),['troparia','prokeimenon','alleluia'],
+  'all verified hymns must be restored after replacing the saved book');
+ assert.match(await allExtra.innerText(),/Troparion|Troparia/i,
+  'the original day's hymn words remain available');
+ for(const width of [320,390]){
+  await page.setViewportSize({width,height:844});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),
+   false,'unplaceable Melkite service overflows at '+width+'px');
+ }
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({
+  path:path.join(artifacts,'melkite-composed-unplaceable.png'),
+  fullPage:true
+ });
  console.log('Melkite on-screen composition: prayers, hymns, repeated responses and speaker labels passed.');
 };
