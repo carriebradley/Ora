@@ -41,6 +41,44 @@ module.exports=async(page,base,artifacts,violations)=>{
   violations.push(...audit.violations.map(v=>({tab:'formatted-private-liturgy',colorScheme,id:v.id,examples:v.nodes.map(n=>({html:n.html,summary:n.failureSummary}))})));
   await page.screenshot({path:path.join(artifacts,`private-liturgy-${colorScheme}.png`),fullPage:true});
  }
+ // Source-like, fictional PDF pages: speaker at one page's foot, prayer
+ // at the following page's top. Verify that headings, responses, rubrics and
+ // Greek/Arabic sung-language labels never acquire an unrelated speaker.
+ await page.evaluate(async()=>{
+  const get=LiturgyReader.get,load=LiturgyReader.load;
+  const pages={
+   1:['The Divine Liturgy','PRIEST: Blessed is the Kingdom. Fixture opening.','PRIEST:'],
+   2:['Fixture priest prayer after page break.','The deacon, standing before the Holy Doors, proclaims:'],
+   3:['Fixture deacon proclamation after page break.','PRIEST:'],
+   4:['The Holy Gospel','Fixture separate prayer after heading.','The priest says:'],
+   5:['ALL: Amen.','PRIEST:'],
+   6:['Greek: A---gi---os o The---os,','PRIEST:'],
+   7:['Arabic: Qud---doo---son---il---laah,','The priest says:'],
+   8:['The priest bows.','Fixture unlabelled prayer after rubric.']
+  };
+  LiturgyReader.get=async id=>({id,name:'fictional-pages.pdf',format:'pdf',pages:8,page:1,updated:712,blob:new Blob()});
+  LiturgyReader.load=async()=>({numPages:8,getPage:async n=>({
+   getTextContent:async()=>({items:(pages[n]||[]).map((str,i)=>({
+    str,width:320,height:12,transform:[1,0,0,12,20,750-i*35]
+   }))})
+  }),destroy:async()=>{}});
+  try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+ });
+ const splitPrayer=page.locator('.reader-inline-text');
+ const speakers=async words=>splitPrayer.locator('.byz-prayer-line').filter({hasText:words}).first()
+  .locator('.byz-speaker').allTextContents();
+ assert.deepEqual(await speakers('Fixture priest prayer after page break.'),['Priest']);
+ assert.deepEqual(await speakers('Fixture deacon proclamation after page break.'),['Deacon']);
+ assert.deepEqual(await speakers('Fixture separate prayer after heading.'),[],
+  'heading cancels an earlier speaker cue');
+ assert.deepEqual(await speakers('Amen.'),['All'],'explicit ALL overrides the earlier speaker');
+ assert.deepEqual(await speakers('Fixture unlabelled prayer after rubric.'),[],
+  'rubric cancels an earlier speaker cue');
+ assert.deepEqual(await splitPrayer.locator('.byz-transliteration-label').allTextContents(),
+  ['Greek','Arabic'],'a printed language label cannot be swallowed by PRIEST:');
+ assert.match(await splitPrayer.innerText(),/A-gi-os o The-os/);
+ assert.match(await splitPrayer.innerText(),/Qud-doo-son-il-laah/);
+ assert.doesNotMatch(await splitPrayer.innerText(),/The priest bows|standing before the Holy Doors/i);
  await page.emulateMedia({colorScheme:'light'});
  await page.evaluate(async()=>{
   const originalGet=LiturgyReader.get,originalLoad=LiturgyReader.load;

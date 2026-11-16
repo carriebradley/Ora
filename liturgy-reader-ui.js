@@ -285,7 +285,9 @@
           pendingRole=LiturgicalFormat.speakerInstruction(text);
           lastLine=null;lastRole=null;continue;
         }
-        if(!role&&pendingRole)role={...pendingRole,words:text};
+        // An explicit Arabic/Greek sung label must retain its language,
+        // even if an unrelated minister cue ended the preceding PDF page.
+        if(!role&&pendingRole&&!/^(?:Arabic|Greek)\s*:/i.test(text))role={...pendingRole,words:text};
         pendingRole=null;
         lastHeading=null;
         const p=document.createElement('p');

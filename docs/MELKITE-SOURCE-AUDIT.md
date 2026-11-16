@@ -55,3 +55,16 @@ physical action without a spoken text is still classified as a rubric.
 
 Regression tests exercise both the formatter and the browser's PDF-shaped
 reader fixture. No source book, private PDF, or liturgical prayer was changed.
+
+
+## Page-break speaker and chant verification
+
+The continuous reader is now exercised with a fictional eight-page PDF
+where a bare priest or deacon cue occurs at the end of one page and the
+actual prayer begins on the next. The browser test also verifies that a new
+heading, an explicit `ALL:` response, or a ceremonial rubric prevents
+speaker attribution from leaking into unrelated text.
+
+Greek and Arabic chant labels are protected from an earlier pending minister
+cue. This is a narrow display-only correction: no saved PDF, source document,
+or liturgical wording is modified.
