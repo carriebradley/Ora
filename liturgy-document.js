@@ -146,6 +146,13 @@
       if(beginnings.length!==1||endings.length!==1)continue;
       const start=beginnings[0],finish=endings[0];
       if(start.n>=finish.n||finish.n-start.n>120)continue;
+      // Never split a printed fixed prayer or the bare speaker cue
+      // introducing its next line. Leave this dated group separate instead.
+      const between=points.filter(p=>p.n>start.n&&p.n<finish.n);
+      const protectedPrayer=/^(?:(?:The\s+)?Trisagion Prayer of St\.?\s+(?:John Chrysostom|Basil the Great)|(?:The\s+)?Prayer (?:of the Trisagion|Before the Gospel|Before Holy Communion|of the Cherubic Hymn|for the Faithful)|(?:The\s+)?(?:Great Litany|Litany of Peace|Small Litany)|(?:Holy\s+)?Anaphora)$/i;
+      const unfinishedCue=/^(?:(?:PRIEST|CELEBRANT|BISHOP|DEACON|PROTODEACON|DCN|ALL|PEOPLE|CHOIR|READER|CANTOR)(?:\s+\d+)?(?:\s+AND\s+DEACON)?\s*:\s*|(?:The\s+)?(?:priest|deacon|bishop|reader|choir)\b[^:]{0,120}\b(?:says?|prays?|chants?|sings?|proclaims?|recites?|exclaims?)\s*:\s*)$/i;
+      if(between.some(p=>protectedPrayer.test(p.text))||
+         unfinishedCue.test(points[finish.n-1]?.text||''))continue;
       // Printed hymn headings can name a saint or tone, and may have a
       // minister prefix. Such existing words always occupy the slot.
       const collisions=points.filter(p=>p.n>start.n&&p.n<finish.n&&

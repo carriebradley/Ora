@@ -277,3 +277,83 @@ test('printed The Holy Gospel heading participates in the structural order check
  assert.deepEqual(result.remaining,Object.keys(record.groups));
  assert.deepEqual(result.sections,book);
 });
+
+
+test('all Newton dates with Trisagion alternatives keep those prayers intact',()=>{
+ const dataset=require('../melkite-propers-2026.json');
+ const book=[{heading:'Liturgy of the Word',lines:[
+  'PRIEST: Blessed is the Kingdom.','Little Entrance',
+  'The Trisagion Prayer of St. John Chrysostom',
+  'PRIEST: O Holy of Holies, our only holy God.','ALL: Amen.',
+  'The Trisagion Prayer of St. Basil the Great',
+  'PRIEST: God, the Holy, who rest among the saints.','ALL: Amen.',
+  'The Trisagion Hymn','ALL: Holy God, Holy Mighty One.',
+  'Epistle','The Holy Gospel','One is Holy','Holy Communion'
+ ]}];
+ const original=book.flatMap(s=>[s.heading,...s.lines]);
+ for(const [iso,record] of Object.entries(dataset.days)){
+  const result=D.compose(book,record,{church:'melkite',iso,id:'melkite-chrysostom'});
+  assert.equal(result.placed.includes('troparia'),false,iso+' cannot split Trisagion prayers');
+  if(record.groups.troparia)assert.ok(result.remaining.includes('troparia'),iso+' must keep withheld troparia available');
+  for(const category of ['prokeimenon','alleluia']){
+   if(record.groups[category])assert.ok(result.placed.includes(category),iso+' should still place safe '+category);
+  }
+  assert.deepEqual(result.sections.filter(s=>!s.dailyProper)
+   .flatMap(s=>[s.heading,...s.lines].filter(Boolean)),original,
+   iso+' changed fixed prayer words or their order');
+ }
+});
+
+test('Alleluia placement never interrupts the Prayer Before the Gospel',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const context={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ const book=[{heading:'Liturgy of the Word',lines:[
+  'Little Entrance','The Trisagion Hymn','Epistle',
+  'Prayer Before the Gospel','PRIEST: Shine in our hearts, O Master.',
+  'ALL: Amen.','The Holy Gospel','One is Holy','Holy Communion'
+ ]}];
+ const result=D.compose(book,record,context);
+ assert.ok(result.placed.includes('troparia'));
+ assert.ok(result.placed.includes('prokeimenon'));
+ assert.equal(result.placed.includes('alleluia'),false);
+ assert.ok(result.remaining.includes('alleluia'));
+ assert.deepEqual(result.sections.filter(s=>!s.dailyProper)
+  .flatMap(s=>[s.heading,...s.lines].filter(Boolean)),
+  book.flatMap(s=>[s.heading,...s.lines]));
+});
+
+test('unfinished speaker cues cannot be separated from the following heading',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const context={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ for(const cue of ['PRIEST:','DEACON:','The priest says:','The deacon proclaims:']){
+  const book=[{heading:'Liturgy of the Word',lines:[
+   'Little Entrance',cue,'The Trisagion Hymn','Epistle',
+   'The Holy Gospel','One is Holy','Holy Communion'
+  ]}];
+  const result=D.compose(book,record,context);
+  assert.equal(result.placed.includes('troparia'),false,cue);
+  assert.ok(result.remaining.includes('troparia'),cue);
+  assert.ok(result.placed.includes('prokeimenon'),cue+' cannot block a different safe slot');
+  assert.deepEqual(result.sections.filter(s=>!s.dailyProper)
+   .flatMap(s=>[s.heading,...s.lines].filter(Boolean)),
+   book.flatMap(s=>[s.heading,...s.lines]));
+ }
+});
+
+test('ordinary litany before the Little Entrance remains untouched and allows safe hymns',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const context={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ const book=[{heading:'Liturgy of the Word',lines:[
+  'PRIEST: Blessed is the Kingdom.','Great Litany',
+  'DEACON: In peace let us pray to the Lord.','ALL: Lord, have mercy.',
+  'ALL: Lord, have mercy.','Little Entrance','The Trisagion Hymn',
+  'ALL: Holy God, Holy Mighty One.','Epistle','The Holy Gospel',
+  'Liturgy of the Eucharist','Anaphora','One is Holy','Holy Communion'
+ ]}];
+ const result=D.compose(book,record,context);
+ assert.deepEqual(result.placed,Object.keys(record.groups));
+ const rendered=result.sections.map(s=>[s.heading,...s.lines].filter(Boolean).join(' / ')).join('\n');
+ assert.equal(rendered.split('ALL: Lord, have mercy.').length-1,2);
+ assert.ok(rendered.indexOf('Great Litany')<rendered.indexOf('Little Entrance'));
+ assert.ok(rendered.indexOf('Anaphora')<rendered.indexOf('Holy Communion'));
+});

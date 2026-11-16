@@ -103,3 +103,18 @@ all 63 date-specific 2026 Newton hymn records against a fictional service
 using the printed variants and test duplicate titles, prayer-heading false
 positives, section headings and reversed service order. No device-local
 PDF was accessed or rewritten.
+
+
+## Protecting fixed prayers when composing dated hymns
+
+The structured compositor refuses a dated hymn placement when the proposed
+interval contains an explicitly titled fixed Trisagion prayer, Gospel
+preparation prayer, litany, or Anaphora. It also protects a bare minister cue
+(such as `PRIEST:` or "The deacon proclaims:") immediately before
+an insertion boundary. In these ambiguous cases, the affected dated hymn is
+left in Readings & propers while other unambiguous hymns remain eligible.
+
+A regression checks both genuine Trisagion prayer alternatives over all 63
+imported Newton 2026 dates, the priest's Prayer Before the Gospel, bare
+minister cues, and an ordinary litany before the Little Entrance. No fixed
+prayers, source-book wording, or saved device-local files are modified.
