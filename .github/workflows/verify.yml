@@ -9,6 +9,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -17,6 +19,8 @@ jobs:
           for script in tests/*.cjs; do
             node --check "$script"
           done
+      - name: Enforce PWA version advance on application changes
+        run: node tools/check-pwa-release.cjs --changed
       - name: Node regression suite
         shell: bash
         run: |
