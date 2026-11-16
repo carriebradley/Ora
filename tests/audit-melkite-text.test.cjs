@@ -188,3 +188,27 @@ test('Genuine prayers and repeated responses remain separately auditable around 
  assert.ok(lost.findings.some(x=>x.kind==='insufficient-occurrences'));
  assert.ok(lost.differences.some(x=>x.kind==='omitted'));
 });
+
+
+test('Melkite audit retains physical source and rendered line numbers when blank lines separate prayers',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='\n\nPriest: Blessed is the Kingdom.\n\nAll: Amen.\n';
+ const shown='Priest: Blessed is the Realm.\n\nAll: Amen.\n\nChoir: Unappointed hymn.';
+ const report=comparePassages(source,shown);
+ assert.equal(report.firstDifference.sourceLine,3);
+ assert.equal(report.firstDifference.renderedLine,1);
+ assert.equal(report.differences[0].sourceLine,3);
+ assert.equal(report.differences[0].renderedLine,1);
+ assert.equal(report.findings.find(item=>item.kind==='missing').sourceLine,3);
+ assert.deepEqual(report.findings.find(item=>item.kind==='unexpected-rendered'&&item.text.startsWith('Choir:')).renderedLines,[5]);
+});
+
+test('Melkite audit reports original positions for reordered and repeated responses',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: Peace.\n\nAll: Amen.\n\nDeacon: Let us pray.';
+ const shown='Deacon: Let us pray.\n\nPriest: Peace.\n\nAll: Amen.\n\nAll: Amen.';
+ const report=comparePassages(source,shown);
+ assert.deepEqual(report.findings.filter(item=>item.kind==='out-of-order').map(item=>item.sourceLine),[5]);
+ assert.deepEqual(report.findings.find(item=>item.kind==='out-of-order').renderedLines,[1]);
+ assert.deepEqual(report.findings.find(item=>item.kind==='extra-occurrences').renderedLines,[5,7]);
+});
