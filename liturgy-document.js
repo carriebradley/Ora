@@ -106,6 +106,27 @@
     const remaining=Object.keys(labels).filter(key=>safeLines(record?.groups?.[key]));
     if(!validRecord(record,context))return {sections:original,placed:[],remaining:[]};
     const points=headings(original),insertions=new Map(),placed=[];
+    // A later major part appearing before an earlier one means PDF heading
+    // extraction is ambiguous. Preserve the local prayer book and leave its
+    // dated hymns in the supplemental panel rather than guess at placement.
+    const milestones=[
+      [/^(?:Little Entrance|Entrance with the Gospel)$/i,10],
+      [/^Trisagion(?: Hymn| Prayer)?$/i,20],
+      [/^(?:Epistle|Epistle Reading|Apostle|Apostolic Reading)$/i,30],
+      [/^(?:Gospel|Gospel Reading)$/i,40],
+      [/^(?:Liturgy of the Eucharist|Great Entrance)$/i,50],
+      [/^(?:Anaphora|Holy Anaphora)$/i,60],
+      [/^(?:One is Holy|Prayer Before Holy Communion)$/i,70],
+      [/^(?:Holy Communion|Distribution of Holy Communion)$/i,80],
+      [/^Dismissal$/i,90]
+    ];
+    let latestStage=0;
+    for(const point of points){
+      const match=milestones.find(([pattern])=>pattern.test(point.text));
+      if(!match)continue;
+      if(match[1]<latestStage)return {sections:original,placed:[],remaining};
+      latestStage=match[1];
+    }
     for(const key of Object.keys(rules)){
       const lines=record?.groups?.[key];
       if(!safeLines(lines))continue;

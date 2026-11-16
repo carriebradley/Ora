@@ -68,3 +68,20 @@ The continuous document reader now normalizes prayer text at the display boundar
 
 ## v348 — twelve-month Newton typika (2026)
 Newton’s January–December 2026 monthly Word files now supply 63 dated, English St. John Chrysostom hymn records in `melkite-propers-2026.json`. The original November 6 dates and wording remain unchanged in a month-only reference dataset. This is **not** every day’s liturgy or a year-round Basil/Presanctified translation. January 30 (source weekday disagreement) and December 24 (Vesperal St. Basil service conflict) are quarantined rather than guessed. Each imported record carries its exact ISO date and monthly document name; the structured compositor rejects records with a mismatched date, month, or church, and the view only offers these hymns during a Chrysostom appointment. The combined dataset is cached for offline use and the import scripts live in `tools/import_melkite_propers_year.py`; full-monthly source books are not bundled. Both PDF and EPUB whole-text readers receive eligible dated hymns at known unambiguous positions, leaving local book bytes unchanged. Cite and review Newton's original month for any publication or liturgical decision.
+
+
+## Conservative order guard for dated Melkite hymns
+
+If PDF extraction places a later major liturgical heading before an earlier
+one, Ora no longer inserts dated hymns inside that ambiguous service layout.
+The compositor checks recognizable fixed milestones from Little Entrance and
+Trisagion through Epistle, Gospel, Anaphora, Communion, and Dismissal. If the
+order regresses, it leaves all saved-book prayers unchanged and retains the
+day's hymns in the optional Readings & propers panel.
+
+A regression uses a fictional two-part liturgy and all 63 verified Melkite
+2026 hymn dates to ensure the complete original line order survives, including
+the Trisagion, a repeated litany response, Eucharistic words and Communion.
+Malformed order cases are tested separately. This is a structural safeguard,
+not verification of the user's device-local PDF or a new liturgical
+translation.

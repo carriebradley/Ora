@@ -144,3 +144,65 @@ test('Newton edition identity survives proper insertion and fallbacks',()=>{
  assert.equal(D.compose(sections,melkite,ctx).sections.newton2009,undefined,
   'an unrecognized source must never be marked as the Newton edition');
 });
+
+
+test('all Newton 2026 hymns preserve the source Trisagion, litanies and Eucharistic prayer order',()=>{
+ const data=require('../melkite-propers-2026.json');
+ const saved=[
+  {heading:'Liturgy of the Word',lines:[
+   'PRIEST: Blessed is the Kingdom of the Father.','ALL: Amen.',
+   'Great Litany','DEACON: In peace let us pray to the Lord.',
+   'ALL: Lord, have mercy.','ALL: Lord, have mercy.',
+   'Little Entrance','Trisagion Hymn',
+   'ALL: Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.',
+   'PRIEST: O Holy of Holies, our only holy God.','ALL: Amen.',
+   'Epistle','DEACON: Let us attend.','Gospel','ALL: Glory to You, O Lord.'
+  ]},
+  {heading:'Liturgy of the Eucharist',lines:[
+   'Great Entrance','DEACON: Let us complete our prayer.',
+   'ALL: Lord, have mercy.','Anaphora',
+   'PRIEST: Take, eat: this is My Body.','ALL: Amen.',
+   'One is Holy','Holy Communion','ALL: Receive the Body of Christ.','Dismissal'
+  ]}
+ ];
+ const originalLines=saved.flatMap(part=>[part.heading,...part.lines]);
+ for(const [iso,record] of Object.entries(data.days)){
+  const before=JSON.stringify(saved);
+  const result=D.compose(saved,record,{church:'melkite',iso,id:'melkite-chrysostom'});
+  assert.equal(JSON.stringify(saved),before,iso+' mutated the source');
+  assert.deepEqual(result.placed,Object.keys(record.groups),
+   iso+' failed to place its unambiguous appointed hymns');
+  assert.deepEqual(result.sections.filter(s=>!s.dailyProper)
+   .flatMap(s=>[s.heading,...s.lines].filter(Boolean)),originalLines,
+   iso+' changed the source prayers, headings, repeats or their order');
+  const out=joined(result);
+  for(const prayer of [
+   'In peace let us pray to the Lord.','O Holy of Holies, our only holy God.',
+   'Take, eat: this is My Body.','Receive the Body of Christ.'
+  ])assert.equal(out.split(prayer).length-1,1,iso+' lost or duplicated '+prayer);
+  assert.equal(out.split('ALL: Lord, have mercy.').length-1,3,
+   iso+' changed a repeated litany response');
+  assert.ok(out.indexOf('Trisagion Hymn')<out.indexOf('Epistle'),iso+' reversed Trisagion/Epistle');
+  assert.ok(out.indexOf('Anaphora')<out.indexOf('Holy Communion'),iso+' reversed Anaphora/Communion');
+ }
+});
+
+test('a reversed major liturgical heading safely suspends dated hymn placement',()=>{
+ const record={
+  ...sample,church:'melkite',iso:'2026-11-15',
+  source:'https://melkite.org/liturgical-resources',typicon:'November-2026.docx'
+ };
+ const ctx={church:'melkite',id:'melkite-chrysostom',iso:'2026-11-15'};
+ for(const lines of [
+  ['Little Entrance','Liturgy of the Eucharist','Trisagion','Epistle','Gospel','One is Holy','Holy Communion'],
+  ['Little Entrance','Gospel','Trisagion','Epistle','One is Holy','Holy Communion'],
+  ['Little Entrance','Trisagion','Epistle','Anaphora','Gospel','One is Holy','Holy Communion'],
+  ['Little Entrance','Trisagion','Epistle','Gospel','Holy Communion','One is Holy']
+ ]){
+  const book=[{heading:'Liturgy of the Word',lines}];
+  const outcome=D.compose(book,record,ctx);
+  assert.deepEqual(outcome.placed,[],lines.join(' / '));
+  assert.deepEqual(outcome.remaining,Object.keys(record.groups));
+  assert.deepEqual(outcome.sections,book,'keep private source unchanged');
+ }
+});
