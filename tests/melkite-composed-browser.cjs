@@ -5,7 +5,9 @@ module.exports=async(page,base,artifacts)=>{
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-chrysostom');
- for(const protectedPrayer of [false,true]){
+ // Revert to the first book structure to confirm restored supplements
+ // disappear again when their hymns become safe to insert.
+ for(const protectedPrayer of [false,true,false]){
   await page.evaluate(async blocked=>{
    const get=LiturgyReader.get,load=LiturgyReader.load;
    const lines=[

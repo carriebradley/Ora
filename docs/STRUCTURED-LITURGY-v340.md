@@ -134,3 +134,22 @@ troparia must then remain in Readings & propers, while independently
 safe Prokeimenon and Alleluia are inserted without duplication. Screenshots
 are saved for both scenarios. These fixtures do not access or alter the
 user's device-local PDF and do not certify the complete printed liturgy.
+
+
+## Rehydrating a saved Melkite service restores withheld hymns
+
+Ora can rehydrate a replaced saved service while the Liturgy view stays
+open. A first composition may put a hymn into the prayer text and remove
+it from Readings & propers; a later book edition may make that position
+unsafe. Previously that subsequent composition did not restore the hymn
+to the supplemental panel. This was detected by the rendered browser
+integration test, not an incorrect liturgical source.
+
+The reader now rebuilds the supplemental groups from the verified
+day-specific source after every eligible composition, including when
+no hymn can be placed. Only safely placed groups are excluded.
+The `placedDaily` state is updated even for zero placements.
+The browser regression exercises normal, protected-Trisagion and normal
+saved-book configurations on the same liturgical date to ensure the
+panel stays synchronized both ways. Original prayers and saved EPUB/PDF
+bytes remain unchanged.

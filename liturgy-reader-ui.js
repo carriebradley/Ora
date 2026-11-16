@@ -336,11 +336,29 @@
       if(!record||!section.isConnected||request!==hydrateVersion||
          document.querySelector('.liturgical-text')!==section)return;
       const result=LiturgyDocument.compose(sections,record,{church,iso,id});
-      if(!result.placed.length)return;
-      renderEdmontonPrayerText(preview,result.sections);
+      if(result.placed.length)renderEdmontonPrayerText(preview,result.sections);
       section.dataset.placedDaily=result.placed.join(',');
+      // Rehydrating an edited saved book may make an earlier hymn placement
+      // unsafe. Restore all unplaced dated groups, not just remove placed
+      // ones. This must work when zero groups can be inserted.
       const extra=document.querySelector('.byz-daily-propers[data-iso="'+iso+'"][data-church="'+church+'"]');
-      for(const key of result.placed)extra?.querySelector('.byz-proper-group[data-proper="'+key+'"]')?.remove();
+      if(extra){
+        extra.replaceChildren();
+        for(const [key,label] of Object.entries(LiturgyDocument.labels)){
+          if(result.placed.includes(key))continue;
+          const lines=record.groups?.[key];
+          if(!Array.isArray(lines)||!lines.length)continue;
+          const group=document.createElement('section');
+          group.className='byz-proper-group';group.dataset.proper=key;
+          const heading=document.createElement('h3');heading.textContent=label;group.append(heading);
+          for(const raw of lines){
+            if(typeof raw!=='string'||!raw.trim())continue;
+            const p=document.createElement('p');
+            p.textContent=LiturgyDocument.displayLine(raw);group.append(p);
+          }
+          extra.append(group);
+        }
+      }
     });
   }
   async function hydrate(){
