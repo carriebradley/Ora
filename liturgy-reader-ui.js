@@ -128,12 +128,12 @@
     // prothesis, Orthros, and post-Liturgy appendices. Only its actual
     // Chrysostom Liturgy (PDF pages 30–96) belongs in this prayer view.
     // Identify the edition before applying page boundaries to other PDFs.
-    let startPage=1,endPage=book.numPages;
+    let startPage=1,endPage=book.numPages,recognizedNewtonEdition=false;
     if(id==='melkite-chrysostom'&&book.numPages===159){
       const notice=await book.getPage(2);
       const imprint=(await notice.getTextContent()).items.map(item=>item.str).join(' ').replace(/\s+/g,' ');
       if(/FINAL\s+DRAFT\s+EDITION/i.test(imprint)&&/COMMON\s+ENGLISH\s+TRANSLATION/i.test(imprint)){
-        startPage=30;endPage=96;foundLiturgy=true;
+        startPage=30;endPage=96;foundLiturgy=true;recognizedNewtonEdition=true;
       }
     }
     for(let number=startPage;number<=endPage;number++){
@@ -157,6 +157,7 @@
         number===startPage&&startPage===30?'Divine Liturgy of St. John Chrysostom':null);
       if(end>=0)break;
     }
+    if(recognizedNewtonEdition)sections.newton2009=true;
     return foundLiturgy&&sections.length?sections:null;
   }
   // Unknown user-saved PDFs still deserve a full scrollable reading view.
@@ -206,7 +207,7 @@
     let inReferenceTable=false;
     // The Newton printed Kontakia/Hirmoi tables belong only to the Melkite
     // edition. Never apply their boundaries to Ukrainian or other books.
-    const melkiteBook=target.closest('[data-text-id]')?.dataset.textId==='melkite-chrysostom';
+    const melkiteBook=target.closest('[data-text-id]')?.dataset.textId==='melkite-chrysostom'&&sections.newton2009===true;
     let container=target;
     const date=target.closest('[data-day-date]')?.dataset.dayDate;
     const sunday=date&&new Date(date+'T00:00:00Z').getUTCDay()===0;

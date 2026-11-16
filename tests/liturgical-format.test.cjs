@@ -469,3 +469,12 @@ test('Newton annual reference boundaries never apply to Ukrainian books',()=>{
  assert.match(reader,/const melkiteBook=target\.closest\('\[data-text-id\]'\)\?\.dataset\.textId==='melkite-chrysostom'/);
  assert.match(reader,/const boundary=melkiteBook\?LiturgicalFormat\.melkiteReferenceBoundary\(text\):null/);
 });
+
+test('Newton reference-table suppression requires verified 2009 PDF identity',()=>{
+ const fs=require('node:fs');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(reader,/recognizedNewtonEdition=true/);
+ assert.match(reader,/sections\.newton2009=true/);
+ assert.match(reader,/sections\.newton2009===true/);
+ assert.match(reader,/const boundary=melkiteBook\?LiturgicalFormat\.melkiteReferenceBoundary\(text\):null/);
+});
