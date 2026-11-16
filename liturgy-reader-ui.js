@@ -393,13 +393,24 @@
           }
         }else if((section.dataset.textId.startsWith('melkite-')||['basil','presanctified'].includes(section.dataset.textId))&&book.kind!=='epub'){
           status.textContent='Preparing your saved prayers…';
-          const liturgy=await prayerPreview(saved,book,b=>standardPrayerText(b,section.dataset.textId));
+          const reading=await prayerPreview(saved,book,async b=>{
+            const liturgy=await standardPrayerText(b,section.dataset.textId);
+            return liturgy?{sections:liturgy,recognized:true}:
+              {sections:await continuousSavedPdfText(b),recognized:false};
+          });
           if(!section.isConnected||token!==hydrateVersion)return;
-          if(liturgy){
-            renderEdmontonPrayerText(preview,liturgy);continuous=true;
-            arrangeDailyHymns(section,preview,liturgy);
-            status.textContent=labels[section.dataset.textId]+' · saved privately on this device';
-          }else preview.textContent='The prayers could not be identified in this PDF. Open the original book below to read it.';
+          // A private, unrecognized PDF still reads continuously. Never
+          // treat its unverified text as a known edition or inject dated hymns.
+          continuous=true;
+          if(reading?.sections){
+            renderEdmontonPrayerText(preview,reading.sections);
+            if(reading.recognized)arrangeDailyHymns(section,preview,reading.sections);
+            status.textContent=(reading.recognized?labels[section.dataset.textId]:
+              'Saved PDF · continuous English text (unverified edition)')+' · saved privately on this device';
+          }else{
+            preview.textContent='No selectable English text was found in this PDF. Open the original book to view it.';
+            status.textContent='Saved PDF · open original book for images · saved privately on this device';
+          }
         }else if(section.dataset.textId==='chrysostom'&&book.kind!=='epub'){
           status.textContent='Preparing the English prayers from your saved Edmonton booklet…';
           const reading=await prayerPreview(saved,book,async b=>{
