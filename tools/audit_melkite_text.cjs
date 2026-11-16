@@ -57,8 +57,9 @@ function comparePassages(source,rendered){
  const wrappingLikely=src.length!==view.length;
  // Preserve line-level missing and unexpected findings when a complete
  // source or rendered line is already present in the other side.
- const hasExactLine=src.some(line=>view.includes(line))||view.some(line=>src.includes(line));
- if(wrappingLikely&&!hasExactLine&&srcWords.length&&viewWords.length){
+ const wrappedLine=src.some(line=>!view.includes(line)&&view.some(v=>v.includes(line)))||view.some(line=>!src.includes(line)&&src.some(v=>v.includes(line)));
+ const completeLineOmission=src.some(line=>!view.includes(line)&&!view.some(v=>v.includes(line)));
+ if(wrappingLikely&&wrappedLine&&!completeLineOmission&&srcWords.length&&viewWords.length){
   // For word-order diagnostics, compare words independently of punctuation
   // attached to their original positions (e.g. "Son." becoming "Son").
   const lexical=arr=>arr.map(w=>w.replace(/^[^\\p{L}\\p{N}]+|[^\\p{L}\\p{N}]+$/gu,'')).filter(Boolean);
