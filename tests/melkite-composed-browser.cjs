@@ -144,7 +144,7 @@ module.exports=async(page,base,artifacts)=>{
  assert.deepEqual(await allExtra.locator('.byz-proper-group').evaluateAll(nodes=>
   nodes.map(node=>node.dataset.proper)),['troparia','prokeimenon','alleluia'],
   'all verified hymns must be restored after replacing the saved book');
- assert.match(await allExtra.innerText(),/Troparion|Troparia/i,
+ assert.match(await allExtra.textContent(),/Troparion|Troparia/i,
   "the original day’s hymn words remain available");
  for(const width of [320,390]){
   await page.setViewportSize({width,height:844});
