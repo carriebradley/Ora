@@ -86,3 +86,58 @@ test('Melkite comparison still identifies changed ministers and omitted final re
  assert.equal(omitted.firstDifference.renderedDifferingWords,0);
  assert.equal(comparePassages('All: Amen.','People: Amen.').firstDifference,undefined);
 });
+
+
+test('Melkite audit finds two separate prayer-word substitutions without modifying text',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: Blessed is the Kingdom.\nAll: Amen.\nDeacon: In peace let us pray.\nAll: Lord, have mercy.';
+ const shown='Priest: Blessed is the Realm.\nAll: Amen.\nDeacon: In silence let us pray.\nAll: Lord, have mercy.';
+ const report=comparePassages(source,shown);
+ assert.equal(report.diffTruncated,false);
+ assert.equal(report.differences.length,2);
+ assert.deepEqual(report.differences.map(x=>x.kind),['changed','changed']);
+ assert.equal(report.differences[0].sourceDifferingWords,1);
+ assert.equal(report.differences[1].renderedDifferingWords,1);
+ assert.match(report.differences[0].sourceExcerpt,/Kingdom/);
+ assert.match(report.differences[1].renderedExcerpt,/silence/);
+ assert.ok(report.findings.length>0);
+});
+test('Melkite audit separates added and omitted words in different petitions',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Deacon: In peace let us pray.\nAll: Lord, have mercy.\nPriest: Through the prayers of the saints.';
+ const shown='Deacon: In peace now let us pray.\nAll: Lord, have mercy.\nPriest: Through prayers of the saints.';
+ const report=comparePassages(source,shown);
+ assert.equal(report.differences.length,2);
+ assert.deepEqual(report.differences.map(x=>x.kind),['added','omitted']);
+ assert.deepEqual(report.differences.map(x=>[x.sourceDifferingWords,x.renderedDifferingWords]),[[0,1],[1,0]]);
+});
+test('Repeated responses remain in order and do not conceal nearby differences',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='All: Lord, have mercy.\nPriest: Have mercy on us, O God.\nAll: Lord, have mercy.\nDeacon: Again let us pray.\nAll: Lord, have mercy.';
+ const shown='All: Lord, have mercy.\nPriest: Have mercy on us, O Lord.\nAll: Lord, have mercy.\nDeacon: Once let us pray.\nAll: Lord, have mercy.';
+ const report=comparePassages(source,shown);
+ assert.equal(report.differences.length,2);
+ assert.ok(report.differences.every(x=>x.kind==='changed'));
+ assert.equal(comparePassages(source,source).findings.length,0);
+});
+test('Large unrelated text is marked unresolved, never claimed to be fully aligned',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: '+Array.from({length:240},(_,i)=>'alpha'+i).join(' ');
+ const rendered='Priest: '+Array.from({length:240},(_,i)=>'beta'+i).join(' ');
+ const report=comparePassages(source,rendered);
+ assert.equal(report.diffTruncated,true);
+ assert.equal(report.differences.length,1);
+ assert.equal(report.differences[0].kind,'unresolved');
+ assert.ok(report.findings.length>0);
+});
+test('Minister labels and line wrapping do not generate word differences',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const original='Celebrant: Blessed is the Kingdom of the Father\nand of the Son.\nPeople: Amen.';
+ const displayed='Priest: Blessed is the Kingdom of the Father and of the Son.\nAll: Amen.';
+ const report=comparePassages(original,displayed);
+ assert.deepEqual(report.findings,[]);
+ assert.equal(report.differences,undefined);
+ const reordered=comparePassages('Priest: Peace.\nAll: Amen.','All: Amen.\nPriest: Peace.');
+ assert.ok(reordered.findings.length>0);
+ assert.ok(reordered.differences.length>0);
+});

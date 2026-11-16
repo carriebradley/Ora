@@ -19,3 +19,9 @@ The comparator also recognizes selected equivalent minister labels (Celebrant/Pr
 When selected source and displayed prayers differ, the comparison additionally returns a `firstDifference` object with source and rendered line numbers, word positions, short excerpts, and counts of differing words after matching the common beginning and ending. The check retains punctuation and word order, while ignoring case and the explicitly recognized equivalent minister labels. Physical line wrapping alone does not produce a mismatch.
 
 The excerpt is diagnostic only. Several distinct differences may be represented by one larger span, so review the full text against its source. The utility never substitutes, deletes, or automatically corrects prayer text.
+
+## Multiple independent differences
+
+The two-file comparison also returns `differences`, a list of separate exact-word change spans labeled `changed`, `omitted`, or `added` for review. Each identifies its source and displayed line, word positions, counts, and short context excerpts. Equivalent role labels and physical line wrapping are treated consistently with the original comparator. The earlier `firstDifference` field and conservative line-level findings remain available.
+
+Alignment uses exact words, not fuzzy matching. Repeated words may admit multiple possible alignments, and added passages may be appointed propers rather than defects. If a larger divergence exceeds the bounded analysis, `diffTruncated: true` is returned with one `unresolved` span, not a claim to have found every discrepancy. Never use these diagnostics to remove or silently rewrite source prayers.

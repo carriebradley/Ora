@@ -55,6 +55,75 @@ function firstDivergence(sourceLines,renderedLines){
  };
 }
 
+// Align exact words across physical line breaks, never fuzzy variants.
+// Myers' bounded edit path supports many small changes within long prayers.
+// If a large mismatch cannot be aligned safely, report it as unresolved.
+function multipleDivergences(sourceLines,renderedLines,firstDifference){
+ const tokens=lines=>lines.flatMap((line,i)=>(line.match(/\S+/g)||[])
+  .map(text=>({text,line:i+1,key:text.toLocaleLowerCase('en')})));
+ const a=tokens(sourceLines),b=tokens(renderedLines),n=a.length,m=b.length;
+ const excerpt=(entries,index)=>entries.slice(Math.max(0,index-3),Math.min(entries.length,index+8)).map(x=>x.text).join(' ');
+ const maxEdits=192;
+ let frontier=new Map([[1,0]]);
+ const trace=[];
+ let operations=null;
+ for(let depth=0;depth<=Math.min(maxEdits,n+m);depth++){
+  const next=new Map();
+  for(let diagonal=-depth;diagonal<=depth;diagonal+=2){
+   const down=frontier.get(diagonal+1)??-1;
+   const across=frontier.get(diagonal-1)??-1;
+   let x=diagonal===-depth||(diagonal!==depth&&across<down)?Math.max(0,down):across+1;
+   let y=x-diagonal;
+   while(x<n&&y<m&&a[x].key===b[y].key){x++;y++;}
+   next.set(diagonal,x);
+   if(x>=n&&y>=m){
+    trace.push(next);
+    const reverse=[];
+    for(let d=depth;d>0;d--){
+     const prior=trace[d-1],k=x-y;
+     const priorDiagonal=k===-d||(k!==d&&(prior.get(k-1)??-1)<(prior.get(k+1)??-1))?k+1:k-1;
+     const previousX=prior.get(priorDiagonal),previousY=previousX-priorDiagonal;
+     while(x>previousX&&y>previousY){reverse.push('equal');x--;y--;}
+     if(x===previousX){reverse.push('insert');y--;}
+     else{reverse.push('delete');x--;}
+    }
+    while(x>0&&y>0){reverse.push('equal');x--;y--;}
+    operations=reverse.reverse();
+    break;
+   }
+  }
+  if(operations)break;
+  trace.push(next);frontier=next;
+ }
+ if(!operations)return {differences:[{kind:'unresolved',...firstDifference}],diffTruncated:true};
+ const differences=[];let sourceIndex=0,renderedIndex=0,startSource=0,startRendered=0;
+ let active=false;
+ const flush=()=>{
+  if(!active)return;
+  const sourceDifferingWords=sourceIndex-startSource;
+  const renderedDifferingWords=renderedIndex-startRendered;
+  differences.push({
+   kind:sourceDifferingWords&&renderedDifferingWords?'changed':sourceDifferingWords?'omitted':'added',
+   sourceLine:a[startSource]?.line??a.at(-1)?.line??null,
+   renderedLine:b[startRendered]?.line??b.at(-1)?.line??null,
+   sourceWord:startSource+1,renderedWord:startRendered+1,
+   sourceDifferingWords,renderedDifferingWords,
+   sourceExcerpt:excerpt(a,startSource),renderedExcerpt:excerpt(b,startRendered)
+  });
+  active=false;
+ };
+ for(const operation of operations){
+  if(operation==='equal'){flush();sourceIndex++;renderedIndex++;}
+  else{
+   if(!active){active=true;startSource=sourceIndex;startRendered=renderedIndex;}
+   if(operation==='delete')sourceIndex++;
+   else renderedIndex++;
+  }
+ }
+ flush();
+ return {differences,diffTruncated:false};
+}
+
 // Compare explicitly chosen prayer lines with a rendered text export.
 // The caller must first exclude rubrics and optional unappointed alternatives.
 // Exact normalized matching is conservative: a mismatch requires review.
@@ -72,6 +141,7 @@ function comparePassages(source,rendered){
  if(normalize(src.join(' '))===normalize(view.join(' ')))
   return {sourceLines:src.length,renderedLines:view.length,findings:[]};
  const firstDifference=firstDivergence(src,view);
+ const {differences,diffTruncated}=multipleDivergences(src,view,firstDifference);
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
   const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);
@@ -96,7 +166,7 @@ function comparePassages(source,rendered){
   // example an appointed proper), but must be explicitly reviewed.
   if(!expected)findings.push({kind:'unexpected-rendered',text:view[hits[0]-1],renderedLines:hits});
  }
- return {sourceLines:src.length,renderedLines:view.length,findings,firstDifference};
+ return {sourceLines:src.length,renderedLines:view.length,findings,firstDifference,differences,diffTruncated};
 }
 if(require.main===module){
  const file=process.argv[2],rendered=process.argv[3];
