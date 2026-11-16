@@ -485,3 +485,12 @@ test('PDF page boundary preserves pending speaker without crossing a heading',()
  assert.match(reader,/if\(section\.heading\|\|section\.alternative\)pendingRole=null/);
  assert.match(reader,/if\(!role&&pendingRole\)role=\{\.\.\.pendingRole,words:text\}/);
 });
+
+test('bare minister label at a page break is retained for the next prayer',()=>{
+ const fs=require('node:fs');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(reader,/if\(role&&!role\.words\)\{pendingRole=role;lastLine=null;lastRole=null;continue;\}/);
+ assert.deepEqual(F.role('PRIEST:'),{kind:'priest',name:'Priest',words:''});
+ assert.deepEqual(F.role('DEACON:'),{kind:'deacon',name:'Deacon',words:''});
+ assert.equal(F.role('PRIEST: Blessed is the Kingdom.')?.words,'Blessed is the Kingdom.');
+});

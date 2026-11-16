@@ -275,6 +275,9 @@
           lastHeading=normalized.toLowerCase();lastLine=null;lastRole=null;pendingRole=null;continue;
         }
         let role=roleLine(text);
+        // A bare printed label (e.g. PRIEST:) can end a PDF page.
+        // Do not render an empty speaker block or lose its attribution.
+        if(role&&!role.words){pendingRole=role;lastLine=null;lastRole=null;continue;}
         if(!role && liturgicalInstruction(text)){
           // Only prayers and responses belong in Ora's reading view.
           // Retain a printed minister attribution for the following prayer,
