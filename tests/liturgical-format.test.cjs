@@ -462,3 +462,10 @@ test('Newton annual Kontakia table ends before genuine Trisagion prayers',()=>{
  assert.equal(B('During the singing of the Hirmos, the Priest continues:'),'hirmoi-end');
  assert.equal(B('Priest: For the holy prophet and forerunner John the Baptist'),null);
 });
+
+test('Newton annual reference boundaries never apply to Ukrainian books',()=>{
+ const fs=require('node:fs');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(reader,/const melkiteBook=target\.closest\('\[data-text-id\]'\)\?\.dataset\.textId==='melkite-chrysostom'/);
+ assert.match(reader,/const boundary=melkiteBook\?LiturgicalFormat\.melkiteReferenceBoundary\(text\):null/);
+});

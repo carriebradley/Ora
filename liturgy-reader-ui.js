@@ -204,6 +204,9 @@
     // Skip it until the next recognized service heading. Keep the source
     // book and the separate date-specific proper records untouched.
     let inReferenceTable=false;
+    // The Newton printed Kontakia/Hirmoi tables belong only to the Melkite
+    // edition. Never apply their boundaries to Ukrainian or other books.
+    const melkiteBook=target.closest('[data-text-id]')?.dataset.textId==='melkite-chrysostom';
     let container=target;
     const date=target.closest('[data-day-date]')?.dataset.dayDate;
     const sunday=date&&new Date(date+'T00:00:00Z').getUTCDay()===0;
@@ -243,7 +246,7 @@
         const normalizedHeading=normalizePdfLine(text);
         // Only the exact source-verified boundary ends an annual reference
         // table. Generic headings inside the table must never resume prayer.
-        const boundary=LiturgicalFormat.melkiteReferenceBoundary(text);
+        const boundary=melkiteBook?LiturgicalFormat.melkiteReferenceBoundary(text):null;
         if(boundary==='kontakia-start'||boundary==='hirmoi-start'){
           inReferenceTable=true;pendingRole=null;continue;
         }
