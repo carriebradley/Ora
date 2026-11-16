@@ -155,8 +155,13 @@
          unfinishedCue.test(points[finish.n-1]?.text||''))continue;
       // Printed hymn headings can name a saint or tone, and may have a
       // minister prefix. Such existing words always occupy the slot.
-      const collisions=points.filter(p=>p.n>start.n&&p.n<finish.n&&
-        rule.conflict.test(p.text.replace(/^(?:(?:priest|deacon|dcn)(?:\s+\d+)?|all|people|choir|cantor|reader|lector|faithful|congregation)\s*:\s*/i,'')));
+      const isPrintedHymn=text=>rule.conflict.test(text.replace(
+        /^(?:(?:priest|deacon|dcn)(?:\s+\d+)?|all|people|choir|cantor|reader|lector|faithful|congregation)\s*:\s*/i,''));
+      const collisions=points.filter(p=>p.n>start.n&&p.n<finish.n&&isPrintedHymn(p.text));
+      // A saved book may already print a troparion or kontakion outside the
+      // Little Entrance slot. Never insert a second, conflicting hymn.
+      if(key==='troparia'&&points.some(p=>
+        (p.n<start.n||p.n>finish.n)&&isPrintedHymn(p.text)))continue;
       // A printed, genuinely empty slot can accept the appointed words;
       // a heading with any intervening prayer text must remain untouched.
       const slotNames={

@@ -67,6 +67,35 @@ test('missing or ambiguous boundaries leave the dated text separate, never guess
  assert.equal(D.compose(repeated,sample,context).placed.includes('troparia'),false);
 });
 
+test('printed troparia outside the insertion interval are never duplicated',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const context={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ for(const printed of [
+  'PRIEST: Troparion of the Resurrection (Tone 8): Existing appointed hymn.',
+  'CHOIR: Kontakion, Tone 8: Existing appointed hymn.',
+  'Troparia and Kontakia'
+ ]){
+  for(const side of ['before','after']){
+   const fixed=[
+    'PRIEST: Blessed is the Kingdom.',
+    ...(side==='before'?[printed]:[]),
+    'Little Entrance','The Trisagion Hymn','ALL: Holy God, Holy Mighty One.',
+    'Epistle','The Holy Gospel',
+    ...(side==='after'?[printed]:[]),
+    'One is Holy','Holy Communion'
+   ];
+   const book=[{heading:'Liturgy of the Word',lines:fixed}];
+   const result=D.compose(book,record,context);
+   assert.equal(result.placed.includes('troparia'),false,printed+' / '+side);
+   assert.equal(result.remaining.includes('troparia'),true,'withheld dated hymn remains accessible');
+   assert.deepEqual(result.placed,['prokeimenon','alleluia'],
+    'independent hymn categories can still be safely positioned');
+   assert.deepEqual(result.sections.filter(s=>!s.dailyProper).flatMap(s=>s.lines),
+    fixed,'original prayers and printed hymns must not change');
+  }
+ }
+});
+
 test('a book already containing its own troparia does not duplicate them',()=>{
  const original=[{heading:'Book',lines:['Little Entrance','Troparia and Kontakia','ALL: Existing words.','Trisagion']}];
  const result=D.compose(original,sample,context);
