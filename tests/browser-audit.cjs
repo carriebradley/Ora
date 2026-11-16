@@ -8,6 +8,36 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR:',e.message)});
  await context.route('**/*',route=>route.request().url().startsWith(process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/')?route.continue():route.abort());
  const base=process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/';
+ // Browser-level prayer text checks use the actual shared formatter and
+ // rendered DOM, not only static inspection of implementation source.
+ await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);
+ const prayerRender=await page.evaluate(()=>{
+  const source=[
+   {text:'PRIEST: Blessed is the Kingdom of the Father',page:1,y:300,height:12},
+   {text:'and of the Son and of the Holy Spirit.',page:1,y:240,height:12},
+   {text:'ALL: Amen.',page:2,y:350,height:12}
+  ];
+  const lines=LiturgicalFormat.combine(source);
+  const parent=document.createElement('div');
+  parent.className='reader-byzantine-prayers';
+  for(const line of lines){
+   const speaker=LiturgicalFormat.role(line);
+   const p=document.createElement('p');p.className='byz-prayer-line';
+   if(speaker){
+    const label=document.createElement('span');label.className='byz-speaker';label.textContent=speaker.name;
+    const words=document.createElement('span');words.className='byz-prayer-words';words.textContent=LiturgicalFormat.displayPrayer(speaker.words);
+    p.append(label,words);
+   }else p.textContent=LiturgicalFormat.displayPrayer(line);
+   parent.append(p);
+  }
+  document.body.append(parent);
+  const result=[...parent.querySelectorAll('p')].map(p=>p.innerText);
+  parent.remove();
+  return result;
+ });
+ assert.equal(prayerRender.length,2,'PDF page continuation should not create a separate prayer');
+ assert.match(prayerRender[0],/Priest[\\s\\S]*Blessed is the Kingdom of the Father and of the Son and of the Holy Spirit/);
+ assert.match(prayerRender[1],/All[\\s\\S]*Amen/);
  // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
  for(const church of ['ukrainian','melkite']){
   await page.goto(`${base}index.html?tab=more&date=2026-11-14&rite=byz`);
