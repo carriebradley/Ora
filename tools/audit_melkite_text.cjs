@@ -52,15 +52,17 @@ function comparePassages(source,rendered){
  // Partial paragraph matches: compare word sequences in order across line
  // breaks. Only activate when at least one side wraps a paragraph and the
  // other does not. Keep the exact-line diagnostics for ordinary comparisons.
- const words=s=>normalize(s).match(/[^\\s]+/g)||[];
+ const words=s=>normalize(s).match(/\S+/g)||[];
  const srcWords=words(src.join(' ')),viewWords=words(view.join(' '));
  const wrappingLikely=src.length!==view.length;
- if(wrappingLikely&&srcWords.length&&viewWords.length){
+ // Extra complete lines are reported by the exact-line comparator below.
+ const extraCompleteLines=view.length>src.length&&src.every(line=>view.includes(line));
+ if(wrappingLikely&&!extraCompleteLines&&srcWords.length&&viewWords.length){
   const sourceSet=new Map(),renderedSet=new Map();
   for(const w of srcWords)sourceSet.set(w,(sourceSet.get(w)||0)+1);
   for(const w of viewWords)renderedSet.set(w,(renderedSet.get(w)||0)+1);
   const sameCounts=sourceSet.size===renderedSet.size&&[...sourceSet].every(([w,n])=>renderedSet.get(w)===n);
-  if(sameCounts){
+  if(sameCounts&&srcWords.join(' ')!==viewWords.join(' ')){
    return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'word-order-mismatch',detail:'Words match but their sequence differs across wrapped paragraphs'}]};
   }
   // Avoid declaring a harmless split a missing line when its words occur in
