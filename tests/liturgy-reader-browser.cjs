@@ -60,7 +60,8 @@ module.exports=async(page,context,base,artifacts,violations)=>{
   await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('page one')&&
     document.querySelector('.reader-inline-text')?.textContent.includes('page two'));
   assert.equal(await page.locator('.reader-inline-controls').isVisible(),false,'private Melkite PDF uses a continuous scroll');
-  assert.match(await page.locator('.reader-status').innerText(),/unverified edition/i);
+  // The source-status text is inside the intentionally collapsed book manager.
+  assert.match(await page.locator('.reader-status').textContent(),/unverified edition/i);
  }
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-03`);
