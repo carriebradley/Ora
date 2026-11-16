@@ -478,3 +478,10 @@ test('Newton reference-table suppression requires verified 2009 PDF identity',()
  assert.match(reader,/sections\.newton2009===true/);
  assert.match(reader,/const boundary=melkiteBook\?LiturgicalFormat\.melkiteReferenceBoundary\(text\):null/);
 });
+
+test('PDF page boundary preserves pending speaker without crossing a heading',()=>{
+ const fs=require('node:fs');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(reader,/if\(section\.heading\|\|section\.alternative\)pendingRole=null/);
+ assert.match(reader,/if\(!role&&pendingRole\)role=\{\.\.\.pendingRole,words:text\}/);
+});

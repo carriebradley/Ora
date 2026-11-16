@@ -215,7 +215,11 @@
     const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
     const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
     for(const section of sections){
-      container=target;lastLine=null;lastRole=null;pendingRole=null;
+      // PDF pages are extraction sections, not necessarily liturgical
+      // paragraph boundaries. Retain a bare speaker cue for the next page,
+      // but never carry it into a new heading or alternative antiphon.
+      container=target;lastLine=null;lastRole=null;
+      if(section.heading||section.alternative)pendingRole=null;
       if(section.alternative){
         const choice=document.createElement('details');choice.className='byz-antiphon-option';
         choice.open=!festal&&section.alternative===(sunday?'sunday':'weekday');
