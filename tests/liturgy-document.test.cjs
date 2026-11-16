@@ -357,3 +357,24 @@ test('ordinary litany before the Little Entrance remains untouched and allows sa
  assert.ok(rendered.indexOf('Great Litany')<rendered.indexOf('Little Entrance'));
  assert.ok(rendered.indexOf('Anaphora')<rendered.indexOf('Holy Communion'));
 });
+
+test('Melkite composition preserves fixed prayers byte-for-byte across all dated hymn slots',()=>{
+ const record=require('../melkite-propers-2026.json').days['2026-11-15'];
+ const context={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ const original=[{heading:'Liturgy of the Word',lines:[
+  'PRIEST: Blessed is the Kingdom of the Father and of the Son and of the Holy Spirit.',
+  'Great Litany','DEACON: In peace let us pray to the Lord.',
+  'ALL: Lord, have mercy.','ALL: Lord, have mercy.',
+  'Little Entrance','The Trisagion Hymn','ALL: Holy God, Holy Mighty One.',
+  'Epistle','The Holy Gospel','Liturgy of the Eucharist',
+  'Anaphora','PRIEST: Remember, O Lord, those who bring offerings.',
+  'One is Holy','Holy Communion','ALL: Receive the Body of Christ.','Dismissal'
+ ]}];
+ const before=JSON.stringify(original);
+ const result=D.compose(original,record,context);
+ assert.equal(JSON.stringify(original),before,'source sections must not be mutated');
+ const fixed=original.flatMap(section=>section.lines);
+ const after=result.sections.filter(section=>!section.dailyProper).flatMap(section=>section.lines);
+ assert.deepEqual(after,fixed,'dated hymns must never remove, duplicate, rewrite or reorder fixed prayer lines');
+ assert.deepEqual(result.placed,Object.keys(record.groups));
+});
