@@ -57,25 +57,23 @@ function comparePassages(source,rendered){
  const wrappingLikely=src.length!==view.length;
  // Preserve line-level missing and unexpected findings when a complete
  // source or rendered line is already present in the other side.
- const wrappedLine=src.some(line=>!view.includes(line)&&view.some(v=>v.includes(line)))||view.some(line=>!src.includes(line)&&src.some(v=>v.includes(line)));
- const completeLineOmission=src.some(line=>!view.includes(line)&&!view.some(v=>v.includes(line)));
- if(wrappingLikely&&wrappedLine&&!completeLineOmission&&srcWords.length&&viewWords.length){
-  // For word-order diagnostics, compare words independently of punctuation
-  // attached to their original positions (e.g. "Son." becoming "Son").
-  const lexical=arr=>arr.map(w=>w.replace(/^[^\\p{L}\\p{N}]+|[^\\p{L}\\p{N}]+$/gu,'')).filter(Boolean);
+ // Require evidence of an actual line merge before word-level diagnosis.
+ // Otherwise a missing complete line must remain a 'missing' finding.
+ const mergedLine=src.some(line=>!view.includes(line)&&view.some(v=>v.startsWith(line+' ')))||
+  view.some(line=>!src.includes(line)&&src.some(v=>v.startsWith(line+' ')));
+ if(wrappingLikely&&mergedLine&&srcWords.length&&viewWords.length){
+  const lexical=arr=>arr.map(w=>w.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,'')).filter(Boolean);
   const sourceLex=lexical(srcWords),renderedLex=lexical(viewWords);
   const sourceSet=new Map(),renderedSet=new Map();
   for(const w of sourceLex)sourceSet.set(w,(sourceSet.get(w)||0)+1);
   for(const w of renderedLex)renderedSet.set(w,(renderedSet.get(w)||0)+1);
   const sameCounts=sourceSet.size===renderedSet.size&&[...sourceSet].every(([w,n])=>renderedSet.get(w)===n);
-  if(sameCounts&&sourceLex.join(' ')!==renderedLex.join(' ')){
+  if(sameCounts&&sourceLex.join(' ')!==renderedLex.join(' '))
    return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'word-order-mismatch',detail:'Words match but their sequence differs across wrapped paragraphs'}]};
-  }
   let j=0;
-  for(const w of srcWords){if(viewWords[j]===w)j++;else break;}
-  if(j>0&&j<srcWords.length){
+  while(j<srcWords.length&&j<viewWords.length&&srcWords[j]===viewWords[j])j++;
+  if(j>0&&j<srcWords.length)
    return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'partial-word-mismatch',wordOffset:j+1,sourceWord:srcWords[j],renderedWord:viewWords[j]||null}]};
-  }
  }
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
