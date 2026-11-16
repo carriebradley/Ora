@@ -446,7 +446,7 @@ test('Melkite tracked Gospel heading and editorial movements',()=>{
 test('annual Kontakia editorial block is excluded before the table heading',()=>{
  const fs=require('node:fs');
  const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
- assert.match(reader,/The celebrant\\\(s\\\) alternate with the Choir/);
+ assert.ok(reader.includes('The celebrant\\(s\\) alternate with the Choir'));
  assert.match(reader,/Table of Kontakia for the Year/);
  assert.match(reader,/inReferenceTable=true/);
 });
