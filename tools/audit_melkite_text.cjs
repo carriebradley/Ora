@@ -7,18 +7,35 @@ const F=require('../liturgical-format.js');
 function audit(input){
  const rows=String(input||'').split(/\r?\n/).map((text,i)=>({line:i+1,text:text.trim()})).filter(x=>x.text);
  const findings=[],boundaries=[];let table=null;
+ // Newton prints two cues for its Kontakia table, followed by two genuine
+ // Trisagion alternatives. Neither is a malformed second table boundary.
+ const trisagionVariants=new Set();
  const add=(row,kind,detail)=>findings.push({line:row.line,kind,text:row.text,detail});
  for(const row of rows){
   const b=F.melkiteReferenceBoundary(row.text);
   if(b){
    boundaries.push({line:row.line,boundary:b});
+   const family=b.split('-')[0];
    if(b.endsWith('-start')){
-    if(table)add(row,'nested-reference-table','Another table began before the prior one ended');
-    table=b.split('-')[0];
-   }else{
-    const family=b.split('-')[0];
-    if(table!==family)add(row,'unmatched-reference-end','End marker without matching table');
+    if(table&&table!==family)
+     add(row,'nested-reference-table','A different reference table began before the prior one ended');
+    else if(!table)table=family;
+    // A second Kontakia heading within the same reference section is expected.
+    if(family!=='kontakia')trisagionVariants.clear();
+   }else if(table===family){
     table=null;
+    if(family==='kontakia'){
+     trisagionVariants.clear();
+     trisagionVariants.add(/\bBasil the Great\b/i.test(row.text)?'basil':'chrysostom');
+    }
+   }else if(!table&&family==='kontakia'&&trisagionVariants.size===1&&
+     !trisagionVariants.has(/\bBasil the Great\b/i.test(row.text)?'basil':'chrysostom')){
+    // The second alternative is a real prayer heading, not a stray end marker.
+    trisagionVariants.add(/\bBasil the Great\b/i.test(row.text)?'basil':'chrysostom');
+   }else{
+    // Never discard the active table on an unrelated or unmatched end marker:
+    // doing so would misclassify the remaining reference entries as prayers.
+    add(row,'unmatched-reference-end','End marker without matching active reference table');
    }
    continue;
   }

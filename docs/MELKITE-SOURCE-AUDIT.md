@@ -25,3 +25,20 @@ The excerpt is diagnostic only. Several distinct differences may be represented 
 The two-file comparison also returns `differences`, a list of separate exact-word change spans labeled `changed`, `omitted`, or `added` for review. Each identifies its source and displayed line, word positions, counts, and short context excerpts. Equivalent role labels and physical line wrapping are treated consistently with the original comparator. The earlier `firstDifference` field and conservative line-level findings remain available.
 
 Alignment uses exact words, not fuzzy matching. Repeated words may admit multiple possible alignments, and added passages may be appointed propers rather than defects. If a larger divergence exceeds the bounded analysis, `diffTruncated: true` is returned with one `unresolved` span, not a claim to have found every discrepancy. Never use these diagnostics to remove or silently rewrite source prayers.
+
+
+## Newton dual reference headings and prayer alternatives
+
+The Newton 2009 edition uses both an introductory celebrant/choir cue and a
+printed "Table of Kontakia for the Year" title for **one** reference table.
+The audit treats that pair as one section, not a nested-table error. The
+subsequent separate Chrysostom and Basil Trisagion prayer headings mark two
+genuine alternatives: the first closes the table and the second is retained
+without raising a false unmatched-marker warning. The Hirmoi reference table
+has its own start and end markers. Unexpected duplicate ends and genuinely
+nested different table families still require review. A mismatched end cannot
+prematurely open the remainder of a reference table as devotional text.
+
+The regression fixtures use short source-verified heading and prayer anchors;
+they do **not** represent a complete transcription or certify any private
+device-local PDF. App prayer wording is never modified by these checks.

@@ -141,3 +141,50 @@ test('Minister labels and line wrapping do not generate word differences',()=>{
  assert.ok(reordered.findings.length>0);
  assert.ok(reordered.differences.length>0);
 });
+
+
+test('Newton dual Kontakia cues and both Trisagion alternatives are legitimate',()=>{
+ const source=[
+  'The celebrant(s) alternate with the Choir the singing of the hymns as indicated',
+  'Table of Kontakia for the Year',
+  'Final Kontakion for ordinary Sundays and Weekdays',
+  'The Trisagion Prayer of St. John Chrysostom',
+  'O Holy of Holies, our only holy God',
+  'The Trisagion Prayer of St. Basil the Great',
+  'God, the Holy, who rest among the saints',
+  'Table of Hirmoi for the Year',
+  'From 21 to 25 November: The Presentation of Our Lady',
+  'During the singing of the Hirmos, the Priest continues:',
+  'Priest: For the holy prophet and forerunner John the Baptist'
+ ].join('\n');
+ const report=audit(source);
+ assert.deepEqual(report.findings,[],'valid Newton alternatives are not broken tables');
+ assert.equal(report.boundaries.length,6);
+ assert.deepEqual(report.boundaries.map(x=>x.boundary),[
+  'kontakia-start','kontakia-start','kontakia-end','kontakia-end','hirmoi-start','hirmoi-end'
+ ]);
+});
+
+test('Unexpected Trisagion markers still trigger review and cannot erase a running table',()=>{
+ const standalone=audit('The Trisagion Prayer of St. Basil the Great\nPRIEST: Holy God.');
+ assert.deepEqual(standalone.findings.map(x=>x.kind),['unmatched-reference-end']);
+ const repeated=audit('Table of Kontakia for the Year\nThe Trisagion Prayer of St. John Chrysostom\nThe Trisagion Prayer of St. John Chrysostom');
+ assert.deepEqual(repeated.findings.map(x=>x.kind),['unmatched-reference-end']);
+ const mismatched=audit('Table of Kontakia for the Year\nDuring the singing of the Hirmos, the Priest continues:\nFinal Kontakion\nThe Trisagion Prayer of St. John Chrysostom');
+ assert.deepEqual(mismatched.findings.map(x=>x.kind),['unmatched-reference-end']);
+});
+
+test('Nested foreign reference table does not swallow the outer table closing marker',()=>{
+ const report=audit('Table of Kontakia for the Year\nTable of Hirmoi for the Year\nFinal Kontakion\nThe Trisagion Prayer of St. John Chrysostom');
+ assert.deepEqual(report.findings.map(x=>x.kind),['nested-reference-table']);
+ assert.equal(report.findings.some(x=>x.kind==='unclosed-reference-table'),false);
+});
+
+test('Genuine prayers and repeated responses remain separately auditable around year tables',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: O Holy of Holies, our only holy God.\nAll: Amen.\nAll: Lord, have mercy.\nAll: Lord, have mercy.\nPriest: For the holy prophet and forerunner John the Baptist.';
+ assert.deepEqual(comparePassages(source,source).findings,[]);
+ const lost=comparePassages(source,source.replace('All: Lord, have mercy.\nAll: Lord, have mercy.','All: Lord, have mercy.'));
+ assert.ok(lost.findings.some(x=>x.kind==='insufficient-occurrences'));
+ assert.ok(lost.differences.some(x=>x.kind==='omitted'));
+});
