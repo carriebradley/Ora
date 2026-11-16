@@ -38,6 +38,44 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.equal(prayerRender.length,2,'PDF page continuation should not create a separate prayer');
  assert.match(prayerRender[0],/Priest[\\s\\S]*Blessed is the Kingdom of the Father and of the Son and of the Holy Spirit/);
  assert.match(prayerRender[1],/All[\\s\\S]*Amen/);
+ // Validate source boundaries in the real mobile browser. These fixtures
+ // are synthetic; they cannot certify a complete private Melkite PDF.
+ const melTest=await page.evaluate(()=>{
+  const classify=LiturgicalFormat.melkiteReferenceBoundary;
+  const rows=[
+   'The celebrant(s) alternate with the Choir the singing of the hymns',
+   'Table of Kontakia for the Year',
+   'O Never-Failing Protectress of Christians',
+   'The Trisagion Prayer of St. John Chrysostom',
+   'PRIEST: Holy God, who rest in the saints.',
+   'Table of Hirmoi for the Year',
+   'On the great feasts the Hirmos is appointed.',
+   'During the singing of the Hirmos, the Priest continues:',
+   'PRIEST: Remember, O Lord, those who bring offerings.'
+  ];
+  let suppressed=false;
+  const visible=[];
+  for(const text of rows){
+   const boundary=classify(text);
+   if(boundary==='kontakia-start'||boundary==='hirmoi-start'){suppressed=true;continue;}
+   if(suppressed){
+    if(boundary==='kontakia-end'||boundary==='hirmoi-end')suppressed=false;
+    else continue;
+   }
+   visible.push(text);
+  }
+  return {visible,transliteration:[
+   'Arabic: Qud---doo---son---il---laah,',
+   'Greek: A---gi---os o The---os,'
+  ].map(text=>({text,instruction:LiturgicalFormat.instruction(text)}))};
+ });
+ assert.deepEqual(melTest.visible,[
+  'The Trisagion Prayer of St. John Chrysostom',
+  'PRIEST: Holy God, who rest in the saints.',
+  'During the singing of the Hirmos, the Priest continues:',
+  'PRIEST: Remember, O Lord, those who bring offerings.'
+ ]);
+ assert.ok(melTest.transliteration.every(x=>!x.instruction),'sung transliterations must remain visible');
  // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
  for(const church of ['ukrainian','melkite']){
   await page.goto(`${base}index.html?tab=more&date=2026-11-14&rite=byz`);
