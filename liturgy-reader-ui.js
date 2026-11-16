@@ -241,6 +241,11 @@
         if(heading)text=heading;
         if(!text)continue;
         const normalizedHeading=normalizePdfLine(text);
+        // The printed annual selection directions start before the table
+        // itself. Suppress the whole editorial block, not just its rows.
+        if(/^The celebrant\(s\) alternate with the Choir\b/i.test(text)){
+          inReferenceTable=true;pendingRole=null;continue;
+        }
         if(/^Table of Kontakia for the Year\b/i.test(text)){
           inReferenceTable=true;pendingRole=null;continue;
         }

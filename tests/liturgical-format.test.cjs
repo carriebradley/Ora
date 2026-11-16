@@ -442,3 +442,11 @@ test('Melkite tracked Gospel heading and editorial movements',()=>{
  assert.equal(F.displayPrayer('Peace □ be to all.'),'Peace be to all.');
  assert.equal(F.instruction('Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.'),false);
 });
+
+test('annual Kontakia editorial block is excluded before the table heading',()=>{
+ const fs=require('node:fs');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(reader,/The celebrant\\\(s\\\) alternate with the Choir/);
+ assert.match(reader,/Table of Kontakia for the Year/);
+ assert.match(reader,/inReferenceTable=true/);
+});
