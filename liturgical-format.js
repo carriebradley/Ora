@@ -50,10 +50,12 @@
   // Preserve direct speech following an editorial speaker cue. Otherwise the
   // rubric classifier hides the entire line, including the spoken prayer.
   // A bare cue ending at ':' remains a rubric for the following line.
-  const spoken=String(text).match(/^\s*(?:the\s+)?(priest|celebrant|bishop|deacon|protodeacon|reader|lector|cantor|choir|people|faithful|congregation)\s+(?:says?|prays?|recites?|proclaims?|exclaims?|sings?|chants?)\s*:\s*(\S.*)$/i);
+  // A source stage cue may share a line with words actually spoken.
+  // Only explicit voice verbs plus a colon and real words count as speech.
+  const spoken=String(text).match(/^\s*(?:the\s+)?(priest|celebrant|bishop|deacon|protodeacon|reader|lector|cantor|choir|people|faithful|congregation)(?:\s*,\s*[^:\r\n]{1,140},)?\s+(?:says?|prays?|recites?|proclaims?|exclaims?|sings?|chants?)(?:\s+(quietly|silently|aloud|in a low voice|in a loud voice))?\s*:\s*(\S.*)$/i);
   if(spoken){
    const minister=role(spoken[1]+':');
-   if(minister)return {...minister,words:spoken[2].trim()};
+   if(minister)return {...minister,words:spoken[3].trim(),...(spoken[2]?{cue:spoken[2].trim()}: {})};
   }
   const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON(?:\s*\d+)?|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
   const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
@@ -62,6 +64,12 @@
   return {kind,name,words:m[4].trim(),...(m[2]||m[3]?{cue:(m[2]||m[3]).trim()}: {})};
  }
  function speakerInstruction(text){
+  // Hide a bare directional cue but preserve its minister for the next line.
+  const directional=String(text).match(/^\s*(?:the\s+)?(priest|celebrant|bishop|deacon|protodeacon|reader|lector|cantor|choir)\s*,\s*[^:\r\n]{1,140},\s+(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming|sings?|singing|chants?|chanting)\s*(?:(quietly|silently|aloud|in a low voice|in a loud voice))?\s*:\s*$/i);
+  if(directional){
+   const speaker=role(directional[1]+':');
+   return directional[2]?{...speaker,cue:directional[2].trim()}:speaker;
+  }
   const m=String(text).match(/^(?:the )?(priest(?:\s+and\s+(?:the\s+)?deacon)?|celebrant|deacon|protodeacon|bishop|reader|lector|cantor|choir|subdeacon|server|acolyte)\s+(?:[^:]*?\s+)?(?:says?|saying|prays?|praying|recites?|reciting|proclaims?|proclaiming|exclaims?|exclaiming|sings?|singing|chants?|chanting)\s*(?:(quietly|silently|aloud|in a low voice|in a loud voice)|\(([^)]*)\))?\s*:\s*$/i);
   if(!m)return null;
   const speaker=role(m[1].replace(/\s+and\s+the\s+/i,' and ')+':');
@@ -95,6 +103,7 @@
  }
  function instruction(text){
   const s=String(text||'').trim();if(!s||role(s))return false;
+  if(speakerInstruction(s))return true; // bare spoken-word cue has no words yet
   // Short posture directions must never be read as prayers. Do not match
   // devotional sentences such as "Let us stand before You, O Lord."
   if(/^\(?\s*(?:(?:the\s+)?(?:all|everyone|people|congregation|faithful|clergy|choir|priest|deacon|bishop|celebrant|reader)\s+)?(?:(?:please|now)\s+)?(?:stand(?:\s+up)?|sit(?:\s+down)?|kneel|bow|rise|be seated|remain (?:standing|seated|kneeling))(?:\s+(?:for the (?:gospel|reading)|in silence|together))?\s*[.)]?$/i.test(s))return true;

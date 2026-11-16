@@ -42,3 +42,16 @@ prematurely open the remainder of a reference table as devotional text.
 The regression fixtures use short source-verified heading and prayer anchors;
 they do **not** represent a complete transcription or certify any private
 device-local PDF. App prayer wording is never modified by these checks.
+
+
+## Spoken words embedded in ceremonial cues
+
+The saved-book reader recognizes explicit spoken words after a source cue such
+as "The priest, turning to the people, says: Peace be to all." The stage
+direction is not presented as devotional content, but the spoken words remain
+visible with the printed minister attribution. Bare directions ending at a
+colon remain hidden and attach their minister to the following prayer. A
+physical action without a spoken text is still classified as a rubric.
+
+Regression tests exercise both the formatter and the browser's PDF-shaped
+reader fixture. No source book, private PDF, or liturgical prayer was changed.

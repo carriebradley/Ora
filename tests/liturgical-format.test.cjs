@@ -530,3 +530,46 @@ test('Newton 2009 source audit: genuine prayers survive both annual tables',()=>
  }
  assert.ok(!visible.some(line=>line.startsWith('From 21 to 25 November')));
 });
+
+
+test('inline spoken prayers survive stage directions and quiet voice cues',()=>{
+ const cases=[
+  ['The priest, turning to the people, says: Peace be to all.','priest','Peace be to all.'],
+  ['The deacon, standing before the Holy Doors, proclaims: Wisdom! Let us attend.','deacon','Wisdom! Let us attend.'],
+  ['The priest says quietly: Remember, O Lord, Your servants.','priest','Remember, O Lord, Your servants.'],
+  ['The choir, together with the people, sings: Holy God, Holy Mighty One.','other','Holy God, Holy Mighty One.']
+ ];
+ for(const [source,kind,words] of cases){
+  const spoken=F.role(source);
+  assert.equal(spoken?.kind,kind,source);
+  assert.equal(spoken?.words,words,source);
+  assert.equal(F.instruction(source),false,'spoken prayer cannot be hidden: '+source);
+ }
+ assert.equal(F.role('The priest says quietly: Lord, have mercy.')?.cue,'quietly');
+});
+
+test('bare source directions remain hidden but retain a speaker for the next prayer',()=>{
+ for(const [cue,name] of [
+  ['The priest, turning to the people, says:','Priest'],
+  ['The deacon, standing before the Holy Doors, proclaims:','Deacon'],
+  ['The choir, together with the people, sings:','Choir']
+ ]){
+  assert.equal(F.role(cue),null,cue);
+  assert.equal(F.instruction(cue),true,cue);
+  assert.equal(F.speakerInstruction(cue)?.name,name,cue);
+ }
+ assert.equal(F.speakerInstruction('The priest says quietly:')?.cue,'quietly');
+});
+
+test('no unspoken ceremonial action is relabelled as a prayer',()=>{
+ for(const line of [
+  'The Deacon, standing before the Holy Doors, takes the censer from the server and censes the Holy Table.',
+  'The priest, turning to the people, bows.',
+  'The priest says that the prayer is finished.',
+  'The priest, turning to the people, says:'
+ ]){
+  assert.equal(F.role(line),null,line);
+  assert.equal(F.instruction(line),true,line);
+ }
+ assert.equal(F.speakerInstruction('The priest says that the prayer is finished.'),null);
+});
