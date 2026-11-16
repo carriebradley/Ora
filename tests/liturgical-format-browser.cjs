@@ -117,6 +117,21 @@ module.exports=async(page,base,artifacts,violations)=>{
    'Divine Liturgy of St. John Chrysostom','Liturgy of the Word',
    'Liturgy of the Eucharist','Anaphora','Holy Communion'
  ]);
+ // The complete reader may be replaced by a queued hydration pass after
+ // headings appear. Wait for actual spoken content and capture diagnostics
+ // if that content disappears, rather than accepting an empty preview.
+ try{
+  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent?.includes('Fixture Ukrainian litany'),null,{timeout:12000});
+ }catch(error){
+  const diagnostic=await page.evaluate(()=>({
+   status:document.querySelector('.reader-status')?.textContent,
+   textId:document.querySelector('.liturgical-text')?.dataset.textId,
+   headings:[...document.querySelectorAll('.reader-inline-text .byz-major-heading')].map(el=>el.textContent),
+   preview:document.querySelector('.reader-inline-text')?.textContent?.slice(0,500),
+   hidden:document.querySelector('.reader-inline-text')?.hidden
+  }));
+  throw new Error('Ukrainian prayer hydration did not finish: '+JSON.stringify(diagnostic),{cause:error});
+ }
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian litany/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
