@@ -96,6 +96,47 @@ test('printed troparia outside the insertion interval are never duplicated',()=>
  }
 });
 
+test('explicit printed variable hymns outside their usual slot do not duplicate dated propers',()=>{
+ const normal=[
+  'PRIEST: Blessed is the Kingdom.',
+  'Little Entrance','Trisagion','Epistle','Gospel',
+  'One is Holy','Holy Communion','ALL: Amen.'
+ ];
+ const cases=[
+  ['troparia','PRIEST: Troparion of the Resurrection, Tone 8: Printed hymn.'],
+  ['prokeimenon','READER: Prokeimenon, Tone 8: Printed verse.'],
+  ['alleluia','CANTOR: Alleluia, Tone 8: Printed Gospel acclamation.'],
+  ['communion','CHOIR: Communion Hymn: Printed Communion verse.']
+ ];
+ for(const [group,printed] of cases)for(const side of ['before','after']){
+  const lines=side==='before'?[printed,...normal]:[...normal,printed];
+  const book=[{heading:'Liturgy of the Word',lines}];
+  const input=JSON.stringify(book);
+  const result=D.compose(book,sample,context);
+  assert.equal(JSON.stringify(book),input,'source mutated: '+group+' '+side);
+  assert.equal(result.placed.includes(group),false,'duplicate '+group+' / '+side);
+  assert.equal(result.remaining.includes(group),true,'withheld '+group+' must remain readable');
+  assert.deepEqual(result.placed,Object.keys(sample.groups).filter(key=>key!==group),
+   'other safely appointed hymns should remain in their places');
+  assert.deepEqual(result.sections.filter(s=>!s.dailyProper).flatMap(s=>s.lines),
+   lines,'printed hymns and fixed prayers must be preserved');
+ }
+});
+
+test('ordinary Alleluia responses outside the Gospel slot do not block the appointed Alleluia',()=>{
+ for(const response of ['ALL: Alleluia!','CHOIR: Alleluia, alleluia, alleluia!']){
+  const book=[{heading:'Liturgy of the Word',lines:[
+   'Little Entrance','Trisagion','Epistle','Gospel',
+   'One is Holy','Holy Communion',response
+  ]}];
+  const result=D.compose(book,sample,context);
+  assert.ok(result.placed.includes('alleluia'),response+' is a response, not a hymn heading');
+  assert.equal(result.remaining.includes('alleluia'),false);
+  assert.equal(result.sections.filter(s=>!s.dailyProper).flatMap(s=>s.lines)
+   .includes(response),true,'printed response survives');
+ }
+});
+
 test('a book already containing its own troparia does not duplicate them',()=>{
  const original=[{heading:'Book',lines:['Little Entrance','Troparia and Kontakia','ALL: Existing words.','Trisagion']}];
  const result=D.compose(original,sample,context);
