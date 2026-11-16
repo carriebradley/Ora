@@ -118,3 +118,19 @@ A regression checks both genuine Trisagion prayer alternatives over all 63
 imported Newton 2026 dates, the priest's Prayer Before the Gospel, bare
 minister cues, and an ordinary litany before the Little Entrance. No fixed
 prayers, source-book wording, or saved device-local files are modified.
+
+
+## Browser-level Melkite composition verification
+
+The Playwright suite now mounts a fictional saved EPUB in the actual
+continuous Melkite reader and uses the verified November 15, 2026 Newton
+record. After asynchronous hymn placement it checks onscreen hymn order,
+two separately rendered "Lord, have mercy" responses, the deacon's
+petition, the priest's Anaphora prayer, and Communion. Copyright notes,
+appendices, page controls, and mobile overflow remain excluded.
+
+A second fixture includes a protected Chrysostom Trisagion prayer. Dated
+troparia must then remain in Readings & propers, while independently
+safe Prokeimenon and Alleluia are inserted without duplication. Screenshots
+are saved for both scenarios. These fixtures do not access or alter the
+user's device-local PDF and do not certify the complete printed liturgy.
