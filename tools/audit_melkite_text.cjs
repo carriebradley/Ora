@@ -40,6 +40,10 @@ function comparePassages(source,rendered){
  const normalize=s=>String(s||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('en');
  const src=String(source||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
  const view=String(rendered||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+ // Identical continuous text is equivalent regardless of physical PDF line
+ // breaks. Keep punctuation and word order intact; do not use fuzzy matching.
+ if(normalize(src.join(' '))===normalize(view.join(' ')))
+  return {sourceLines:src.length,renderedLines:view.length,findings:[]};
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
   const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);

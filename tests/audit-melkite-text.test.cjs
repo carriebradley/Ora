@@ -37,3 +37,12 @@ test('Melkite comparison reports unexpected displayed prayers without removing t
  assert.deepEqual(comparePassages(source,rendered).findings.map(x=>x.kind),['unexpected-rendered']);
  assert.equal(comparePassages(source,rendered).findings[0].text,'Choir: Unappointed seasonal hymn.');
 });
+
+test('Equivalent prayer wording survives different physical line wrapping',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: Blessed is the Kingdom of the Father\nand of the Son and of the Holy Spirit.\nAll: Amen.';
+ const rendered='Priest: Blessed is the Kingdom of the Father and of the Son and of the Holy Spirit.\nAll: Amen.';
+ assert.deepEqual(comparePassages(source,rendered).findings,[]);
+ assert.ok(comparePassages(source,rendered.replace('Holy Spirit','Holy Ghost')).findings.length>0);
+ assert.ok(comparePassages(source,'All: Amen.\nPriest: Blessed is the Kingdom of the Father and of the Son and of the Holy Spirit.').findings.length>0);
+});
