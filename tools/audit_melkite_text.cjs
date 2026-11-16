@@ -40,10 +40,10 @@ function comparePassages(source,rendered){
  const normalize=s=>String(s||'').replace(/\s+/g,' ').trim().toLocaleLowerCase('en');
  // Normalize only known equivalent speaker labels. Preserve the prayer's
  // wording and never equate distinct ministers or erase response counts.
- const normalizeSpeaker=s=>s.replace(/^\\s*(?:the\\s+)?(?:celebrant|priest(?:\\s+1)?)\\s*:\\s*/i,'Priest: ')
-  .replace(/^\\s*(?:dcn|deacon)\\s*:\\s*/i,'Deacon: ')
-  .replace(/^\\s*(?:people|faithful|congregation|all)\\s*:\\s*/i,'All: ');
- const src=String(source||'').split(/\\r?\\n/).map(x=>normalizeSpeaker(x.trim())).filter(Boolean);
+ const normalizeSpeaker=s=>s.replace(/^\s*(?:the\s+)?(?:celebrant|priest(?:\s+1)?)\s*:\s*/i,'Priest: ')
+  .replace(/^\s*(?:dcn|deacon)\s*:\s*/i,'Deacon: ')
+  .replace(/^\s*(?:people|faithful|congregation|all)\s*:\s*/i,'All: ');
+ const src=String(source||'').split(/\r?\n/).map(x=>normalizeSpeaker(x.trim())).filter(Boolean);
  const view=String(rendered||'').split(/\r?\n/).map(x=>normalizeSpeaker(x.trim())).filter(Boolean);
  // Identical continuous text is equivalent regardless of physical PDF line
  // breaks. Keep punctuation and word order intact; do not use fuzzy matching.
