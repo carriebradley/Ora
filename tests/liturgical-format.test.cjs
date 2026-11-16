@@ -483,7 +483,8 @@ test('PDF page boundary preserves pending speaker without crossing a heading',()
  const fs=require('node:fs');
  const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
  assert.match(reader,/if\(section\.heading\|\|section\.alternative\)pendingRole=null/);
- assert.match(reader,/if\(!role&&pendingRole\)role=\{\.\.\.pendingRole,words:text\}/);
+ assert.ok(reader.includes('if(!role&&pendingRole&&!/^(?:Arabic|Greek)\\s*:/i.test(text))role={...pendingRole,words:text};'),
+  'a split-page speaker must not swallow a printed Greek or Arabic chant label');
 });
 
 test('bare minister label at a page break is retained for the next prayer',()=>{
