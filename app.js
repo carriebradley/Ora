@@ -1680,7 +1680,9 @@
     if(appointment)hydrateByzantinePropers(iso,church);
     const dailyHymns=appointment?'<div class="byz-daily-propers" data-iso="'+esc(iso)+'" data-church="'+esc(church)+'"></div>':'';
     const caution=service.verification==='source-conflict'
-      ?'<p class="muted">Service appointment needs confirmation with the eparchy.</p>'
+      ?'<p class="muted">'+esc(melkite&&iso==='2026-12-24'
+        ?'Newton appoints Vesperal St. Basil, not a morning Liturgy; the December typicon also names Chrysostom. Confirm local directions.'
+        :'Service appointment needs confirmation with the eparchy.')+'</p>'
       :!dated?'<p class="muted">Daily appointments are not verified for this date.</p>':'';
     return '<details class="byz-liturgy-variations">'+
       '<summary>Readings &amp; propers'+(day.tone?' · Tone '+Number(day.tone):'')+'</summary>'+
@@ -1688,7 +1690,9 @@
       (items||'<p class="muted">Daily reading references are unavailable.</p>')+
       caution+
       '<a class="btn sm" target="_blank" rel="noopener noreferrer" href="'+esc(source)+'">'+
-      esc(sourceName)+'</a></details>';
+      esc(sourceName)+'</a>'+
+      (service.detailSource?'<a class="btn sm" target="_blank" rel="noopener noreferrer" href="'+
+        esc(service.detailSource)+'">Nativity service order</a>':'')+'</details>';
   }
   function viewLiturgy() {
     const v=dayInfo(st.date);loadReadings(st.date);

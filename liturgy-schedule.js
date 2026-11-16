@@ -105,8 +105,19 @@
       verification='verified';
       note='St. John Chrysostom is identified in the Diocese of Newton’s '+monthNames[Number(iso.slice(5,7))-1]+' 2026 monthly typicon. Parish service times and local directions vary.';
     }
+    // Newton's Nativity service book appoints a Vesperal Basil Liturgy on
+    // the 2026 Paramony (Christmas is Friday), but the December 2026
+    // monthly typicon contains a conflicting Chrysostom heading. Preserve
+    // the appointed Vesperal book without claiming the sources agree.
+    let detailSource='';
+    if(church==='melkite'&&iso==='2026-12-24'){
+      id='basil';title='Vesperal Divine Liturgy of St. Basil the Great';
+      verification='source-conflict';
+      note='The Diocese of Newton appoints St. Basil with Vespers on December 24, with no morning Liturgy. The December 2026 monthly typicon also contains a conflicting Chrysostom heading; dated hymns remain withheld.';
+      detailSource='https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf';
+    }
     const source=church==='ukrainian'?'https://eeparchy.com/calendar/'+iso:church==='melkite'?'https://melkite.org/liturgical-resources':'https://mci.archpitt.org/LiturgicalCalendar2026.html';
-    return {id,title,note,verification,source};
+    return {id,title,note,verification,source,...(detailSource?{detailSource}:{})};
   }
   return {service,monthlyChrysostomDates};
 });

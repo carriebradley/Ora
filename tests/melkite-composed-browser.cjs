@@ -156,5 +156,15 @@ module.exports=async(page,base,artifacts)=>{
   path:path.join(artifacts,'melkite-composed-unplaceable.png'),
   fullPage:true
  });
- console.log('Melkite on-screen composition: prayers, hymns, repeated responses and speaker labels passed.');
+ // The 2026 Paramony retains Basil's Vesperal service but not the
+ // conflicting December typicon's unverified Chrysostom hymns.
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
+ assert.match(await page.locator('.service-summary').textContent(),/Vesperal Divine Liturgy of St. Basil/);
+ assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-basil');
+ assert.equal(await page.locator('.byz-daily-propers').count(),0,'conflicting dated hymns must not be appointed');
+ const paramony=page.locator('.byz-liturgy-variations');
+ assert.match(await paramony.textContent(),/not a morning Liturgy/);
+ assert.match(await paramony.textContent(),/Chrysostom/);
+ assert.equal(await paramony.locator('a[href="https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf"]').count(),1);
+ console.log('Melkite on-screen composition and 2026 Nativity conflict safeguards passed.');
 };

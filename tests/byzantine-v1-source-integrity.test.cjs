@@ -102,6 +102,12 @@ test('2026 service selector never silently claims a verified appointment without
   }else if(S.monthlyChrysostomDates.includes(iso)){
    assert.equal(me.verification,'verified',iso+' dated Chrysostom heading ignored');
    assert.equal(me.id,'chrysostom');
+  }else if(iso==='2026-12-24'){
+   assert.equal(me.verification,'source-conflict','December typicon conflict must be disclosed');
+   assert.equal(me.id,'basil','Newton Nativity book prescribes Vesperal Basil');
+   assert.match(me.title,/Vesperal/);
+   assert.ok(me.detailSource?.includes('The-Feast-of-the-Nativity'));
+   assert.equal(melkite.days[iso],undefined,'conflicted dated hymns remain quarantined');
   }else assert.equal(me.verification,'calculated',iso+' claims unverified Melkite appointment');
   if(iso==='2026-12-24'){
    assert.equal(ua.id,'unknown');
