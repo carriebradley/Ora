@@ -40,7 +40,11 @@ test('Newton year-round hymns preserve November and quarantine disputed dates',(
  assert.equal(Object.keys(year.days).length,63);
  assert.equal(year.days['2026-01-30'],undefined);
  assert.equal(year.days['2026-12-24'],undefined);
- assert.equal(year.coverage.January.quarantined[0].date,'2026-01-30');
+ assert.deepEqual(year.coverage.January.quarantined[0],{
+  date:'2026-01-30',printedWeekday:'Thursday',actualWeekday:'Friday'
+ });
+ assert.equal(new Date('2026-01-30T12:00:00Z').getUTCDay(),5);
+ assert.match(year.coverage.January.source,/January-2026\.docx$/);
  assert.equal(year.coverage.December.quarantined[0].date,'2026-12-24');
  for(const [iso,rec] of Object.entries(november.days))assert.deepEqual(year.days[iso],rec,'November source preserved: '+iso);
  for(const [iso,rec] of Object.entries(year.days)){

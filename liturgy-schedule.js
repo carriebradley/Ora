@@ -116,7 +116,15 @@
     // the 2026 Paramony (Christmas is Friday), but the December 2026
     // monthly typicon contains a conflicting Chrysostom heading. Preserve
     // the appointed Vesperal book without claiming the sources agree.
-    let detailSource='';
+    let detailSource='',detailSourceLabel='',sourceDiscrepancy='';
+    // Newton's 2026 annual calendar confirms the Three Hierarchs on Friday
+    // January 30. Its January monthly typicon prints Thursday instead.
+    // This validates the feast, not the unreviewed dated hymn selection.
+    if(church==='melkite'&&iso==='2026-01-30'){
+      sourceDiscrepancy='The January monthly typicon labels January 30 as Thursday; in 2026 it falls on Friday. The Diocese of Newton annual calendar confirms the feast of the Three Holy Hierarchs and its readings, but the misdated typicon hymns remain withheld.';
+      detailSource='https://melkite.org/wp-content/uploads/2025/12/January-2026.docx';
+      detailSourceLabel='January typicon';
+    }
     if(church==='melkite'&&iso==='2026-12-24'){
       id='basil';title='Vesperal Divine Liturgy of St. Basil the Great';
       verification='source-conflict';
@@ -124,7 +132,9 @@
       detailSource='https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf';
     }
     const source=church==='ukrainian'?'https://eeparchy.com/calendar/'+iso:church==='melkite'?'https://melkite.org/liturgical-resources':'https://mci.archpitt.org/LiturgicalCalendar2026.html';
-    return {id,title,note,verification,source,...(detailSource?{detailSource}:{})};
+    return {id,title,note,verification,source,
+      ...(detailSource?{detailSource,detailSourceLabel:detailSourceLabel||'Nativity service order'}:{}),
+      ...(sourceDiscrepancy?{sourceDiscrepancy}:{})};
   }
   return {service,monthlyChrysostomDates};
 });

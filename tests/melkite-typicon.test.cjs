@@ -7,7 +7,17 @@ test('November monthly typicon verifies only its twelve dated Melkite appointmen
   assert.equal(S.service(day,'melkite').verification,'verified');
   assert.match(S.service(day,'melkite').note,/monthly typicon/);
  }
- assert.equal(S.service('2026-01-30','melkite').verification,'calculated');
+ const hierarchs=S.service('2026-01-30','melkite');
+ assert.equal(hierarchs.verification,'calculated','feast verification does not certify a service appointment');
+ assert.equal(hierarchs.id,'chrysostom','do not substitute a different ordinary Liturgy');
+ assert.match(hierarchs.sourceDiscrepancy,/Thursday/);
+ assert.match(hierarchs.sourceDiscrepancy,/Friday/);
+ assert.match(hierarchs.sourceDiscrepancy,/Three Holy Hierarchs/);
+ assert.match(hierarchs.sourceDiscrepancy,/hymns remain withheld/);
+ assert.equal(hierarchs.detailSource,'https://melkite.org/wp-content/uploads/2025/12/January-2026.docx');
+ assert.equal(hierarchs.detailSourceLabel,'January typicon');
+ assert.equal(S.service('2026-01-29','melkite').sourceDiscrepancy,undefined);
+ assert.equal(S.service('2026-01-30','ukrainian').sourceDiscrepancy,undefined);
  const paramony=S.service('2026-12-24','melkite');
  assert.equal(paramony.verification,'source-conflict','December Chrysostom heading conflicts with Newton Nativity order');
  assert.equal(paramony.id,'basil');

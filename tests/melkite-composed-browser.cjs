@@ -166,5 +166,17 @@ module.exports=async(page,base,artifacts)=>{
  assert.match(await paramony.textContent(),/not a morning Liturgy/);
  assert.match(await paramony.textContent(),/Chrysostom/);
  assert.equal(await paramony.locator('a[href="https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf"]').count(),1);
- console.log('Melkite on-screen composition and 2026 Nativity conflict safeguards passed.');
+ // Newton's annual calendar confirms this Friday feast, but the January
+ // typicon misprints the weekday. Don't expose its quarantined hymns.
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-01-30');
+ assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-chrysostom');
+ assert.equal(await page.locator('.byz-daily-propers').count(),0,'January 30 hymns remain quarantined');
+ const hierarchs=page.locator('.byz-liturgy-variations');
+ assert.match(await hierarchs.textContent(),/Thursday/);
+ assert.match(await hierarchs.textContent(),/Friday/);
+ assert.match(await hierarchs.textContent(),/Three Holy Hierarchs/);
+ assert.equal(await hierarchs.locator('a[href="https://melkite.org/wp-content/uploads/2025/12/January-2026.docx"]').count(),1);
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-01-29');
+ assert.doesNotMatch(await page.locator('.byz-liturgy-variations').textContent(),/typicon labels January 30/);
+ console.log('Melkite on-screen composition, Nativity and Three Hierarchs source safeguards passed.');
 };
