@@ -12,6 +12,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Check test script syntax
+        run: |
+          for script in tests/*.cjs; do
+            node --check "$script"
+          done
       - name: Node regression suite
         shell: bash
         run: |
