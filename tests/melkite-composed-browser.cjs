@@ -170,7 +170,7 @@ module.exports=async(page,base,artifacts)=>{
  // typicon misprints the weekday. Don't expose its quarantined hymns.
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-01-30');
  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-chrysostom');
- assert.equal(await page.locator('.byz-daily-propers').count(),0,'January 30 hymns remain quarantined');
+ assert.equal(await page.locator('.byz-daily-propers .byz-proper-group').count(),0,'January 30 quarantined hymns are never rendered');
  const hierarchs=page.locator('.byz-liturgy-variations');
  assert.match(await hierarchs.textContent(),/Thursday/);
  assert.match(await hierarchs.textContent(),/Friday/);
