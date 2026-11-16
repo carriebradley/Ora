@@ -96,7 +96,13 @@
     return validRecord(record,{iso,church,id})?record:null;
   }
   function compose(sections,record,context){
-    const original=(sections||[]).map(part=>({...part,lines:[...(part.lines||[])]}));
+    // Retain the verified Newton 2009 edition identity after adding dated
+    // hymns. The continuous reader uses it to hide annual reference tables.
+    const preserveEdition=items=>{
+      if(sections?.newton2009===true)items.newton2009=true;
+      return items;
+    };
+    const original=preserveEdition((sections||[]).map(part=>({...part,lines:[...(part.lines||[])]})));
     const remaining=Object.keys(labels).filter(key=>safeLines(record?.groups?.[key]));
     if(!validRecord(record,context))return {sections:original,placed:[],remaining:[]};
     const points=headings(original),insertions=new Map(),placed=[];
@@ -150,7 +156,7 @@
       }
       flush();
     }
-    return {sections:out,placed,remaining:remaining.filter(key=>!placed.includes(key))};
+    return {sections:preserveEdition(out),placed,remaining:remaining.filter(key=>!placed.includes(key))};
   }
   return {compose,labels,validRecord,displayLine,loadRecord};
 });

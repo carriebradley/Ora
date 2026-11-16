@@ -118,3 +118,29 @@ test('Melkite dated hymns display without known import punctuation artifacts',()
  assert.equal(D.displayLine('Lord, hear me. Next prayer!'),
   'Lord, hear me. Next prayer!');
 });
+
+
+test('Newton edition identity survives proper insertion and fallbacks',()=>{
+ const melkite={
+  ...sample,church:'melkite',iso:'2026-11-15',
+  source:'https://melkite.org/liturgical-resources',typicon:'November-2026.docx'
+ };
+ const ctx={church:'melkite',iso:'2026-11-15',id:'melkite-chrysostom'};
+ const saved=sections.map(part=>({...part,lines:[...part.lines]}));
+ saved.newton2009=true;
+ const before=JSON.stringify(saved);
+ const placed=D.compose(saved,melkite,ctx);
+ assert.ok(placed.placed.length>0,'exercise actual dated proper insertion');
+ assert.equal(placed.sections.newton2009,true,
+  'inserted hymns must not reveal Newton annual reference tables');
+ assert.equal(saved.newton2009,true);
+ assert.equal(JSON.stringify(saved),before,'saved prayer lines must not be modified');
+ assert.equal(D.compose(saved,{...melkite,groups:{}},ctx).sections.newton2009,true,
+  'no-placement fallback retains the edition');
+ assert.equal(D.compose(saved,melkite,{...ctx,iso:'2026-12-01'}).sections.newton2009,true,
+  'wrong-date fallback retains the edition');
+ assert.equal(D.compose(saved,sample,context).sections.newton2009,true,
+  'unrelated proper records cannot erase the private source identity');
+ assert.equal(D.compose(sections,melkite,ctx).sections.newton2009,undefined,
+  'an unrecognized source must never be marked as the Newton edition');
+});

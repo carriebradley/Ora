@@ -68,3 +68,17 @@ speaker attribution from leaking into unrelated text.
 Greek and Arabic chant labels are protected from an earlier pending minister
 cue. This is a narrow display-only correction: no saved PDF, source document,
 or liturgical wording is modified.
+
+
+## Keep source identity after inserting dated hymns
+
+The known Newton 2009 Chrysostom PDF carries a `newton2009` marker on
+the parsed section collection. This identifies the specific edition whose
+annual Kontakia and Hirmoi reference tables the reader knows to suppress.
+Composing the day's verified hymns previously built a new array without
+retaining this marker, potentially exposing reference tables after hydration.
+
+The compositor now preserves the marker during hymn insertion and fallback.
+It never assigns the identity to an unrecognized book. New tests cover
+successful placement, no-placement, mismatched-day and unknown-source cases.
+The source PDF and prayer wording remain unchanged.
