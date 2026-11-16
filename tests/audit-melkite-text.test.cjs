@@ -49,7 +49,7 @@ test('Equivalent prayer wording survives different physical line wrapping',()=>{
 
 test('Melkite audit recognizes equivalent minister labels but not changed ministers',()=>{
  const {comparePassages}=require('../tools/audit_melkite_text.cjs');
- assert.deepEqual(comparePassages('Celebrant: Blessed is the Kingdom.\\nPeople: Amen.','Priest: Blessed is the Kingdom.\\nAll: Amen.').findings,[]);
+ assert.deepEqual(comparePassages('Celebrant: Blessed is the Kingdom.\nPeople: Amen.','Priest: Blessed is the Kingdom.\nAll: Amen.').findings,[]);
  assert.deepEqual(comparePassages('DCN: In peace let us pray.','Deacon: In peace let us pray.').findings,[]);
  assert.ok(comparePassages('Deacon: In peace let us pray.','Priest: In peace let us pray.').findings.length>0);
 });
