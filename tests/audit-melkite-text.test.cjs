@@ -53,3 +53,12 @@ test('Melkite audit recognizes equivalent minister labels but not changed minist
  assert.deepEqual(comparePassages('DCN: In peace let us pray.','Deacon: In peace let us pray.').findings,[]);
  assert.ok(comparePassages('Deacon: In peace let us pray.','Priest: In peace let us pray.').findings.length>0);
 });
+
+test('Melkite partial wrapped paragraphs flag changed words and reordered phrases',()=>{
+ const {comparePassages}=require('../tools/audit_melkite_text.cjs');
+ const source='Priest: Blessed is the Kingdom of the Father\nand of the Son and of the Holy Spirit.\nAll: Amen.';
+ const changed='Priest: Blessed is the Kingdom of the Father and of the Son and of the Holy Ghost.\nAll: Amen.';
+ assert.ok(comparePassages(source,changed).findings.some(x=>x.kind==='partial-word-mismatch'));
+ const reordered='Priest: Blessed is the Kingdom of the Father and of the Holy Spirit and of the Son.\nAll: Amen.';
+ assert.ok(comparePassages(source,reordered).findings.some(x=>x.kind==='word-order-mismatch'));
+});

@@ -13,3 +13,5 @@ Completely unexpected displayed lines are reported as `unexpected-rendered` for 
 If the entire selected passage has identical wording in the same order, differences in physical line wrapping alone are ignored. Partial differences still use conservative line-level diagnostics and may need manual review. This is not fuzzy text matching.
 
 The comparator also recognizes selected equivalent minister labels (Celebrant/Priest, DCN/Deacon, People/Faithful/Congregation/All). It does not equate priest and deacon or silently change the words of a prayer.
+
+For passages with different line counts, the comparator also checks the first differing word and reports word-order mismatches when the same words appear in a different order. This is diagnostic only; it does not automatically rewrite or discard liturgical text.

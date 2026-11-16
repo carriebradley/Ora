@@ -49,6 +49,28 @@ function comparePassages(source,rendered){
  // breaks. Keep punctuation and word order intact; do not use fuzzy matching.
  if(normalize(src.join(' '))===normalize(view.join(' ')))
   return {sourceLines:src.length,renderedLines:view.length,findings:[]};
+ // Partial paragraph matches: compare word sequences in order across line
+ // breaks. Only activate when at least one side wraps a paragraph and the
+ // other does not. Keep the exact-line diagnostics for ordinary comparisons.
+ const words=s=>normalize(s).match(/[^\\s]+/g)||[];
+ const srcWords=words(src.join(' ')),viewWords=words(view.join(' '));
+ const wrappingLikely=src.length!==view.length;
+ if(wrappingLikely&&srcWords.length&&viewWords.length){
+  const sourceSet=new Map(),renderedSet=new Map();
+  for(const w of srcWords)sourceSet.set(w,(sourceSet.get(w)||0)+1);
+  for(const w of viewWords)renderedSet.set(w,(renderedSet.get(w)||0)+1);
+  const sameCounts=sourceSet.size===renderedSet.size&&[...sourceSet].every(([w,n])=>renderedSet.get(w)===n);
+  if(sameCounts){
+   return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'word-order-mismatch',detail:'Words match but their sequence differs across wrapped paragraphs'}]};
+  }
+  // Avoid declaring a harmless split a missing line when its words occur in
+  // the same order; still flag a changed or omitted word explicitly.
+  let j=0;
+  for(const w of srcWords){if(viewWords[j]===w)j++;else break;}
+  if(j>0&&j<srcWords.length){
+   return {sourceLines:src.length,renderedLines:view.length,findings:[{kind:'partial-word-mismatch',wordOffset:j+1,sourceWord:srcWords[j],renderedWord:viewWords[j]||null}]};
+  }
+ }
  const counts=new Map(),positions=new Map();
  for(let i=0;i<view.length;i++){
   const key=normalize(view[i]);counts.set(key,(counts.get(key)||0)+1);
