@@ -54,7 +54,7 @@
   const profile=id=>Object.hasOwn(profiles,id)?profiles[id]:null;
   const validISO=iso=>{
     if(typeof iso!=='string'||!/^2026-\d\d-\d\d$/.test(iso))return null;
-    const d=new Date(iso+'T12:00:00Z');
+    const d=new Date(iso+'T00:00:00Z');
     return Number.isFinite(d.getTime())&&d.toISOString().slice(0,10)===iso?d:null;
   };
   function day(id,iso){
