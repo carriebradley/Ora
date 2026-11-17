@@ -8,6 +8,28 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR:',e.message)});
  await context.route('**/*',route=>route.request().url().startsWith(process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/')?route.continue():route.abort());
  const base=process.env.ORA_BASE_URL || 'http://127.0.0.1:8765/';
+ // Source coverage belongs in More, not among the spoken prayers. The
+ // national April 12 cycle must not be presented as an active selection.
+ await page.goto(`${base}index.html?tab=more&date=2026-04-05&rite=byz`);
+ await page.locator('[data-act="byzchoice"][data-v="ukrainian"]').click();
+ await page.locator('.more-paschal-basis summary').click();
+ let basisText=await page.locator('.more-paschal-basis').innerText();
+ assert.match(basisText,/April 5 Paschal cycle/);
+ assert.match(basisText,/St. George/);
+ assert.match(basisText,/2026-04-12/);
+ assert.match(basisText,/not selectable yet/);
+ assert.equal(await page.locator('.more-paschal-basis a[href="https://eeparchy.com/Easter%20Program%20.pdf"]').count(),1);
+ assert.equal(await page.locator('.more-paschal-basis a[href="https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/"]').count(),1);
+ await page.locator('[data-act="byzchoice"][data-v="melkite"]').click();
+ await page.locator('.more-paschal-basis summary').click();
+ basisText=await page.locator('.more-paschal-basis').innerText();
+ assert.match(basisText,/Melkite Diocese of Newton/);
+ assert.doesNotMatch(basisText,/St. George|2026-04-12/);
+ await page.locator('[data-act="byzchoice"][data-v="ukrainian"]').click();
+ await page.goto(`${base}index.html?tab=more&date=2027-04-04&rite=byz`);
+ await page.locator('.more-paschal-basis summary').click();
+ assert.match(await page.locator('.more-paschal-basis').innerText(),/checked diocesan Paschal source for 2027 has not been bundled/);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  // Browser-level prayer text checks use the actual shared formatter and
  // rendered DOM, not only static inspection of implementation source.
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=byz`);

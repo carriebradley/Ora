@@ -1941,11 +1941,21 @@
       <details style="margin:8px 0"><summary><b>The Epilogue</b> <span class="muted" style="font-size:.8rem">· the troops of heaven, and “Mayst Thou save me, O Jesus”</span></summary><div style="margin-top:10px">${v(window.FELIRE_EPI)}</div></details>
       <p class="muted" style="font-size:.74rem">Tr. Whitley Stokes, <i>The Martyrology of Oengus the Culdee</i> (Henry Bradshaw Society, 1905). Read from a scan of the printed book, so a letter here and there may be misread; brackets and question marks are Stokes’s own.</p></div></details>`;
   }
+  function paschalCoverageHTML() {
+    const year=Number(st.date.slice(0,4));
+    const basis=LiturgySchedule.paschalBasis(year,S.byzChurch);
+    if(!basis)return '<p class="muted">Ora uses the Gregorian Paschal calculation for this Byzantine calendar. A checked diocesan Paschal source for '+esc(year)+' has not been bundled; services and readings outside verified dates remain calculated.</p>';
+    const link=(url,label)=>'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+'</a>';
+    let h='<p>For '+esc(year)+', Ora uses <b>'+esc(basis.label)+'</b> (Pascha '+esc(basis.pascha)+'). Source: '+link(basis.source,S.byzChurch==='ukrainian'?'Edmonton Easter program':'Melkite diocesan resources')+'.</p>';
+    if(basis.alternativePascha)h+='<p>Other Edmonton parishes, including St. George, celebrated Pascha on '+esc(basis.alternativePascha)+'. The '+link(basis.alternativeSource,'national UGCC 2026 calendar')+' also follows that date. That second cycle is <b>not selectable yet</b> because its calendar, appointed readings, office, and Divine Liturgy must use the same dates.</p>';
+    h+='<p class="muted">These records verify the specified sources and dates, not a universal parish timetable. Unverified daily propers are never transferred from another Paschal cycle.</p>';
+    return h;
+  }
   function viewMore() {
     return `<div class="more-section-heading">Preferences</div>
     <section class="card more-appearance"><h3>Appearance</h3><div class="seg" role="group" aria-label="Color theme">${[['light','Light'],['dark','Dark'],['system','System']].map(([value,label])=>`<button data-act="theme" data-v="${value}" class="${S.theme===value?'on':''}" aria-pressed="${S.theme===value}">${label}</button>`).join('')}</div><p class="muted">System follows your device’s appearance.</p></section>
     <section class="card more-settings"><h3>Settings</h3><div class="row"><button class="btn fill" data-act="settings">Open settings</button></div></section>
-    <section class="card"><div class="lab"><span class="grow">Byzantine Calendar</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian · Edmonton</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This setting controls Byzantine dates and readings throughout Ora.</p></section>
+    <section class="card"><div class="lab"><span class="grow">Byzantine Calendar</span></div><div class="seg" role="group" aria-label="Byzantine Catholic Church calendar"><button data-act="byzchoice" data-v="ukrainian" class="${S.byzChurch === 'ukrainian' ? 'on' : ''}">Ukrainian · Edmonton</button><button data-act="byzchoice" data-v="melkite" class="${S.byzChurch === 'melkite' ? 'on' : ''}">Melkite</button></div><p class="muted" style="font-size:.83rem;margin:12px 0 0">This setting controls Byzantine dates and readings throughout Ora.</p><details class="more-paschal-basis"><summary>Paschal calendar coverage</summary><div class="more-source-content">${paschalCoverageHTML()}</div></details></section>
     <div class="more-section-heading">Prayer books</div>
     <details class="card more-liturgy"><summary><b>Sacred Liturgy</b></summary><div class="more-liturgy-content">${viewLiturgy()}</div></details>
     <div class="more-section-heading">Sources</div>
@@ -2488,7 +2498,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v365';
+  const APP_BUILD = 'ora-v366';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

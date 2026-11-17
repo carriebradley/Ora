@@ -162,5 +162,26 @@
       ...(detailSource?{detailSource,detailSourceLabel:detailSourceLabel||'Nativity service order'}:{}),
       ...(sourceDiscrepancy?{sourceDiscrepancy}:{})};
   }
-  return {service,monthlyChrysostomDates};
+  // Source coverage is limited to 2026 and to the specific church named.
+  // The April 12 Ukrainian cycle is documented but not yet selectable:
+  // its dates, readings, office and propers must move as one unit.
+  const coverage2026=Object.freeze({
+    ukrainian:Object.freeze({
+      year:2026,church:'ukrainian',pascha:'2026-04-05',
+      label:'Edmonton · April 5 Paschal cycle (St. Josaphat Cathedral)',
+      source:'https://eeparchy.com/Easter%20Program%20.pdf',
+      alternativePascha:'2026-04-12',
+      alternativeLabel:'St. George Parish and national UGCC calendar',
+      alternativeSource:'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/'
+    }),
+    melkite:Object.freeze({
+      year:2026,church:'melkite',pascha:'2026-04-05',
+      label:'Melkite Diocese of Newton · April 5 Paschal cycle',
+      source:'https://melkite.org/liturgical-resources'
+    })
+  });
+  function paschalBasis(year,church='ukrainian'){
+    return year===2026&&Object.hasOwn(coverage2026,church)?coverage2026[church]:null;
+  }
+  return {service,monthlyChrysostomDates,paschalBasis};
 });
