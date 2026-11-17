@@ -194,9 +194,19 @@ module.exports=async(page,base,artifacts)=>{
  const originalSettings=await page.evaluate(()=>localStorage.getItem('ora.settings'));
  await page.evaluate(()=>{
   const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');
-  s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));
+  s.byzChurch='ukrainian';s.byzLiturgyChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));
  });
  try{
+  for(const iso of ['2026-04-02','2026-04-04']){
+   await page.goto(base+'index.html?tab=liturgy&rite=byz&date='+iso);
+   assert.match(await page.locator('.service-summary').textContent(),/Vesperal Divine Liturgy of St. Basil/);
+   assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'basil');
+   const details=page.locator('.byz-liturgy-variations');
+   assert.match(await details.textContent(),/St. George/);
+   assert.equal(await details.locator('a[href="https://eeparchy.com/Easter%20Program%20.pdf"]').count(),1);
+   assert.equal(await page.locator('.byz-daily-propers .byz-proper-group').count(),0);
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  }
   await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-12-24');
   assert.match(await page.locator('.service-summary').textContent(),/confirm Edmonton directions/);
   assert.equal(await page.locator('.liturgical-text').count(),0,'no service reader can be appointed while Edmonton sources conflict');

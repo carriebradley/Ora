@@ -122,6 +122,11 @@ test('2026 service selector never silently claims a verified appointment without
    assert.match(ua.sourceDiscrepancy,/Edmonton.*UGCC 2026 national calendar/);
    assert.ok(ukrainian.days[iso],'retain original dated Edmonton hymn source for audit');
    assert.equal(ua.id,'unknown','the existing hymn record does not establish a Divine Liturgy appointment');
+  }else if(['2026-04-02','2026-04-04'].includes(iso)){
+   assert.equal(ua.id,'basil');
+   assert.equal(ua.verification,'verified','Edmonton program confirms cathedral April 5 cycle');
+   assert.equal(ua.detailSource,'https://eeparchy.com/Easter%20Program%20.pdf');
+   assert.match(ua.sourceDiscrepancy,/April 12/);
   }else if(iso==='2026-04-01'){
    assert.equal(ua.id,'presanctified');
    assert.equal(ua.verification,'verified','Edmonton explicitly appoints Great Wednesday Presanctified Gifts');

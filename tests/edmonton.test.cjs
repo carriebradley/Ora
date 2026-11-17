@@ -83,3 +83,21 @@ test('Edmonton Christmas Eve contradicts the UGCC national 2026 Vesperal Basil s
  assert.notEqual(S.service(eve,'melkite').detailSource,s.detailSource);
  assert.equal(S.service('2027-12-24','ukrainian').id,'unknown','2026 evidence must not be reused in later years');
 });
+
+test('Edmonton cathedral Holy Week appointments are verified within the April 5 cycle only',()=>{
+ for(const [iso,day] of [['2026-04-02','Great Thursday'],['2026-04-04','Great Saturday']]){
+  const s=S.service(iso,'ukrainian');
+  assert.equal(s.id,'basil');
+  assert.equal(s.verification,'verified');
+  assert.match(s.title,/Vesperal Divine Liturgy of St. Basil/);
+  assert.match(s.note,new RegExp(day));
+  assert.match(s.note,/April 5 Paschal cycle/);
+  assert.equal(s.detailSource,'https://eeparchy.com/Easter%20Program%20.pdf');
+  assert.match(s.sourceDiscrepancy,/including St. George/);
+  assert.equal(s.source,'https://eeparchy.com/calendar/'+iso);
+ }
+ assert.equal(S.service('2026-04-01','ukrainian').id,'presanctified');
+ assert.equal(S.service('2026-04-03','ukrainian').id,'none');
+ assert.equal(S.service('2026-04-05','ukrainian').id,'chrysostom');
+ assert.equal(S.service('2026-04-11','ukrainian').verification,'calculated');
+});

@@ -34,3 +34,24 @@ test('Unspecified service church follows Ukrainian Edmonton and preserves Melkit
  assert.notEqual(serviceForChurch('2026-12-24','melkite').detailSource,edmontonEve.detailSource);
  assert.match(serviceForChurch('2026-11-12','melkite').source,/melkite\.org/);
 });
+
+test('Edmonton cathedral dates stay separate from the national UGCC Paschalion',()=>{
+ for(const iso of ['2026-04-02','2026-04-04']){
+  const s=serviceForChurch(iso,'ukrainian');
+  assert.equal(s.id,'basil');
+  assert.equal(s.verification,'verified');
+  assert.equal(s.title,'Vesperal Divine Liturgy of St. Basil the Great');
+  assert.equal(s.detailSource,'https://eeparchy.com/Easter%20Program%20.pdf');
+  assert.equal(s.detailSourceLabel,'Edmonton 2026 Easter services');
+  assert.match(s.note,/St. Josaphat Cathedral/);
+  assert.match(s.note,/April 12 Pascha/);
+  assert.match(s.sourceDiscrepancy,/St. George/);
+ }
+ for(const iso of ['2026-04-09','2026-04-11']){
+  const s=serviceForChurch(iso,'ukrainian');
+  assert.equal(s.verification,'calculated');
+  assert.equal(s.detailSource,undefined);
+ }
+ assert.match(serviceForChurch('2026-04-02','melkite').detailSource,/melkite.org/);
+ assert.equal(serviceForChurch('2027-04-02','ukrainian').id,'unknown');
+});
