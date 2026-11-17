@@ -178,6 +178,17 @@ module.exports=async(page,base,artifacts)=>{
  assert.equal(await hierarchs.locator('a[href="https://melkite.org/wp-content/uploads/2025/12/January-2026.docx"]').count(),1);
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-01-29');
  assert.doesNotMatch(await page.locator('.byz-liturgy-variations').textContent(),/typicon labels January 30/);
+ // Newton's Holy Week order specifies Vespers with St. Basil on
+ // Great Thursday and Great Saturday, without appointing any dated hymns.
+ for(const iso of ['2026-04-02','2026-04-04']){
+  await page.goto(base+'index.html?tab=liturgy&rite=byz&date='+iso);
+  assert.match(await page.locator('.service-summary').textContent(),/Vesperal Divine Liturgy of St. Basil/);
+  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-basil');
+  assert.equal(await page.locator('.byz-daily-propers .byz-proper-group').count(),0);
+  const details=page.locator('.byz-liturgy-variations');
+  assert.equal(await details.locator('a[href="https://melkite.org/faith/sunday-scriptures/behold-the-bridegroom-is-coming"]').count(),1);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ }
  // The Ukrainian Edmonton calendar and UGCC national calendar disagree on
  // December 24. Unlike Newton's case, do not select Basil automatically.
  const originalSettings=await page.evaluate(()=>localStorage.getItem('ora.settings'));

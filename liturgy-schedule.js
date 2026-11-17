@@ -116,6 +116,16 @@
       verification='verified';
       note='St. John Chrysostom is identified in the Diocese of Newton’s '+monthNames[Number(iso.slice(5,7))-1]+' 2026 monthly typicon. Parish service times and local directions vary.';
     }
+    // Newton's Holy Week services prescribe Vespers joined to St. Basil
+    // for Great Thursday and Great Saturday, unlike an ordinary Basil
+    // Liturgy. This verifies the form, not a local time or printed hymns.
+    if(church==='melkite'&&['2026-04-02','2026-04-04'].includes(iso)){
+      id='basil';title='Vesperal Divine Liturgy of St. Basil the Great';
+      verification='verified';
+      note='The Diocese of Newton appoints Vespers with the Divine Liturgy of St. Basil for '+(iso==='2026-04-02'?'Great and Holy Thursday':'Great and Holy Saturday')+'. Parish celebration times vary; no date-specific hymns are inferred.';
+      detailSource='https://melkite.org/faith/sunday-scriptures/behold-the-bridegroom-is-coming';
+      detailSourceLabel='Melkite Holy Week service order';
+    }
     // Newton's Nativity service book appoints a Vesperal Basil Liturgy on
     // the 2026 Paramony (Christmas is Friday), but the December 2026
     // monthly typicon contains a conflicting Chrysostom heading. Preserve

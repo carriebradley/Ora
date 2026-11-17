@@ -108,6 +108,12 @@ test('2026 service selector never silently claims a verified appointment without
    assert.match(me.title,/Vesperal/);
    assert.ok(me.detailSource?.includes('The-Feast-of-the-Nativity'));
    assert.equal(melkite.days[iso],undefined,'conflicted dated hymns remain quarantined');
+  }else if(['2026-04-02','2026-04-04'].includes(iso)){
+   assert.equal(me.verification,'verified','Newton Holy Week service order appoints Vesperal Basil');
+   assert.equal(me.id,'basil');
+   assert.match(me.title,/Vesperal.*Basil/);
+   assert.equal(me.detailSource,'https://melkite.org/faith/sunday-scriptures/behold-the-bridegroom-is-coming');
+   assert.equal(melkite.days[iso],undefined,'no invented Holy Week dated hymn groups');
   }else assert.equal(me.verification,'calculated',iso+' claims unverified Melkite appointment');
   if(iso==='2026-12-24'){
    assert.equal(ua.id,'unknown');

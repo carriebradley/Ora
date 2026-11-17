@@ -26,6 +26,22 @@ test('November monthly typicon verifies only its twelve dated Melkite appointmen
  assert.match(paramony.note,/conflicting Chrysostom heading/);
  assert.equal(paramony.detailSource,'https://melkite.org/wp-content/uploads/2016/09/The-Feast-of-the-Nativity-of-Our-Lord-God-and-Savior-Jesus-Christ.pdf');
  assert.equal(S.service('2026-12-24','ukrainian').id,'unknown');
+ for(const iso of ['2026-04-02','2026-04-04']){
+  const s=S.service(iso,'melkite');
+  assert.equal(s.id,'basil');
+  assert.equal(s.verification,'verified');
+  assert.equal(s.title,'Vesperal Divine Liturgy of St. Basil the Great');
+  assert.match(s.note,/Diocese of Newton appoints Vespers/);
+  assert.match(s.note,iso==='2026-04-02'?/Great and Holy Thursday/:/Great and Holy Saturday/);
+  assert.equal(s.detailSource,'https://melkite.org/faith/sunday-scriptures/behold-the-bridegroom-is-coming');
+  assert.equal(s.detailSourceLabel,'Melkite Holy Week service order');
+  assert.equal(s.source,'https://melkite.org/liturgical-resources');
+ }
+ assert.equal(S.service('2026-04-01','melkite').verification,'calculated');
+ assert.equal(S.service('2026-04-03','melkite').id,'none');
+ assert.equal(S.service('2026-04-05','melkite').id,'chrysostom');
+ assert.equal(S.service('2026-04-02','ukrainian').verification,'calculated','Do not promote Edmonton without its own dated evidence');
+ assert.equal(S.service('2027-04-02','melkite').id,'unknown');
  assert.equal(S.service('2026-11-12','melkite').verification,'calculated');
  assert.equal(S.service('2026-11-13','ukrainian').verification,'calculated');
  assert.equal(M.typicon('2027-11-13'),null);
