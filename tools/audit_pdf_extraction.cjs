@@ -6,12 +6,14 @@ const wordPattern=/[\p{L}\p{M}]+(?:[\u2019'-][\p{L}\p{M}]+)*/gu;
 const sourceGlyph=/[\uE000-\uF8FF\uFFFD\u25A1]/gu;
 const latin=/\p{Script=Latin}/u;
 const cyrillic=/\p{Script=Cyrillic}/u;
+// Parenthesized repetition cues are review candidates, not missing prayers.
+const repetitionDirective=/\(\s*(?:to\s+be\s+repeated\s+after\s+each\s+petition|three\s+times(?:[\s\u00ad\u2010-\u2015-]*to\s+be\s+repeated\s+after\s+each\s+petition)?)\s*\.?\s*\)/gi;
 function audit(input){
  const text=String(input??'');
  const pages=text.split('\f');
  if(pages.length>1&&!pages.at(-1).trim())pages.pop();
  const findings=[];
- const summary={'mixed-script-token':0,'private-use-glyph':0,'replacement-glyph':0};
+ const summary={'mixed-script-token':0,'private-use-glyph':0,'replacement-glyph':0,'repetition-rubric':0};
  for(let page=0;page<pages.length;page++){
   const lines=pages[page].split(/\r?\n/);
   for(let i=0;i<lines.length;i++){
@@ -21,6 +23,13 @@ function audit(input){
     if(!latin.test(m[0])||!cyrillic.test(m[0]))continue;
     const kind='mixed-script-token';
     findings.push({kind,page:page+1,line:i+1,column:m.index+1,token:m[0],excerpt:excerpt(m.index,m.index+m[0].length)});
+    summary[kind]++;
+   }
+   for(const m of line.matchAll(repetitionDirective)){
+    const kind='repetition-rubric';
+    findings.push({kind,page:page+1,line:i+1,column:m.index+1,
+     cue:/after\s+each\s+petition/i.test(m[0])?'after-each-petition':'three-times',
+     excerpt:excerpt(m.index,m.index+m[0].length)});
     summary[kind]++;
    }
    for(const m of line.matchAll(sourceGlyph)){

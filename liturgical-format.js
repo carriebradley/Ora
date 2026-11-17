@@ -23,7 +23,7 @@
    .replace(/\s+([,.;:!?])/g,'$1')
    .replace(/-\s*-\s*-\s*/g,'-')
    .replace(/\b(well)-\s*-\s*(being)\b/gi,'$1-$2')
-   .replace(/\s*\((?:To be repeated after each petition|Three times)\)\s*$/i,'')
+   .replace(/\s*\(\s*(?:To\s+be\s+repeated\s+after\s+each\s+petition|Three\s+times(?:[\s\u00ad\u2010-\u2015-]*To\s+be\s+repeated\s+after\s+each\s+petition)?)\s*\.?\s*\)\s*$/i,'')
    .replace(/([(\u2018\u201c])\s+/g,'$1')
    .replace(/\s+([)\u2019\u201d])/g,'$1')
    .replace(/[ \t]{2,}/g,' ')

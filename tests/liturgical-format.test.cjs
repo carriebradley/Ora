@@ -674,3 +674,23 @@ test('dated hymns render prayer words but not editorial replacement directions i
  assert.match(app,/LiturgicalFormat\.properPrayerLines\(entry\.groups\?\.\[key\]\)/);
  assert.match(reader,/LiturgicalFormat\.properPrayerLines\(record\.groups\?\.\[key\]\)/);
 });
+
+
+test('Newton 2009 printed repetition directions do not obscure spoken responses',()=>{
+ const cases=[
+  ['ALL: Lord, have mercy. (To be repeated after each petition)','ALL: Lord, have mercy.'],
+  ['ALL: Lord, have mercy. (To be repeated after each petition.)','ALL: Lord, have mercy.'],
+  ['ALL: Lord, have mercy. (three times -\u00ad\u2010\u2011 to be repeated after each petition.)','ALL: Lord, have mercy.'],
+  ['ALL: Grant this, O Lord. (To be repeated after each petition.)','ALL: Grant this, O Lord.'],
+  ['ALL: Lord, have mercy. (Three times)','ALL: Lord, have mercy.']
+ ];
+ for(const [source,expected] of cases){
+  assert.equal(F.displayPrayer(source),expected);
+  assert.equal(F.instruction(source),false,'do not hide printed spoken responses');
+  assert.equal(F.role(source)?.kind,'all');
+ }
+ assert.equal(F.displayPrayer('Lord, have mercy. (Three times more, if desired.)'),
+  'Lord, have mercy. (Three times more, if desired.)');
+ assert.equal(F.displayPrayer('All: Lord, have mercy. (To be repeated after each petition.) Then another prayer.'),
+  'All: Lord, have mercy. (To be repeated after each petition.) Then another prayer.');
+});

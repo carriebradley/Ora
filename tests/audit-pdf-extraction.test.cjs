@@ -21,3 +21,20 @@ test('ordinary Cyrillic-only lines, accents and religious symbols are not false 
  const report=audit('Українською молитва.\nPeace † be to all.\nÉléison.');
  assert.deepEqual(report.findings,[]);
 });
+
+test('Newton 2009 repetition audit preserves source-page and separates instruction types',()=>{
+ const source='All: Lord, have mercy. (To be repeated after each petition.)\n'
+  +'All: Amen. (Three times)\f'
+  +'All: Lord, have mercy. (three times -\u00ad\u2010\u2011 to be repeated after each petition.)\n'
+  +'This person repeated the petition three times in ordinary speech.';
+ const result=audit(source);
+ assert.equal(result.pages,2);
+ assert.equal(result.summary['repetition-rubric'],3);
+ assert.deepEqual(result.findings.map(x=>[x.kind,x.page,x.line,x.cue]),[
+  ['repetition-rubric',1,1,'after-each-petition'],
+  ['repetition-rubric',1,2,'three-times'],
+  ['repetition-rubric',2,1,'after-each-petition']
+ ]);
+ assert.match(result.findings[2].excerpt,/Lord, have mercy/);
+ assert.doesNotMatch(result.findings[2].excerpt,/ordinary speech/);
+});
