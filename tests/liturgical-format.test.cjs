@@ -601,3 +601,16 @@ test('Newton private-use blessing marks and ornamental bullets never appear in d
  assert.equal(F.displayPrayer('Priest: Peace \u2020 be to all.'),
   'Priest: Peace \u2020 be to all.','ordinary religious symbols remain untouched');
 });
+
+test('Edmonton 2012 English spans recover two verified mixed-script source words',()=>{
+ const items=[
+  {str:'\u0422he Light of Christ',width:12},
+  {str:'taking the holy Bread, s\u0430\u0443s:',width:20},
+  {str:'Господи, помилуй.',width:30}
+ ];
+ assert.deepEqual(F.englishPdfItems(items),[
+  {str:'The Light of Christ',width:12},
+  {str:'taking the holy Bread, says:',width:20}
+ ]);
+ assert.equal(F.englishPdfItems([{str:'Слава Ісусу Христу!'}]).length,0);
+});

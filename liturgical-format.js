@@ -140,8 +140,13 @@
  function englishPdfItems(items){
   const out=[];
   for(const item of items||[]){
-   const text=String(item.str??'');
-   if(!CYRILLIC.test(text)){if(text.trim())out.push(item);continue;}
+   const text=String(item.str??'')
+   // Two verified English spans in the 2012 Edmonton episcopal book use
+   // Cyrillic look-alikes. Restore only these complete English words
+   // before the Ukrainian-language filter removes Cyrillic text.
+   .replace(/\u0422he\b/g,'The')
+   .replace(/\bs\u0430\u0443s\b/g,'says');
+   if(!CYRILLIC.test(text)){if(text.trim())out.push(text===item.str?item:{...item,str:text});continue;}
    // A PDF library may place both languages in one text item.
    // Retain only Latin fragments, without inventing a translation.
    const english=text.split(/\s+(?:\/|\||•)\s+|\r?\n|\t/).map(part=>{
