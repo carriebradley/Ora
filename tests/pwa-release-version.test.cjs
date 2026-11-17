@@ -23,6 +23,6 @@ test('release guard catches application changes but not documentation or reading
  assert.equal(R.requiresBump(['oortext.json']),true);
  assert.equal(R.requiresBump(['tests/pwa-release-version.test.cjs','docs/README.md','readings.json']),false);
  assert.throws(()=>R.validate(
-  file('app.js').replace('ora-v363','ora-v362'),file('sw.js'),file('index.html')
+  file('app.js').replace(R.appVersion(file('app.js')),'ora-v1'),file('sw.js'),file('index.html')
  ),/must match/);
 });

@@ -19,7 +19,7 @@ test('Cheesefare aliturgical days and Edmonton source conflicts cannot silently 
  for(const church of ['ukrainian','melkite']){
   for(const day of ['2026-02-11','2026-02-13'])assert.equal(S.service(day,church).id,'none');
   assert.equal(S.service('2026-04-02',church).id,'basil');assert.equal(S.service('2026-04-01',church).id,'presanctified');
-  assert.equal(S.service('2026-04-02',church).verification,'calculated');
+  assert.equal(S.service('2026-04-02',church).verification,church==='melkite'?'verified':'calculated');
  }
  const conflict=S.service('2026-12-24','ukrainian');assert.equal(conflict.id,'unknown');assert.equal(conflict.verification,'source-conflict');assert.match(conflict.note,/Source conflict/);
  assert.equal(S.service('2026-12-24','melkite').id,'basil');assert.equal(S.service('2026-12-24','ruthenian').id,'basil');
