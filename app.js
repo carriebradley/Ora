@@ -382,7 +382,7 @@
   function cardByz(v) {
     const r = v.byz;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(LiturgicalColors.display(r))}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
-      <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason)}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
+      <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason, 'fast')}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
   }
@@ -488,6 +488,11 @@
   function observanceColor(r, rite) {
     if (LiturgicalColors.marian(r)) return 'blue';
     const x = status(r, rite);
+    // The Today badge represents a fasting observance in violet even when
+    // a weekday saint or Melkite diocesan commemoration would normally be white.
+    // Great Feasts keep their own feast color; do not change vestment data.
+    if (rite === 'byz' && (x.fast || r.fastSeason) &&
+        !/^(?:Great Feast|Feast of the Lord|Solemnity|Principal|Holy Day)$/i.test(r.rank || '')) return 'v';
     if (x.holySpirit || x.martyr) return 'r';
     if (x.roseSunday) return 'rose';
     if (x.feast) return 'gold';
@@ -2498,7 +2503,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v373';
+  const APP_BUILD = 'ora-v374';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
