@@ -21,7 +21,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.equal(await page.locator('.more-paschal-basis a[href="https://eeparchy.com/Easter%20Program%20.pdf"]').count(),1);
  assert.equal(await page.locator('.more-paschal-basis a[href="https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/"]').count(),1);
  await page.locator('[data-act="byzchoice"][data-v="melkite"]').click();
- await page.locator('.more-paschal-basis summary').click();
+ if(!(await page.locator('.more-paschal-basis').evaluate(el=>el.open)))
+  await page.locator('.more-paschal-basis summary').click();
  basisText=await page.locator('.more-paschal-basis').innerText();
  assert.match(basisText,/Melkite Diocese of Newton/);
  assert.doesNotMatch(basisText,/St. George|2026-04-12/);
