@@ -591,3 +591,13 @@ test('inline Byzantine minister cues preserve spoken text without parser errors'
   {kind:'other',name:'Subdeacon',words:'Fixture private prayer.',cue:'quietly'});
  assert.equal(F.role('The priest says:'),null,'bare cue must not be treated as spoken prayer');
 });
+
+// PDF glyphs inspected against Newton's 2009 official liturgy, printed pages 11 and 89.
+test('Newton private-use blessing marks and ornamental bullets never appear in displayed prayers',()=>{
+ assert.equal(F.displayPrayer('Priest: Blessed \uf058 is the union of Your holy things.'),
+  'Priest: Blessed is the union of Your holy things.');
+ assert.equal(F.displayPrayer('\uf076 Let our mouths be filled…'),
+  'Let our mouths be filled…');
+ assert.equal(F.displayPrayer('Priest: Peace \u2020 be to all.'),
+  'Priest: Peace \u2020 be to all.','ordinary religious symbols remain untouched');
+});

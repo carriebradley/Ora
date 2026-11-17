@@ -16,7 +16,9 @@
    .replace(/[\u200b\u200c\u200d\u2060\ufeff]/g,'')
    .replace(/[\u2002-\u200a\u202f]/g,' ')
    .replace(/\u00ad/g,'')
-   .replace(/[\u25a1\ufffd]/g,'')
+   // Font-substituted Wingdings blessing crosses and decorative diamonds
+   // occur in the Newton 2009 source; they are never spoken prayer words.
+   .replace(/[\u25a1\ufffd\uf058\uf076]/g,'')
    .replace(/\s*[*\u2217\uff0a]+\s*/g,' ')
    .replace(/\s+([,.;:!?])/g,'$1')
    .replace(/-\s*-\s*-\s*/g,'-')
