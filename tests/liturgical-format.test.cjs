@@ -653,3 +653,24 @@ test('Newton 2009 feast apolyses are reference alternatives, not daily prayers',
  assert.match(reader,/boundary==='apolyses-start'/);
  assert.match(reader,/boundary==='apolyses-end'/);
 });
+
+test('dated hymns render prayer words but not editorial replacement directions in either fallback',()=>{
+ const rows=[
+  'Troparion, Tone 4: Glory to You, O Lord.',
+  'Instead of “Blessed is He who comes…” we sing:',
+  'All creation is filled with rejoicing today.',
+  'Instead of “May our mouths…” and “Blessed be the Name…” we sing:',
+  'ALL: Lord, have mercy.',
+  'verse: The heavens tell the glory of God.',
+  '   '
+ ];
+ assert.deepEqual(F.properPrayerLines(rows),[
+  rows[0],rows[2],rows[4],rows[5]
+ ]);
+ assert.deepEqual(F.properPrayerLines(null),[]);
+ assert.equal(F.instruction(rows[1]),true);
+ const fs=require('node:fs'),app=fs.readFileSync(require.resolve('../app.js'),'utf8');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(app,/LiturgicalFormat\.properPrayerLines\(entry\.groups\?\.\[key\]\)/);
+ assert.match(reader,/LiturgicalFormat\.properPrayerLines\(record\.groups\?\.\[key\]\)/);
+});

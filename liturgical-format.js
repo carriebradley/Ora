@@ -132,6 +132,12 @@
   if(/^(?:during|after|before|while|when|then|meanwhile|at this point|at the conclusion|as the|following the|if the|once the)\s+(?:the |this |these |a |an )?(?:priest|deacon|bishop|celebrant|litany|hymn|prayer|entrance|gospel|people|choir|faithful|clergy|singing|chanting|reading|communion|gifts|service|troparion|antiphon|procession|holy doors|royal doors)\b/i.test(s))return true;
   return /^(?:on Sundays|on weekdays|on feast days|on great feasts|if there is|instead of|the royal doors|the holy doors|the iconostasis|the following prayer is|this prayer is)\b/i.test(s);
  }
+ // Daily source records sometimes include editorial selection directions.
+ // Keep the actual hymns and repeated responses, but not directions such as
+ // 'Instead of ... we sing:' in either fallback display path.
+ function properPrayerLines(lines){
+  return Array.isArray(lines)?lines.filter(line=>typeof line==='string'&&line.trim()&&!instruction(line)):[];
+ }
  // English-only device-local display for bilingual Ukrainian PDFs.
  // Filter PDF items before merging coordinates: a single horizontal line
  // may contain Ukrainian on the left and English on the right.
@@ -272,5 +278,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,startAtOpeningBlessing,epubPrayerSections};
 });

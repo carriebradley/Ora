@@ -346,8 +346,8 @@
         extra.replaceChildren();
         for(const [key,label] of Object.entries(LiturgyDocument.labels)){
           if(result.placed.includes(key))continue;
-          const lines=record.groups?.[key];
-          if(!Array.isArray(lines)||!lines.length)continue;
+          const lines=LiturgicalFormat.properPrayerLines(record.groups?.[key]);
+          if(!lines.length)continue;
           const group=document.createElement('section');
           group.className='byz-proper-group';group.dataset.proper=key;
           const heading=document.createElement('h3');heading.textContent=label;group.append(heading);
