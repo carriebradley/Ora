@@ -151,16 +151,20 @@ module.exports=async(page,base,artifacts,violations)=>{
    try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
  });
  const ukrainian=page.locator('.reader-inline-text');
- assert.equal(await ukrainian.locator('.byz-major-heading').first().innerText(),'Divine Liturgy of St. John Chrysostom');
- assert.deepEqual(await ukrainian.locator('.byz-major-heading').allTextContents(),[
+ const expectedHeadings=[
    'Divine Liturgy of St. John Chrysostom','Liturgy of the Word',
    'Liturgy of the Eucharist','Anaphora','Holy Communion'
- ]);
- // The complete reader may be replaced by a queued hydration pass after
- // headings appear. Wait for actual spoken content and capture diagnostics
- // if that content disappears, rather than accepting an empty preview.
+ ];
+ // Hydration and the fixture extraction can race a queued redraw. Verify
+ // the full heading sequence and spoken text together, not a transient
+ // initial heading followed by a separate immediate DOM snapshot.
  try{
-  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent?.includes('Fixture Ukrainian litany'),null,{timeout:12000});
+  await page.waitForFunction(expected=>{
+   const el=document.querySelector('.reader-inline-text');
+   if(!el||!el.textContent?.includes('Fixture Ukrainian litany'))return false;
+   const headings=[...el.querySelectorAll('.byz-major-heading')].map(x=>x.textContent.trim());
+   return headings.length===expected.length&&headings.every((x,i)=>x===expected[i]);
+  },expectedHeadings,{timeout:12000});
  }catch(error){
   const diagnostic=await page.evaluate(()=>({
    status:document.querySelector('.reader-status')?.textContent,
@@ -171,6 +175,7 @@ module.exports=async(page,base,artifacts,violations)=>{
   }));
   throw new Error('Ukrainian prayer hydration did not finish: '+JSON.stringify(diagnostic),{cause:error});
  }
+ assert.deepEqual(await ukrainian.locator('.byz-major-heading').allTextContents(),expectedHeadings);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian litany/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
