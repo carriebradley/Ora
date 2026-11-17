@@ -1843,6 +1843,35 @@
           "All creation is filled with rejoicing today, for Christ is born of a Virgin. (3)"
         ]
       }
+    },
+    "2026-12-31": {
+      "source": "https://eeparchy.com/calendar/2026-12-31",
+      "church": "ukrainian",
+      "groups": {
+        "troparia": [
+          "Troparion, Tone 4: Your Nativity, O Christ our God,* made the light of knowledge dawn on the world:* through it, those who worshipped the stars were taught by a star* to worship You, the Sun of Righteousness,* and to know You, the Dawn from on the high.* Glory to You, O Lord.",
+          "Glory be to the Father and to the Son and to the Holy Spirit, now and for ever and ever. Amen.",
+          "Kontakion, Tone 3: The Virgin today gives birth to Him who is above all being;* the earth offers the cave to Him whom no one can approach;* Angel with shepherds give Him glory,* while Magi make their way with a star,* for to us is born a little Child – the pre-eternal God."
+        ],
+        "prokeimenon": [
+          "Prokeimenon, Tone 8",
+          "Let all the earth worship You and sing to You; let it sing to Your Name, O Most High.",
+          "verse: Shout to the Lord, all the earth, sing now to His name, give glory to His praise. (Psalm 65:4,2)"
+        ],
+        "alleluia": [
+          "Alleluia, Tone 1",
+          "verse: The heavens tell the glory of God, and the firmament declares the work of His hands.",
+          "verse: Day announces its message unto day and night proclaims its knowledge unto night. (Psalm 18:2,3)"
+        ],
+        "communion": [
+          "The Lord has sent deliverance* to His people.* Alleluia, alleluia, alleluia. (Psalm 110:9)",
+          "Instead of “Blessed is He who comes…” we sing:",
+          "All creation is filled with rejoicing today, for Christ is born of a Virgin.",
+          "Instead of “We have seen the true light…” we sing:",
+          "Instead of “May our mouths…” and “Blessed be the Name…” we sing:",
+          "All creation is filled with rejoicing today, for Christ is born of a Virgin. (3)"
+        ]
+      }
     }
   }
 }
