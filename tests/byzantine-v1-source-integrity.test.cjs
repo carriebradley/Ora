@@ -68,9 +68,12 @@ test('all dated Ukrainian and Melkite hymns match an available church-specific s
    const unchanged=JSON.stringify(book);
    const result=D.compose(book,record,{church,iso,id});
    assert.equal(JSON.stringify(book),unchanged,'Source ordinary was mutated');
-   assert.deepEqual(new Set(result.placed),new Set(groups.map(([group])=>group)),
-    iso+' failed to place an unambiguous dated group');
-   assert.deepEqual(result.remaining,[],iso+' incorrectly left a placeable group separate');
+   const substitutions=groups.filter(([,lines])=>D.hasFeastSubstitution(lines)).map(([key])=>key);
+   const placeable=groups.map(([group])=>group).filter(key=>!substitutions.includes(key));
+   assert.deepEqual(new Set(result.placed),new Set(placeable),
+    iso+' failed to place all safe dated groups');
+   assert.deepEqual(new Set(result.remaining),new Set(substitutions),
+    iso+' replacement groups must remain available without duplicating fixed prayers');
    assert.equal((text(result.sections).match(/Blessed is the Kingdom/g)||[]).length,1);
    const otherChurch=church==='ukrainian'?'melkite':'ukrainian';
    const wrong=D.compose(book,record,{church:otherChurch,iso,id:otherChurch==='ukrainian'?'chrysostom':'melkite-chrysostom'});

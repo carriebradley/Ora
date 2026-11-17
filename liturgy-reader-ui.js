@@ -350,7 +350,7 @@
           if(!lines.length)continue;
           const group=document.createElement('section');
           group.className='byz-proper-group';group.dataset.proper=key;
-          const heading=document.createElement('h3');heading.textContent=label;group.append(heading);
+          const heading=document.createElement('h3');heading.textContent=LiturgyDocument.properLabel(key,record.groups?.[key]);group.append(heading);
           for(const raw of lines){
             if(typeof raw!=='string'||!raw.trim())continue;
             const p=document.createElement('p');

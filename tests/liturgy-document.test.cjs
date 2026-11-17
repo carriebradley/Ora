@@ -477,3 +477,46 @@ test('Melkite multi-section service retains every minister and repeated prayer t
  assert.ok(result.sections.findIndex(section=>section.heading==='Liturgy of the Eucharist')>
   result.sections.findIndex(section=>section.heading==='Liturgy of the Word'));
 });
+
+test('Nativity feast replacements remain separate until their exact fixed-prayer slots are verified',()=>{
+ const records=require('../ukrainian-propers.json').days;
+ const expected={
+  '2026-12-25':['troparia','communion'],
+  '2026-12-26':['communion'],
+  '2026-12-27':['communion'],
+  '2026-12-28':['communion'],
+  '2026-12-31':['communion']
+ };
+ const original=sections.map(p=>({...p,lines:[...p.lines]}));
+ for(const [iso,withheld] of Object.entries(expected)){
+  const record=records[iso],snapshot=JSON.stringify(record);
+  const result=D.compose(original,record,{church:'ukrainian',iso,id:'chrysostom'});
+  assert.deepEqual(result.remaining.filter(k=>withheld.includes(k)),withheld,iso+' keeps replacement groups accessible');
+  for(const key of withheld){
+   assert.equal(D.hasFeastSubstitution(record.groups[key]),true,iso+' '+key);
+   assert.equal(result.placed.includes(key),false,iso+' must not insert a replacement alongside its fixed prayer');
+   assert.match(D.properLabel(key,record.groups[key]),/Includes feast substitutions/);
+   assert.equal(result.sections.filter(p=>p.dailyProper===key).length,0,iso+' group was injected');
+  }
+  for(const key of ['troparia','prokeimenon','alleluia','communion'].filter(k=>!withheld.includes(k))){
+   assert.equal(D.hasFeastSubstitution(record.groups[key]),false,iso+' '+key);
+   assert.ok(result.placed.includes(key),iso+' '+key+' retains safe dated placement');
+  }
+  assert.deepEqual(result.sections.filter(p=>!p.dailyProper).flatMap(p=>p.lines),
+    original.flatMap(p=>p.lines),iso+' fixed prayer words changed');
+  assert.equal(JSON.stringify(record),snapshot,iso+' source data changed');
+ }
+ assert.deepEqual(D.properLabel('communion',sample.groups.communion),'Communion Hymn');
+ assert.deepEqual(D.compose(original,sample,context).placed,Object.keys(sample.groups),
+  'ordinary proper insertion must remain available');
+});
+
+test('both dated companion panels label unplaced feast substitutions without showing source directions',()=>{
+ const fs=require('node:fs');
+ const app=fs.readFileSync(require.resolve('../app.js'),'utf8');
+ const reader=fs.readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(app,/LiturgyDocument\.properLabel\(key,entry\.groups\?\.\[key\]\)/);
+ assert.match(reader,/LiturgyDocument\.properLabel\(key,record\.groups\?\.\[key\]\)/);
+ assert.match(app,/LiturgicalFormat\.properPrayerLines\(entry\.groups\?\.\[key\]\)/);
+ assert.match(reader,/LiturgicalFormat\.properPrayerLines\(record\.groups\?\.\[key\]\)/);
+});

@@ -77,6 +77,17 @@
       lines.every(line=>typeof line==='string'&&line.trim().length>0&&line.length<=1200&&
         !/[\u0400-\u052f\u0600-\u06ff]/u.test(line));
   }
+  // Dated source lines saying "Instead of..." designate replacements for
+  // particular fixed prayers. Until the precise slot can be authenticated
+  // against the saved edition, display these hymns in the dated companion
+  // section rather than inserting them beside the unchanged fixed prayer.
+  function hasFeastSubstitution(lines){
+    return Array.isArray(lines)&&lines.some(line=>
+      typeof line==='string'&&/^\s*Instead of\b/i.test(line));
+  }
+  function properLabel(key,lines){
+    return (labels[key]||key)+(hasFeastSubstitution(lines)?' · Includes feast substitutions':'');
+  }
   function displayLine(raw){
     return String(raw).replace(/^\s*(?:PROKIMENON|PROKEIMENON)\b/i,'Prokeimenon')
       .replace(/^\s*ALLELUIA\b/i,'Alleluia')
@@ -139,7 +150,7 @@
     }
     for(const key of Object.keys(rules)){
       const lines=record?.groups?.[key];
-      if(!safeLines(lines))continue;
+      if(!safeLines(lines)||hasFeastSubstitution(lines))continue;
       const rule=rules[key];
       const beginnings=points.filter(p=>rule.after.test(p.anchor));
       const endings=points.filter(p=>rule.before.test(p.anchor));
@@ -204,5 +215,5 @@
     }
     return {sections:preserveEdition(out),placed,remaining:remaining.filter(key=>!placed.includes(key))};
   }
-  return {compose,labels,validRecord,displayLine,loadRecord};
+  return {compose,labels,validRecord,displayLine,loadRecord,hasFeastSubstitution,properLabel};
 });

@@ -1652,7 +1652,7 @@
         if(!lines.length)continue;
         const part=document.createElement('section');
         part.className='byz-proper-group';part.dataset.proper=key;
-        const heading=document.createElement('h3');heading.textContent=label;part.append(heading);
+        const heading=document.createElement('h3');heading.textContent=LiturgyDocument.properLabel(key,entry.groups?.[key]);part.append(heading);
         for(const raw of lines){
           if(typeof raw!=='string'||!raw.trim())continue;
           const p=document.createElement('p');
@@ -2503,7 +2503,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v374';
+  const APP_BUILD = 'ora-v375';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
