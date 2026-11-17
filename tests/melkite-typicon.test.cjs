@@ -40,7 +40,9 @@ test('November monthly typicon verifies only its twelve dated Melkite appointmen
  assert.equal(S.service('2026-04-01','melkite').verification,'calculated');
  assert.equal(S.service('2026-04-03','melkite').id,'none');
  assert.equal(S.service('2026-04-05','melkite').id,'chrysostom');
- assert.equal(S.service('2026-04-02','ukrainian').verification,'calculated','Do not promote Edmonton without its own dated evidence');
+ assert.equal(S.service('2026-04-02','ukrainian').verification,'verified','Edmonton eparchial Easter program independently confirms the cathedral Basil appointment');
+ assert.match(S.service('2026-04-02','ukrainian').detailSource,/eeparchy\.com\/Easter/);
+ assert.equal(S.service('2026-04-11','ukrainian').verification,'calculated','April 12-cycle parish dates are not inferred from the April 5 cathedral schedule');
  assert.equal(S.service('2027-04-02','melkite').id,'unknown');
  assert.equal(S.service('2026-11-12','melkite').verification,'calculated');
  assert.equal(S.service('2026-11-13','ukrainian').verification,'calculated');
