@@ -52,7 +52,7 @@
   // A bare cue ending at ':' remains a rubric for the following line.
   // A source stage cue may share a line with words actually spoken.
   // Only explicit voice verbs plus a colon and real words count as speech.
-  const spoken=String(text).match(/^\s*(?:the\s+)?(priest|celebrant|bishop|deacon|protodeacon|reader|lector|cantor|choir|people|faithful|congregation)(?:\s*,\s*[^:\r\n]{1,140},)?\s+(?:says?|prays?|recites?|proclaims?|exclaims?|sings?|chants?)(?:\s+(quietly|silently|aloud|in a low voice|in a loud voice))?\s*:\s*(\S.*)$/i);
+  const spoken=String(text).match(/^\s*(?:the\s+)?(priest|celebrant|bishop|deacon|protodeacon|reader|lector|cantor|choir|people|faithful|congregation|subdeacon|server|acolyte)(?:\s*,\s*[^:\r\n]{1,140},)?\s+(?:says?|prays?|recites?|proclaims?|exclaims?|sings?|chants?)(?:\s+(quietly|silently|aloud|in a low voice|in a loud voice))?\s*:\s*(\S.*)$/i);
   if(spoken){
    const minister=role(spoken[1]+':');
    if(minister)return {...minister,words:spoken[3].trim(),...(spoken[2]?{cue:spoken[2].trim()}: {})};

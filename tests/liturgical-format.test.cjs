@@ -574,3 +574,18 @@ test('no unspoken ceremonial action is relabelled as a prayer',()=>{
  }
  assert.equal(F.speakerInstruction('The priest says that the prayer is finished.'),null);
 });
+
+// A printed inline ministry cue must never discard the words after the colon.
+test('inline Byzantine minister cues preserve spoken text without parser errors',()=>{
+ for(const [label,kind,name] of [
+  ['Priest','priest','Priest'],['Deacon','deacon','Deacon'],
+  ['Subdeacon','other','Subdeacon'],['Server','other','Server'],['Acolyte','other','Acolyte']
+ ]){
+  const prayer='Fixture words of prayer.';
+  assert.deepEqual(F.role('The '+label+' says: '+prayer),{kind,name,words:prayer});
+  assert.equal(F.instruction('The '+label+' says: '+prayer),false);
+ }
+ assert.deepEqual(F.role('The priest says quietly: Fixture private prayer.'),
+  {kind:'priest',name:'Priest',words:'Fixture private prayer.',cue:'quietly'});
+ assert.equal(F.role('The priest says:'),null,'bare cue must not be treated as spoken prayer');
+});
