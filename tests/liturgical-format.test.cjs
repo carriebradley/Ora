@@ -587,5 +587,7 @@ test('inline Byzantine minister cues preserve spoken text without parser errors'
  }
  assert.deepEqual(F.role('The priest says quietly: Fixture private prayer.'),
   {kind:'priest',name:'Priest',words:'Fixture private prayer.',cue:'quietly'});
+ assert.deepEqual(F.role('The subdeacon says quietly: Fixture private prayer.'),
+  {kind:'other',name:'Subdeacon',words:'Fixture private prayer.',cue:'quietly'});
  assert.equal(F.role('The priest says:'),null,'bare cue must not be treated as spoken prayer');
 });
