@@ -381,7 +381,7 @@
   }
   function cardByz(v) {
     const r = v.byz;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(LiturgicalColors.display(r))}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(observanceColor(r,'byz'))}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
       <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason, 'fast')}${r.fast ? chip(r.fast, 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}</p></section>`;
@@ -1926,7 +1926,7 @@
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
-      const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(LiturgicalColors.display(v[k]))}"></span>`).join('');
+      const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(k==='byz'?observanceColor(v[k],k):LiturgicalColors.display(v[k]))}"></span>`).join('');
       const f = (st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && (v.byz.fastSeason || /Strict|^Fast and/.test(v.byz.fast)));
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
@@ -2503,7 +2503,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v375';
+  const APP_BUILD = 'ora-v376';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

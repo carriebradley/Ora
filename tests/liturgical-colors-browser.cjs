@@ -38,6 +38,30 @@ module.exports=async(page,base)=>{
   assert.notEqual(await page.locator('.gl[data-v="byz"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),violet,
    church+' major feast retains its own color, even during the Nativity Fast');
  }
+
+ // The same Byzantine fasting color must be used in the selected-calendar
+ // card marker and the month grid, not only the Today badge and fast chip.
+ const fastingPurple='#6a3f9a';
+ for(const church of ['ukrainian','melkite']){
+  await page.evaluate(church=>{
+   const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');
+   s.byzChurch=church;localStorage.setItem('ora.settings',JSON.stringify(s));
+  },church);
+  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-17`);
+  const byzCard=page.locator('.calendar-byz-saints').locator('..');
+  assert.equal(await byzCard.locator('.sw').evaluate(el=>el.style.getPropertyValue('--c')),fastingPurple,
+   church+' Byzantine calendar card marker must be purple within the Nativity Fast');
+  const layers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
+  const byzIndex=layers.indexOf('byz');
+  assert.ok(byzIndex>=0,church+' Byzantine month layer is enabled');
+  assert.equal(await page.locator('.cell[data-d="2026-11-17"] .dot').nth(byzIndex)
+   .evaluate(el=>el.style.getPropertyValue('--c')),fastingPurple,
+   church+' Byzantine monthly calendar dot must match fasting color');
+  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-21`);
+  assert.equal(await page.locator('.calendar-byz-saints').locator('..').locator('.sw')
+   .evaluate(el=>el.style.getPropertyValue('--c')),blue,
+   church+' major Marian feast still takes blue over fasting season');
+ }
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-03-25`);
  assert.notEqual(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),blue,'Holy Thursday keeps precedence over Annunciation');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-04-05`);
