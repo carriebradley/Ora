@@ -17,6 +17,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.match(basisText,/April 5 Paschal cycle/);
  assert.match(basisText,/St. George/);
  assert.match(basisText,/2026-04-12/);
+ assert.match(basisText,/new calendar/);
+ assert.match(basisText,/Julian calendar for fixed feasts/);
+ assert.equal(await page.locator('.more-paschal-basis a[href="https://eeparchy.com/parishes/st-george-parish"]').count(),1);
  assert.match(basisText,/not selectable yet/);
  assert.equal(await page.locator('.more-paschal-basis a[href="https://eeparchy.com/Easter%20Program%20.pdf"]').count(),1);
  assert.equal(await page.locator('.more-paschal-basis a[href="https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/"]').count(),1);

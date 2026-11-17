@@ -1947,7 +1947,7 @@
     if(!basis)return '<p class="muted">Ora uses the Gregorian Paschal calculation for this Byzantine calendar. A checked diocesan Paschal source for '+esc(year)+' has not been bundled; services and readings outside verified dates remain calculated.</p>';
     const link=(url,label)=>'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(label)+'</a>';
     let h='<p>For '+esc(year)+', Ora uses <b>'+esc(basis.label)+'</b> (Pascha '+esc(basis.pascha)+'). Source: '+link(basis.source,S.byzChurch==='ukrainian'?'Edmonton Easter program':'Melkite diocesan resources')+'.</p>';
-    if(basis.alternativePascha)h+='<p>Other Edmonton parishes, including St. George, celebrated Pascha on '+esc(basis.alternativePascha)+'. The '+link(basis.alternativeSource,'national UGCC 2026 calendar')+' also follows that date. That second cycle is <b>not selectable yet</b> because its calendar, appointed readings, office, and Divine Liturgy must use the same dates.</p>';
+    if(basis.alternativePascha)h+='<p>The '+link(basis.alternativeSource,'national UGCC 2026 calendar')+' places Pascha on '+esc(basis.alternativePascha)+' while keeping fixed feasts on the <b>new calendar</b>. '+link(basis.julianParishSource,'St. George Parish in Edmonton')+' also follows April 12 Pascha, but uses the <b>Julian calendar for fixed feasts too</b>. These are different calendar profiles. Neither is <b>selectable yet</b> until its readings, offices, Divine Liturgy and dated propers can be aligned.</p>';
     h+='<p class="muted">These records verify the specified sources and dates, not a universal parish timetable. Unverified daily propers are never transferred from another Paschal cycle.</p>';
     return h;
   }
@@ -2498,7 +2498,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v366';
+  const APP_BUILD = 'ora-v367';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

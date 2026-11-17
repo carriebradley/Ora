@@ -9,7 +9,9 @@ test('2026 Paschal source identities are church-specific and do not leak into ot
  assert.match(ukrainian.label,/Edmonton/);
  assert.equal(ukrainian.source,'https://eeparchy.com/Easter%20Program%20.pdf');
  assert.equal(ukrainian.alternativePascha,'2026-04-12');
- assert.match(ukrainian.alternativeLabel,/St. George/);
+ assert.match(ukrainian.alternativeLabel,/new-style fixed feasts/);
+ assert.match(ukrainian.julianParishLabel,/St. George.*Julian fixed feasts/);
+ assert.equal(ukrainian.julianParishSource,'https://eeparchy.com/parishes/st-george-parish');
  assert.equal(ukrainian.alternativeSource,'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/');
  assert.equal(melkite.pascha,'2026-04-05');
  assert.match(melkite.label,/Newton/);

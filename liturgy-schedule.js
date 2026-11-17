@@ -171,8 +171,10 @@
       label:'Edmonton · April 5 Paschal cycle (St. Josaphat Cathedral)',
       source:'https://eeparchy.com/Easter%20Program%20.pdf',
       alternativePascha:'2026-04-12',
-      alternativeLabel:'St. George Parish and national UGCC calendar',
-      alternativeSource:'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/'
+      alternativeLabel:'National UGCC: new-style fixed feasts and April 12 Pascha',
+      alternativeSource:'https://ugcc.ua/data/tserkovnyy-kalendar-ugkts-na-2026-rik-8059/',
+      julianParishLabel:'St. George, Edmonton: Julian fixed feasts and April 12 Pascha',
+      julianParishSource:'https://eeparchy.com/parishes/st-george-parish'
     }),
     melkite:Object.freeze({
       year:2026,church:'melkite',pascha:'2026-04-05',
