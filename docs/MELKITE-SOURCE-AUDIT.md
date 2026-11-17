@@ -91,3 +91,7 @@ Previously, skipped blank lines shifted review pointers; the auditor now keeps
 those original positions for changed-word spans, missing or reordered lines,
 and unexpected or repeated displayed responses. Blank lines still do not count
 as spoken prayers or trigger wording differences.
+
+## Feast dismissal reference lists (Newton printed pp. 87-88)
+
+In the 2009 Chrysostom source, the fixed-feast and movable-feast **Apolyses** lists appear after the actual concluding dismissal. These are a menu of alternative phrases, not prayers all appointed on an ordinary day. The two headings are treated as one source-only reference block. The reader resumes at the tracked **Distribution of the Antidoron** heading so that the genuine final blessing remains visible. Printed PDF pages 95-96 were visually checked; the original private source text remains unchanged. This suppression applies only when the stored PDF is positively identified as Newton's 2009 159-page edition. This does not imply that Ora has independently selected the correct feast-specific dismissal formula.

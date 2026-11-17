@@ -614,3 +614,42 @@ test('Edmonton 2012 English spans recover two verified mixed-script source words
  ]);
  assert.equal(F.englishPdfItems([{str:'Слава Ісусу Христу!'}]).length,0);
 });
+
+
+test('Newton 2009 feast apolyses are reference alternatives, not daily prayers',()=>{
+ // Printed pp. 87-88 (PDF pp. 95-96). The current liturgy's concluding
+ // prayers precede the tables; the Antidoron blessing follows the tables.
+ const rows=[
+  {text:'Priest: Through the prayers of our Holy Fathers',visible:true},
+  {text:'All: Amen.',visible:true},
+  {text:'Apolyses for the Fixed Feasts of the Lord and the Theotokos',boundary:'apolyses-start'},
+  {text:'From 25 to 31 December:',visible:false},
+  {text:'May Christ our true God who was born in a cave...',visible:false},
+  {text:'Apolyses for the Movable Feasts',boundary:'apolyses-start'},
+  {text:'Palm Sunday:',visible:false},
+  {text:'May Christ our true God who entered Jerusalem...',visible:false},
+  {text:'D I S T R I B U T I O N O F T H E A N T I D O R O N',boundary:'apolyses-end'},
+  {text:'Priest: May the blessing of the Lord and His mercy be upon you.',visible:true}
+ ];
+ let inTable=false;
+ const shown=[];
+ for(const row of rows){
+  const boundary=F.melkiteReferenceBoundary(row.text);
+  assert.equal(boundary,row.boundary||null,'Unexpected reference boundary: '+row.text);
+  if(boundary==='apolyses-start'){inTable=true;continue;}
+  if(inTable){
+   if(boundary==='apolyses-end')inTable=false;
+   else continue;
+  }
+  if(F.heading(row.text))continue;
+  shown.push(row.text);
+ }
+ assert.equal(inTable,false,'final Antidoron blessing must be outside the reference block');
+ assert.ok(shown.some(line=>/Through the prayers of our Holy Fathers/.test(line)));
+ assert.ok(shown.some(line=>/May the blessing of the Lord/.test(line)));
+ assert.ok(!shown.some(line=>/born in a cave|entered Jerusalem/.test(line)));
+ assert.equal(F.normalize('D I S T R I B U T I O N O F T H E A N T I D O R O N'),'Distribution of the Antidoron');
+ const reader=require('node:fs').readFileSync(require.resolve('../liturgy-reader-ui.js'),'utf8');
+ assert.match(reader,/boundary==='apolyses-start'/);
+ assert.match(reader,/boundary==='apolyses-end'/);
+});

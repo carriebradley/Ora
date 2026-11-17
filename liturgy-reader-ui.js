@@ -252,11 +252,11 @@
         // Only the exact source-verified boundary ends an annual reference
         // table. Generic headings inside the table must never resume prayer.
         const boundary=melkiteBook?LiturgicalFormat.melkiteReferenceBoundary(text):null;
-        if(boundary==='kontakia-start'||boundary==='hirmoi-start'){
+        if(boundary==='kontakia-start'||boundary==='hirmoi-start'||boundary==='apolyses-start'){
           inReferenceTable=true;pendingRole=null;continue;
         }
         if(inReferenceTable){
-          if(boundary==='kontakia-end'||boundary==='hirmoi-end'){
+          if(boundary==='kontakia-end'||boundary==='hirmoi-end'||boundary==='apolyses-end'){
             inReferenceTable=false;
           }else continue;
         }

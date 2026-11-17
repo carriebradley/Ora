@@ -1,6 +1,6 @@
 /* Display-only formatting for private local books; contains no liturgical texts. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgicalFormat=factory();})(typeof self!=='undefined'?self:this,function(){
- const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal'];
+ const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron'];
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
@@ -212,6 +212,9 @@
      /^Table of Kontakia for the Year\b/i.test(s))return 'kontakia-start';
   if(/^The Trisagion Prayer of St\.? (?:John Chrysostom|Basil the Great)\b/i.test(s))
     return 'kontakia-end';
+  if(/^Apolyses for the (?:Fixed|Movable) Feasts\b/i.test(s))return 'apolyses-start';
+  // Tracked display letters in Newton's printed heading are not prayer text.
+  if(compact(s)==='distributionoftheantidoron')return 'apolyses-end';
   if(/^Table of Hirmoi for the Year\b/i.test(s))return 'hirmoi-start';
   if(/^During the singing of the Hirmos, the Priest continues\b/i.test(s))
     return 'hirmoi-end';
