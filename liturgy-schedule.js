@@ -102,6 +102,19 @@
       id='presanctified';title=names[id];verification='verified';
       note='Edmonton appoints the Liturgy of the Presanctified Gifts on Great Wednesday evening. Its no-Divine-Liturgy note refers to a Eucharistic celebration, not the Presanctified service. Parish times may vary.';
     }
+    // Edmonton's 2026 eparchial Easter program documents Vespers and
+    // St. Basil at St. Josaphat Cathedral on Great Thursday and Saturday
+    // of the April 5 Paschal cycle. Other eparchial parishes, notably
+    // St. George, celebrated Pascha on April 12. This verifies only
+    // the April 5 cycle's documented cathedral/parish appointments.
+    if(church==='ukrainian'&&['2026-04-02','2026-04-04'].includes(iso)){
+      id='basil';title='Vesperal Divine Liturgy of St. Basil the Great';
+      verification='verified';
+      note='The Edmonton Eparchy’s 2026 Easter program confirms Vespers with St. Basil at St. Josaphat Cathedral on '+(iso==='2026-04-02'?'Great Thursday':'Great Saturday')+' (April 5 Paschal cycle). Other parishes, including St. George, followed an April 12 Pascha. Parish times and local Holy Week dates may differ; no dated hymns are inferred.';
+      detailSource='https://eeparchy.com/Easter%20Program%20.pdf';
+      detailSourceLabel='Edmonton 2026 Easter services';
+      sourceDiscrepancy='This service is documented for Edmonton parishes following April 5 Pascha, including St. Josaphat Cathedral. Some Edmonton parishes, including St. George, celebrated Pascha on April 12. Check the local parish’s Holy Week dates; variable prayers and readings have not been assigned here.';
+    }
     if(church==='ukrainian'&&iso==='2026-12-24'){
       id='unknown';verification='source-conflict';title='Divine Liturgy · confirm Edmonton directions';
       note='Source conflict: Edmonton’s dated December 24 calendar says the Divine Liturgy is not served, whereas the UGCC Patriarchal Liturgical Commission’s official 2026 calendar appoints Vespers with the Divine Liturgy of St. Basil the Great. No service has been selected automatically; confirm the local eparchy’s directions.';
