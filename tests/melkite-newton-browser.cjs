@@ -58,7 +58,10 @@ module.exports=async(page,base,artifacts)=>{
     'ALL: Lord, have mercy. (To be repeated after each petition)',
     'DEACON: For the precious gifts here offered, let us pray to the Lord.',
     'Optional:',
-    'For this holy house and those who enter it with faith, let us pray to the Lord.'
+    'For this holy house and those who enter it with faith, let us pray to the Lord.',
+    'For our deliverance from all affliction, let us pray to the Lord.',
+    'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
+    'The Priest prays the following prayer:'
    ],
    68:[
     'Prayer of Offering','PRIEST: Lord God Almighty who alone are holy.'
@@ -158,6 +161,15 @@ module.exports=async(page,base,artifacts)=>{
  assert.doesNotMatch(text,/After the third petition, some other appropriate ecumenic petitions may be said/,
   'optional-petition instructions must not read as prayer');
  assert.match(text,/Preparation for Holy Communion/);
+ const optional=preview.locator('details.byz-optional-litany');
+ assert.equal(await optional.count(),2,'Gifts and Communion alternatives are independent');
+ assert.deepEqual(await optional.locator('summary').allTextContents(),['Optional petitions','Optional petitions']);
+ assert.deepEqual(await optional.evaluateAll(nodes=>nodes.map(n=>n.open)),[false,false],
+  'unappointed petitions must not appear in default prayer flow');
+ assert.ok((await optional.first().textContent()).includes('For this holy house'),
+  'optional petitions remain accessible without losing source words');
+ assert.ok((await optional.last().textContent()).includes('For our deliverance'),
+  'Communion alternatives remain accessible in their own section');
  assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
   'six source-directed Aitesis responses must be visible');
  assert.equal((text.match(/To You, O Lord/g)||[]).length,2,

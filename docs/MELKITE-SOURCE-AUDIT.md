@@ -137,3 +137,15 @@ The source-specific display expansion checks the heading, original printed
 repetition directive, all ten prayer anchors and distinct closing response.
 Missing, substituted, already-expanded, or unrecognized source structures
 remain unchanged, and the underlying PDF is never edited.
+
+
+## Optional petition display boundaries (Newton PDF pp. 67 and 79)
+
+The original PDF explicitly labels the last three Litany-of-Gifts petitions
+and the last two Communion-preparation petitions "Optional:". These are
+alternatives, not automatically appointed prayers. In the recognized source
+edition, the reader groups the exact verified sequences in collapsed,
+accessible Optional petitions disclosures, while retaining all unambiguously
+required prayers in the continuous default reading flow. If the optional
+label, complete sequence, or next fixed prayer heading is missing, it leaves
+that litany unchanged. Source PDFs and saved prayer text remain intact.

@@ -259,6 +259,46 @@
  // once, prescribing it after every petition. The tenth following
  // petition ends before the distinct "To You, O Lord" commendation.
  // Never apply this source-specific expansion to an altered petition list.
+
+ // In the recognized Newton 2009 edition (Gifts p. 67; Communion p. 79),
+ // only the explicitly marked optional petition blocks are alternate material.
+ // Identify them by entire section, exact opening label, every printed
+ // optional petition and next mandatory heading. Return display coordinates;
+ // never erase or mutate source paragraphs.
+ function newtonOptionalPetitions(sections){
+  const starts=new Set(),lines=new Set(),result={starts,lines};
+  if(!Array.isArray(sections)||sections.newton2009!==true)return result;
+  const entries=sections.flatMap((part,section)=>(part.lines||[])
+   .map((raw,index)=>({text:String(raw).trim(),section,index})));
+  const key=row=>row.section+':'+row.index;
+  const rules=[
+   {head:'litanyofthegifts',end:'prayerofoffering',expected:[
+    /^for\s+this\s+holy\s+house\s+and\s+those\s+who\s+enter\s+it\s+with\s+faith\b/i,
+    /^for\s+our\s+deliverance\s+from\s+all\s+affliction\b/i,
+    /^help\s+us,\s*save\s+us,\s*have\s+mercy\s+on\s+us\s+and\s+protect\s+us\b/i
+   ],trailer:/^the\s+priest\s+prays\s+the\s+following\s+prayer\s*:?$/i},
+   {head:'preparationforholycommunion',end:'theaitesis',expected:[
+    /^for\s+our\s+deliverance\s+from\s+all\s+affliction\b/i,
+    /^help\s+us,\s*save\s+us,\s*have\s+mercy\s+on\s+us\s+and\s+protect\s+us\b/i
+   ]}
+  ];
+  for(const rule of rules){
+   const heads=entries.map((r,i)=>compact(r.text)===rule.head?i:-1).filter(i=>i>=0);
+   if(heads.length!==1)continue;
+   const end=entries.findIndex((r,i)=>i>heads[0]&&compact(r.text)===rule.end);
+   if(end<0||end-heads[0]>38)continue;
+   const scoped=entries.slice(heads[0]+1,end);
+   const markers=scoped.map((r,i)=>/^optional\s*:?\s*$/i.test(r.text)?i:-1).filter(i=>i>=0);
+   if(markers.length!==1)continue;
+   const marker=scoped[markers[0]],body=scoped.slice(markers[0]+1);
+   const prayers=body.filter(r=>!rule.trailer||!rule.trailer.test(r.text));
+   if(prayers.length!==rule.expected.length||
+      !prayers.every((r,i)=>rule.expected[i].test(r.text)))continue;
+   starts.add(key(marker));
+   for(const row of body)lines.add(key(row));
+  }
+  return result;
+ }
  function expandNewtonPeaceLitany(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -485,5 +525,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
 });

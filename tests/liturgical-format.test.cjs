@@ -698,6 +698,47 @@ test('Newton 2009 printed repetition directions do not obscure spoken responses'
 
 
 
+
+test('Newton optional blocks are identified only with their complete exact petition sequence',()=>{
+ const source=[{lines:[
+  'Litany of the Gifts',
+  'Deacon: Let us complete our prayer to the Lord.',
+  'All: Lord, have mercy.',
+  'Deacon: For the precious gifts here offered, let us pray to the Lord.',
+  'Optional:',
+  'For this holy house and those who enter it with faith, reverence and fear of God, let us pray to the Lord.',
+  'For our deliverance from all affliction, wrath, danger and need, let us pray to the Lord.',
+  'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
+  'The Priest prays the following prayer:'
+ ]},{lines:[
+  'Prayer of Offering','Priest: Fixture prayer of offering.',
+  'Preparation for Holy Communion',
+  'Deacon: Now that we have remembered all the saints, let us pray to the Lord.',
+  'All: Lord, have mercy.',
+  'For the precious gifts here offered and sanctified, let us pray to the Lord.',
+  'That our God who loves mankind may send down His divine grace, let us pray.',
+  'Optional:'
+ ]},{lines:[
+  'For our deliverance from all affliction, wrath, danger and need, let us pray to the Lord.',
+  'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
+  'The Aitesis','All: Grant this, O Lord.'
+ ]}];
+ source.newton2009=true;
+ const snapshot=JSON.stringify(source),groups=F.newtonOptionalPetitions(source);
+ assert.deepEqual([...groups.starts],['0:4','1:7']);
+ assert.deepEqual([...groups.lines],['0:5','0:6','0:7','0:8','2:0','2:1']);
+ assert.equal(JSON.stringify(source),snapshot,'original book remains intact');
+ const unknown=source.map(p=>({...p,lines:p.lines.slice()}));
+ assert.equal(F.newtonOptionalPetitions(unknown).lines.size,0,'unknown book has no source-specific grouping');
+ const changed=source.map(p=>({...p,lines:p.lines.slice()}));changed.newton2009=true;
+ changed[0].lines[6]='For an unverified optional intention, let us pray to the Lord.';
+ const guarded=F.newtonOptionalPetitions(changed);
+ assert.equal(guarded.lines.has('0:5'),false,'incomplete Gifts group must not be altered');
+ assert.equal(guarded.lines.has('2:0'),true,'independent verified Communion group may still be recognized');
+ const missing=source.map(p=>({...p,lines:p.lines.filter(s=>s!=='Prayer of Offering')}));missing.newton2009=true;
+ assert.equal(F.newtonOptionalPetitions(missing).starts.has('0:4'),false,'the next required heading is a necessary boundary');
+});
+
 test('Newton Litany of Peace expands the ten unambiguous after-each-petition responses',()=>{
  const source=[{lines:[
   'The Litany of Peace',

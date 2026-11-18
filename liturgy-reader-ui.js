@@ -214,7 +214,11 @@
     // On feasts the ordinary antiphons must not be mistaken for appointed propers.
     const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
     const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
-    for(const section of LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections)))))){
+    const shownSections=LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections)))));
+    const optionalLitany=melkiteBook?LiturgicalFormat.newtonOptionalPetitions(shownSections):null;
+    let optionalLitanyDetails=null;
+    for(let sectionIndex=0;sectionIndex<shownSections.length;sectionIndex++){
+      const section=shownSections[sectionIndex];
       // PDF pages are extraction sections, not necessarily liturgical
       // paragraph boundaries. Retain a bare speaker cue for the next page,
       // but never carry it into a new heading or alternative antiphon.
@@ -229,6 +233,18 @@
       if(section.heading&&!section.alternative){const h=document.createElement(section.dailyProper?'h4':'h3');h.className=section.dailyProper?'byz-prayer-heading byz-daily-proper-heading':'byz-major-heading';h.textContent=section.heading;container.append(h);lastMajor=section.heading;lastHeading=section.heading.toLowerCase();lastLine=null;lastRole=null;}
       for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
         const raw=section.lines[lineIndex];
+        const slot=sectionIndex+':'+lineIndex;
+        if(optionalLitany?.starts.has(slot)){
+          optionalLitanyDetails=document.createElement('details');
+          optionalLitanyDetails.className='byz-antiphon-option byz-optional-litany';
+          const summary=document.createElement('summary');summary.textContent='Optional petitions';
+          optionalLitanyDetails.append(summary);target.append(optionalLitanyDetails);
+          lastLine=null;lastRole=null;pendingRole=null;continue;
+        }
+        if(optionalLitanyDetails){
+          if(optionalLitany?.lines.has(slot))container=optionalLitanyDetails;
+          else{optionalLitanyDetails=null;container=target;lastLine=null;lastRole=null;}
+        }
         let text=String(raw||'').trim();
         // Some PDFs extract tracked uppercase display headings as isolated
         // letters and break a heading mid-word across physical lines.
