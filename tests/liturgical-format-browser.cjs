@@ -241,7 +241,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await ukrainian.innerText(),/\*/, 'Ukrainian continuous prayer text hides PDF chant-break asterisks');
  assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows|All stand\.|\(Sit\.\)/);
  assert.match(await ukrainian.innerText(),/Let us stand well before God/, 'prayer language mentioning standing must be retained');
- assert.equal(await ukrainian.locator('.byz-role-deacon').count(),7,'fixture includes the four extra Insistent Litany petitions');
+ assert.equal(await ukrainian.locator('.byz-role-deacon').count(),9,'fixture includes Insistent Litany petitions plus the seasonal Trisagion-alternative exchange');
  assert.equal(await ukrainian.locator('.byz-role-priest .byz-speaker').first().innerText(),'Priest 1');
  assert.equal(await ukrainian.locator('.byz-role-deacon .byz-speaker').first().innerText(),'Deacon 2');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);
