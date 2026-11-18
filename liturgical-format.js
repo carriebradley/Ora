@@ -1,6 +1,6 @@
 /* Display-only formatting for private local books; contains no liturgical texts. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgicalFormat=factory();})(typeof self!=='undefined'?self:this,function(){
- const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','Prayer of the Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
+ const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','Prayer of the Ektene','Insistent Litany','Polychronion','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();
@@ -123,6 +123,8 @@
   if(/^\(?\s*(?:(?:the\s+)?(?:all|everyone|people|congregation|faithful|clergy|choir|priest|deacon|bishop|celebrant|reader)\s+)?(?:(?:please|now)\s+)?(?:stand(?:\s+up)?|sit(?:\s+down)?|kneel|bow|rise|be seated|remain (?:standing|seated|kneeling))(?:\s+(?:for the (?:gospel|reading)|in silence|together))?\s*[.)]?$/i.test(s))return true;
   if(/^\(?\s*(?:stand|sit|kneel)\s*(?:or|\/)\s*(?:stand|sit|kneel)\s*[.)]?$/i.test(s))return true;
   if(/^(?:rubric|instructions?|note):/i.test(s))return true;
+  // Edmonton 2012 p. 65: this is an editorial insertion cue, never prayer.
+  if(/^Special petitions may be added here\.?$/i.test(s))return true;
   if(/^\(\s*(?:said quietly by (?:the\s+)?priest|ecumenic petitions)\s*\)\s*:?$/i.test(s))return true;
   if(/^(?:the deacon, standing before the holy doors, takes the censer|the priest hands the deacon the holy gospel|the epistle reader, turning again to the altar, chants|then, turning to the people, the deacon proclaims)\b/i.test(s))return true;
   if(/^on the feasts of the nativity of our lord and the theophany, their octaves\b/i.test(s))return true;
@@ -480,6 +482,39 @@
   expanded.newton2009=true;
   return expanded;
  }
+
+ // Edmonton 2012 episcopal liturgy pp. 65, 111: four litany replies
+ // and one dismissal reply explicitly print "(3)" for repetition.
+ // Only the exact recognized edition with all five occurrences qualifies.
+ function expandEdmontonThreefoldResponses(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[])
+   .map((raw,index)=>({text:String(raw).trim(),section,index})));
+  const head=rows.findIndex(r=>compact(r.text)==='insistentlitany');
+  const close=rows.findIndex((r,i)=>i>head&&compact(r.text)==='dismissal');
+  if(head<0||close<0)return sections;
+  const exact=/^all\s*:\s*lord,\s*have\s+mercy\.\s*\(3\)\s*$/i;
+  const counted=rows.slice(head+1,close).filter(r=>exact.test(r.text));
+  const dismiss=rows.slice(close+1).filter(r=>
+   /^all\s*:\s*[\u2020]?\s*glory\s+be\s+to\s+the\s+father\b/i.test(r.text)&&
+   /lord,\s*have\s+mercy\.\s*\(3\)\s*\*\s*mas-?\s*ter,\s*give\s+the\s+blessing\./i.test(r.text));
+  if(counted.length!==4||dismiss.length!==1||
+   rows.filter(r=>/\blord,\s*have\s+mercy\.\s*\(3\)/i.test(r.text)).length!==5)
+   return sections;
+  const matches=new Set(counted.map(r=>r.section+':'+r.index));
+  const dismissalSlot=dismiss[0].section+':'+dismiss[0].index;
+  const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((line,index)=>{
+   const key=section+':'+index;
+   if(matches.has(key))return String(line).replace(/\s*\(3\)\s*$/,' Lord, have mercy. Lord, have mercy.');
+   if(key===dismissalSlot)return String(line)
+    .replace(/Lord,\s*have\s+mercy\.\s*\(3\)/i,'Lord, have mercy. Lord, have mercy. Lord, have mercy.')
+    .replace(/\bMas-\s*ter(?=,\s*give\s+the\s+blessing\.)/i,'Master');
+   return line;
+  })}));
+  out.edmonton2012=true;
+  return out;
+ }
+
  function startAtOpeningBlessing(sections){
   if(!Array.isArray(sections))return sections;
   let si=-1,li=-1;
@@ -532,5 +567,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,startAtOpeningBlessing,epubPrayerSections};
 });

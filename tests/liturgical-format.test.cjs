@@ -26,6 +26,50 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
  assert.equal(M.fixed([sections[1],sections[1]],'1'),null);
 });
 
+
+test('Edmonton 2012 expands four Insistent Litany replies and one dismissal reply only in matched editions',()=>{
+ const source=[{lines:[
+  'Insistent Litany','DCN 2: Petition A.','ALL: Lord, have mercy. (3)',
+  'DCN 2: Petition B.','ALL: Lord, have mercy. (3)',
+  'DCN 2: Petition C.','ALL: Lord, have mercy. (3)',
+  'Special petitions may be added here.',
+  'DCN 2: Petition D.','ALL: Lord, have mercy. (3)'
+ ]},{lines:[
+  'Dismissal','BISHOP: Fixture dismissal.',
+  'ALL: †Glory be to the Father and to the Son and to the Holy Spirit,* now and for ever and ever. Amen.* Lord, have mercy. (3)* Mas-ter, give the blessing.',
+  'BISHOP: Fixture conclusion.'
+ ]}];
+ source.edmonton2012=true;
+ assert.equal(F.heading('Insistent Litany'),true);
+ assert.equal(F.heading('Polychronion'),true);
+ assert.equal(F.instruction('Special petitions may be added here.'),true);
+ assert.equal(F.instruction('Special petitions may be added here for a family.'),false);
+ const saved=JSON.stringify(source),result=F.expandEdmontonThreefoldResponses(source);
+ const lines=result.flatMap(x=>x.lines);
+ assert.equal(result.edmonton2012,true);
+ const answers=lines.filter(x=>/^ALL: Lord, have mercy\./.test(x));
+ assert.equal(answers.length,4);
+ assert.equal(answers.filter(x=>(x.match(/Lord, have mercy\./g)||[]).length===3).length,4);
+ const ending=lines.find(x=>x.startsWith('ALL: †Glory'));
+ assert.equal((ending.match(/Lord, have mercy\./g)||[]).length,3);
+ assert.match(ending,/Master, give the blessing\./);
+ assert.doesNotMatch(ending,/\(3\)|Mas-ter/);
+ assert.equal(JSON.stringify(source),saved);
+ assert.strictEqual(F.expandEdmontonThreefoldResponses(result),result);
+ const other=source.map(x=>({...x,lines:x.lines.slice()}));
+ assert.strictEqual(F.expandEdmontonThreefoldResponses(other),other);
+ const altered=source.map(x=>({...x,lines:x.lines.slice()}));altered.edmonton2012=true;
+ altered[0].lines[6]='ALL: Lord, have mercy. (2)';
+ assert.strictEqual(F.expandEdmontonThreefoldResponses(altered),altered);
+ const half=source.map(x=>({...x,lines:x.lines.slice()}));half.edmonton2012=true;
+ half[1].lines[2]=half[1].lines[2].replace(' (3)','');
+ assert.strictEqual(F.expandEdmontonThreefoldResponses(half),half);
+ const prejoined=source.map(x=>({...x,lines:x.lines.slice()}));prejoined.edmonton2012=true;
+ prejoined[1].lines[2]=prejoined[1].lines[2].replace('Mas-ter','Master');
+ assert.equal((F.expandEdmontonThreefoldResponses(prejoined)[1].lines[2].match(/Lord, have mercy\./g)||[]).length,3,
+  'already-joined PDF extraction remains a valid recognized source');
+});
+
 test('Edmonton episcopal ceremonial directions are classified separately',()=>{
  for(const text of [
   'The first protopresbyter bows to the bishop and enters the sanctuary.',

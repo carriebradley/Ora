@@ -137,7 +137,15 @@ module.exports=async(page,base,artifacts,violations)=>{
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
      35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
+     65:['Insistent Litany','DCN 2: Fixture petition A.','ALL: Lord, have mercy. (3)',
+       'DCN 2: Fixture petition B.','ALL: Lord, have mercy. (3)',
+       'DCN 2: Fixture petition C.','ALL: Lord, have mercy. (3)',
+       'Special petitions may be added here.',
+       'DCN 2: Fixture petition D.','ALL: Lord, have mercy. (3)'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
+     111:['Dismissal','BISHOP: Fixture dismissal.',
+       'ALL: †Glory be to the Father and to the Son and to the Holy Spirit,* now and for ever and ever. Amen.* Lord, have mercy. (3)* Mas-ter, give the blessing.',
+       'BISHOP: Fixture concluding prayer.'],
      83:['BISHOP: Fixture anaphora.'],
      99:['ALL: Fixture Communion response.'],
      113:['ALL: Fixture conclusion.'],
@@ -180,6 +188,14 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.deepEqual(await ukrainian.locator('.byz-major-heading').allTextContents(),expectedHeadings);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian litany/);
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon/);
+ const tripleWords=await ukrainian.locator('.byz-prayer-words').allTextContents();
+ assert.equal(tripleWords.filter(s=>(s.match(/Lord, have mercy\./g)||[]).length===3).length,5,
+  'four Insistent Litany replies and the dismissal must each have three spoken mercies');
+ assert.doesNotMatch(await ukrainian.innerText(),/Lord, have mercy\.\s*\(3\)|Mas-ter|Special petitions may be added here\./,
+  'source-count shorthand, wrapped syllable and optional-insertion rubric stay hidden');
+ assert.match(await ukrainian.innerText(),/Master, give the blessing/);
+ assert.ok((await ukrainian.locator('.byz-prayer-heading').allTextContents()).includes('Insistent Litany'));
+
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
  assert.match(await ukrainian.innerText(),/For You are holy now and ever\./);
  assert.match(await ukrainian.innerText(),/For God is a great Lord and a great King over all the earth\./,'the Divine Liturgy always capitalizes God');
@@ -188,7 +204,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await ukrainian.innerText(),/\*/, 'Ukrainian continuous prayer text hides PDF chant-break asterisks');
  assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows|All stand\.|\(Sit\.\)/);
  assert.match(await ukrainian.innerText(),/Let us stand well before God/, 'prayer language mentioning standing must be retained');
- assert.equal(await ukrainian.locator('.byz-role-deacon').count(),3,'fixture includes the additional Gospel entrance response');
+ assert.equal(await ukrainian.locator('.byz-role-deacon').count(),7,'fixture includes the four extra Insistent Litany petitions');
  assert.equal(await ukrainian.locator('.byz-role-priest .byz-speaker').first().innerText(),'Priest 1');
  assert.equal(await ukrainian.locator('.byz-role-deacon .byz-speaker').first().innerText(),'Deacon 2');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);

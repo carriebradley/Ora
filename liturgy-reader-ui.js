@@ -117,7 +117,9 @@
       const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
       addPrayerSections(sections,rows,heading);
     }
-    return sections.reduce((n,part)=>n+part.lines.length,0)>=3?sections:null;
+    if(sections.reduce((n,part)=>n+part.lines.length,0)<3)return null;
+    sections.edmonton2012=true;
+    return LiturgicalFormat.expandEdmontonThreefoldResponses(sections);
   }
 
   // Generic PDF reading view for a user's private Melkite copy. Unlike the
