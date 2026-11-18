@@ -31,6 +31,36 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
 
 
 
+
+test('Edmonton p. 57 renders two spoken iterations of each source-marked initial hymn',()=>{
+ const lines=[
+  'Trisagion Hymn','ALL: †Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
+  'Baptismal Hymn',
+  'On the Nativity of Christ, Theophany, Saturday of Lazarus, Holy Saturday, Easter Week and Pentecost, we sing the Baptismal Hymn:',
+  'ALL: All you who have been baptized into Christ, you have put on Christ. Alleluia. (2)',
+  'CLERGY: Fixture Greek chant.','DEACON: Give glory to Christ, our God!',
+  'ALL: †Glory be to the Father, and to the Son, and to the Holy Spirit. You have put on Christ. Alleluia.',
+  'The bishop proceeds to the high place:','DEACON: Master, proceed.'
+ ];
+ const original=[{lines:[...lines]}];original.edmonton2012=true;
+ const snapshot=JSON.stringify(original),expanded=F.expandEdmontonTrisagionTwofold(original);
+ assert.equal(expanded.edmonton2012,true);
+ assert.deepEqual([...F.edmontonBaptismalAlternative(expanded).starts],['0:2'],
+  'seasonal grouping must remain recognized after expanding marked repetitions');
+ assert.equal((expanded[0].lines[1].match(/Holy God, Holy and Mighty,/g)||[]).length,2);
+ assert.equal((expanded[0].lines[4].match(/All you who have been baptized into Christ/g)||[]).length,2);
+ assert.doesNotMatch(expanded[0].lines[1]+expanded[0].lines[4],/\(2\)/);
+ assert.equal(expanded[0].lines[7],lines[7],'concluding response unchanged');
+ assert.equal(JSON.stringify(original),snapshot,'original source not rewritten');
+ assert.strictEqual(F.expandEdmontonTrisagionTwofold(expanded),expanded,'idempotent after expansion');
+ const unknown=original.map(part=>({...part,lines:[...part.lines]}));
+ assert.strictEqual(F.expandEdmontonTrisagionTwofold(unknown),unknown);
+ for(const omission of [1,3,4,5,6,7,8,9]){
+  const altered=[{lines:lines.filter((_,i)=>i!==omission)}];altered.edmonton2012=true;
+  assert.strictEqual(F.expandEdmontonTrisagionTwofold(altered),altered,'altered edition remains untouched');
+ }
+});
+
 test('Edmonton seasonal Baptismal Hymn is collapsed only with a complete source signature',()=>{
  const lines=[
   'Trisagion Hymn','ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
