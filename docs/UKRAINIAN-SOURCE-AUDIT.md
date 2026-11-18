@@ -81,3 +81,18 @@ change prayer wording, the dated propers, or device-local source books.
 The *Baptismal Hymn* is a seasonal substitution (not automatically
 appointed year-round); recognizing its heading is a prerequisite to
 separately grouping and selecting that alternate hymn in later work.
+
+
+## Baptismal alternative (Edmonton 2012, PDF p. 57)
+
+The source explicitly appoints the Baptismal Hymn **instead of**
+the Trisagion for Nativity, Theophany, Lazarus Saturday, Holy Saturday,
+Easter Week, and Pentecost. In the positively recognized private book,
+a complete exact sequence is grouped into a collapsed disclosure labelled
+"Baptismal Hymn (only on appointed feasts)". Dates are not guessed and
+the original prayer text is never edited. Unknown or altered editions
+remain unchanged.
+
+The source identity of the Edmonton PDF is now preserved when the
+introductory pages are skipped and when dated propers are composed, so
+source-only display rules remain properly gated.

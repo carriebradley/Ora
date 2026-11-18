@@ -30,6 +30,42 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
 
 
 
+
+test('Edmonton seasonal Baptismal Hymn is collapsed only with a complete source signature',()=>{
+ const lines=[
+  'Trisagion Hymn','ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
+  'Baptismal Hymn',
+  'On the Nativity of Christ, Theophany, Saturday of Lazarus, Holy Saturday, Easter Week and Pentecost, we sing the Baptismal Hymn:',
+  'ALL: All you who have been baptized into Christ, you have put on Christ. Alleluia. (2)',
+  'CLERGY: Fixture Greek chant.','DEACON: Give glory to Christ, our God!',
+  'ALL: †Glory be to the Father, and to the Son, and to the Holy Spirit. You have put on Christ. Alleluia.',
+  'The bishop proceeds to the high place:','DEACON: Master, proceed.','BISHOP: Normal continuation.'
+ ];
+ const source=[{lines:[...lines]}];source.edmonton2012=true;
+ const snapshot=JSON.stringify(source),found=F.edmontonBaptismalAlternative(source);
+ assert.deepEqual([...found.starts],['0:2']);
+ assert.deepEqual([...found.lines],['0:3','0:4','0:5','0:6','0:7','0:8']);
+ assert.equal(JSON.stringify(source),snapshot);
+ const unknown=source.map(s=>({...s,lines:[...s.lines]}));
+ assert.equal(F.edmontonBaptismalAlternative(unknown).starts.size,0);
+ for(const absent of [0,1,2,3,4,5,6,7,8,9]){
+  const changed=[{lines:lines.filter((_,i)=>i!==absent)}];changed.edmonton2012=true;
+  assert.equal(F.edmontonBaptismalAlternative(changed).starts.size,0,'missing pattern '+absent);
+ }
+ const repeated=[{lines:[...lines,'Baptismal Hymn']}];repeated.edmonton2012=true;
+ assert.equal(F.edmontonBaptismalAlternative(repeated).starts.size,0);
+});
+test('the opening-blessing trim preserves positively identified edition markers',()=>{
+ const source=[{lines:['Preface','Blessing','PRIEST: Blessed is the Kingdom.','ALL: Amen.']}];
+ source.edmonton2012=true;
+ const result=F.startAtOpeningBlessing(source);
+ assert.equal(result.edmonton2012,true);
+ assert.equal(result.newton2009,undefined);
+ assert.deepEqual(source[0].lines,['Preface','Blessing','PRIEST: Blessed is the Kingdom.','ALL: Amen.']);
+ const melkite=[...source];delete melkite.edmonton2012;melkite.newton2009=true;
+ assert.equal(F.startAtOpeningBlessing(melkite).newton2009,true);
+});
+
 test('Edmonton 2012 printed section labels remain headings, never prayer words',()=>{
  const verified=[
   'Hymn to Christ','The Beatitudes','The Entrance of Christ the High Priest',

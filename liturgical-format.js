@@ -582,6 +582,40 @@
   out.edmonton2012=true;
   return out;
  }
+
+ // The Edmonton 2012 Baptismal Hymn (PDF p. 57) replaces the ordinary
+ // Trisagion only on appointed feasts. Do not appoint it by default or
+ // change unknown editions. A complete source signature is required.
+ function edmontonBaptismalAlternative(sections){
+  const starts=new Set(),lines=new Set(),found={starts,lines};
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return found;
+  const rows=sections.flatMap((part,section)=>(part.lines||[])
+    .map((raw,index)=>({text:String(raw).trim(),section,index})));
+  const match=(pattern,arr)=>arr.filter(row=>pattern.test(row.text));
+  const ordinary=match(/^Trisagion Hymn$/i,rows);
+  const alternate=match(/^Baptismal Hymn$/i,rows);
+  if(ordinary.length!==1||alternate.length!==1)return found;
+  const start=rows.indexOf(alternate[0]),before=rows.indexOf(ordinary[0]);
+  if(start<=before||start-before>25)return found;
+  const preceding=rows.slice(before+1,start);
+  if(match(/^all\s*:\s*[\u2020]?\s*Holy God,\s*Holy and Mighty,\s*Holy and Immortal,\s*have mercy on us\.\s*\(2\)$/i,preceding).length!==1)return found;
+  const ends=match(/^(?:deacon|dcn)(?:\s+\d+)?\s*:\s*Master,\s*proceed\.$/i,rows.slice(start+1,start+14));
+  if(ends.length!==1)return found;
+  const body=rows.slice(start+1,rows.indexOf(ends[0]));
+  const patterns=[
+   /^On the Nativity of Christ,\s*Theophany,\s*Saturday of Lazarus,\s*Holy Saturday,\s*Easter Week and Pentecost,\s*we sing the Baptismal Hymn:$/i,
+   /^all\s*:\s*All you who have been baptized into Christ,\s*you have put on Christ\.\s*Alleluia\.\s*\(2\)$/i,
+   /^clergy\s*:\s*\S.+/i,
+   /^(?:deacon|dcn)(?:\s+\d+)?\s*:\s*Give glory to Christ,\s*our God!$/i,
+   /^all\s*:\s*[\u2020]?\s*Glory be to the Father\b/i,
+   /^The bishop proceeds to the high place:$/i
+  ];
+  if(body.length!==patterns.length||!body.every((row,i)=>patterns[i].test(row.text)))return found;
+  const slot=row=>row.section+':'+row.index;
+  starts.add(slot(alternate[0]));
+  for(const row of body)lines.add(slot(row));
+  return found;
+ }
  function startAtOpeningBlessing(sections){
   if(!Array.isArray(sections))return sections;
   let si=-1,li=-1;
@@ -601,7 +635,10 @@
   }
   const result=sections.slice(si).map((part,i)=>i===0?{...part,heading:null,lines:part.lines.slice(li)}:part);
   for(const part of result)part.lines=(part.lines||[]).filter(s=>!/^(?:WE\s+LEAVE\s+THE\s+WORLD(?:\s+STAND)?|STAND)$/i.test(s.trim()));
-  return [{heading:'Liturgy of the Word',lines:[]},...result];
+  const out=[{heading:'Liturgy of the Word',lines:[]},...result];
+  if(sections.edmonton2012===true)out.edmonton2012=true;
+  if(sections.newton2009===true)out.newton2009=true;
+  return out;
  }
  // EPUB books are organized by spine sections rather than PDF pages. Keep
  // the saved Byzantine edition intact and display its liturgical words as a
@@ -634,5 +671,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,startAtOpeningBlessing,epubPrayerSections};
 });
