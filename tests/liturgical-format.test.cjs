@@ -1284,3 +1284,19 @@ test('opening-blessing cleanup never mutates later cached source sections',()=>{
  assert.equal(JSON.stringify(source),before,'output edits cannot change input');
  assert.equal(output.edmonton2012,true);
 });
+
+
+test('Edmonton first antiphon separates source-marked Sundays and weekdays',()=>{
+ const row=text=>({text,page:39});
+ const verse=['VERSE: Fixture verse one.','ALL: Fixture reply one.','VERSE: Fixture verse two.','ALL: Fixture reply two.','VERSE: Fixture verse three.','ALL: Fixture reply three.'];
+ const source=['First Antiphon','Major Feast Days:','See propers.','Sundays:',...verse,'Weekdays:',...verse].map(row);
+ const snapshot=JSON.stringify(source),out=F.edmontonFirstAntiphonRows(source);
+ assert.deepEqual(out.filter(x=>x.alternative==='sunday').map(x=>x.text),verse);
+ assert.deepEqual(out.filter(x=>x.alternative==='weekday').map(x=>x.text),verse);
+ assert.equal(JSON.stringify(source),snapshot);
+ assert.deepEqual(out.filter(x=>!x.alternative).map(x=>x.text),['First Antiphon','Major Feast Days:','See propers.']);
+ for(const index of [0,3,4,10,11]){
+  const partial=source.filter((_,i)=>i!==index);
+  assert.strictEqual(F.edmontonFirstAntiphonRows(partial),partial,'incomplete source fails closed');
+ }
+});

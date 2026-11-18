@@ -173,6 +173,25 @@
  // may contain Ukrainian on the left and English on the right.
  const CYRILLIC=/[\u0400-\u052f\u1c80-\u1c8f\u2de0-\u2dff\ua640-\ua69f]/u;
  const CYRILLIC_RUN=/[\u0400-\u052f\u1c80-\u1c8f\u2de0-\u2dff\ua640-\ua69f]+/gu;
+ // Edmonton 2012 PDF p. 39: the Sunday and weekday first antiphons
+ // are vertical alternatives, not two consecutive appointed hymns.
+ // Only split an intact, positively identified page; leave unknown text alone.
+ function edmontonFirstAntiphonRows(rows){
+  if(!Array.isArray(rows))return rows;
+  const find=pattern=>rows.flatMap((row,i)=>pattern.test(String(row.text||'').trim())?[i]:[]);
+  const head=find(/^First Antiphon$/i),sun=find(/^Sundays:\s*$/i),weekday=find(/^Weekdays:\s*$/i);
+  if(head.length!==1||sun.length!==1||weekday.length!==1||
+     !(head[0]<sun[0]&&sun[0]<weekday[0]))return rows;
+  const valid=part=>part.filter(row=>/^VERSE\s*:/i.test(row.text)).length===3&&
+    part.filter(row=>/^ALL\s*:/i.test(row.text)).length===3;
+  if(!valid(rows.slice(sun[0]+1,weekday[0]))||!valid(rows.slice(weekday[0]+1)))return rows;
+  return rows.flatMap((row,i)=>{
+   if(i===sun[0]||i===weekday[0])return [];
+   if(i>sun[0]&&i<weekday[0])return [{...row,alternative:'sunday'}];
+   if(i>weekday[0])return [{...row,alternative:'weekday'}];
+   return [row];
+  });
+ }
  function englishPdfItems(items){
   const out=[];
   for(const item of items||[]){
@@ -739,5 +758,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
