@@ -175,3 +175,18 @@ normal compound hyphens and unrelated Unicode dashes. The source-only
 Litany-of-Peace petition anchor also recognizes its verified all-holy
 combination, avoiding a false rejection of the ten-response expansion.
 The original source PDFs and private saved text remain untouched.
+
+
+## Optional dismissal response (Newton PDF p. 93, printed p. 85)
+
+The original 2009 Newton text marks the people's three-part Apolysis
+response **Optional:** before the separate appointed Sunday/feast
+dismissal. Its "Lord, have mercy" response is printed once with
+"(Three times)". Ora groups the optional material in a collapsed,
+accessible disclosure, expanding that response into three spoken
+repetitions only if the complete source pattern matches. Missing or
+altered boundaries remain untouched. The original PDF is unchanged.
+
+The v387 change carries forward source-confirmed work initially
+prepared in PR #93, without overwriting the intervening v384–v386
+releases or reusing their application/service-worker version numbers.

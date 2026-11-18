@@ -776,6 +776,41 @@ test('Newton 2009 printed repetition directions do not obscure spoken responses'
 
 
 
+
+test('Newton optional Apolysis stays collapsed and renders three spoken mercies if opened',()=>{
+ const source=[{lines:[
+  'A P O L Y S I S',
+  'Priest: Glory to You, Christ God, our hope, glory to You.',
+  'Optional:',
+  'All: Glory be to the Father, and to the Son, and to the Holy Spirit, now and always and forever and ever. Amen.',
+  'Lord, have mercy. (Three times)',
+  'Give the blessing, Master, in the name of the Lord.',
+  'On Sundays and Feast days:',
+  'Priest: May Christ our True God save us.'
+ ]}];
+ source.newton2009=true;
+ assert.equal(F.normalize(source[0].lines[0]),'Apolysis');
+ assert.equal(F.heading(source[0].lines[0]),true);
+ const snapshot=JSON.stringify(source),found=F.newtonOptionalPetitions(source);
+ assert.deepEqual([...found.starts],['0:2']);
+ assert.deepEqual([...found.lines],['0:3','0:4','0:5']);
+ assert.deepEqual([...found.triples],['0:4']);
+ assert.equal(found.labels.get('0:2'),'Optional dismissal responses');
+ assert.equal(F.displayPrayer('Lord, have mercy. Lord, have mercy. Lord, have mercy.'),
+  'Lord, have mercy. Lord, have mercy. Lord, have mercy.');
+ assert.equal(JSON.stringify(source),snapshot,'saved source remains unchanged');
+ const unknown=source.map(p=>({...p,lines:p.lines.slice()}));
+ assert.equal(F.newtonOptionalPetitions(unknown).starts.size,0);
+ for(const missing of ['Optional:','On Sundays and Feast days:','Lord, have mercy. (Three times)']){
+  const changed=source.map(p=>({...p,lines:p.lines.filter(s=>s!==missing)}));
+  changed.newton2009=true;
+  assert.equal(F.newtonOptionalPetitions(changed).starts.size,0,'incomplete block cannot be regrouped: '+missing);
+ }
+ const changed=source.map(p=>({...p,lines:p.lines.slice()}));changed.newton2009=true;
+ changed[0].lines[4]='Lord, have mercy. (Twice)';
+ assert.equal(F.newtonOptionalPetitions(changed).triples.size,0,'another repetition count must not be guessed');
+});
+
 test('Newton optional blocks are identified only with their complete exact petition sequence',()=>{
  const source=[{lines:[
   'Litany of the Gifts',

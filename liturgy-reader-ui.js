@@ -239,7 +239,7 @@
         if(optionalLitany?.starts.has(slot)){
           optionalLitanyDetails=document.createElement('details');
           optionalLitanyDetails.className='byz-antiphon-option byz-optional-litany';
-          const summary=document.createElement('summary');summary.textContent='Optional petitions';
+          const summary=document.createElement('summary');summary.textContent=optionalLitany.labels?.get(slot)||'Optional petitions';
           optionalLitanyDetails.append(summary);target.append(optionalLitanyDetails);
           lastLine=null;lastRole=null;pendingRole=null;continue;
         }
@@ -248,6 +248,10 @@
           else{optionalLitanyDetails=null;container=target;lastLine=null;lastRole=null;}
         }
         let text=String(raw||'').trim();
+        // The verified optional Newton dismissal prints the mercy response
+        // once followed by a repetition count. Supply the spoken triple only
+        // inside its positively matched (and collapsed) optional block.
+        if(optionalLitany?.triples.has(slot))text='Lord, have mercy. Lord, have mercy. Lord, have mercy.';
         // Some PDFs extract tracked uppercase display headings as isolated
         // letters and break a heading mid-word across physical lines.
         // Repair only known headings; never alter the wording of prayers.
