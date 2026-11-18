@@ -143,7 +143,8 @@ test('Installed app includes year-round Melkite hymns offline without changing l
 
 test('update probes bypass shell caching and fail cleanly offline', async () => {
   const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
-  const shell = await w.caches.open('ora-v400');
+  const current = fs.readFileSync(require.resolve('../sw.js'), 'utf8').match(/const V = '(ora-v\d+)'/)[1];
+  const shell = await w.caches.open(current);
   const before = (await shell.keys()).length;
   const calls = [];
   w.context.fetch = async (_request, options) => { calls.push(options); return new Response('const V = \'ora-v401\''); };

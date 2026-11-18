@@ -136,7 +136,8 @@ module.exports=async(page,base,artifacts,violations)=>{
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
-     35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.','DCN 1: For the seafarers and travellers, for the sick'],\n     37:['and the suffering, for those held captive, and for their salvation, let us pray to the Lord.','ALL: Lord, have mercy.'],
+     35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.','DCN 1: For the seafarers and travellers, for the sick'],
+     37:['and the suffering, for those held captive, and for their salvation, let us pray to the Lord.','ALL: Lord, have mercy.'],
      39:['First Antiphon','Major Feast Days:','See propers.','Sundays:',
        'VERSE: Fixture Sunday verse one.','ALL: Fixture Sunday reply one.',
        'VERSE: Fixture Sunday verse two.','ALL: Fixture Sunday reply two.',
