@@ -149,3 +149,14 @@ accessible Optional petitions disclosures, while retaining all unambiguously
 required prayers in the continuous default reading flow. If the optional
 label, complete sequence, or next fixed prayer heading is missing, it leaves
 that litany unchanged. Source PDFs and saved prayer text remain intact.
+
+
+## Embedded chant-selection note after All response (Newton PDF p. 68)
+
+The original 2009 source places an editorial sentence about the alternative
+"I will love You, Lord" chant immediately after the people's spoken
+Trinitarian response. On the continuous reader this otherwise looks like
+words that should be spoken. Ora removes that *exact verified trailing note*
+from the display of the All response. It keeps the actual response and
+the independently printed chant prayer unchanged; other explanatory text
+patterns remain untouched. The saved private PDF is never modified.

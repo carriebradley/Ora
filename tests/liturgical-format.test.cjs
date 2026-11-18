@@ -676,6 +676,20 @@ test('dated hymns render prayer words but not editorial replacement directions i
 });
 
 
+
+test('Newton 2009 inline alternate-chant note never becomes the spoken All response',()=>{
+ const response='All: The Father, the Son and the Holy Spirit, Trinity, one in essence and undivided.';
+ const source=response+' After “The Father, the Son…,” “I will love You, Lord…” may also be sung.';
+ assert.equal(F.displayPrayer(source),response);
+ assert.equal(F.role(source)?.kind,'all');
+ assert.equal(F.instruction(source),false,'response words should not become an editorial direction');
+ assert.equal(F.displayPrayer(response),response,'the underlying response cannot be changed');
+ assert.equal(F.displayPrayer('I will love You, Lord, my strength.'),'I will love You, Lord, my strength.',
+  'separate sung prayer must be retained');
+ assert.equal(F.displayPrayer(response+' After another explanation is offered.'),
+  response+' After another explanation is offered.','unverified editorial patterns must not be guessed');
+});
+
 test('Newton 2009 printed repetition directions do not obscure spoken responses',()=>{
  const cases=[
   ['ALL: Lord, have mercy. (To be repeated after each petition)','ALL: Lord, have mercy.'],

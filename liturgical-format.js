@@ -28,6 +28,10 @@
    .replace(/\s+([,.;:!?])/g,'$1')
    .replace(/-\s*-\s*-\s*/g,'-')
    .replace(/\b(well)-\s*-\s*(being)\b/gi,'$1-$2')
+   // Newton 2009 PDF p. 68 appends an editorial chant alternative immediately
+   // after this All response. Hide only the fully matched source note, never
+   // the response or the independent "I will love You, Lord" prayer.
+   .replace(/(\bThe\s+Father,\s+the\s+Son\s+and\s+the\s+Holy\s+Spirit,\s+Trinity,\s+one\s+in\s+essence\s+and\s+undivided\.)\s+After\s+[\u201c"]The\s+Father,\s+the\s+Son[^\r\n]{0,48}[\u201c"]I\s+will\s+love\s+You,\s+Lord[^\r\n]{0,48}may\s+also\s+be\s+sung\.\s*$/i,'$1')
    .replace(/\s*\(\s*(?:To\s+be\s+repeated\s+after\s+each\s+petition|Three\s+times(?:[\s\u00ad\u2010-\u2015-]*To\s+be\s+repeated\s+after\s+each\s+petition)?)\s*\.?\s*\)\s*$/i,'')
    .replace(/([(\u2018\u201c])\s+/g,'$1')
    .replace(/\s+([)\u2019\u201d])/g,'$1')

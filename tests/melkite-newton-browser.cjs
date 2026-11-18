@@ -64,7 +64,8 @@ module.exports=async(page,base,artifacts)=>{
     'The Priest prays the following prayer:'
    ],
    68:[
-    'Prayer of Offering','PRIEST: Lord God Almighty who alone are holy.'
+    'Prayer of Offering','PRIEST: Lord God Almighty who alone are holy.',
+    'ALL: The Father, the Son and the Holy Spirit, Trinity, one in essence and undivided. After “The Father, the Son…,” “I will love You, Lord…” may also be sung.'
    ],
    78:[
     'P R E P A R A T I O N F O R H O L Y C O M M U N I O N',
@@ -161,6 +162,10 @@ module.exports=async(page,base,artifacts)=>{
  assert.doesNotMatch(text,/After the third petition, some other appropriate ecumenic petitions may be said/,
   'optional-petition instructions must not read as prayer');
  assert.match(text,/Preparation for Holy Communion/);
+ assert.match(text,/The Father, the Son and the Holy Spirit, Trinity, one in essence and undivided\./,
+  'retain the actual All response following the prayer of offering');
+ assert.doesNotMatch(text,/After “The Father, the Son.*may also be sung/,
+  'printed inline chant-selection note must not be read as prayer');
  const optional=preview.locator('details.byz-optional-litany');
  assert.equal(await optional.count(),2,'Gifts and Communion alternatives are independent');
  assert.deepEqual(await optional.locator('summary').allTextContents(),['Optional petitions','Optional petitions']);
