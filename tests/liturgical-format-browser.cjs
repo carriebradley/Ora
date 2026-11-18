@@ -181,6 +181,8 @@ module.exports=async(page,base,artifacts,violations)=>{
      83:['BISHOP: Fixture anaphora.'],
      89:['BISHOP: Among the first, remember, O Lord, the fixture hierarchs, who may live in peace, safety, honour and health'],
      91:['for many years, and rightly impart the word of Your truth.','ALL: And remember all men and all women.'],
+     95:['ALL: Our Father, Who art in heaven. Fixture prayer and forgive us our'],
+     97:['trespasses as we forgive those who trespass against us. And lead us not into temptation but deliver us from evil.','BISHOP: For the kingdom, the power, and the glory are Yours.'],
      99:['Communion of the Faithful','BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
        'ALL: Fixture Communion response.'],
      113:['ALL: Fixture conclusion.'],
@@ -281,6 +283,10 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await commemoration.innerText(),/honour and health for many years/);
  assert.equal(await commemoration.locator('.byz-speaker').innerText(),'Bishop');
  assert.equal(await ukrainian.locator('.byz-role-all').filter({hasText:'And remember all men and all women.'}).count(),1);
+ const ourFather=ukrainian.locator('.byz-prayer-line').filter({hasText:'Fixture prayer and forgive us our'});
+ assert.equal(await ourFather.count(),1);assert.match(await ourFather.innerText(),/forgive us our trespasses/);
+ assert.equal(await ourFather.locator('.byz-speaker').innerText(),'All');
+ assert.equal(await ukrainian.locator('.byz-role-priest').filter({hasText:'For the kingdom, the power'}).count(),1);
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
