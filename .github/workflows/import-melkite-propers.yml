@@ -8,6 +8,7 @@ on:
       - .github/workflows/import-melkite-propers.yml
 permissions:
   contents: write
+  checks: write
 concurrency:
   group: ora-melkite-propers-import
   cancel-in-progress: false
@@ -25,7 +26,19 @@ jobs:
       - name: Test DOCX parser with fictional data
         run: python -m unittest discover -s tests -p test_melkite_propers.py
       - name: Extract English dated hymns from Newton typicon
-        run: python tools/import_melkite_propers.py
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/import_melkite_propers.py 2>&1 | tee /tmp/ora-melkite-import.log
+      - name: Report import failure details
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const file = '/tmp/ora-melkite-import.log';
+            const output = fs.existsSync(file) ? fs.readFileSync(file, 'utf8').slice(-12000) : 'Import did not start; inspect the earlier failing step.';
+            await github.rest.checks.create({owner: context.repo.owner, repo: context.repo.repo, head_sha: context.sha, name: 'Melkite import diagnostics', status: 'completed', conclusion: 'neutral', output: {title: 'Melkite import failure details', summary: output}});
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
