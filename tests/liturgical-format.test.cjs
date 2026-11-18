@@ -28,6 +28,31 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
 
 
 
+
+test('Edmonton 2012 repairs only verified printed line-wraps and preserves real compounds',()=>{
+ const source=[{lines:[
+  'PRIEST: Pray for our sal-vation and govern-ment.','ALL: Al-leluia, all holy.',
+  'BISHOP: Our loving-kindness, Only-begotten Son, life-giving Spirit and well-being.',
+  'PRIEST: Im-mortal Fa-ther; Mys-teries, nothing-ness and pro-todeacon.',
+  'PRIEST: Fixture non-verified semi-circular and word-breaks.'
+ ]}];
+ source.edmonton2012=true;
+ const before=JSON.stringify(source),out=F.repairEdmontonWrappedWords(source);
+ assert.equal(out.edmonton2012,true);
+ assert.match(out[0].lines[0],/salvation and government/);
+ assert.equal(out[0].lines[1],'ALL: Alleluia, all holy.');
+ assert.match(out[0].lines[2],/loving-kindness, Only-begotten Son, life-giving Spirit and well-being/);
+ assert.match(out[0].lines[3],/Immortal Father; Mysteries, nothingness and protodeacon/);
+ assert.match(out[0].lines[4],/semi-circular and word-breaks/);
+ assert.equal(JSON.stringify(source),before,'source must remain byte-for-byte intact');
+ assert.strictEqual(F.repairEdmontonWrappedWords(out),out,'the repair is idempotent');
+ const unknown=source.map(p=>({...p,lines:p.lines.slice()}));
+ assert.strictEqual(F.repairEdmontonWrappedWords(unknown),unknown,'unrecognized books are never altered');
+ const noSplit=[{lines:['ALL: Only-begotten Son and loving-kindness.']}];
+ noSplit.edmonton2012=true;
+ assert.strictEqual(F.repairEdmontonWrappedWords(noSplit),noSplit,'real compounds never trigger a rewrite');
+});
+
 test('Edmonton 2012 expands three other marked repetitions without repeating the Amen',()=>{
  const source=[{lines:[
   'Confession of Love',

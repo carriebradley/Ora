@@ -50,3 +50,18 @@ duplicated, altered or already expanded passage is left unchanged.
 The source PDF and locally stored text are not rewritten. The Cherubic
 Hymn's separate "(3)" rubric on p. 71 has different chant semantics and
 is not expanded automatically pending its own source review.
+
+
+## Printing line-wrap artifacts (Edmonton 2012 English pp. 33–113)
+
+An audit of the original PDF using layout-preserving text extraction found
+**97** English words divided at printed line ends, comprising **75**
+different split patterns. One is the genuine compound "loving-kindness"
+and must retain its hyphen. The other **74** distinct word-break patterns
+can be unambiguously rejoined, including "sal-vation", "govern-ment",
+"Al-leluia", "Mys-teries", and "pro-todeacon". Ora re-joins only these
+74 exact source-confirmed fragments in the display of the recognized
+Edmonton 2012 book, while keeping ordinary hyphenated expressions such as
+"Only-begotten", "life-giving", and "well-being" unchanged. This does not
+rewrite the private original, change unknown editions, or alter other
+traditions' automatic PDF handling.

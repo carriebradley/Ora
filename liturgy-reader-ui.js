@@ -120,7 +120,7 @@
     if(sections.reduce((n,part)=>n+part.lines.length,0)<3)return null;
     sections.edmonton2012=true;
     return LiturgicalFormat.expandEdmontonRemainingThreefold(
-      LiturgicalFormat.expandEdmontonThreefoldResponses(sections));
+      LiturgicalFormat.expandEdmontonThreefoldResponses(LiturgicalFormat.repairEdmontonWrappedWords(sections)));
   }
 
   // Generic PDF reading view for a user's private Melkite copy. Unlike the

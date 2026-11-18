@@ -526,6 +526,29 @@
  }
 
 
+
+ // The English pages of the 2012 Edmonton source have 97 words broken
+ // at printed line endings (74 exact non-compound split patterns).
+ // The generic combiner preserves hyphens to protect genuine compounds in
+ // other books. Repair only source-confirmed fragments in this edition.
+ const EDMONTON_WRAPPED_SPLITS=new Set(
+  'ac-claim,acknow-ledge,al-leluia,al-ways,apos-tles,as-cended,at-tentive,be-came,be-gotten,be-half,be-stowed,ben-efit,bod-ies,cheru-bim,com-mandments,com-mend,con-fidence,con-science,condem-nation,condemna-tion,confi-dence,de-ceased,dea-con,en-able,en-trance,ene-mies,evan-gelists,ex-change,fa-ther,fa-thers,for-giveness,for-sake,for-ward,glo-rify,glori-ous,govern-ment,har-mony,heav-ens,im-mortal,immacu-late,in-cense,in-finite,incon-ceivable,jus-tice,king-dom,like-ness,lov-ing,mag-nificent,mas-ter,mys-teries,nothing-ness,of-fered,offer-ing,par-don,par-takes,per-sons,pre-sented,pres-byters,pres-ent,priest-hood,pro-todeacon,re-ceived,re-spond,sal-vation,sanc-tify,sanc-tuary,ser-vant,spiri-tual,sup-per,sup-plications,through-out,to-gether,tribula-tion,ven-eration'.split(',')
+ );
+ function repairEdmontonWrappedWords(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
+  let changed=false;
+  const repaired=sections.map(part=>({...part,lines:(part.lines||[]).map(line=>{
+   const next=String(line).replace(/\b([A-Za-z]{2,})-([a-z]{2,})\b/g,(whole,a,b)=>{
+    if(!EDMONTON_WRAPPED_SPLITS.has((a+'-'+b).toLowerCase()))return whole;
+    changed=true;return a+b;
+   });
+   return next;
+  })}));
+  if(!changed)return sections;
+  repaired.edmonton2012=true;
+  return repaired;
+ }
+
  // Edmonton 2012 English PDF pp. 79, 99, 109 prints three other explicit
  // "(3)" directions: the bishop's confession of love, a short private
  // prayer within One is Holy, and the people's post-Ambo hymn.
@@ -608,5 +631,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,startAtOpeningBlessing,epubPrayerSections};
 });

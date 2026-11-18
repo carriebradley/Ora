@@ -136,7 +136,7 @@ module.exports=async(page,base,artifacts,violations)=>{
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
-     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
+     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
      65:['Insistent Litany','DCN 2: Fixture petition A.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition B.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition C.','ALL: Lord, have mercy. (3)',
@@ -197,6 +197,10 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await ukrainian.innerText(),/Lord, have mercy\.\s*\(3\)|Mas-ter|Special petitions may be added here\./,
   'source-count shorthand, wrapped syllable and optional-insertion rubric stay hidden');
  assert.match(await ukrainian.innerText(),/Master, give the blessing/);
+ assert.match(await ukrainian.innerText(),/Pray for salvation and government; preserve loving-kindness\./,
+  'only verified Ukrainian source line-wrap artifacts are joined');
+ assert.doesNotMatch(await ukrainian.innerText(),/sal-vation|govern-ment/,
+  'hyphenated print fragments are not spoken words');
  const fullUkrainian=await ukrainian.innerText();
  assert.equal((fullUkrainian.match(/I will love You, O Lord, my strength;/g)||[]).length,3,
   'the bishop\'s Confession-of-Love prayer is said three times');
