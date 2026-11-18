@@ -1,6 +1,6 @@
 /* Display-only formatting for private local books; contains no liturgical texts. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgicalFormat=factory();})(typeof self!=='undefined'?self:this,function(){
- const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
+ const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
@@ -235,6 +235,39 @@
  // and explicitly prescribed after every subsequent petition. Only the
  // two mandatory petitions preceding the shaded Optional block are
  // unambiguous. Do not automatically appoint or expand optional petitions.
+
+ // The Litany of the Gifts (Newton 2009 PDF p. 67) has exactly one
+ // unambiguous required petition after its printed Lord-have-mercy cue.
+ // The shaded Optional section is a different selection; never infer
+ // responses or appointments for those extra petitions.
+ function expandNewtonGiftLitany(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const entries=sections.flatMap((part,section)=>(part.lines||[])
+    .map((text,index)=>({text:String(text).trim(),section,index})));
+  const headings=entries.map((row,i)=>compact(row.text)==='litanyofthegifts'?i:-1).filter(i=>i>=0);
+  if(headings.length!==1)return sections;
+  const start=headings[0],end=entries.findIndex((row,i)=>i>start&&compact(row.text)==='prayerofoffering');
+  if(end<0||end-start>25)return sections;
+  const rows=entries.slice(start+1,end);
+  const response=/^all\s*:\s*lord,\s*have\s+mercy\.?\s*\(\s*to\s+be\s+repeated\s+after\s+each\s+petition\.?\s*\)$/i;
+  const cues=rows.map((row,i)=>response.test(row.text)?i:-1).filter(i=>i>=0);
+  if(cues.length!==1)return sections;
+  const cue=cues[0],opening=rows.slice(0,cue),following=rows.slice(cue+1);
+  if(opening.length!==1||
+     !/^deacon\s*:\s*let\s+us\s+complete\s+our\s+prayer\s+to\s+the\s+lord\.?$/i.test(opening[0].text))
+    return sections;
+  const optional=following.findIndex(row=>/^optional\s*:/i.test(row.text));
+  if(optional!==1)return sections;
+  const required=following[0];
+  if(!/^deacon\s*:\s*for\s+the\s+precious\s+gifts\s+here\s+offered,\s*let\s+us\s+pray\s+to\s+the\s+lord\.?$/i.test(required.text)||
+     following.some(row=>/^all\s*:/i.test(row.text)))return sections;
+  const target=required.section+':'+required.index;
+  const expanded=sections.map((part,section)=>({...part,lines:(part.lines||[])
+    .flatMap((line,index)=>section+':'+index===target?
+      [line,'All: Lord, have mercy.']:[line])}));
+  expanded.newton2009=true;
+  return expanded;
+ }
  function expandNewtonCommunionPreparation(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const rows=sections.flatMap((part,section)=>(part.lines||[])
@@ -351,5 +384,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
 });

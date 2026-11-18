@@ -19,6 +19,17 @@ module.exports=async(page,base,artifacts)=>{
     'PRIEST: God, the Holy, who rest among the saints.',
     'The Trisagion Hymn','ALL: Holy God, Holy Mighty One.','Epistle'
    ],
+   67:[
+    'L I T A N Y O F T H E G I F T S',
+    'DEACON: Let us complete our prayer to the Lord.',
+    'ALL: Lord, have mercy. (To be repeated after each petition)',
+    'DEACON: For the precious gifts here offered, let us pray to the Lord.',
+    'Optional:',
+    'For this holy house and those who enter it with faith, let us pray to the Lord.'
+   ],
+   68:[
+    'Prayer of Offering','PRIEST: Lord God Almighty who alone are holy.'
+   ],
    78:[
     'P R E P A R A T I O N F O R H O L Y C O M M U N I O N',
     'DEACON: Now that we have remembered all the saints, again and again in peace let us pray to the Lord.',
@@ -106,8 +117,8 @@ module.exports=async(page,base,artifacts)=>{
   assert.ok(index>last,'misordered Newton 2009 source and dated hymns: '+phrase);
   last=index;
  }
- assert.equal((text.match(/Lord, have mercy/g)||[]).length,3,
-  'only the two mandatory Communion-preparation petitions receive added responses');
+ assert.equal((text.match(/Lord, have mercy/g)||[]).length,5,
+  'Gift litany and Communion preparation contain their two and three verified responses');
  assert.match(text,/Preparation for Holy Communion/);
  assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
   'six source-directed Aitesis responses must be visible');

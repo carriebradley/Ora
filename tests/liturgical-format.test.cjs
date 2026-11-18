@@ -768,3 +768,35 @@ test('Newton communion-preparation adds only two mandatory responses before Opti
  assert.strictEqual(F.expandNewtonCommunionPreparation(preExpanded),preExpanded,
   'pre-existing responses must never be doubled');
 });
+
+test('Newton Litany of the Gifts repeats its mandatory answer without appointing optional petitions',()=>{
+ const source=[{lines:[
+  'L I T A N Y O F T H E G I F T S',
+  'Deacon: Let us complete our prayer to the Lord.',
+  'All: Lord, have mercy. (To be repeated after each petition)',
+  'Deacon: For the precious gifts here offered, let us pray to the Lord.',
+  'Optional:',
+  'For this holy house and those who enter it with faith, let us pray to the Lord.',
+  'For our deliverance from all affliction, let us pray to the Lord.',
+  'Help us, save us, have mercy on us and protect us, O God, by Your grace.'
+ ]},{lines:['Prayer of Offering','Priest: Lord God Almighty who alone are holy.']}];
+ source.newton2009=true;
+ const snapshot=JSON.stringify(source);
+ assert.equal(F.normalize(source[0].lines[0]),'Litany of the Gifts');
+ assert.equal(F.normalize('P R A Y E R O F O F F E R I N G'),'Prayer of Offering');
+ const expanded=F.expandNewtonGiftLitany(source);
+ const lines=expanded.flatMap(x=>x.lines);
+ assert.equal(lines.filter(x=>/^All: Lord, have mercy/.test(x)).length,2);
+ assert.equal(lines.filter(x=>x==='All: Lord, have mercy.').length,1);
+ assert.ok(lines.includes('For our deliverance from all affliction, let us pray to the Lord.'),
+  'optional source prayer is not deleted');
+ assert.equal(JSON.stringify(source),snapshot,'saved source words cannot be changed');
+ assert.strictEqual(F.expandNewtonGiftLitany(expanded),expanded,'cannot repeat a previously expanded passage');
+ const unrecognized=source.map(x=>({...x,lines:x.lines.slice()}));
+ assert.strictEqual(F.expandNewtonGiftLitany(unrecognized),unrecognized);
+ const missing=source.map(x=>({...x,lines:x.lines.filter(s=>s!=='Optional:')}));missing.newton2009=true;
+ assert.strictEqual(F.expandNewtonGiftLitany(missing),missing,'without optional boundary, fail closed');
+ const already=source.map(x=>({...x,lines:x.lines.slice()}));already.newton2009=true;
+ already[0].lines.splice(4,0,'All: Lord, have mercy.');
+ assert.strictEqual(F.expandNewtonGiftLitany(already),already,'do not duplicate source-expanded answers');
+});
