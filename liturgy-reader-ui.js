@@ -217,10 +217,11 @@
     // On feasts the ordinary antiphons must not be mistaken for appointed propers.
     const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
     const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
-    const shownSections=LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections)))));
+    const newtonHymns=melkiteBook?LiturgicalFormat.newtonTrisagionHymns(sections):null;
+    const shownSections=LiturgicalFormat.expandNewtonTrisagionHymns(LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections))))));
     const optionalLitany=melkiteBook?LiturgicalFormat.newtonOptionalPetitions(shownSections):null;
     const baptismal=shownSections.edmonton2012===true?LiturgicalFormat.edmontonBaptismalAlternative(shownSections):null;
-    let optionalLitanyDetails=null,baptismalDetails=null;
+    let optionalLitanyDetails=null,baptismalDetails=null,newtonHymnDetails=null;
     for(let sectionIndex=0;sectionIndex<shownSections.length;sectionIndex++){
       const section=shownSections[sectionIndex];
       // PDF pages are extraction sections, not necessarily liturgical
@@ -238,6 +239,12 @@
       for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
         const raw=section.lines[lineIndex];
         const slot=sectionIndex+':'+lineIndex;
+        if(newtonHymns?.starts.has(slot)){
+          newtonHymnDetails=document.createElement('details');newtonHymnDetails.className='byz-antiphon-option byz-newton-seasonal-hymn';
+          const summary=document.createElement('summary');summary.textContent=newtonHymns.labels.get(slot);newtonHymnDetails.append(summary);target.append(newtonHymnDetails);
+          lastLine=null;lastRole=null;pendingRole=null;continue;
+        }
+        if(newtonHymnDetails){if(newtonHymns?.lines.has(slot))container=newtonHymnDetails;else{newtonHymnDetails=null;container=target;lastLine=null;lastRole=null;pendingRole=null;}}
         if(baptismal?.starts.has(slot)){
           baptismalDetails=document.createElement('details');
           baptismalDetails.className='byz-antiphon-option byz-seasonal-hymn';
@@ -578,5 +585,6 @@
   });
   window.LiturgicalText={card,hydrate};
 })();
+
 
 

@@ -1418,3 +1418,12 @@ test('Edmonton Communion prayer retains congregation across page boundary',()=>{
  const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonCommunionPrayerPageBreak(unknown),unknown);
  const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;assert.strictEqual(F.joinEdmontonCommunionPrayerPageBreak(duplicate),duplicate);
 });
+
+test('Newton Trisagion alternatives preserve source repetitions and remain optional',()=>{
+ const lines=['The Trisagion Hymn','The choir and the celebrants alternate in singing the Trisagion Hymn:','ALL: Holy God, Holy Mighty One, Holy Immortal One, have mercy on us. (Three times)','Arabic: Fixture chant.','Greek: Fixture chant.','ALL: Holy Immortal One, have mercy on us.','DEACON: Dynamis.','ALL: Holy God, Holy Mighty One, Holy Immortal One, have mercy on us.','On the Feasts of the Nativity of our Lord and the Theophany, the Trisagion is replaced by the following hymn:','ALL: All of you who have been baptized into Christ, have put on Christ. Alleluia. (Three times)','Greek: Fixture chant.','Arabic: Fixture chant.','ALL: Have put on Christ. Alleluia.','DEACON: Dynamis.','ALL: All of you who have been baptized into Christ, have put on Christ. Alleluia.','On the Feast of the Exaltation of the Holy Cross, the following hymn is chanted:','ALL: We bow in worship before Your Cross, O Master, and we give praise to Your Holy Resurrection. (Three times)','Greek: Fixture chant.','Arabic: Fixture chant.','ALL: and we give praise to Your Holy Resurrection.','DEACON: Dynamis.','ALL: We bow in worship before Your Cross, O Master, and we give praise to Your Holy Resurrection.'];
+ const source=[{lines:[...lines]}];source.newton2009=true;const snapshot=JSON.stringify(source),plan=F.newtonTrisagionHymns(source);
+ assert.deepEqual([...plan.starts],['0:8','0:15']);assert.deepEqual([...plan.labels.values()],['Baptismal Hymn (only on appointed feasts)','Cross Hymn (only on appointed feasts)']);assert.deepEqual([...plan.triples],['0:2','0:9','0:16']);assert.equal(JSON.stringify(source),snapshot);
+ const shown=F.expandNewtonTrisagionHymns(source);for(const index of [2,9,16])assert.equal((shown[0].lines[index].match(/Holy God|All of you who have been baptized|We bow in worship/g)||[]).length,3);
+ assert.strictEqual(F.expandNewtonTrisagionHymns(shown),shown);const unknown=source.map(part=>({...part,lines:[...part.lines]}));assert.strictEqual(F.expandNewtonTrisagionHymns(unknown),unknown);
+});
+

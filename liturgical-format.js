@@ -360,6 +360,37 @@
   }
   return result;
  }
+ function newtonTrisagionHymns(sections){
+  const starts=new Set(),lines=new Set(),labels=new Map(),triples=new Set(),result={starts,lines,labels,triples};
+  if(!Array.isArray(sections)||sections.newton2009!==true)return result;
+  const rows=sections.flatMap((part,section)=>(part.lines||[]).map((raw,index)=>({text:String(raw).trim(),section,index})));
+  const key=row=>row.section+':'+row.index;
+  const find=pattern=>rows.map((row,index)=>pattern.test(row.text)?index:-1).filter(index=>index>=0);
+  const ordinary=/^(?:all\s*:\s*)?holy\s+god,\s*holy\s+mighty\s+one,\s*holy\s+immortal\s+one,\s*have\s+mercy\s+on\s+us\.\s*\(\s*three\s+times\s*\)\s*$/i;
+  const baptismal=/^(?:all\s*:\s*)?all\s+of\s+you\s+who\s+have\s+been\s+baptized\s+into\s+christ,\s*have\s+put\s+on\s+christ\.\s*alleluia\.\s*\(\s*three\s+times\s*\)\s*$/i;
+  const cross=/^(?:all\s*:\s*)?we\s+bow\s+in\s+worship\s+before\s+your\s+cross,\s*o\s+master,\s*and\s+we\s+give\s+praise\s+to\s+your\s+holy\s+resurrection\.\s*\(\s*three\s+times\s*\)\s*$/i;
+  const [a,b,c]=[ordinary,baptismal,cross].map(find);
+  if([a,b,c].some(hits=>hits.length!==1)||!(a[0]<b[0]&&b[0]<c[0]))return result;
+  const heading=find(/^the\s+trisagion\s+hymn$/i);
+  if(heading.length!==1||heading[0]>=a[0]||a[0]-heading[0]>8||!rows.slice(heading[0]+1,a[0]).some(row=>/^the\s+choir\s+and\s+the\s+celebrants\s+alternate\b/i.test(row.text)))return result;
+  const baptismalIntro=/^on\s+the\s+feasts\s+of\s+the\s+nativity\s+of\s+our\s+lord\s+and\s+the\s+theophany\b/i,crossIntro=/^on\s+the\s+feast\s+of\s+the\s+exaltation\s+of\s+the\s+holy\s+cross\b/i;
+  const intro=(at,pattern)=>rows.findIndex((row,index)=>index>=at-4&&index<at&&pattern.test(row.text));
+  const bs=intro(b[0],baptismalIntro),cs=intro(c[0],crossIntro);
+  const baptismalFinal=/^(?:all\s*:\s*)?all\s+of\s+you\s+who\s+have\s+been\s+baptized\s+into\s+christ,\s*have\s+put\s+on\s+christ\.\s*alleluia\.\s*$/i,crossFinal=/^(?:all\s*:\s*)?we\s+bow\s+in\s+worship\s+before\s+your\s+cross,\s*o\s+master,\s*and\s+we\s+give\s+praise\s+to\s+your\s+holy\s+resurrection\.\s*$/i;
+  const be=rows.findIndex((row,index)=>index>b[0]&&index<c[0]&&baptismalFinal.test(row.text)),ce=rows.findIndex((row,index)=>index>c[0]&&crossFinal.test(row.text));
+  if(bs<0||cs<0||be<0||ce<0||be-b[0]>18||ce-c[0]>18)return result;
+  starts.add(key(rows[bs]));labels.set(key(rows[bs]),'Baptismal Hymn (only on appointed feasts)');
+  starts.add(key(rows[cs]));labels.set(key(rows[cs]),'Cross Hymn (only on appointed feasts)');
+  for(let i=bs;i<=be;i++)lines.add(key(rows[i]));for(let i=cs;i<=ce;i++)lines.add(key(rows[i]));
+  for(const index of [a[0],b[0],c[0]])triples.add(key(rows[index]));return result;
+ }
+ function expandNewtonTrisagionHymns(sections){
+  const hymns=newtonTrisagionHymns(sections);if(hymns.triples.size!==3)return sections;
+  const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((raw,index)=>{
+   if(!hymns.triples.has(section+':'+index))return raw;const words=String(raw).replace(/\s*\(\s*three\s+times\s*\)\s*$/i,'').trim();return [words,words,words].join(' ');
+  })}));out.newton2009=true;return out;
+ }
+
  function expandNewtonPeaceLitany(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -903,5 +934,6 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
+
