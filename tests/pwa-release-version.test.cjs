@@ -14,6 +14,13 @@ test('build update notice only offers strictly newer published worker versions',
  assert.equal(R.versionNumber('ora-v365')>R.versionNumber('ora-v364'),true);
  assert.equal(R.versionNumber('ora-v363')>R.versionNumber('ora-v364'),false);
 });
+test('manual update waits briefly for service-worker activation before reloading',()=>{
+ const app=file('app.js'),start=app.indexOf("notice.querySelector('button').addEventListener('click'");
+ const controller=app.indexOf('controllerchange',start),wait=app.indexOf('await Promise.race',start),reload=app.indexOf('location.reload()',start);
+ assert.ok(start>=0&&controller>start,'update action observes the incoming worker');
+ assert.ok(wait>controller&&reload>wait,'activation wait precedes reload');
+ assert.match(app.slice(start,reload),/setTimeout\(resolve, 1500\)/,'offline fallback remains bounded');
+});
 test('release guard catches application changes but not documentation or readings refreshes',()=>{
  assert.equal(R.requiresBump(['app.js']),true);
  assert.equal(R.requiresBump(['liturgy-schedule.js']),true);

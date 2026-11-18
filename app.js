@@ -2503,7 +2503,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v394';
+  const APP_BUILD = 'ora-v395';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
@@ -2521,10 +2521,23 @@
       notice.innerHTML = '<span>New Ora update available</span><button type="button" class="btn fill">Update now</button>';
       notice.querySelector('button').addEventListener('click', async () => {
         store.set('ora.navigation', { tab: st.tab, readRite: st.readRite, liturgyView: st.liturgyView });
+        // Do not reload into the old shell while a newer worker is still
+        // installing. Waiting briefly for controllerchange makes the action
+        // dependable on slower Pages and mobile connections.
+        let resolveControllerChange;
+        const controllerChange = new Promise(resolve => {
+          resolveControllerChange = resolve;
+          navigator.serviceWorker.addEventListener('controllerchange', resolve, { once: true });
+        });
         try {
           const reg = await navigator.serviceWorker.getRegistration();
           if (reg) await reg.update();
         } catch (_) { /* reload can still fetch online */ }
+        await Promise.race([
+          controllerChange,
+          new Promise(resolve => setTimeout(resolve, 1500))
+        ]);
+        resolveControllerChange?.();
         location.reload();
       });
       document.body.appendChild(notice);
