@@ -1391,3 +1391,17 @@ test('Edmonton Lord’s Prayer stays with the congregation over the page break',
  const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonLordsPrayerPageBreak(unknown),unknown);
  const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;assert.strictEqual(F.joinEdmontonLordsPrayerPageBreak(duplicate),duplicate);
 });
+
+
+test('Edmonton Thanksgiving Litany invitation stays with its deacon',()=>{
+ const a='DCN 1: Stand aright! Having received the divine, holy, immaculate, immortal, heavenly, and';
+ const b='life-giving, awesome Mysteries of Christ, let us rightly give thanks to the Lord.';
+ const source=[{lines:['Thanksgiving Litany',a]},{lines:[b,'ALL: Lord, have mercy.','DCN 1: Fixture next petition.']}];source.edmonton2012=true;
+ const before=JSON.stringify(source),out=F.joinEdmontonThanksgivingPageBreak(source);
+ assert.equal(out[0].lines[1],a+' '+b);assert.deepEqual(out[1].lines,['ALL: Lord, have mercy.','DCN 1: Fixture next petition.']);
+ assert.equal(JSON.stringify(source),before);assert.equal(out.edmonton2012,true);assert.strictEqual(F.joinEdmontonThanksgivingPageBreak(out),out);
+ const altered=source.map(x=>({...x,lines:[...x.lines]}));altered.edmonton2012=true;altered[1].lines[1]='ALL: Different response.';
+ assert.strictEqual(F.joinEdmontonThanksgivingPageBreak(altered),altered);
+ const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonThanksgivingPageBreak(unknown),unknown);
+ const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;assert.strictEqual(F.joinEdmontonThanksgivingPageBreak(duplicate),duplicate);
+});
