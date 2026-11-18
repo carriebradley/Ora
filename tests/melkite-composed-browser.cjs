@@ -5,11 +5,11 @@ module.exports=async(page,base,artifacts)=>{
  await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-15');
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-chrysostom');
+ await page.evaluate(()=>{window.__melkiteFixtureOriginal={get:LiturgyReader.get,load:LiturgyReader.load};});
  // Revert to the first book structure to confirm restored supplements
  // disappear again when their hymns become safe to insert.
  for(const protectedPrayer of [false,true,false]){
   await page.evaluate(async blocked=>{
-   const get=LiturgyReader.get,load=LiturgyReader.load;
    const lines=[
     'PRIEST: Blessed is the Kingdom. Fixture Melkite opening.',
     'Great Litany','DEACON: Fixture opening petition.',
@@ -33,8 +33,7 @@ module.exports=async(page,base,artifacts)=>{
    LiturgyReader.load=async()=>({
     kind:'epub',numPages:3,sections:parts,destroy:async()=>{}
    });
-   try{await LiturgicalText.hydrate();}
-   finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+   await LiturgicalText.hydrate();
   },protectedPrayer);
   const expected=protectedPrayer?'prokeimenon,alleluia':'troparia,prokeimenon,alleluia';
   try{
@@ -98,7 +97,6 @@ module.exports=async(page,base,artifacts)=>{
  // headings must restore all the day's dated hymns to Readings & propers.
  // Ordinary words, roles and repeated responses must remain intact.
  await page.evaluate(async()=>{
-  const get=LiturgyReader.get,load=LiturgyReader.load;
   const lines=[
    'PRIEST: Blessed is the Kingdom. Fixture no-slot opening.',
    'Great Litany','DEACON: Fixture no-slot petition.',
@@ -118,8 +116,7 @@ module.exports=async(page,base,artifacts)=>{
   LiturgyReader.load=async()=>({
    kind:'epub',numPages:3,sections:parts,destroy:async()=>{}
   });
-  try{await LiturgicalText.hydrate();}
-  finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+  await LiturgicalText.hydrate();
  });
  await page.waitForFunction(()=>{
   const section=document.querySelector('.liturgical-text');
@@ -155,6 +152,11 @@ module.exports=async(page,base,artifacts)=>{
  await page.screenshot({
   path:path.join(artifacts,'melkite-composed-unplaceable.png'),
   fullPage:true
+ });
+ await page.evaluate(()=>{
+  LiturgyReader.get=window.__melkiteFixtureOriginal.get;
+  LiturgyReader.load=window.__melkiteFixtureOriginal.load;
+  delete window.__melkiteFixtureOriginal;
  });
  // The 2026 Paramony retains Basil's Vesperal service but not the
  // conflicting December typicon's unverified Chrysostom hymns.
