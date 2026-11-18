@@ -99,8 +99,17 @@ def fetch_source(attempts=3):
                                            'Cache-Control':'no-cache'})
             with urlopen(request,timeout=45) as response:
                 raw=response.read(20*1024*1024+1)
+                headers=getattr(response,'headers',None)
+                content_type=headers.get_content_type() if headers else 'unknown'
+                status=getattr(response,'status',None)
             if len(raw)>20*1024*1024 or not is_zipfile(BytesIO(raw)):
-                raise ValueError('Newton source returned an invalid or oversized DOCX')
+                prefix=raw[:4096].lower()
+                kind=('html' if b'<html' in prefix or b'<!doctype html' in prefix else 'other')
+                markers=[name for name in ('cloudflare','captcha','access denied','challenge')
+                         if name.encode('ascii') in prefix]
+                raise ValueError('Newton source returned invalid or oversized DOCX '
+                                 f'(HTTP {status}, type {content_type}, bytes {len(raw)}, '
+                                 f'format {kind}, markers {",".join(markers) or "none"})')
             return Document(BytesIO(raw))
         except (URLError, TimeoutError, ValueError) as error:
             if attempt+1==attempts:
