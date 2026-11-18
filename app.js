@@ -2503,7 +2503,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v406';
+  const APP_BUILD = 'ora-v407';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
@@ -2519,13 +2519,57 @@
       notice.setAttribute('role', 'status');
       notice.style.cssText = 'position:fixed;left:12px;right:12px;bottom:calc(86px + env(safe-area-inset-bottom, 0px));z-index:1000;background:var(--card);color:var(--ink);border:1px solid var(--lit);border-radius:12px;padding:12px 14px;box-shadow:0 4px 22px #0007;display:flex;align-items:center;justify-content:space-between;gap:12px';
       notice.innerHTML = '<span>New Ora update available</span><button type="button" class="btn fill">Update now</button>';
-      notice.querySelector('button').addEventListener('click', async () => {
+      // Remember which worker controlled the open page when the update was offered.
+      // It may activate before the user actually taps the update button.
+      const offeredController = navigator.serviceWorker?.controller || null;
+      const updateButton = notice.querySelector('button');
+      updateButton.addEventListener('click', async () => {
+        if (updateButton.disabled) return;
+        updateButton.disabled = true;
+        updateButton.textContent = 'Updating...';
         store.set('ora.navigation', { tab: st.tab, readRite: st.readRite, liturgyView: st.liturgyView });
+        const worker = navigator.serviceWorker;
+        let onControllerChange;
+        const controllerChange = new Promise(resolve => {
+          onControllerChange = () => resolve(true);
+          worker?.addEventListener('controllerchange', onControllerChange);
+        });
         try {
-          const reg = await navigator.serviceWorker.getRegistration();
+          const reg = await worker?.getRegistration();
           if (reg) await reg.update();
-        } catch (_) { /* reload can still fetch online */ }
-        location.reload();
+        } catch (_) { /* keep the current prayer open if activation cannot finish */ }
+        let activated = !worker || !offeredController ||
+          (!!worker.controller && worker.controller !== offeredController);
+        // A newly active worker may already control an old, still-open app page.
+        // Ask that worker for its actual build rather than waiting for an event
+        // which has already happened. Older workers simply time out.
+        if (!activated && worker.controller && typeof MessageChannel !== 'undefined') {
+          const version = await new Promise(resolve => {
+            const channel = new MessageChannel();
+            const timer = setTimeout(() => { channel.port1.close(); resolve(null); }, 600);
+            channel.port1.onmessage = event => {
+              clearTimeout(timer);
+              channel.port1.close();
+              resolve(event.data?.type === 'ORA_VERSION' ? event.data.version : null);
+            };
+            try { worker.controller.postMessage({ type: 'ORA_VERSION_QUERY' }, [channel.port2]); }
+            catch (_) { clearTimeout(timer); channel.port1.close(); resolve(null); }
+          });
+          activated = version === match[1] ||
+            (!!worker.controller && worker.controller !== offeredController);
+        }
+        if (!activated) activated = await Promise.race([
+          controllerChange,
+          new Promise(resolve => setTimeout(() => resolve(false), 5000))
+        ]);
+        worker?.removeEventListener('controllerchange', onControllerChange);
+        if (activated) {
+          location.reload();
+          return;
+        }
+        notice.querySelector('span').textContent = 'Update not ready. Check your connection and retry.';
+        updateButton.textContent = 'Retry update';
+        updateButton.disabled = false;
       });
       document.body.appendChild(notice);
     } catch (_) { /* offline */ }
