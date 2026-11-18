@@ -173,13 +173,14 @@
  // may contain Ukrainian on the left and English on the right.
  const CYRILLIC=/[\u0400-\u052f\u1c80-\u1c8f\u2de0-\u2dff\ua640-\ua69f]/u;
  const CYRILLIC_RUN=/[\u0400-\u052f\u1c80-\u1c8f\u2de0-\u2dff\ua640-\ua69f]+/gu;
- // Edmonton 2012 PDF p. 39: the Sunday and weekday first antiphons
+ // Edmonton 2012 PDF pp. 39 and 45: the Sunday and weekday antiphons
  // are vertical alternatives, not two consecutive appointed hymns.
  // Only split an intact, positively identified page; leave unknown text alone.
- function edmontonFirstAntiphonRows(rows){
+ function edmontonFirstAntiphonRows(rows,title='First Antiphon'){
   if(!Array.isArray(rows))return rows;
   const find=pattern=>rows.flatMap((row,i)=>pattern.test(String(row.text||'').trim())?[i]:[]);
-  const head=find(/^First Antiphon$/i),sun=find(/^Sundays:\s*$/i),weekday=find(/^Weekdays:\s*$/i);
+  if(!['First Antiphon','Entrance Antiphon'].includes(title))return rows;
+  const head=find(title==='Entrance Antiphon'?/^Entrance Antiphon$/i:/^First Antiphon$/i),sun=find(/^Sundays:\s*$/i),weekday=find(/^Weekdays:\s*$/i);
   if(head.length!==1||sun.length!==1||weekday.length!==1||
      !(head[0]<sun[0]&&sun[0]<weekday[0]))return rows;
   const valid=part=>part.filter(row=>/^VERSE\s*:/i.test(row.text)).length===3&&

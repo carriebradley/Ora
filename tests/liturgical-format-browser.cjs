@@ -144,6 +144,13 @@ module.exports=async(page,base,artifacts,violations)=>{
        'Weekdays:','VERSE: Fixture weekday verse one.','ALL: Fixture weekday reply one.',
        'VERSE: Fixture weekday verse two.','ALL: Fixture weekday reply two.',
        'VERSE: Fixture weekday verse three.','ALL: Fixture weekday reply three.'],
+     45:['Entrance Antiphon','Major Feast Days:','See propers.','Sundays:',
+       'VERSE: Fixture Sunday entrance one.','ALL: Fixture Sunday entrance response one.',
+       'VERSE: Fixture Sunday entrance two.','ALL: Fixture Sunday entrance response two.',
+       'VERSE: Fixture Sunday entrance three.','ALL: Fixture Sunday entrance response three.',
+       'Weekdays:','VERSE: Fixture weekday entrance one.','ALL: Fixture weekday entrance response one.',
+       'VERSE: Fixture weekday entrance two.','ALL: Fixture weekday entrance response two.',
+       'VERSE: Fixture weekday entrance three.','ALL: Fixture weekday entrance response three.'],
      57:['Trisagion Hymn',
        'ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
        'Baptismal Hymn',
@@ -245,12 +252,17 @@ module.exports=async(page,base,artifacts,violations)=>{
   'the spoken sung response must be retained');
 
  const firstAntiphon=ukrainian.locator('details.byz-antiphon-option:not(.byz-seasonal-hymn)');
- assert.equal(await firstAntiphon.count(),2,'printed Sunday and weekday antiphons are separate');
+ assert.equal(await firstAntiphon.count(),4,'both printed Sunday and weekday antiphons are separate');
  assert.equal(await firstAntiphon.nth(0).evaluate(el=>el.open),true,'Sunday form is selected');
  assert.equal(await firstAntiphon.nth(1).evaluate(el=>el.open),false,'weekday form is not appointed on Sunday');
  assert.match(await firstAntiphon.nth(0).innerText(),/Fixture Sunday verse one/);
  assert.doesNotMatch(await firstAntiphon.nth(0).innerText(),/Fixture weekday/);
  assert.match(await firstAntiphon.nth(1).textContent(),/Fixture weekday verse one/);
+ assert.equal(await firstAntiphon.nth(2).evaluate(el=>el.open),true,'Sunday entrance form is selected');
+ assert.equal(await firstAntiphon.nth(3).evaluate(el=>el.open),false,'weekday entrance form is closed');
+ assert.match(await firstAntiphon.nth(2).innerText(),/Fixture Sunday entrance one/);
+ assert.doesNotMatch(await firstAntiphon.nth(2).innerText(),/Fixture weekday entrance/);
+ assert.match(await firstAntiphon.nth(3).textContent(),/Fixture weekday entrance one/);
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');

@@ -1300,3 +1300,15 @@ test('Edmonton first antiphon separates source-marked Sundays and weekdays',()=>
   assert.strictEqual(F.edmontonFirstAntiphonRows(partial),partial,'incomplete source fails closed');
  }
 });
+
+
+test('Edmonton entrance antiphon also keeps Sunday and weekday forms separate',()=>{
+ const row=text=>({text,page:45});
+ const verses=['VERSE: Fixture first.','ALL: Fixture one.','VERSE: Fixture second.','ALL: Fixture two.','VERSE: Fixture third.','ALL: Fixture three.'];
+ const rows=['Entrance Antiphon','Major Feast Days:','See propers.','Sundays:',...verses,'Weekdays:',...verses].map(row);
+ const out=F.edmontonFirstAntiphonRows(rows,'Entrance Antiphon');
+ assert.deepEqual(out.filter(x=>x.alternative==='sunday').map(x=>x.text),verses);
+ assert.deepEqual(out.filter(x=>x.alternative==='weekday').map(x=>x.text),verses);
+ assert.strictEqual(F.edmontonFirstAntiphonRows(rows,'First Antiphon'),rows);
+ assert.strictEqual(F.edmontonFirstAntiphonRows(rows,'Unknown'),rows);
+});
