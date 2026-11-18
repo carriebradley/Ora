@@ -50,8 +50,10 @@ jobs:
           python3 -m http.server 8765 >/tmp/ora-server.log 2>&1 &
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
           node tests/browser-audit.cjs 2>&1 | tee /tmp/ora-browser-audit/browser-log.txt
+      # Reporting is supplemental; Node, importer and browser test failures remain blocking.
       - name: Record browser diagnostics
         if: always()
+        continue-on-error: true
         uses: actions/github-script@v7
         with:
           script: |
