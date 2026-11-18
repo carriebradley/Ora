@@ -677,6 +677,25 @@ test('dated hymns render prayer words but not editorial replacement directions i
 
 
 
+
+test('Newton composite extraction hyphens retain one real hyphen in devotional words',()=>{
+ const artifacts=[
+  ['all-\u00ad\u2010\u2011holy','all-holy'],
+  ['Only-\u00ad\u2010\u2011Begotten','Only-Begotten'],
+  ['well-\u00ad\u2010\u2011being','well-being'],
+  ['Life-\u00ad\u2010\u2011Giving','Life-Giving'],
+  ['leave-\u00ad\u2010\u2011taking','leave-taking']
+ ];
+ for(const [source,expected] of artifacts)
+  assert.equal(F.displayPrayer('Priest: '+source+'.'),'Priest: '+expected+'.',source);
+ assert.equal(F.displayPrayer('Only-begotten'), 'Only-begotten',
+  'ordinary printed compounds must stay exactly as written');
+ assert.equal(F.displayPrayer('God—merciful'), 'God—merciful',
+  'genuine em dash is not an extraction artifact');
+ assert.equal(F.displayPrayer('God‐loving'),'God‐loving',
+  'a single Unicode hyphen must remain unchanged');
+});
+
 test('Newton 2009 inline alternate-chant note never becomes the spoken All response',()=>{
  const response='All: The Father, the Son and the Holy Spirit, Trinity, one in essence and undivided.';
  const source=response+' After “The Father, the Son…,” “I will love You, Lord…” may also be sung.';
@@ -769,7 +788,7 @@ test('Newton Litany of Peace expands the ten unambiguous after-each-petition res
   'For the travelers by sea, air and land, for the sick and captives, let us pray to the Lord.',
   'For our deliverance from all affliction, wrath, danger and need, let us pray to the Lord.',
   'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
-  'Let us remember our all-holy, spotless, most highly blessed and glorious Lady the Theotokos.',
+  'Let us remember our all-\u00ad\u2010\u2011holy, spotless, most highly blessed and glorious Lady the Theotokos.',
   'All: To You, O Lord.',
   'Priest: For all glory, honor and worship are Your due.'
  ]}];

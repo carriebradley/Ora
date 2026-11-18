@@ -27,6 +27,9 @@
    .replace(/\s*[*\u2217\uff0a]+\s*/g,' ')
    .replace(/\s+([,.;:!?])/g,'$1')
    .replace(/-\s*-\s*-\s*/g,'-')
+   // Newton's font extracts ordinary compound hyphens as a run of three
+   // different hyphen code points. Drop only redundant characters, retain '-'.
+   .replace(/-\u2010\u2011/g,'-')
    .replace(/\b(well)-\s*-\s*(being)\b/gi,'$1-$2')
    // Newton 2009 PDF p. 68 appends an editorial chant alternative immediately
    // after this All response. Hide only the fully matched source note, never
@@ -333,7 +336,7 @@
    /^help\s+us,\s*save\s+us,\s*have\s+mercy\s+on\s+us\b/i
   ];
   const petitions=after.filter(r=>/^(?:for\b|help\s+us\b)/i.test(r.text));
-  const closing=after.filter(r=>/^let\s+us\s+remember\s+our\s+all-holy\b/i.test(r.text));
+  const closing=after.filter(r=>/^let\s+us\s+remember\s+our\s+all-(?:[\u00ad\u2010\u2011]{0,3})holy\b/i.test(r.text));
   if(petitions.length!==anchors.length||
      !petitions.every((r,i)=>anchors[i].test(r.text))||
      closing.length!==1||after.indexOf(closing[0])<after.indexOf(petitions.at(-1)))return sections;
