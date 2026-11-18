@@ -160,3 +160,18 @@ words that should be spoken. Ora removes that *exact verified trailing note*
 from the display of the All response. It keeps the actual response and
 the independently printed chant prayer unchanged; other explanatory text
 patterns remain untouched. The saved private PDF is never modified.
+
+
+## Font-substituted composite hyphens in prayers (Newton PDF pp. 30–96)
+
+A read-only review of the original 2009 PDF using text-position extraction
+identified **176** occurrences in the liturgical service-page range of
+three visually overlapping hyphen code points: ASCII hyphen, soft hyphen,
+U+2010 and U+2011. These are one **printed** compound hyphen, not three
+spoken or printed punctuation marks. Examples include all-holy,
+Only-Begotten and Life-Giving. Ora now reduces exactly this extraction
+artifact to a single plain hyphen for the *displayed* prayers, preserving
+normal compound hyphens and unrelated Unicode dashes. The source-only
+Litany-of-Peace petition anchor also recognizes its verified all-holy
+combination, avoiding a false rejection of the ten-response expansion.
+The original source PDFs and private saved text remain untouched.

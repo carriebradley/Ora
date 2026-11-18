@@ -25,7 +25,7 @@ module.exports=async(page,base,artifacts)=>{
     'For the travelers by sea, air and land, for the sick and captives, let us pray to the Lord.',
     'For our deliverance from all affliction, wrath, danger and need, let us pray to the Lord.',
     'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
-    'Let us remember our all-holy, spotless, most highly blessed and glorious Lady the Theotokos.',
+    'Let us remember our all-\u00ad\u2010\u2011holy, spotless, most highly blessed and glorious Lady the Theotokos.',
     'ALL: To You, O Lord.','PRIEST: Fixture Litany of Peace conclusion.',
     'Little Entrance','The celebrant(s) alternate with the Choir the singing of the hymns as indicated',
     'Table of Kontakia for the Year','Fixture annual Kontakia index must be hidden.',
@@ -65,6 +65,7 @@ module.exports=async(page,base,artifacts)=>{
    ],
    68:[
     'Prayer of Offering','PRIEST: Lord God Almighty who alone are holy.',
+    'PRIEST: Fixture Only-\u00ad\u2010\u2011Begotten prayer.',
     'ALL: The Father, the Son and the Holy Spirit, Trinity, one in essence and undivided. After “The Father, the Son…,” “I will love You, Lord…” may also be sung.'
    ],
    78:[
@@ -162,6 +163,8 @@ module.exports=async(page,base,artifacts)=>{
  assert.doesNotMatch(text,/After the third petition, some other appropriate ecumenic petitions may be said/,
   'optional-petition instructions must not read as prayer');
  assert.match(text,/Preparation for Holy Communion/);
+ assert.match(text,/Fixture Only-Begotten prayer\./,'verified composite hyphen is displayed as a single hyphen');
+ assert.doesNotMatch(text,/Fixture Only-\u2010\u2011Begotten/,'redundant font hyphens do not appear');
  assert.match(text,/The Father, the Son and the Holy Spirit, Trinity, one in essence and undivided\./,
   'retain the actual All response following the prayer of offering');
  assert.doesNotMatch(text,/After “The Father, the Son.*may also be sung/,
