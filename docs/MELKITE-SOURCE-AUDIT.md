@@ -149,3 +149,18 @@ accessible Optional petitions disclosures, while retaining all unambiguously
 required prayers in the continuous default reading flow. If the optional
 label, complete sequence, or next fixed prayer heading is missing, it leaves
 that litany unchanged. Source PDFs and saved prayer text remain intact.
+
+
+## Optional Apolysis response (Newton PDF p. 93, printed p. 85)
+
+The source visually distinguishes an optional three-part dismissal response
+from the priest's dismissal. In order, it prints the people's doxology,
+"Lord, have mercy" with the instruction **three times**, and the request
+for the priest's blessing. This block is not a default appointed prayer.
+When the full source structure and Sunday/feast dismissal boundary match
+the positively identified 2009 Newton edition, Ora places the optional
+block in a closed accessible disclosure. If opened, the reader displays
+three complete spoken mercies rather than silently dropping the count.
+Source books and prayer lines are not altered; unknown or edited versions
+are left unchanged. This is independent of the dated dismissal formula,
+which still requires source-verified date selection.

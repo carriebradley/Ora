@@ -86,6 +86,16 @@ module.exports=async(page,base,artifacts)=>{
     'That our life may be peaceful, let us ask the Lord.',
     'That our end may be painless, let us ask.'
    ],
+   93:[
+    'A P O L Y S I S',
+    'PRIEST: Glory to You, Christ God, our hope, glory to You.',
+    'Optional:',
+    'ALL: Glory be to the Father, and to the Son, and to the Holy Spirit, now and always and forever and ever. Amen.',
+    'Lord, have mercy. (Three times)',
+    'Give the blessing, Master, in the name of the Lord.',
+    'On Sundays and Feast days:',
+    'PRIEST: Fixture Sunday dismissal.'
+   ],
    80:[
     'Let us ask for unity of faith and commend our whole life to Christ God.',
     'ALL: To You, O Lord.','The Lord’s Prayer'
@@ -162,14 +172,19 @@ module.exports=async(page,base,artifacts)=>{
   'optional-petition instructions must not read as prayer');
  assert.match(text,/Preparation for Holy Communion/);
  const optional=preview.locator('details.byz-optional-litany');
- assert.equal(await optional.count(),2,'Gifts and Communion alternatives are independent');
- assert.deepEqual(await optional.locator('summary').allTextContents(),['Optional petitions','Optional petitions']);
- assert.deepEqual(await optional.evaluateAll(nodes=>nodes.map(n=>n.open)),[false,false],
-  'unappointed petitions must not appear in default prayer flow');
+ assert.equal(await optional.count(),3,'Gifts, Communion and dismissal optional material stay distinct');
+ assert.deepEqual(await optional.locator('summary').allTextContents(),['Optional petitions','Optional petitions','Optional dismissal responses']);
+ assert.deepEqual(await optional.evaluateAll(nodes=>nodes.map(n=>n.open)),[false,false,false],
+  'unappointed material must not appear in default prayer flow');
  assert.ok((await optional.first().textContent()).includes('For this holy house'),
   'optional petitions remain accessible without losing source words');
- assert.ok((await optional.last().textContent()).includes('For our deliverance'),
+ assert.ok((await optional.nth(1).textContent()).includes('For our deliverance'),
   'Communion alternatives remain accessible in their own section');
+ const dismissalText=await optional.last().textContent();
+ assert.equal((dismissalText.match(/Lord, have mercy\./g)||[]).length,3,
+  'optional dismissal contains three spoken responses, not the hidden count cue');
+ assert.doesNotMatch(dismissalText,/Three times/, 'count rubric is replaced, not spoken');
+ assert.match(text,/Fixture Sunday dismissal/, 'appointed dismissal remains in main flow');
  assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
   'six source-directed Aitesis responses must be visible');
  assert.equal((text.match(/To You, O Lord/g)||[]).length,2,

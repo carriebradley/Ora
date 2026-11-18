@@ -1,6 +1,6 @@
 /* Display-only formatting for private local books; contains no liturgical texts. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgicalFormat=factory();})(typeof self!=='undefined'?self:this,function(){
- const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','Prayer of the Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
+ const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','Prayer of the Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Apolysis','Distribution of the Antidoron','The Aitesis'];
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
  function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();
@@ -260,13 +260,15 @@
  // petition ends before the distinct "To You, O Lord" commendation.
  // Never apply this source-specific expansion to an altered petition list.
 
- // In the recognized Newton 2009 edition (Gifts p. 67; Communion p. 79),
+ // In the recognized Newton 2009 edition (Gifts p. 67; Communion p. 79;
+ // optional dismissal p. 93),
  // only the explicitly marked optional petition blocks are alternate material.
  // Identify them by entire section, exact opening label, every printed
  // optional petition and next mandatory heading. Return display coordinates;
  // never erase or mutate source paragraphs.
  function newtonOptionalPetitions(sections){
-  const starts=new Set(),lines=new Set(),result={starts,lines};
+  const starts=new Set(),lines=new Set(),labels=new Map(),triples=new Set();
+  const result={starts,lines,labels,triples};
   if(!Array.isArray(sections)||sections.newton2009!==true)return result;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
    .map((raw,index)=>({text:String(raw).trim(),section,index})));
@@ -280,6 +282,13 @@
    {head:'preparationforholycommunion',end:'theaitesis',expected:[
     /^for\s+our\s+deliverance\s+from\s+all\s+affliction\b/i,
     /^help\s+us,\s*save\s+us,\s*have\s+mercy\s+on\s+us\s+and\s+protect\s+us\b/i
+   ]},
+   // Newton's shaded dismissal response (PDF p. 93) is optional.
+   // When chosen, its printed Lord-have-mercy is sung three times.
+   {head:'apolysis',end:'onsundaysandfeastdays',label:'Optional dismissal responses',tripleIndex:1,expected:[
+    /^all\s*:\s*glory\s+be\s+to\s+the\s+father,\s*and\s+to\s+the\s+son\b/i,
+    /^lord,\s*have\s+mercy\.\s*\(\s*three\s+times\s*\)$/i,
+    /^give\s+the\s+blessing,\s*master,\s*in\s+the\s+name\s+of\s+the\s+lord\.?$/i
    ]}
   ];
   for(const rule of rules){
@@ -295,6 +304,8 @@
    if(prayers.length!==rule.expected.length||
       !prayers.every((r,i)=>rule.expected[i].test(r.text)))continue;
    starts.add(key(marker));
+   if(rule.label)labels.set(key(marker),rule.label);
+   if(Number.isInteger(rule.tripleIndex))triples.add(key(prayers[rule.tripleIndex]));
    for(const row of body)lines.add(key(row));
   }
   return result;
