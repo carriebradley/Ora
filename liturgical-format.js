@@ -598,13 +598,13 @@
   const start=rows.indexOf(alternate[0]),before=rows.indexOf(ordinary[0]);
   if(start<=before||start-before>25)return found;
   const preceding=rows.slice(before+1,start);
-  if(match(/^all\s*:\s*[\u2020]?\s*Holy God,\s*Holy and Mighty,\s*Holy and Immortal,\s*have mercy on us\.\s*\(2\)$/i,preceding).length!==1)return found;
+  if(match(/^all\s*:\s*[\u2020]?\s*Holy God,\s*Holy and Mighty,\s*Holy and Immortal,\s*have mercy on us\.\s*(?:\(2\)|Holy God,\s*Holy and Mighty,\s*Holy and Immortal,\s*have mercy on us\.)$/i,preceding).length!==1)return found;
   const ends=match(/^(?:deacon|dcn)(?:\s+\d+)?\s*:\s*Master,\s*proceed\.$/i,rows.slice(start+1,start+14));
   if(ends.length!==1)return found;
   const body=rows.slice(start+1,rows.indexOf(ends[0]));
   const patterns=[
    /^On the Nativity of Christ,\s*Theophany,\s*Saturday of Lazarus,\s*Holy Saturday,\s*Easter Week and Pentecost,\s*we sing the Baptismal Hymn:$/i,
-   /^all\s*:\s*All you who have been baptized into Christ,\s*you have put on Christ\.\s*Alleluia\.\s*\(2\)$/i,
+   /^all\s*:\s*All you who have been baptized into Christ,\s*you have put on Christ\.\s*Alleluia\.\s*(?:\(2\)|All you who have been baptized into Christ,\s*you have put on Christ\.\s*Alleluia\.)$/i,
    /^clergy\s*:\s*\S.+/i,
    /^(?:deacon|dcn)(?:\s+\d+)?\s*:\s*Give glory to Christ,\s*our God!$/i,
    /^all\s*:\s*[\u2020]?\s*Glory be to the Father\b/i,
@@ -615,6 +615,28 @@
   starts.add(slot(alternate[0]));
   for(const row of body)lines.add(slot(row));
   return found;
+ }
+
+ // Edmonton 2012 p. 57: the people's first Trisagion and Baptismal
+ // responses each end in "(2)". The later doxology remains a distinct
+ // concluding response; expand only the two marked initial stanzas.
+ function expandEdmontonTrisagionTwofold(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true||
+     edmontonBaptismalAlternative(sections).starts.size!==1)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[])
+    .map((text,index)=>({text:String(text).trim(),section,index})));
+  const ordinary=/^all\s*:\s*[\u2020]?\s*Holy God,\s*Holy and Mighty,\s*Holy and Immortal,\s*have mercy on us\.\s*\(2\)$/i;
+  const baptism=/^all\s*:\s*All you who have been baptized into Christ,\s*you have put on Christ\.\s*Alleluia\.\s*\(2\)$/i;
+  const found=[ordinary,baptism].map(pattern=>rows.filter(r=>pattern.test(r.text)));
+  if(found.some(group=>group.length!==1))return sections;
+  const chosen=found.map(group=>group[0]),slots=new Set(chosen.map(r=>r.section+':'+r.index));
+  const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((raw,index)=>{
+   if(!slots.has(section+':'+index))return raw;
+   return String(raw).replace(/^(all\s*:\s*)([\u2020]?\s*)(.+?\.)\s*\(2\)\s*$/i,
+     (_,role,sign,words)=>role+sign+words+' '+words);
+  })}));
+  out.edmonton2012=true;
+  return out;
  }
  function startAtOpeningBlessing(sections){
   if(!Array.isArray(sections))return sections;
@@ -671,5 +693,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });

@@ -230,6 +230,17 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
  assert.equal(await seasonal.evaluate(el=>el.open),false,'not appointed by default');
  assert.match(await seasonal.textContent(),/Fixture Greek baptismal hymn/);
+ const chants=await ukrainian.locator('.byz-prayer-words').allTextContents();
+ const trisagion=chants.find(x=>x.includes('Holy God, Holy and Mighty, Holy and Immortal'));
+ assert.ok(trisagion);
+ assert.equal((trisagion.match(/Holy God, Holy and Mighty, Holy and Immortal, have mercy on us\./g)||[]).length,2,
+  'initial Trisagion stanza must be written twice instead of showing (2)');
+ const baptism=await seasonal.locator('.byz-prayer-words').allTextContents();
+ const start=baptism.find(x=>x.includes('All you who have been baptized into Christ'));
+ assert.ok(start);
+ assert.equal((start.match(/All you who have been baptized into Christ/g)||[]).length,2,
+  'seasonal Baptismal stanza must be written twice if opened');
+
  assert.equal(await ukrainian.locator('.byz-prayer-line').filter({hasText:'Fixture post-hymn prayer'}).count(),1,
   'regular liturgy must resume outside seasonal alternative');
 

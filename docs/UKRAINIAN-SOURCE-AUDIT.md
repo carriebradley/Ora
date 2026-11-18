@@ -96,3 +96,14 @@ remain unchanged.
 The source identity of the Edmonton PDF is now preserved when the
 introductory pages are skipped and when dated propers are composed, so
 source-only display rules remain properly gated.
+
+
+## Twofold initial hymn responses (Edmonton 2012 PDF p. 57)
+
+The opening congregational line of the standard Trisagion and the
+corresponding Baptismal Hymn alternative each print "(2)" after one
+stanza. The original source gives the concluding doxology separately.
+Ora expands exactly those two source-matched initial stanzas into
+twice-spoken prayer words, preserving each later doxology and never
+changing or automatically appointing the optional Baptismal Hymn.
+Unrecognized source structures remain unchanged.
