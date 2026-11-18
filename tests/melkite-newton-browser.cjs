@@ -11,6 +11,22 @@ module.exports=async(page,base,artifacts)=>{
    2:['FINAL DRAFT EDITION COMMON ENGLISH TRANSLATION'],
    30:[
     'The Divine Liturgy','PRIEST: Blessed is the Kingdom. Fixture opening.',
+
+    'The Litany of Peace',
+    'DEACON: In peace let us pray to the Lord.',
+    'ALL: Lord, have mercy. (To be repeated after each petition)',
+    'For peace from on high and the salvation of our souls, let us pray to the Lord.',
+    'For peace in the whole world, the well-being of the holy Churches of God, let us pray to the Lord.',
+    'For this holy house and for those who enter it with faith, let us pray to the Lord.',
+    'For (our Father and Patriarch N., if present,) our Father and (Arch)Bishop N., let us pray to the Lord.',
+    'For the government and for the armed forces, let us pray to the Lord.',
+    'For this city, for every city and country place, let us pray to the Lord.',
+    'For favorable weather, an abundance of the fruits of the earth, let us pray to the Lord.',
+    'For the travelers by sea, air and land, for the sick and captives, let us pray to the Lord.',
+    'For our deliverance from all affliction, wrath, danger and need, let us pray to the Lord.',
+    'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
+    'Let us remember our all-holy, spotless, most highly blessed and glorious Lady the Theotokos.',
+    'ALL: To You, O Lord.','PRIEST: Fixture Litany of Peace conclusion.',
     'Little Entrance','The celebrant(s) alternate with the Choir the singing of the hymns as indicated',
     'Table of Kontakia for the Year','Fixture annual Kontakia index must be hidden.',
     'The Trisagion Prayer of St. John Chrysostom',
@@ -134,16 +150,18 @@ module.exports=async(page,base,artifacts)=>{
   assert.ok(index>last,'misordered Newton 2009 source and dated hymns: '+phrase);
   last=index;
  }
- assert.equal((text.match(/Lord, have mercy/g)||[]).length,29,
-  'Ektene threefold responses and five verified later litany answers must display');
+ assert.equal((text.match(/Lord, have mercy/g)||[]).length,40,
+  'Litany of Peace, Ektene, Gifts and Communion responses must all display');
+ assert.equal((text.match(/To You, O Lord/g)||[]).length,2,
+  'Litany of Peace and Aitesis each preserve one distinct concluding response');
  assert.match(text,/Fixture Ektene concluding prayer/);
  assert.doesNotMatch(text,/After the third petition, some other appropriate ecumenic petitions may be said/,
   'optional-petition instructions must not read as prayer');
  assert.match(text,/Preparation for Holy Communion/);
  assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
   'six source-directed Aitesis responses must be visible');
- assert.equal((text.match(/To You, O Lord/g)||[]).length,1,
-  'different concluding response stays singular');
+ assert.equal((text.match(/To You, O Lord/g)||[]).length,2,
+  'each distinct concluding response stays singular in its own litany');
  assert.doesNotMatch(text,/To be repeated after each petition/,
   'editorial directions are not prayers');
  assert.match(text,/The Aitesis/,'tracked heading remains legible');

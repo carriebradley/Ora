@@ -697,6 +697,51 @@ test('Newton 2009 printed repetition directions do not obscure spoken responses'
 
 
 
+
+test('Newton Litany of Peace expands the ten unambiguous after-each-petition responses',()=>{
+ const source=[{lines:[
+  'The Litany of Peace',
+  'Deacon: In peace let us pray to the Lord.',
+  'All: Lord, have mercy. (To be repeated after each petition)',
+  'For peace from on high and the salvation of our souls, let us pray to the Lord.',
+  'For peace in the whole world, the well-being of the holy Churches of God, let us pray to the Lord.',
+  'For this holy house and for those who enter it with faith, let us pray to the Lord.',
+  'For (our Father and Patriarch N., if present,) our Father and (Arch)Bishop N., let us pray to the Lord.',
+  'For the government and for the armed forces, let us pray to the Lord.'
+ ]},{lines:[
+  'For this city, for every city and country place, let us pray to the Lord.',
+  'For favorable weather, an abundance of the fruits of the earth, let us pray to the Lord.',
+  'For the travelers by sea, air and land, for the sick and captives, let us pray to the Lord.',
+  'For our deliverance from all affliction, wrath, danger and need, let us pray to the Lord.',
+  'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
+  'Let us remember our all-holy, spotless, most highly blessed and glorious Lady the Theotokos.',
+  'All: To You, O Lord.',
+  'Priest: For all glory, honor and worship are Your due.'
+ ]}];
+ source.newton2009=true;
+ const snapshot=JSON.stringify(source);
+ const result=F.expandNewtonPeaceLitany(source),lines=result.flatMap(part=>part.lines);
+ assert.equal(lines.filter(s=>/^All: Lord, have mercy/.test(s)).length,11);
+ assert.equal(lines.filter(s=>s==='All: Lord, have mercy.').length,10);
+ assert.equal(lines.filter(s=>s==='All: To You, O Lord.').length,1);
+ assert.equal(result.newton2009,true);
+ assert.equal(JSON.stringify(source),snapshot);
+ assert.strictEqual(F.expandNewtonPeaceLitany(result),result,'idempotent after expansion');
+ const unrecognized=source.map(part=>({...part,lines:[...part.lines]}));
+ assert.strictEqual(F.expandNewtonPeaceLitany(unrecognized),unrecognized);
+ const removed=source.map(part=>({...part,lines:part.lines.filter(s=>!s.startsWith('For favorable weather'))}));
+ removed.newton2009=true;
+ assert.strictEqual(F.expandNewtonPeaceLitany(removed),removed,'missing petition must fail closed');
+ const alternative=source.map(part=>({...part,lines:[...part.lines]}));alternative.newton2009=true;
+ alternative[0].lines[6]='For another intention, let us pray to the Lord.';
+ assert.strictEqual(F.expandNewtonPeaceLitany(alternative),alternative);
+ const already=source.map(part=>({...part,lines:[...part.lines]}));already.newton2009=true;
+ already[1].lines.splice(1,0,'All: Lord, have mercy.');
+ assert.strictEqual(F.expandNewtonPeaceLitany(already),already,'existing response must not be doubled');
+ const noClose=source.map(part=>({...part,lines:part.lines.filter(s=>s!=='All: To You, O Lord.')}));noClose.newton2009=true;
+ assert.strictEqual(F.expandNewtonPeaceLitany(noClose),noClose,'distinct concluding response required');
+});
+
 test('Newton 2009 Ektene expands eight threefold responses for the printed default petitions only',()=>{
  const source=[{lines:[
   'T H E E K T E N E','(Ecumenic Petitions)',

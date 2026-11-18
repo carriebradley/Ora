@@ -125,3 +125,15 @@ heading/directive is missing, the expansion fails closed. The editorial
 substitution directions are hidden in the prayer view. Other translations
 and Ukrainian books are unaffected. Custom alternative-petition selection
 remains a future enhancement.
+
+
+## Opening Litany of Peace responses (Newton PDF p. 32)
+
+The identified Newton 2009 opening Litany of Peace directs the printed
+"Lord, have mercy" answer after each petition. For the unchanged default
+sequence, Ora adds ten missing responses after the ten following petitions.
+The distinct commendation response "To You, O Lord" remains singular.
+The source-specific display expansion checks the heading, original printed
+repetition directive, all ten prayer anchors and distinct closing response.
+Missing, substituted, already-expanded, or unrecognized source structures
+remain unchanged, and the underlying PDF is never edited.

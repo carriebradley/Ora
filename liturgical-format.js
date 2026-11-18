@@ -254,6 +254,52 @@
  // after each petition. Four middle petitions may be replaced by alternatives.
  // Render the printed default sequence only after exact source verification,
  // without assigning responses to any unverified alternatives.
+
+ // The Newton 2009 Litany of Peace prints the Lord-have-mercy response
+ // once, prescribing it after every petition. The tenth following
+ // petition ends before the distinct "To You, O Lord" commendation.
+ // Never apply this source-specific expansion to an altered petition list.
+ function expandNewtonPeaceLitany(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const entries=sections.flatMap((part,section)=>(part.lines||[])
+   .map((text,index)=>({text:String(text).trim(),section,index})));
+  const headings=entries.map((row,i)=>compact(row.text)==='thelitanyofpeace'?i:-1).filter(i=>i>=0);
+  if(headings.length!==1)return sections;
+  const start=headings[0],end=entries.findIndex((r,i)=>i>start&&
+   /^all\s*:\s*to\s+you,\s*o\s+lord\.?\s*$/i.test(r.text));
+  if(end<0||end-start>40)return sections;
+  const rows=entries.slice(start+1,end);
+  const response=/^all\s*:\s*lord,\s*have\s+mercy\.?\s*\(\s*(?:to\s+be\s+repeated\s+)?after\s+each\s+petition\.?\s*\)$/i;
+  const cues=rows.map((r,i)=>response.test(r.text)?i:-1).filter(i=>i>=0);
+  if(cues.length!==1)return sections;
+  const cue=cues[0],opening=rows.slice(0,cue),after=rows.slice(cue+1);
+  if(opening.length!==1||
+    !/^deacon\s*:\s*in\s+peace\s+let\s+us\s+pray\s+to\s+the\s+lord\.?$/i.test(opening[0].text)||
+    after.some(r=>/^(?:all|choir|priest|deacon)\s*:/i.test(r.text)))return sections;
+  const anchors=[
+   /^for\s+peace\s+from\s+on\s+high\b/i,
+   /^for\s+peace\s+in\s+the\s+whole\s+world\b/i,
+   /^for\s+this\s+holy\s+house\b/i,
+   /^for\s+\(?our\s+father\s+and\s+patriarch\b|^for\s+our\s+father\s+and\s+\(arch\)bishop\b/i,
+   /^for\s+the\s+government\b/i,
+   /^for\s+this\s+city\b/i,
+   /^for\s+favorable\s+weather\b/i,
+   /^for\s+the\s+travelers\s+by\s+sea\b/i,
+   /^for\s+our\s+deliverance\s+from\s+all\s+affliction\b/i,
+   /^help\s+us,\s*save\s+us,\s*have\s+mercy\s+on\s+us\b/i
+  ];
+  const petitions=after.filter(r=>/^(?:for\b|help\s+us\b)/i.test(r.text));
+  const closing=after.filter(r=>/^let\s+us\s+remember\s+our\s+all-holy\b/i.test(r.text));
+  if(petitions.length!==anchors.length||
+     !petitions.every((r,i)=>anchors[i].test(r.text))||
+     closing.length!==1||after.indexOf(closing[0])<after.indexOf(petitions.at(-1)))return sections;
+  const target=new Set(petitions.map(r=>r.section+':'+r.index));
+  const expanded=sections.map((part,section)=>({...part,lines:(part.lines||[])
+   .flatMap((line,index)=>target.has(section+':'+index)?
+     [line,'All: Lord, have mercy.']:[line])}));
+  expanded.newton2009=true;
+  return expanded;
+ }
  function expandNewtonEktene(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -439,5 +485,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
 });
