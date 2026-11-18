@@ -1,4 +1,4 @@
-const V = 'ora-v399', DATA = 'ora-data-v1';
+const V = 'ora-v400', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'liturgy-schedule.js', 'epub-reader.js', 'roman-missal.js', 'liturgical-format.js', 'liturgy-reader.js', 'liturgy-document.js', 'liturgy-reader-ui.js', 'source-reader.js', 'vendor/pdfjs/pdf.mjs', 'vendor/pdfjs/pdf.worker.mjs', 'edmonton-2026.js', 'edmonton.js', 'calendar.js', 'melkite.js', 'melkite-2026.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzantine-office.js', 'sacred-art.js', 'liturgical-colors.js', 'byzlect.js', 'justice.js', 'justice-readings.js', 'felire.js', 'oor.js', 'roman-office-texts-data.js', 'roman-office-texts.js', 'roman-office.js', 'roman-short-readings.js', 'hours.js', 'oortext.json', 'ukrainian-propers.json', 'melkite-propers-2026.json', 'manifest.webmanifest', 'icon.svg', 'icon-180.png'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json', 'ukrainian-propers.json', 'melkite-propers-2026.json']);
 
@@ -31,6 +31,15 @@ self.addEventListener('fetch', e => {
   const u = new URL(e.request.url);
   if (e.request.method !== 'GET' || u.origin !== self.location.origin) return;
   const file = u.pathname.split('/').pop();
+  // Published-version probes use a fresh query string. Never store them in
+  // the offline shell: each check would otherwise consume a new cache entry.
+  if (file === 'sw.js') {
+    e.respondWith((async () => {
+      try { return await fetch(e.request, { cache: 'no-store' }); }
+      catch (_) { return new Response('Update check unavailable offline.', { status: 503 }); }
+    })());
+    return;
+  }
   if (JSON_FILES.has(file)) {
     e.respondWith((async () => {
       // The bundled reading library belongs to this shell version, so an older

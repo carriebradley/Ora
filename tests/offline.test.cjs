@@ -139,3 +139,22 @@ test('Installed app includes year-round Melkite hymns offline without changing l
  assert.ok(!fs.readFileSync(require.resolve('../sw.js'),'utf8').includes("'melkite-propers-2026-11.json'"),
   'outdated month-only source is not pre-cached as the live year-round source');
 });
+
+
+test('update probes bypass shell caching and fail cleanly offline', async () => {
+  const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
+  const shell = await w.caches.open('ora-v400');
+  const before = (await shell.keys()).length;
+  const calls = [];
+  w.context.fetch = async (_request, options) => { calls.push(options); return new Response('const V = \'ora-v401\''); };
+  for (let i=0; i<25; i++) {
+    const response = await w.request('sw.js?update-check='+i);
+    assert.equal(response.status, 200);
+    assert.match(await response.text(), /ora-v401/);
+  }
+  assert.equal((await shell.keys()).length, before, 'unique update probes must not grow the shell');
+  assert.ok(calls.every(options=>options.cache==='no-store'));
+  w.context.fetch = async () => { throw new Error('offline'); };
+  assert.equal((await w.request('sw.js?update-check=offline')).status, 503);
+  assert.equal((await shell.keys()).length, before);
+});
