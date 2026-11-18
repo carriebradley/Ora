@@ -165,7 +165,8 @@
  // Keep the actual hymns and repeated responses, but not directions such as
  // 'Instead of ... we sing:' in either fallback display path.
  function properPrayerLines(lines){
-  return Array.isArray(lines)?lines.filter(line=>typeof line==='string'&&line.trim()&&!instruction(line)):[];
+  return Array.isArray(lines)?lines.filter(line=>typeof line==='string'&&line.trim()&&!instruction(line)&&
+    !/^Kondakion of the Ointment-Bearing women \(Tone 2\): Trisagion or Instead of the Trisagion(?:\s*:|\s+[“"])/i.test(line)):[];
  }
  // English-only device-local display for bilingual Ukrainian PDFs.
  // Filter PDF items before merging coordinates: a single horizontal line

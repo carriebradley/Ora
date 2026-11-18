@@ -1262,3 +1262,11 @@ test('Newton Litany of the Gifts repeats its mandatory answer without appointing
  already[0].lines.splice(4,0,'All: Lord, have mercy.');
  assert.strictEqual(F.expandNewtonGiftLitany(already),already,'do not duplicate source-expanded answers');
 });
+
+
+test('ambiguous extracted Melkite Trisagion choices are not displayed as prayer',()=>{
+ const data=require('../melkite-propers-2026.json').days;
+ for(const iso of ['2026-04-23','2026-04-25'])
+  assert.deepEqual(F.properPrayerLines(data[iso].groups.troparia),[]);
+ assert.deepEqual(F.properPrayerLines(['A genuine prayer.']),['A genuine prayer.']);
+});

@@ -533,3 +533,15 @@ test('both dated companion panels label unplaced feast substitutions without sho
  assert.match(app,/LiturgicalFormat\.properPrayerLines\(entry\.groups\?\.\[key\]\)/);
  assert.match(reader,/LiturgicalFormat\.properPrayerLines\(record\.groups\?\.\[key\]\)/);
 });
+
+
+test('ambiguous embedded Trisagion choices in Melkite records are not inserted',()=>{
+ const records=require('../melkite-propers-2026.json').days;
+ for(const iso of ['2026-04-23','2026-04-25']){
+  const record=records[iso],snapshot=JSON.stringify(record);
+  const result=D.compose(sections,record,{church:'melkite',iso,id:'melkite-chrysostom'});
+  assert.equal(result.placed.includes('troparia'),false,iso);
+  assert.equal(result.remaining.includes('troparia'),false,iso);
+  assert.equal(JSON.stringify(record),snapshot,'source data is unchanged');
+ }
+});

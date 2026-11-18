@@ -75,7 +75,8 @@
   function safeLines(lines){
     return Array.isArray(lines)&&lines.length>0&&lines.length<=40&&
       lines.every(line=>typeof line==='string'&&line.trim().length>0&&line.length<=1200&&
-        !/[\u0400-\u052f\u0600-\u06ff]/u.test(line));
+        !/[\u0400-\u052f\u0600-\u06ff]/u.test(line)&&
+        !/^Kondakion of the Ointment-Bearing women \(Tone 2\): Trisagion or Instead of the Trisagion(?:\s*:|\s+[“"])/i.test(line));
   }
   // Dated source lines saying "Instead of..." designate replacements for
   // particular fixed prayers. Until the precise slot can be authenticated
