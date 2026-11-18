@@ -137,6 +137,16 @@ module.exports=async(page,base,artifacts,violations)=>{
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
      35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
+     57:['Trisagion Hymn',
+       'ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
+       'Baptismal Hymn',
+       'On the Nativity of Christ, Theophany, Saturday of Lazarus, Holy Saturday, Easter Week and Pentecost, we sing the Baptismal Hymn:',
+       'ALL: All you who have been baptized into Christ, you have put on Christ. Alleluia. (2)',
+       'CLERGY: Fixture Greek baptismal hymn.',
+       'DEACON: Give glory to Christ, our God!',
+       'ALL: †Glory be to the Father, and to the Son, and to the Holy Spirit. You have put on Christ. Alleluia.',
+       'The bishop proceeds to the high place:',
+       'DEACON: Master, proceed.','BISHOP: Fixture post-hymn prayer.'],
      65:['Insistent Litany','DCN 2: Fixture petition A.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition B.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition C.','ALL: Lord, have mercy. (3)',
@@ -215,6 +225,13 @@ module.exports=async(page,base,artifacts,violations)=>{
    'Confession of Faith','Communion of the Faithful','Final Blessing'])
   assert.ok(headings.includes(title),'missing verified Ukrainian section heading: '+title);
  assert.ok(headings.includes('Insistent Litany'));
+ const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
+ assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
+ assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
+ assert.equal(await seasonal.evaluate(el=>el.open),false,'not appointed by default');
+ assert.match(await seasonal.textContent(),/Fixture Greek baptismal hymn/);
+ assert.equal(await ukrainian.locator('.byz-prayer-line').filter({hasText:'Fixture post-hymn prayer'}).count(),1,
+  'regular liturgy must resume outside seasonal alternative');
 
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
  assert.match(await ukrainian.innerText(),/For You are holy now and ever\./);

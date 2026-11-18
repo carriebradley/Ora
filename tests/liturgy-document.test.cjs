@@ -31,6 +31,19 @@ test('document module loads dated records and normalizes prayer typography',()=>
  assert.equal(D.displayLine('The angels* give thanks * to God.'),'The angels give thanks to God.');
 });
 
+
+test('dated composition retains Edmonton identity for source-specific alternatives',()=>{
+ const input=[{heading:'Liturgy of the Word',lines:[...sections[0].lines]}];
+ input.edmonton2012=true;
+ const untouched=JSON.stringify(input);
+ const output=D.compose(input,sample,context);
+ assert.equal(output.sections.edmonton2012,true);
+ assert.ok(output.placed.includes('troparia'));
+ assert.equal(JSON.stringify(input),untouched);
+ assert.equal(D.compose(input,null,context).sections.edmonton2012,true);
+ assert.equal(D.compose(sections,sample,context).sections.edmonton2012,undefined);
+});
+
 test('a genuinely empty printed hymn placeholder can receive dated words without duplicate headings',()=>{
  const placeholder=[{heading:'Liturgy of the Word',lines:[
   'Little Entrance','Troparia and Kontakia','Trisagion','Epistle','Gospel']}];

@@ -219,7 +219,8 @@
     const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
     const shownSections=LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections)))));
     const optionalLitany=melkiteBook?LiturgicalFormat.newtonOptionalPetitions(shownSections):null;
-    let optionalLitanyDetails=null;
+    const baptismal=shownSections.edmonton2012===true?LiturgicalFormat.edmontonBaptismalAlternative(shownSections):null;
+    let optionalLitanyDetails=null,baptismalDetails=null;
     for(let sectionIndex=0;sectionIndex<shownSections.length;sectionIndex++){
       const section=shownSections[sectionIndex];
       // PDF pages are extraction sections, not necessarily liturgical
@@ -237,6 +238,18 @@
       for(let lineIndex=0;lineIndex<section.lines.length;lineIndex++){
         const raw=section.lines[lineIndex];
         const slot=sectionIndex+':'+lineIndex;
+        if(baptismal?.starts.has(slot)){
+          baptismalDetails=document.createElement('details');
+          baptismalDetails.className='byz-antiphon-option byz-seasonal-hymn';
+          const summary=document.createElement('summary');
+          summary.textContent='Baptismal Hymn (only on appointed feasts)';
+          baptismalDetails.append(summary);target.append(baptismalDetails);
+          lastLine=null;lastRole=null;pendingRole=null;continue;
+        }
+        if(baptismalDetails){
+          if(baptismal?.lines.has(slot))container=baptismalDetails;
+          else{baptismalDetails=null;container=target;lastLine=null;lastRole=null;pendingRole=null;}
+        }
         if(optionalLitany?.starts.has(slot)){
           optionalLitanyDetails=document.createElement('details');
           optionalLitanyDetails.className='byz-antiphon-option byz-optional-litany';
