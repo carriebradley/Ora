@@ -391,6 +391,25 @@
   })}));out.newton2009=true;return out;
  }
 
+ // Newton 2009 pp. 81 and 84 (PDF pp. 89 and 92) mark these two
+ // concluding responses as threefold. Require both unique, ordered anchors
+ // so a partial or edited private book is never rewritten for display.
+ function expandNewtonConcludingThreefold(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[]).map((raw,index)=>({text:String(raw).trim(),section,index})));
+  const exalted=/^(?:priest|celebrant)(?:\s+\d+)?\s*:\s*May\s+You\s+be\s+exalted\s+above\s+the\s+heavens,\s*O\s+God,\s*and\s+Your\s+glory\s+above\s+all\s+the\s+earth\.\s*\(\s*three\s+times\s*\)\s*$/i;
+  const name=/^all\s*:\s*Amen\.\s*Blessed\s+be\s+the\s+name\s+of\s+the\s+Lord,\s*now\s+and\s+for(?:\s*|-)ever\.\s*\(\s*three\s+times\s*\)\s*$/i;
+  const found=pattern=>rows.map((row,index)=>pattern.test(row.text)?index:-1).filter(index=>index>=0);
+  const [a,b]=[exalted,name].map(found);
+  if(a.length!==1||b.length!==1||a[0]>=b[0])return sections;
+  const targets=new Set([rows[a[0]].section+':'+rows[a[0]].index,rows[b[0]].section+':'+rows[b[0]].index]);
+  const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((raw,index)=>{
+   if(!targets.has(section+':'+index))return raw;
+   const words=String(raw).replace(/\s*\(\s*three\s+times\s*\)\s*$/i,'').trim();
+   return [words,words,words].join(' ');
+  })}));out.newton2009=true;return out;
+ }
+
  function expandNewtonPeaceLitany(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -934,6 +953,6 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 
