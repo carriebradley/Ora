@@ -26,6 +26,10 @@ jobs:
         run: |
           set -o pipefail
           node --test --test-isolation=none tests/*.test.cjs 2>&1 | tee /tmp/ora-test-log.txt
+      - name: Melkite importer regression tests
+        run: |
+          python3 -m pip install python-docx
+          python3 -m unittest discover -s tests -p 'test_melkite_propers*.py'
       - run: npm install --prefix /tmp/ora-tools playwright@1.56.1 axe-core@4.11.0
       - name: Select browser
         run: |

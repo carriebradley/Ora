@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 from docx import Document
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from import_melkite_propers import extract
+from import_melkite_propers import extract, hymns
 
 class MelkiteProperImportTests(unittest.TestCase):
     def fixture(self):
@@ -33,6 +33,17 @@ class MelkiteProperImportTests(unittest.TestCase):
             book.add_paragraph('Confidential sermon must never be shown.')
             book.add_paragraph('يا رب ارحم')
         return book
+    def test_trisagion_selection_is_not_mistaken_for_a_hymn(self):
+        for selection in ['Trisagion or Instead of the Trisagion: fictional alternative',
+                          'Instead of the Trisagion: fictional alternative']:
+            prayers, unresolved = hymns(['Hymns:', 'Kondakion (Tone 2)', selection, 'Epistle: Sample'])
+            self.assertEqual(prayers, [])
+            self.assertEqual(unresolved, ['Kondakion (Tone 2)'])
+        prayers, unresolved = hymns(['Hymns:', 'Kondakion (Tone 2)',
+                                     'An entirely fictional hymn about mercy and hope.', 'Epistle: Sample'])
+        self.assertEqual(len(prayers), 1)
+        self.assertEqual(unresolved, [])
+
     def test_extract_only_appointed_english_hymns(self):
         days=extract(self.fixture())['days']
         self.assertEqual(set(days),{'2026-11-15','2026-11-22'})

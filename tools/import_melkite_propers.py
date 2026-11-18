@@ -17,6 +17,7 @@ INDEX='https://melkite.org/liturgical-resources'
 DATE=re.compile(r'^(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+November\s+(\d{1,2}),\s*2026\b',re.I)
 ARABIC=re.compile(r'[\u0600-\u06ff]')
 HYMN=re.compile(r'^(?:Troparion|Kondakion|Kontakion)\b',re.I)
+HYMN_BOUNDARY=re.compile(r'^(?:Trisagion\b|Instead\s+of\b)',re.I)
 PROK=re.compile(r'^(?:Prokimenon|Prokeimenon)\s*:',re.I)
 ALLELUIA=re.compile(r'^Alleluia\s*:',re.I)
 STOP_READ=re.compile(r'^(?:Reading from\b|Brethren\b|Gospel\s*:|At that time\b|The Lord told\b|Homily\b)',re.I)
@@ -44,7 +45,7 @@ def hymns(lines):
             unresolved.append('Patronal hymn determined locally')
             continue
         following=next((s for s in part[i+1:] if s),'')
-        if english(following) and not HYMN.match(following) and len(following)>24 and len(following)<=1200:
+        if english(following) and not HYMN.match(following) and not HYMN_BOUNDARY.match(following) and len(following)>24 and len(following)<=1200:
             out.append(title.strip(' :')+': '+following)
         else:
             unresolved.append(title)
