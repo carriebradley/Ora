@@ -136,20 +136,20 @@ module.exports=async(page,base,artifacts,violations)=>{
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
-     35:['First Antiphon','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
+     35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
      65:['Insistent Litany','DCN 2: Fixture petition A.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition B.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition C.','ALL: Lord, have mercy. (3)',
        'Special petitions may be added here.',
        'DCN 2: Fixture petition D.','ALL: Lord, have mercy. (3)'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
-     79:['BISHOP: I will love You, O Lord, my strength; the Lord is my stronghold and my refuge. (3)'],
-     109:['ALL: Amen. Blessed be the name of the Lord now and for ever. (3)'],
+     79:['Confession of Faith','BISHOP: I will love You, O Lord, my strength; the Lord is my stronghold and my refuge. (3)'],
+     109:['Final Blessing','ALL: Amen. Blessed be the name of the Lord now and for ever. (3)'],
      111:['Dismissal','BISHOP: Fixture dismissal.',
        'ALL: †Glory be to the Father and to the Son and to the Holy Spirit,* now and for ever and ever. Amen.* Lord, have mercy. (3)* Mas-ter, give the blessing.',
        'BISHOP: Fixture concluding prayer.'],
      83:['BISHOP: Fixture anaphora.'],
-     99:['BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
+     99:['Communion of the Faithful','BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
        'ALL: Fixture Communion response.'],
      113:['ALL: Fixture conclusion.'],
      34:['Ukrainian facing-language page must never appear'],
@@ -210,7 +210,11 @@ module.exports=async(page,base,artifacts,violations)=>{
   'the post-Ambo hymn is said three times');
  assert.equal((fullUkrainian.match(/Amen\. Blessed be the name of the Lord/g)||[]).length,1,
   'the hymn\'s introductory Amen is not repeated');
- assert.ok((await ukrainian.locator('.byz-prayer-heading').allTextContents()).includes('Insistent Litany'));
+ const headings=await ukrainian.locator('.byz-prayer-heading').allTextContents();
+ for(const title of ['Hymn to Christ','The Beatitudes','Prokimenon','Epistle',
+   'Confession of Faith','Communion of the Faithful','Final Blessing'])
+  assert.ok(headings.includes(title),'missing verified Ukrainian section heading: '+title);
+ assert.ok(headings.includes('Insistent Litany'));
 
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);
  assert.match(await ukrainian.innerText(),/For You are holy now and ever\./);

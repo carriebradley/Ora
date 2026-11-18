@@ -65,3 +65,19 @@ Edmonton 2012 book, while keeping ordinary hyphenated expressions such as
 "Only-begotten", "life-giving", and "well-being" unchanged. This does not
 rewrite the private original, change unknown editions, or alter other
 traditions' automatic PDF handling.
+
+
+## Verified English section headings (Edmonton 2012 English pp. 33-113)
+
+The original episcopal service has 22 printed prayer/service subsection
+headings beyond Ora's previous heading vocabulary, including *The
+Beatitudes*, *Confession of Faith*, *Surrender to God*, *Communion of the
+Faithful*, *Ambo Prayer*, and *Final Blessing*. The source's *The Entrance
+of Christ the High Priest* is split across two PDF lines; treating it as
+a heading prevents its words being absorbed into the prayer underneath.
+These titles are recognized for display-only segmentation and do not
+change prayer wording, the dated propers, or device-local source books.
+
+The *Baptismal Hymn* is a seasonal substitution (not automatically
+appointed year-round); recognizing its heading is a prerequisite to
+separately grouping and selecting that alternate hymn in later work.

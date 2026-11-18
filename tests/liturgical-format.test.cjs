@@ -29,6 +29,41 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
 
 
 
+
+test('Edmonton 2012 printed section labels remain headings, never prayer words',()=>{
+ const verified=[
+  'Hymn to Christ','The Beatitudes','The Entrance of Christ the High Priest',
+  'The Light of Christ','Entrance of the High Priest','Baptismal Hymn',
+  'Prokimenon','Epistle','Alleluia','Gospel','Prayer for the Church',
+  'Concluding Blessing','Litany of Supplication','Surrender to God',
+  'Communion of the Clergy','Communion of the Faithful',
+  'Thanksgiving Hymn','Thanksgiving Litany','Ambo Prayer',
+  'Final Blessing','Confession of Faith','Troparia and Kontakia'
+ ];
+ for(const text of verified){
+  assert.equal(F.heading(text),true,'source heading not recognized: '+text);
+  assert.equal(F.normalize(text),text,'printed title should stay intact: '+text);
+ }
+ const split=['THE ENTRANCE OF','CHRIST THE HIGH PRIEST',
+  'Prayer of Entrance','BISHOP: Fixture episcopal entrance prayer.'];
+ assert.deepEqual(F.combine(split),[
+  'The Entrance of Christ the High Priest','Prayer of Entrance',
+  'BISHOP: Fixture episcopal entrance prayer.'
+ ],'wrapped source heading should not merge into the prayer');
+ const sequence=F.combine([
+  'Surrender to God','BISHOP: Peace be with all.',
+  'ALL: And with your spirit.','Ambo Prayer',
+  'PRIEST: Let us go forth in peace.','ALL: In the name of the Lord.'
+ ]);
+ assert.deepEqual(sequence,[
+  'Surrender to God','BISHOP: Peace be with all.',
+  'ALL: And with your spirit.','Ambo Prayer',
+  'PRIEST: Let us go forth in peace.','ALL: In the name of the Lord.'
+ ]);
+ assert.equal(F.heading('Let us go forth in peace.'),false);
+ assert.equal(F.heading('I believe in one God.'),false);
+});
+
 test('Edmonton 2012 repairs only verified printed line-wraps and preserves real compounds',()=>{
  const source=[{lines:[
   'PRIEST: Pray for our sal-vation and govern-ment.','ALL: Al-leluia, all holy.',
