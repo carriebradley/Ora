@@ -29,3 +29,24 @@ prayers, not redistributed copyrighted full service texts.
 Audit the remaining fixed English text and compare the episcopal
 ceremony with the ordinary Ukrainian parish booklet. Check all dated
 substitutions, reading prompts, and the device-local iPhone display.
+
+
+## Three further source-marked repetitions (Edmonton PDF pp. 79, 99, 109)
+
+A page-by-page review of the original English episcopal liturgy identifies
+three additional, distinct "(3)" instructions outside the Insistent Litany
+and dismissal:
+
+- **Confession of Love (p. 79):** repeat the bishop's brief "I will love
+  You" prayer three times, not the preceding people's Trinitarian response.
+- **One is Holy (p. 99):** repeat only the short "God, be merciful to me,
+  a sinner" prayer three times, not the bishop's longer prayer.
+- **Following the Ambo Prayer (p. 109):** repeat "Blessed be the name of
+  the Lord" three times while saying the preceding "Amen" only once.
+
+The exact three source phrases must all be present in the correct order
+in the positively identified 140-page Edmonton 2012 book. An incomplete,
+duplicated, altered or already expanded passage is left unchanged.
+The source PDF and locally stored text are not rewritten. The Cherubic
+Hymn's separate "(3)" rubric on p. 71 has different chant semantics and
+is not expanded automatically pending its own source review.

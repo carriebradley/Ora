@@ -143,11 +143,14 @@ module.exports=async(page,base,artifacts,violations)=>{
        'Special petitions may be added here.',
        'DCN 2: Fixture petition D.','ALL: Lord, have mercy. (3)'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
+     79:['BISHOP: I will love You, O Lord, my strength; the Lord is my stronghold and my refuge. (3)'],
+     109:['ALL: Amen. Blessed be the name of the Lord now and for ever. (3)'],
      111:['Dismissal','BISHOP: Fixture dismissal.',
        'ALL: †Glory be to the Father and to the Son and to the Holy Spirit,* now and for ever and ever. Amen.* Lord, have mercy. (3)* Mas-ter, give the blessing.',
        'BISHOP: Fixture concluding prayer.'],
      83:['BISHOP: Fixture anaphora.'],
-     99:['ALL: Fixture Communion response.'],
+     99:['BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
+       'ALL: Fixture Communion response.'],
      113:['ALL: Fixture conclusion.'],
      34:['Ukrainian facing-language page must never appear'],
      115:['Appendix content must never appear']
@@ -194,6 +197,15 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await ukrainian.innerText(),/Lord, have mercy\.\s*\(3\)|Mas-ter|Special petitions may be added here\./,
   'source-count shorthand, wrapped syllable and optional-insertion rubric stay hidden');
  assert.match(await ukrainian.innerText(),/Master, give the blessing/);
+ const fullUkrainian=await ukrainian.innerText();
+ assert.equal((fullUkrainian.match(/I will love You, O Lord, my strength;/g)||[]).length,3,
+  'the bishop\'s Confession-of-Love prayer is said three times');
+ assert.equal((fullUkrainian.match(/God, be merciful to me, a sinner\./g)||[]).length,3,
+  'the private prayer before One is Holy is said three times');
+ assert.equal((fullUkrainian.match(/Blessed be the name of the Lord now and for ever\./g)||[]).length,3,
+  'the post-Ambo hymn is said three times');
+ assert.equal((fullUkrainian.match(/Amen\. Blessed be the name of the Lord/g)||[]).length,1,
+  'the hymn\'s introductory Amen is not repeated');
  assert.ok((await ukrainian.locator('.byz-prayer-heading').allTextContents()).includes('Insistent Litany'));
 
  assert.match(await ukrainian.innerText(),/Fixture Ukrainian antiphon with chant marks, Lord!/);

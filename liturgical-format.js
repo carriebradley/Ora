@@ -525,6 +525,37 @@
   return out;
  }
 
+
+ // Edmonton 2012 English PDF pp. 79, 99, 109 prints three other explicit
+ // "(3)" directions: the bishop's confession of love, a short private
+ // prayer within One is Holy, and the people's post-Ambo hymn.
+ // The Amen before the last hymn is said only once. Only expand a complete
+ // matched trio in the positively identified local episcopal edition.
+ function expandEdmontonRemainingThreefold(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[])
+   .map((text,index)=>({text:String(text).trim(),section,index})));
+  const love=/^(?:bishop|priest)(?:\s+\d+)?\s*:\s*I will love You, O Lord, my strength;\s*the Lord is my stronghold and my refuge\.\s*\(3\)\s*$/i;
+  const sinner=/\bGod,\s*be merciful to me,\s*a sinner\.\s*\(3\)\s*$/i;
+  const hymn=/^all\s*:\s*Amen\.\s*Blessed be the name of the Lord now and for ever\.\s*\(3\)\s*$/i;
+  const patterns=[love,sinner,hymn];
+  const found=patterns.map(pattern=>rows.filter(r=>pattern.test(r.text)));
+  if(found.some(group=>group.length!==1))return sections;
+  const chosen=found.map(group=>group[0]);
+  const positions=chosen.map(r=>rows.findIndex(x=>x.section===r.section&&x.index===r.index));
+  if(!(positions[0]<positions[1]&&positions[1]<positions[2]))return sections;
+  const slots=new Map(chosen.map((r,i)=>[r.section+':'+r.index,i]));
+  const repeated=(text,phrase)=>String(text).replace(phrase,(_,words)=>[words,words,words].join(' '));
+  const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((line,index)=>{
+   const which=slots.get(section+':'+index);
+   if(which===0)return repeated(line,/(I will love You, O Lord, my strength;\s*the Lord is my stronghold and my refuge\.)\s*\(3\)\s*$/i);
+   if(which===1)return repeated(line,/(God,\s*be merciful to me,\s*a sinner\.)\s*\(3\)\s*$/i);
+   if(which===2)return repeated(line,/(Blessed be the name of the Lord now and for ever\.)\s*\(3\)\s*$/i);
+   return line;
+  })}));
+  out.edmonton2012=true;
+  return out;
+ }
  function startAtOpeningBlessing(sections){
   if(!Array.isArray(sections))return sections;
   let si=-1,li=-1;
@@ -577,5 +608,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,startAtOpeningBlessing,epubPrayerSections};
 });

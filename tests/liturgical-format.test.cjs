@@ -27,6 +27,46 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
 });
 
 
+
+test('Edmonton 2012 expands three other marked repetitions without repeating the Amen',()=>{
+ const source=[{lines:[
+  'Confession of Love',
+  'BISHOP: I will love You, O Lord, my strength; the Lord is my stronghold and my refuge. (3)',
+  'Confession of Faith'
+ ]},{lines:[
+  'One is Holy',
+  'BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
+  'ALL: One is holy, one is Lord.'
+ ]},{lines:[
+  'Ambo Prayer',
+  'ALL: Amen. Blessed be the name of the Lord now and for ever. (3)',
+  'Final Blessing'
+ ]}];
+ source.edmonton2012=true;
+ const original=JSON.stringify(source),out=F.expandEdmontonRemainingThreefold(source);
+ const all=out.flatMap(part=>part.lines);
+ assert.equal(out.edmonton2012,true);
+ assert.equal((all[1].match(/I will love You, O Lord, my strength;/g)||[]).length,3);
+ assert.equal((all[4].match(/God, be merciful to me, a sinner\./g)||[]).length,3);
+ assert.equal((all[7].match(/Blessed be the name of the Lord now and for ever\./g)||[]).length,3);
+ assert.equal((all[7].match(/\bAmen\./g)||[]).length,1,'the preceding Amen is not repeated');
+ assert.equal(JSON.stringify(source),original,'saved source remains unmodified');
+ assert.strictEqual(F.expandEdmontonRemainingThreefold(out),out,'already expanded must be idempotent');
+ const unknown=source.map(p=>({...p,lines:[...p.lines]}));
+ assert.strictEqual(F.expandEdmontonRemainingThreefold(unknown),unknown,'other books must not be changed');
+ for(const [section,index] of [[0,1],[1,1],[2,1]]){
+  const changed=source.map(p=>({...p,lines:[...p.lines]}));changed.edmonton2012=true;
+  changed[section].lines[index]=changed[section].lines[index].replace(' (3)','');
+  assert.strictEqual(F.expandEdmontonRemainingThreefold(changed),changed,'missing marker must fail closed');
+ }
+ const swapped=source.map(p=>({...p,lines:[...p.lines]}));swapped.edmonton2012=true;
+ [swapped[0],swapped[2]]=[swapped[2],swapped[0]];
+ assert.strictEqual(F.expandEdmontonRemainingThreefold(swapped),swapped,'out-of-order source must not be altered');
+ const extra=source.map(p=>({...p,lines:[...p.lines]}));extra.edmonton2012=true;
+ extra[1].lines.push(source[1].lines[1]);
+ assert.strictEqual(F.expandEdmontonRemainingThreefold(extra),extra,'duplicate source prayer must not be expanded');
+});
+
 test('Edmonton 2012 expands four Insistent Litany replies and one dismissal reply only in matched editions',()=>{
  const source=[{lines:[
   'Insistent Litany','DCN 2: Petition A.','ALL: Lord, have mercy. (3)',
