@@ -136,7 +136,7 @@ module.exports=async(page,base,artifacts,violations)=>{
    const row=(str,y)=>({str,width:260,height:12,transform:[1,0,0,12,20,y]});
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
-     35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
+     35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.','DCN 1: For the seafarers and travellers, for the sick'],\n     37:['and the suffering, for those held captive, and for their salvation, let us pray to the Lord.','ALL: Lord, have mercy.'],
      39:['First Antiphon','Major Feast Days:','See propers.','Sundays:',
        'VERSE: Fixture Sunday verse one.','ALL: Fixture Sunday reply one.',
        'VERSE: Fixture Sunday verse two.','ALL: Fixture Sunday reply two.',
@@ -264,6 +264,10 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await firstAntiphon.nth(2).innerText(),/Fixture weekday entrance/);
  assert.match(await firstAntiphon.nth(3).textContent(),/Fixture weekday entrance one/);
  assert.doesNotMatch(await ukrainian.textContent(),/Major Feast Days:|Hymn to Christ, p\.\s*39|Continue on p\.\s*47/,'source selection and page notes are not prayer');
+ const crossing=ukrainian.locator('.byz-prayer-line').filter({hasText:'For the seafarers and travellers'});
+ assert.equal(await crossing.count(),1);
+ assert.match(await crossing.innerText(),/for the sick and the suffering, for those held captive/);
+ assert.equal(await crossing.locator('.byz-speaker').innerText(),'Deacon 1');
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
@@ -291,7 +295,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.doesNotMatch(await ukrainian.innerText(),/\*/, 'Ukrainian continuous prayer text hides PDF chant-break asterisks');
  assert.doesNotMatch(await ukrainian.innerText(),/Ukrainian facing-language page|Appendix content|The priest bows|All stand\.|\(Sit\.\)/);
  assert.match(await ukrainian.innerText(),/Let us stand well before God/, 'prayer language mentioning standing must be retained');
- assert.equal(await ukrainian.locator('.byz-role-deacon').count(),9,'fixture includes Insistent Litany petitions plus the seasonal Trisagion-alternative exchange');
+ assert.equal(await ukrainian.locator('.byz-role-deacon').count(),10,'fixture includes Insistent Litany petitions plus the seasonal Trisagion-alternative exchange');
  assert.equal(await ukrainian.locator('.byz-role-priest .byz-speaker').first().innerText(),'Priest 1');
  assert.equal(await ukrainian.locator('.byz-role-deacon .byz-speaker').first().innerText(),'Deacon 2');
  assert.equal(await page.locator('.reader-inline-controls').isVisible(),false);

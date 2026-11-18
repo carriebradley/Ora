@@ -541,6 +541,29 @@
  // those spoken words, not the opening people's verse or Great Entrance.
  // A marker, the edition identity, and the unique surrounding sequence
  // are required; unknown or modified PDFs remain untouched.
+ // Edmonton 2012 English PDF pp. 35 and 37 split one Great Litany
+ // petition across facing-language pages. Join only this exact, uniquely
+ // matched continuation and its following response; never alter saved bytes.
+ function joinEdmontonGreatLitanyPageBreak(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
+  const start=/^DCN\s*1\s*:\s*For the seafarers and travellers,\s*for the sick\s*$/i;
+  const tail=/^and the suffering,\s*for those held captive,\s*and for their salvation,\s*let us pray to the Lord\.\s*$/i;
+  const matches=[];
+  for(let i=0;i+1<sections.length;i++){
+   const left=sections[i],right=sections[i+1],lines=left.lines||[],next=right.lines||[];
+   if(left.alternative||right.alternative||right.heading||!lines.length||next.length<2)continue;
+   if(start.test(lines.at(-1))&&tail.test(next[0])&&/^ALL\s*:\s*Lord,\s*have mercy\.\s*$/i.test(next[1]))matches.push(i);
+  }
+  if(matches.length!==1)return sections;
+  const where=matches[0];
+  const out=sections.map((part,i)=>{
+   if(i===where)return {...part,lines:[...part.lines.slice(0,-1),part.lines.at(-1)+' '+sections[i+1].lines[0]]};
+   if(i===where+1)return {...part,lines:part.lines.slice(1)};
+   return {...part,lines:[...(part.lines||[])]};
+  });
+  out.edmonton2012=true;
+  return out;
+ }
  function expandEdmontonCherubicThreefold(sections){
   if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
   const rows=sections.flatMap((part,section)=>(part.lines||[])
@@ -769,5 +792,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });

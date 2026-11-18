@@ -1328,3 +1328,22 @@ test('Edmonton antiphon display removes only source page directions',()=>{
   assert.strictEqual(F.edmontonFirstAntiphonRows(missing,title),missing,'unrecognized pages are unchanged');
  }
 });
+
+
+test('Edmonton Great Litany petition remains one speaker across English page break',()=>{
+ const a='DCN 1: For the seafarers and travellers, for the sick';
+ const b='and the suffering, for those held captive, and for their salvation, let us pray to the Lord.';
+ const source=[{lines:['ALL: Prior response.',a]},{lines:[b,'ALL: Lord, have mercy.','DCN 1: Next petition.']}];
+ source.edmonton2012=true;
+ const before=JSON.stringify(source),out=F.joinEdmontonGreatLitanyPageBreak(source);
+ assert.equal(out[0].lines[1],a+' '+b);
+ assert.deepEqual(out[1].lines,['ALL: Lord, have mercy.','DCN 1: Next petition.']);
+ assert.equal(out.edmonton2012,true);assert.equal(JSON.stringify(source),before);
+ assert.strictEqual(F.joinEdmontonGreatLitanyPageBreak(out),out,'idempotent');
+ const unknown=source.map(x=>({...x,lines:[...x.lines]}));
+ assert.strictEqual(F.joinEdmontonGreatLitanyPageBreak(unknown),unknown);
+ const incomplete=[{lines:[a]},{lines:[b,'ALL: Another response.']}];incomplete.edmonton2012=true;
+ assert.strictEqual(F.joinEdmontonGreatLitanyPageBreak(incomplete),incomplete);
+ const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;
+ assert.strictEqual(F.joinEdmontonGreatLitanyPageBreak(duplicate),duplicate);
+});
