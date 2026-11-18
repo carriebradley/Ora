@@ -694,3 +694,38 @@ test('Newton 2009 printed repetition directions do not obscure spoken responses'
  assert.equal(F.displayPrayer('All: Lord, have mercy. (To be repeated after each petition.) Then another prayer.'),
   'All: Lord, have mercy. (To be repeated after each petition.) Then another prayer.');
 });
+
+
+test('Newton 2009 Aitesis faithfully expands five printed repeat-after-each-petition responses',()=>{
+ const original=[{lines:[
+  'T H E A I T E S I S','That this day be without sin, let us ask the Lord.',
+  'All: Grant this, O Lord. (To be repeated after each petition.)',
+  'For an angel of peace, let us ask the Lord.',
+  'For forgiveness of sins, let us ask the Lord.',
+  'For peace in the world, let us ask the Lord.',
+  'That our life may be peaceful, let us ask the Lord.',
+  'That our end may be painless, let us ask.'
+ ]},{lines:[
+  'Let us ask for unity of faith and commend our whole life to Christ God.',
+  'All: To You, O Lord.','The Lord’s Prayer'
+ ]}];
+ original.newton2009=true;
+ const saved=JSON.stringify(original);
+ assert.equal(F.normalize('T H E A I T E S I S'),'The Aitesis');
+ assert.equal(F.heading('T H E A I T E S I S'),true);
+ const displayed=F.expandNewtonAitesis(original),lines=displayed.flatMap(p=>p.lines);
+ assert.equal(lines.filter(s=>/^All: Grant this, O Lord/.test(s)).length,6);
+ assert.equal(lines.filter(s=>s==='All: Grant this, O Lord.').length,5);
+ assert.equal(lines.filter(s=>s==='All: To You, O Lord.').length,1);
+ assert.equal(displayed.newton2009,true);
+ assert.equal(JSON.stringify(original),saved,'source must remain unchanged');
+ assert.strictEqual(F.expandNewtonAitesis(displayed),displayed,'idempotent');
+ const unrecognized=original.map(p=>({...p,lines:p.lines.slice()}));
+ assert.strictEqual(F.expandNewtonAitesis(unrecognized),unrecognized,'unrecognized source unaffected');
+ const incomplete=original.map(p=>({...p,lines:p.lines.filter(s=>!s.includes('angel of peace'))}));
+ incomplete.newton2009=true;
+ assert.strictEqual(F.expandNewtonAitesis(incomplete),incomplete,'missing petition prevents guessing');
+ const already=original.map(p=>({...p,lines:p.lines.slice()}));already.newton2009=true;
+ already[0].lines.splice(4,0,'All: Grant this, O Lord.');
+ assert.strictEqual(F.expandNewtonAitesis(already),already,'already expanded source unaffected');
+});

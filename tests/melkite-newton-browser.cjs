@@ -19,6 +19,20 @@ module.exports=async(page,base,artifacts)=>{
     'PRIEST: God, the Holy, who rest among the saints.',
     'The Trisagion Hymn','ALL: Holy God, Holy Mighty One.','Epistle'
    ],
+   79:[
+    'T H E A I T E S I S',
+    'That this day may be peaceful, let us ask the Lord.',
+    'ALL: Grant this, O Lord. (To be repeated after each petition.)',
+    'For an angel of peace, let us ask the Lord.',
+    'For forgiveness of sins, let us ask the Lord.',
+    'For peace in the world, let us ask the Lord.',
+    'That our life may be peaceful, let us ask the Lord.',
+    'That our end may be painless, let us ask.'
+   ],
+   80:[
+    'Let us ask for unity of faith and commend our whole life to Christ God.',
+    'ALL: To You, O Lord.','The Lord’s Prayer'
+   ],
    31:[
     'The Holy Gospel','Liturgy of the Eucharist','Anaphora',
     'PRIEST: Fixture Eucharistic prayer.',
@@ -82,6 +96,13 @@ module.exports=async(page,base,artifacts)=>{
   assert.ok(index>last,'misordered Newton 2009 source and dated hymns: '+phrase);
   last=index;
  }
+ assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
+  'six source-directed Aitesis responses must be visible');
+ assert.equal((text.match(/To You, O Lord/g)||[]).length,1,
+  'different concluding response stays singular');
+ assert.doesNotMatch(text,/To be repeated after each petition/,
+  'editorial directions are not prayers');
+ assert.match(text,/The Aitesis/,'tracked heading remains legible');
  assert.deepEqual(await preview.locator('.byz-daily-proper-heading').allTextContents(),
   ['Prokeimenon','Alleluia']);
  const panel=page.locator('.byz-daily-propers[data-church="melkite"][data-iso="2026-11-15"]');
