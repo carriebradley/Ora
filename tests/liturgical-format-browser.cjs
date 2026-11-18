@@ -140,17 +140,17 @@ module.exports=async(page,base,artifacts,violations)=>{
      39:['First Antiphon','Major Feast Days:','See propers.','Sundays:',
        'VERSE: Fixture Sunday verse one.','ALL: Fixture Sunday reply one.',
        'VERSE: Fixture Sunday verse two.','ALL: Fixture Sunday reply two.',
-       'VERSE: Fixture Sunday verse three.','ALL: Fixture Sunday reply three.',
+       'VERSE: Fixture Sunday verse three.','ALL: Fixture Sunday reply three. (Hymn to Christ, p. 39)',
        'Weekdays:','VERSE: Fixture weekday verse one.','ALL: Fixture weekday reply one.',
        'VERSE: Fixture weekday verse two.','ALL: Fixture weekday reply two.',
-       'VERSE: Fixture weekday verse three.','ALL: Fixture weekday reply three.'],
+       'VERSE: Fixture weekday verse three.','ALL: Fixture weekday reply three. (Hymn to Christ, p. 39)'],
      45:['Entrance Antiphon','Major Feast Days:','See propers.','Sundays:',
        'VERSE: Fixture Sunday entrance one.','ALL: Fixture Sunday entrance response one.',
        'VERSE: Fixture Sunday entrance two.','ALL: Fixture Sunday entrance response two.',
-       'VERSE: Fixture Sunday entrance three.','ALL: Fixture Sunday entrance response three.',
+       'VERSE: Fixture Sunday entrance three.','ALL: Fixture Sunday entrance response three. (Continue on p. 47)',
        'Weekdays:','VERSE: Fixture weekday entrance one.','ALL: Fixture weekday entrance response one.',
        'VERSE: Fixture weekday entrance two.','ALL: Fixture weekday entrance response two.',
-       'VERSE: Fixture weekday entrance three.','ALL: Fixture weekday entrance response three.'],
+       'VERSE: Fixture weekday entrance three.','ALL: Fixture weekday entrance response three. (Continue on p. 47)'],
      57:['Trisagion Hymn',
        'ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
        'Baptismal Hymn',
@@ -263,6 +263,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await firstAntiphon.nth(2).innerText(),/Fixture Sunday entrance one/);
  assert.doesNotMatch(await firstAntiphon.nth(2).innerText(),/Fixture weekday entrance/);
  assert.match(await firstAntiphon.nth(3).textContent(),/Fixture weekday entrance one/);
+ assert.doesNotMatch(await ukrainian.textContent(),/Major Feast Days:|Hymn to Christ, p\.\s*39|Continue on p\.\s*47/,'source selection and page notes are not prayer');
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');

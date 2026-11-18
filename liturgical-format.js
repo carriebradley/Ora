@@ -186,10 +186,20 @@
   const valid=part=>part.filter(row=>/^VERSE\s*:/i.test(row.text)).length===3&&
     part.filter(row=>/^ALL\s*:/i.test(row.text)).length===3;
   if(!valid(rows.slice(sun[0]+1,weekday[0]))||!valid(rows.slice(weekday[0]+1)))return rows;
+  // The source's feast heading and page references are editorial directions,
+  // not spoken words. Remove only the exact notes on these verified pages.
+  const feast=find(/^Major Feast Days:\s*$/i),see=find(/^See propers\.\s*$/i);
+  const removeFeast=feast.length===1&&see.length===1&&feast[0]>head[0]&&
+    see[0]===feast[0]+1&&see[0]<sun[0];
+  const note=title==='Entrance Antiphon'?/\s*\(Continue on p\.\s*47\)\s*$/i:
+    /\s*\(Hymn to Christ,\s*p\.\s*39\)\s*$/i;
   return rows.flatMap((row,i)=>{
-   if(i===sun[0]||i===weekday[0])return [];
-   if(i>sun[0]&&i<weekday[0])return [{...row,alternative:'sunday'}];
-   if(i>weekday[0])return [{...row,alternative:'weekday'}];
+   if(i===sun[0]||i===weekday[0]||(removeFeast&&(i===feast[0]||i===see[0])))return [];
+   if(i>sun[0]){
+    const text=String(row.text||'').replace(note,'');
+    if(!text.trim())return [];
+    return [{...row,text,alternative:i<weekday[0]?'sunday':'weekday'}];
+   }
    return [row];
   });
  }

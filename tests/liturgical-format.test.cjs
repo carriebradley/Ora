@@ -1294,7 +1294,7 @@ test('Edmonton first antiphon separates source-marked Sundays and weekdays',()=>
  assert.deepEqual(out.filter(x=>x.alternative==='sunday').map(x=>x.text),verse);
  assert.deepEqual(out.filter(x=>x.alternative==='weekday').map(x=>x.text),verse);
  assert.equal(JSON.stringify(source),snapshot);
- assert.deepEqual(out.filter(x=>!x.alternative).map(x=>x.text),['First Antiphon','Major Feast Days:','See propers.']);
+ assert.deepEqual(out.filter(x=>!x.alternative).map(x=>x.text),['First Antiphon']);
  for(const index of [0,3,4,10,11]){
   const partial=source.filter((_,i)=>i!==index);
   assert.strictEqual(F.edmontonFirstAntiphonRows(partial),partial,'incomplete source fails closed');
@@ -1311,4 +1311,20 @@ test('Edmonton entrance antiphon also keeps Sunday and weekday forms separate',(
  assert.deepEqual(out.filter(x=>x.alternative==='weekday').map(x=>x.text),verses);
  assert.strictEqual(F.edmontonFirstAntiphonRows(rows,'First Antiphon'),rows);
  assert.strictEqual(F.edmontonFirstAntiphonRows(rows,'Unknown'),rows);
+});
+
+
+test('Edmonton antiphon display removes only source page directions',()=>{
+ const row=text=>({text});
+ for(const [title,note] of [['First Antiphon','(Hymn to Christ, p. 39)'],['Entrance Antiphon','(Continue on p. 47)']]){
+  const words=['VERSE: Fixture first.','ALL: One.','VERSE: Fixture second.','ALL: Two.','VERSE: Fixture third.','ALL: Three. '+note];
+  const rows=[title,'Major Feast Days:','See propers.','Sundays:',...words,'Weekdays:',...words].map(row);
+  const snapshot=JSON.stringify(rows),out=F.edmontonFirstAntiphonRows(rows,title);
+  assert.equal(out.filter(r=>/ALL: Three\./.test(r.text)).length,2);
+  assert.ok(out.every(r=>!r.text.includes(note)));
+  assert.deepEqual(out.filter(r=>!r.alternative).map(r=>r.text),[title]);
+  assert.equal(JSON.stringify(rows),snapshot,'source rows remain unchanged');
+  const missing=rows.filter(r=>r.text!=='Weekdays:');
+  assert.strictEqual(F.edmontonFirstAntiphonRows(missing,title),missing,'unrecognized pages are unchanged');
+ }
 });
