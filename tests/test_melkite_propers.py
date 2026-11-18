@@ -1,10 +1,12 @@
 """Offline parser regression fixtures: all content below is invented."""
 import sys
 import unittest
+from io import BytesIO
+from unittest.mock import patch
 from pathlib import Path
 from docx import Document
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from import_melkite_propers import extract, hymns
+from import_melkite_propers import extract, hymns, fetch_source
 
 class MelkiteProperImportTests(unittest.TestCase):
     def fixture(self):
@@ -33,6 +35,20 @@ class MelkiteProperImportTests(unittest.TestCase):
             book.add_paragraph('Confidential sermon must never be shown.')
             book.add_paragraph('يا رب ارحم')
         return book
+    def test_source_fetch_retries_invalid_response_and_rejects_persistent_failure(self):
+        content=BytesIO()
+        Document().save(content)
+        with patch('import_melkite_propers.urlopen', side_effect=[BytesIO(b'not a docx'), BytesIO(content.getvalue())]) as fetch, \
+             patch('import_melkite_propers.time.sleep') as pause:
+            self.assertIsNotNone(fetch_source())
+            self.assertEqual(fetch.call_count, 2)
+            pause.assert_called_once()
+        with patch('import_melkite_propers.urlopen', side_effect=lambda *a, **k: BytesIO(b'not a docx')) as fetch, \
+             patch('import_melkite_propers.time.sleep'):
+            with self.assertRaisesRegex(RuntimeError, 'existing hymns were not replaced'):
+                fetch_source()
+            self.assertEqual(fetch.call_count, 3)
+
     def test_trisagion_selection_is_not_mistaken_for_a_hymn(self):
         for selection in ['Trisagion or Instead of the Trisagion: fictional alternative',
                           'Instead of the Trisagion: fictional alternative']:

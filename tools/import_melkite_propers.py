@@ -9,6 +9,9 @@ from io import BytesIO
 import json
 from pathlib import Path
 import re
+import time
+from urllib.error import URLError
+from zipfile import is_zipfile
 from urllib.request import Request, urlopen
 from docx import Document
 
@@ -86,15 +89,31 @@ def extract(doc):
             raise ValueError('Source anchor missing complete Sunday groups: '+iso)
     return {'schema':1,'days':dict(sorted(days.items()))}
 
+def fetch_source(attempts=3):
+    """Reject non-DOCX responses and retry transient source failures."""
+    if attempts < 1:
+        raise ValueError('At least one source attempt is required')
+    for attempt in range(attempts):
+        try:
+            request=Request(SOURCE,headers={'User-Agent':'Ora Liturgical Source Import',
+                                           'Cache-Control':'no-cache'})
+            with urlopen(request,timeout=45) as response:
+                raw=response.read(20*1024*1024+1)
+            if len(raw)>20*1024*1024 or not is_zipfile(BytesIO(raw)):
+                raise ValueError('Newton source returned an invalid or oversized DOCX')
+            return Document(BytesIO(raw))
+        except (URLError, TimeoutError, ValueError) as error:
+            if attempt+1==attempts:
+                raise RuntimeError('Newton source unavailable or invalid after retries; existing hymns were not replaced') from error
+            time.sleep(2*(attempt+1))
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--source',type=Path)
     p.add_argument('--out',type=Path,default=Path('melkite-propers-2026-11.json'))
     args=p.parse_args()
     if args.source:book=Document(args.source)
-    else:
-        with urlopen(Request(SOURCE,headers={'User-Agent':'Ora Liturgical Source Import'}),timeout=45) as response:
-            book=Document(BytesIO(response.read()))
+    else:book=fetch_source()
     data=extract(book)
     args.out.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'dates':len(data['days']),'groups':{d:list(e['groups']) for d,e in data['days'].items()}},indent=2))
