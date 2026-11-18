@@ -172,7 +172,8 @@ module.exports=async(page,base,artifacts,violations)=>{
        'Special petitions may be added here.',
        'DCN 2: Fixture petition D.','ALL: Lord, have mercy. (3)'],
      69:['DEACON 1: Fixture Eucharistic invitation.'],
-     79:['Confession of Faith','BISHOP: I will love You, O Lord, my strength; the Lord is my stronghold and my refuge. (3)'],
+     79:['BISHOP: I will love You, O Lord, my strength; the Lord is my stronghold and my refuge. (3)','Confession of Faith','ALL: I believe in one God, the Father, the Almighty. Fixture Creed. He suffered, died and'],
+     81:['was buried. Fixture Creed continuation and the life of the world to come. Amen.','Blessing'],
      109:['Final Blessing','ALL: Amen. Blessed be the name of the Lord now and for ever. (3)'],
      111:['Dismissal','BISHOP: Fixture dismissal.',
        'ALL: †Glory be to the Father and to the Son and to the Holy Spirit,* now and for ever and ever. Amen.* Lord, have mercy. (3)* Mas-ter, give the blessing.',
@@ -269,6 +270,10 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.equal(await crossing.count(),1);
  assert.match(await crossing.innerText(),/for the sick and the suffering, for those held captive/);
  assert.equal(await crossing.locator('.byz-speaker').innerText(),'Deacon 1');
+ const creed=ukrainian.locator('.byz-prayer-line').filter({hasText:'Fixture Creed continuation'});
+ assert.equal(await creed.count(),1);
+ assert.match(await creed.innerText(),/He suffered, died and was buried/);
+ assert.equal(await creed.locator('.byz-speaker').innerText(),'All');
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');

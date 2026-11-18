@@ -1347,3 +1347,19 @@ test('Edmonton Great Litany petition remains one speaker across English page bre
  const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;
  assert.strictEqual(F.joinEdmontonGreatLitanyPageBreak(duplicate),duplicate);
 });
+
+
+test('Edmonton Creed stays a single congregational prayer across pages',()=>{
+ const a='ALL: I believe in one God, the Father, the Almighty. Fixture Creed. He suffered, died and';
+ const b='was buried. Fixture Creed continuation and the life of the world to come. Amen.';
+ const source=[{lines:['Confession of Faith',a]},{lines:[b,'Blessing','DCN 2: Fixture petition.']}];source.edmonton2012=true;
+ const before=JSON.stringify(source),out=F.joinEdmontonCreedPageBreak(source);
+ assert.equal(out[0].lines[1],a+' '+b);assert.deepEqual(out[1].lines,['Blessing','DCN 2: Fixture petition.']);
+ assert.equal(out.edmonton2012,true);assert.equal(JSON.stringify(source),before);
+ assert.strictEqual(F.joinEdmontonCreedPageBreak(out),out);
+ const missing=source.map(x=>({...x,lines:[...x.lines]}));missing.edmonton2012=true;missing[1].lines[1]='Other heading';
+ assert.strictEqual(F.joinEdmontonCreedPageBreak(missing),missing);
+ const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonCreedPageBreak(unknown),unknown);
+ const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;
+ assert.strictEqual(F.joinEdmontonCreedPageBreak(duplicate),duplicate);
+});
