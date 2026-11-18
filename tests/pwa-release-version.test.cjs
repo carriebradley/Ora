@@ -14,19 +14,28 @@ test('build update notice only offers strictly newer published worker versions',
  assert.equal(R.versionNumber('ora-v365')>R.versionNumber('ora-v364'),true);
  assert.equal(R.versionNumber('ora-v363')>R.versionNumber('ora-v364'),false);
 });
-test('manual update waits for activation or a matching active worker version',()=>{
+test('manual update reloads only after the advertised worker proves its build',()=>{
  const app=file('app.js');
- const start=app.indexOf("const offeredController = navigator.serviceWorker?.controller");
+ const start=app.indexOf("const updateButton = notice.querySelector('button')");
  const end=app.indexOf('document.body.appendChild(notice)',start);
  const code=app.slice(start,end);
- assert.ok(start>=0&&end>start,'update action must retain its controller snapshot');
- assert.ok(code.indexOf("addEventListener('controllerchange'")>=0);
- assert.ok(code.indexOf("await reg.update()")>code.indexOf("addEventListener('controllerchange'"));
- assert.ok(code.indexOf("ORA_VERSION_QUERY")>code.indexOf("await reg.update()"));
- assert.ok(code.indexOf("await Promise.race")>code.indexOf("ORA_VERSION_QUERY"));
- assert.ok(code.indexOf('if (activated)')<code.indexOf('location.reload()'));
- assert.match(code,/setTimeout\(\(\) => resolve\(false\), 5000\)/);
- assert.match(code,/updateButton\.disabled = false/);
+ assert.ok(start>=0&&end>start,'update action must retain its guarded reload');
+ const helper=code.indexOf('const activeBuild = async () =>');
+ const update=code.indexOf('await reg.update()',helper);
+ const initial=code.indexOf('let activated = await activeBuild() === match[1]',update);
+ const wait=code.indexOf('await Promise.race',initial);
+ const verifiedAfterChange=code.indexOf('activated = await activeBuild() === match[1]',wait);
+ const reload=code.indexOf('location.reload()');
+ assert.ok(helper>=0,'active worker build must be queried through its message port');
+ assert.ok(update>helper,'registration is refreshed before readiness is decided');
+ assert.ok(initial>update,'current worker build is checked after registration update');
+ assert.ok(wait>initial,'unmatched workers wait for a controller change or bounded timeout');
+ assert.ok(verifiedAfterChange>wait,'controller changes must be rechecked against the advertised build');
+ assert.ok(reload>verifiedAfterChange,'reload is only reachable after the matching-build check');
+ assert.match(code,/ORA_VERSION_QUERY/);
+ assert.match(code,/setTimeout\(\(\) => \{[^}]*resolve\(null\); \}, 600\)/);
+ assert.match(code,/setTimeout\(resolve, 5000\)/);
+ assert.doesNotMatch(code,/controller\s*!==\s*offeredController/);
  assert.match(code,/Retry update/);
 });
 test('installed worker answers build handshake without touching saved prayer data',()=>{
@@ -53,3 +62,4 @@ test('release guard catches application changes but not documentation or reading
   file('app.js').replace(R.appVersion(file('app.js')),'ora-v1'),file('sw.js'),file('index.html')
  ),/must match/);
 });
+
