@@ -107,3 +107,16 @@ Ora expands exactly those two source-matched initial stanzas into
 twice-spoken prayer words, preserving each later doxology and never
 changing or automatically appointing the optional Baptismal Hymn.
 Unrecognized source structures remain unchanged.
+
+
+## Unspoken appointed-proper directions (Edmonton 2012 pp. 39, 45, 53, 57, 59)
+
+The service repeatedly prints "See propers" in hymn slots and describes
+the selection of the daily Prokimenon and the chant of the Alleluia.
+The Baptismal Hymn paragraph similarly lists when it replaces the
+Trisagion. These are **rubrics**, not the congregational words to pray.
+The continuous reader now removes those narrowly recognized printed
+directions from its prayer display while keeping headings, spoken
+Alleluia verses/responses, the Baptismal Hymn, and original private
+source files unchanged. Appointed daily propers remain governed by
+their separate verified calendar records.

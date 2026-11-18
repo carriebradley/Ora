@@ -96,6 +96,22 @@ test('the opening-blessing trim preserves positively identified edition markers'
  assert.equal(F.startAtOpeningBlessing(melkite).newton2009,true);
 });
 
+
+test('Edmonton appointment and Alleluia rubrics are not spoken prayer',()=>{
+ for(const direction of [
+  'See propers.',
+  'The Prokimenon for the day. See propers.',
+  'The “Alleluia” is sung in preparation for the proclamation of the holy Gospel. If psalm verses are chanted, the faithful respond after each verse with the refrain “Alleluia” (3).',
+  'If psalm verses are chanted, the faithful respond after each verse.',
+  'On the Nativity of Christ, Theophany, Saturday of Lazarus, Holy Saturday, Easter Week and Pentecost, we sing the Baptismal Hymn:'
+ ])assert.equal(F.instruction(direction),true,'editorial direction: '+direction);
+ for(const spoken of [
+  'ALL: Alleluia, alleluia, alleluia.',
+  'ALL: All you who have been baptized into Christ, you have put on Christ. Alleluia.',
+  'DEACON: Wisdom! Let us be attentive.',
+  'The Lord is my strength and my salvation.'
+ ])assert.equal(F.instruction(spoken),false,'spoken words must remain: '+spoken);
+});
 test('Edmonton 2012 printed section labels remain headings, never prayer words',()=>{
  const verified=[
   'Hymn to Christ','The Beatitudes','The Entrance of Christ the High Priest',

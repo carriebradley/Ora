@@ -147,6 +147,10 @@ module.exports=async(page,base,artifacts,violations)=>{
        'ALL: †Glory be to the Father, and to the Son, and to the Holy Spirit. You have put on Christ. Alleluia.',
        'The bishop proceeds to the high place:',
        'DEACON: Master, proceed.','BISHOP: Fixture post-hymn prayer.'],
+     59:['Prokimenon','The Prokimenon for the day. See propers.',
+       'Epistle','Alleluia',
+       'The “Alleluia” is sung in preparation for the proclamation of the holy Gospel. If psalm verses are chanted, the faithful respond after each verse with the refrain “Alleluia” (3).',
+       'ALL: Alleluia, alleluia, alleluia.'],
      65:['Insistent Litany','DCN 2: Fixture petition A.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition B.','ALL: Lord, have mercy. (3)',
        'DCN 2: Fixture petition C.','ALL: Lord, have mercy. (3)',
@@ -225,6 +229,11 @@ module.exports=async(page,base,artifacts,violations)=>{
    'Confession of Faith','Communion of the Faithful','Final Blessing'])
   assert.ok(headings.includes(title),'missing verified Ukrainian section heading: '+title);
  assert.ok(headings.includes('Insistent Litany'));
+ assert.doesNotMatch(await ukrainian.innerText(),/The Prokimenon for the day\. See propers\.|The “Alleluia” is sung in preparation|we sing the Baptismal Hymn:/,
+  'source selection rubrics must not be displayed as speech');
+ assert.match(await ukrainian.innerText(),/Alleluia, alleluia, alleluia\./,
+  'the spoken sung response must be retained');
+
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
