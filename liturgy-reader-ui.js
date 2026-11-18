@@ -120,7 +120,7 @@
     if(sections.reduce((n,part)=>n+part.lines.length,0)<3)return null;
     sections.edmonton2012=true;
     return LiturgicalFormat.expandEdmontonCherubicThreefold(LiturgicalFormat.expandEdmontonRemainingThreefold(
-      LiturgicalFormat.expandEdmontonThreefoldResponses(LiturgicalFormat.expandEdmontonTrisagionTwofold(LiturgicalFormat.repairEdmontonWrappedWords(LiturgicalFormat.joinEdmontonThanksgivingPageBreak(LiturgicalFormat.joinEdmontonLordsPrayerPageBreak(LiturgicalFormat.joinEdmontonChurchPrayerPageBreak(LiturgicalFormat.joinEdmontonCreedPageBreak(LiturgicalFormat.joinEdmontonGreatLitanyPageBreak(sections))))))))));
+      LiturgicalFormat.expandEdmontonThreefoldResponses(LiturgicalFormat.expandEdmontonTrisagionTwofold(LiturgicalFormat.repairEdmontonWrappedWords(LiturgicalFormat.joinEdmontonCommunionPrayerPageBreak(LiturgicalFormat.joinEdmontonThanksgivingPageBreak(LiturgicalFormat.joinEdmontonLordsPrayerPageBreak(LiturgicalFormat.joinEdmontonChurchPrayerPageBreak(LiturgicalFormat.joinEdmontonCreedPageBreak(LiturgicalFormat.joinEdmontonGreatLitanyPageBreak(sections)))))))))));
   }
 
   // Generic PDF reading view for a user's private Melkite copy. Unlike the

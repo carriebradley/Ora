@@ -186,7 +186,8 @@ module.exports=async(page,base,artifacts,violations)=>{
      95:['ALL: Our Father, Who art in heaven. Fixture prayer and forgive us our'],
      97:['trespasses as we forgive those who trespass against us. And lead us not into temptation but deliver us from evil.','BISHOP: For the kingdom, the power, and the glory are Yours.'],
      99:['Communion of the Faithful','BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
-       'ALL: Fixture Communion response.'],
+       'ALL: Fixture Communion response.','Prayer Before Holy Communion','ALL: I believe, O Lord, and confess, that You are truly Christ. Fixture prayer. †Remember me, O Lord, when You come into Your kingdom.'],
+     101:['†Remember me, O Master, when You come into Your Kingdom. †Remember me, O Holy One, when You come into Your Kingdom. Fixture prayer. †I have sinned without number; forgive me, O Lord.','Communion of the Clergy'],
      113:['ALL: Fixture conclusion.'],
      34:['Ukrainian facing-language page must never appear'],
      115:['Appendix content must never appear']
@@ -292,6 +293,9 @@ module.exports=async(page,base,artifacts,violations)=>{
  const thanksgiving=ukrainian.locator('.byz-prayer-line').filter({hasText:'Having received the divine'});
  assert.equal(await thanksgiving.count(),1);assert.match(await thanksgiving.innerText(),/heavenly, and life-giving/);
  assert.equal(await thanksgiving.locator('.byz-speaker').innerText(),'Deacon 1');
+ const communionPrayer=ukrainian.locator('.byz-prayer-line').filter({hasText:'I have sinned without number'});
+ assert.equal(await communionPrayer.count(),1);assert.match(await communionPrayer.innerText(),/I believe, O Lord, and confess/);
+ assert.equal(await communionPrayer.locator('.byz-speaker').innerText(),'All');
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');

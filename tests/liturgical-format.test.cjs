@@ -1405,3 +1405,16 @@ test('Edmonton Thanksgiving Litany invitation stays with its deacon',()=>{
  const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonThanksgivingPageBreak(unknown),unknown);
  const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;assert.strictEqual(F.joinEdmontonThanksgivingPageBreak(duplicate),duplicate);
 });
+
+
+test('Edmonton Communion prayer retains congregation across page boundary',()=>{
+ const a='ALL: I believe, O Lord, and confess, that You are truly Christ. Fixture prayer. †Remember me, O Lord, when You come into Your kingdom.';
+ const b='†Remember me, O Master, when You come into Your Kingdom. †Remember me, O Holy One, when You come into Your Kingdom. Fixture prayer. †I have sinned without number; forgive me, O Lord.';
+ const source=[{lines:['Prayer Before Holy Communion',a]},{lines:[b,'Communion of the Clergy','BISHOP: Fixture invitation.']}];source.edmonton2012=true;
+ const before=JSON.stringify(source),out=F.joinEdmontonCommunionPrayerPageBreak(source);
+ assert.equal(out[0].lines[1],a+' '+b);assert.deepEqual(out[1].lines,['Communion of the Clergy','BISHOP: Fixture invitation.']);
+ assert.equal(JSON.stringify(source),before);assert.equal(out.edmonton2012,true);assert.strictEqual(F.joinEdmontonCommunionPrayerPageBreak(out),out);
+ const altered=source.map(x=>({...x,lines:[...x.lines]}));altered.edmonton2012=true;altered[1].lines[1]='Other heading';assert.strictEqual(F.joinEdmontonCommunionPrayerPageBreak(altered),altered);
+ const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonCommunionPrayerPageBreak(unknown),unknown);
+ const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;assert.strictEqual(F.joinEdmontonCommunionPrayerPageBreak(duplicate),duplicate);
+});
