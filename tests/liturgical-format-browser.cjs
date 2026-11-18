@@ -179,6 +179,8 @@ module.exports=async(page,base,artifacts,violations)=>{
        'ALL: †Glory be to the Father and to the Son and to the Holy Spirit,* now and for ever and ever. Amen.* Lord, have mercy. (3)* Mas-ter, give the blessing.',
        'BISHOP: Fixture concluding prayer.'],
      83:['BISHOP: Fixture anaphora.'],
+     89:['BISHOP: Among the first, remember, O Lord, the fixture hierarchs, who may live in peace, safety, honour and health'],
+     91:['for many years, and rightly impart the word of Your truth.','ALL: And remember all men and all women.'],
      99:['Communion of the Faithful','BISHOP: Fixture longer prayer. God, be merciful to me, a sinner. (3)',
        'ALL: Fixture Communion response.'],
      113:['ALL: Fixture conclusion.'],
@@ -274,6 +276,11 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.equal(await creed.count(),1);
  assert.match(await creed.innerText(),/He suffered, died and was buried/);
  assert.equal(await creed.locator('.byz-speaker').innerText(),'All');
+ const commemoration=ukrainian.locator('.byz-prayer-line').filter({hasText:'fixture hierarchs'});
+ assert.equal(await commemoration.count(),1);
+ assert.match(await commemoration.innerText(),/honour and health for many years/);
+ assert.equal(await commemoration.locator('.byz-speaker').innerText(),'Bishop');
+ assert.equal(await ukrainian.locator('.byz-role-all').filter({hasText:'And remember all men and all women.'}).count(),1);
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');

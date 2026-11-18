@@ -546,6 +546,28 @@
  // matched continuation and its following response; never alter saved bytes.
  // Edmonton 2012 English PDF pp. 79 and 81 divide the Creed mid-sentence.
  // Join the complete, unique source-shaped boundary and retain its speaker.
+ // Edmonton 2012 English pp. 89-91: the bishop's commemoration
+ // continues over the page break before the people's response.
+ function joinEdmontonChurchPrayerPageBreak(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
+  const start=/^BISHOP\s*:\s*Among the first,\s*remember,\s*O Lord,\s*the\b/i;
+  const ending=/\bmay live in peace,\s*safety,\s*honour and health\s*$/i;
+  const continuation=/^for many years,\s*and rightly impart the word of Your truth\.\s*$/i;
+  const response=/^ALL\s*:\s*And remember all men and all women\.\s*$/i;
+  const matches=[];
+  for(let i=0;i+1<sections.length;i++){
+   const left=sections[i],right=sections[i+1],lines=left.lines||[],next=right.lines||[];
+   if(left.alternative||right.alternative||right.heading||!lines.length||next.length<2)continue;
+   if(start.test(lines.at(-1))&&ending.test(lines.at(-1))&&continuation.test(next[0])&&response.test(next[1]))matches.push(i);
+  }
+  if(matches.length!==1)return sections;
+  const where=matches[0],out=sections.map((part,i)=>{
+   if(i===where)return {...part,lines:[...part.lines.slice(0,-1),part.lines.at(-1)+' '+sections[i+1].lines[0]]};
+   if(i===where+1)return {...part,lines:part.lines.slice(1)};
+   return {...part,lines:[...(part.lines||[])]};
+  });
+  out.edmonton2012=true;return out;
+ }
  function joinEdmontonCreedPageBreak(sections){
   if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
   const starts=/^ALL\s*:\s*I believe in one God,\s*the Father,\s*the Almighty\b/i;
@@ -814,5 +836,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });

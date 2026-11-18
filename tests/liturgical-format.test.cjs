@@ -1363,3 +1363,17 @@ test('Edmonton Creed stays a single congregational prayer across pages',()=>{
  const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;
  assert.strictEqual(F.joinEdmontonCreedPageBreak(duplicate),duplicate);
 });
+
+
+test('Edmonton Church commemoration retains bishop and response across pages',()=>{
+ const a='BISHOP: Among the first, remember, O Lord, the fixture hierarchs, who may live in peace, safety, honour and health';
+ const b='for many years, and rightly impart the word of Your truth.';
+ const source=[{lines:['Prayer for the Church',a]},{lines:[b,'ALL: And remember all men and all women.','BISHOP: Fixture next prayer.']}];source.edmonton2012=true;
+ const before=JSON.stringify(source),out=F.joinEdmontonChurchPrayerPageBreak(source);
+ assert.equal(out[0].lines[1],a+' '+b);assert.deepEqual(out[1].lines,['ALL: And remember all men and all women.','BISHOP: Fixture next prayer.']);
+ assert.equal(out.edmonton2012,true);assert.equal(JSON.stringify(source),before);assert.strictEqual(F.joinEdmontonChurchPrayerPageBreak(out),out);
+ const altered=source.map(x=>({...x,lines:[...x.lines]}));altered.edmonton2012=true;altered[1].lines[1]='ALL: Another response.';
+ assert.strictEqual(F.joinEdmontonChurchPrayerPageBreak(altered),altered);
+ const unknown=source.map(x=>({...x,lines:[...x.lines]}));assert.strictEqual(F.joinEdmontonChurchPrayerPageBreak(unknown),unknown);
+ const duplicate=[...source,...source.map(x=>({...x,lines:[...x.lines]}))];duplicate.edmonton2012=true;assert.strictEqual(F.joinEdmontonChurchPrayerPageBreak(duplicate),duplicate);
+});
