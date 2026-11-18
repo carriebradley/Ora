@@ -182,7 +182,10 @@ module.exports=async(page,base,artifacts,violations)=>{
        ['Official translation of the Ukrainian Greek Catholic Church: St. John Chrysostom']:
        content[number]||[]).map((s,i)=>row(s,760-i*34))})
    }),destroy:async()=>{}});
-   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=get;LiturgyReader.load=load;}
+   // Keep the fixture available through the assertions: a queued app redraw
+   // may rehydrate after the first render, and must read the same book.
+   window.__restoreEdmontonFixture=()=>{LiturgyReader.get=get;LiturgyReader.load=load;};
+   await LiturgicalText.hydrate();
  });
  const ukrainian=page.locator('.reader-inline-text');
  const expectedHeadings=[
@@ -289,6 +292,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  await page.setViewportSize({width:390,height:844});
  assert.equal(await ukrainian.locator('.byz-rubrics-toggle').count(),0);
  assert.equal(await ukrainian.locator('.byz-rubric').count(),0);
+ await page.evaluate(()=>{window.__restoreEdmontonFixture();delete window.__restoreEdmontonFixture;});
  // A different user-owned Ukrainian PDF may not have the Edmonton page
  // count; generic prayer detection must still produce the same UI.
  await page.evaluate(async()=>{
