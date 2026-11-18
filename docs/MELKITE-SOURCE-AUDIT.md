@@ -107,3 +107,21 @@ The recognized 2009 source prints a `Lord, have mercy` answer after the opening 
 ## Litany of the Gifts (Newton PDF p. 67)
 
 The printed Litany of the Gifts gives one response to the Deacon's opening petition, followed by an unambiguous mandatory petition concerning the offered gifts. A visually shaded **Optional** section comes next, before the **Prayer of Offering** (PDF p. 68). The reader repeats `Lord, have mercy` once after the mandatory petition, but only when the recognized Newton PDF contains all exact anchors and the optional boundary. It does not append answers to optional petitions or modify the original source. If the section has been edited, is missing the optional boundary, or already contains extra responses, the rendered passage is left unchanged.
+
+
+## Ektene triple responses and optional substitutions (Newton PDF pp. 58–59)
+
+The printed Newton 2009 Ektene explicitly calls for three Lord-have-mercy
+answers after every petition. Its three introductory petitions (the opening
+invitation and two requests) and concluding petition must be retained.
+Four intermediate default petitions may instead be replaced with other
+appropriate intentions; those alternatives are substitutions, not additions.
+
+For the unmodified printed standard sequence only, the recognized Newton
+reader now displays eight threefold answers. It leaves the source book, all
+petition wording, and optional intent directions intact in source storage.
+If any petition changes, a response is already present, or the distinctive
+heading/directive is missing, the expansion fails closed. The editorial
+substitution directions are hidden in the prayer view. Other translations
+and Ukrainian books are unaffected. Custom alternative-petition selection
+remains a future enhancement.

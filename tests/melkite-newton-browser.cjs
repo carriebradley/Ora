@@ -19,6 +19,23 @@ module.exports=async(page,base,artifacts)=>{
     'PRIEST: God, the Holy, who rest among the saints.',
     'The Trisagion Hymn','ALL: Holy God, Holy Mighty One.','Epistle'
    ],
+   58:[
+    'T H E E K T E N E','(Ecumenic Petitions)',
+    'DEACON: Let us all say with our whole soul and our whole mind, let us all say:',
+    'ALL: Lord, have mercy. (three times -\u00ad\u2010\u2011 to be repeated after each petition.)',
+    'Lord Almighty, God of our fathers, we pray to You, hear us and have mercy.',
+    'Have mercy on us, O God, in Your great mercy, we pray to You, hear us and have mercy.',
+    'After the third petition, some other appropriate ecumenic petitions may be said.',
+    'Again, we pray for our Father and (Arch)Bishop N. and for his honorable presbyterate.',
+    'Again, we pray for the priests, the deacons, the monks, the nuns and all our brothers and sisters in Christ.',
+    'Again, we pray for mercy, life, peace, health and salvation.'
+   ],
+   59:[
+    'Again, we pray for the blessed and ever to be remembered founders of this holy church.',
+    'Again, we pray for those who bear offerings and all the people here present.',
+    'DEACON: Wisdom.','Prayer of the Ektene (said quietly by the Priest):',
+    'PRIEST: Fixture Ektene concluding prayer.'
+   ],
    67:[
     'L I T A N Y O F T H E G I F T S',
     'DEACON: Let us complete our prayer to the Lord.',
@@ -117,8 +134,11 @@ module.exports=async(page,base,artifacts)=>{
   assert.ok(index>last,'misordered Newton 2009 source and dated hymns: '+phrase);
   last=index;
  }
- assert.equal((text.match(/Lord, have mercy/g)||[]).length,5,
-  'Gift litany and Communion preparation contain their two and three verified responses');
+ assert.equal((text.match(/Lord, have mercy/g)||[]).length,29,
+  'Ektene threefold responses and five verified later litany answers must display');
+ assert.match(text,/Fixture Ektene concluding prayer/);
+ assert.doesNotMatch(text,/After the third petition, some other appropriate ecumenic petitions may be said/,
+  'optional-petition instructions must not read as prayer');
  assert.match(text,/Preparation for Holy Communion/);
  assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
   'six source-directed Aitesis responses must be visible');

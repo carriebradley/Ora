@@ -696,6 +696,55 @@ test('Newton 2009 printed repetition directions do not obscure spoken responses'
 });
 
 
+
+test('Newton 2009 Ektene expands eight threefold responses for the printed default petitions only',()=>{
+ const source=[{lines:[
+  'T H E E K T E N E','(Ecumenic Petitions)',
+  'Deacon: Let us all say with our whole soul and our whole mind, let us all say:',
+  'All: Lord, have mercy. (three times -\u00ad\u2010\u2011 to be repeated after each petition.)',
+  'Lord Almighty, God of our fathers, we pray to You, hear us and have mercy.',
+  'Have mercy on us, O God, in Your great mercy, we pray to You, hear us and have mercy.',
+  'After the third petition, some other appropriate ecumenic petitions may be said. If used, four petitions below would be omitted.',
+  'Again, we pray for our Father and (Arch)Bishop N. and for his honorable presbyterate.',
+  '* In case there are guest Patriarchs or Bishops, they will be mentioned by name.'
+ ]},{lines:[
+  'Again, we pray for the priests, the deacons, the monks, the nuns and all our brothers and sisters in Christ.',
+  'Again, we pray for mercy, life, peace, health, salvation and forgiveness.',
+  'Again, we pray for the blessed and ever to be remembered founders of this holy church.',
+  'Again, we pray for those who bear offerings, those who do good works and all the people here present.',
+  'Deacon: Wisdom.','Prayer of the Ektene','Priest: Fixture concluding prayer.'
+ ]}];
+ source.newton2009=true;
+ assert.equal(F.heading('T H E E K T E N E'),true);
+ assert.equal(F.heading('Prayer of the Ektene'),true);
+ assert.equal(F.normalize('The Ektene (Ecumenic Petitions)'),'The Ektene');
+ assert.equal(F.normalize('Prayer of the Ektene (said quietly by the Priest):'),'Prayer of the Ektene');
+ assert.equal(F.instruction('(said quietly by the Priest)'),true);
+ assert.equal(F.instruction(source[0].lines[6]),true);
+ assert.equal(F.instruction(source[0].lines[8]),true);
+ const before=JSON.stringify(source);
+ const expanded=F.expandNewtonEktene(source),rows=expanded.flatMap(p=>p.lines);
+ assert.equal(expanded.newton2009,true);
+ assert.equal(rows.filter(s=>s==='All: Lord, have mercy. Lord, have mercy. Lord, have mercy.').length,8);
+ assert.equal(rows.filter(s=>/^Again, we pray\b/.test(s)).length,5);
+ assert.equal(JSON.stringify(source),before,'the private source is unchanged');
+ assert.strictEqual(F.expandNewtonEktene(expanded),expanded,'expansion is idempotent');
+ const unknown=source.map(p=>({...p,lines:[...p.lines]}));
+ assert.strictEqual(F.expandNewtonEktene(unknown),unknown,'other books must be unaffected');
+ const minusFinal=source.map(p=>({...p,lines:p.lines.filter(s=>!s.startsWith('Again, we pray for those who bear'))}));
+ minusFinal.newton2009=true;
+ assert.strictEqual(F.expandNewtonEktene(minusFinal),minusFinal,'mandatory final petition required');
+ const replacement=source.map(p=>({...p,lines:p.lines.slice()}));replacement.newton2009=true;
+ replacement[0].lines[7]='Again, we pray for another special intention.';
+ assert.strictEqual(F.expandNewtonEktene(replacement),replacement,'custom alternatives must not be assigned inferred responses');
+ const preExpanded=source.map(p=>({...p,lines:p.lines.slice()}));preExpanded.newton2009=true;
+ preExpanded[1].lines.splice(1,0,'All: Lord, have mercy.');
+ assert.strictEqual(F.expandNewtonEktene(preExpanded),preExpanded,'existing answers must not be doubled');
+ const changedCue=source.map(p=>({...p,lines:p.lines.slice()}));changedCue.newton2009=true;
+ changedCue[0].lines[3]='All: Lord, have mercy.';
+ assert.strictEqual(F.expandNewtonEktene(changedCue),changedCue,'missing source directive must fail closed');
+});
+
 test('Newton 2009 Aitesis faithfully expands five printed repeat-after-each-petition responses',()=>{
  const original=[{lines:[
   'T H E A I T E S I S','That this day be without sin, let us ask the Lord.',

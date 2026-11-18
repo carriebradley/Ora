@@ -1,9 +1,14 @@
 /* Display-only formatting for private local books; contains no liturgical texts. */
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LiturgicalFormat=factory();})(typeof self!=='undefined'?self:this,function(){
- const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
+ const titles=['The Holy Gospel','The Troparia & Kontakia','Divine Liturgy of St. John Chrysostom','The Litany of Peace','The Order of Antiphons','The Ektene','Prayer of the Ektene','First Antiphon','Second Antiphon','Third Antiphon','The Kairos Service','Prayers Before the Holy Doors','Liturgy of the Word','Liturgy of the Eucharist','Blessing','Great Litany','Litany of Peace','Small Litany','First Antiphon','Second Antiphon','Third Antiphon','Entrance Antiphon','Entrance with the Gospel','Little Entrance','Great Entrance','Prayer of Entrance','Trisagion Hymn','Trisagion Prayer','Prayer of the Trisagion','Only-Begotten Son','Cherubic Hymn','Prayer Before the Gospel','Prayer for the Faithful','Troparia','Troparia & Kontakia','Creed','Symbol of Faith','Prayer of the Cherubic Hymn','Litany for the Gifts','Litany of the Gifts','Prayer of Offering','Anaphora','Holy Anaphora','Confession of Love','Thanksgiving','Remembrance','Epiclesis','The Lord’s Prayer','One is Holy','Communion Hymn','Prayer Before Holy Communion','Preparation for Holy Communion','Holy Communion','Blessing with the Holy Gifts','Prayer of Thanksgiving','Prayer Behind the Ambo','Dismissal','Distribution of the Antidoron','The Aitesis'];
  const compact=s=>String(s).replace(/[^a-z]/gi,'').toLowerCase(),heads=new Map(titles.map(t=>[compact(t),t]));
  heads.set(compact('The Divine and Holy Liturgy of Saint John Chrysostom'),'Divine Liturgy of St. John Chrysostom');
- function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();return heads.get(compact(s))||s;}
+ function normalize(text){const s=String(text||'').replace(/[\u2002-\u200a\u202f]/g,' ').replace(/\u00ad/g,'').replace(/\s+/g,' ').trim();
+  // Source headings may carry unspoken parenthetical titles or voice directions.
+  const key=compact(s);
+  if(key==='theekteneecumenicpetitions')return 'The Ektene';
+  if(key==='prayeroftheektenesaidquietlybythepriest')return 'Prayer of the Ektene';
+  return heads.get(key)||s;}
  // Some Melkite editions print heading letters with tracking and omit spaces.
  heads.set(compact('The Trisagion Hymn'),'The Trisagion Hymn');
  // Device-only display cleanup for PDF extraction and chant typography.
@@ -111,11 +116,15 @@
   if(/^\(?\s*(?:(?:the\s+)?(?:all|everyone|people|congregation|faithful|clergy|choir|priest|deacon|bishop|celebrant|reader)\s+)?(?:(?:please|now)\s+)?(?:stand(?:\s+up)?|sit(?:\s+down)?|kneel|bow|rise|be seated|remain (?:standing|seated|kneeling))(?:\s+(?:for the (?:gospel|reading)|in silence|together))?\s*[.)]?$/i.test(s))return true;
   if(/^\(?\s*(?:stand|sit|kneel)\s*(?:or|\/)\s*(?:stand|sit|kneel)\s*[.)]?$/i.test(s))return true;
   if(/^(?:rubric|instructions?|note):/i.test(s))return true;
+  if(/^\(\s*(?:said quietly by (?:the\s+)?priest|ecumenic petitions)\s*\)\s*:?$/i.test(s))return true;
   if(/^(?:the deacon, standing before the holy doors, takes the censer|the priest hands the deacon the holy gospel|the epistle reader, turning again to the altar, chants|then, turning to the people, the deacon proclaims)\b/i.test(s))return true;
   if(/^on the feasts of the nativity of our lord and the theophany, their octaves\b/i.test(s))return true;
   // The saved Melkite ordinary contains prose about which optional antiphons
   // to select. These are editorial explanations, not words to pray.
   if(/^For pastoral reasons, if only one Antiphon is done\b/i.test(s))return true;
+  // Newton's alternative-petition selection and episcopal footnotes are directions.
+  if(/^After the third petition, some other appropriate ecumenic petitions may be said\b/i.test(s))return true;
+  if(/^(?:\*\s*)?In case there are guest Patriarchs or Bishops\b/i.test(s))return true;
   if(/^For Sundays and Commemorations of the Third Class\b/i.test(s))return true;
   // Edition-specific stage directions seen in the privately saved Melkite
   // liturgy; never treat the actual Trisagion words as a direction.
@@ -240,6 +249,52 @@
  // unambiguous required petition after its printed Lord-have-mercy cue.
  // The shaded Optional section is a different selection; never infer
  // responses or appointments for those extra petitions.
+
+ // Newton 2009 PDF pp. 58-59: the Ektene prescribes a threefold response
+ // after each petition. Four middle petitions may be replaced by alternatives.
+ // Render the printed default sequence only after exact source verification,
+ // without assigning responses to any unverified alternatives.
+ function expandNewtonEktene(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const entries=sections.flatMap((part,section)=>(part.lines||[])
+   .map((text,index)=>({text:String(text).trim(),section,index})));
+  const headings=entries.map((r,i)=>compact(r.text)==='theektene'?i:-1).filter(i=>i>=0);
+  if(headings.length!==1)return sections;
+  const start=headings[0],end=entries.findIndex((r,i)=>i>start&&compact(r.text)==='prayeroftheektene');
+  if(end<0||end-start>50)return sections;
+  const rows=entries.slice(start+1,end);
+  const cuePattern=/^all\s*:\s*lord,\s*have\s+mercy\.\s*\(\s*three\s+times\b[\s\u00ad\-\u2010-\u2015]*to\s+be\s+repeated\s+after\s+each\s+petition\.?\s*\)$/i;
+  const cues=rows.map((r,i)=>cuePattern.test(r.text)?i:-1).filter(i=>i>=0);
+  if(cues.length!==1)return sections;
+  const cue=cues[0],before=rows.slice(0,cue),after=rows.slice(cue+1);
+  if(before.filter(r=>/^deacon\s*:\s*let\s+us\s+all\s+say\s+with\s+our\s+whole\s+soul\b/i.test(r.text)).length!==1||
+     before.some(r=>/^(?:all|choir)\s*:/i.test(r.text))||
+     after.some(r=>/^(?:all|choir)\s*:/i.test(r.text))||
+     !after.some(r=>/^after\s+the\s+third\s+petition,\s*some\s+other\s+appropriate\s+ecumenic\s+petitions\s+may\s+be\s+said\b/i.test(r.text)))
+    return sections;
+  const anchors=[
+   /^lord\s+almighty,\s*god\s+of\s+our\s+fathers\b/i,
+   /^have\s+mercy\s+on\s+us,\s*o\s+god,\s*in\s+your\s+great\s+mercy\b/i,
+   /^again,\s*we\s+pray\s+for\s+our\s+father\s+and\s+\(arch\)bishop\b/i,
+   /^again,\s*we\s+pray\s+for\s+the\s+priests,\s*the\s+deacons\b/i,
+   /^again,\s*we\s+pray\s+for\s+mercy,\s*life,\s*peace,\s*health\b/i,
+   /^again,\s*we\s+pray\s+for\s+the\s+blessed\s+and\s+ever\s+to\s+be\s+remembered\s+founders\b/i,
+   /^again,\s*we\s+pray\s+for\s+those\s+who\s+bear\s+offerings\b/i
+  ];
+  const petitions=after.filter(r=>/^(?:lord\s+almighty|have\s+mercy\s+on\s+us,\s*o\s+god|again,?\s*we\s+pray)\b/i.test(r.text));
+  if(petitions.length!==anchors.length||!petitions.every((r,i)=>anchors[i].test(r.text)))
+    return sections;
+  const target=new Set(petitions.map(r=>r.section+':'+r.index));
+  const originalCue=rows[cue].section+':'+rows[cue].index;
+  const triple='All: Lord, have mercy. Lord, have mercy. Lord, have mercy.';
+  const expanded=sections.map((part,section)=>({...part,lines:(part.lines||[])
+   .flatMap((line,index)=>{
+    const key=section+':'+index;
+    return key===originalCue?[triple]:target.has(key)?[line,triple]:[line];
+   })}));
+  expanded.newton2009=true;
+  return expanded;
+ }
  function expandNewtonGiftLitany(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -384,5 +439,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,startAtOpeningBlessing,epubPrayerSections};
 });
