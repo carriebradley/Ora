@@ -137,6 +137,13 @@ module.exports=async(page,base,artifacts,violations)=>{
    const content={
      33:['PRIEST 1: Blessed is the Kingdom.','DCN 2: Fixture Ukrainian litany.','ALL: Amen.','The priest bows.','All stand.','(Sit.)'],
      35:['First Antiphon','Hymn to Christ','The Beatitudes','Prokimenon','Epistle','ALL: Fixture Ukrainian antiphon * with chant marks , Lord !','For You are holy * now and ever .','Verse: For god is a great Lord and a great King over all the earth. Pray for sal-vation and govern-ment; preserve loving-kindness.','ALL: Let us stand well before God.','10 11','Entrance with the Gospel','DEACON: Let us pray to the Lord.'],
+     39:['First Antiphon','Major Feast Days:','See propers.','Sundays:',
+       'VERSE: Fixture Sunday verse one.','ALL: Fixture Sunday reply one.',
+       'VERSE: Fixture Sunday verse two.','ALL: Fixture Sunday reply two.',
+       'VERSE: Fixture Sunday verse three.','ALL: Fixture Sunday reply three.',
+       'Weekdays:','VERSE: Fixture weekday verse one.','ALL: Fixture weekday reply one.',
+       'VERSE: Fixture weekday verse two.','ALL: Fixture weekday reply two.',
+       'VERSE: Fixture weekday verse three.','ALL: Fixture weekday reply three.'],
      57:['Trisagion Hymn',
        'ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
        'Baptismal Hymn',
@@ -234,6 +241,13 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await ukrainian.innerText(),/Alleluia, alleluia, alleluia\./,
   'the spoken sung response must be retained');
 
+ const firstAntiphon=ukrainian.locator('details.byz-antiphon-option:not(.byz-seasonal-hymn)');
+ assert.equal(await firstAntiphon.count(),2,'printed Sunday and weekday antiphons are separate');
+ assert.equal(await firstAntiphon.nth(0).evaluate(el=>el.open),true,'Sunday form is selected');
+ assert.equal(await firstAntiphon.nth(1).evaluate(el=>el.open),false,'weekday form is not appointed on Sunday');
+ assert.match(await firstAntiphon.nth(0).innerText(),/Fixture Sunday verse one/);
+ assert.doesNotMatch(await firstAntiphon.nth(0).innerText(),/Fixture weekday/);
+ assert.match(await firstAntiphon.nth(1).textContent(),/Fixture weekday verse one/);
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
