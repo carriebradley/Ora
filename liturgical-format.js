@@ -701,7 +701,7 @@
    if(/^Blessing$/i.test(first[j].trim())){li=j;break;}
    if(role(first[j]))break;
   }
-  const result=sections.slice(si).map((part,i)=>i===0?{...part,heading:null,lines:part.lines.slice(li)}:part);
+  const result=sections.slice(si).map((part,i)=>({...part,...(i===0?{heading:null}:{}),lines:(part.lines||[]).slice(i===0?li:0)}));
   for(const part of result)part.lines=(part.lines||[]).filter(s=>!/^(?:WE\s+LEAVE\s+THE\s+WORLD(?:\s+STAND)?|STAND)$/i.test(s.trim()));
   const out=[{heading:'Liturgy of the Word',lines:[]},...result];
   if(sections.edmonton2012===true)out.edmonton2012=true;

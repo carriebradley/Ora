@@ -1270,3 +1270,17 @@ test('ambiguous extracted Melkite Trisagion choices are not displayed as prayer'
   assert.deepEqual(F.properPrayerLines(data[iso].groups.troparia),[]);
  assert.deepEqual(F.properPrayerLines(['A genuine prayer.']),['A genuine prayer.']);
 });
+
+
+test('opening-blessing cleanup never mutates later cached source sections',()=>{
+ const source=[{heading:'Cover',lines:['PRIEST: Blessed is the Kingdom.','ALL: Amen.']},
+  {heading:'Later',lines:['STAND','DEACON: Fixture petition.','ALL: Fixture response.']}];
+ source.edmonton2012=true;
+ const before=JSON.stringify(source),output=F.startAtOpeningBlessing(source);
+ assert.equal(JSON.stringify(source),before,'input remains unchanged');
+ assert.deepEqual(output[2].lines,['DEACON: Fixture petition.','ALL: Fixture response.']);
+ assert.notStrictEqual(output[2],source[1]);
+ output[2].lines.push('fixture');
+ assert.equal(JSON.stringify(source),before,'output edits cannot change input');
+ assert.equal(output.edmonton2012,true);
+});
