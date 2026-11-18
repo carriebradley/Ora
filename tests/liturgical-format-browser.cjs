@@ -525,5 +525,17 @@ module.exports=async(page,base,artifacts,violations)=>{
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'EPUB prayers fit narrow phones');
  }
  await page.setViewportSize({width:390,height:844});
+
+ const edmontonClergy=await page.evaluate(()=>{
+  const hymn='Let us who mystically represent the cherubim and sing the Thrice-holy Hymn to the life-giving Trinity. That we may receive the King of all, escorted invisibly by ranks of angels. Alleluia, alleluia, alleluia';
+  const parts=[{lines:['Cherubic Hymn','ALL: Let us who mystically represent the cherubim. Fixture opening.','CLERGY: '+hymn+' (\u2020bow). (3)','The bishop proceeds to the preparation table.','Great Entrance','ALL: Fixture conclusion.']}];
+  parts.edmonton2012=true;
+  const rendered=LiturgicalFormat.expandEdmontonCherubicThreefold(parts);
+  return {count:(rendered[0].lines[2].match(/Let us who mystically represent the cherubim/g)||[]).length,
+   source:parts[0].lines[2],rendered:rendered[0].lines[2]};
+ });
+ assert.equal(edmontonClergy.count,3,'mobile reader source formatter repeats whole clergy hymn');
+ assert.match(edmontonClergy.source,/\(3\)/,'original source retained');
+ assert.doesNotMatch(edmontonClergy.rendered,/\(3\)|bow/i,'printed bow/repetition rubrics not read aloud');
  console.log('Byzantine formatting: continuous paragraphs, tracked headings, source speakers, no stage directions, preserved petitions, appendix boundary, light/dark and mobile overflow passed.');
 };

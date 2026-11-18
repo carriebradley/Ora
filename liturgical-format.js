@@ -504,6 +504,43 @@
   return expanded;
  }
 
+
+ // Edmonton 2012 episcopal booklet, English PDF p. 71: the clergy's complete
+ // Cherubic Hymn has a printed (3) after a separate bow direction. Repeat
+ // those spoken words, not the opening people's verse or Great Entrance.
+ // A marker, the edition identity, and the unique surrounding sequence
+ // are required; unknown or modified PDFs remain untouched.
+ function expandEdmontonCherubicThreefold(sections){
+  if(!Array.isArray(sections)||sections.edmonton2012!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[])
+   .map((text,index)=>({text:String(text).trim(),section,index})));
+  const positions=title=>rows.flatMap((row,i)=>
+   compact(row.text)===compact(title)?[i]:[]);
+  const start=positions('Cherubic Hymn'),end=positions('Great Entrance');
+  if(start.length!==1||end.length!==1||end[0]<=start[0]||
+     end[0]-start[0]>65)return sections;
+  const between=rows.slice(start[0]+1,end[0]);
+  const initial=between.filter(row=>/^all\s*:\s*Let us who mystically represent the cherubim\b/i.test(row.text));
+  const clergy=between.filter(row=>/^clergy\s*:/i.test(row.text));
+  if(initial.length!==1||clergy.length!==1)return sections;
+  const selected=clergy[0],where=between.indexOf(selected);
+  if(where<=between.indexOf(initial[0]))return sections;
+  const pattern=/^clergy\s*:\s*(Let us who mystically represent the cherubim\b[\s\S]{1,700}?\bAlleluia,\s*alleluia,\s*alleluia)\s*\(\s*\u2020\s*bow\s*\)\.\s*\(3\)\s*$/i;
+  const match=selected.text.match(pattern);
+  if(!match||
+    !/\bThrice-holy Hymn to the life-giving Trinity\b/i.test(match[1])||
+    !/\bThat we may receive the King of all\b/i.test(match[1])||
+    !/\bescorted invisibly by ranks of angels\b/i.test(match[1])||
+    !between.slice(where+1).some(row=>/^The bishop proceeds to the preparation table\b/i.test(row.text))||
+    between.some(row=>row!==selected&&/\(\s*3\s*\)/.test(row.text)))
+    return sections;
+  const key=selected.section+':'+selected.index;
+  const expanded=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((raw,index)=>
+   section+':'+index===key?'CLERGY: '+[match[1],match[1],match[1]].join(' '):raw)}));
+  expanded.edmonton2012=true;
+  return expanded;
+ }
+
  // Edmonton 2012 episcopal liturgy pp. 65, 111: four litany replies
  // and one dismissal reply explicitly print "(3)" for repetition.
  // Only the exact recognized edition with all five occurrences qualifies.
@@ -701,5 +738,5 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });

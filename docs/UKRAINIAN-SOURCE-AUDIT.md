@@ -120,3 +120,18 @@ directions from its prayer display while keeping headings, spoken
 Alleluia verses/responses, the Baptismal Hymn, and original private
 source files unchanged. Appointed daily propers remain governed by
 their separate verified calendar records.
+
+
+## Cherubic Hymn clergy repetition (Edmonton 2012, English PDF p. 71)
+
+The Edmonton episcopal source distinguishes three passages: the people's
+opening Cherubic Hymn, the clergy's full repeated hymn, and the people's
+continuation after the Great Entrance. The clergy stanza carries a printed
+bow cue and an explicit \`(3)\`. The recognized, device-local edition now
+expands **only the complete clergy stanza** into three spoken iterations in
+the continuous prayer reader. It removes the printed bow cue from that
+display and keeps the people's opening/continuation singular. The match
+requires the unique Cherubic Hymn and Great Entrance boundaries, the
+opening congregational stanza, exact clergy source markers, and the
+following preparation-table direction. Unknown, edited, or duplicate
+source passages fail closed. The original PDF remains untouched.

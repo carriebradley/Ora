@@ -32,6 +32,39 @@ test('Roman fixed prayers prefer a unique general form and never guess a seasona
 
 
 
+
+test('Edmonton Cherubic Hymn repeats only the complete clergy stanza in recognized 2012 edition',()=>{
+ const hymn='Let us who mystically represent the cherubim, singing the Thrice-holy Hymn to the life-giving Trinity, lay aside cares. That we may receive the King of all, escorted invisibly by ranks of angels. Alleluia, alleluia, alleluia';
+ const first='ALL: Let us who mystically represent the cherubim. Fixture opening.';
+ const closing='ALL: That we may receive the King of all. Fixture Great Entrance continuation.';
+ const source=[{lines:['Cherubic Hymn',first,'BISHOP: Fixture prayer.']},
+  {lines:['CLERGY: '+hymn+' (\u2020bow). (3)','The bishop proceeds to the preparation table.']},
+  {lines:['Great Entrance','DCN 1: Fixture entrance.',closing]}];
+ source.edmonton2012=true;
+ const before=JSON.stringify(source),output=F.expandEdmontonCherubicThreefold(source);
+ assert.equal(output.edmonton2012,true);
+ assert.equal(output[1].lines[0],'CLERGY: '+[hymn,hymn,hymn].join(' '));
+ assert.equal(output[0].lines[1],first,'people sing the opening once');
+ assert.equal(output[2].lines[2],closing,'Great Entrance continuation remains singular');
+ assert.equal(output[1].lines[1],source[1].lines[1],'source directions remain intact');
+ assert.doesNotMatch(output[1].lines[0],/\(\s*3\s*\)|bow/i);
+ assert.equal(JSON.stringify(source),before,'device-local source must not be rewritten');
+ assert.strictEqual(F.expandEdmontonCherubicThreefold(output),output,'idempotent');
+ const unknown=source.map(part=>({...part,lines:[...part.lines]}));
+ assert.strictEqual(F.expandEdmontonCherubicThreefold(unknown),unknown);
+ for(const [section,index] of [[0,0],[0,1],[1,0],[1,1],[2,0]]){
+  const altered=source.map(part=>({...part,lines:[...part.lines]}));altered.edmonton2012=true;
+  altered[section].lines.splice(index,1);
+  assert.strictEqual(F.expandEdmontonCherubicThreefold(altered),altered,'missing source anchor: '+section+':'+index);
+ }
+ const extra=source.map(part=>({...part,lines:[...part.lines]}));extra.edmonton2012=true;
+ extra[1].lines.unshift('CLERGY: '+hymn+' (\u2020bow). (3)');
+ assert.strictEqual(F.expandEdmontonCherubicThreefold(extra),extra,'ambiguous double stanza fails closed');
+ const modified=source.map(part=>({...part,lines:[...part.lines]}));modified.edmonton2012=true;
+ modified[1].lines[0]=modified[1].lines[0].replace('ranks of angels','a different company');
+ assert.strictEqual(F.expandEdmontonCherubicThreefold(modified),modified,'unverified wording fails closed');
+});
+
 test('Edmonton p. 57 renders two spoken iterations of each source-marked initial hymn',()=>{
  const lines=[
   'Trisagion Hymn','ALL: †Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
