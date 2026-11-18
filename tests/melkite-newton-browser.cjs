@@ -19,7 +19,17 @@ module.exports=async(page,base,artifacts)=>{
     'PRIEST: God, the Holy, who rest among the saints.',
     'The Trisagion Hymn','ALL: Holy God, Holy Mighty One.','Epistle'
    ],
+   78:[
+    'P R E P A R A T I O N F O R H O L Y C O M M U N I O N',
+    'DEACON: Now that we have remembered all the saints, again and again in peace let us pray to the Lord.',
+    'ALL: Lord, have mercy. (To be repeated after each petition)',
+    'For the precious gifts here offered and sanctified, let us pray to the Lord.'
+   ],
    79:[
+    'That our God who loves mankind, having received these gifts on His altar, may send down His divine grace and the gift of the Holy Spirit, let us pray.',
+    'Optional:',
+    'For our deliverance from all affliction, let us pray to the Lord.',
+    'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
     'T H E A I T E S I S',
     'That this day may be peaceful, let us ask the Lord.',
     'ALL: Grant this, O Lord. (To be repeated after each petition.)',
@@ -96,6 +106,9 @@ module.exports=async(page,base,artifacts)=>{
   assert.ok(index>last,'misordered Newton 2009 source and dated hymns: '+phrase);
   last=index;
  }
+ assert.equal((text.match(/Lord, have mercy/g)||[]).length,3,
+  'only the two mandatory Communion-preparation petitions receive added responses');
+ assert.match(text,/Preparation for Holy Communion/);
  assert.equal((text.match(/Grant this, O Lord/g)||[]).length,6,
   'six source-directed Aitesis responses must be visible');
  assert.equal((text.match(/To You, O Lord/g)||[]).length,1,

@@ -214,7 +214,7 @@
     // On feasts the ordinary antiphons must not be mistaken for appointed propers.
     const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
     const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
-    for(const section of LiturgicalFormat.expandNewtonAitesis(sections)){
+    for(const section of LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(sections))){
       // PDF pages are extraction sections, not necessarily liturgical
       // paragraph boundaries. Retain a bare speaker cue for the next page,
       // but never carry it into a new heading or alternative antiphon.

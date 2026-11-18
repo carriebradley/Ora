@@ -729,3 +729,42 @@ test('Newton 2009 Aitesis faithfully expands five printed repeat-after-each-peti
  already[0].lines.splice(4,0,'All: Grant this, O Lord.');
  assert.strictEqual(F.expandNewtonAitesis(already),already,'already expanded source unaffected');
 });
+
+test('Newton communion-preparation adds only two mandatory responses before Optional',()=>{
+ const source=[{lines:[
+  'P R E P A R A T I O N F O R H O L Y C O M M U N I O N',
+  'Deacon: Now that we have remembered all the saints, again and again in peace let us pray to the Lord.',
+  'All: Lord, have mercy. (To be repeated after each petition)',
+  'For the precious gifts here offered and sanctified, let us pray to the Lord.'
+ ]},{lines:[
+  'That our God who loves mankind, having received these gifts on His holy and mystical altar in Heaven, may send down His divine grace and the gift of the Holy Spirit, let us pray.',
+  'Optional:',
+  'For our deliverance from all affliction, let us pray to the Lord.',
+  'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
+  'T H E A I T E S I S',
+  'All: Grant this, O Lord. (To be repeated after each petition.)'
+ ]}];
+ source.newton2009=true;
+ const snapshot=JSON.stringify(source);
+ assert.equal(F.normalize(source[0].lines[0]),'Preparation for Holy Communion');
+ assert.equal(F.heading(source[0].lines[0]),true);
+ assert.equal(F.normalize('L I T A N Y O F T H E G I F T S'),'Litany of the Gifts');
+ const result=F.expandNewtonCommunionPreparation(source),lines=result.flatMap(p=>p.lines);
+ assert.equal(lines.filter(x=>/^All: Lord, have mercy/.test(x)).length,3);
+ assert.equal(lines.filter(x=>x==='All: Lord, have mercy.').length,2);
+ assert.ok(lines.includes('For our deliverance from all affliction, let us pray to the Lord.'),
+  'optional source wording is preserved but must not be expanded automatically');
+ assert.equal(JSON.stringify(source),snapshot,'source text must be immutable');
+ assert.equal(result.newton2009,true);
+ assert.strictEqual(F.expandNewtonCommunionPreparation(result),result,'re-expansion must be disabled');
+ const unknown=source.map(p=>({...p,lines:p.lines.slice()}));
+ assert.strictEqual(F.expandNewtonCommunionPreparation(unknown),unknown,'unknown saved edition cannot receive responses');
+ for(const fragment of ['Optional:','For the precious gifts here offered and sanctified, let us pray to the Lord.']){
+  const altered=source.map(p=>({...p,lines:p.lines.filter(x=>x!==fragment)}));altered.newton2009=true;
+  assert.strictEqual(F.expandNewtonCommunionPreparation(altered),altered,'incomplete source must fail closed: '+fragment);
+ }
+ const preExpanded=source.map(p=>({...p,lines:p.lines.slice()}));preExpanded.newton2009=true;
+ preExpanded[1].lines.splice(1,0,'All: Lord, have mercy.');
+ assert.strictEqual(F.expandNewtonCommunionPreparation(preExpanded),preExpanded,
+  'pre-existing responses must never be doubled');
+});
