@@ -136,6 +136,23 @@ test('Edmonton p. 57 renders two spoken iterations of each source-marked initial
  }
 });
 
+test('Edmonton printed priests cue keeps the Greek chant separate from the twofold response',()=>{
+ const rows=['Trisagion Hymn',
+  'ALL: † Holy God, Holy and Mighty, Holy and Im-','mortal, have mercy on us. (2)',
+  'PRIESTS †Αλφα fixture chant.','DCN 1: Give glory to Christ, our God!',
+  'Baptismal Hymn','Fixture baptismal text.','DEACON: Give glory to Christ, our God!'].map(text=>({text}));
+ const snapshot=JSON.stringify(rows),fixed=F.edmontonTrisagionRows(rows);
+ assert.equal(fixed[3].text,'PRIESTS: †Αλφα fixture chant.');
+ assert.deepEqual(F.role(fixed[3].text),{kind:'clergy',name:'Priests',words:'†Αλφα fixture chant.'});
+ const combined=F.combine(fixed);
+ assert.equal(combined.filter(line=>line.startsWith('ALL:')).length,1);
+ assert.equal(combined.filter(line=>line.startsWith('PRIESTS:')).length,1);
+ assert.doesNotMatch(combined.find(line=>line.startsWith('ALL:')),/PRIESTS/);
+ assert.equal(JSON.stringify(rows),snapshot,'source rows are unchanged');
+ for(const changed of [rows.slice(0,-1),[...rows,rows[3]],rows.filter(row=>!row.text.includes('(2)'))])
+  assert.strictEqual(F.edmontonTrisagionRows(changed),changed,'incomplete or duplicate source stays unchanged');
+});
+
 test('Edmonton seasonal Baptismal Hymn is collapsed only with a complete source signature',()=>{
  const lines=[
   'Trisagion Hymn','ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',

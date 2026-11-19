@@ -116,7 +116,8 @@
         !/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(row.text));
       const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
       const antiphonRows=number===39||number===45?LiturgicalFormat.edmontonFirstAntiphonRows(rows,number===45?'Entrance Antiphon':'First Antiphon'):
-        number===41||number===47?LiturgicalFormat.edmontonAdditionalAntiphonRows(rows,number===41?'typica':'beatitudes'):rows;
+        number===41||number===47?LiturgicalFormat.edmontonAdditionalAntiphonRows(rows,number===41?'typica':'beatitudes'):
+        number===57?LiturgicalFormat.edmontonTrisagionRows(rows):rows;
       addPrayerSections(sections,antiphonRows,heading);
     }
     if(sections.reduce((n,part)=>n+part.lines.length,0)<3)return null;

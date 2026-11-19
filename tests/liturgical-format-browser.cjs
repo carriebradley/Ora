@@ -163,6 +163,7 @@ module.exports=async(page,base,artifacts,violations)=>{
        'The procession leaves the sanctuary through the north doors.'],
      57:['Trisagion Hymn',
        'ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
+       'PRIESTS †Αλφα fixture Greek chant.','DCN 1: Give glory to Christ, our God!',
        'Baptismal Hymn',
        'On the Nativity of Christ, Theophany, Saturday of Lazarus, Holy Saturday, Easter Week and Pentecost, we sing the Baptismal Hymn:',
        'ALL: All you who have been baptized into Christ, you have put on Christ. Alleluia. (2)',
@@ -312,6 +313,7 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.equal(await communionPrayer.count(),1);assert.match(await communionPrayer.innerText(),/I believe, O Lord, and confess/);
  assert.equal(await communionPrayer.locator('.byz-speaker').innerText(),'All');
  const seasonal=ukrainian.locator('details.byz-seasonal-hymn');
+ assert.equal(await ukrainian.locator('.byz-speaker').filter({hasText:'Priests'}).count(),1,'printed priests cue remains a separate speaker');
  assert.equal(await seasonal.count(),1,'source-matched Baptismal Hymn must be separate');
  assert.equal(await seasonal.locator('summary').innerText(),'Baptismal Hymn (only on appointed feasts)');
  assert.equal(await seasonal.evaluate(el=>el.open),false,'not appointed by default');

@@ -74,8 +74,8 @@
    const minister=role(spoken[1]+':');
    if(minister)return {...minister,words:spoken[3].trim(),...(spoken[2]?{cue:spoken[2].trim()}: {})};
   }
-  const m=String(text).match(/^\s*(?:the\s+)?(PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON(?:\s*\d+)?|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
-  const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
+  const m=String(text).match(/^\s*(?:the\s+)?(PRIESTS|PRIEST(?:\s*\d+)?(?:\s+AND\s+DEACON)?|CELEBRANT|BISHOP|DEACON(?:\s*\d+)?|DCN\s*\d*|PROTODEACON|ALL|PEOPLE|FAITHFUL|CONGREGATION|CHOIR|CLERGY|READER|LECTOR|VERSE|CANTOR|SUBDEACON|SERVER|ACOLYTE)(?:\s*\(([^)]+)\)|\s*,\s*(quietly|silently|aloud))?\s*:\s*(.*)$/i);if(!m)return null;
+  const label=m[1].toUpperCase(),kind=/AND/.test(label)||label==='CLERGY'||label==='PRIESTS'?'clergy':/^(?:PRIEST|CELEBRANT|BISHOP)/.test(label)?'priest':/^(?:DEACON|DCN|PROTODEACON)/.test(label)?'deacon':/^(?:ALL|PEOPLE|FAITHFUL|CONGREGATION)$/.test(label)?'all':'other';
   const number=label.match(/\b\d+\b/)?.[0]||'';
   const name=label==='PRIEST AND DEACON'?'Priest and Deacon':kind==='priest'?(/BISHOP/.test(label)?'Bishop':'Priest')+(number?' '+number:''):kind==='deacon'?'Deacon'+(number?' '+number:''):label[0]+label.slice(1).toLowerCase();
   return {kind,name,words:m[4].trim(),...(m[2]||m[3]?{cue:(m[2]||m[3]).trim()}: {})};
@@ -226,6 +226,23 @@
       !/Rejoice and be glad\s*\*?\s*for your reward will be great in heaven\.\s*$/i.test(text))return rows;
   }
   return rows.map((row,i)=>i>=start[0]&&i<end[0]?{...row,alternative:kind}:row);
+ }
+ // The 2012 episcopal PDF p. 57 prints PRIESTS without a colon. PDF.js
+ // otherwise joins that Greek chant to the preceding people's response,
+ // hiding its (2) boundary and preventing the seasonal hymn recognition.
+ // Normalize only this complete, identified page's printed speaker cue.
+ function edmontonTrisagionRows(rows){
+  if(!Array.isArray(rows))return rows;
+  const find=re=>rows.flatMap((row,i)=>re.test(String(row.text||'').trim())?[i]:[]);
+  const head=find(/^Trisagion Hymn$/i),baptism=find(/^Baptismal Hymn$/i);
+  const priests=find(/^PRIESTS\s+[^\u0370-\u03ff]*[\u0370-\u03ff]/u);
+  const deacon=find(/^(?:DCN|DEACON)(?:\s+\d+)?\s*:\s*Give glory to Christ,\s*our God!$/i);
+  if(head.length!==1||baptism.length!==1||priests.length!==1||deacon.length!==2||
+     !(head[0]<priests[0]&&priests[0]<deacon[0]&&deacon[0]<baptism[0]&&baptism[0]<deacon[1]))return rows;
+  const before=rows.slice(head[0]+1,priests[0]).map(r=>r.text).join(' ');
+  if(!/^ALL\s*:\s*†?\s*Holy God,\s*Holy and Mighty,/i.test(before)||
+     !/have mercy on us\.\s*\(2\)\s*$/i.test(before))return rows;
+  return rows.map((row,i)=>i===priests[0]?{...row,text:String(row.text).replace(/^PRIESTS\s+/,'PRIESTS: ')}:row);
  }
  function englishPdfItems(items){
   const out=[];
@@ -1016,6 +1033,6 @@
   }
   return startAtOpeningBlessing(out);
  }
-  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 
