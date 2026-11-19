@@ -1,4 +1,22 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),F=require('../liturgical-format.js'),M=require('../roman-missal.js');
+test('Newton source prayer embedded in prothesis direction is restored without changing the book',()=>{
+ const cue='Then the Priest kisses the Antimension. Fixture directions. The Priest censes it and returns the censer to the server. The Priest and the Deacon bow three times saying quietly “O God, forgive me the sinner and have mercy on me.” The Deacon then says to the Priest in a low voice:';
+ const prayer='Priest and Deacon, quietly: O God, forgive me the sinner and have mercy on me.';
+ const source=[{lines:['The Cherubic Hymn']},{lines:[cue,'Deacon: Fixture next prayer.']}];source.newton2009=true;
+ const original=JSON.stringify(source),out=F.expandNewtonProthesisPrayer(source);
+ assert.deepEqual(out[1].lines,[cue,prayer,prayer,prayer,'Deacon: Fixture next prayer.']);
+ assert.equal(JSON.stringify(source),original);
+ assert.deepEqual(F.role(prayer),{kind:'clergy',name:'Priest and Deacon',words:'O God, forgive me the sinner and have mercy on me.',cue:'quietly'});
+ assert.strictEqual(F.expandNewtonProthesisPrayer(out),out);
+ const unknown=source.map(p=>({...p,lines:[...p.lines]}));
+ assert.strictEqual(F.expandNewtonProthesisPrayer(unknown),unknown);
+ for(const alteredCue of [cue.replace('three times','twice'),cue.replace('have mercy on me','save me'),cue.replace('The Deacon then says','The Priest then says')]){
+  const altered=[{lines:['The Cherubic Hymn']},{lines:[alteredCue]}];altered.newton2009=true;
+  assert.strictEqual(F.expandNewtonProthesisPrayer(altered),altered);
+ }
+ const duplicate=[{lines:['The Cherubic Hymn']},{lines:[cue,cue]}];duplicate.newton2009=true;
+ assert.strictEqual(F.expandNewtonProthesisPrayer(duplicate),duplicate);
+});
 test('Newton Cherubic hymn repeats the source-marked clergy exchange without altering the book',()=>{
  const cue='The Priest is joined by the Deacon; they both bow three times, repeating quietly the Cherubic Hymn:';
  const priest='Priest: We who mystically represent the Cherubim, and sing to the Life-Giving Trinity the thrice-holy hymn, let us lay aside all earthly cares, to receive the King of all.';

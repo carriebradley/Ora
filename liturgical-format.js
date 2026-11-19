@@ -431,6 +431,24 @@
   ]}));out.newton2009=true;return out;
  }
 
+ // Newton 2009 PDF p. 64 embeds this prayer in a long stage direction.
+ // Recover only the exact quoted words from the recognized private book;
+ // the surrounding direction is still hidden by the reader.
+ function expandNewtonProthesisPrayer(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[]).map((text,index)=>({text:String(text).trim(),section,index})));
+  if(rows.filter(row=>/^The Cherubic Hymn$/i.test(row.text)).length!==1)return sections;
+  const pattern=/^Then the Priest kisses the Antimension\.[\s\S]*?The Priest censes it and returns the censer to the server\. The Priest and the Deacon bow three times saying quietly [“"](O God, forgive me the sinner and have mercy on me\.)[”"] The Deacon then says to the Priest in a low voice:$/i;
+  const matches=rows.map(row=>({row,match:row.text.match(pattern)})).filter(x=>x.match);
+  if(matches.length!==1)return sections;
+  const {row,match}=matches[0],part=sections[row.section];
+  const next=part.lines[row.index+1];
+  if(next&&/^Priest and Deacon, quietly:/i.test(next))return sections;
+  const prayer='Priest and Deacon, quietly: '+match[1];
+  const out=sections.map((p,i)=>({...p,lines:i===row.section?[...p.lines.slice(0,row.index+1),prayer,prayer,prayer,...p.lines.slice(row.index+1)]:[...(p.lines||[])]}));
+  out.newton2009=true;return out;
+ }
+
  function expandNewtonPeaceLitany(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -974,6 +992,6 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 

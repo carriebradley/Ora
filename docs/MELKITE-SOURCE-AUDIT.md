@@ -1,5 +1,18 @@
 # Melkite source-text audit utility
 
+## Prayer at the preparation table (Newton 2009, PDF p. 64)
+
+The source embeds a short priest-and-deacon prayer in a long movement
+direction following the Cherubic Hymn and says the clergy bow three times
+while saying it. Ora's prayer-only reader previously hid the entire
+direction, including the spoken prayer. For the positively recognized
+edition, the complete unique direction is matched and the quoted words are
+extracted from the user's own PDF and displayed three times. The surrounding
+movement instructions and the original saved document remain unchanged.
+Unknown, incomplete, edited or duplicated passages are left untouched.
+
+Source: https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf
+
 ## Cherubic Hymn clergy repetition (Newton 2009, PDF p. 64)
 
 The original source directs the priest and deacon to bow three times while

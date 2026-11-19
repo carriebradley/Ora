@@ -57,7 +57,7 @@ module.exports=async(page,base,artifacts)=>{
     'The Priest is joined by the Deacon; they both bow three times, repeating quietly the Cherubic Hymn:',
     'Priest: We who mystically represent the Cherubim, and sing to the Life-Giving Trinity the thrice-holy hymn, let us lay aside all earthly cares, to receive the King of all.',
     'Deacon: Invisibly escorted by angel hosts. Alleluia Alleluia. Alleluia.',
-    'Then the Priest kisses the Antimension. Fixture direction.'
+    'Then the Priest kisses the Antimension. Fixture directions. The Priest censes it and returns the censer to the server. The Priest and the Deacon bow three times saying quietly “O God, forgive me the sinner and have mercy on me.” The Deacon then says to the Priest in a low voice:'
    ],
    67:[
     'L I T A N Y O F T H E G I F T S',
@@ -150,6 +150,9 @@ module.exports=async(page,base,artifacts)=>{
   'the source-marked priest stanza appears three times');
  assert.equal(await preview.locator('.byz-role-deacon').filter({hasText:'Invisibly escorted by angel hosts'}).count(),3,
   'each stanza retains its deacon response');
+ assert.equal(await preview.locator('.byz-role-clergy').filter({hasText:'O God, forgive me the sinner and have mercy on me.'}).count(),3,
+  'the prayer embedded in a source direction appears three times with both clergy');
+ assert.doesNotMatch(text,/The Priest censes it and returns the censer/,'the surrounding movement direction remains hidden');
  assert.equal((text.match(/Fixture choir hymn remains singular/g)||[]).length,1,
   'the preceding congregational hymn remains singular');
  assert.doesNotMatch(text,/they both bow three times, repeating quietly/,'the verified direction is not spoken prayer');
