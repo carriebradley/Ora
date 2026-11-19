@@ -14,7 +14,7 @@ test('build update notice only offers strictly newer published worker versions',
  assert.equal(R.versionNumber('ora-v365')>R.versionNumber('ora-v364'),true);
  assert.equal(R.versionNumber('ora-v363')>R.versionNumber('ora-v364'),false);
 });
-test('manual update reloads only after the advertised worker proves its build',()=>{
+test('manual update reloads only after a sufficiently recent worker proves its build',()=>{
  const app=file('app.js');
  const start=app.indexOf("const updateButton = notice.querySelector('button')");
  const end=app.indexOf('document.body.appendChild(notice)',start);
@@ -22,21 +22,33 @@ test('manual update reloads only after the advertised worker proves its build',(
  assert.ok(start>=0&&end>start,'update action must retain its guarded reload');
  const helper=code.indexOf('const activeBuild = async () =>');
  const update=code.indexOf('await reg.update()',helper);
- const initial=code.indexOf('let activated = await activeBuild() === match[1]',update);
+ const initial=code.indexOf('let activated = meetsOfferedBuild(await activeBuild(), match[1])',update);
  const wait=code.indexOf('await Promise.race',initial);
- const verifiedAfterChange=code.indexOf('activated = await activeBuild() === match[1]',wait);
+ const verifiedAfterChange=code.indexOf('activated = meetsOfferedBuild(await activeBuild(), match[1])',wait);
  const reload=code.indexOf('location.reload()');
  assert.ok(helper>=0,'active worker build must be queried through its message port');
  assert.ok(update>helper,'registration is refreshed before readiness is decided');
  assert.ok(initial>update,'current worker build is checked after registration update');
  assert.ok(wait>initial,'unmatched workers wait for a controller change or bounded timeout');
  assert.ok(verifiedAfterChange>wait,'controller changes must be rechecked against the advertised build');
- assert.ok(reload>verifiedAfterChange,'reload is only reachable after the matching-build check');
+ assert.ok(reload>verifiedAfterChange,'reload is only reachable after the minimum-build check');
  assert.match(code,/ORA_VERSION_QUERY/);
  assert.match(code,/setTimeout\(\(\) => \{[^}]*resolve\(null\); \}, 600\)/);
  assert.match(code,/setTimeout\(resolve, 5000\)/);
  assert.doesNotMatch(code,/controller\s*!==\s*offeredController/);
  assert.match(code,/Retry update/);
+});
+test('update accepts the offered worker or a newer release, and rejects old or invalid builds',()=>{
+ const vm=require('node:vm'),app=file('app.js');
+ const expression=app.match(/const meetsOfferedBuild = (.*);/);
+ assert.ok(expression,'update must verify the active worker build');
+ const ready=vm.runInNewContext('('+expression[1]+')');
+ for(const [build,offered,expected] of [
+  ['ora-v417','ora-v418',false],['ora-v418','ora-v418',true],
+  ['ora-v419','ora-v418',true],['ora-v42','ora-v418',false],
+  [null,'ora-v418',false],['ora-v419x','ora-v418',false],
+  ['ora-v419',null,false]
+ ]) assert.equal(ready(build,offered),expected,`${build} against ${offered}`);
 });
 test('installed worker answers build handshake without touching saved prayer data',()=>{
  const vm=require('node:vm');

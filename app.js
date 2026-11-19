@@ -2514,7 +2514,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v417';
+  const APP_BUILD = 'ora-v418';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
@@ -2560,16 +2560,16 @@
           const reg = await worker?.getRegistration();
           if (reg) await reg.update();
         } catch (_) { /* keep the current prayer open if activation cannot finish */ }
-        let activated = await activeBuild() === match[1];
+        const meetsOfferedBuild = (build, offered) => /^ora-v\d+$/.test(build || '') && /^ora-v\d+$/.test(offered || '') && Number(build.slice(5)) >= Number(offered.slice(5));
+        let activated = meetsOfferedBuild(await activeBuild(), match[1]);
         if (!activated) {
           await Promise.race([
             controllerChange,
             new Promise(resolve => setTimeout(resolve, 5000))
           ]);
-          // A controller change is not proof by itself: another deployment can
-          // intervene while this page is open. Reload only after this worker
-          // identifies itself as the build advertised in the notice.
-          activated = await activeBuild() === match[1];
+          // Another release may supersede the notice while this page is open.
+          // Reload only after a worker identifies itself as at least that build.
+          activated = meetsOfferedBuild(await activeBuild(), match[1]);
         }
         worker?.removeEventListener('controllerchange', onControllerChange);
         if (activated) {
