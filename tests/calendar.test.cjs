@@ -157,7 +157,8 @@ test('The Liturgical Day and rose legend name both joyful Sundays', () => {
   const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
   assert.match(app, /Rose · Gaudete \(Advent III\) and Laetare \(Lent IV\)/);
   assert.match(app, /roseSunday \? \(\/Gaudete\/i\.test\(title\) \? 'Gaudete'/);
-  assert.match(app, /x\.roseSunday \? r\.title : x\.detail/);
+  assert.match(app, /const detail = k === 'byz' \? displayTitle\(r\.title\) : k === 'sarum' \? [\s\S]* : r\.title/);
+  assert.doesNotMatch(app, /const seasonLine =/);
 });
 
 test('Roman sanctoral has no duplicate Anthony and 1962 classes and dates are valid',()=>{

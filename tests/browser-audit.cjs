@@ -222,9 +222,12 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.screenshot({path:path.join(artifacts,'justice-simple-dark-mobile.png'),fullPage:true});
  await page.setViewportSize({width:390,height:844});
  await page.goto(`${base}index.html?tab=today&date=2026-11-15&rite=sarum`);
- assert.match(await page.locator('.glance').innerText(),/St. Martin's Lent/);
- assert.match(await page.locator('#app').innerText(),/Sunday — no historical fast today/);
+ assert.doesNotMatch(await page.locator('.glance').innerText(),/St. Martin's Lent/);
+ assert.match(await page.locator('.gl[data-v="sarum"]').innerText(),/St. Machutus/);
  await page.screenshot({path:path.join(artifacts,'traditional-sunday-mobile.png'),fullPage:true});
+ await page.goto(`${base}index.html?tab=calendar&date=2026-11-15&rite=sarum`);
+ assert.match(await page.locator('#app').innerText(),/St. Martin's Lent/);
+ assert.match(await page.locator('#app').innerText(),/Sunday — no historical fast today/);
  await page.goto(`${base}index.html?tab=pray&date=2026-02-23&rite=roman&kind=readings`);
  fs.writeFileSync(path.join(artifacts,'accessibility-results.json'),JSON.stringify(violations,null,2));
  const poly=page.locator('.oortx-slot[data-k^="Church of Smyrna|"]');
@@ -266,7 +269,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  // Store the large texts once, then verify deep links and prayer data with the network disabled.
  await page.evaluate(async()=>{for(const file of ['matins.json','fathers.json','oortext.json']){const r=await fetch(file);if(!r.ok)throw new Error(file);await r.json();}});
  await context.setOffline(true);
- await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-15`);assert.match(await page.locator('#app').innerText(),/St. Martin's Lent/);
+ await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-15`);
+ assert.match(await page.locator('.gl[data-v="sarum"]').innerText(),/St. Machutus/);
+ assert.doesNotMatch(await page.locator('.glance').innerText(),/St. Martin's Lent/);
  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-12-24&kind=evening`);
  assert.match(await page.locator('#st0').innerText(),/Galatians 4:4-5/i);
  assert.match(await page.locator('#st0').innerText(),/adoption of sons/);

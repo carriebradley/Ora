@@ -554,17 +554,18 @@
     const rows = [['Roman', v.roman, 'roman'], ['Byzantine', v.byz, 'byz'], ['Traditional', v.sarum, 'sarum']];
     return `<section class="card glance"><div class="lab liturgical-day-heading">${todayAccent("calendar")}<span class="grow">The Liturgical Day</span></div>` + rows.map(([n, r, k]) => {
       const x = status(r, k);
-      const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : x.roseSunday ? r.title : x.detail;
+      // Today should state the observance plainly. Fasting qualifications,
+      // feast allowances and calendar-cycle detail belong in Calendar, not
+      // beneath every rite choice on this compact card.
+      const detail = k === 'byz' ? displayTitle(r.title) : k === 'sarum' ? String(r.title || '').split(/\s*[·•]\s*St\. Martin's Lent\b/i)[0].trim() : r.title;
       const shown = k === 'byz' ? (byzantineCommemorations(detail)[0] || detail) :
         k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
         westernCommemorations(detail)[0] || detail;
       const detailHTML = esc(displayTitle(shown));
-      const seasonLine = k === 'roman' && x.roseSunday ? '' : displayTitle(glanceSeason(r, k, v.iso));
-      const cycles = '';
       const lit = observanceColor(r, k);
       const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
       const badgeColor = lit === 'w' ? 'var(--lit-white)' : col(lit);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${seasonLine || detail || cycles ? `<div class="gd">${detailHTML}${seasonLine ? `<div class="muted" style="margin-top:5px">${esc(seasonLine)}</div>` : ''}${cycles}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2503,7 +2504,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v410';
+  const APP_BUILD = 'ora-v411';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

@@ -27,7 +27,7 @@ module.exports=async(page,base)=>{
   ]){
    await page.goto(`${base}index.html?tab=today&rite=byz&date=${date}`);
    const row=page.locator('.gl[data-v="byz"]');
-   assert.match(await row.innerText(),fragment,church+' '+date+' retains the season');
+   assert.doesNotMatch(await row.innerText(),fragment,church+' '+date+' keeps fasting detail in Calendar');
    assert.equal(await row.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),violet,
     church+' '+date+' fasting observance must not be white');
   }
