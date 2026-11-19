@@ -145,6 +145,9 @@ module.exports=async(page,base,artifacts,violations)=>{
        'Weekdays:','VERSE: Fixture weekday verse one.','ALL: Fixture weekday reply one.',
        'VERSE: Fixture weekday verse two.','ALL: Fixture weekday reply two.',
        'VERSE: Fixture weekday verse three.','ALL: Fixture weekday reply three. (Hymn to Christ, p. 39)'],
+     41:['Typica: Psalm 102','ALL: Bless the Lord, O my soul,',
+       'Fixture typica words. Compassionate and merciful is the Lord,',
+       'Blessed are You, O Lord.','Hymn to Christ','ALL: Fixture shared hymn.'],
      45:['Entrance Antiphon','Major Feast Days:','See propers.','Sundays:',
        'VERSE: Fixture Sunday entrance one.','ALL: Fixture Sunday entrance response one.',
        'VERSE: Fixture Sunday entrance two.','ALL: Fixture Sunday entrance response two.',
@@ -152,6 +155,12 @@ module.exports=async(page,base,artifacts,violations)=>{
        'Weekdays:','VERSE: Fixture weekday entrance one.','ALL: Fixture weekday entrance response one.',
        'VERSE: Fixture weekday entrance two.','ALL: Fixture weekday entrance response two.',
        'VERSE: Fixture weekday entrance three.','ALL: Fixture weekday entrance response three. (Continue on p. 47)'],
+     47:['The Beatitudes','ALL: Remember us, O Lord,',
+       'Blessed are the first. Blessed are the second. Blessed are the third.',
+       'Blessed are they fourth. Blessed are they fifth. Blessed are the sixth.',
+       'Blessed are the seventh. Blessed are the eighth. Blessed are you ninth.',
+       'Rejoice and be glad * for your reward will be great in heaven.',
+       'The procession leaves the sanctuary through the north doors.'],
      57:['Trisagion Hymn',
        'ALL: Holy God, Holy and Mighty, Holy and Immortal, have mercy on us. (2)',
        'Baptismal Hymn',
@@ -261,17 +270,23 @@ module.exports=async(page,base,artifacts,violations)=>{
   'the spoken sung response must be retained');
 
  const firstAntiphon=ukrainian.locator('details.byz-antiphon-option:not(.byz-seasonal-hymn)');
- assert.equal(await firstAntiphon.count(),4,'both printed Sunday and weekday antiphons are separate');
+ assert.equal(await firstAntiphon.count(),6,'both antiphons have three separate choices');
  assert.equal(await firstAntiphon.nth(0).evaluate(el=>el.open),true,'Sunday form is selected');
  assert.equal(await firstAntiphon.nth(1).evaluate(el=>el.open),false,'weekday form is not appointed on Sunday');
  assert.match(await firstAntiphon.nth(0).innerText(),/Fixture Sunday verse one/);
  assert.doesNotMatch(await firstAntiphon.nth(0).innerText(),/Fixture weekday/);
  assert.match(await firstAntiphon.nth(1).textContent(),/Fixture weekday verse one/);
- assert.equal(await firstAntiphon.nth(2).evaluate(el=>el.open),true,'Sunday entrance form is selected');
- assert.equal(await firstAntiphon.nth(3).evaluate(el=>el.open),false,'weekday entrance form is closed');
- assert.match(await firstAntiphon.nth(2).innerText(),/Fixture Sunday entrance one/);
- assert.doesNotMatch(await firstAntiphon.nth(2).innerText(),/Fixture weekday entrance/);
- assert.match(await firstAntiphon.nth(3).textContent(),/Fixture weekday entrance one/);
+ assert.equal(await firstAntiphon.nth(2).evaluate(el=>el.open),false,'Typica is available without being automatically appointed');
+ assert.match(await firstAntiphon.nth(2).textContent(),/Fixture typica words/);
+ assert.equal(await firstAntiphon.nth(3).evaluate(el=>el.open),true,'Sunday entrance form is selected');
+ assert.equal(await firstAntiphon.nth(4).evaluate(el=>el.open),false,'weekday entrance form is closed');
+ assert.match(await firstAntiphon.nth(3).innerText(),/Fixture Sunday entrance one/);
+ assert.doesNotMatch(await firstAntiphon.nth(3).innerText(),/Fixture weekday entrance/);
+ assert.match(await firstAntiphon.nth(4).textContent(),/Fixture weekday entrance one/);
+ assert.equal(await firstAntiphon.nth(5).evaluate(el=>el.open),false,'Beatitudes are available without being automatically appointed');
+ assert.match(await firstAntiphon.nth(5).textContent(),/Blessed are you ninth/);
+ assert.doesNotMatch(await firstAntiphon.nth(2).textContent(),/Fixture shared hymn/,'shared hymn remains outside the choice');
+ assert.match(await ukrainian.innerText(),/Fixture shared hymn/,'shared hymn remains visible');
  assert.doesNotMatch(await ukrainian.textContent(),/Major Feast Days:|Hymn to Christ, p\.\s*39|Continue on p\.\s*47/,'source selection and page notes are not prayer');
  const crossing=ukrainian.locator('.byz-prayer-line').filter({hasText:'For the seafarers and travellers'});
  assert.equal(await crossing.count(),1);

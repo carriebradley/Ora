@@ -94,8 +94,8 @@
         !/^(?:page \d+|table of contents|contents|notes|rubrics)$/i.test(line));
       if(!combined.length)continue;
       if(group.alternative){
-        const name=group.alternative==='sunday'?'Sunday':'Weekday';
-        const choice=/^(?:Sunday|Weekday)\b/i.test(combined[0])?combined.shift():name;
+        const name={sunday:'Sunday',weekday:'Weekday',typica:'Typica: Psalm 102',beatitudes:'The Beatitudes'}[group.alternative];
+        const choice=/^(?:Sunday|Weekday|Typica:\s*Psalm\s*102|The Beatitudes)\b/i.test(combined[0])?combined.shift():name;
         if(combined.length)sections.push({alternative:group.alternative,heading:choice,lines:combined});
       }else sections.push({lines:combined});
     }
@@ -115,7 +115,9 @@
       const rows=LiturgicalFormat.pdfRows(LiturgicalFormat.englishPdfItems(items),number).filter(row=>
         !/^Episcopal Divine Liturgy 2012 WEB|^Layout 1|^Page \d+/i.test(row.text));
       const heading=number===33?'Liturgy of the Word':number===69?'Liturgy of the Eucharist':number===83?'Anaphora':number===99?'Holy Communion':null;
-      addPrayerSections(sections,number===39||number===45?LiturgicalFormat.edmontonFirstAntiphonRows(rows,number===45?'Entrance Antiphon':'First Antiphon'):rows,heading);
+      const antiphonRows=number===39||number===45?LiturgicalFormat.edmontonFirstAntiphonRows(rows,number===45?'Entrance Antiphon':'First Antiphon'):
+        number===41||number===47?LiturgicalFormat.edmontonAdditionalAntiphonRows(rows,number===41?'typica':'beatitudes'):rows;
+      addPrayerSections(sections,antiphonRows,heading);
     }
     if(sections.reduce((n,part)=>n+part.lines.length,0)<3)return null;
     sections.edmonton2012=true;

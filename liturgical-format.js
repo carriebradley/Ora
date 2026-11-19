@@ -203,6 +203,30 @@
    return [row];
   });
  }
+ // The same Edmonton 2012 source prints a third choice on the next
+ // English page: Typica after the first antiphon, and the Beatitudes after
+ // the entrance antiphon. Keep the shared hymn and entrance directions
+ // outside the disclosures. Call only for the identified 140-page edition.
+ function edmontonAdditionalAntiphonRows(rows,kind){
+  if(!Array.isArray(rows)||!['typica','beatitudes'].includes(kind))return rows;
+  const find=re=>rows.flatMap((row,i)=>re.test(String(row.text||'').trim())?[i]:[]);
+  const start=find(kind==='typica'?/^Typica:\s*Psalm\s*102$/i:/^The Beatitudes$/i);
+  const end=find(kind==='typica'?/^Hymn to Christ$/i:/^The procession leaves the sanctuary\b/i);
+  if(start.length!==1||end.length!==1||end[0]<=start[0]+1)return rows;
+  const body=rows.slice(start[0]+1,end[0]);
+  const text=body.map(row=>String(row.text||'').trim()).join(' ').replace(/\s+/g,' ');
+  if(body.filter(row=>/^ALL\s*:/i.test(row.text)).length!==1)return rows;
+  if(kind==='typica'){
+   if(!/^ALL\s*:\s*Bless the Lord, O my soul\b/i.test(text)||
+      !/Compassionate and merciful is the Lord/i.test(text)||
+      !/Blessed are You, O Lord\.\s*$/i.test(text))return rows;
+  }else{
+   if(!/^ALL\s*:\s*Remember us, O Lord\b/i.test(text)||
+      (text.match(/\bBlessed are (?:the|they|you)\b/gi)||[]).length!==9||
+      !/Rejoice and be glad\s*\*?\s*for your reward will be great in heaven\.\s*$/i.test(text))return rows;
+  }
+  return rows.map((row,i)=>i>=start[0]&&i<end[0]?{...row,alternative:kind}:row);
+ }
  function englishPdfItems(items){
   const out=[];
   for(const item of items||[]){
@@ -992,6 +1016,6 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 

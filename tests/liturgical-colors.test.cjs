@@ -18,6 +18,19 @@ test('Marian display colour leaves vestment data and precedence intact',()=>{
  const displaced=L.roman(date('2026-05-31'));assert.match(displaced.title,/Trinity/);assert.equal(C.marian(displaced),false);
  const holyThursday=L.roman(date('2027-03-25'));assert.match(holyThursday.title,/Holy Thursday/);assert.equal(C.marian(holyThursday),false);
 });
+
+test('fasting days and seasons are identified without changing calendar data',()=>{
+ const martin={title:'A feast',color:'w',season:'After Trinity',historicalObservance:{name:"St. Martin's Lent"}};
+ const before=JSON.stringify(martin);
+ assert.equal(C.fasting(martin,'sarum'),true);
+ assert.equal(C.fasting(martin,'roman'),false);
+ assert.equal(C.fasting({fast:'Fast and abstinence',color:'r'},'roman'),true);
+ assert.equal(C.fasting({fastSeason:'Nativity Fast',color:'w'},'byz'),true);
+ assert.equal(C.fasting({season:'Lent',color:'w'},'roman'),true);
+ assert.equal(C.fasting({season:'Passiontide',color:'r'},'sarum'),true);
+ assert.equal(C.fasting({season:'Advent',color:'w'},'roman'),false);
+ assert.equal(JSON.stringify(martin),before);
+});
 test('other Marys, virgins, and optional or outranked Marian entries do not recolour a day',()=>{
  for(const title of ['Saint Mary Magdalene','Saint Mary of Egypt','Saint Therese, Virgin and Doctor','Saint Joseph, Spouse of the Blessed Virgin Mary','Christmas','Presentation of the Lord']){
   assert.equal(C.marian({title}),false,title);

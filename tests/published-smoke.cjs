@@ -92,17 +92,17 @@ module.exports=async function(browser,artifacts){
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'published art caption fits');
       }
     }
-    // The two rose Sundays must have their proper titles, dates, and liturgical
-    // colors on the actual deployed site, not merely in the calendar engine.
-    for(const [date,badge,title]of [
-      ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/],
-      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/]
+    // Joyful Sunday names remain correct while the Lenten fasting season
+    // uses the owner's purple display colour.
+    for(const [date,badge,title,colour]of [
+      ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/,'#d9899e'],
+      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/,'#6a3f9a']
     ]){
       await visit(`${base}index.html?tab=today&rite=roman&date=${date}`,`Rose Sunday ${date}`);
       const card=page.locator('.gl[data-v="roman"]');
       assert.equal(await card.locator('.gb').innerText(),badge,date+' rose Sunday badge');
       assert.match((await card.innerText()).replace(/\s+/g,' '),title,date+' correct joy Sunday');
-      assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#d9899e',date+' Roman rose accent');
+      assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),colour,date+' Roman accent');
       for(const width of [320,390]){
         await page.setViewportSize({width,height:844});
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,date+' rose day has no horizontal overflow');

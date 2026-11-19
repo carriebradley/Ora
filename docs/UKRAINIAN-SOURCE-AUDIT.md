@@ -1,5 +1,22 @@
 # Ukrainian Divine Liturgy — source audit
 
+## Episcopal Typica and Beatitudes alternatives (Edmonton 2012)
+
+On November 19, 2026, the original 140-page episcopal PDF was processed
+with Ora's PDF.js extraction and compared with its English PDF pp. 39,
+41, 45 and 47. The Sunday and weekday selections refer forward to a
+shared hymn or entrance; Typica on p. 41 and the Beatitudes on p. 47 are
+additional antiphon choices. Previously, those two alternatives remained
+in the continuous prayer stream even when another form was open.
+
+For this positively identified edition only, Ora groups each complete
+source-matched alternative into a closed disclosure. The shared Hymn to
+Christ and the subsequent entrance directions remain outside the choices;
+no alternative is appointed automatically. Incomplete or ambiguous
+source boundaries leave the original extraction unchanged. This correction
+does not modify the saved PDF and does not establish the behavior of the
+separate Calgary or cathedral parish booklets.
+
 ## Ordinary parish booklet: antiphon alternatives require review
 
 Reviewed November 19, 2026. Ora links to the 33-page English

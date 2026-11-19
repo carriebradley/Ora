@@ -15,5 +15,12 @@
       || /\bconception of (?:the )?(?:(?:holy|saint|st\.?|righteous)\s+)*ann[ae]\b/i.test(title);
   }
   const display=day=>marian(day)?'blue':day?.color;
-  return {blue,marian,display};
+  // Display fasting periods consistently without changing a calendar's
+  // source colour or implying that every date is a day of abstinence.
+  function fasting(day,rite,fast=day?.fast){
+    return !!(fast||day?.fastSeason||
+      (rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")||
+      /^(?:Lent|Passiontide)$/i.test(day?.season||''));
+  }
+  return {blue,marian,display,fasting};
 });
