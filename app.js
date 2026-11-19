@@ -1706,12 +1706,17 @@
     const byzantine=st.liturgyView==='byz';
     const service=LiturgySchedule.service(st.date,S.byzLiturgyChurch);
     const day=byzantine?L.byzantine(P(st.date),{...S,byzChurch:S.byzLiturgyChurch}):v.roman;
-    const bookId=byzantine&&['chrysostom','basil','presanctified'].includes(service.id)&&S.byzLiturgyChurch==='melkite'?'melkite-'+service.id:byzantine?service.id:'roman';
-    const reader=LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:day.title,dayRank:byzantine?day.rank:''});
+    const manualAvailable=byzantine&&service.id==='unknown'&&service.verification==='unavailable';
+    const choice=manualAvailable&&st.manualBook?.date===st.date&&st.manualBook?.church===S.byzLiturgyChurch?st.manualBook.id:'';
+    const serviceId=choice||service.id;
+    const bookId=byzantine&&['chrysostom','basil','presanctified'].includes(serviceId)&&S.byzLiturgyChurch==='melkite'?'melkite-'+serviceId:byzantine?serviceId:'roman';
+    const reader=choice||!manualAvailable?LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:day.title,dayRank:byzantine?day.rank:'',manual:!!choice}):'';
+    const manualBooks=manualAvailable?`<details class="manual-service-books" ${choice?'open':''}><summary>Open a saved service book</summary><p class="muted">The service for this date has not been verified. Choose a book to read; this does not identify the appointed service.</p><div class="row" role="group" aria-label="Choose a service book">${[['chrysostom','St. John Chrysostom'],['basil','St. Basil'],['presanctified','Presanctified Gifts']].map(([id,label])=>`<button type="button" class="btn sm" data-act="manualBook" data-v="${id}" aria-pressed="${choice===id}">${label}</button>`).join('')}</div></details>`:'';
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
       <h2 class="simple-liturgy-title">${esc(day.title)}</h2>
       ${byzantine?`<p class="service-summary"><strong>${esc(service.title)}</strong></p>`:''}
+      ${manualBooks}
       ${reader}
       ${byzantine?byzLiturgyDailyChanges(st.date,S.byzLiturgyChurch,day,service):''}
       <button class="btn sm" data-act="goReadings" data-v="${byzantine?'byz':'roman'}">Open the day’s readings</button>
@@ -2465,6 +2470,11 @@
       case 'kind': st.kind = v; break;
       case 'prayview': st.prayView = v === 'mass' ? 'mass' : 'office'; break;
       case 'liturgyview': st.liturgyView = v === 'byz' ? 'byz' : 'mass'; break;
+      case 'manualBook': {
+        const current=LiturgySchedule.service(st.date,S.byzLiturgyChurch);
+        if(st.tab!=='liturgy'||st.liturgyView!=='byz'||current.id!=='unknown'||current.verification!=='unavailable'||!['chrysostom','basil','presanctified'].includes(v))return;
+        st.manualBook={date:st.date,church:S.byzLiturgyChurch,id:v};break;
+      }
       case 'shour': st.shour = v; break;
       case 'goPray': st.kind = b.dataset.k; st.tab = 'pray'; window.scrollTo(0, 0); break;
       case 'qnext': st.quoteShift++; break;
@@ -2504,7 +2514,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v411';
+  const APP_BUILD = 'ora-v412';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

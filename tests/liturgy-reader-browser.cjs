@@ -74,7 +74,36 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
  await ensureOffline();await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
  await page.locator('[data-reader="mode"]').click();await page.waitForFunction(()=>document.querySelector('#reader-text')?.textContent.includes('page two'));
- await page.locator('[data-reader="close"]').click();await context.setOffline(false);
+  await page.locator('[data-reader="close"]').click();
+  // In an unverified year, opening a private book is an explicit choice,
+  // not an automatically appointed service or a source of dated hymns.
+  await page.goto(`${base}index.html?tab=liturgy&rite=byz&date=2027-01-09`);
+  assert.match(await page.locator('.service-summary').innerText(),/calendar unavailable/i);
+  assert.equal(await page.locator('.liturgical-text').count(),0,'no book is automatically selected');
+  const picker=page.locator('.manual-service-books');
+  await picker.locator('summary').click();
+  assert.match(await picker.innerText(),/does not identify the appointed service/);
+  await picker.locator('[data-act="manualBook"][data-v="chrysostom"]').click();
+  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'chrysostom');
+  assert.equal(await page.locator('.liturgical-text').getAttribute('data-manual-book'),'true');
+  assert.equal(await page.locator('.byz-daily-propers').count(),0);
+  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
+  await ensureOffline();await page.locator('[data-reader="open"]').click();
+  await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
+  await page.locator('[data-reader="close"]').click();
+  await page.locator('[data-act="next"]').click();
+  assert.equal(await page.locator('.liturgical-text').count(),0,'manual choice cannot appoint the next date');
+  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));});
+  await page.goto(`${base}index.html?tab=liturgy&rite=byz&date=2027-01-09`);
+  await page.locator('.manual-service-books summary').click();
+  await page.locator('.manual-service-books [data-v="basil"]').click();
+  assert.equal(await page.locator('.liturgical-text').getAttribute('data-text-id'),'melkite-basil','manual selection stays in the chosen church');
+  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'manual book choices fit phone');
+  await context.setOffline(false);
+  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings'));s.byzChurch='ukrainian';localStorage.setItem('ora.settings',JSON.stringify(s));});
+  await page.goto(`${base}index.html?tab=liturgy&rite=byz&date=2026-11-11`);
+  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
  await ensureOffline();page.once('dialog',d=>d.accept());await page.locator('[data-reader="remove"]').click();
  await page.waitForFunction(()=>document.querySelector('[data-reader="open"]').disabled);
  assert.equal(await page.evaluate(async()=>!!await LiturgyReader.get('basil')),true,'removal leaves the other service book intact');

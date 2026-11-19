@@ -10,10 +10,10 @@
     return prayerPreviews.get(saved.id).promise;
   }
   function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
-  function card(id,{church='ukrainian',date='',dayTitle='',dayRank=''}={}){
+  function card(id,{church='ukrainian',date='',dayTitle='',dayRank='',manual=false}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
     const roman=id==='roman';
-    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" aria-label="Prayers of the day">
+    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" ${manual?'data-manual-book="true"':''} aria-label="${manual?'Selected service book':'Prayers of the day'}">
       ${roman?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
@@ -371,7 +371,7 @@
   // privately saved book. Unknown/seasonal editions remain unchanged.
   function arrangeDailyHymns(section,preview,sections,{recognized=true,seasonal=false}={}){
     const id=section.dataset.textId;
-    if(!recognized||seasonal||!['chrysostom','melkite-chrysostom'].includes(id)||
+    if(section.dataset.manualBook==='true'||!recognized||seasonal||!['chrysostom','melkite-chrysostom'].includes(id)||
        typeof LiturgyDocument==='undefined')return;
     const church=id.startsWith('melkite-')?'melkite':'ukrainian';
     const iso=section.dataset.dayDate,request=hydrateVersion;
