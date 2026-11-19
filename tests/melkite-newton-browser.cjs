@@ -52,6 +52,13 @@ module.exports=async(page,base,artifacts)=>{
     'DEACON: Wisdom.','Prayer of the Ektene (said quietly by the Priest):',
     'PRIEST: Fixture Ektene concluding prayer.'
    ],
+   63:['The Cherubic Hymn','ALL: Fixture choir hymn remains singular.'],
+   64:[
+    'The Priest is joined by the Deacon; they both bow three times, repeating quietly the Cherubic Hymn:',
+    'Priest: We who mystically represent the Cherubim, and sing to the Life-Giving Trinity the thrice-holy hymn, let us lay aside all earthly cares, to receive the King of all.',
+    'Deacon: Invisibly escorted by angel hosts. Alleluia Alleluia. Alleluia.',
+    'Then the Priest kisses the Antimension. Fixture direction.'
+   ],
    67:[
     'L I T A N Y O F T H E G I F T S',
     'DEACON: Let us complete our prayer to the Lord.',
@@ -139,6 +146,13 @@ module.exports=async(page,base,artifacts)=>{
   throw new Error('Recognized Newton PDF was not composed: '+JSON.stringify(diagnostics),{cause:error});
  }
  const preview=page.locator('.reader-inline-text'),text=await preview.innerText();
+ assert.equal(await preview.locator('.byz-role-priest').filter({hasText:'We who mystically represent the Cherubim'}).count(),3,
+  'the source-marked priest stanza appears three times');
+ assert.equal(await preview.locator('.byz-role-deacon').filter({hasText:'Invisibly escorted by angel hosts'}).count(),3,
+  'each stanza retains its deacon response');
+ assert.equal((text.match(/Fixture choir hymn remains singular/g)||[]).length,1,
+  'the preceding congregational hymn remains singular');
+ assert.doesNotMatch(text,/they both bow three times, repeating quietly/,'the verified direction is not spoken prayer');
  assert.doesNotMatch(text,/Fixture annual (?:Kontakia|Hirmoi) index must be hidden|Table of (?:Kontakia|Hirmoi) for the Year/,
   'annual indexes must remain absent after dated hymns are inserted');
  const original=[

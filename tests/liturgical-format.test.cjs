@@ -1,4 +1,28 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),F=require('../liturgical-format.js'),M=require('../roman-missal.js');
+test('Newton Cherubic hymn repeats the source-marked clergy exchange without altering the book',()=>{
+ const cue='The Priest is joined by the Deacon; they both bow three times, repeating quietly the Cherubic Hymn:';
+ const priest='Priest: We who mystically represent the Cherubim, and sing to the Life-Giving Trinity the thrice-holy hymn, let us lay aside all earthly cares, to receive the King of all.';
+ const deacon='Deacon: Invisibly escorted by angel hosts. Alleluia Alleluia. Alleluia.';
+ const after='Then the Priest kisses the Antimension. Fixture direction.';
+ const source=[{lines:['The Cherubic Hymn','All: Fixture congregation sings once.']},{lines:[cue,priest,deacon,after]}];source.newton2009=true;
+ const snapshot=JSON.stringify(source),out=F.expandNewtonCherubicThreefold(source);
+ assert.deepEqual(out[0].lines,source[0].lines);
+ assert.deepEqual(out[1].lines,[priest,deacon,priest,deacon,priest,deacon,after]);
+ assert.equal(JSON.stringify(source),snapshot,'private source data is never mutated');
+ assert.equal(out.newton2009,true);
+ assert.strictEqual(F.expandNewtonCherubicThreefold(out),out,'already expanded material is unchanged');
+ const unknown=source.map(p=>({...p,lines:[...p.lines]}));
+ assert.strictEqual(F.expandNewtonCherubicThreefold(unknown),unknown,'unrecognized editions remain unchanged');
+ for(const [section,index] of [[0,0],[1,0],[1,1],[1,2],[1,3]]){
+  const altered=source.map(p=>({...p,lines:[...p.lines]}));altered.newton2009=true;altered[section].lines[index]='unrecognized passage';
+  assert.strictEqual(F.expandNewtonCherubicThreefold(altered),altered,'missing source boundary fails closed');
+ }
+ const edited=source.map(p=>({...p,lines:[...p.lines]}));edited.newton2009=true;
+ edited[1].lines[1]=priest.replace('earthly cares','other cares');
+ assert.strictEqual(F.expandNewtonCherubicThreefold(edited),edited,'a changed prayer remains unexpanded');
+ const duplicate=source.map(p=>({...p,lines:[...p.lines]}));duplicate.newton2009=true;duplicate[1].lines.push(cue);
+ assert.strictEqual(F.expandNewtonCherubicThreefold(duplicate),duplicate,'ambiguous duplicate cues are left unchanged');
+});
 test('PDF headings and paragraphs survive tracked letters and physical line breaks',()=>{
  assert.deepEqual(F.combine(['L I T U R G Y O F T H E','E U C H A R I S T','PRIEST: Fixture opening','continued on this row.','ALL: Fixture response.']),['Liturgy of the Eucharist','PRIEST: Fixture opening continued on this row.','ALL: Fixture response.']);
  assert.equal(F.heading('Holy God'),false,'title case alone is not a heading');

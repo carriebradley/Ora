@@ -1,5 +1,20 @@
 # Melkite source-text audit utility
 
+## Cherubic Hymn clergy repetition (Newton 2009, PDF p. 64)
+
+The original source directs the priest and deacon to bow three times while
+quietly repeating the Cherubic Hymn. It prints one priest stanza followed by
+one deacon response. The recognized 2009 edition now displays that paired
+exchange three times, without repeating the earlier congregation's hymn.
+This is a display-only expansion: the saved PDF is not changed. It requires
+the source's unique heading, complete direction, both consecutive speaker
+lines and the following printed boundary. Unknown or altered editions and
+ambiguous duplicates remain unchanged. The original was inspected with PDF
+text extraction and the formatter was checked against its source lines;
+this narrow finding does not certify the full Divine Liturgy.
+
+Source: https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf
+
 Run `node tools/audit_melkite_text.cjs extracted.txt` on a locally extracted, plain-text copy of the relevant Melkite liturgy. It reports reference-table boundaries, unclosed tables, suspicious rubrics, and damaged glyphs as JSON. Exit code 1 means manual review is needed.
 
 The tool does not download or modify source documents, upload private books, remove text, or certify a complete liturgy. It uses the same boundary classifier as Ora's reader. Source-page metadata is not retained by a plain-text input; keep page references in the extraction when possible. This is an aid to source review, not a substitute for comparing rendered pages and the original edition.

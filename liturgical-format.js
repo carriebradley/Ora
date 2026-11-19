@@ -410,6 +410,27 @@
   })}));out.newton2009=true;return out;
  }
 
+ // Newton 2009 PDF p. 64: the priest and deacon quietly repeat the complete
+ // Cherubic Hymn together three times. Keep the source's two speaker lines
+ // paired and do not alter the preceding people's hymn or the saved PDF.
+ function expandNewtonCherubicThreefold(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[]).map((text,index)=>({text:String(text).trim(),section,index})));
+  const cues=rows.map((row,index)=>/^The Priest is joined by the Deacon; they both bow three times, repeating quietly the Cherubic Hymn:$/i.test(row.text)?index:-1).filter(index=>index>=0);
+  if(cues.length!==1)return sections;
+  const i=cues[0],cue=rows[i],priest=rows[i+1],deacon=rows[i+2],next=rows[i+3];
+  const heading=rows.slice(0,i).filter(row=>/^The Cherubic Hymn$/i.test(row.text));
+  if(heading.length!==1||!priest||!deacon||!next||
+     priest.section!==cue.section||deacon.section!==cue.section||next.section!==cue.section||
+     priest.index!==cue.index+1||deacon.index!==cue.index+2||next.index!==cue.index+3||
+     !/^Priest:\s*We who mystically represent the Cherubim,\s*and sing to the Life[-\u00ad\u2010-\u2011]+Giving Trinity the thrice[-\u00ad\u2010-\u2011]+holy hymn,\s*let us lay aside all earthly cares,\s*to receive the King of all\.\s*$/i.test(priest.text)||
+     !/^Deacon:\s*Invisibly escorted by angel hosts\.\s*Alleluia[.,]?\s+Alleluia[.,]?\s+Alleluia\.\s*$/i.test(deacon.text)||
+     !/^Then the Priest kisses the Antimension\./i.test(next.text))return sections;
+  const out=sections.map((part,section)=>({...part,lines:section!==cue.section?[...(part.lines||[])]:[
+   ...part.lines.slice(0,cue.index),...Array.from({length:3},()=>[part.lines[priest.index],part.lines[deacon.index]]).flat(),...part.lines.slice(next.index)
+  ]}));out.newton2009=true;return out;
+ }
+
  function expandNewtonPeaceLitany(sections){
   if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
@@ -953,6 +974,6 @@
   }
   return startAtOpeningBlessing(out);
  }
- return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+ return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 
