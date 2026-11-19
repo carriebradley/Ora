@@ -1,5 +1,25 @@
 # Ukrainian Divine Liturgy — source audit
 
+## Ordinary parish booklet: antiphon alternatives require review
+
+Reviewed November 19, 2026. Ora links to the 33-page English
+[Assumption parish booklet](https://abvmcalgary.com/site/wp-content/uploads/2025/04/PDF-Divine-Liturgy-Eng.pdf).
+Its First and Second Antiphons present Sunday, weekday and Typica forms as
+alternatives; the First Antiphon choices span more than one PDF page. An
+[Edmonton cathedral bilingual edition](https://stjosaphat.ab.ca/wp-content/uploads/2020/05/PDF-Divine-Liturgy-Ukr-Eng.pdf)
+also describes the forms as alternatives. These are parish-booklet sources,
+not the 140-page episcopal edition described below.
+
+The current edition-specific separation code recognizes the episcopal source,
+while generic PDF handling does not explicitly identify these vertical,
+cross-page parish alternatives. This is a likely presentation defect: the
+reader could show alternatives consecutively. A live source-render comparison
+has not yet been completed, so its exact effect on a device is unconfirmed.
+Do not automatically choose a form or alter prayer words on this evidence
+alone. Next, inspect the actual PDF with the reader's extraction pipeline,
+verify the boundaries of all printed alternatives and common prayers, and
+test unknown, incomplete and previously saved books before changing behavior.
+
 ## Verified edition
 
 Eparchy of Edmonton, *Episcopal Divine Liturgy* (2012), 140-page
