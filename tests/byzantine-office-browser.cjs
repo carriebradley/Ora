@@ -5,6 +5,7 @@ module.exports=async(page,base,artifacts)=>{
   for(const kind of ['morning','evening','night']){
    await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-13&kind=${kind}`);
    assert.match(await page.locator('.byz-office-guide').innerText(),/Prayer companion/);
+   assert.equal(await page.locator('.byz-unverified-pascha').count(),0,'verified 2026 basis should not be labeled unverified');
    assert.equal(await page.locator('.step .t').first().innerText(),'Sign of the Cross');
    assert.equal(await page.locator('.step .tx').first().innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
    await page.locator('.byz-fixed-psalms > summary').first().click();
@@ -24,6 +25,19 @@ module.exports=async(page,base,artifacts)=>{
    assert.equal(titles.includes('O Heavenly King'),heavenly);
    assert.equal(titles.includes('Paschal opening · three times'),paschal);
   }
+  // A future seasonal prayer order is calculated, not a diocesan appointment.
+  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2027-03-28&kind=morning`);
+  assert.match(await page.locator('.byz-unverified-pascha').innerText(),/calculated Gregorian Pascha.*not yet been verified/);
+  assert.equal(await page.locator('.step .t').first().innerText(),'Sign of the Cross');
+  for(const width of [320,390]){
+   await page.setViewportSize({width,height:844});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'unverified calendar note fits phone');
+  }
+  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2027-03-28`);
+  const calendarCard=page.locator('.calendar-byz-saints').locator('..');
+  assert.match(await calendarCard.innerText(),/Pascha.*calculated; not yet verified for this church/);
+  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-04-05`);
+  assert.doesNotMatch(await page.locator('.calendar-byz-saints').locator('..').innerText(),/calculated; not yet verified for this church/);
  }
  await page.goto(`${base}index.html?tab=pray&rite=byz&date=2026-11-15&kind=morning`);
  assert.match(await page.locator('.divine-office-card').innerText(),/Resurrection troparion · Tone 8/);
