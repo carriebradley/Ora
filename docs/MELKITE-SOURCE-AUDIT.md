@@ -1,5 +1,17 @@
 # Melkite source-text audit utility
 
+## Opening prayers (Newton 2009, PDF pp. 30–31)
+
+The printed opening assigns the priest and deacon two recitations of the
+first verse and one of the following verse. Later, the deacon says that
+second verse three times before the opening blessing. The PDF extraction
+joins the first two verses into one line and the reader previously omitted
+some repetitions or exposed the editorial count. After checking both printed
+pages and the PDF.js extraction, Ora expands those counts for this recognized
+edition only, preserves the distinct speakers and leaves the saved PDF intact.
+All surrounding source cues must match; incomplete, altered, duplicated or
+unrecognized passages remain unchanged. This does not certify the full text.
+
 ## Prayer at the preparation table (Newton 2009, PDF p. 64)
 
 The source embeds a short priest-and-deacon prayer in a long movement

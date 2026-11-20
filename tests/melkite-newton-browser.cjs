@@ -10,7 +10,11 @@ module.exports=async(page,base,artifacts)=>{
   const pages={
    2:['FINAL DRAFT EDITION COMMON ENGLISH TRANSLATION'],
    30:[
-    'The Divine Liturgy','PRIEST: Blessed is the Kingdom. Fixture opening.',
+    'The Divine Liturgy',
+    'They bow three times saying:',
+    'Glory to God in the highest, on earth peace, good will to men. (Twice) O Lord, You shall open my lips and my mouth will declare Your praise. (Once)',
+    'The Priest kisses the Gospel and the Holy Table, while the Deacon kisses the Holy Table only.',
+    'PRIEST: Blessed is the Kingdom. Fixture opening.',
 
     'The Litany of Peace',
     'DEACON: In peace let us pray to the Lord.',
@@ -110,6 +114,10 @@ module.exports=async(page,base,artifacts)=>{
     'ALL: To You, O Lord.','The Lord’s Prayer'
    ],
    31:[
+    'He kisses the Priest’s right hand, bows before the Holy Table, replaces his hat and exits the Holy Place from the North Door, and standing before the Holy Doors, he reverently bows three times saying:',
+    'O Lord, You shall open my lips and my mouth will declare Your praise. (Three times)',
+    'He uncovers his head and proclaims in a mighty voice:',
+    'Deacon: Give the blessing, Master.',
     'The Holy Gospel','Liturgy of the Eucharist','Anaphora',
     'PRIEST: Fixture Eucharistic prayer.',
     'Table of Hirmoi for the Year','Fixture annual Hirmoi index must be hidden.',
@@ -146,6 +154,15 @@ module.exports=async(page,base,artifacts)=>{
   throw new Error('Recognized Newton PDF was not composed: '+JSON.stringify(diagnostics),{cause:error});
  }
  const preview=page.locator('.reader-inline-text'),text=await preview.innerText();
+ const opening=preview.locator('.byz-role-clergy').filter({hasText:'Glory to God in the highest'});
+ const deaconOpening=preview.locator('.byz-role-deacon').filter({hasText:'O Lord, You shall open my lips'});
+ assert.equal(await opening.count(),1,'the opening verse belongs to the priest and deacon');
+ assert.equal(((await opening.innerText()).match(/Glory to God in the highest/g)||[]).length,2);
+ assert.equal(((await opening.innerText()).match(/O Lord, You shall open my lips/g)||[]).length,1);
+ assert.equal(await deaconOpening.count(),1,'the later verse belongs to the deacon');
+ assert.equal(((await deaconOpening.innerText()).match(/O Lord, You shall open my lips/g)||[]).length,3);
+ assert.doesNotMatch(await opening.innerText(),/\((?:Twice|Once)\)/);
+ assert.doesNotMatch(await deaconOpening.innerText(),/\(Three times\)/);
  assert.equal(await preview.locator('.byz-role-priest').filter({hasText:'We who mystically represent the Cherubim'}).count(),3,
   'the source-marked priest stanza appears three times');
  assert.equal(await preview.locator('.byz-role-deacon').filter({hasText:'Invisibly escorted by angel hosts'}).count(),3,

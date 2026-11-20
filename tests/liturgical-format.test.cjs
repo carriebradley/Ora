@@ -1486,3 +1486,38 @@ test('Newton Trisagion alternatives preserve source repetitions and remain optio
  assert.strictEqual(F.expandNewtonTrisagionHymns(shown),shown);const unknown=source.map(part=>({...part,lines:[...part.lines]}));assert.strictEqual(F.expandNewtonTrisagionHymns(unknown),unknown);
 });
 
+test('Newton opening prayers preserve the printed twofold, single and threefold counts',()=>{
+ const source=[{lines:[
+  'They bow three times saying:',
+  'Glory to God in the highest, on earth peace, good will to men. (Twice) O Lord, You shall open my lips and my mouth will declare Your praise. (Once)',
+  'The Priest kisses the Gospel and the Holy Table, while the Deacon kisses the Holy Table only.'
+ ]},{lines:[
+  'He kisses the Priest’s right hand, bows before the Holy Table, replaces his hat and exits the Holy Place from the North Door, and standing before the Holy Doors, he reverently bows three times saying:',
+  'O Lord, You shall open my lips and my mouth will declare Your praise. (Three times)',
+  'He uncovers his head and proclaims in a mighty voice:',
+  'Deacon: Give the blessing, Master.'
+ ]}];
+ source.newton2009=true;
+ const before=JSON.stringify(source),out=F.expandNewtonOpeningPrayers(source);
+ assert.equal(JSON.stringify(source),before,'saved source sections stay untouched');
+ assert.equal(out.newton2009,true);
+ assert.equal(out[0].lines.length,source[0].lines.length,'source line coordinates stay stable');
+ assert.equal(F.role(out[0].lines[1]).kind,'clergy');
+ assert.equal((out[0].lines[1].match(/Glory to God in the highest/g)||[]).length,2);
+ assert.equal((out[0].lines[1].match(/O Lord, You shall open my lips/g)||[]).length,1);
+ assert.equal(F.role(out[1].lines[1]).kind,'deacon');
+ assert.equal((out[1].lines[1].match(/O Lord, You shall open my lips/g)||[]).length,3);
+ assert.doesNotMatch(out[0].lines[1]+out[1].lines[1],/\((?:Twice|Once|Three times)\)/);
+ const unknown=source.map(p=>({lines:[...p.lines]}));
+ assert.equal(F.expandNewtonOpeningPrayers(unknown),unknown,'unknown editions are unchanged');
+ for(const edit of [
+  s=>s[0].lines[1]=s[0].lines[1].replace('(Twice)','(Once)'),
+  s=>s[1].lines[0]='Changed instruction.',
+  s=>s[1].lines.push(s[1].lines[1]),
+  s=>s[1].lines.splice(2,1)
+ ]){
+  const changed=source.map(p=>({lines:[...p.lines]}));changed.newton2009=true;edit(changed);
+  assert.equal(F.expandNewtonOpeningPrayers(changed),changed,'ambiguous or incomplete sources must remain unchanged');
+ }
+ assert.equal(F.expandNewtonOpeningPrayers(out),out,'already expanded passages are not repeated again');
+});

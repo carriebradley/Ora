@@ -425,6 +425,36 @@
   for(let i=bs;i<=be;i++)lines.add(key(rows[i]));for(let i=cs;i<=ce;i++)lines.add(key(rows[i]));
   for(const index of [a[0],b[0],c[0]])triples.add(key(rows[index]));return result;
  }
+ // Newton 2009, PDF pp. 30-31: the priest and deacon say the first
+ // verse twice and the second once; later the deacon says the latter three
+ // times. The source combines the first two verses in one extracted line.
+ // Recognize the complete surrounding source cues before expanding either.
+ function expandNewtonOpeningPrayers(sections){
+  if(!Array.isArray(sections)||sections.newton2009!==true)return sections;
+  const rows=sections.flatMap((part,section)=>(part.lines||[]).map((raw,index)=>({text:String(raw).trim(),section,index})));
+  const opening=/^(Glory to God in the highest, on earth peace, good will to men\.)\s*\(Twice\)\s*(O Lord, You shall open my lips and my mouth will declare Your praise\.)\s*\(Once\)$/i;
+  const deacon=/^(O Lord, You shall open my lips and my mouth will declare Your praise\.)\s*\(Three times\)$/i;
+  const find=pattern=>rows.map((row,index)=>pattern.test(row.text)?index:-1).filter(index=>index>=0);
+  const [first,second]=[opening,deacon].map(find);
+  if(first.length!==1||second.length!==1||first[0]>=second[0])return sections;
+  const i=first[0],j=second[0],a=rows[i],b=rows[j];
+  if(!rows[i-1]||!rows[i+1]||!rows[j-1]||!rows[j+1]||!rows[j+2]||
+     rows[i-1].section!==a.section||rows[i+1].section!==a.section||
+     rows[j-1].section!==b.section||rows[j+1].section!==b.section||rows[j+2].section!==b.section||
+     !/^They bow three times saying:$/i.test(rows[i-1].text)||
+     !/^The Priest kisses the Gospel and the Holy Table, while the Deacon kisses the Holy Table only\.$/i.test(rows[i+1].text)||
+     !/^He kisses the Priest[’']s right hand,.*standing before the Holy Doors, he reverently bows three times saying:$/i.test(rows[j-1].text)||
+     !/^He uncovers his head and proclaims in a mighty voice:$/i.test(rows[j+1].text)||
+     !/^Deacon:\s*Give the blessing, Master\.$/i.test(rows[j+2].text))return sections;
+  const [,glory,lips]=a.text.match(opening),deaconWords=b.text.match(deacon)[1];
+  const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((raw,index)=>{
+   if(section===a.section&&index===a.index)return 'Priest and Deacon: '+[glory,glory,lips].join(' ');
+   if(section===b.section&&index===b.index)return 'Deacon: '+[deaconWords,deaconWords,deaconWords].join(' ');
+   return raw;
+  })}));
+  out.newton2009=true;return out;
+ }
+
  function expandNewtonTrisagionHymns(sections){
   const hymns=newtonTrisagionHymns(sections);if(hymns.triples.size!==3)return sections;
   const out=sections.map((part,section)=>({...part,lines:(part.lines||[]).map((raw,index)=>{
@@ -1033,6 +1063,6 @@
   }
   return startAtOpeningBlessing(out);
  }
-  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonOpeningPrayers,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 

@@ -221,7 +221,7 @@
     const specialRank=target.closest('[data-day-rank]')?.dataset.dayRank||'';
     const festal=/\b(?:feast|vigil|holy week|holy day)\b/i.test(specialRank);
     const newtonHymns=melkiteBook?LiturgicalFormat.newtonTrisagionHymns(sections):null;
-    const shownSections=LiturgicalFormat.expandNewtonProthesisPrayer(LiturgicalFormat.expandNewtonCherubicThreefold(LiturgicalFormat.expandNewtonConcludingThreefold(LiturgicalFormat.expandNewtonTrisagionHymns(LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections)))))))));
+    const shownSections=LiturgicalFormat.expandNewtonOpeningPrayers(LiturgicalFormat.expandNewtonProthesisPrayer(LiturgicalFormat.expandNewtonCherubicThreefold(LiturgicalFormat.expandNewtonConcludingThreefold(LiturgicalFormat.expandNewtonTrisagionHymns(LiturgicalFormat.expandNewtonPeaceLitany(LiturgicalFormat.expandNewtonEktene(LiturgicalFormat.expandNewtonAitesis(LiturgicalFormat.expandNewtonCommunionPreparation(LiturgicalFormat.expandNewtonGiftLitany(sections))))))))));
     const optionalLitany=melkiteBook?LiturgicalFormat.newtonOptionalPetitions(shownSections):null;
     const baptismal=shownSections.edmonton2012===true?LiturgicalFormat.edmontonBaptismalAlternative(shownSections):null;
     let optionalLitanyDetails=null,baptismalDetails=null,newtonHymnDetails=null;
