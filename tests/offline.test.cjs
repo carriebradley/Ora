@@ -13,7 +13,7 @@ function worker() {
       match: async r => entries.get(key(r))?.clone(),
       put: async (r, value) => entries.set(key(r), value.clone()),
       keys: async () => [...entries.keys()].map(url => ({ url })),
-      addAll: async list => { for (const path of list) entries.set(key(path), new Response(['oortext.json','melkite-propers-2026.json'].includes(path) ? fs.readFileSync(require.resolve('../'+path)) : '<html>Ora</html>')); }
+      addAll: async list => { for (const path of list) entries.set(key(path), new Response(['oortext.json','ukrainian-propers.json','melkite-propers-2026.json'].includes(path) ? fs.readFileSync(require.resolve('../'+path)) : '<html>Ora</html>')); }
     };
   };
   const caches = {
@@ -158,4 +158,28 @@ test('update probes bypass shell caching and fail cleanly offline', async () => 
   w.context.fetch = async () => { throw new Error('offline'); };
   assert.equal((await w.request('sw.js?update-check=offline')).status, 503);
   assert.equal((await shell.keys()).length, before);
+});
+
+
+test('Offline upgrade uses newly bundled Byzantine hymns instead of stale persistent copies', async () => {
+  const w = worker(), data = await w.caches.open('ora-data-v1');
+  const files = ['ukrainian-propers.json', 'melkite-propers-2026.json'];
+  for (const file of files) await data.put(file, Response.json({ schema: 1, days: { stale: {} } }));
+  await w.lifecycle('install'); await w.lifecycle('activate');
+  for (const file of files) {
+    const expected = JSON.parse(fs.readFileSync(require.resolve('../' + file), 'utf8'));
+    assert.ok(require('node:util').isDeepStrictEqual(await (await w.request(file)).json(), expected), file + ' should use the installed bundle');
+    assert.deepEqual(await (await data.match(file)).json(), { schema: 1, days: { stale: {} } }, 'previous downloads remain intact');
+  }
+});
+
+test('Fresh Byzantine hymns update the installed shell and remain available offline', async () => {
+  const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
+  for (const file of ['ukrainian-propers.json', 'melkite-propers-2026.json']) {
+    const fresh = { schema: 1, days: { fresh: {} } };
+    w.context.fetch = async () => Response.json(fresh);
+    assert.deepEqual(await (await w.request(file)).json(), fresh);
+    w.context.fetch = async () => { throw new Error('offline'); };
+    assert.deepEqual(await (await w.request(file)).json(), fresh, file + ' should retain the online refresh');
+  }
 });
