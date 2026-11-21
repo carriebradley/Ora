@@ -81,3 +81,12 @@ test('Roman readings renderer safely shows citations and official links without 
  assert.match(render.romanReadingsHTML('2026-11-21',false,false),/Printed verified example/,
    'existing full-text display still works');
 });
+
+test('scheduled publishing mode sanitizes the archive even after an RSS fetch failure',()=>{
+ const workflow=fs.readFileSync(path.join(root,'.github/workflows/readings.yml'),'utf8');
+ assert.match(workflow,/vars\.ORA_READINGS_PUBLICATION_MODE/);
+ assert.match(workflow,/continue-on-error:\s*true/);
+ assert.match(workflow,/if:\s*env\.ORA_READINGS_PUBLICATION_MODE == 'references-only'/);
+ assert.match(workflow,/python3 publication_readings\.py --input readings\.json --output/);
+ assert.match(workflow,/mv \/tmp\/ora-public-references\.json readings\.json/);
+});

@@ -10,6 +10,10 @@ permissions: { contents: write }
 concurrency:
   group: ora-daily-imports
   cancel-in-progress: false
+# Unset by default. A repository Actions variable may opt into a citation-only
+# public archive, independently of any permissions or review decision.
+env:
+  ORA_READINGS_PUBLICATION_MODE: ${{ vars.ORA_READINGS_PUBLICATION_MODE || 'full' }}
 jobs:
   fetch:
     runs-on: ubuntu-latest
@@ -17,6 +21,13 @@ jobs:
       - uses: actions/checkout@v4
       - run: python3 fetch_readings.py
         continue-on-error: true
+      # Fail closed for citation-only distribution even when the RSS request
+      # failed and the old file is all that remains in this checkout.
+      - name: Enforce optional citation-only public archive
+        if: env.ORA_READINGS_PUBLICATION_MODE == 'references-only'
+        run: |
+          python3 publication_readings.py --input readings.json --output /tmp/ora-public-references.json
+          mv /tmp/ora-public-references.json readings.json
       - run: python3 fetch_divineoffice.py
         continue-on-error: true
       - run: python3 fetch_angelus.py
