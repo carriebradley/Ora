@@ -157,7 +157,7 @@
     }).catch(() => { st.readings[iso] = null; if (st.date === iso) render(); });
   }
   const readingsSpeech = r => r.full
-    ? r.full.sections.map(s => `${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`).join('\n\n')
+    ? r.full.sections.map(s => `${s.label}. ${s.cite}.${s.text ? ' ' + s.text.replace(/\bR\.\s*/g, '') : ''}`).join('\n\n')
     : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}Gospel, ${r.gospel || ''}.`;
   function romanReadingsHTML(iso, showAudio = true, simple = false) {
     const r = st.readings[iso];
@@ -166,9 +166,12 @@
     else if (r && r.full) {
       if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>`;
       if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
+      const referencesOnly = r.full.sections.every(s => !String(s.text || '').trim());
       for (const s of r.full.sections) {
-        h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div><div class="tx">${esc(s.text)}</div>${simple ? '' : speakBtn(`${s.label}. ${s.cite}. ${s.text.replace(/\bR\.\s*/g, '')}`)}</div>`;
+        const passage = String(s.text || '');
+        h += `<div class="step reading-group" style="margin-top:10px"><div class="reading-heading"><div class="reading-label">${esc(s.label)}</div>${s.cite ? `<div class="reading-reference">${esc(s.cite)}</div>` : ''}</div>${passage ? `<div class="tx">${esc(passage)}</div>` : ''}${simple ? '' : speakBtn(`${s.label}. ${s.cite}.${passage ? ' ' + passage.replace(/\bR\.\s*/g, '') : ''}`)}</div>`;
       }
+      if (referencesOnly) h += `<p class="muted">The full readings are available on the <a href="${usccb(iso)}" target="_blank" rel="noopener">official USCCB page</a>.</p>`;
       if (!simple) h += `<div class="row">${speakBtn(readingsSpeech(r))}</div>`;
       const gs = r.full.sections.find(s => /gospel/i.test(s.label) && s.cite); if (gs && !simple) h += fathersBlock(gs.cite);
     } else if (r) {
@@ -2516,7 +2519,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v426';
+  const APP_BUILD = 'ora-v427';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

@@ -42,3 +42,16 @@ I understand that these are separate rights and ecclesiastical questions and hav
 
 ## Not a legal opinion
 This is a factual implementation and policy comparison, not a legal determination. It preserves existing app function while documenting a material public-release gate. An independent qualified review and rights-holder direction may be necessary.
+
+## Prepared source-reference distribution fallback (November 21, 2026)
+
+The current checked public `readings.json` contains **23 dated RSS records**, **100 reading sections** and approximately **13,574 words** of reproduced passage bodies (snapshot November 21, 2026). The scheduled importer can grow the archive up to 800 dates. This is a publication-rights risk inventory, **not evidence of an existing license**.
+
+A tested, **opt-in** citation-only distribution path is now available:
+
+- To preview without modifying the public dataset: `python3 publication_readings.py --input readings.json --output /tmp/ora-readings-references.json`. The script refuses in-place modification.
+- To intentionally make the scheduled refresh write only citation metadata to its selected `--out` file: set `ORA_READINGS_PUBLICATION_MODE=references-only` on the importing process. The default remains `full` for now; do not change production behavior by accident.
+- The reduced file retains the date, source link, Scripture citations, external audio IDs, and independent Justice readings; it removes **all** USCCB passage body text and other non-whitelisted per-day fields. The app renders citations and a link to the original USCCB page without blank passages or invalid read-aloud controls.
+- Before switching the public release, update the deployed dataset **and** scheduled GitHub Actions environment, test the published URL and offline behavior, and assess existing published Git history and older cached copies. A reference-only future dataset cannot retroactively erase public repository history or private client caches.
+
+The 2025 USCCB guidelines (effective November 29, 2026) and CCD permissions text were rechecked against their official pages on November 21, 2026. They expressly distinguish web RSS display from a downloadable digital application. **No Ora-specific permission or ecclesiastical authentication was confirmed.** This fallback prepares a lower-risk alternative; it does not resolve ICEL or other publication rights. See the official USCCB website for the current terms.

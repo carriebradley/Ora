@@ -242,6 +242,16 @@ def main():
     old['_copyright'] = copyright_ or old.get('_copyright', '')
     days = sorted(k for k in old if not k.startswith('_'))
     for k in days[:-KEEP_DAYS]: del old[k]
+    # Opt-in publication fallback. Default remains unchanged until owner
+    # elects citations-only distribution after rights-holder review.
+    mode = os.environ.get('ORA_READINGS_PUBLICATION_MODE', 'full').strip().lower()
+    if mode not in ('full', 'references-only'):
+        raise ValueError('ORA_READINGS_PUBLICATION_MODE must be full or references-only')
+    if mode == 'references-only':
+        from publication_readings import references_only
+        old = references_only(old)
+    else:
+        old.pop('_publication_mode', None)
     json.dump(old, open(out_path, 'w'), ensure_ascii=False, separators=(',', ':'), sort_keys=True)
     print(f'{len(new)} days from feed; {len(days)} total in {out_path}')
 
