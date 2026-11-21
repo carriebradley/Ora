@@ -1,10 +1,14 @@
 'use strict';
 // WebKit on Linux, with iPhone viewport/touch emulation. This is NOT iOS Safari
 // and cannot certify installed-PWA storage retention across OS updates.
+// Playwright WebKit ephemeral contexts cannot persist File/Blob in IndexedDB:
+// https://github.com/microsoft/playwright/issues/42795
+// Use a persistent context to match a regular Safari session.
 const {webkit,devices}=require('playwright');
 const assert=require('node:assert/strict');
 const path=require('node:path');
 const fs=require('node:fs');
+const os=require('node:os');
 const {epub}=require('./epub-reader-browser.cjs');
 const base=process.env.ORA_BASE_URL||'http://127.0.0.1:8765/';
 const out=process.env.ORA_WEBKIT_ARTIFACT_DIR||'/tmp/ora-webkit-audit';
@@ -33,14 +37,13 @@ function pdf(){
 }
 
 (async()=>{
- const browser=await webkit.launch({headless:true});
- let page;
+ const profile=fs.mkdtempSync(path.join(os.tmpdir(),'ora-webkit-profile-'));
+ let context,page;
  try{
-  const context=await browser.newContext({...devices['iPhone 13'],viewport:{width:390,height:844},serviceWorkers:'allow'});
-  page=await context.newPage();
+  context=await webkit.launchPersistentContext(profile,{...devices['iPhone 13'],viewport:{width:390,height:844},serviceWorkers:'allow',headless:true});
+  page=context.pages()[0]||await context.newPage();
   const pageErrors=[];
   page.on('pageerror',error=>pageErrors.push(error.message));
-  page.on('requestfailed',request=>console.error('WEBKIT_REQUEST_FAILED',request.url(),request.failure()?.errorText));
   page.on('console',message=>{if(message.type()==='error')console.error('WEBKIT_CONSOLE_ERROR',message.text());});
   // No external requests should be needed to operate local saved books.
   await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
@@ -65,14 +68,6 @@ function pdf(){
   await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-11');
   const saved=page.locator('.liturgical-text[data-text-id="chrysostom"]');
   await saved.waitFor();
-  await page.evaluate(()=>{
-   window.__oraWebkitTransactions=[];
-   const previous=IDBDatabase.prototype.transaction;
-   IDBDatabase.prototype.transaction=function(names,mode,...rest){
-    window.__oraWebkitTransactions.push({names:String(names),mode:mode||'readonly'});
-    return previous.call(this,names,mode,...rest);
-   };
-  });
   await saved.locator('.reader-offline summary').click();
   await page.locator('#liturgical-file').setInputFiles({
    name:'webkit-private-test.pdf',mimeType:'application/pdf',buffer:pdf()
@@ -90,21 +85,9 @@ function pdf(){
       fileValue:element?.querySelector('#liturgical-file')?.value,
       fileDisabled:element?.querySelector('#liturgical-file')?.disabled,
       buttonDisabled:element?.querySelector('[data-reader="open"]')?.disabled,
-      storage:saved,transactions:window.__oraWebkitTransactions?.slice(-12)};
+      storage:saved};
     });
     console.error('WEBKIT_PDF_SAVE_DIAGNOSTICS',JSON.stringify(detail));
-    const probe=await page.evaluate(async bytes=>{
-     const file=new File([Uint8Array.from(bytes)],'webkit-probe.pdf',{type:'application/pdf'});
-     return await Promise.race([
-      LiturgyReader.load(file,'pdf').then(async doc=>{
-       const pages=doc.numPages;
-       await doc.destroy();
-       return {status:'ok',pages};
-      }).catch(e=>({status:'error',message:String(e?.message||e),name:e?.name})),
-      new Promise(resolve=>setTimeout(()=>resolve({status:'timed-out'}),6000))
-     ]);
-    },Array.from(pdf())).catch(e=>({status:'probe-error',message:String(e?.message||e)}));
-    console.error('WEBKIT_PDF_LOAD_PROBE',JSON.stringify(probe));
     throw error;
    });
   await page.evaluate(async()=>LiturgyReader.bookmark('chrysostom',2));
@@ -160,5 +143,8 @@ function pdf(){
  }catch(error){
   if(page)await page.screenshot({path:path.join(out,'webkit-failure.png'),fullPage:true}).catch(()=>{});
   throw error;
- }finally{await browser.close();}
+ }finally{
+  if(context)await context.close();
+  fs.rmSync(profile,{recursive:true,force:true});
+ }
 })().catch(err=>{console.error(err);process.exitCode=1;});
