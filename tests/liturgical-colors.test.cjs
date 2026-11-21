@@ -37,3 +37,19 @@ test('other Marys, virgins, and optional or outranked Marian entries do not reco
  }
  assert.equal(C.marian({title:'Sunday of Advent',also:[{title:'Immaculate Conception'}]}),false);
 });
+
+
+test('explicit fast-free wording does not create a false purple fasting day',()=>{
+ const quiet={title:'Ordinary weekday',season:'Ordinary Time',color:'w'};
+ for(const fast of ['No fast','No fasting','Fast-free','Fast is lifted','Fasting is lifted']){
+  const day={...quiet,fast},before=JSON.stringify(day);
+  assert.equal(C.fasting(day,'roman'),false,'No fasting observance: '+fast);
+  assert.equal(JSON.stringify(day),before,'Display must not mutate the calendar');
+ }
+ assert.equal(C.fasting({...quiet,fast:'Fast and abstinence'},'roman'),true);
+ // Fast seasons are visibly purple even when a particular feast is fast-free.
+ assert.equal(C.fasting({...quiet,fast:'No fast',fastSeason:'Nativity Fast'},'byz'),true);
+ assert.equal(C.fasting({...quiet,fast:'Fast-free',season:'Lent'},'roman'),true);
+ assert.equal(C.fasting({...quiet,fast:'No fast',
+   historicalObservance:{name:"St. Martin's Lent"}},'sarum'),true);
+});

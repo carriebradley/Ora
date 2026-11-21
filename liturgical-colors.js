@@ -18,7 +18,11 @@
   // Display fasting periods consistently without changing a calendar's
   // source colour or implying that every date is a day of abstinence.
   function fasting(day,rite,fast=day?.fast){
-    return !!(fast||day?.fastSeason||
+    const label=String(fast||'').trim();
+    // "No fast" is not a fasting observance. A separately recorded fast
+    // season still keeps its purple seasonal marker, even on feast days.
+    const fastFree=/^(?:no\s+fast(?:ing)?|fast[- ]free|fast(?:ing)?\s+(?:is\s+)?lifted)\b/i.test(label);
+    return !!((label&&!fastFree)||day?.fastSeason||
       (rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")||
       /^(?:Lent|Passiontide)$/i.test(day?.season||''));
   }
