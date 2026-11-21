@@ -595,7 +595,13 @@ module.exports=async(page,base,artifacts,violations)=>{
  assert.match(await epubPrayer.innerText(),/Fixture EPUB opening/);
  assert.match(await epubPrayer.innerText(),/Fixture EPUB second-section petition/,'all EPUB prayer sections appear in one document');
  assert.match(await epubPrayer.innerText(),/Amen\./);
- await epubPrayer.locator('.byz-daily-proper-heading').first().waitFor();
+ // Hymn hydration follows the initial EPUB render asynchronously. Wait for
+ // the *visible final text*, not merely a heading that can be replaced by
+ // another in-flight hydration before the next assertion runs.
+ await page.waitForFunction(()=>{
+  const root=document.querySelector('.reader-inline-text');
+  return root&&!root.hidden&&/Troparion, Tone 8/.test(root.innerText||'');
+ },null,{timeout:12000});
  assert.match(await epubPrayer.innerText(),/Troparion, Tone 8/,
   'an eligible continuous EPUB receives the exact day’s hymns, not only PDFs');
  assert.doesNotMatch(await epubPrayer.innerText(),/rights note|priest bows|appendix must not appear/i,'hide editorial notes and rubrics');
