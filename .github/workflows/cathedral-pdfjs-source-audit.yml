@@ -1,0 +1,44 @@
+name: Cathedral PDF.js source audit
+on:
+  push:
+    branches:
+      - 'ora-cathedral-pdfjs-source-audit-*'
+  workflow_dispatch:
+permissions:
+  contents: read
+  checks: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Extract cathedral source with Ora PDF.js
+        continue-on-error: true
+        run: node tools/audit_ukrainian_cathedral_source.mjs
+      - name: Record compact source-boundary diagnostics
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs=require('fs');
+            let report={status:'error',note:'No source report was generated'};
+            if(fs.existsSync('cathedral-pdfjs-audit.json')){
+              try{report=JSON.parse(fs.readFileSync('cathedral-pdfjs-audit.json','utf8'));}catch(e){report.note='Invalid source report JSON';}
+            }
+            await github.rest.checks.create({
+              owner:context.repo.owner,repo:context.repo.repo,head_sha:context.sha,
+              name:'Cathedral PDF.js extraction diagnostics',status:'completed',
+              conclusion:report.status==='ok'?'success':'neutral',
+              output:{title:'Read-only source headings and page boundaries',
+                summary:JSON.stringify(report,null,2).slice(0,35000)}
+            });
+      - name: Save read-only source report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cathedral-pdfjs-headings
+          path: cathedral-pdfjs-audit.json
