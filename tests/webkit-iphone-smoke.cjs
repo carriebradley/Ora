@@ -67,7 +67,24 @@ function pdf(){
   await page.locator('#liturgical-file').setInputFiles({
    name:'webkit-private-test.pdf',mimeType:'application/pdf',buffer:pdf()
   });
-  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]')?.disabled);
+  await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]')?.disabled,
+   null,{timeout:12000}).catch(async error=>{
+    const detail=await page.evaluate(async()=>{
+     const element=document.querySelector('.liturgical-text');
+     let saved=null;
+     try{
+      const record=await LiturgyReader.get('chrysostom');
+      saved=record?{name:record.name,size:record.size,page:record.page}:null;
+     }catch(e){saved={error:e.message};}
+     return {status:element?.querySelector('.reader-status')?.textContent,
+      fileValue:element?.querySelector('#liturgical-file')?.value,
+      fileDisabled:element?.querySelector('#liturgical-file')?.disabled,
+      buttonDisabled:element?.querySelector('[data-reader="open"]')?.disabled,
+      storage:saved};
+    });
+    console.error('WEBKIT_PDF_SAVE_DIAGNOSTICS',JSON.stringify(detail));
+    throw error;
+   });
   await page.evaluate(async()=>LiturgyReader.bookmark('chrysostom',2));
   await page.reload();
   await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]')?.disabled);
