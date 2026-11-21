@@ -2514,7 +2514,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v421';
+  const APP_BUILD = 'ora-v422';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
@@ -2525,8 +2525,9 @@
       // A delayed Pages deployment can briefly serve an older worker.
       // Only offer an update when the published build is newer.
       if (!match || Number(match[1].slice(5)) <= Number(APP_BUILD.slice(5))) return;
-      // A second check may have completed while this request was in flight.
-      if (updateShown) return;
+      // The page can be backgrounded while the published-version request is in flight.
+      // Only show a notice when Ora is visible, and avoid overlapping duplicates.
+      if (document.visibilityState !== 'visible' || updateShown) return;
       updateShown = true;
       const notice = document.createElement('div');
       notice.setAttribute('role', 'status');
