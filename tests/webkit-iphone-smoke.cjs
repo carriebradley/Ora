@@ -104,7 +104,19 @@ function pdf(){
   await page.locator('[data-reader="open"]').click();
   await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
   await page.locator('[data-reader="mode"]').click();
-  await page.waitForFunction(()=>document.querySelector('#reader-text')?.textContent.includes('page two'));
+  await page.waitForFunction(()=>document.querySelector('#reader-text')?.textContent.includes('page two'),
+   null,{timeout:9000}).catch(async error=>{
+    const detail=await page.evaluate(()=>({
+     status:document.querySelector('#reader-status')?.textContent,
+     text:document.querySelector('#reader-text')?.textContent?.slice(0,600),
+     textHidden:document.querySelector('#reader-text')?.hidden,
+     canvasHidden:document.querySelector('#reader-page')?.hidden,
+     modeText:document.querySelector('[data-reader="mode"]')?.textContent,
+     currentPage:document.querySelector('#reader-number')?.value
+    }));
+    console.error('WEBKIT_PDF_TEXTVIEW_DIAGNOSTICS',JSON.stringify(detail));
+    throw error;
+   });
   await page.locator('[data-reader="close"]').click();
   // A second book must not overwrite the first book's IndexedDB record.
   await page.evaluate(async data=>{
