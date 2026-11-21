@@ -328,7 +328,7 @@
     if(!a)return '<p class="muted">Artwork unavailable.</p>';
     loadArt(a);const m=st.art[a.q];
     let h=`<figure class="art" data-art-key="${esc(a.q)}">`;
-    h+=m?.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><div class="ph" hidden>Image unavailable. Choose Another to view a different work.</div>` : `<div class="ph">${m==='loading'?'Finding a verified artwork…':'No verified image available. Choose Another.'}</div>`;
+    h+=m?.img ? `<img src="${esc(m.img)}" alt="${esc(a.t)}" loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.hidden=false"><div class="ph" hidden>Image unavailable. Choose Another to view a different work.</div>` : `<div class="ph">${m==='loading'?'Finding a verified artwork…':'No verified image available. Choose Another.'}</div>`;
     h+=`<figcaption class="artwork-caption"><h3 class="artwork-title">${esc(a.t)}</h3><p class="artwork-artist">${esc(a.a)}</p><dl class="artwork-facts"><div><dt>Created</dt><dd>${esc(a.created)}</dd></div><div><dt>Origin</dt><dd>${esc(a.origin)}</dd></div></dl><p class="artwork-description">${esc(a.p)}</p></figcaption>`;
     if(m?.source && m.img)h+=`<p class="artwork-credit">Image: ${esc(m.source)}${m.license?' · '+esc(m.license):''}</p>`;
     h+=`<div class="row"><button class="btn sm" data-act="artnext">Another</button><a class="btn sm" target="_blank" rel="noopener noreferrer" href="${esc(a.source)}">About this work</a>${speakBtn(`${a.t}. ${a.a}. Created ${a.created}. Origin: ${a.origin}. ${a.p}`)}</div></figure>`;

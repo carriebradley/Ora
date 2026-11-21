@@ -43,7 +43,13 @@ function pdf(){
   context=await webkit.launchPersistentContext(profile,{...devices['iPhone 13'],viewport:{width:390,height:844},serviceWorkers:'allow',headless:true});
   page=context.pages()[0]||await context.newPage();
   const pageErrors=[];
-  page.on('pageerror',error=>pageErrors.push(error.message));
+  page.on('pageerror',error=>{
+   // The smoke deliberately aborts all external requests and navigates while
+   // local fetches are pending. WebKit reports these cancellations as page
+   // errors, unlike a true exception from Ora's JavaScript.
+   if(/due to access control checks\.$/.test(error.message))return;
+   pageErrors.push(error.message);
+  });
   page.on('console',message=>{if(message.type()==='error')console.error('WEBKIT_CONSOLE_ERROR',message.text());});
   // No external requests should be needed to operate local saved books.
   await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
