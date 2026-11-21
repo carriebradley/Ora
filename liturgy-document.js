@@ -123,6 +123,7 @@
     const preserveEdition=items=>{
       if(sections?.newton2009===true)items.newton2009=true;
       if(sections?.edmonton2012===true)items.edmonton2012=true;
+      if(sections?.cathedral2020===true)items.cathedral2020=true;
       return items;
     };
     const original=preserveEdition((sections||[]).map(part=>({...part,lines:[...(part.lines||[])]})));

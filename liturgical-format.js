@@ -1008,6 +1008,36 @@
   out.edmonton2012=true;
   return out;
  }
+
+ // This is a *source fingerprint-locked* display classifier, not a typikon.
+ // The 31-page St Josaphat cathedral booklet was checked with this same
+ // PDF.js version and English row extraction on November 21, 2026.
+ // All markers and physical row counts must match before tagging any line.
+ function cathedralAntiphonRows(pages){
+  const specs=[
+   [4,39,[[18,/^FIRST ANTIPHON\b/i],[21,/^Sunday Antiphon\b/i]],[[21,39,'sunday']]],
+   [5,36,[[1,/^Weekday Antiphon\b/i],[16,/^Typica\s*:\s*Psalm\b/i],[30,/^Small Litany\b/i]],[[1,15,'weekday'],[16,29,'typica']]],
+   [6,35,[[15,/^SECOND ANTIPHON\b/i],[18,/^Sunday Antiphon\b/i]],[[18,35,'sunday']]],
+   [7,38,[[1,/^Weekday Antiphon\b/i],[17,/^Typica\s*:\s*Psalm\b/i],[28,/^(?:Only[-\s]?Begotten Son|Hymn to Christ)\b/i]],[[1,16,'weekday'],[17,27,'typica']]],
+   [8,33,[[1,/^Small Litany\b/i],[24,/^THIRD ANTIPHON\b/i],[27,/^Sunday Antiphon\b/i]],[[27,33,'sunday']]],
+   [9,39,[[11,/^Weekday Antiphon\b/i],[27,/^(?:The\s+)?Beatitudes\b/i]],[[1,10,'sunday'],[11,26,'weekday'],[27,39,'beatitudes']]],
+   [10,51,[[10,/^(?:The\s+)?(?:Small Entrance|Entrance of Christ|Little Entrance)\b/i]],[[1,9,'beatitudes']]]
+  ];
+  if(!pages||typeof pages!=='object')return null;
+  for(const [page,size,markers] of specs){
+   const rows=pages[page];
+   if(!Array.isArray(rows)||rows.length!==size||rows.some(row=>typeof row?.text!=='string'||row.alternative))return null;
+   if(!markers.every(([number,pattern])=>pattern.test(rows[number-1]?.text.trim()||'')))return null;
+  }
+  const tagged={};
+  for(const [page,, ,spans] of specs){
+   tagged[page]=pages[page].map((row,index)=>{
+    const choice=spans.find(([start,end])=>index+1>=start&&index+1<=end);
+    return choice?{...row,alternative:choice[2]}:{...row};
+   });
+  }
+  return tagged;
+ }
  function startAtOpeningBlessing(sections){
   if(!Array.isArray(sections))return sections;
   let si=-1,li=-1;
@@ -1030,6 +1060,7 @@
   const out=[{heading:'Liturgy of the Word',lines:[]},...result];
   if(sections.edmonton2012===true)out.edmonton2012=true;
   if(sections.newton2009===true)out.newton2009=true;
+  if(sections.cathedral2020===true)out.cathedral2020=true;
   return out;
  }
  // EPUB books are organized by spine sections rather than PDF pages. Keep
@@ -1063,6 +1094,6 @@
   }
   return startAtOpeningBlessing(out);
  }
-  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonOpeningPrayers,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,cathedralAntiphonRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonOpeningPrayers,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 

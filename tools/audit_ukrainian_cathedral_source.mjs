@@ -33,6 +33,7 @@ async function inspect(){
  pdfjs.GlobalWorkerOptions.workerSrc=new URL('../vendor/pdfjs/pdf.worker.mjs',import.meta.url).href;
  const task=pdfjs.getDocument({data:bytes,isEvalSupported:false,enableXfa:false,useWasm:false,useSystemFonts:true});
  const book=await task.promise;
+ const rowPages={};
  const result={status:'ok',source,sha256:digest,pageCount:book.numPages,pages:[],warnings:[],
   note:'Diagnostic only: heading locations and row counts; no copyrighted prayer text stored.'};
  if(book.numPages!==31)result.warnings.push('Page count changed (expected 31)');
@@ -42,6 +43,7 @@ async function inspect(){
   const items=(await page.getTextContent()).items;
   const english=F.englishPdfItems(items);
   const rows=F.pdfRows(english,number);
+  rowPages[number]=rows;
   const matches=[];
   for(let index=0;index<rows.length;index++){
    const t=rows[index].text.trim();
@@ -52,6 +54,15 @@ async function inspect(){
    markers:matches});
  }
  await book.destroy();
+ const classified=F.cathedralAntiphonRows(rowPages);
+ if(!classified)result.warnings.push('Source-specific alternative grouping rejected verified PDF.js rows');
+ else{
+  const counts={};for(const rows of Object.values(classified))for(const row of rows)
+   if(row.alternative)counts[row.alternative]=(counts[row.alternative]||0)+1;
+  result.alternativeRowCounts=counts;
+  for(const [page,index] of [[5,30],[7,28],[8,1],[10,10]])
+   if(classified[page][index-1].alternative)result.warnings.push('Shared prayer/entrance marked optional on page '+page);
+ }
  if(result.pages.some(p=>p.cyrillicRows))result.warnings.push('English extraction retained Cyrillic rows');
  // Fail closed if an edition revision or an extraction update moves a
  // printed heading. This checks boundaries, never daily appointments.

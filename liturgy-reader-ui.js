@@ -128,6 +128,25 @@
 
   // Generic PDF reading view for a user's private Melkite copy. Unlike the
   // alternating-language Edmonton booklet, do not assume fixed page numbers.
+  // Only the exact source-reviewed bilingual 31-page cathedral edition can
+  // receive alternative markers. A different file or extraction fails closed.
+  async function verifiedCathedralRows(book,id){
+    if(id!=='chrysostom'||book.numPages!==31||!globalThis.crypto?.subtle)return null;
+    try{
+      const bytes=await book.getData();
+      const hash=Array.from(new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256',bytes)),
+        n=>n.toString(16).padStart(2,'0')).join('');
+      if(hash!=='74cf0db74f1df45d74959969406b039102e5b11dff854a52942e6dea6be38c17')return null;
+      const sourcePages={};
+      for(let number=4;number<=10;number++){
+        const page=await book.getPage(number);
+        sourcePages[number]=LiturgicalFormat.pdfRows(
+          LiturgicalFormat.englishPdfItems((await page.getTextContent()).items),number);
+      }
+      return LiturgicalFormat.cathedralAntiphonRows(sourcePages);
+    }catch(_){return null;}
+  }
+
   async function standardPrayerText(book,id){
     const sections=[];let foundLiturgy=false;
     // The user's Melkite 2009 *final draft* contains Kairos, vesting,
@@ -135,6 +154,7 @@
     // Chrysostom Liturgy (PDF pages 30–96) belongs in this prayer view.
     // Identify the edition before applying page boundaries to other PDFs.
     let startPage=1,endPage=book.numPages,recognizedNewtonEdition=false;
+    const cathedral=await verifiedCathedralRows(book,id);
     if(id==='melkite-chrysostom'&&book.numPages===159){
       const notice=await book.getPage(2);
       const imprint=(await notice.getTextContent()).items.map(item=>item.str).join(' ').replace(/\s+/g,' ');
@@ -144,7 +164,7 @@
     }
     for(let number=startPage;number<=endPage;number++){
       const page=await book.getPage(number),items=(await page.getTextContent()).items;
-      const lines=LiturgicalFormat.pdfRows(id==='chrysostom'?LiturgicalFormat.englishPdfItems(items):items,number);
+      const lines=cathedral?.[number]||LiturgicalFormat.pdfRows(id==='chrysostom'?LiturgicalFormat.englishPdfItems(items):items,number);
       if(!lines.length)continue;
       const full=lines.map(row=>row.text).join(' ');
       if(!foundLiturgy){
@@ -164,6 +184,19 @@
       if(end>=0)break;
     }
     if(recognizedNewtonEdition)sections.newton2009=true;
+    if(cathedral){
+      // The third Sunday/Beatitudes options continue across physical PDF
+      // pages. Combine consecutive fragments into one accessible disclosure.
+      const grouped=[];
+      for(const part of sections){
+        const previous=grouped.at(-1);
+        if(part.alternative&&previous?.alternative===part.alternative)
+          previous.lines.push(...part.lines);
+        else grouped.push(part);
+      }
+      sections.length=0;sections.push(...grouped);
+      sections.cathedral2020=true;
+    }
     return foundLiturgy&&sections.length?sections:null;
   }
   // Unknown user-saved PDFs still deserve a full scrollable reading view.
@@ -234,7 +267,9 @@
       if(section.heading||section.alternative)pendingRole=null;
       if(section.alternative){
         const choice=document.createElement('details');choice.className='byz-antiphon-option';
-        choice.open=!festal&&section.alternative===(sunday?'sunday':'weekday');
+        // A parish booklet's printed alternatives do not prove an appointed
+        // choice for a date. Keep all source-locked cathedral choices closed.
+        choice.open=sections.cathedral2020===true?false:!festal&&section.alternative===(sunday?'sunday':'weekday');
         const summary=document.createElement('summary');summary.textContent=section.heading||section.alternative;
         choice.append(summary);target.append(choice);container=choice;
       }
