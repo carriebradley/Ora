@@ -25,6 +25,10 @@ async function inspect(){
  const bytes=new Uint8Array(await reply.arrayBuffer());
  if(bytes.length<10000||bytes.length>20*1024*1024)throw Error('Unexpected PDF size');
  const digest=createHash('sha256').update(bytes).digest('hex');
+ const canvas=await import('@napi-rs/canvas');
+ globalThis.DOMMatrix=canvas.DOMMatrix;
+ globalThis.ImageData=canvas.ImageData;
+ globalThis.Path2D=canvas.Path2D;
  const pdfjs=await import('../vendor/pdfjs/pdf.mjs');
  pdfjs.GlobalWorkerOptions.workerSrc=new URL('../vendor/pdfjs/pdf.worker.mjs',import.meta.url).href;
  const task=pdfjs.getDocument({data:bytes,isEvalSupported:false,enableXfa:false,useWasm:false,useSystemFonts:true});

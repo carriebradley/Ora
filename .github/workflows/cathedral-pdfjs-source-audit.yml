@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Install PDF.js geometry polyfills for Node
+        run: npm install --no-save --no-package-lock @napi-rs/canvas
       - name: Extract cathedral source with Ora PDF.js
         continue-on-error: true
         run: node tools/audit_ukrainian_cathedral_source.mjs
