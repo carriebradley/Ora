@@ -20,3 +20,17 @@ The current edition-specific antiphon handling explicitly identifies the 140-pag
 Before implementation, inspect the real 31-page source through Ora's PDF.js pipeline and compare the on-device reader with the original. Verify unique edition identity and complete alternative and common-section boundaries across page breaks; preserve both the source PDF and shared prayers. Unknown, altered, incomplete or ambiguous books should remain unchanged. Cover all three antiphons, the shared Hymn to Christ and entrance, plus negative cases and offline/mobile behavior. Do not apply a cathedral-specific rule to the Calgary or episcopal edition without separate evidence.
 
 The Calgary PDF returned HTTP 403 to the source-fetching service during this review. No new claim about its exact extraction or third-antiphon layout was established.
+
+## Actual Ora PDF.js extraction check (November 21, 2026)
+
+A source-only GitHub Actions audit ran the **same vendored PDF.js 5.6.205**, `LiturgicalFormat.englishPdfItems()`, and `LiturgicalFormat.pdfRows()` used by Ora against the original cathedral PDF. This checks the *actual extracted row boundaries*, not just visual reading of the printed spreads.
+
+- Source has **31 PDF pages** and SHA-256 `74cf0db74f1df45d74959969406b039102e5b11dff854a52942e6dea6be38c17`.
+- In PDF pages 4–10, **zero Cyrillic rows** survived the English-only extraction.
+- **First Antiphon:** PDF p. 4 First Antiphon at extracted row 18; Sunday at row 21. PDF p. 5 weekday row 1, Typica row 16, followed by the **shared Small Litany at row 30**.
+- **Second Antiphon:** PDF p. 6 heading row 15, Sunday row 18. PDF p. 7 weekday row 1, Typica row 17; shared **Only-Begotten Son** at row 28. The next **Small Litany** is p. 8 row 1.
+- **Third Antiphon:** PDF p. 8 heading row 24 and Sunday row 27. PDF p. 9 weekday row 11 and Beatitudes row 27; the **shared entrance begins at PDF p. 10 row 10**.
+
+These are **one-based row indices within each page** from Ora's extractor; they are not line numbers in the original PDF and must not be treated as universal markers for another edition or another PDF.js version. The audit emits only marker positions, not copyrighted prayer bodies or the original PDF. A future source change or missing heading generates an explicit warning.
+
+**Reader behavior is not yet changed.** Before classifying optional spans in the app, verify exactly where the shared doxology before the Only-Begotten hymn begins, and test that cross-page prayers remain uninterrupted. The source printout does not establish which alternate antiphon is appointed on any specific date.

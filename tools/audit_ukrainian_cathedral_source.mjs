@@ -53,6 +53,24 @@ async function inspect(){
  }
  await book.destroy();
  if(result.pages.some(p=>p.cyrillicRows))result.warnings.push('English extraction retained Cyrillic rows');
+ // Fail closed if an edition revision or an extraction update moves a
+ // printed heading. This checks boundaries, never daily appointments.
+ const expectedHash='74cf0db74f1df45d74959969406b039102e5b11dff854a52942e6dea6be38c17';
+ if(result.sha256!==expectedHash)result.warnings.push('Cathedral booklet bytes changed; review source before classifying alternatives');
+ const expected={
+  4:['first-antiphon','sunday-antiphon'],
+  5:['weekday-antiphon','typica','small-litany'],
+  6:['second-antiphon','sunday-antiphon'],
+  7:['weekday-antiphon','typica','only-begotten-son'],
+  8:['small-litany','third-antiphon','sunday-antiphon'],
+  9:['weekday-antiphon','beatitudes'],
+  10:['entrance']
+ };
+ for(const [page,names] of Object.entries(expected)){
+  const actual=result.pages.find(p=>p.pdfPage===Number(page))?.markers.map(m=>m.marker)||[];
+  for(const marker of names)if(!actual.includes(marker))
+   result.warnings.push('Missing '+marker+' on PDF page '+page);
+ }
  result.status=result.warnings.length?'review':'ok';
  return result;
 }
