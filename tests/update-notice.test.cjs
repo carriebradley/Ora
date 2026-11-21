@@ -44,8 +44,8 @@ test('a backgrounded page does not display a late update notice and checks again
     createElement(){return {style:{},setAttribute(){},querySelector(){return {addEventListener(){}};}};}
   };
   const fetch=()=>new Promise(resolve=>pending.push(resolve));
-  const build=app.slice(start,end).match(/const APP_BUILD = '(ora-v\\d+)'/)[1];
-  const check=new Function('document','fetch',app.slice(start,end)+'\\nreturn checkForPublishedUpdate;')(document,fetch);
+  const build=app.slice(start,end).match(/const APP_BUILD = '(ora-v\d+)'/)[1];
+  const check=new Function('document','fetch',app.slice(start,end)+'\nreturn checkForPublishedUpdate;')(document,fetch);
   const newer=()=>({ok:true,text:async()=>`const V = 'ora-v${Number(build.slice(5))+1}'`});
   const first=check();
   assert.equal(pending.length,1);
