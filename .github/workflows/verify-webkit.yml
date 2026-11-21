@@ -9,19 +9,20 @@ permissions:
 jobs:
   webkit:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Install WebKit browser and Linux dependencies
-        run: |
-          npm install --prefix /tmp/ora-webkit playwright@1.56.1
-          /tmp/ora-webkit/node_modules/.bin/playwright install --with-deps webkit
+      - name: Install matching Playwright JavaScript package
+        run: npm install --prefix /tmp/ora-webkit playwright@1.56.1
       - name: Check WebKit smoke test syntax
         run: node --check tests/webkit-iphone-smoke.cjs
       - name: "iPhone-sized WebKit: navigation and private-book persistence"
+        shell: bash
         env:
           NODE_PATH: /tmp/ora-webkit/node_modules
           ORA_WEBKIT_ARTIFACT_DIR: /tmp/ora-webkit-audit
