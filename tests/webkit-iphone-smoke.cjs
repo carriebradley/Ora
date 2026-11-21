@@ -100,6 +100,24 @@ function pdf(){
   assert.equal(first.page,2,'WebKit must persist the PDF bookmark after reload');
   assert.equal(first.pages,2);
   assert.ok(first.bytes>100);
+  // Capture the exact PDF.js text-extraction failure without changing Ora.
+  await page.evaluate(()=>{
+   const previous=LiturgyReader.load;
+   LiturgyReader.load=async function(...args){
+    const doc=await previous.apply(this,args);
+    const original=doc.getPage.bind(doc);
+    doc.getPage=async function(...params){
+     const pdfPage=await original(...params);
+     const text=pdfPage.getTextContent.bind(pdfPage);
+     pdfPage.getTextContent=async function(...params2){
+      try{return await text(...params2);}
+      catch(e){console.error('ORA_WEBKIT_GET_TEXT_CONTENT_ERROR',String(e?.name),String(e?.message),String(e?.stack));throw e;}
+     };
+     return pdfPage;
+    };
+    return doc;
+   };
+  });
   await page.locator('.reader-offline summary').click();
   await page.locator('[data-reader="open"]').click();
   await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
