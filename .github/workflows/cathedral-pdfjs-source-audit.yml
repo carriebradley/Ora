@@ -21,6 +21,19 @@ jobs:
       - name: Extract cathedral source with Ora PDF.js
         continue-on-error: true
         run: node tools/audit_ukrainian_cathedral_source.mjs
+      - name: Prepare mobile browser for saved-book check
+        run: |
+          npm install --prefix /tmp/ora-cathedral-browser playwright@1.56.1
+          browser_path=$(command -v google-chrome || command -v chromium || true)
+          if [ -n "$browser_path" ]; then
+            echo "ORA_CHROMIUM=$browser_path" >> "$GITHUB_ENV"
+          else
+            /tmp/ora-cathedral-browser/node_modules/.bin/playwright install chromium
+          fi
+      - name: Audit actual cathedral PDF inside Ora's 390px reader
+        env:
+          NODE_PATH: /tmp/ora-cathedral-browser/node_modules
+        run: node tests/cathedral-live-source-browser.cjs
       - name: Record compact source-boundary diagnostics
         if: always()
         uses: actions/github-script@v7
@@ -31,10 +44,13 @@ jobs:
             if(fs.existsSync('cathedral-pdfjs-audit.json')){
               try{report=JSON.parse(fs.readFileSync('cathedral-pdfjs-audit.json','utf8'));}catch(e){report.note='Invalid source report JSON';}
             }
+            if(fs.existsSync('cathedral-browser-audit.json')){
+              try{report.browser=JSON.parse(fs.readFileSync('cathedral-browser-audit.json','utf8'));}catch(e){report.browser={status:'error'};}
+            }
             await github.rest.checks.create({
               owner:context.repo.owner,repo:context.repo.repo,head_sha:context.sha,
               name:'Cathedral PDF.js extraction diagnostics',status:'completed',
-              conclusion:report.status==='ok'?'success':'neutral',
+              conclusion:report.status==='ok'&&report.browser?.status==='ok'?'success':'neutral',
               output:{title:'Read-only source headings and page boundaries',
                 summary:JSON.stringify(report,null,2).slice(0,35000)}
             });
@@ -43,4 +59,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cathedral-pdfjs-headings
-          path: cathedral-pdfjs-audit.json
+          path: |
+            cathedral-pdfjs-audit.json
+            cathedral-browser-audit.json
