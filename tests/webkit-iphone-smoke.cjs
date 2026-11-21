@@ -40,6 +40,8 @@ function pdf(){
   page=await context.newPage();
   const pageErrors=[];
   page.on('pageerror',error=>pageErrors.push(error.message));
+  page.on('requestfailed',request=>console.error('WEBKIT_REQUEST_FAILED',request.url(),request.failure()?.errorText));
+  page.on('console',message=>{if(message.type()==='error')console.error('WEBKIT_CONSOLE_ERROR',message.text());});
   // No external requests should be needed to operate local saved books.
   await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
   for(const tab of ['today','pray','readings','liturgy','calendar','more']){
@@ -63,6 +65,14 @@ function pdf(){
   await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-11');
   const saved=page.locator('.liturgical-text[data-text-id="chrysostom"]');
   await saved.waitFor();
+  await page.evaluate(()=>{
+   window.__oraWebkitTransactions=[];
+   const previous=IDBDatabase.prototype.transaction;
+   IDBDatabase.prototype.transaction=function(names,mode,...rest){
+    window.__oraWebkitTransactions.push({names:String(names),mode:mode||'readonly'});
+    return previous.call(this,names,mode,...rest);
+   };
+  });
   await saved.locator('.reader-offline summary').click();
   await page.locator('#liturgical-file').setInputFiles({
    name:'webkit-private-test.pdf',mimeType:'application/pdf',buffer:pdf()
@@ -80,9 +90,21 @@ function pdf(){
       fileValue:element?.querySelector('#liturgical-file')?.value,
       fileDisabled:element?.querySelector('#liturgical-file')?.disabled,
       buttonDisabled:element?.querySelector('[data-reader="open"]')?.disabled,
-      storage:saved};
+      storage:saved,transactions:window.__oraWebkitTransactions?.slice(-12)};
     });
     console.error('WEBKIT_PDF_SAVE_DIAGNOSTICS',JSON.stringify(detail));
+    const probe=await page.evaluate(async bytes=>{
+     const file=new File([Uint8Array.from(bytes)],'webkit-probe.pdf',{type:'application/pdf'});
+     return await Promise.race([
+      LiturgyReader.load(file,'pdf').then(async doc=>{
+       const pages=doc.numPages;
+       await doc.destroy();
+       return {status:'ok',pages};
+      }).catch(e=>({status:'error',message:String(e?.message||e),name:e?.name})),
+      new Promise(resolve=>setTimeout(()=>resolve({status:'timed-out'}),6000))
+     ]);
+    },Array.from(pdf())).catch(e=>({status:'probe-error',message:String(e?.message||e)}));
+    console.error('WEBKIT_PDF_LOAD_PROBE',JSON.stringify(probe));
     throw error;
    });
   await page.evaluate(async()=>LiturgyReader.bookmark('chrysostom',2));
