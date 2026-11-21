@@ -40,6 +40,50 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.reload();await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
  await ensureOffline();await page.locator('[data-reader="open"]').click();await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
  await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.querySelector('#liturgical-reader').open);
+ // A plausible opening prayer is NOT evidence of a verified source edition.
+ // The unknown PDF remains readable, but no dated hymns are auto-inserted.
+ const unverified=await page.evaluate(async()=>{
+  const originals={get:LiturgyReader.get,load:LiturgyReader.load};
+  const content={
+   1:['The Divine Liturgy of St. John Chrysostom','PRIEST: Blessed is the Kingdom.',
+      'Great Litany','ALL: Lord, have mercy.','Little Entrance','Trisagion','Epistle','Gospel'],
+   2:['Holy Communion','ALL: Amen.','Dismissal']
+  };
+  LiturgyReader.get=async id=>id==='chrysostom'?
+   {id,name:'unverified-opening-words.pdf',format:'pdf',pages:2,page:1,
+    updated:'unverified-source-fixture',blob:new Blob()}:originals.get(id);
+  LiturgyReader.load=async()=>({
+   numPages:2,
+   getPage:async number=>({getTextContent:async()=>({
+    items:(content[number]||[]).map((str,index)=>({
+      str,width:210,height:12,transform:[1,0,0,12,20,360-index*28]
+    }))
+   })}),
+   destroy:async()=>{}
+  });
+  try{
+   await LiturgicalText.hydrate();
+   const element=document.querySelector('.liturgical-text');
+   return {
+    status:element.querySelector('.reader-status').textContent,
+    text:element.querySelector('.reader-inline-text').textContent,
+    placed:element.dataset.placedDaily||'',
+    originalFileStillSaved:!!(await originals.get('chrysostom'))
+   };
+  }finally{
+   LiturgyReader.get=originals.get;
+   LiturgyReader.load=originals.load;
+  }
+ });
+ assert.match(unverified.status,/unverified edition/i,
+  'a PDF with familiar liturgy headings must not claim official edition identity');
+ assert.match(unverified.text,/Blessed is the Kingdom/,
+  'unverified private PDFs must remain readable');
+ assert.equal(unverified.placed,'',
+  'date-specific hymns cannot be inserted into an unverified private translation');
+ assert.equal(unverified.originalFileStillSaved,true,'the original saved book remains intact');
+ await page.reload();
+ await page.waitForFunction(()=>!document.querySelector('[data-reader="open"]').disabled);
  // Date selection chooses a different slot, rather than relabelling Chrysostom's PDF.
  await page.goto(`${base}index.html?tab=liturgy&date=2026-04-02`);
  assert.match(await page.locator('.service-summary').innerText(),/Basil the Great/);
