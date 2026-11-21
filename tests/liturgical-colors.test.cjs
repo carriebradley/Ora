@@ -53,3 +53,18 @@ test('explicit fast-free wording does not create a false purple fasting day',()=
  assert.equal(C.fasting({...quiet,fast:'No fast',
    historicalObservance:{name:"St. Martin's Lent"}},'sarum'),true);
 });
+
+
+test('fast-free wording stays neutral across Today badge and Calendar chip decisions',()=>{
+ const words=['No fast','No fasting','Fast-free','Fast free','Fast is lifted','Fasting is lifted'];
+ for(const fast of words){
+  assert.equal(C.fastFree(fast),true,fast);
+  assert.equal(C.fasting({fast,season:'Ordinary Time'},'roman'),false,fast);
+ }
+ for(const fast of ['Fast and abstinence','No meat','Strict Fast','Great Fast']){
+  assert.equal(C.fastFree(fast),false,fast);
+ }
+ assert.equal(C.fastFree(''),false);
+ assert.equal(C.fasting({fast:'No fasting',fastSeason:'Nativity Fast'},'byz'),true);
+ assert.equal(C.fasting({fast:'No fast',historicalObservance:{name:"St. Martin's Lent"}},'sarum'),true);
+});

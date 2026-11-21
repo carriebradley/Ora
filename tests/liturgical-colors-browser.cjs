@@ -83,6 +83,32 @@ module.exports=async(page,base)=>{
    .evaluate(el=>el.style.getPropertyValue('--c')),violet,
    church+' major Marian feast stays purple during fasting season');
  }
+ // A negative source fasting label must not create a violet Today badge
+ // or a 'fast' Calendar chip; other genuine fasting seasons stay purple.
+ await page.goto(base+'index.html?tab=today&rite=roman&date=2026-11-16');
+ await page.evaluate(()=>{
+  window.__oraOriginalRoman=LitCal.roman;
+  LitCal.roman=(...args)=>({
+   ...window.__oraOriginalRoman(...args),
+   rank:'Weekday',title:'Ordinary Weekday',season:'Ordinary Time',
+   color:'w',fast:'No fast',fastSeason:'',isFeast:false,also:[]
+  });
+ });
+ try{
+  await page.locator('[data-act="next"]').first().click();
+  const card=page.locator('.gl[data-v="roman"]');
+  assert.notEqual(await card.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),violet,
+   'negative fast label must not turn a neutral Today badge violet');
+  assert.notEqual((await card.locator('.gb').innerText()).trim(),'Fast Day',
+   'negative fast label must not become a positive fasting badge');
+  await page.locator('#nav [data-tab="calendar"]').click();
+  const textChip=page.locator('.chip').filter({hasText:'No fast'});
+  assert.ok(await textChip.count()>0,'retain original negative calendar guidance');
+  assert.equal(await page.locator('.chip.fast').filter({hasText:'No fast'}).count(),0,
+   'negative fasting guidance must not be visually styled as a fast');
+ }finally{
+  await page.evaluate(()=>{LitCal.roman=window.__oraOriginalRoman;delete window.__oraOriginalRoman;});
+ }
  // St. Martin’s Lent is a season indicator, including Sundays and feasts;
  // it does not change the underlying Sarum vestment colour or fast rules.
  for(const date of ['2026-11-11','2026-11-15','2026-11-19','2026-11-20','2026-12-08','2026-12-24']){

@@ -15,16 +15,20 @@
       || /\bconception of (?:the )?(?:(?:holy|saint|st\.?|righteous)\s+)*ann[ae]\b/i.test(title);
   }
   const display=day=>marian(day)?'blue':day?.color;
+  // A negative fasting statement is guidance, not a positive fast marker.
+  // Share this check across Today badges, Calendar chips and season colours.
+  function fastFree(fast){
+    return /^(?:no\s+fast(?:ing)?|fast[- ]free|fast(?:ing)?\s+(?:is\s+)?lifted)\b/i.test(String(fast||'').trim());
+  }
   // Display fasting periods consistently without changing a calendar's
   // source colour or implying that every date is a day of abstinence.
   function fasting(day,rite,fast=day?.fast){
     const label=String(fast||'').trim();
-    // "No fast" is not a fasting observance. A separately recorded fast
-    // season still keeps its purple seasonal marker, even on feast days.
-    const fastFree=/^(?:no\s+fast(?:ing)?|fast[- ]free|fast(?:ing)?\s+(?:is\s+)?lifted)\b/i.test(label);
-    return !!((label&&!fastFree)||day?.fastSeason||
+    // A separately recorded fasting season remains purple even on a feast
+    // whose individual fasting rule is lifted.
+    return !!((label&&!fastFree(label))||day?.fastSeason||
       (rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")||
       /^(?:Lent|Passiontide)$/i.test(day?.season||''));
   }
-  return {blue,marian,display,fasting};
+  return {blue,marian,display,fasting,fastFree};
 });
