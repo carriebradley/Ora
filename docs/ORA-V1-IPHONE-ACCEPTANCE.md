@@ -26,3 +26,11 @@ For each issue, record **date, rite/church, tab, expected versus actual behavior
 - Ora is publicly hosted; permission for official liturgical texts and ecclesiastical publication review remain separate matters.
 
 Only mark Version 1 released when the final commit passes the automated checks **and** the user reports this iPhone acceptance pass.
+
+## Browser-engine verification added (November 21, 2026)
+
+GitHub Actions now has a separate **Ora WebKit compatibility** check using a persistent WebKit session with iPhone-sized touch emulation. Persistent storage matters: Playwright's temporary WebKit contexts cannot save `File`/`Blob` objects to IndexedDB, unlike normal Safari windows (upstream [Playwright #42795](https://github.com/microsoft/playwright/issues/42795)). The test exercises tab navigation, 320px large-text layout, saved PDF/EPUB entries, bookmarks, and device-local storage while offline.
+
+Testing uncovered an independent **PDF Text view** issue: PDF.js calls `for await` on `ReadableStream`, but Safari through version 26.6 lacks the needed async iterator (upstream [PDF.js #20973](https://github.com/mozilla/pdf.js/issues/20973)). Ora now adds a standard-compliant, feature-detected iterator only when it is missing. Modern browsers with native support are untouched; the private original PDF is not rewritten.
+
+A passing Linux WebKit run **does not certify iOS Safari** or installed PWA storage retention. Complete the real-device checklist above before v1 release.

@@ -24,6 +24,34 @@
   const get=id=>request('readonly',s=>s.get(id));
   const all=()=>request('readonly',s=>s.getAll());
   const remove=id=>request('readwrite',s=>s.delete(id));
+  // PDF.js iterates ReadableStream chunks with for-await. Safari before 27
+  // has getReader() but lacks ReadableStream[Symbol.asyncIterator].
+  // Add the missing standard iterator only where the browser lacks it.
+  // https://github.com/mozilla/pdf.js/issues/20973
+  function ensureStreamAsyncIterator() {
+    if(typeof ReadableStream!=='function'||typeof Symbol.asyncIterator==='undefined')return;
+    const proto=ReadableStream.prototype;
+    if(typeof proto[Symbol.asyncIterator]==='function')return;
+    try {
+      Object.defineProperty(proto,Symbol.asyncIterator,{
+        configurable:true,writable:true,
+        value:async function*(){
+          const reader=this.getReader();
+          let complete=false;
+          try{
+            for(;;){
+              const chunk=await reader.read();
+              if(chunk.done){complete=true;return;}
+              yield chunk.value;
+            }
+          }finally{
+            if(!complete)try{await reader.cancel();}catch(_){}
+            reader.releaseLock();
+          }
+        }
+      });
+    }catch(_){/* Keep PDF page view available if a host freezes the prototype. */}
+  }
   let pdfLibrary;
   async function library() {
     if (!pdfLibrary) pdfLibrary=import('./vendor/pdfjs/pdf.mjs').then(p=>{p.GlobalWorkerOptions.workerSrc=new URL('./vendor/pdfjs/pdf.worker.mjs',location.href).href;return p;}).catch(e=>{pdfLibrary=null;throw e;});
@@ -31,6 +59,7 @@
   }
   async function load(blob,format='pdf') {
     if(format==='epub')return EpubReader.load(blob);
+    ensureStreamAsyncIterator();
     const p=await library();
     const task=p.getDocument({data:new Uint8Array(await blob.arrayBuffer()),isEvalSupported:false,enableXfa:false,useSystemFonts:true,useWasm:false});
     task.onPassword=()=>{task.destroy();};
