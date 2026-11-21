@@ -476,7 +476,7 @@
           status.textContent='Preparing your saved prayers…';
           const reading=await prayerPreview(saved,book,async b=>{
             const liturgy=await standardPrayerText(b,section.dataset.textId);
-            return liturgy?{sections:liturgy,recognized:true}:
+            return liturgy?{sections:liturgy,recognized:LiturgicalFormat.verifiedPrayerEdition(liturgy,section.dataset.textId)}:
               {sections:await continuousSavedPdfText(b),recognized:false};
           });
           if(!section.isConnected||token!==hydrateVersion)return;
@@ -497,7 +497,8 @@
           const reading=await prayerPreview(saved,book,async b=>{
             const seasonal=await isEaster2018Booklet(b);
             const liturgy=await edmontonPrayerText(b)||await standardPrayerText(b,section.dataset.textId);
-            if(liturgy)return {sections:LiturgicalFormat.startAtOpeningBlessing(liturgy),recognized:true,seasonal};
+            if(liturgy)return {sections:LiturgicalFormat.startAtOpeningBlessing(liturgy),
+              recognized:LiturgicalFormat.verifiedPrayerEdition(liturgy,section.dataset.textId),seasonal};
             const fallback=await continuousSavedPdfText(b);
             return {sections:fallback?LiturgicalFormat.startAtOpeningBlessing(fallback):null,recognized:false,seasonal};
           });
@@ -509,7 +510,7 @@
             renderEdmontonPrayerText(preview,reading.sections);
             arrangeDailyHymns(section,preview,reading.sections,{recognized:reading.recognized,seasonal:reading.seasonal});
             if(reading.seasonal)showSeasonalBookletNote(section);
-            status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · English-only continuous text')+' · saved privately on this device';
+            status.textContent=(reading.recognized?'Ukrainian Divine Liturgy':'Saved PDF · English-only continuous text (unverified edition)')+' · saved privately on this device';
           }else{
             preview.replaceChildren();
             preview.textContent='No selectable English text was found in this PDF. Open original book to view it. If this file contains only Ukrainian, use an English-language edition instead.';

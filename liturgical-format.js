@@ -1094,6 +1094,15 @@
   }
   return startAtOpeningBlessing(out);
  }
-  return {normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,cathedralAntiphonRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonOpeningPrayers,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
+  // A recognizable opening prayer is not proof of the translation/edition.
+  // Keep generic, privately saved PDFs readable without silently composing
+  // official daily hymns into an unverified source book.
+  function verifiedPrayerEdition(sections,id){
+    return !!(sections&&(
+      (id==='chrysostom'&&(sections.edmonton2012===true||sections.cathedral2020===true))||
+      (id==='melkite-chrysostom'&&sections.newton2009===true)
+    ));
+  }
+  return {verifiedPrayerEdition,normalize,displayPrayer,displayTitle,heading,role,speakerInstruction,properPrayerLines,pdfRows,cathedralAntiphonRows,edmontonFirstAntiphonRows,edmontonAdditionalAntiphonRows,edmontonTrisagionRows,pdfFolioLine,instruction,combine,englishPdfItems,melkiteReferenceBoundary,newtonOptionalPetitions,newtonTrisagionHymns,expandNewtonOpeningPrayers,expandNewtonTrisagionHymns,expandNewtonConcludingThreefold,expandNewtonCherubicThreefold,expandNewtonProthesisPrayer,expandNewtonPeaceLitany,expandNewtonEktene,expandNewtonGiftLitany,expandNewtonCommunionPreparation,expandNewtonAitesis,joinEdmontonGreatLitanyPageBreak,joinEdmontonCreedPageBreak,joinEdmontonChurchPrayerPageBreak,joinEdmontonLordsPrayerPageBreak,joinEdmontonThanksgivingPageBreak,joinEdmontonCommunionPrayerPageBreak,expandEdmontonCherubicThreefold,expandEdmontonThreefoldResponses,expandEdmontonRemainingThreefold,repairEdmontonWrappedWords,edmontonBaptismalAlternative,expandEdmontonTrisagionTwofold,startAtOpeningBlessing,epubPrayerSections};
 });
 
