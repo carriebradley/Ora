@@ -2002,7 +2002,7 @@
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => {const p=calendarPair(v[k],k);return RITES[k]+': '+v[k].title+(v[k].fast?'. '+v[k].fast:'')+'. Vestment color '+(COLOR_NAMES[p.vestment]||p.vestment)+'; liturgical season '+LiturgicalColors.season(v[k],k).label+' ('+(COLOR_NAMES[p.category]||p.category)+')';}).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true" title="'+esc(disciplineGuidance.map(x=>RITES[x.rite]+': '+x.info.label).join('; '))+'">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Easter, Pascha and Christmas'],['gold','Gold · Feast vestments and badges'],['rose','Rose · Gaudete and Laetare'],['blue','Blue · Marian badge accent']];
+    const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Easter, Pascha and Christmas'],['gold','Gold · Feast vestments and badges'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian badge accent']];
     h += '</div><div class="calendar-dot-guide"><span class="dot dual" style="--c:#a8232a;--ring:#8a6ba4" aria-hidden="true"></span><span><b>Inner dot</b> = liturgical vestment color; <b>outer ring</b> = liturgical season color, only when different. <b>Purple ƒ</b> = separate fasting or abstinence guidance (not always a binding obligation). Sundays are not fasting days.</span></div>';
     h += '<div class="calendar-key" aria-label="Season and vestment color legend">'+keys.map(([key,label])=>`<span><i class="key-dot" style="--key:${CALENDAR_CATEGORY_COLORS[key]}"></i> ${label}</span>`).join('')+'</div>';
     h += '</section>';
@@ -2581,7 +2581,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v443';
+  const APP_BUILD = 'ora-v444';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
