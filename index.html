@@ -122,13 +122,15 @@ a{color:var(--accent)}
 .glance .gl:first-of-type,.glance .lab+.gl{border-top:0}
 .glance .lab{margin-bottom:5px}
 .glance .gl[role="button"]{cursor:pointer;border-radius:10px;padding-left:10px;padding-right:10px;margin-left:-10px;margin-right:-10px;transition:background .15s}
-.glance .gl.selected{background:color-mix(in srgb,var(--lit) 5%,transparent);box-shadow:inset 3px 0 0 var(--lit),inset -3px 0 0 var(--lit)}
+.glance .gl.selected{background:color-mix(in srgb,var(--today-category,var(--lit)) 5%,transparent);box-shadow:inset 3px 0 0 var(--today-category,var(--lit)),inset -3px 0 0 var(--today-category,var(--lit))}
 .glance .gl[role="button"]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.glance .today-rite{display:inline-flex;align-items:center;gap:10px;min-width:0}
+.glance .today-dot{width:12px;height:12px;flex:none;margin:0 2px}
 .glance .gn{color:var(--ink);font-weight:700;font-size:1.08rem;line-height:1.3;letter-spacing:.005em}
 .glance .gb{justify-self:end;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line);white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(0,0,0,.16),0 0 0 1px color-mix(in srgb,var(--badge-color,var(--line)) 50%,var(--line))}
-.glance .gb[style*="--lit-white"]{box-shadow:inset 0 0 0 1px #c8bba5,0 0 0 1px #d7cbb9}
+.glance .gl[data-category="w"] .gb{box-shadow:inset 0 0 0 1px #c8bba5,0 0 0 1px #d7cbb9}
 .glance .gl.selected .gb{box-shadow:inset 0 0 0 1px rgba(0,0,0,.2),0 0 0 1.5px var(--badge-color,var(--line))}
-/* Badges use each rite's liturgical colour; the label retains feast/fast status. */
+/* Today badges match the calendar category; adjacent dots show vestment colours. */
 .glance .gd{grid-column:1/-1;color:var(--ink);min-width:0;font-family:var(--serif);font-size:1rem;line-height:1.55;overflow-wrap:break-word}
 @media (max-width:420px){.glance .gl{column-gap:10px}.glance .gb{font-size:.86rem}}
 
@@ -336,16 +338,16 @@ nav button.on b{color:color-mix(in srgb,var(--lit) 50%,var(--ink))}
 .glance .byz-commemoration.subsequent::before{content:"";position:absolute;left:3px;top:.75em;width:5px;height:5px;border-radius:50%;background:var(--gold)}
 
 /* Ivory observance badges: readable distinction from the cream card in light mode. */
-.glance .gb[style*="--lit-white"]{
+.glance .gl[data-category="w"] .gb{
   border:1px solid #b5a589;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 1px 2px rgba(63,45,20,.10);
 }
-.glance .gl.selected .gb[style*="--lit-white"]{
+.glance .gl.selected[data-category="w"] .gb{
   border-color:#a99879;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 0 0 1px #cbbda3;
 }
-:root[data-theme="dark"] .glance .gb[style*="--lit-white"]{border-color:#b9a98f;box-shadow:0 0 0 1px rgba(240,232,218,.18)}
-:root[data-theme="dark"] .glance .gl.selected .gb[style*="--lit-white"]{border-color:#b9a98f;box-shadow:0 0 0 1px rgba(240,232,218,.3)}
+:root[data-theme="dark"] .glance .gl[data-category="w"] .gb{border-color:#b9a98f;box-shadow:0 0 0 1px rgba(240,232,218,.18)}
+:root[data-theme="dark"] .glance .gl.selected[data-category="w"] .gb{border-color:#b9a98f;box-shadow:0 0 0 1px rgba(240,232,218,.3)}
 
 /* Byzantine reading-day headings should be quieter than the primary prayer titles. */
 .reading-main-title{font-size:1.2rem;line-height:1.4;font-weight:600;letter-spacing:0}

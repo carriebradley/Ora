@@ -608,10 +608,13 @@
         k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
         westernCommemorations(detail)[0] || detail;
       const detailHTML = esc(displayTitle(shown));
-      const lit = observanceColor(r, k);
-      const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      const badgeColor = lit === 'w' ? 'var(--lit-white)' : col(lit);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
+      // Today reuses the calendar's vestment/category pair and category palette.
+      // Status labels remain unchanged, including the Sunday fast exemption.
+      const pair = calendarPair(r,k);
+      const badgeColor = CALENDAR_CATEGORY_COLORS[pair.category] || col(pair.category);
+      const ink = ['w','gold','y','rose','v','g'].includes(pair.category) ? '#000' : '#fff';
+      const colors = `Vestment color ${COLOR_NAMES[pair.vestment]||pair.vestment}; calendar category ${COLOR_NAMES[pair.category]||pair.category}`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeColor}" data-category="${esc(pair.category)}" data-vestment="${esc(pair.vestment)}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}"><span class="today-rite">${calendarSwatch(r,k,'sw today-dot')}<span class="gn">${n}</span></span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2562,7 +2565,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v435';
+  const APP_BUILD = 'ora-v436';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
