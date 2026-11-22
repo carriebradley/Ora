@@ -65,8 +65,9 @@
     if(rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")
       return {color:'v',label:"St. Martin's Lent"};
     if(rite==='byz'&&fastSeason)return {color:'v',label:fastSeason};
+    // Easter/Pascha gold is a dedicated seasonal accent, distinct from yellow vestments.
     if(/^(?:Easter Time|Eastertide|Paschaltide|Pentecostarion)$/i.test(name))
-      return {color:'w',label:name};
+      return {color:'gold',label:name};
     if(/^Whitsuntide$/i.test(name))return {color:'r',label:name};
     if(/Advent|Lent|Passiontide|Holy Week|Triodion|Pre-Lent|Triduum/i.test(name))
       return {color:'v',label:name};
@@ -77,15 +78,11 @@
       return {color:'w',label:'Nativity and Theophany'};
     return {color:'g',label:name||'Ordinary season'};
   }
-  // A dot uses the source vestment colour and adds a category ring only
-  // for a distinct colour family. Sarum yellow ('y') and calendar gold
-  // refer to the same gold colour, despite their separate source labels.
+  // Inner color is the source vestment; outer color is the season.
+  // Yellow vestments and seasonal Easter gold use distinct palette shades.
   function pair(day,category){
     const vestment=day?.color||'w', outer=category||vestment;
-    const sameColor=vestment===outer||
-      (vestment==='y'&&outer==='gold')||
-      (vestment==='gold'&&outer==='y');
-    return {vestment,category:outer,dual:!sameColor};
+    return {vestment,category:outer,dual:vestment!==outer};
   }
   return {blue,marian,display,fasting,fastFree,sunday,discipline,easterSeason,season,pair};
 });

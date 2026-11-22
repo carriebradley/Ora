@@ -547,10 +547,6 @@
   function calendarPair(r,rite){
     return LiturgicalColors.pair(r,LiturgicalColors.season(r,rite).color);
   }
-  // Today badge represents the day's vestment and feast/saint identity.
-  function badgePair(r,rite){
-    return LiturgicalColors.pair(r,observanceColor(r,rite));
-  }
   function calendarSwatch(r,rite,cls='dot'){
     const p=calendarPair(r,rite);
     const season=LiturgicalColors.season(r,rite);
@@ -622,14 +618,13 @@
         k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
         westernCommemorations(detail)[0] || detail;
       const detailHTML = esc(displayTitle(shown));
-      const season = LiturgicalColors.season(r,k), pair = badgePair(r,k);
-      const badgeColor = CALENDAR_CATEGORY_COLORS[pair.category] || col(pair.category);
-      const seasonColor = CALENDAR_CATEGORY_COLORS[season.color] || col(season.color);
-      const badgeFill = col(pair.vestment);
-      const ink = ['w','gold','y','rose'].includes(pair.vestment) ? '#000' : '#fff';
-      const colors = `Vestment color ${COLOR_NAMES[pair.vestment]||pair.vestment}; liturgical season ${season.label} (${COLOR_NAMES[season.color]||season.color})`;
+      const season = LiturgicalColors.season(r,k);
+      const vestment = r.color || 'w';
+      const badgeFill = col(vestment);
+      const ink = ['w','gold','y','rose'].includes(vestment) ? '#000' : '#fff';
+      const colors = `Vestment color ${COLOR_NAMES[vestment]||vestment}; liturgical season ${season.label} (${COLOR_NAMES[season.color]||season.color})`;
       const discipline = LiturgicalColors.discipline(r,k);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeColor}" data-category="${esc(season.color)}" data-badge-category="${esc(pair.category)}" data-vestment="${esc(pair.vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb${pair.dual ? ' dual' : ''}" style="--badge-color:${badgeColor};--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeFill}" data-category="${esc(season.color)}" data-vestment="${esc(vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb" style="--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2002,7 +1997,7 @@
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => {const p=calendarPair(v[k],k);return RITES[k]+': '+v[k].title+(v[k].fast?'. '+v[k].fast:'')+'. Vestment color '+(COLOR_NAMES[p.vestment]||p.vestment)+'; liturgical season '+LiturgicalColors.season(v[k],k).label+' ('+(COLOR_NAMES[p.category]||p.category)+')';}).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true" title="'+esc(disciplineGuidance.map(x=>RITES[x.rite]+': '+x.info.label).join('; '))+'">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Easter, Pascha and Christmas'],['gold','Gold · Feast vestments and badges'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian badge accent']];
+    const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Christmas season and white vestments'],['gold','Gold · Easter/Pascha season and gold vestments'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian observance accent']];
     h += '</div><div class="calendar-dot-guide"><span class="dot dual" style="--c:#a8232a;--ring:#8a6ba4" aria-hidden="true"></span><span><b>Inner dot</b> = liturgical vestment color; <b>outer ring</b> = liturgical season color, only when different. <b>Purple ƒ</b> = separate fasting or abstinence guidance (not always a binding obligation). Sundays are not fasting days.</span></div>';
     h += '<div class="calendar-key" aria-label="Season and vestment color legend">'+keys.map(([key,label])=>`<span><i class="key-dot" style="--key:${CALENDAR_CATEGORY_COLORS[key]}"></i> ${label}</span>`).join('')+'</div>';
     h += '</section>';
@@ -2581,7 +2576,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v445';
+  const APP_BUILD = 'ora-v446';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
