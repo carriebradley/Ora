@@ -3,6 +3,13 @@ module.exports=async(page,base,artifacts,violations)=>{
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));});
  await page.goto(`${base}index.html?tab=liturgy&rite=byz&date=2026-11-12`);
  await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ // The page initiates its own asynchronous private-reader hydration on render.
+ // Wait for that initial attempt to settle before installing the fixture,
+ // otherwise it can cancel the mocked hydration through hydrateVersion.
+ await page.waitForFunction(()=>{
+  const status=document.querySelector('.liturgical-text .reader-status');
+  return status && !/Checking saved book|Preparing (?:your saved prayers|the English prayers)/.test(status.textContent);
+ });
  // Fictional PDF-shaped rows exercise the real UI extraction path. Nothing is
  // written to device storage, and no publisher or user's book is uploaded.
  await page.evaluate(async()=>{
@@ -13,6 +20,10 @@ module.exports=async(page,base,artifacts,violations)=>{
   try{await LiturgicalText.hydrate();}finally{LiturgyReader.get=originalGet;LiturgyReader.load=originalLoad;}
  });
  const text=page.locator('.reader-inline-text');
+ // Verify the mocked excerpt was actually rendered, not merely that the
+ // async hydrate call returned. This makes any missing PDF text diagnosable.
+ await text.locator('.byz-prayer-words').first().waitFor({state:'visible'});
+ assert.match(await text.innerText(),/Fixture opening/);
  assert.equal(await page.locator('.liturgy-opening .t').innerText(),'Sign of the Cross');
  assert.equal(await page.locator('.liturgy-opening .tx').innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
  for(const width of [320,390,800]){
