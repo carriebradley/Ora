@@ -49,7 +49,18 @@ jobs:
           mkdir -p /tmp/ora-browser-audit
           python3 -m http.server 8765 >/tmp/ora-server.log 2>&1 &
           for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+          # Preserve both exit codes, so an intermittent browser or log-capture
+          # failure stays visible and remains a blocking test failure.
+          set +e
           node tests/browser-audit.cjs 2>&1 | tee /tmp/ora-browser-audit/browser-log.txt
+          status=(${PIPESTATUS[@]})
+          set -e
+          echo "Ora browser process exit: ${status[0]}; log capture exit: ${status[1]}" | tee -a /tmp/ora-browser-audit/browser-log.txt
+          if [ "${status[0]}" -ne 0 ] || [ "${status[1]}" -ne 0 ]; then
+            echo "Local HTTP server diagnostics:"
+            tail -n 30 /tmp/ora-server.log || true
+            exit 1
+          fi
       # Reporting is supplemental; Node, importer and browser test failures remain blocking.
       - name: Record browser diagnostics
         if: always()

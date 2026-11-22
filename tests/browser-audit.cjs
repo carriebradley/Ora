@@ -296,6 +296,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  console.log(JSON.stringify({pages:results.length,offline,errors,violations},null,2));
  if(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_REF==='refs/heads/main'&&process.env.GITHUB_REPOSITORY==='carriebradley/Ora')
   await require('./published-smoke.cjs')(browser,artifacts);
- await browser.close();assert.equal(violations.length,0,'automated accessibility violations');
+ console.log('Ora browser audit: all page checks complete; closing browser.');
+ await browser.close();
+ console.log('Ora browser audit: browser closed cleanly.');
+ assert.equal(violations.length,0,'automated accessibility violations');
 })().catch(e=>{console.error(e);process.exit(1)});
 
