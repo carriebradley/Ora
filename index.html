@@ -96,7 +96,7 @@ nav button.on{color:var(--ink);font-weight:600}
 .cell .dots{display:flex;gap:2px;min-height:12px;align-items:center}
 .dot{width:8px;height:8px;flex:none;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.35)}
 .dot.dual,.sw.dual{box-shadow:0 0 0 2px var(--ring)}
-.cell .f{position:absolute;top:1px;right:3px;font-size:.6rem;color:#6a3f9a}
+.cell .f{position:absolute;top:1px;right:3px;font-size:.72rem;font-weight:750;color:#9b79bc}
 .legend{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
 .legend button{padding:5px 10px;border-radius:99px;border:1px solid var(--line);font-size:.85rem;color:var(--muted)}
 .legend button.on{border-color:var(--accent);color:var(--accent);font-weight:600}
@@ -130,6 +130,10 @@ a{color:var(--accent)}
 .glance .gb{justify-self:end;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line);white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(0,0,0,.16),0 0 0 1px color-mix(in srgb,var(--badge-color,var(--line)) 50%,var(--line))}
 .glance .gl[data-category="w"] .gb{box-shadow:inset 0 0 0 1px #c8bba5,0 0 0 1px #d7cbb9}
 .glance .gl.selected .gb{box-shadow:inset 0 0 0 1px rgba(0,0,0,.2),0 0 0 1.5px var(--badge-color,var(--line))}
+.glance .today-badges{display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:0}
+.glance .discipline-marker{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;font-weight:600;line-height:1.25;letter-spacing:.01em;color:#ae8dcc;white-space:nowrap}
+.glance .discipline-marker i{width:7px;height:7px;display:inline-block;border-radius:50%;background:#8a6ba4;box-shadow:0 0 0 1px #8a6ba4}
+html[data-theme="light"] .glance .discipline-marker{color:#6a3f9a}
 /* Today badges mirror the calendar dots: vestment fill, category ring if different. */
 .glance .gb.dual,.glance .gl[data-category="w"] .gb.dual,.glance .gl.selected .gb.dual{box-shadow:inset 0 0 0 1px rgba(0,0,0,.2),0 0 0 3px var(--badge-color,var(--line))}
 .glance .gd{grid-column:1/-1;color:var(--ink);min-width:0;font-family:var(--serif);font-size:1rem;line-height:1.55;overflow-wrap:break-word}

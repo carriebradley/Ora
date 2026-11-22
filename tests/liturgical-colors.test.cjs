@@ -96,3 +96,22 @@ test('two-color calendar dot pairs use vestments inside, category outside, and n
   assert.equal(JSON.stringify(day),original,'never rewrite source vestment data');
  }
 });
+
+test('discipline is separate from feast identity and is never inferred for Sundays',()=>{
+ assert.deepEqual(C.discipline({date:'2026-11-11',fast:'Traditional Wednesday abstinence — feast allowances may apply'},'byz'),
+  {kind:'traditional',short:'Trad. abstinence',label:'Traditional abstinence (local practice; feast allowances may apply)'});
+ assert.equal(C.discipline({date:'2026-11-15',fast:'Traditional Sunday abstinence',fastSeason:'Nativity Fast'},'byz'),null);
+ assert.equal(C.discipline({date:'2026-04-13',season:'Easter Time'},'roman'),null);
+ assert.equal(C.discipline({date:'2026-11-16',fast:'No fast'},'roman'),null);
+ assert.equal(C.discipline({date:'2026-11-17',fastSeason:'Nativity Fast'},'byz').kind,'season');
+ assert.equal(C.discipline({date:'2026-11-19',fast:'Abstinence from meat'},'byz').kind,'abstinence');
+});
+test('Easter season is distinguished from Ordinary Time without rewriting source data',()=>{
+ for(const season of ['Easter Time','Eastertide','Paschaltide']){
+  const day={color:'w',season,title:'Monday after Easter'};
+  const old=JSON.stringify(day);
+  assert.equal(C.easterSeason(day),true);
+  assert.equal(JSON.stringify(day),old);
+ }
+ for(const season of ['Ordinary Time','After Pentecost','Advent'])assert.equal(C.easterSeason({season}),false);
+});

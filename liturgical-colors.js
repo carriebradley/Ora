@@ -37,11 +37,29 @@
       (rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")||
       /^(?:Lent|Passiontide)$/i.test(day?.season||''));
   }
+  // Indicate discipline separately from the feast or commemoration colour.
+  // "Traditional" abstinence describes a practice, not a blanket legal obligation.
+  function discipline(day,rite){
+    if(sunday(day))return null;
+    const label=String(day?.fast||'').trim();
+    if(label&&!fastFree(label)){
+      const traditional=/^traditional\b/i.test(label);
+      const abstinence=/abstinen|no meat|without meat/i.test(label)&&!/\bfast\b|\bstrict\b/i.test(label);
+      return {kind:traditional?'traditional':abstinence?'abstinence':'fast',
+        short:traditional?'Trad. abstinence':abstinence?'Abstinence':'Fast',
+        label:traditional?'Traditional abstinence (local practice; feast allowances may apply)':abstinence?'Abstinence guidance: '+label:'Fasting guidance: '+label};
+    }
+    const season=String(day?.fastSeason||'').trim()||
+      (rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent"?"St. Martin's Lent":'')||
+      (/^(?:Lent|Passiontide)$/i.test(day?.season||'')?day.season:'');
+    return season?{kind:'season',short:'Fasting season',label:'Fasting season: '+season}:null;
+  }
+  const easterSeason=day=>/^(?:Easter Time|Eastertide|Paschaltide)$/i.test(String(day?.season||''));
   // A calendar dot shows the source vestment colour; a different calendar
   // category appears as an outer ring. Compare colour names, not shades.
   function pair(day,category){
     const vestment=day?.color||'w', outer=category||vestment;
     return {vestment,category:outer,dual:vestment!==outer};
   }
-  return {blue,marian,display,fasting,fastFree,sunday,pair};
+  return {blue,marian,display,fasting,fastFree,sunday,discipline,easterSeason,pair};
 });
