@@ -217,7 +217,8 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-19`);
  assert.equal(await page.locator('.gl[data-v="roman"] .today-dot').getAttribute('data-category'),'w','Easter Sunday is not ordinary green');
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-04-13`);
- assert.equal(await page.locator('.gl[data-v="sarum"] .today-dot').getAttribute('data-category'),'w','Traditional Eastertide stays white');
+ assert.notEqual(await page.locator('.gl[data-v="sarum"] .today-dot').getAttribute('data-category'),'g','Traditional Eastertide cannot be ordinary green even when a feast takes precedence');
+ assert.notEqual(await page.locator('.gl[data-v="sarum"] .gb').innerText(),'Ordinary Day','Traditional Eastertide is not labeled Ordinary Day');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-04-13`);
  assert.match(await page.locator('.calendar-key').innerText(),/Off-white · Easter\/Paschal season/);
  for(const [rite,date] of [
