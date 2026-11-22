@@ -160,15 +160,20 @@
     .catch(() => cachedFeed())
     .then(data => { feed = data; return feed; });
   feedP.then(() => { if (st.tab === 'justice') render(); });
+  const hasReadingCitations = data => data && typeof data === 'object' && !Array.isArray(data) &&
+    ['first', 'psalm', 'second', 'gospel'].some(key => typeof data[key] === 'string' && data[key].trim());
   function loadReadings(iso) {
     if (st.readings[iso] !== undefined) return;
     st.readings[iso] = 'loading';
     feedP.then(f => {
       if (f[iso] && f[iso].sections && f[iso].sections.length) { st.readings[iso] = { full: f[iso], copyright: f._copyright }; if (st.date === iso) render(); return; }
       const cached = store.get('ora.readings.' + iso, null);
-      if (cached) { st.readings[iso] = cached; if (st.date === iso) render(); return; }
+      if (hasReadingCitations(cached)) { st.readings[iso] = cached; if (st.date === iso) render(); return; }
       return fetch(`${READINGS_API}/${iso.slice(0, 4)}/${iso.slice(5)}.json`).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(j => {
-        const x = j.readings || {}; const out = { first: x.firstReading, psalm: x.psalm, second: x.secondReading, gospel: x.gospel };
+        const x = j?.readings && typeof j.readings === 'object' && !Array.isArray(j.readings) ? j.readings : {};
+        const cite = value => typeof value === 'string' ? value.trim() : '';
+        const out = { first: cite(x.firstReading), psalm: cite(x.psalm), second: cite(x.secondReading), gospel: cite(x.gospel) };
+        if (!hasReadingCitations(out)) throw new Error('No usable Mass reading citations for date');
         st.readings[iso] = out; store.set('ora.readings.' + iso, out); if (st.date === iso) render();
       });
     }).catch(() => { st.readings[iso] = null; if (st.date === iso) render(); });
@@ -191,8 +196,8 @@
       if (referencesOnly) h += `<p class="muted">The full readings are available on the <a href="${usccb(iso)}" target="_blank" rel="noopener">official USCCB page</a>.</p>`;
       if (!simple) h += `<div class="row">${speakBtn(readingsSpeech(r))}</div>`;
       const gs = r.full.sections.find(s => /gospel/i.test(s.label) && s.cite); if (gs && !simple) h += fathersBlock(gs.cite);
-    } else if (r) {
-      for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['gospel', 'Gospel']]) if (r[k]) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
+    } else if (r && hasReadingCitations(r)) {
+      for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['gospel', 'Gospel']]) if (typeof r[k] === 'string' && r[k].trim()) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
     if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a><a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
     if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. All rights reserved. Ora has not verified separate digital-application reproduction permission; see the official USCCB page for the approved readings.</p>`;
@@ -2536,7 +2541,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v431';
+  const APP_BUILD = 'ora-v432';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
