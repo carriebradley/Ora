@@ -50,6 +50,10 @@ test('v1 release scope explicitly rejects unfinished text corpus and premature a
  assert.match(roadmap,/superseded as a planning assumption/);
  const fidelity=fs.readFileSync(path.join(root,'docs/ORA-V1-ROMAN-FIDELITY-GATE.md'),'utf8');
  assert.match(fidelity,/Morning Prayer \(Lauds\)/);
+ assert.match(fidelity,/Mass — correct order and actual texts/);
+ assert.match(fidelity,/Office of Readings.*Daytime Prayer.*Compline/);
+ assert.match(fidelity,/Other rites remain first-class/);
+ assert.match(roadmap,/Mass and the Liturgy of the Hours/);
  assert.match(fidelity,/Source-backed parity evidence/);
  assert.match(fidelity,/proposed .*acceptance framework|proposed .*acceptance/i);
  assert.match(roadmap,/iPhone\/Safari acceptance testing/);
