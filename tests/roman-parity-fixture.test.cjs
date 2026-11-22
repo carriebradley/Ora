@@ -26,7 +26,11 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
 });
 test('initial source selection does not claim completed liturgical parity',()=>{
  assert.ok(fixture.sections.length>=25);
- assert.ok(fixture.sections.every(section=>section.comparison==='not-compared'));
- assert.ok(fixture.sections.every(section=>!section.oraCompared&&!section.textCompared));
+ assert.deepEqual(fixture.sections.filter(section=>section.oraCompared).map(section=>section.id).sort(),
+  ['lauds.psalmody','lauds.reading','vespers.psalmody','vespers.reading'].sort());
+ assert.ok(fixture.sections.every(section=>!section.textCompared&&section.comparison!=='match-approved'),
+  'No full-text First Edition certification was performed');
+ assert.ok(fixture.sections.some(section=>!section.oraCompared&&section.comparison==='not-compared'),
+  'Remaining audit rows must stay open');
  assert.deepEqual(fixture.massSections.map(x=>x.ref),['Hebrews 1:1-6','Psalm 97:1,2b,6,7c,9','Mark 1:15','Mark 1:14-20']);
 });

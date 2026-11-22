@@ -73,12 +73,31 @@ def build(raw,chapters):
                 if lo>hi:raise ValueError('Invalid verse range')
                 for v in range(lo,hi+1):take(c,v)
             chapter=last_ch
+    # Two verified Week I Monday Office readings start at half-verses.
+    # Check the exact public-domain chapter prefix before clipping; if
+    # the underlying chapter changes, do not silently misquote the Office.
+    text=' '.join(selected)
+    excerpt_starts={
+        '2 Thessalonians 3:10b-13':(
+            'For also when we were with you, this we declared to you: that, if ',
+            'If '),
+        'Colossians 1:9b-11':(
+            'Therefore we also, from the day that we heard it, cease not to pray for you, and to beg that ',
+            'That ')
+    }
+    bounded=raw in excerpt_starts
+    if bounded:
+        opening,replacement=excerpt_starts[raw]
+        if not text.startswith(opening):raise ValueError('Office half-verse boundary changed: '+raw)
+        text=replacement+text[len(opening):]
     display=re.sub(r'(?<=\d)[ab]\b','',ref)
+    if bounded:display=raw
     if book=='Micah' and '4a' in raw:display='Micah 5:3-5a'
     if book=='Hosea' and '16:2' in raw:display='Hosea 6:1-3a'
-    return {'ref':display,'officeRef':raw,'text':' '.join(selected),'source':sources,
+    return {'ref':display,'officeRef':raw,'text':text,'source':sources,
             'translation':'Douay-Rheims-Challoner','rights':'public-domain',
-            'wholeVerses':bool(re.search(r'\d[ab]\b',raw)) and book not in ('Micah','Hosea'),
+            'wholeVerses':bool(re.search(r'\d[ab]\b',raw)) and book not in ('Micah','Hosea') and not bounded,
+            'boundedOfficeExcerpt':bounded,
             'referenceAdjusted':ref!=re.sub(r'^See\s+','',raw).replace('—','-').replace('–','-')}
 
 def lxx_judith(capture):

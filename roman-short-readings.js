@@ -99,27 +99,29 @@
       "referenceAdjusted": false
     },
     "2 Thessalonians 3:10b-13": {
-      "ref": "2 Thessalonians 3:10-13",
+      "ref": "2 Thessalonians 3:10b-13",
       "officeRef": "2 Thessalonians 3:10b-13",
-      "text": "For also when we were with you, this we declared to you: that, if any man will not work, neither let him eat. For we have heard there are some among you who walk disorderly, working not at all, but curiously meddling. Now we charge them that are such, and beseech them by the Lord Jesus Christ, that, working with silence, they would eat their own bread. But you, brethren, be not weary in well doing.",
+      "text": "If any man will not work, neither let him eat. For we have heard there are some among you who walk disorderly, working not at all, but curiously meddling. Now we charge them that are such, and beseech them by the Lord Jesus Christ, that, working with silence, they would eat their own bread. But you, brethren, be not weary in well doing.",
       "source": [
         "https://www.drbo.org/chapter/60003.htm"
       ],
       "translation": "Douay-Rheims-Challoner",
       "rights": "public-domain",
-      "wholeVerses": true,
+      "wholeVerses": false,
+      "boundedOfficeExcerpt": true,
       "referenceAdjusted": false
     },
     "Colossians 1:9b-11": {
-      "ref": "Colossians 1:9-11",
+      "ref": "Colossians 1:9b-11",
       "officeRef": "Colossians 1:9b-11",
-      "text": "Therefore we also, from the day that we heard it, cease not to pray for you, and to beg that you may be filled with the knowledge of his will, in all wisdom, and spiritual understanding: That you may walk worthy of God, in all things pleasing; being fruitful in every good work, and increasing in the knowledge of God: Strengthened with all might, according to the power of his glory, in all patience and longsuffering with joy,",
+      "text": "That you may be filled with the knowledge of his will, in all wisdom, and spiritual understanding: That you may walk worthy of God, in all things pleasing; being fruitful in every good work, and increasing in the knowledge of God: Strengthened with all might, according to the power of his glory, in all patience and longsuffering with joy,",
       "source": [
         "https://www.drbo.org/chapter/58001.htm"
       ],
       "translation": "Douay-Rheims-Challoner",
       "rights": "public-domain",
-      "wholeVerses": true,
+      "wholeVerses": false,
+      "boundedOfficeExcerpt": true,
       "referenceAdjusted": false
     },
     "Romans 13:11-14": {

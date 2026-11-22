@@ -33,6 +33,14 @@ Future statuses should be `match-approved`, `appointed-different-translation`, `
 - [GILH](https://divineoffice.org/general-instructions/), especially nos. 76–79: outside choir, a person may choose the most appropriate of Midmorning, Midday or Midafternoon Prayer. These remain separate Hours; do not collapse them into Lauds.
 - [Reference-edition decision, Issue #154](ROMAN-LITURGICAL-REFERENCE-BASELINE-2026-2027.md); rights and publisher-specific distribution remain [Issue #166](https://github.com/carriebradley/Ora/issues/166).
 
+## Initial source-to-Ora selection comparison — November 22, 2026
+
+Issue [#157](https://github.com/carriebradley/Ora/issues/157) identifies two bounded-scripture defects in Monday Week I: Ora's Douay–Rheims **Morning Prayer** excerpt for **2 Thessalonians 3:10b–13** included the unappointed opening of verse 10, and **Evening Prayer** for **Colossians 1:9b–11** included the unappointed opening of verse 9. Both had full-verse display labels. Version 431 corrects these two precise boundaries and labels; `tools/import_roman_short_readings.py` now guards against accidentally reintroducing the extra clauses.
+
+For this dated weekday, the renderer's three-part Lauds appointments (**Psalm 5; 1 Chronicles 29:10–13; Psalm 29**) and Vespers (**Psalms 11 and 15; Ephesians 1:3–10**) and matching First Edition antiphons are checked against the source witnesses. The public-domain biblical wording remains **a different translation**, not the approved U.S. First Edition wording. No copyrighted text has been added.
+
+The four corresponding JSON rows are now `oraCompared=true` and `comparison=appointed-different-translation`, **but `textCompared=false`**: these checks confirm specific selections and excerpt boundaries, not exhaustive approved-text equivalence. Every other full-day row still needs inspection. The Mass source text for January 11, 2027 is not in the current archived USCCB feed (which had dates only through November 22, 2026 when this comparison began). The user-facing fallback must be assessed separately in Issue #156.
+
 ## Actual comparison still required
 
 1. Render Ora's **Roman** Mass and every available Hour for `2027-01-11`, using U.S. national settings with Epiphany Sunday and the First Edition. Record an export or screenshot of *structure and section citations* without publishing copyright-protected text.
