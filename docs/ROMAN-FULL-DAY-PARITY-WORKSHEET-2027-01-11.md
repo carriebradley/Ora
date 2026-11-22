@@ -45,6 +45,12 @@ The four corresponding JSON rows are now `oraCompared=true` and `comparison=appo
 
 The [USCCB 2027 Liturgical Calendar, printed p. 15](https://www.usccb.org/resources/2027cal.pdf) directly confirms the January 11 weekday, season, green color, Lectionary 305 and Psalter Week I. Ora's modern Roman calendar has now been checked for these selections, and the reproducible Node assertion records the matching Monday, First Week of Ordinary Time and weekday Cycle I. This is an **appointment-only** match; it does not compare the approved wording of Mass or any Hour. The worksheet's `calendar.day` row has `oraCompared=true`, `textCompared=false`, and `comparison=match-calendar-appointment`. There are now **5 of 27 rows** with a bounded Ora comparison, none certified as text-identical to the First Edition.
 
+## Monday Week I Gospel canticles verified at the selection level
+
+The Monday Week I [Morning Prayer](https://divineoffice.org/ord-w01-mon-mp/) and [Evening Prayer](https://divineoffice.org/ord-w01-mon-ep/) witnesses each identify the appointed Gospel canticle and antiphon. The relevant Ora record and its **actual generated Hour HTML** now have focused checks: Benedictus (Luke 1:68–79) and Magnificat (Luke 1:46–55) each occur after the short responsory, before intercessions, with the source's Monday antiphon repeated before and after the canticle.
+
+These checks cover the *appointed choice and placement*, not an independent word-by-word comparison to a licensed printed First Edition volume. The public witness is an online weekday template, not direct authentication of every January 2027 text and variation. Both JSON rows remain `textCompared=false` and use the bounded `match-source-selection` status. **Seven of 27 rows now record a limited Ora comparison; zero are certified as text-identical to the approved book.** No protected canticle body was added to the test fixtures.
+
 ## Actual comparison still required
 
 1. Render Ora's **Roman** Mass and every available Hour for `2027-01-11`, using U.S. national settings with Epiphany Sunday and the First Edition. Record an export or screenshot of *structure and section citations* without publishing copyright-protected text.

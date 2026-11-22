@@ -243,10 +243,10 @@
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-mp/",
       "oraModule": "hours.js; roman-office-texts.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "2027-01-11 Roman Morning Prayer renders Benedictus (Luke 1:68-79) and twice surrounds it with the Monday Week I source-witness antiphon;  checked against the respective DivineOffice.org Monday Week I First Edition witness and the real Hours.modern HTML. These are source-appointment, section-placement and brief antiphon checks, not exhaustive official-book wording, text licensing or an approved-translation certification."
     },
     {
       "id": "lauds.intercessions",
@@ -347,10 +347,10 @@
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-ep/",
       "oraModule": "hours.js; roman-office-texts.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "2027-01-11 Roman Evening Prayer renders Magnificat (Luke 1:46-55) and twice surrounds it with the Monday Week I source-witness antiphon;  checked against the respective DivineOffice.org Monday Week I First Edition witness and the real Hours.modern HTML. These are source-appointment, section-placement and brief antiphon checks, not exhaustive official-book wording, text licensing or an approved-translation certification."
     },
     {
       "id": "vespers.intercessions",

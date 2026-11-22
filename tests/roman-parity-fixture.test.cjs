@@ -13,7 +13,7 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
  const ids=fixture.sections.map(x=>x.id);
  assert.equal(new Set(ids).size,ids.length,'no duplicate comparison rows');
  const validSources=new Set(['official-calendar','lectionary-index','publisher-first-edition-witness','pending']);
- const validComparison=new Set(['not-compared','match-calendar-appointment','match-approved','appointed-different-translation','legitimate-option','wrong-appointment','missing-content','out-of-order','source-conflict','unverified']);
+ const validComparison=new Set(['not-compared','match-calendar-appointment','match-source-selection','match-approved','appointed-different-translation','legitimate-option','wrong-appointment','missing-content','out-of-order','source-conflict','unverified']);
  for(const section of fixture.sections){
   assert.match(section.sourceUrl,/^https:\/\//,'source witness required for '+section.id);
   assert.ok(section.expected&&section.oraModule&&section.element,'complete audit row '+section.id);
@@ -22,14 +22,14 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
   assert.equal(typeof section.oraCompared,'boolean');
   assert.equal(typeof section.textCompared,'boolean');
   if(section.comparison==='match-approved')assert.equal(section.textCompared,true,'certifying match requires wording comparison');
-  if(section.comparison==='match-calendar-appointment')assert.equal(section.textCompared,false,'calendar appointment alone is not a text match');
+  if(section.comparison==='match-calendar-appointment'||section.comparison==='match-source-selection')assert.equal(section.textCompared,false,'source appointment alone is not a full text match');
   if(section.textCompared)assert.equal(section.oraCompared,true,'wording comparison requires Ora output');
  }
 });
 test('initial source selection does not claim completed liturgical parity',()=>{
  assert.ok(fixture.sections.length>=25);
  assert.deepEqual(fixture.sections.filter(section=>section.oraCompared).map(section=>section.id).sort(),
-  ['calendar.day','lauds.psalmody','lauds.reading','vespers.psalmody','vespers.reading'].sort());
+  ['calendar.day','lauds.psalmody','lauds.reading','lauds.benedictus','vespers.psalmody','vespers.reading','vespers.magnificat'].sort());
  assert.ok(fixture.sections.every(section=>!section.textCompared&&section.comparison!=='match-approved'),
   'No full-text First Edition certification was performed');
  assert.ok(fixture.sections.some(section=>!section.oraCompared&&section.comparison==='not-compared'),

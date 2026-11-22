@@ -46,3 +46,25 @@ test('properly bounded excerpts remain labeled as public-domain translations, no
   assert.equal(S.records[ref].officeRef,ref);
  }
 });
+test('January 11 Monday Gospel canticles and appointed weekday antiphons display in correct order',()=>{
+ const R=require('../roman-office-texts.js');
+ for(const [which,section,canticleName,expectedRef,antiphonStart] of [
+  ['L','lauds.benedictus','Benedictus','Luke 1:68-79','Blessed be the Lord our God.'],
+  ['V','vespers.magnificat','Magnificat','Luke 1:46-55','My soul proclaims the greatness of the Lord, for he has looked with favor']
+ ]){
+  const plan=H.modernPsalmody(L,d,which,options);
+  const selected=R.select(L,d,which,options,plan);
+  assert.ok(selected,'Monday Week I First Edition weekday source must be selected');
+  assert.ok(selected.source.includes('ord-w01-mon-'),'weekday source should identify Monday Week I');
+  const ant=selected.gospelAntiphon;
+  assert.ok(ant&&ant.startsWith(antiphonStart),'wrong '+canticleName+' antiphon');
+  const html=H.modern(L,d,which,options);
+  const from=html.indexOf('<b>'+canticleName+'</b>');
+  const to=html.indexOf('<b>Intercessions</b>',from);
+  assert.ok(from!==-1&&to>from,section+' needs its appointed canticle before intercessions');
+  const passage=html.slice(from,to);
+  assert.ok(passage.includes(R.ordinary[which==='L'?'benedictus':'magnificat'].split('\\n')[0]),section+' includes the gospel canticle');
+  assert.equal(passage.split(ant).length-1,2,section+' repeats the appointed antiphon before and after canticle');
+  assert.equal(expectedRef,which==='L'?'Luke 1:68-79':'Luke 1:46-55');
+ });
+});
