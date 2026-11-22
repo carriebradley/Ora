@@ -186,6 +186,15 @@ module.exports=async(page,base)=>{
  await page.setViewportSize({width:390,height:844});
  // Today uses precisely the same two-color dots and legend-category colors
  // as Calendar for all rites, including matching-color and Sunday cases.
+ await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));});
+ await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-10`);
+ const martyrRow=page.locator('.gl[data-v="byz"]'),martyrBadge=martyrRow.locator('.gb');
+ assert.equal(await martyrRow.locator('.today-dot').getAttribute('data-vestment'),'g','Byzantine November 10 vestment is green');
+ assert.equal(await martyrRow.locator('.today-dot').getAttribute('data-category'),'r','Byzantine November 10 calendar category is red');
+ assert.equal(await martyrBadge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#3d7a4a','Byzantine martyr badge has green fill');
+ assert.equal(await martyrBadge.evaluate(el=>el.style.getPropertyValue('--badge-color')),'#b23e3e','Byzantine martyr badge has red ring');
+ assert.equal(await martyrBadge.evaluate(el=>el.classList.contains('dual')),true,'Byzantine martyr badge shows two colors');
+ assert.match(await martyrBadge.evaluate(el=>getComputedStyle(el).boxShadow),/3px/,'Byzantine badge draws the red outer ring');
  for(const [rite,date] of [
   ['sarum','2026-12-06'],['sarum','2026-12-13'],['sarum','2026-12-02'],
   ['roman','2026-12-08'],['roman','2026-05-24'],
@@ -195,7 +204,10 @@ module.exports=async(page,base)=>{
   const row=page.locator(`.gl[data-v="${rite}"]`),todayDot=row.locator('.today-dot');
   const pair=await todayDot.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.style.getPropertyValue('--c'),ring:el.style.getPropertyValue('--ring'),dual:el.classList.contains('dual')}));
   const categoryColor=await row.evaluate(el=>el.style.getPropertyValue('--today-category'));
-  assert.equal(await row.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),categoryColor,rite+' badge matches category palette on '+date);
+  const badge=row.locator('.gb');
+  assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-color')),categoryColor,rite+' badge ring uses category palette on '+date);
+  assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),pair.inner,rite+' badge fill uses vestment colour on '+date);
+  assert.equal(await badge.evaluate(el=>el.classList.contains('dual')),pair.dual,rite+' badge ring only when vestment and category differ on '+date);
   assert.equal(await row.getAttribute('data-vestment'),pair.vestment);
   assert.equal(await row.getAttribute('data-category'),pair.category);
   assert.match(await row.getAttribute('aria-label'),/Vestment color .*; calendar category /);
