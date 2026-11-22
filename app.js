@@ -629,7 +629,7 @@
       const ink = ['w','gold','y','rose'].includes(pair.vestment) ? '#000' : '#fff';
       const colors = `Vestment color ${COLOR_NAMES[pair.vestment]||pair.vestment}; liturgical season ${season.label} (${COLOR_NAMES[season.color]||season.color})`;
       const discipline = LiturgicalColors.discipline(r,k);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${seasonColor}" data-category="${esc(season.color)}" data-badge-category="${esc(pair.category)}" data-vestment="${esc(pair.vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb${pair.dual ? ' dual' : ''}" style="--badge-color:${badgeColor};--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeColor}" data-category="${esc(season.color)}" data-badge-category="${esc(pair.category)}" data-vestment="${esc(pair.vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb${pair.dual ? ' dual' : ''}" style="--badge-color:${badgeColor};--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2581,7 +2581,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v444';
+  const APP_BUILD = 'ora-v445';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
