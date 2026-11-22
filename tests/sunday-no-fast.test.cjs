@@ -31,7 +31,7 @@ test('Sundays retain their season without claiming a fasting obligation',()=>{
   assert.equal(sarum.fast,'');
   assert.match(sarum.historicalObservance.day,/Sunday/);
   for(const [rite,day] of [
-    ['roman',L.roman(date('2027-02-14'))],
+    ['roman',L.roman(date('2027-02-15'))],
     ['byz',L.byzantine(date('2026-11-23'),{byzChurch:'ukrainian'})],
     ['sarum',S.sarum(date('2026-11-23'))]
   ])assert.equal(C.sunday(day),false,rite);
