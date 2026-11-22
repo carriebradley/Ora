@@ -1,0 +1,32 @@
+'use strict';
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fixture=require('../docs/roman-liturgical-day-parity-2027-01-11.json');
+test('first full-day Roman parity fixture has all core Offices and Mass with source categories',()=>{
+ assert.equal(fixture.schema,1);
+ assert.equal(fixture.date,'2027-01-11');
+ assert.equal(fixture.lectionaryNumber,305);
+ assert.equal(fixture.psalterWeek,1);
+ const kinds=new Set(fixture.sections.map(x=>x.office));
+ for(const name of ['calendar','mass','invitatory','office-of-readings','lauds','daytime-midmorning','daytime-midday','daytime-midafternoon','vespers','compline'])assert.ok(kinds.has(name),'missing '+name);
+ const ids=fixture.sections.map(x=>x.id);
+ assert.equal(new Set(ids).size,ids.length,'no duplicate comparison rows');
+ const validSources=new Set(['official-calendar','lectionary-index','publisher-first-edition-witness','pending']);
+ const validComparison=new Set(['not-compared','match-approved','appointed-different-translation','legitimate-option','wrong-appointment','missing-content','out-of-order','source-conflict','unverified']);
+ for(const section of fixture.sections){
+  assert.match(section.sourceUrl,/^https:\/\//,'source witness required for '+section.id);
+  assert.ok(section.expected&&section.oraModule&&section.element,'complete audit row '+section.id);
+  assert.ok(validSources.has(section.sourceStatus),'invalid source kind '+section.id);
+  assert.ok(validComparison.has(section.comparison),'invalid comparison status '+section.id);
+  assert.equal(typeof section.oraCompared,'boolean');
+  assert.equal(typeof section.textCompared,'boolean');
+  if(section.comparison==='match-approved')assert.equal(section.textCompared,true,'certifying match requires wording comparison');
+  if(section.textCompared)assert.equal(section.oraCompared,true,'wording comparison requires Ora output');
+ }
+});
+test('initial source selection does not claim completed liturgical parity',()=>{
+ assert.ok(fixture.sections.length>=25);
+ assert.ok(fixture.sections.every(section=>section.comparison==='not-compared'));
+ assert.ok(fixture.sections.every(section=>!section.oraCompared&&!section.textCompared));
+ assert.deepEqual(fixture.massSections.map(x=>x.ref),['Hebrews 1:1-6','Psalm 97:1,2b,6,7c,9','Mark 1:15','Mark 1:14-20']);
+});
