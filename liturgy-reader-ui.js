@@ -47,9 +47,16 @@
     target.append(wrapper);
   }
   function renderEucharistic(section,book){
-    const choice=section.dataset.eucharisticChoice||'1',target=section.querySelector('.roman-eucharistic-text');if(!target)return;
+    const choice=section.dataset.eucharisticChoice||'',target=section.querySelector('.roman-eucharistic-text');if(!target)return;
     section.querySelectorAll('[data-reader="eucharistic"]').forEach(b=>{const on=b.dataset.choice===choice;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});
-    target.replaceChildren();const part=RomanMissal.fixed(book.sections,choice);
+    target.replaceChildren();
+    // The priest selects a permitted Eucharistic Prayer; the date alone
+    // does not appoint one. Never present Prayer I as automatically chosen.
+    if(!choice){
+      target.textContent='Choose a Eucharistic Prayer to read. The priest decides which permitted prayer is used at Mass.';
+      return;
+    }
+    const part=RomanMissal.fixed(book.sections,choice);
     if(part){for(const block of RomanMissal.prayers(part).blocks){const el=document.createElement(['p','h4','pre'].includes(block.tag)?block.tag:'p');el.textContent=block.text;if(block.role==='all')el.classList.add('roman-response');target.append(el);}}
     else target.textContent='This Eucharistic Prayer was not found in your saved Missal.';
   }

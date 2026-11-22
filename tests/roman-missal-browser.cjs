@@ -10,9 +10,16 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const prayers=page.locator('.reader-inline-text');
  assert.equal(await prayers.isVisible(),true,'prayers remain visible with management collapsed');
  assert.equal(await page.locator('dialog[open]').count(),0);
- for(const text of ['Fixture entrance.','Fixture Gloria response.','Fixture Apostles response.','Fixture offerings.','Fixture communion.','Fixture after communion.','Fixture general Eucharistic prayer one.'])assert.ok((await prayers.innerText()).includes(text),text);
+ for(const text of ['Fixture entrance.','Fixture Gloria response.','Fixture Apostles response.','Fixture offerings.','Fixture communion.','Fixture after communion.'])assert.ok((await prayers.innerText()).includes(text),text);
  assert.doesNotMatch(await prayers.innerText(),/Fixture (?:biography|Scripture|hidden|Gloria instruction|Eucharistic direction|Christmas variant|Nicene response)/);
  assert.equal(await prayers.locator('.roman-response').count(),2,'explicit source responses retain visual distinction');
+ assert.match(await prayers.innerText(),/The priest decides which permitted prayer is used at Mass/);
+ assert.doesNotMatch(await prayers.innerText(),/Fixture general Eucharistic prayer one\./);
+ assert.equal(await prayers.locator('[data-reader="eucharistic"][aria-pressed="true"]').count(),0,
+   'no Eucharistic Prayer should be preselected');
+ await page.locator('[data-reader="eucharistic"][data-choice="1"]').click();
+ await page.waitForFunction(()=>document.querySelector('.roman-eucharistic-text')?.textContent.includes('Fixture general Eucharistic prayer one.'));
+ assert.equal(await prayers.locator('[data-reader="eucharistic"][data-choice="1"]').getAttribute('aria-pressed'),'true');
  await page.locator('[data-reader="eucharistic"][data-choice="2"]').click();
  await page.waitForFunction(()=>document.querySelector('.roman-eucharistic-text')?.textContent.includes('Fixture Eucharistic prayer two.'));
  assert.doesNotMatch(await prayers.innerText(),/Fixture general Eucharistic prayer one/);
@@ -28,5 +35,5 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-13&rite=roman`);
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Daily prayers are not available'));
  assert.deepEqual(uploads,[],'private text is never uploaded');page.off('request',watch);
- console.log('Inline Roman prayers: date matching, complete propers, Gloria, Apostles’ Creed, source rubrics/responses, Eucharistic variants, unmatched dates and offline reopening passed.');
+ console.log('Inline Roman prayers: date matching, displayed propers, source rubrics/responses, deliberate Eucharistic choice, unmatched dates and offline reopening passed.');
 };
