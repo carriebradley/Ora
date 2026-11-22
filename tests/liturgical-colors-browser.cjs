@@ -231,7 +231,7 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-24`);
  const seasonRow=page.locator('.gl[data-v="byz"]');
  assert.equal(await seasonRow.locator('.today-season-dot').getAttribute('data-season-color'),'v','Nativity prayer season is violet');
- assert.equal(await seasonRow.locator('.today-season-dot').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(138, 107, 164)','Season dot is filled violet');
+ assert.equal(await seasonRow.locator('.today-season-dot').evaluate(el=>el.style.getPropertyValue('--season-dot')),'#8a6ba4','Season dot has the violet season color');
  assert.equal(await seasonRow.locator('.today-badges').innerText(),await seasonRow.locator('.gb').innerText(),'Badge has no second line');
  assert.equal(await page.locator('.gl[data-v="roman"] .today-season-dot').getAttribute('data-season-color'),'g','Roman ordinary season stays green');
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-22`);
