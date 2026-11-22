@@ -28,7 +28,7 @@ module.exports=async(page,base)=>{
  assert.equal(await page.locator('.gl[data-v="roman"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),blue);
  assert.equal(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),blue,'Marian feast category remains blue despite St. Martin’s Lent');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
- assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian feasts/);
+ assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian badge accent/);
  const dots=await page.locator('.cell[data-d="2026-12-08"] .dot').evaluateAll(ds=>ds.map(d=>({vestment:d.dataset.vestment,category:d.dataset.category,ring:d.style.getPropertyValue('--ring'),dual:d.classList.contains('dual')})));
  assert.deepEqual(dots[0],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Roman: white Marian vestments and Advent violet ring');
  assert.deepEqual(dots[2],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Traditional: white Marian vestments and St Martin season violet ring');
@@ -257,7 +257,7 @@ module.exports=async(page,base)=>{
  assert.notEqual(await page.locator('.gl[data-v="sarum"]').getAttribute('data-category'),'g','Traditional Eastertide cannot be ordinary green even when a feast takes precedence');
  assert.notEqual(await page.locator('.gl[data-v="sarum"] .gb').innerText(),'Ordinary Day','Traditional Eastertide is not labeled Ordinary Day');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-04-13`);
- assert.match(await page.locator('.calendar-key').innerText(),/Off-white · Easter\/Paschal season/);
+ assert.match(await page.locator('.calendar-key').innerText(),/Off-white · Easter, Pascha and Christmas/);
  for(const [rite,date] of [
   ['sarum','2026-12-06'],['sarum','2026-12-13'],['sarum','2026-12-02'],
   ['roman','2026-12-08'],['roman','2026-05-24'],
