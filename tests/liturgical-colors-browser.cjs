@@ -205,13 +205,13 @@ module.exports=async(page,base)=>{
  assert.equal(await wednesday.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#3d7a4a','Wednesday vestment stays green');
  assert.equal(await wednesday.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),'#b23e3e','Wednesday martyr ring is red');
  assert.equal(await wednesday.locator('.today-discipline-dot').getAttribute('data-discipline'),'traditional','Wednesday abstinence uses left-hand ring');
- assert.equal(await wednesday.locator('.today-discipline-dot').evaluate(el=>getComputedStyle(el).backgroundColor),'rgba(0, 0, 0, 0)','Traditional abstinence is hollow, not a binding fast dot');
+ assert.equal(await wednesday.locator('.today-discipline-dot').evaluate(el=>el.style.backgroundColor),'transparent','Traditional abstinence is hollow, not a binding fast dot');
  assert.equal(await wednesday.locator('.today-badges .discipline-marker').count(),0,'No extra abstinence text below badge');
  assert.match(await wednesday.getAttribute('aria-label'),/Traditional abstinence \(local practice/,'Accessible fasting details remain available');
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-24`);
  const seasonRow=page.locator('.gl[data-v="byz"]');
  assert.equal(await seasonRow.locator('.today-discipline-dot').getAttribute('data-discipline'),'season','Fasting season uses left-hand ring');
- assert.equal(await seasonRow.locator('.today-discipline-dot').evaluate(el=>getComputedStyle(el).backgroundColor),'rgba(0, 0, 0, 0)','Season ring has no fill');
+ assert.equal(await seasonRow.locator('.today-discipline-dot').evaluate(el=>el.style.backgroundColor),'transparent','Season ring has no fill');
  assert.equal(await seasonRow.locator('.today-badges').innerText(),await seasonRow.locator('.gb').innerText(),'Badge has no second line');
  assert.equal(await page.locator('.gl[data-v="roman"] .today-discipline-dot').count(),0,'Roman memorial has no fasting indicator');
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-22`);
@@ -219,7 +219,7 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-03`);
  const goodFriday=page.locator('.gl[data-v="roman"] .today-discipline-dot');
  assert.equal(await goodFriday.getAttribute('data-discipline'),'fast','Explicit fast has a filled dot');
- assert.equal(await goodFriday.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(138, 107, 164)','Explicit fast dot is filled violet');
+ assert.equal(await goodFriday.evaluate(el=>el.style.backgroundColor),'rgb(138, 107, 164)','Explicit fast dot is filled violet');
  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-11`);
  const byzLayers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
  const martyrDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(byzLayers.indexOf('byz'));

@@ -560,7 +560,7 @@
   // rite names aligned on non-fasting days.
   function todayDisciplineDot(info){
     return '<span class="today-indicator-slot" aria-hidden="true">'+(info?
-      '<span class="today-discipline-dot" data-discipline="'+esc(info.kind)+'" title="'+esc(info.label)+'"></span>':'')+'</span>';
+      '<span class="today-discipline-dot" data-discipline="'+esc(info.kind)+'" style="background:'+(info.kind==='season'||info.kind==='traditional'?'transparent':'#8a6ba4')+'" title="'+esc(info.label)+'"></span>':'')+'</span>';
   }
   function glanceSeason(r, rite, iso) {
     if (rite === 'byz') {
