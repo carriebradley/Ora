@@ -127,6 +127,19 @@ module.exports=async(page,base)=>{
  assert.doesNotMatch(sundayBadge,/Fast Day|Strict Fast|Fasting Season|St\. Martin's Lent/,'Sunday retains a feast or Sunday badge, never a fasting badge');
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-15`);
  assert.equal(await page.locator('.cell[data-d="2026-11-15"] .f').count(),0);
+ // Byzantine Sundays retain their Nativity Fast season name without an
+ // individual fast-day label, purple fasting chip, or month-grid fast sign.
+ for(const church of ['ukrainian','melkite']){
+  await page.evaluate(church=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch=church;localStorage.setItem('ora.settings',JSON.stringify(s));},church);
+  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-22`);
+  const byzBadge=(await page.locator('.gl[data-v="byz"] .gb').innerText()).trim();
+  assert.doesNotMatch(byzBadge,/Fast Day|Strict Fast|Fasting Season/,church+' Sunday must not be a fast day');
+  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-22`);
+  const byzCard=page.locator('.calendar-byz-saints').locator('..');
+  assert.ok(await byzCard.locator('.chip').filter({hasText:/Nativity Fast/}).count()>0,church+' season remains visible');
+  assert.equal(await byzCard.locator('.chip.fast').filter({hasText:/Nativity Fast/}).count(),0,church+' Sunday season is not a fasting chip');
+  assert.equal(await page.locator('.cell[data-d="2026-11-22"] .f').count(),0,church+' Sunday has no fast marker');
+ }
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-19`);
  assert.equal(await page.locator('.calendar-western-title').filter({hasText:'Thursday after the 24th Sunday'}).locator('..').locator('.sw').evaluate(el=>el.style.getPropertyValue('--c')),violet,'Traditional calendar marker');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-03-25`);
