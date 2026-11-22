@@ -92,11 +92,11 @@ module.exports=async function(browser,artifacts){
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'published art caption fits');
       }
     }
-    // Joyful Sunday names remain correct while the Lenten fasting season
-    // uses the owner's purple display colour.
+    // Both joyful Sundays are rose. Laetare remains in Lent, but Sundays
+    // are never fast days, so fasting-day purple must not override rose.
     for(const [date,badge,title,colour]of [
       ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/,'#d9899e'],
-      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/,'#6a3f9a']
+      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/,'#d9899e']
     ]){
       await visit(`${base}index.html?tab=today&rite=roman&date=${date}`,`Rose Sunday ${date}`);
       const card=page.locator('.gl[data-v="roman"]');
