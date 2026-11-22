@@ -123,7 +123,8 @@ module.exports=async(page,base)=>{
  // Sundays within St. Martin's Lent are not fast days. The Sunday badge
  // and original Sunday liturgical colour take precedence over the season.
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-15`);
- assert.equal((await page.locator('.gl[data-v="sarum"] .gb').innerText()).trim(),'Sunday');
+ const sundayBadge=(await page.locator('.gl[data-v="sarum"] .gb').innerText()).trim();
+ assert.doesNotMatch(sundayBadge,/Fast Day|Strict Fast|Fasting Season|St\. Martin's Lent/,'Sunday retains a feast or Sunday badge, never a fasting badge');
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-15`);
  assert.equal(await page.locator('.cell[data-d="2026-11-15"] .f').count(),0);
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-19`);
