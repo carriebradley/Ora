@@ -24,6 +24,6 @@ test('USCCB 2027 transferred Annunciation remains appointed after Holy Week',()=
 
 test('Roman reference edition and locality caveats remain visible to the V1 audit',()=>{
  const doc=fs.readFileSync(path.join(__dirname,'../docs/ROMAN-LITURGICAL-REFERENCE-BASELINE-2026-2027.md'),'utf8');
- for(const required of ['Roman Missal, Third Edition','1998/2002','1975/1976','February 10, 2027','December 3, 2028','Boston','Newark','2027-04-05','2027-05-06','2027-05-09','2027-01-11'])
+ for(const required of ['Roman Missal, Third Edition','1998/2001','2002','1975/1976','February 10, 2027','December 3, 2028','Boston','Newark','2027-04-05','2027-05-06','2027-05-09','2027-01-11'])
   assert.ok(doc.includes(required),'missing source-policy detail: '+required);
 });
