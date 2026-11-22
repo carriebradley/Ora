@@ -50,8 +50,8 @@ module.exports=async(page,base)=>{
    await page.goto(`${base}index.html?tab=today&rite=byz&date=${date}`);
    const row=page.locator('.gl[data-v="byz"]');
    assert.doesNotMatch(await row.innerText(),fragment,church+' '+date+' keeps fasting detail in Calendar');
-   assert.ok(await row.locator('.discipline-marker').count()>0,
-    church+' '+date+' has separate purple fasting guidance');
+   assert.equal(await row.locator('.today-discipline-dot').count(),1,
+    church+' '+date+' has a purple fasting indicator at the left');
   }
   await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-17`);
   const fastChip=page.locator('.chip.fast').filter({hasText:/Nativity Fast/});
@@ -59,7 +59,7 @@ module.exports=async(page,base)=>{
   await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-21`);
   assert.equal(await page.locator('.gl[data-v="byz"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),blue,
    church+' Marian feast stays blue during the Nativity Fast');
-  assert.ok(await page.locator('.gl[data-v="byz"] .discipline-marker').count()>0);
+  assert.equal(await page.locator('.gl[data-v="byz"] .today-discipline-dot').count(),1);
  }
 
  // The same Byzantine fasting color must be used in the selected-calendar
@@ -116,7 +116,7 @@ module.exports=async(page,base)=>{
  // it does not change the underlying Sarum vestment colour or fast rules.
  for(const date of ['2026-11-11','2026-11-19','2026-11-20','2026-12-08','2026-12-24']){
   await page.goto(`${base}index.html?tab=today&rite=sarum&date=${date}`);
-  assert.ok(await page.locator('.gl[data-v="sarum"] .discipline-marker').count()>0,date+' Traditional seasonal fasting indicator');
+  assert.equal(await page.locator('.gl[data-v="sarum"] .today-discipline-dot').count(),1,date+' Traditional fasting indicator');
   assert.ok(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),date+' retains its own observance colour');
  }
  for(const date of ['2026-11-10','2026-11-15','2026-12-25']){
@@ -186,13 +186,14 @@ module.exports=async(page,base)=>{
   }
  }
  await page.setViewportSize({width:390,height:844});
- // Today uses precisely the same two-color dots and legend-category colors
- // as Calendar for all rites, including matching-color and Sunday cases.
+ // Today badges match the calendar's two-color dots. The left-hand Today
+ // marker instead carries fasting guidance, separately from feast colors.
  await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch='melkite';localStorage.setItem('ora.settings',JSON.stringify(s));});
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-10`);
  const martyrRow=page.locator('.gl[data-v="byz"]'),martyrBadge=martyrRow.locator('.gb');
- assert.equal(await martyrRow.locator('.today-dot').getAttribute('data-vestment'),'g','Byzantine November 10 vestment is green');
- assert.equal(await martyrRow.locator('.today-dot').getAttribute('data-category'),'r','Byzantine November 10 calendar category is red');
+ assert.equal(await martyrRow.getAttribute('data-vestment'),'g','Byzantine November 10 vestment is green');
+ assert.equal(await martyrRow.getAttribute('data-category'),'r','Byzantine November 10 calendar category is red');
+ assert.equal(await martyrRow.locator('.today-discipline-dot').count(),0,'No fasting dot on November 10');
  assert.equal(await martyrBadge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#3d7a4a','Byzantine martyr badge has green fill');
  assert.equal(await martyrBadge.evaluate(el=>el.style.getPropertyValue('--badge-color')),'#b23e3e','Byzantine martyr badge has red ring');
  assert.equal(await martyrBadge.evaluate(el=>el.classList.contains('dual')),true,'Byzantine martyr badge shows two colors');
@@ -200,10 +201,25 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-11`);
  const wednesday=page.locator('.gl[data-v="byz"]');
  assert.match(await wednesday.locator('.gb').innerText(),/Martyr/);
- assert.equal(await wednesday.locator('.today-dot').getAttribute('data-category'),'r','Wednesday martyrs retain red classification');
+ assert.equal(await wednesday.getAttribute('data-category'),'r','Wednesday martyrs retain red classification');
  assert.equal(await wednesday.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#3d7a4a','Wednesday vestment stays green');
  assert.equal(await wednesday.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),'#b23e3e','Wednesday martyr ring is red');
- assert.equal(await wednesday.locator('.discipline-marker').getAttribute('data-discipline'),'traditional','Wednesday abstinence stays separate');
+ assert.equal(await wednesday.locator('.today-discipline-dot').getAttribute('data-discipline'),'traditional','Wednesday abstinence uses left-hand ring');
+ assert.equal(await wednesday.locator('.today-discipline-dot').evaluate(el=>getComputedStyle(el).backgroundColor),'rgba(0, 0, 0, 0)','Traditional abstinence is hollow, not a binding fast dot');
+ assert.equal(await wednesday.locator('.today-badges .discipline-marker').count(),0,'No extra abstinence text below badge');
+ assert.match(await wednesday.getAttribute('aria-label'),/Traditional abstinence \(local practice/,'Accessible fasting details remain available');
+ await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-24`);
+ const seasonRow=page.locator('.gl[data-v="byz"]');
+ assert.equal(await seasonRow.locator('.today-discipline-dot').getAttribute('data-discipline'),'season','Fasting season uses left-hand ring');
+ assert.equal(await seasonRow.locator('.today-discipline-dot').evaluate(el=>getComputedStyle(el).backgroundColor),'rgba(0, 0, 0, 0)','Season ring has no fill');
+ assert.equal(await seasonRow.locator('.today-badges').innerText(),await seasonRow.locator('.gb').innerText(),'Badge has no second line');
+ assert.equal(await page.locator('.gl[data-v="roman"] .today-discipline-dot').count(),0,'Roman memorial has no fasting indicator');
+ await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-22`);
+ assert.equal(await page.locator('.gl[data-v="byz"] .today-discipline-dot').count(),0,'Sunday has no individual fasting dot');
+ await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-03`);
+ const goodFriday=page.locator('.gl[data-v="roman"] .today-discipline-dot');
+ assert.equal(await goodFriday.getAttribute('data-discipline'),'fast','Explicit fast has a filled dot');
+ assert.equal(await goodFriday.evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(138, 107, 164)','Explicit fast dot is filled violet');
  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-11`);
  const byzLayers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
  const martyrDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(byzLayers.indexOf('byz'));
@@ -213,11 +229,12 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-13`);
  const easterRoman=page.locator('.gl[data-v="roman"]');
  assert.equal(await easterRoman.locator('.gb').innerText(),'Easter Season','Easter weekday is not Ordinary Day');
- assert.equal(await easterRoman.locator('.today-dot').getAttribute('data-category'),'w','Easter weekday category is white');
+ assert.equal(await easterRoman.getAttribute('data-category'),'w','Easter weekday category is white');
+ assert.equal(await easterRoman.locator('.today-discipline-dot').count(),0,'Easter weekday has no fasting dot');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-19`);
- assert.equal(await page.locator('.gl[data-v="roman"] .today-dot').getAttribute('data-category'),'w','Easter Sunday is not ordinary green');
+ assert.equal(await page.locator('.gl[data-v="roman"]').getAttribute('data-category'),'w','Easter Sunday is not ordinary green');
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-04-13`);
- assert.notEqual(await page.locator('.gl[data-v="sarum"] .today-dot').getAttribute('data-category'),'g','Traditional Eastertide cannot be ordinary green even when a feast takes precedence');
+ assert.notEqual(await page.locator('.gl[data-v="sarum"]').getAttribute('data-category'),'g','Traditional Eastertide cannot be ordinary green even when a feast takes precedence');
  assert.notEqual(await page.locator('.gl[data-v="sarum"] .gb').innerText(),'Ordinary Day','Traditional Eastertide is not labeled Ordinary Day');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-04-13`);
  assert.match(await page.locator('.calendar-key').innerText(),/Off-white · Easter\/Paschal season/);
@@ -227,10 +244,10 @@ module.exports=async(page,base)=>{
   ['byz','2026-11-17'],['byz','2026-11-22']
  ]){
   await page.goto(`${base}index.html?tab=today&rite=${rite}&date=${date}`);
-  const row=page.locator(`.gl[data-v="${rite}"]`),todayDot=row.locator('.today-dot');
-  const pair=await todayDot.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.style.getPropertyValue('--c'),ring:el.style.getPropertyValue('--ring'),dual:el.classList.contains('dual')}));
+  const row=page.locator(`.gl[data-v="${rite}"]`);
   const categoryColor=await row.evaluate(el=>el.style.getPropertyValue('--today-category'));
   const badge=row.locator('.gb');
+  const pair=await row.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.querySelector('.gb').style.getPropertyValue('--badge-fill'),ring:el.querySelector('.gb').classList.contains('dual')?el.querySelector('.gb').style.getPropertyValue('--badge-color'):'',dual:el.querySelector('.gb').classList.contains('dual')}));
   assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-color')),categoryColor,rite+' badge ring uses category palette on '+date);
   assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),pair.inner,rite+' badge fill uses vestment colour on '+date);
   assert.equal(await badge.evaluate(el=>el.classList.contains('dual')),pair.dual,rite+' badge ring only when vestment and category differ on '+date);
@@ -246,7 +263,7 @@ module.exports=async(page,base)=>{
   const index=active.indexOf(rite);
   assert.ok(index>=0,rite+' layer visible');
   const calendarDot=page.locator(`.cell[data-d="${date}"] .dot`).nth(index);
-  assert.deepEqual(await calendarDot.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.style.getPropertyValue('--c'),ring:el.style.getPropertyValue('--ring'),dual:el.classList.contains('dual')})),pair,rite+' Today and Calendar match on '+date);
+  assert.deepEqual(await calendarDot.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.style.getPropertyValue('--c'),ring:el.style.getPropertyValue('--ring'),dual:el.classList.contains('dual')})),pair,rite+' Today badge and Calendar dot match on '+date);
  }
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-12-06`);
  for(const width of [320,390]){

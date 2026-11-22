@@ -555,9 +555,12 @@
     const label=`Vestment color ${COLOR_NAMES[p.vestment]||p.vestment}; calendar category ${COLOR_NAMES[p.category]||p.category}`;
     return `<span class="${cls}${p.dual?' dual':''}" style="--c:${col(p.vestment)}${p.dual?';--ring:'+(CALENDAR_CATEGORY_COLORS[p.category]||col(p.category)):''}" data-vestment="${esc(p.vestment)}" data-category="${esc(p.category)}" title="${esc(label)}"></span>`;
   }
-  function disciplineMarker(r,rite){
-    const info=LiturgicalColors.discipline(r,rite);
-    return info?'<span class="discipline-marker" data-discipline="'+esc(info.kind)+'" title="'+esc(info.label)+'" aria-label="'+esc(info.label)+'"><i aria-hidden="true"></i>'+esc(info.short)+'</span>':'';
+  // Today uses the left-hand slot for fasting guidance; the badge already
+  // contains the vestment fill and feast-category ring. An empty slot keeps
+  // rite names aligned on non-fasting days.
+  function todayDisciplineDot(info){
+    return '<span class="today-indicator-slot" aria-hidden="true">'+(info?
+      '<span class="today-discipline-dot" data-discipline="'+esc(info.kind)+'" title="'+esc(info.label)+'"></span>':'')+'</span>';
   }
   function glanceSeason(r, rite, iso) {
     if (rite === 'byz') {
@@ -626,7 +629,8 @@
       const badgeFill = col(pair.vestment);
       const ink = ['w','gold','y','rose'].includes(pair.vestment) ? '#000' : '#fff';
       const colors = `Vestment color ${COLOR_NAMES[pair.vestment]||pair.vestment}; calendar category ${COLOR_NAMES[pair.category]||pair.category}`;
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeColor}" data-category="${esc(pair.category)}" data-vestment="${esc(pair.vestment)}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}"><span class="today-rite">${calendarSwatch(r,k,'sw today-dot')}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb${pair.dual ? ' dual' : ''}" style="--badge-color:${badgeColor};--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span>${disciplineMarker(r,k)}</span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
+      const discipline = LiturgicalColors.discipline(r,k);
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeColor}" data-category="${esc(pair.category)}" data-vestment="${esc(pair.vestment)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todayDisciplineDot(discipline)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb${pair.dual ? ' dual' : ''}" style="--badge-color:${badgeColor};--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2578,7 +2582,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v438';
+  const APP_BUILD = 'ora-v439';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
