@@ -12,7 +12,9 @@ const loader=new Function('feedP','fetch','store','st','render','READINGS_API',
 const htmlStart=source.indexOf('  function romanReadingsHTML(');
 const htmlEnd=source.indexOf('  /* OCA lists',htmlStart);
 assert.ok(htmlStart>=0&&htmlEnd>htmlStart,'Roman readings renderer is present');
-const htmlFactory=new Function('st','esc','displayTitle','usccb','usccbAudio','speakBtn','fathersBlock','readingsSpeech',
+const citationValidator=new Function(source.slice(start,source.indexOf('  function loadReadings(',start))+
+ '\\nreturn hasReadingCitations;')();
+const htmlFactory=new Function('st','esc','displayTitle','usccb','usccbAudio','speakBtn','fathersBlock','readingsSpeech','hasReadingCitations',
  source.slice(htmlStart,htmlEnd)+'\nreturn romanReadingsHTML;');
 const iso='2027-01-11';
 
@@ -38,7 +40,7 @@ const render=reading=>{
  const st={readings:{[iso]:reading}};
  return htmlFactory(st,s=>String(s),s=>s,
   date=>'https://bible.usccb.org/bible/readings/'+date.slice(5,7)+date.slice(8,10)+date.slice(2,4)+'.cfm',
-  ()=>'/audio',()=>'',()=>'',()=>'')(iso);
+  ()=>'/audio',()=>'',()=>'',()=>' ',citationValidator)(iso);
 };
 
 test('invalid or missing third-party Mass citations never produce an empty truthy reading',async()=>{
