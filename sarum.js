@@ -2062,6 +2062,8 @@
       note: 'Martinmas (11 November) through Christmas Eve (24 December). The Council of Mâcon (581) prescribed Mondays, Wednesdays and Fridays; local and monastic rules varied. Sarum Advent had no general fast beyond Ember Days and the Christmas vigil. A feast is not assumed to cancel a fast.'
     } : null;
     if (!fast && dow(d) === 5 && !(t.season === 'Eastertide' && diff(d, E) < 7) && !/^Nativity of Our Lord/.test(t.title)) fast = 'Friday — day of abstinence';
+    // Guard Sunday even where a vigil or historic fasting period overlaps.
+    if (dow(d) === 0) fast = '';
     // Vestment colour by the rubric in the 1526 Sarum Missal (Warren I, pp. 24–25); other days keep the app's default.
     let color = w.color, colorNote = '';
     const md = w.mk || '', nm = w.title || '', easter = t.season === 'Eastertide' || (t.season === 'Whitsuntide' && t.rank !== 'Principal Feast' && !/Trinity/.test(t.title));

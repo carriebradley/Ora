@@ -368,7 +368,7 @@
   // Compact fasting markers describe the calendar's stated observance; see More for discipline distinctions.
   function fastingIcons(r, rite) {
     const fast = String(r.fast || ''), note = String(r.fastingNote || ''), full = fast + ' ' + note;
-    if (!fast || /no fast|fast[- ]free|dispens|fast is lifted/i.test(full)) return '';
+    if (LiturgicalColors.sunday(r) || !fast || /no fast|fast[- ]free|dispens|fast is lifted/i.test(full)) return '';
     const kinds = [];
     if (/abstinen|no meat|without meat|strict fast|great fast|fast and abstinence/i.test(full)) kinds.push('meat');
     if (rite === 'byz' && /strict fast|no dairy|without dairy|dairy and eggs|meat, dairy/i.test(full)) kinds.push('dairy','eggs');
@@ -401,13 +401,13 @@
   function cardRoman(v) {
     const r = v.roman;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(calendarDisplayColor(r,'roman'))}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
-      <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div>
+      <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div>
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
   function cardByz(v) {
     const r = v.byz;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(observanceColor(r,'byz'))}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
-      <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason, 'fast')}${r.fast ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
+      <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason, LiturgicalColors.sunday(r) ? '' : 'fast')}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}${LiturgySchedule.paschalBasis(P(v.iso).getUTCFullYear(),S.byzChurch)?'':' · calculated; not yet verified for this church'}</p></section>`;
   }
@@ -421,7 +421,7 @@
   function cardSarum(v) {
     const r = v.sarum;
     return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(calendarDisplayColor(r,'sarum'))}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
-      <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${chipsFor(r)}${r.fast ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
+      <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${chipsFor(r)}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
       ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
       ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
   }
@@ -485,13 +485,14 @@
     const alsoFeast = (r.also || []).find(x => FEASTRANK.test(x.note || ''));
     const major = /Solemnity|Principal|Great Feast|Feast of the Lord|Holy Day/.test(rk);
     const feast = r.isFeast || (FEASTRANK.test(rk) && !/Holy Week/.test(rk)) || !!alsoFeast;
-    let fast = r.fast || (r.ember ? 'Ember Day — fast and abstinence' : '');
+    const sunday = LiturgicalColors.sunday(r);
+    let fast = sunday ? '' : (r.fast || (r.ember ? 'Ember Day — fast and abstinence' : ''));
     // A source label such as 'No fast' cannot become a Fast Day badge or violet day.
     if (LiturgicalColors.fastFree(fast)) fast = '';
     if (fast && major && /day of abstinence|traditional day|Friday of Lent|abstinence from meat$/.test(fast) && !/strict|Great Fast/.test(fast)) fast = '';
     const minor = /Memorial|Saint|Commemoration|Octave|lessons|Memory/.test(rk);
     const martin = rite === 'sarum' && r.historicalObservance && r.historicalObservance.name === "St. Martin's Lent";
-    const seasonalFast = rite === 'byz' && !!r.fastSeason;
+    const seasonalFast = rite === 'byz' && !!r.fastSeason && !sunday;
     const kind = feast && fast ? 'both' : feast ? 'feast' : fast ? 'fast' : seasonalFast ? 'season' : 'plain';
     const title = String(r.title || '');
     // A red color does not, by itself, establish martyrdom: e.g. Pentecost.
@@ -502,7 +503,7 @@
     const melkiteCommemoration = rite === 'byz' && S.byzChurch === 'melkite' && rk === 'Diocesan calendar' && title !== 'Weekday' && !feast;
     const badge = holySpirit ? 'Holy Spirit' : martyr ? 'Martyr' : roseSunday ? (/Gaudete/i.test(title) ? 'Gaudete' : /Laetare/i.test(title) ? 'Laetare' : 'Sunday') :
       feast ? rankLabel : melkiteCommemoration ? 'Commemoration' : kind === 'fast' ? (/strict/i.test(fast) ? 'Strict Fast' : 'Fast Day') :
-      martin ? "St. Martin's Lent" : rk === 'Sunday' ? 'Sunday' : kind === 'season' ? 'Fasting Season' :
+      sunday ? 'Sunday' : martin ? "St. Martin's Lent" : rk === 'Sunday' ? 'Sunday' : kind === 'season' ? 'Fasting Season' :
       minor ? (/Octave/.test(rk) ? 'Octave' : /lessons/.test(rk) ? 'Feast' : 'Memorial') :
       rk === 'Sunday' ? 'Sunday' : rite === 'byz' ? 'Weekday' : 'Ordinary Day';
     const name = alsoFeast && !FEASTRANK.test(rk) ? alsoFeast.title : (feast || minor ? r.title : '');
@@ -1960,7 +1961,7 @@
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
       const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(calendarDisplayColor(v[k],k))}"></span>`).join('');
-      const f = (st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && (v.byz.fastSeason || /Strict|^Fast and/.test(v.byz.fast)));
+      const f = d.getUTCDay() !== 0 && ((st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && (v.byz.fastSeason || /Strict|^Fast and/.test(v.byz.fast))));
       const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
@@ -2541,7 +2542,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v433';
+  const APP_BUILD = 'ora-v434';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

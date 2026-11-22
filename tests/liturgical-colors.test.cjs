@@ -68,3 +68,17 @@ test('fast-free wording stays neutral across Today badge and Calendar chip decis
  assert.equal(C.fasting({fast:'No fasting',fastSeason:'Nativity Fast'},'byz'),true);
  assert.equal(C.fasting({fast:'No fast',historicalObservance:{name:"St. Martin's Lent"}},'sarum'),true);
 });
+
+
+test('Sunday overrides individual fasting labels and fasting-season colours',()=>{
+ for(const [rite,day] of [
+  ['roman',{date:'2027-02-14',season:'Lent',fast:'Fast and abstinence',color:'v'}],
+  ['byz',{date:'2026-11-22',fastSeason:'Nativity Fast',fast:'Strict Fast',color:'g'}],
+  ['sarum',{date:'2026-11-15',fast:'Vigil fast',historicalObservance:{name:"St. Martin's Lent"},color:'r'}]
+ ]){
+  assert.equal(C.sunday(day),true,rite);
+  assert.equal(C.fasting(day,rite),false,rite);
+ }
+ assert.equal(C.sunday({date:'2026-11-23'}),false);
+ assert.equal(C.fasting({date:'2026-11-23',fastSeason:'Nativity Fast'},'byz'),true);
+});

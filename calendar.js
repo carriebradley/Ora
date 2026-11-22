@@ -345,7 +345,7 @@
     for (const c of cands.slice(1)) if (c.p <= 11 || c.kind==='O')
       also.push({ title: c.title, note: (w.p >= 9 && c.p >= 10) ? 'Optional commemoration' : 'Outranked — not observed this year' });
     const fast = [];
-    if (w.title === 'Ash Wednesday' || /^Good Friday/.test(w.title)) fast.push('Day of fast and abstinence');
+    if (dow(d) !== 0 && (w.title === 'Ash Wednesday' || /^Good Friday/.test(w.title))) fast.push('Day of fast and abstinence');
     else if (dow(d) === 5 && t.season === 'Lent' && w.kind !== 'S') fast.push('Friday of Lent — abstinence from meat');
     const c = ofCycles(d);
     return Object.assign({}, w, { also, fast: fast.join('; '), sundayCycle: c.sundayCycle, weekdayCycle: c.weekdayCycle, date: iso(d) });
@@ -598,7 +598,7 @@
     if (w !== t && (t.priv || t.cls <= 3)) also.unshift({ title: t.title, note: 'Commemoration' });
     return {
       title: w.title, rank: EF_RANK[w.cls], cls: w.cls, color: w.color === 'b' ? 'k' : w.color, season: t.season,
-      also, fast: t.fast || '', date: iso(d)
+      also, fast: dow(d) === 0 ? '' : (t.fast || ''), date: iso(d)
     };
   }
 
@@ -757,6 +757,9 @@
     if (same(d, add(P, -48)) || same(d, add(P, -2))) fast = 'Strict abstinence — no meat, eggs or dairy';
     else if (o.byzChurch === 'ukrainian' && ((mm === 12 && md === 24) || (mm === 1 && md === 5) || (mm === 9 && md === 14) || (mm === 8 && md === 29))) fast = 'Fast and abstinence from meat — U.S. Ukrainian practice';
     else if (!fastFree && !lordOrMary && (dow(d) === 5 || (o.byzChurch === 'ruthenian' && greatFast && dow(d) === 3))) fast = o.byzChurch === 'ruthenian' && !greatFast ? 'Friday — abstinence from meat or equivalent penance' : 'Abstinence from meat';
+    // Sundays are never marked as fasting days. Seasonal information stays
+    // separate, and Eastern abstinence practices can have their own nuances.
+    if (sun) fast = '';
     const fastingNote = `${o.byzChurch === 'ruthenian' ? 'U.S. Ruthenian' : 'U.S. Ukrainian Greek Catholic'} practice. Seasonal fasting traditions are fuller than these general requirements; follow your eparchy’s current directions and personal exemptions.`;
     return { title: w.title, rank: w.rank, color: w.color, season, tone, also, fast, fastSeason, fastingNote, date: iso(d), pascha: iso(P) };
   }

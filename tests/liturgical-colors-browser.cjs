@@ -111,15 +111,21 @@ module.exports=async(page,base)=>{
  }
  // St. Martin’s Lent is a season indicator, including Sundays and feasts;
  // it does not change the underlying Sarum vestment colour or fast rules.
- for(const date of ['2026-11-11','2026-11-15','2026-11-19','2026-11-20','2026-12-08','2026-12-24']){
+ for(const date of ['2026-11-11','2026-11-19','2026-11-20','2026-12-08','2026-12-24']){
   await page.goto(`${base}index.html?tab=today&rite=sarum&date=${date}`);
   assert.equal(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),violet,date+' Traditional badge');
   assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),violet,date+' selected Traditional colour');
  }
- for(const date of ['2026-11-10','2026-12-25']){
+ for(const date of ['2026-11-10','2026-11-15','2026-12-25']){
   await page.goto(`${base}index.html?tab=today&rite=sarum&date=${date}`);
   assert.notEqual(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),violet,date+' outside St. Martin’s Lent');
  }
+ // Sundays within St. Martin's Lent are not fast days. The Sunday badge
+ // and original Sunday liturgical colour take precedence over the season.
+ await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-15`);
+ assert.equal((await page.locator('.gl[data-v="sarum"] .gb').innerText()).trim(),'Sunday');
+ await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-15`);
+ assert.equal(await page.locator('.cell[data-d="2026-11-15"] .f').count(),0);
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-19`);
  assert.equal(await page.locator('.calendar-western-title').filter({hasText:'Thursday after the 24th Sunday'}).locator('..').locator('.sw').evaluate(el=>el.style.getPropertyValue('--c')),violet,'Traditional calendar marker');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-03-25`);
