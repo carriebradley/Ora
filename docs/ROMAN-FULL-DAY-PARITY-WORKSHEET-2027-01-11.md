@@ -41,6 +41,10 @@ For this dated weekday, the renderer's three-part Lauds appointments (**Psalm 5;
 
 The four corresponding JSON rows are now `oraCompared=true` and `comparison=appointed-different-translation`, **but `textCompared=false`**: these checks confirm specific selections and excerpt boundaries, not exhaustive approved-text equivalence. Every other full-day row still needs inspection. The Mass source text for January 11, 2027 is not in the current archived USCCB feed (which had dates only through November 22, 2026 when this comparison began). The user-facing fallback must be assessed separately in Issue #156.
 
+## Calendar appointment verified — November 22, 2026
+
+The [USCCB 2027 Liturgical Calendar, printed p. 15](https://www.usccb.org/resources/2027cal.pdf) directly confirms the January 11 weekday, season, green color, Lectionary 305 and Psalter Week I. Ora's modern Roman calendar has now been checked for these selections, and the reproducible Node assertion records the matching Monday, First Week of Ordinary Time and weekday Cycle I. This is an **appointment-only** match; it does not compare the approved wording of Mass or any Hour. The worksheet's `calendar.day` row has `oraCompared=true`, `textCompared=false`, and `comparison=match-calendar-appointment`. There are now **5 of 27 rows** with a bounded Ora comparison, none certified as text-identical to the First Edition.
+
 ## Actual comparison still required
 
 1. Render Ora's **Roman** Mass and every available Hour for `2027-01-11`, using U.S. national settings with Epiphany Sunday and the First Edition. Record an export or screenshot of *structure and section citations* without publishing copyright-protected text.

@@ -48,10 +48,10 @@
       "sourceUrl": "https://www.usccb.org/resources/2027cal.pdf",
       "oraModule": "calendar.js",
       "sourceStatus": "official-calendar",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-calendar-appointment",
+      "note": "Verified against USCCB 2027 Liturgical Calendar, printed p. 15 (PDF page 17): Jan 11 is Monday of First Week in Ordinary Time, green, Lectionary 305, Psalter Week I. Compared with LitCal.roman for the U.S. Epiphany-Sunday option: weekday/season/color/rank/weekday cycle and Sunday Year B agree. This verifies calendar appointment only, not Mass/Hours text or approved wording."
     },
     {
       "id": "mass.entrance",
