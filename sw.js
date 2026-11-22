@@ -1,4 +1,4 @@
-const V = 'ora-v429', DATA = 'ora-data-v1';
+const V = 'ora-v430', DATA = 'ora-data-v1';
 const FILES = ['./', 'index.html', 'app.js', 'liturgy-schedule.js', 'epub-reader.js', 'roman-missal.js', 'liturgical-format.js', 'liturgy-reader.js', 'liturgy-document.js', 'liturgy-reader-ui.js', 'source-reader.js', 'vendor/pdfjs/pdf.mjs', 'vendor/pdfjs/pdf.worker.mjs', 'edmonton-2026.js', 'edmonton.js', 'calendar.js', 'melkite.js', 'melkite-2026.js', 'sarummass.js', 'sarum.js', 'data.js', 'content.js', 'byzantine-office.js', 'sacred-art.js', 'liturgical-colors.js', 'byzlect.js', 'justice.js', 'justice-readings.js', 'felire.js', 'oor.js', 'roman-office-texts-data.js', 'roman-office-texts.js', 'roman-office.js', 'roman-short-readings.js', 'hours.js', 'oortext.json', 'ukrainian-propers.json', 'melkite-propers-2026.json', 'manifest.webmanifest', 'icon.svg', 'icon-180.png'];
 const JSON_FILES = new Set(['readings.json', 'fathers.json', 'matins.json', 'oortext.json', 'office_audio.json', 'angelus.json', 'ukrainian-propers.json', 'melkite-propers-2026.json']);
 const VERSIONED_JSON = new Set(['oortext.json', 'ukrainian-propers.json', 'melkite-propers-2026.json']);
@@ -56,7 +56,16 @@ self.addEventListener('fetch', e => {
       try {
         const response = await fetch(e.request, { cache: 'no-store' });
         if (!response.ok) throw new Error('HTTP ' + response.status);
-        await response.clone().json();
+        const parsed = await response.clone().json();
+        // A syntactically valid but empty feed is not a successful update.
+        // Keep the last usable offline readings when the publisher job
+        // temporarily produces an empty or incomplete payload.
+        if (file === 'readings.json' &&
+            (!parsed || typeof parsed !== 'object' || Array.isArray(parsed) ||
+             !Object.keys(parsed).some(day => /^\d{4}-\d{2}-\d{2}$/.test(day) &&
+               Array.isArray(parsed[day]?.sections) && parsed[day].sections.length > 0))) {
+          throw new Error('Readings update contains no dated reading sections');
+        }
         try { await data.put(e.request, response.clone()); } catch (_) { /* storage full: keep serving online */ }
         return response;
       } catch (_) {

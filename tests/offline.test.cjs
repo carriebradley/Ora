@@ -74,14 +74,15 @@ test('If migration runs out of storage, previously downloaded texts remain avail
 
 test('HTTP errors and invalid JSON cannot replace the last successful readings', async () => {
   const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
-  w.context.fetch = async () => Response.json({ readings: 'good' });
-  assert.deepEqual(await (await w.request('readings.json')).json(), { readings: 'good' });
+  const good = {'2026-11-22': {sections: [{label: 'Gospel', cite: 'John 1:1', text: 'Good text'}]}};
+  w.context.fetch = async () => Response.json(good);
+  assert.deepEqual(await (await w.request('readings.json')).json(), good);
   for (const response of [new Response('error', { status: 500 }), new Response('<html>not JSON</html>')]) {
     w.context.fetch = async () => response.clone();
-    assert.deepEqual(await (await w.request('readings.json')).json(), { readings: 'good' });
+    assert.deepEqual(await (await w.request('readings.json')).json(), good);
   }
   w.context.fetch = async () => { throw new Error('offline'); };
-  assert.deepEqual(await (await w.request('readings.json')).json(), { readings: 'good' });
+  assert.deepEqual(await (await w.request('readings.json')).json(), good);
 });
 
 test('Fresh online JSON updates cached text, and quota failures still serve the online copy', async () => {
@@ -117,14 +118,15 @@ test('App build and installed worker version agree', () => {
 test('JSON refresh bypasses HTTP cache and retains the last valid offline copy', async () => {
   const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
   const calls = [];
+  const updated = {'2026-11-22': {sections: [{label: 'Gospel', text: 'New text'}]}};
   w.context.fetch = async (_request, options) => {
     calls.push(options);
-    return Response.json({ revision: 2 });
+    return Response.json(updated);
   };
-  assert.deepEqual(await (await w.request('readings.json')).json(), { revision: 2 });
+  assert.deepEqual(await (await w.request('readings.json')).json(), updated);
   assert.equal(calls[0]?.cache, 'no-store');
   w.context.fetch = async () => { throw new Error('offline'); };
-  assert.deepEqual(await (await w.request('readings.json')).json(), { revision: 2 });
+  assert.deepEqual(await (await w.request('readings.json')).json(), updated);
 });
 
 
@@ -182,4 +184,24 @@ test('Fresh Byzantine hymns update the installed shell and remain available offl
     w.context.fetch = async () => { throw new Error('offline'); };
     assert.deepEqual(await (await w.request(file)).json(), fresh, file + ' should retain the online refresh');
   }
+});
+
+test('Empty and incomplete successful readings feeds never erase the last offline copy', async () => {
+  const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
+  const good = {'2026-11-22': {sections: [{label: 'Gospel', text: 'Last valid text'}]}};
+  w.context.fetch = async () => Response.json(good);
+  assert.deepEqual(await (await w.request('readings.json')).json(), good);
+  for (const bad of [{}, [], null, {updated: '2026-11-22'}, {'2026-11-22': {sections: []}}]) {
+    w.context.fetch = async () => Response.json(bad);
+    assert.deepEqual(await (await w.request('readings.json')).json(), good,
+      'invalid response must not replace cached text: ' + JSON.stringify(bad));
+  }
+  w.context.fetch = async () => { throw Error('offline'); };
+  assert.deepEqual(await (await w.request('readings.json')).json(), good);
+});
+
+test('First-install readings without dated content fail explicitly instead of caching an empty feed', async () => {
+  const w = worker(); await w.lifecycle('install'); await w.lifecycle('activate');
+  w.context.fetch = async () => Response.json({});
+  assert.equal((await w.request('readings.json')).status, 503);
 });

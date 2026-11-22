@@ -141,7 +141,24 @@
     return u;
   };
   let feed = null;
-  const feedP = fetch('readings.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : {}).catch(() => store.get('ora.feed', {})).then(j => { feed = j || {}; if (Object.keys(feed).length > 1) store.set('ora.feed', feed); return feed; });
+  // A successful HTTP response can still contain an empty or partial feed.
+  // Never replace the last usable readings with one that has no dated text.
+  const hasReadingsFeed = data => data && typeof data === 'object' && !Array.isArray(data) &&
+    Object.keys(data).some(day => /^\d{4}-\d{2}-\d{2}$/.test(day) &&
+      Array.isArray(data[day]?.sections) && data[day].sections.length > 0);
+  const cachedFeed = () => {
+    const saved = store.get('ora.feed', {});
+    return hasReadingsFeed(saved) ? saved : {};
+  };
+  const feedP = fetch('readings.json', { cache: 'no-cache' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!hasReadingsFeed(data)) return cachedFeed();
+      store.set('ora.feed', data);
+      return data;
+    })
+    .catch(() => cachedFeed())
+    .then(data => { feed = data; return feed; });
   feedP.then(() => { if (st.tab === 'justice') render(); });
   function loadReadings(iso) {
     if (st.readings[iso] !== undefined) return;
@@ -2519,7 +2536,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v429';
+  const APP_BUILD = 'ora-v430';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
