@@ -2,7 +2,7 @@
 Updated: 15 November 2026
 
 ## Objective
-Complete a dependable, attractive, clearly sourced private devotional prayer companion (a public GitHub Pages PWA), not a claim to publish complete or ecclesiastically approved editions of every official liturgical book.
+Complete an accurate Roman-first Catholic prayer companion, prioritizing fidelity to the actual, Church-appointed Liturgy of the Hours over feature breadth. For the Roman Office, correct appointed content, prayer order, texts, and transparent translation provenance take precedence over a devotional approximation. The PWA is publicly hosted and must not imply ecclesiastical authentication or unauthorized reuse of texts. The November 15 scope is being revised; see [the proposed Roman fidelity gate](ORA-V1-ROMAN-FIDELITY-GATE.md).
 
 ## Release scope and definition of done
 The Roman, Ukrainian Greek Catholic (Edmonton-first), Melkite Greek Catholic (Newton-first) and Traditional/Sarum selections must reliably:
@@ -14,7 +14,9 @@ The Roman, Ukrainian Greek Catholic (Edmonton-first), Melkite Greek Catholic (Ne
 - Have a green GitHub Actions regression and browser audit on the release commit, plus human iPhone/Safari acceptance testing.
 - Preserve the user's editorial preferences: title case rather than accidental ALL CAPS, Gaudete/Laetare on the correct third Advent/fourth Lent Sundays, primary saint only on Today and full list in Calendar, tradition-aware saint quotes/art, simple cards and source credits.
 
-A complete official Roman Liturgy of the Hours, a complete Melkite/UGCC variable office, a full annual corpus of Fathers' readings, and complete imported copyrighted Mass/Divine Liturgy books are **outside the v1 release gate**. They remain optional future enhancements. This is a truthful scope decision, not a claim those texts already exist.
+**V1 scope is under revision as of November 22, 2026.** The owner has identified fidelity to the actual Church-appointed Roman prayer—especially Morning Prayer—as the top product priority. The previous exclusion of a complete Roman Liturgy of the Hours from the V1 gate is therefore **superseded as a planning assumption**. Before a feature freeze, agree on the exact coverage and acceptance evidence in [the proposed Roman fidelity gate](ORA-V1-ROMAN-FIDELITY-GATE.md). Passing section-presence tests alone does not establish liturgical fidelity.
+
+The full year of historical Office of Readings texts and fully bundled copyrighted service books remain optional future enhancements. A complete, verifiable core Roman Office may use authorized official editions, a clearly labeled alternative translation, or an on-device licensed source, but must not present invented or mismatched prayers as the Church-appointed office. Existing Byzantine source-safety requirements remain in force.
 
 ## Baseline confirmed on November 15, 2026
 
