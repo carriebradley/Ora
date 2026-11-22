@@ -37,5 +37,11 @@
       (rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")||
       /^(?:Lent|Passiontide)$/i.test(day?.season||''));
   }
-  return {blue,marian,display,fasting,fastFree,sunday};
+  // A calendar dot shows the source vestment colour; a different calendar
+  // category appears as an outer ring. Compare colour names, not shades.
+  function pair(day,category){
+    const vestment=day?.color||'w', outer=category||vestment;
+    return {vestment,category:outer,dual:vestment!==outer};
+  }
+  return {blue,marian,display,fasting,fastFree,sunday,pair};
 });

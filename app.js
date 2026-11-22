@@ -400,13 +400,13 @@
   }
   function cardRoman(v) {
     const r = v.roman;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(calendarDisplayColor(r,'roman'))}"></span><span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab">${calendarSwatch(r,'roman','sw')}<span class="grow">Roman · modern</span>${speakBtn(spokenCard(r))}</div>
       <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${romanSeasonBadges(r,v.iso)}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div>
       <p class="muted">Sunday cycle ${r.sundayCycle} · Weekday cycle ${r.weekdayCycle}</p>${fastingIcons(r,'roman')}${alsoHTML(r.also)}</section>`;
   }
   function cardByz(v) {
     const r = v.byz;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(observanceColor(r,'byz'))}"></span><span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
+    return `<section class="card"><div class="lab">${calendarSwatch(r,'byz','sw')}<span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
       <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason, LiturgicalColors.sunday(r) ? '' : 'fast')}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}${LiturgySchedule.paschalBasis(P(v.iso).getUTCFullYear(),S.byzChurch)?'':' · calculated; not yet verified for this church'}</p></section>`;
@@ -420,7 +420,7 @@
   }
   function cardSarum(v) {
     const r = v.sarum;
-    return `<section class="card"><div class="lab"><span class="sw" style="--c:${col(calendarDisplayColor(r,'sarum'))}"></span><span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
+    return `<section class="card"><div class="lab">${calendarSwatch(r,'sarum','sw')}<span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${chipsFor(r)}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
       ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
       ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
@@ -529,6 +529,24 @@
   function calendarDisplayColor(r,rite){
     if (LiturgicalColors.fasting(r,rite,status(r,rite).fast)) return 'v';
     return rite==='byz'?observanceColor(r,rite):LiturgicalColors.display(r);
+  }
+  // Category colours exactly match the printed calendar legend.
+  const CALENDAR_CATEGORY_COLORS = {
+    g:'#59805d',v:'#8a6ba4',r:'#b23e3e',w:'#eee8d9',
+    gold:'#c9a227',rose:'#c9899e',blue:'#3b729f',
+    y:'#c9a227',k:'#1c1c1c'
+  };
+  const COLOR_NAMES = {g:'green',v:'violet',r:'red',w:'white',gold:'gold',rose:'rose',blue:'blue',y:'yellow',k:'black'};
+  function calendarPair(r,rite){
+    // The rose Gaudete/Laetare *category* applies even when the historical
+    // Sarum Sunday vestment itself is red, not modern Roman rose.
+    const joyful=rite==='sarum'&&LiturgicalColors.sunday(r)&&/\b(?:Gaudete|Laetare) Sunday\b/i.test(r.title||'');
+    return LiturgicalColors.pair(r,joyful?'rose':observanceColor(r,rite));
+  }
+  function calendarSwatch(r,rite,cls='dot'){
+    const p=calendarPair(r,rite);
+    const label=`Vestment color ${COLOR_NAMES[p.vestment]||p.vestment}; calendar category ${COLOR_NAMES[p.category]||p.category}`;
+    return `<span class="${cls}${p.dual?' dual':''}" style="--c:${col(p.vestment)}${p.dual?';--ring:'+(CALENDAR_CATEGORY_COLORS[p.category]||col(p.category)):''}" data-vestment="${esc(p.vestment)}" data-category="${esc(p.category)}" title="${esc(label)}"></span>`;
   }
   function glanceSeason(r, rite, iso) {
     if (rite === 'byz') {
@@ -1960,12 +1978,14 @@
     for (const d of L.DN) h += `<div class="dow">${d.slice(0, 3)}</div>`;
     for (let i = 0; i < 42; i++) {
       const d = L.add(start, i), iso = L.iso(d), v = dayInfo(iso), out = d.getUTCMonth() !== m;
-      const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => `<span class="dot ${MAJOR.test(v[k].rank || '') ? 'maj' : ''}" style="--c:${col(calendarDisplayColor(v[k],k))}"></span>`).join('');
+      const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => calendarSwatch(v[k],k)).join('');
       const f = d.getUTCDay() !== 0 && ((st.layers.sarum && v.sarum.fast && !/^Friday/.test(v.sarum.fast)) || (st.layers.byz && v.byz.fast && (v.byz.fastSeason || /Strict|^Fast and/.test(v.byz.fast))));
-      const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => RITES[k] + ': ' + v[k].title + (v[k].fast ? '. ' + v[k].fast : '')).join('. ');
+      const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => {const p=calendarPair(v[k],k);return RITES[k]+': '+v[k].title+(v[k].fast?'. '+v[k].fast:'')+'. Vestment color '+(COLOR_NAMES[p.vestment]||p.vestment)+'; calendar category '+(COLOR_NAMES[p.category]||p.category);}).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
-    h += '</div><div class="calendar-key" aria-label="Liturgical color legend"><span><i class="key-dot" style="--key:#59805d"></i> Green · Ordinary Time</span><span><i class="key-dot" style="--key:#8a6ba4"></i> Violet · Penitence and fasting</span><span><i class="key-dot" style="--key:#b23e3e"></i> Red · Martyr or Holy Spirit</span><span><i class="key-dot" style="--key:#eee8d9"></i> Off-white · Memorials</span><span><i class="key-dot" style="--key:#c9a227"></i> Gold · Feasts and solemnities</span><span><i class="key-dot" style="--key:#c9899e"></i> Rose · Gaudete (Advent III) and Laetare (Lent IV)</span><span><i class="key-dot" style="--key:#3b729f"></i> Blue · Marian feasts</span></div>';
+    const keys=[['g','Green · Ordinary Time'],['v','Violet · Penitential season or fasting day'],['r','Red · Martyr or Holy Spirit'],['w','Off-white · Memorials'],['gold','Gold · Feasts and solemnities'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian feasts']];
+    h += '</div><div class="calendar-dot-guide"><span class="dot dual" style="--c:#a8232a;--ring:#8a6ba4" aria-hidden="true"></span><span><b>Inner dot</b> = liturgical vestment color; <b>outer ring</b> = calendar category in the legend, only when different. Sundays are not fasting days.</span></div>';
+    h += '<div class="calendar-key" aria-label="Calendar category color legend">'+keys.map(([key,label])=>`<span><i class="key-dot" style="--key:${CALENDAR_CATEGORY_COLORS[key]}"></i> ${label}</span>`).join('')+'</div>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
@@ -2542,7 +2562,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v434';
+  const APP_BUILD = 'ora-v435';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

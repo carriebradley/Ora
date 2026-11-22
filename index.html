@@ -93,9 +93,9 @@ nav button.on{color:var(--ink);font-weight:600}
 .dow{font-size:.74rem;text-align:center;color:var(--muted);padding:2px 0}
 .cell{aspect-ratio:1/1.08;border-radius:10px;border:1px solid var(--line);background:var(--card);padding:3px 2px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;font-size:.82rem;position:relative}
 .cell.out{color:var(--muted)}.cell.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.cell.sel{background:var(--line)}
-.cell .dots{display:flex;gap:3px;min-height:10px;align-items:center}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.35)}
-.dot.maj{box-shadow:0 0 0 2px var(--gold)}
+.cell .dots{display:flex;gap:2px;min-height:12px;align-items:center}
+.dot{width:8px;height:8px;flex:none;border-radius:50%;background:var(--c);border:1px solid rgba(0,0,0,.35)}
+.dot.dual,.sw.dual{box-shadow:0 0 0 2px var(--ring)}
 .cell .f{position:absolute;top:1px;right:3px;font-size:.6rem;color:#6a3f9a}
 .legend{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
 .legend button{padding:5px 10px;border-radius:99px;border:1px solid var(--line);font-size:.85rem;color:var(--muted)}
@@ -224,6 +224,8 @@ nav button.on b{color:color-mix(in srgb,var(--lit) 50%,var(--ink))}
 /* Keep all Catholic Social Teaching section icons gold, while card edges retain category colors. */
 .justice-daily .lab svg,.justice-ecology .lab svg,.justice-economic .lab svg,.justice-reading .lab svg,.justice-teaching .lab svg,.justice-voice .lab svg,
 .calendar-key{display:flex;align-items:center;flex-wrap:wrap;gap:9px 16px;margin:14px 0 3px;color:var(--muted);font-size:.78rem;line-height:1.4}.calendar-key>span{display:inline-flex;align-items:center;gap:7px}.key-ring{display:inline-block;width:13px;height:13px;border:2px solid #c9a227;border-radius:50%}.key-fast{display:inline-grid;place-items:center;width:15px;height:15px;color:#a38abf;font-size:1rem;font-style:normal}.key-colors{display:inline-flex;gap:3px}.key-colors i{width:8px;height:8px;border-radius:50%;background:#59805d}.key-colors i:nth-child(2){background:#8a6ba4}.key-colors i:nth-child(3){background:#b23e3e}.kept-entry{margin:12px 0;border-top:1px solid var(--line);padding-top:10px}.kept-entry>p{font-size:.92rem;line-height:1.5;margin:8px 0}.kept-source{font-size:.84rem;color:var(--muted)}.kept-source>summary{cursor:pointer}.kept-source p{line-height:1.5;margin:7px 0}
+.calendar-dot-guide{display:flex;align-items:center;gap:10px;margin:12px 2px 0;color:var(--muted);font-size:.76rem;line-height:1.45}
+.calendar-dot-guide .dot{margin:0 2px}.calendar-dot-guide b{color:var(--ink)}
 .calendar-key{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin-top:14px}.calendar-key>span{min-width:0;font-size:.72rem;line-height:1.35}.key-dot{width:10px;height:10px;min-width:10px;border-radius:50%;background:var(--key);border:1px solid rgba(180,170,160,.35)}@media(max-width:370px){.calendar-key{grid-template-columns:1fr}}\n.tab-heading h1{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.page-heading-icon{flex:none;color:var(--gold)}.calendar-key .key-dot[style*="#c9899e"]{box-shadow:0 0 0 1px rgba(201,137,158,.15)}
 .office-card-eyebrow{display:flex;align-items:center;gap:11px;margin:0 0 15px 3px;color:var(--muted);font-family:var(--sans);font-size:.78rem;font-weight:650;letter-spacing:.095em;text-transform:uppercase;line-height:1.35}.office-card-eyebrow svg{width:19px;height:19px;flex:none;fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.tab-heading h1{gap:0}
 /* Uniform page-title rhythm on all primary Ora pages. */

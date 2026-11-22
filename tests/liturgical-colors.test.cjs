@@ -82,3 +82,17 @@ test('Sunday overrides individual fasting labels and fasting-season colours',()=
  assert.equal(C.sunday({date:'2026-11-23'}),false);
  assert.equal(C.fasting({date:'2026-11-23',fastSeason:'Nativity Fast'},'byz'),true);
 });
+
+test('two-color calendar dot pairs use vestments inside, category outside, and no redundant ring',()=>{
+ for(const [day,category,expected] of [
+  [{date:'2026-12-06',color:'r'},'v',{vestment:'r',category:'v',dual:true}],
+  [{date:'2026-12-07',color:'v'},'v',{vestment:'v',category:'v',dual:false}],
+  [{date:'2026-12-08',color:'w'},'blue',{vestment:'w',category:'blue',dual:true}],
+  [{date:'2026-05-24',color:'r'},'r',{vestment:'r',category:'r',dual:false}],
+  [{date:'2026-01-20',color:'y'},'gold',{vestment:'y',category:'gold',dual:true}]
+ ]){
+  const original=JSON.stringify(day);
+  assert.deepEqual(C.pair(day,category),expected);
+  assert.equal(JSON.stringify(day),original,'never rewrite source vestment data');
+ }
+});
