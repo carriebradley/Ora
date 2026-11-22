@@ -89,9 +89,9 @@ test('two-color calendar dot pairs use vestments inside, category outside, and n
   [{date:'2026-12-07',color:'v'},'v',{vestment:'v',category:'v',dual:false}],
   [{date:'2026-12-08',color:'w'},'blue',{vestment:'w',category:'blue',dual:true}],
   [{date:'2026-05-24',color:'r'},'r',{vestment:'r',category:'r',dual:false}],
-  [{date:'2026-01-20',color:'y'},'gold',{vestment:'y',category:'gold',dual:false}],
-  [{date:'2026-11-11',color:'y',title:'Martinmas'},'gold',{vestment:'y',category:'gold',dual:false}],
-  [{date:'2026-11-11',color:'gold'},'y',{vestment:'gold',category:'y',dual:false}],
+  [{date:'2026-01-20',color:'y'},'gold',{vestment:'y',category:'gold',dual:true}],
+  [{date:'2026-11-11',color:'y',title:'Martinmas'},'gold',{vestment:'y',category:'gold',dual:true}],
+  [{date:'2026-11-11',color:'gold'},'y',{vestment:'gold',category:'y',dual:true}],
   [{date:'2026-11-11',color:'r'},'gold',{vestment:'r',category:'gold',dual:true}]
  ]){
   const original=JSON.stringify(day);
@@ -127,8 +127,8 @@ test('season color reflects prayer calendar, not feast or fasting-day status',()
   [{date:'2026-11-23',color:'r',season:'After Trinity',historicalObservance:{name:"St. Martin's Lent"}},'sarum','v'],
   [{date:'2026-11-11',color:'y',season:'After Trinity',historicalObservance:{name:"St. Martin's Lent"}},'sarum','v'],
   [{date:'2026-12-08',color:'w',season:'Advent',title:'Immaculate Conception'},'roman','v'],
-  [{date:'2026-04-13',color:'w',season:'Easter Time'},'roman','w'],
-  [{date:'2026-04-13',color:'w',season:'Pentecostarion'},'byz','w'],
+  [{date:'2026-04-13',color:'w',season:'Easter Time'},'roman','gold'],
+  [{date:'2026-04-13',color:'w',season:'Pentecostarion'},'byz','gold'],
   [{date:'2026-12-06',color:'r',season:'Advent'},'sarum','v'],
   [{date:'2026-12-13',color:'r',season:'Advent',title:'Gaudete Sunday'},'sarum','rose'],
   [{date:'2026-12-25',color:'w',season:'After Pentecost'},'byz','w'],
@@ -140,4 +140,14 @@ test('season color reflects prayer calendar, not feast or fasting-day status',()
   assert.equal(JSON.stringify(day),before,'do not mutate the source calendar');
  }
  assert.deepEqual(C.pair({color:'y'},'v'),{vestment:'y',category:'v',dual:true});
+});
+
+test('Easter gold is a separate seasonal shade from yellow vestments and Christmas white',()=>{
+ for(const [rite,season] of [['roman','Easter Time'],['byz','Pentecostarion'],['sarum','Eastertide']]){
+  const day={date:'2026-04-13',season,color:'w'};
+  assert.equal(C.season(day,rite).color,'gold');
+  assert.deepEqual(C.pair(day,'gold'),{vestment:'w',category:'gold',dual:true});
+ }
+ assert.equal(C.season({date:'2026-12-25',color:'w',season:'Christmas'},'roman').color,'w');
+ assert.deepEqual(C.pair({color:'y'},'gold'),{vestment:'y',category:'gold',dual:true});
 });
