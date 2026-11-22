@@ -69,5 +69,5 @@ test('January 11 Monday Gospel canticles and appointed weekday antiphons display
   assert.ok(row.expected.includes(expectedRef),section+' has the source witness citation');
   assert.equal(row.comparison,'match-source-selection');
   assert.equal(row.textCompared,false,'exact printed-book wording not certified');
- });
+ }
 });
