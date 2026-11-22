@@ -13,7 +13,7 @@ const htmlStart=source.indexOf('  function romanReadingsHTML(');
 const htmlEnd=source.indexOf('  /* OCA lists',htmlStart);
 assert.ok(htmlStart>=0&&htmlEnd>htmlStart,'Roman readings renderer is present');
 const citationValidator=new Function(source.slice(start,source.indexOf('  function loadReadings(',start))+
- '\\nreturn hasReadingCitations;')();
+ '\nreturn hasReadingCitations;')();
 const htmlFactory=new Function('st','esc','displayTitle','usccb','usccbAudio','speakBtn','fathersBlock','readingsSpeech','hasReadingCitations',
  source.slice(htmlStart,htmlEnd)+'\nreturn romanReadingsHTML;');
 const iso='2027-01-11';
