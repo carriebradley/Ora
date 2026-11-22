@@ -1,0 +1,396 @@
+{
+  "schema": 1,
+  "updated": "2026-11-22",
+  "repo": "carriebradley/Ora",
+  "sourceOfTruth": "GitHub issue discussions and acceptance evidence; this JSON only creates missing issues",
+  "currentProduction": {
+    "build": "ora-v430",
+    "sha": "559a0b70578724ec5fbdcd72449c2355b854e7af",
+    "note": "Snapshot only; inspect current main each session"
+  },
+  "scopeProposal": "PR #152 (Roman Mass and complete Hours, Byzantine and Traditional preserved)",
+  "tracker": {
+    "id": "V1",
+    "title": "[Ora V1] Full liturgical-day fidelity — tracker and chat handoff",
+    "priority": "P0",
+    "area": "release",
+    "goal": "Canonical restart point: Roman Mass and the full Roman Liturgy of the Hours first; then independently source-verified Byzantine and Traditional liturgies; no release freeze until the chosen texts are genuinely Church-appointed, legally distributable or provided from an approved device-local source, and technically dependable.",
+    "rules": [
+      "Roman Mass and the complete Hours share first priority; Morning Prayer is one example, not the limit.",
+      "Do not equate section presence or green CI with accurate official appointments/wording.",
+      "Use the current approved U.S. Roman Missal, Lectionary and Liturgy of the Hours as comparison standards; prefer official English.",
+      "Label every different translation, historical alternative, unresolved choice or missing section.",
+      "Do not silently choose unrelated texts, including cross-church Byzantine service material.",
+      "Preserve Today card simplification, purple fasting indicators and private saved books.",
+      "No freeze until source-backed parity evidence, publication path and iPhone acceptance pass."
+    ]
+  },
+  "tasks": [
+    {
+      "id": "R-01",
+      "priority": "P0",
+      "area": "roman-sources",
+      "title": "Confirm Roman reference editions and U.S. calendar options",
+      "goal": "Select the applicable approved U.S. Missal, Lectionary and Liturgy of the Hours editions for fidelity comparisons.",
+      "steps": [
+        "Document exact reference editions and jurisdiction.",
+        "List US solemnity transfers and valid options in Mass and Hours.",
+        "Separate authorized text, alternative translations and unavailable content."
+      ],
+      "done": [
+        "Versioned source links or book/page witnesses recorded.",
+        "Edition and optional-choice policy documented; no unofficial composite treated as authoritative."
+      ],
+      "depends": []
+    },
+    {
+      "id": "R-02",
+      "priority": "P0",
+      "area": "roman-sources",
+      "title": "Create a reusable full liturgical-day parity worksheet",
+      "goal": "Develop a durable source-to-Ora comparison record for one representative weekday.",
+      "steps": [
+        "Choose and record one dated ordinary weekday.",
+        "Inventory Mass and each Hour by part, appointment, text, translation, role, permitted options, evidence and discrepancy.",
+        "Distinguish wrong text from unknown source or optional variant."
+      ],
+      "done": [
+        "A completed first-date worksheet with references, reproducible steps and next correction.",
+        "No protected source text reproduced in public test fixtures without permission."
+      ],
+      "depends": [
+        "R-01"
+      ]
+    },
+    {
+      "id": "R-03",
+      "priority": "P0",
+      "area": "roman-mass",
+      "title": "Audit an ordinary weekday Roman Mass against the Missal and Lectionary",
+      "goal": "Check one real day's Mass rather than simply proving that a saved EPUB section opens.",
+      "steps": [
+        "Verify day-specific readings, psalm, acclamation and Gospel.",
+        "Verify entrance/Communion antiphons and Collect, Prayer over Offerings, Prayer after Communion.",
+        "Check Ordinary of Mass navigation, speaker labels and legitimate options."
+      ],
+      "done": [
+        "Dated component-by-component comparison and severity-ranked defects.",
+        "Focused tests or linked small repair issues; no silent selection of optional Mass prayers."
+      ],
+      "depends": [
+        "R-01",
+        "R-02"
+      ]
+    },
+    {
+      "id": "R-04",
+      "priority": "P0",
+      "area": "roman-hours",
+      "title": "Audit an ordinary weekday Roman Morning Prayer word by word",
+      "goal": "Verify Lauds as prayed in the approved Roman Liturgy of the Hours.",
+      "steps": [
+        "Check first-Hour Invitatory rule, opening, hymn and three-part psalmody/antiphons.",
+        "Check short reading, responsory, Benedictus, intercessions, Lord's Prayer, collect and conclusion.",
+        "Identify exact ICEL/ICET versus Douay-Rheims or historical alternatives."
+      ],
+      "done": [
+        "All rendered sections mapped to source/edition or marked unavailable.",
+        "A discrepancy table and targeted test for each confirmed selection/order error."
+      ],
+      "depends": [
+        "R-01",
+        "R-02"
+      ]
+    },
+    {
+      "id": "R-05",
+      "priority": "P0",
+      "area": "roman-hours",
+      "title": "Audit weekday Roman Evening Prayer for that same date",
+      "goal": "Verify real Vespers for the weekday already covered by Mass and Lauds.",
+      "steps": [
+        "Compare psalms, NT canticle, antiphons, reading and responsory.",
+        "Compare Magnificat antiphon, intercessions, Lord's Prayer, collect and dismissal.",
+        "Record differences in appointed content, wording, options and order."
+      ],
+      "done": [
+        "Complete source-backed component matrix for one weekday Vespers.",
+        "Wrong or missing material tracked as a focused correction."
+      ],
+      "depends": [
+        "R-02",
+        "R-04"
+      ]
+    },
+    {
+      "id": "R-06",
+      "priority": "P1",
+      "area": "roman-mass",
+      "title": "Audit a Sunday Roman Mass including vigil/day options",
+      "goal": "Select one Sunday and compare the corresponding Mass against the official sources.",
+      "steps": [
+        "Choose dated Sunday and note vigil/day form.",
+        "Compare readings, propers, creed and applicable Mass texts.",
+        "Test unambiguous choice vs alternatives in the local Missal."
+      ],
+      "done": [
+        "One dated Sunday comparison with options identified.",
+        "Regression tests prevent wrong-form selection or hidden alternatives."
+      ],
+      "depends": [
+        "R-03"
+      ]
+    },
+    {
+      "id": "R-07",
+      "priority": "P1",
+      "area": "roman-hours",
+      "title": "Audit Sunday Lauds and First/Second Vespers",
+      "goal": "Verify the correct Sunday psalter, propers and Saturday evening precedence.",
+      "steps": [
+        "Compare one Sunday Morning Prayer and both forms of Evening Prayer.",
+        "Check gospel canticle antiphons, psalmody, proper prayer and seasonal exceptions.",
+        "Test First Vespers selection and separate it from Sunday Second Vespers."
+      ],
+      "done": [
+        "Three dated source-backed comparisons and targeted regressions.",
+        "No reused generic weekday material where the proper is required."
+      ],
+      "depends": [
+        "R-04",
+        "R-05"
+      ]
+    },
+    {
+      "id": "R-08",
+      "priority": "P1",
+      "area": "roman-hours",
+      "title": "Audit Roman Night Prayer on two contrasting dates",
+      "goal": "Verify weekday and Sunday/solemnity Compline against authorized sources.",
+      "steps": [
+        "Compare structure, readings, antiphons, responsories, Nunc Dimittis and collect.",
+        "Check examination of conscience, Alleluia, conclusion and Marian antiphon options.",
+        "Test relevant first/second Vespers interaction."
+      ],
+      "done": [
+        "Two distinct source-backed cases with passing targeted regressions.",
+        "Any unknown element explicitly identified."
+      ],
+      "depends": [
+        "R-01"
+      ]
+    },
+    {
+      "id": "R-09",
+      "priority": "P1",
+      "area": "roman-hours",
+      "title": "Audit Invitatory and one Daytime Prayer hour",
+      "goal": "Verify the first-Hour Invitatory choice and a representative daytime office.",
+      "steps": [
+        "Check Invitatory presence/omission when another Hour is prayed first.",
+        "Audit one date and one of midmorning, midday or midafternoon: psalms, antiphons, reading, verse, collect.",
+        "Distinguish complementary psalmody/optional alternatives."
+      ],
+      "done": [
+        "One daytime-office source comparison and Invitatory choice tests.",
+        "Missing components receive narrowly scoped follow-up issues."
+      ],
+      "depends": [
+        "R-01",
+        "R-02"
+      ]
+    },
+    {
+      "id": "R-10",
+      "priority": "P1",
+      "area": "roman-hours",
+      "title": "Audit one complete Roman Office of Readings",
+      "goal": "Establish fidelity for the real appointed biblical and patristic readings.",
+      "steps": [
+        "Compare one day: opening, psalmody, first reading, second reading and responsories.",
+        "Determine when Ora shows official wording vs public-domain historical alternatives/links.",
+        "Record source and distribution limitations; split future reading imports by collection."
+      ],
+      "done": [
+        "One whole Office comparison and specific missing/unverified component inventory.",
+        "No unrelated historical excerpt presented as appointed."
+      ],
+      "depends": [
+        "R-01",
+        "R-02"
+      ]
+    },
+    {
+      "id": "R-11",
+      "priority": "P1",
+      "area": "roman-calendar",
+      "title": "Check Mass/Hours coherence across three boundary dates",
+      "goal": "Ensure Mass and the Hours reflect the same actual liturgical calendar while preserving legitimate differences.",
+      "steps": [
+        "Test a Sunday-to-Monday boundary, a solemnity with First Vespers, and a transferred celebration.",
+        "Compare feast/rank/season selections in Today, Mass, readings and Hours.",
+        "Capture exceptions where multiple Masses or optional choices are legitimate."
+      ],
+      "done": [
+        "A dated cross-module matrix and source-backed passing tests.",
+        "No silent mismatched saint, feast, rank or proper."
+      ],
+      "depends": [
+        "R-03",
+        "R-05"
+      ]
+    },
+    {
+      "id": "R-12",
+      "priority": "P1",
+      "area": "roman-sources",
+      "title": "Audit section-level Roman translations and fallback labeling",
+      "goal": "Expose approved versus alternate wording without cluttering Today cards.",
+      "steps": [
+        "Inventory source/translation of the Mass and each Hour component.",
+        "Check UI labels for ICEL/ICET, Douay-Rheims, hymn alternatives, private source and unavailable text.",
+        "Design limited per-section display corrections."
+      ],
+      "done": [
+        "Traceable provenance for compared sections.",
+        "No historical devotional passage represented as official current wording.",
+        "Compact Today cards unchanged."
+      ],
+      "depends": [
+        "R-01",
+        "R-04"
+      ]
+    },
+    {
+      "id": "R-13",
+      "priority": "P0",
+      "area": "publication",
+      "title": "Resolve licensed text delivery for public/offline Ora",
+      "goal": "Establish a defensible path to official texts in a public installable PWA.",
+      "steps": [
+        "Verify USCCB daily-reading RSS and accumulated JSON rights and PWA caching.",
+        "Review ICEL permissions separately from ecclesiastical authentication.",
+        "Compare official publisher link, licensed text and user-imported approved book modes.",
+        "Evaluate the existing references-only publication fallback without activating it prematurely."
+      ],
+      "done": [
+        "Permissions/unknowns documented with primary sources.",
+        "Actionable release decision and any specific rights-holder inquiry prepared.",
+        "No assertion of approval that has not been granted."
+      ],
+      "depends": [
+        "R-01"
+      ]
+    },
+    {
+      "id": "R-14",
+      "priority": "P1",
+      "area": "roman-mass",
+      "title": "Verify private Roman Missal EPUB navigation and optional texts",
+      "goal": "Make device-local Missal navigation dependable without claiming automated choice of every Mass option.",
+      "steps": [
+        "Test an ordinary day and an ambiguous or multiple-Mass heading.",
+        "Verify Extracted Collect, offerings/Communion prayers and Ordinary navigation.",
+        "Check preface, creed, Eucharistic Prayer and vigil choices remain explicit.",
+        "Preserve original device-local book and bookmarks."
+      ],
+      "done": [
+        "Correct date selection or explicit ambiguity warning.",
+        "No inappropriate automatic option or loss of saved local content."
+      ],
+      "depends": [
+        "R-03"
+      ]
+    },
+    {
+      "id": "B-01",
+      "priority": "P1",
+      "area": "byzantine",
+      "title": "Audit one source-matched Melkite Divine Liturgy",
+      "goal": "Compare one selected Melkite service against the original Newton edition and dated typikon.",
+      "steps": [
+        "Choose verified service date/type.",
+        "Compare fixed prayer order, repetition, minister roles, optional petitions.",
+        "Verify dated hymns only where the Newton typikon supports the date."
+      ],
+      "done": [
+        "One dated comparison with source citations and focused defect list.",
+        "No substitutions from Ukrainian or unknown services."
+      ],
+      "depends": []
+    },
+    {
+      "id": "B-02",
+      "priority": "P1",
+      "area": "byzantine",
+      "title": "Audit one source-matched Ukrainian Divine Liturgy",
+      "goal": "Compare the Ukrainian service against Edmonton/UGCC sources independently of Melkite.",
+      "steps": [
+        "Choose verified dated service.",
+        "Check fixed text, responses, minister labels and church-specific propers.",
+        "Keep Edmonton December 24 conflict flagged; do not select guessed Basil."
+      ],
+      "done": [
+        "One source-backed dated comparison and test coverage.",
+        "Unresolved eparchial/national discrepancies clearly identified."
+      ],
+      "depends": []
+    },
+    {
+      "id": "T-01",
+      "priority": "P2",
+      "area": "traditional",
+      "title": "Audit one Traditional/Sarum daily prayer and Mass",
+      "goal": "Validate a representative historical Sarum day without conflating it with modern Roman rites.",
+      "steps": [
+        "Select one documented date and historical text edition.",
+        "Compare calendar, Mass, prayer sections and translation labels.",
+        "Record anachronisms and uncertain variants."
+      ],
+      "done": [
+        "One documented historical source comparison and small regressions.",
+        "No false modern Roman equivalence or invented history."
+      ],
+      "depends": []
+    },
+    {
+      "id": "Q-01",
+      "priority": "P1",
+      "area": "quality",
+      "title": "Confirm private books, updates, offline and accessibility on iPhone",
+      "goal": "Carry out remaining real-device acceptance that browser emulation cannot prove.",
+      "steps": [
+        "Check private PDF/EPUB save, close/reopen, bookmark, app update and airplane mode.",
+        "Check core daily tabs, selected rite, large text, dark mode and VoiceOver.",
+        "Record precise date, rite, view and reproduction for any defect."
+      ],
+      "done": [
+        "Owner-device pass or concrete blocker list documented.",
+        "Same-SHA automated mobile/WebKit regressions remain green."
+      ],
+      "depends": []
+    },
+    {
+      "id": "Q-02",
+      "priority": "P2",
+      "area": "release",
+      "title": "Reconcile stale PRs and run final evidence-based V1 release gate",
+      "goal": "Declare V1 only after agreed liturgical and technical criteria are actually met.",
+      "steps": [
+        "Compare stale open PRs with main and close superseded changes safely.",
+        "Reconcile all P0/open acceptance issues and documented exceptions with owner decisions.",
+        "Run Node, browser, WebKit and Pages checks on final SHA; record rollback point.",
+        "Complete iPhone acceptance and update README with accurate limitations."
+      ],
+      "done": [
+        "All required V1 issues closed with evidence or explicitly rescoped.",
+        "Final commit SHA, CI/Pages URLs and iPhone signoff in tracker.",
+        "No V1 claim based solely on structural 462/462 coverage."
+      ],
+      "depends": [
+        "R-13",
+        "Q-01"
+      ]
+    }
+  ]
+}

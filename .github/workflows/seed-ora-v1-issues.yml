@@ -1,0 +1,94 @@
+name: Seed Ora V1 fidelity issues
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/ORA-V1-ISSUE-BACKLOG.json'
+      - '.github/workflows/seed-ora-v1-issues.yml'
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: ora-v1-issue-seed
+  cancel-in-progress: false
+jobs:
+  seed:
+    if: github.repository == 'carriebradley/Ora'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create missing V1 issues and tracker
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const data = JSON.parse(fs.readFileSync('docs/ORA-V1-ISSUE-BACKLOG.json','utf8'));
+            const {owner, repo} = context.repo;
+            const marker = id => '<!-- ora-v1-work:' + id + ' -->';
+            const esc = s => String(s);
+            const checklist = (items) => items.map(s => '- [ ] ' + esc(s)).join('\n');
+            const lines = arr => (arr || []).map(s => '- ' + s).join('\n');
+            const link = path => '[\`' + path + '\`](https://github.com/' + owner + '/' + repo + '/blob/main/' + path + ')';
+            const all = await github.paginate(github.rest.issues.listForRepo,{owner,repo,state:'all',per_page:100});
+            const existing = all.filter(issue => !issue.pull_request);
+            const created = new Map();
+            const byId = id => existing.find(issue => (issue.body||'').includes(marker(id)));
+            const labelSpecs = [{"name":"ora-v1","color":"0969DA","description":"Ora Version 1 liturgical fidelity backlog"},{"name":"P0","color":"B60205","description":"Ora priority P0"},{"name":"P1","color":"FBCA04","description":"Ora priority P1"},{"name":"P2","color":"0E8A16","description":"Ora priority P2"},{"name":"area:roman-mass","color":"C2E0C6","description":"Ora workstream: roman-mass"},{"name":"area:roman-hours","color":"C2E0C6","description":"Ora workstream: roman-hours"},{"name":"area:roman-sources","color":"C2E0C6","description":"Ora workstream: roman-sources"},{"name":"area:roman-calendar","color":"C2E0C6","description":"Ora workstream: roman-calendar"},{"name":"area:publication","color":"C2E0C6","description":"Ora workstream: publication"},{"name":"area:byzantine","color":"C2E0C6","description":"Ora workstream: byzantine"},{"name":"area:traditional","color":"C2E0C6","description":"Ora workstream: traditional"},{"name":"area:quality","color":"C2E0C6","description":"Ora workstream: quality"},{"name":"area:release","color":"C2E0C6","description":"Ora workstream: release"}];
+            let availableLabels = [];
+            try {
+              availableLabels = await github.paginate(github.rest.issues.listLabelsForRepo,{owner,repo,per_page:100});
+              const names = new Set(availableLabels.map(x=>x.name));
+              for (const label of labelSpecs) {
+                if(names.has(label.name))continue;
+                await github.rest.issues.createLabel({owner,repo,...label});
+                names.add(label.name);
+              }
+            } catch(error) { core.warning('Label setup unavailable: ' + error.message + '. Creating issues without labels if needed.'); }
+            const useLabels = new Set(availableLabels.map(x=>x.name).concat(labelSpecs.map(x=>x.name)));
+            async function ensureIssue(item,body) {
+              let issue=byId(item.id)||existing.find(x=>x.title===item.title);
+              if (!issue) {
+                const wanted = ['ora-v1',item.priority,'area:'+item.area].filter(x=>useLabels.has(x));
+                try {
+                  issue=(await github.rest.issues.create({owner,repo,title:item.title,body,labels:wanted})).data;
+                } catch(error) {
+                  if(!wanted.length)throw error;
+                  core.warning('Issue labels unavailable; retrying without labels: '+error.message);
+                  issue=(await github.rest.issues.create({owner,repo,title:item.title,body})).data;
+                }
+                existing.push(issue);
+                core.info('Created #'+issue.number+' '+item.id);
+                await new Promise(resolve=>setTimeout(resolve,300));
+              } else core.info('Preserving existing #'+issue.number+' '+item.id);
+              created.set(item.id,issue);
+              return issue;
+            }
+            const t=data.tracker;
+            const trackerBody = marker(t.id)+'\n## Mission\n'+t.goal+
+              '\n\n## Standing decisions\n'+lines(t.rules)+
+              '\n\n## Snapshot, not release certification\nProduction baseline '+data.currentProduction.build+
+              ' at \`'+data.currentProduction.sha+'\`. Always check the latest main commit and deployment. Proposed definition: '+data.scopeProposal+
+              '\n\n## Chat handoff protocol\n1. Start by reading this issue and the first open P0 issue; consult linked decisions, code and latest PRs.\n2. Work on **one small issue at a time**; log sources, outcome, tests, PR/commit, blocker and *next concrete step* in its comments.\n3. Reference issue numbers in PRs, but preserve decisions here after PRs close.\n4. Close issues only when their acceptance checklist is demonstrated; split larger discoveries into new focused issues.\n5. Update the tracker when the owner changes priorities; never declare a V1 stability freeze without owner acceptance.\n\n## Live work index\n<!-- ora-v1-index:start -->\nPending initial seed\n<!-- ora-v1-index:end -->';
+            const parent=await ensureIssue(t,trackerBody);
+            for (const task of data.tasks) {
+              const prereq = task.depends.length ? task.depends.map(id => {const dep=created.get(id); return dep ? '#'+dep.number : id;}).join(', ') : 'None';
+              const body = marker(task.id)+'\n**Parent:** #'+parent.number+
+                '  |  **Priority:** '+task.priority+'  |  **Workstream:** '+task.area+
+                '\n\n## Objective\n'+task.goal+
+                '\n\n## Focused work\n'+checklist(task.steps)+
+                '\n\n## Acceptance criteria\n'+checklist(task.done)+
+                '\n\n**Dependencies:** '+prereq+
+                '\n\n## Current handoff\n**Status:** Not started.  \n**Next action:** Start with the first unchecked focused-work item; record exact dates and official sources.  \n**Evidence/PR:** Not yet recorded.\n\n**Discussion rule:** Log findings, exceptions, source URLs/page numbers, test results and next action in issue comments. Keep private PDF/EPUB book contents off GitHub.';
+              await ensureIssue(task,body);
+            }
+            const start='<!-- ora-v1-index:start -->',end='<!-- ora-v1-index:end -->';
+            const index=data.tasks.map(x=>{const issue=created.get(x.id);return '- [ ] #'+issue.number+' — '+x.title+' ('+x.id+')';}).join('\n');
+            const content=(await github.rest.issues.get({owner,repo,issue_number:parent.number})).data.body||'';
+            const i=content.indexOf(start),j=content.indexOf(end,i);
+            if(i>=0&&j>i) {
+              const desired=content.slice(0,i+start.length)+'\n'+index+'\n'+content.slice(j);
+              if(content!==desired)await github.rest.issues.update({owner,repo,issue_number:parent.number,body:desired});
+            } else core.warning('Tracker index markers missing; preserve user-edited body rather than overwrite.');
+            core.info('Ora V1 tracker: #'+parent.number+'; '+data.tasks.length+' focused issues; reruns leave existing issue discussions intact.');
