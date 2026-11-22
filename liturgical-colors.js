@@ -60,11 +60,11 @@
   function season(day,rite){
     const name=String(day?.season||'').trim(),title=String(day?.title||'');
     const fastSeason=String(day?.fastSeason||'').trim();
+    if(rite!=='byz'&&/\b(?:Gaudete|Laetare) Sunday\b/i.test(title))
+      return {color:'rose',label:name||'Joyful Sunday'};
     if(rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")
       return {color:'v',label:"St. Martin's Lent"};
     if(rite==='byz'&&fastSeason)return {color:'v',label:fastSeason};
-    if(rite!=='byz'&&/\b(?:Gaudete|Laetare) Sunday\b/i.test(title))
-      return {color:'rose',label:name||'Joyful Sunday'};
     if(/^(?:Easter Time|Eastertide|Paschaltide|Pentecostarion)$/i.test(name))
       return {color:'w',label:name};
     if(/^Whitsuntide$/i.test(name))return {color:'r',label:name};

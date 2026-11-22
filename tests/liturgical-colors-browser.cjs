@@ -30,8 +30,8 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
  assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian feasts/);
  const dots=await page.locator('.cell[data-d="2026-12-08"] .dot').evaluateAll(ds=>ds.map(d=>({vestment:d.dataset.vestment,category:d.dataset.category,ring:d.style.getPropertyValue('--ring'),dual:d.classList.contains('dual')})));
- assert.deepEqual(dots[0],{vestment:'w',category:'blue',ring:blue,dual:true},'Roman: white Marian vestment and blue category ring');
- assert.deepEqual(dots[2],{vestment:'w',category:'blue',ring:blue,dual:true},'Traditional: white vestment and blue Marian category; fast shown separately');
+ assert.deepEqual(dots[0],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Roman: white Marian vestments and Advent violet ring');
+ assert.deepEqual(dots[2],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Traditional: white Marian vestments and St Martin season violet ring');
  for(const church of ['ukrainian','melkite']){
   await page.evaluate(church=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch=church;localStorage.setItem('ora.settings',JSON.stringify(s));},church);
   await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-12-09`);
@@ -50,8 +50,8 @@ module.exports=async(page,base)=>{
    await page.goto(`${base}index.html?tab=today&rite=byz&date=${date}`);
    const row=page.locator('.gl[data-v="byz"]');
    assert.doesNotMatch(await row.innerText(),fragment,church+' '+date+' keeps fasting detail in Calendar');
-   assert.equal(await row.locator('.today-discipline-dot').count(),1,
-    church+' '+date+' has a purple fasting indicator at the left');
+   assert.equal(await row.locator('.today-season-dot').getAttribute('data-season-color'),'v',
+    church+' '+date+' has violet Nativity prayer-season dot at the left');
   }
   await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-17`);
   const fastChip=page.locator('.chip.fast').filter({hasText:/Nativity Fast/});
@@ -59,7 +59,7 @@ module.exports=async(page,base)=>{
   await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-21`);
   assert.equal(await page.locator('.gl[data-v="byz"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),blue,
    church+' Marian feast stays blue during the Nativity Fast');
-  assert.equal(await page.locator('.gl[data-v="byz"] .today-discipline-dot').count(),1);
+  assert.equal(await page.locator('.gl[data-v="byz"] .today-season-dot').getAttribute('data-season-color'),'v');
  }
 
  // The same Byzantine fasting color must be used in the selected-calendar
@@ -82,8 +82,8 @@ module.exports=async(page,base)=>{
   assert.ok(await page.locator('.cell[data-d="2026-11-17"] .dot').nth(byzIndex).getAttribute('data-category'));
   await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-21`);
   assert.equal(await page.locator('.calendar-byz-saints').locator('..').locator('.sw')
-   .getAttribute('data-category'),'blue',
-   church+' major Marian feast category remains blue during fasting season');
+   .getAttribute('data-category'),'v',
+   church+' Marian vestments remain white and Nativity season is violet');
   assert.ok(await page.locator('.cell[data-d="2026-11-21"] .f').count()>0);
  }
  // A negative source fasting label must not create a violet Today badge
@@ -116,7 +116,7 @@ module.exports=async(page,base)=>{
  // it does not change the underlying Sarum vestment colour or fast rules.
  for(const date of ['2026-11-11','2026-11-19','2026-11-20','2026-12-08','2026-12-24']){
   await page.goto(`${base}index.html?tab=today&rite=sarum&date=${date}`);
-  assert.equal(await page.locator('.gl[data-v="sarum"] .today-discipline-dot').count(),1,date+' Traditional fasting indicator');
+  assert.equal(await page.locator('.gl[data-v="sarum"] .today-season-dot').getAttribute('data-season-color'),'v',date+' Traditional St Martin prayer-season dot');
   assert.ok(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),date+' retains its own observance colour');
  }
  for(const date of ['2026-11-10','2026-11-15','2026-12-25']){
@@ -145,22 +145,24 @@ module.exports=async(page,base)=>{
  }
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-19`);
  assert.equal(await page.locator('.calendar-western-title').filter({hasText:'Thursday after the 24th Sunday'}).locator('..').locator('.sw').getAttribute('data-category'),'v','Uncelebrated St. Martin penitential weekday remains violet');
- // Martinmas' Sarum vestment is yellow (gold): the feast's gold category
- // is the same colour family and must not create a redundant outer ring.
+ // Martinmas' Today badge retains gold for the feast, while Calendar
+ // shows a gold vestment center with the violet St Martin season ring.
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-11`);
  const martinRow=page.locator('.gl[data-v="sarum"]'),martinBadge=martinRow.locator('.gb');
  assert.match(await martinRow.innerText(),/Martinmas/);
  assert.equal(await martinRow.getAttribute('data-vestment'),'y','Sarum Martinmas vestments are yellow/gold');
- assert.equal(await martinRow.getAttribute('data-category'),'gold','Martinmas remains a gold feast category');
+ assert.equal(await martinRow.getAttribute('data-category'),'v','Martinmas has violet prayer season');
+ assert.equal(await martinRow.getAttribute('data-badge-category'),'gold','Martinmas badge retains the gold feast category');
+ assert.equal(await martinRow.locator('.today-season-dot').getAttribute('data-season-color'),'v');
  assert.equal(await martinBadge.evaluate(el=>el.classList.contains('dual')),false,'Martinmas Today badge has no redundant gold outline');
  assert.equal(await martinBadge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#d4a017','Martinmas badge retains original gold vestment');
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-11`);
  const martinLayers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
  const martinDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(martinLayers.indexOf('sarum'));
  assert.equal(await martinDot.getAttribute('data-vestment'),'y');
- assert.equal(await martinDot.getAttribute('data-category'),'gold');
- assert.equal(await martinDot.evaluate(el=>el.classList.contains('dual')),false,'Martinmas calendar has only one gold dot');
- assert.equal(await martinDot.evaluate(el=>el.style.getPropertyValue('--ring')),'','No extra gold ring is emitted');
+ assert.equal(await martinDot.getAttribute('data-category'),'v');
+ assert.equal(await martinDot.evaluate(el=>el.classList.contains('dual')),true,'Martinmas calendar shows gold vestment and violet season');
+ assert.equal(await martinDot.evaluate(el=>el.style.getPropertyValue('--ring')),legendViolet,'Outer ring is the St Martin prayer season');
  assert.equal(await martinDot.evaluate(el=>el.style.getPropertyValue('--c')),'#d4a017','Single dot uses gold vestment shade');
  // Traditional Advent Sundays keep the red Sarum vestment color with a
  // violet category ring; Sundays must not acquire any fasting marker.
@@ -175,7 +177,7 @@ module.exports=async(page,base)=>{
  assert.equal(await advent.evaluate(el=>el.style.getPropertyValue('--ring')),'#8a6ba4');
  assert.equal(await advent.evaluate(el=>el.classList.contains('dual')),true);
  assert.equal(await page.locator('.cell[data-d="2026-12-06"] .f').count(),0,'no Sunday fast marker');
- assert.match(await page.locator('.cell[data-d="2026-12-06"]').getAttribute('aria-label'),/Vestment color red; calendar category violet/);
+ assert.match(await page.locator('.cell[data-d="2026-12-06"]').getAttribute('aria-label'),/Vestment color red; liturgical season .*\(violet\)/);
  // Gaudete is a rose calendar category even when Sarum rubrics retain red
  // as the actual Sunday vestment color.
  const gaudete=page.locator('.cell[data-d="2026-12-13"] .dot').nth(sarumIndex);
@@ -193,8 +195,8 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-05-24`);
  const pentecost=page.locator('.cell[data-d="2026-05-24"] .dot').first();
  assert.equal(await pentecost.getAttribute('data-vestment'),'r');
- assert.equal(await pentecost.getAttribute('data-category'),'r');
- assert.equal(await pentecost.evaluate(el=>el.classList.contains('dual')),false,'red on red needs no ring');
+ assert.equal(await pentecost.getAttribute('data-category'),'w');
+ assert.equal(await pentecost.evaluate(el=>el.classList.contains('dual')),true,'red Pentecost vestments within white Easter season');
  for(const width of [320,390]){
   await page.setViewportSize({width,height:844});
   for(const theme of ['light','dark']){
@@ -209,8 +211,8 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-10`);
  const martyrRow=page.locator('.gl[data-v="byz"]'),martyrBadge=martyrRow.locator('.gb');
  assert.equal(await martyrRow.getAttribute('data-vestment'),'g','Byzantine November 10 vestment is green');
- assert.equal(await martyrRow.getAttribute('data-category'),'r','Byzantine November 10 calendar category is red');
- assert.equal(await martyrRow.locator('.today-discipline-dot').count(),0,'No fasting dot on November 10');
+ assert.equal(await martyrRow.getAttribute('data-category'),'g','Byzantine November 10 after Pentecost season is green');
+ assert.equal(await martyrRow.locator('.today-season-dot').getAttribute('data-season-color'),'g','Season dot remains green on martyr day');
  assert.equal(await martyrBadge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#3d7a4a','Byzantine martyr badge has green fill');
  assert.equal(await martyrBadge.evaluate(el=>el.style.getPropertyValue('--badge-color')),'#b23e3e','Byzantine martyr badge has red ring');
  assert.equal(await martyrBadge.evaluate(el=>el.classList.contains('dual')),true,'Byzantine martyr badge shows two colors');
@@ -218,36 +220,37 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-11`);
  const wednesday=page.locator('.gl[data-v="byz"]');
  assert.match(await wednesday.locator('.gb').innerText(),/Martyr/);
- assert.equal(await wednesday.getAttribute('data-category'),'r','Wednesday martyrs retain red classification');
+ assert.equal(await wednesday.getAttribute('data-category'),'g','Wednesday after Pentecost prayer season remains green');
+ assert.equal(await wednesday.getAttribute('data-badge-category'),'r','Martyr badge retains red classification');
  assert.equal(await wednesday.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#3d7a4a','Wednesday vestment stays green');
  assert.equal(await wednesday.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),'#b23e3e','Wednesday martyr ring is red');
- assert.equal(await wednesday.locator('.today-discipline-dot').getAttribute('data-discipline'),'traditional','Wednesday abstinence uses left-hand ring');
- assert.equal(await wednesday.locator('.today-discipline-dot').evaluate(el=>el.style.backgroundColor),'transparent','Traditional abstinence is hollow, not a binding fast dot');
+ assert.equal(await wednesday.locator('.today-season-dot').getAttribute('data-season-color'),'g','Abstinence cannot change seasonal green');
+ assert.equal(await wednesday.getAttribute('data-discipline'),'traditional','Traditional abstinence remains as guidance');
  assert.equal(await wednesday.locator('.today-badges .discipline-marker').count(),0,'No extra abstinence text below badge');
  assert.match(await wednesday.getAttribute('aria-label'),/Traditional abstinence \(local practice/,'Accessible fasting details remain available');
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-24`);
  const seasonRow=page.locator('.gl[data-v="byz"]');
- assert.equal(await seasonRow.locator('.today-discipline-dot').getAttribute('data-discipline'),'season','Fasting season uses left-hand ring');
- assert.equal(await seasonRow.locator('.today-discipline-dot').evaluate(el=>el.style.backgroundColor),'transparent','Season ring has no fill');
+ assert.equal(await seasonRow.locator('.today-season-dot').getAttribute('data-season-color'),'v','Nativity prayer season is violet');
+ assert.equal(await seasonRow.locator('.today-season-dot').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(138, 107, 164)','Season dot is filled violet');
  assert.equal(await seasonRow.locator('.today-badges').innerText(),await seasonRow.locator('.gb').innerText(),'Badge has no second line');
- assert.equal(await page.locator('.gl[data-v="roman"] .today-discipline-dot').count(),0,'Roman memorial has no fasting indicator');
+ assert.equal(await page.locator('.gl[data-v="roman"] .today-season-dot').getAttribute('data-season-color'),'g','Roman ordinary season stays green');
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-22`);
- assert.equal(await page.locator('.gl[data-v="byz"] .today-discipline-dot').count(),0,'Sunday has no individual fasting dot');
+ assert.equal(await page.locator('.gl[data-v="byz"] .today-season-dot').getAttribute('data-season-color'),'v','Sunday remains in Nativity prayer season');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-03`);
- const goodFriday=page.locator('.gl[data-v="roman"] .today-discipline-dot');
- assert.equal(await goodFriday.getAttribute('data-discipline'),'fast','Explicit fast has a filled dot');
- assert.equal(await goodFriday.evaluate(el=>el.style.backgroundColor),'rgb(138, 107, 164)','Explicit fast dot is filled violet');
+ const goodFriday=page.locator('.gl[data-v="roman"] .today-season-dot');
+ assert.equal(await goodFriday.getAttribute('data-season-color'),'v','Good Friday follows the penitential season');
+ assert.equal(await page.locator('.gl[data-v="roman"]').getAttribute('data-discipline'),'fast','Fasting guidance is retained separately');
  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-11`);
  const byzLayers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
  const martyrDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(byzLayers.indexOf('byz'));
- assert.equal(await martyrDot.getAttribute('data-category'),'r','Calendar also retains red martyr ring');
+ assert.equal(await martyrDot.getAttribute('data-category'),'g','Calendar ring follows green After Pentecost season, not red martyrs');
  assert.equal(await page.locator('.cell[data-d="2026-11-11"] .f').count(),1,'Calendar shows separate abstinence ƒ');
  assert.match(await page.locator('.calendar-dot-guide').innerText(),/Purple ƒ.*abstinence guidance/);
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-13`);
  const easterRoman=page.locator('.gl[data-v="roman"]');
  assert.equal(await easterRoman.locator('.gb').innerText(),'Easter Season','Easter weekday is not Ordinary Day');
  assert.equal(await easterRoman.getAttribute('data-category'),'w','Easter weekday category is white');
- assert.equal(await easterRoman.locator('.today-discipline-dot').count(),0,'Easter weekday has no fasting dot');
+ assert.equal(await easterRoman.locator('.today-season-dot').getAttribute('data-season-color'),'w','Easter prayer season is white');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-19`);
  assert.equal(await page.locator('.gl[data-v="roman"]').getAttribute('data-category'),'w','Easter Sunday is not ordinary green');
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-04-13`);
@@ -261,26 +264,25 @@ module.exports=async(page,base)=>{
   ['byz','2026-11-17'],['byz','2026-11-22']
  ]){
   await page.goto(`${base}index.html?tab=today&rite=${rite}&date=${date}`);
-  const row=page.locator(`.gl[data-v="${rite}"]`);
-  const categoryColor=await row.evaluate(el=>el.style.getPropertyValue('--today-category'));
-  const badge=row.locator('.gb');
-  const pair=await row.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.querySelector('.gb').style.getPropertyValue('--badge-fill'),ring:el.querySelector('.gb').classList.contains('dual')?el.querySelector('.gb').style.getPropertyValue('--badge-color'):'',dual:el.querySelector('.gb').classList.contains('dual')}));
-  assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-color')),categoryColor,rite+' badge ring uses category palette on '+date);
-  assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),pair.inner,rite+' badge fill uses vestment colour on '+date);
-  assert.equal(await badge.evaluate(el=>el.classList.contains('dual')),pair.dual,rite+' badge ring only when vestment and category differ on '+date);
-  assert.equal(await row.getAttribute('data-vestment'),pair.vestment);
-  assert.equal(await row.getAttribute('data-category'),pair.category);
-  assert.match(await row.getAttribute('aria-label'),/Vestment color .*; calendar category /);
+  const row=page.locator(`.gl[data-v="${rite}"]`),badge=row.locator('.gb');
+  const seasonColor=await row.getAttribute('data-category');
+  const vestment=await row.getAttribute('data-vestment');
+  assert.equal(await row.locator('.today-season-dot').getAttribute('data-season-color'),seasonColor,rite+' Today dot matches prayer season '+date);
+  assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),({r:'#a8232a',w:'#f0e8da',v:'#6a3f9a',g:'#3d7a4a',y:'#d4a017',gold:'#c9a227',blue:'#3b729f',rose:'#d9899e',k:'#1c1c1c'})[vestment],rite+' badge interior shows vestments '+date);
+  assert.match(await row.getAttribute('aria-label'),/Vestment color .*; liturgical season /);
   if(rite==='sarum'&&date==='2026-12-06'){
-   assert.deepEqual(pair,{vestment:'r',category:'v',inner:'#a8232a',ring:legendViolet,dual:true},'Sarum Sunday red with violet Advent ring');
-   assert.doesNotMatch((await row.locator('.gb').innerText()).trim(),/Fast Day|Strict Fast/);
+   assert.equal(seasonColor,'v','Sarum Advent season is violet');
+   assert.equal(vestment,'r','Sarum Sunday vestments stay red');
+   assert.doesNotMatch((await badge.innerText()).trim(),/Fast Day|Strict Fast/);
   }
   await page.goto(`${base}index.html?tab=calendar&rite=${rite}&date=${date}`);
   const active=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
   const index=active.indexOf(rite);
   assert.ok(index>=0,rite+' layer visible');
   const calendarDot=page.locator(`.cell[data-d="${date}"] .dot`).nth(index);
-  assert.deepEqual(await calendarDot.evaluate(el=>({vestment:el.dataset.vestment,category:el.dataset.category,inner:el.style.getPropertyValue('--c'),ring:el.style.getPropertyValue('--ring'),dual:el.classList.contains('dual')})),pair,rite+' Today badge and Calendar dot match on '+date);
+  assert.equal(await calendarDot.getAttribute('data-vestment'),vestment,rite+' Calendar inner dot retains liturgical vestment '+date);
+  assert.equal(await calendarDot.getAttribute('data-category'),seasonColor,rite+' Calendar ring follows same season as Today '+date);
+  assert.equal(await calendarDot.evaluate(el=>el.classList.contains('dual')),vestment!==seasonColor&&!(vestment==='y'&&seasonColor==='gold'),rite+' only different colors create rings '+date);
  }
  await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-12-06`);
  for(const width of [320,390]){
@@ -291,6 +293,16 @@ module.exports=async(page,base)=>{
   }
  }
  await page.setViewportSize({width:390,height:844});
+ // November 23: three distinct daily prayer seasons independent of badge colors.
+ await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-23`);
+ for(const [rite,want] of [['roman','g'],['byz','v'],['sarum','v']]){
+  const row=page.locator(`.gl[data-v="${rite}"]`);
+  assert.equal(await row.locator('.today-season-dot').getAttribute('data-season-color'),want,rite+' November 23 Today season');
+ }
+ await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-23`);
+ const nov23Layers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
+ for(const [rite,want] of [['roman','g'],['byz','v'],['sarum','v']])
+  assert.equal(await page.locator('.cell[data-d="2026-11-23"] .dot').nth(nov23Layers.indexOf(rite)).getAttribute('data-category'),want,rite+' November 23 Calendar season');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-03-25`);
  assert.notEqual(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),blue,'Holy Thursday keeps precedence over Annunciation');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-04-05`);
