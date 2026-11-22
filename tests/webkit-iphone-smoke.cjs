@@ -149,6 +149,10 @@ function pdf(){
    await LiturgyReader.save('basil',file);
    await LiturgyReader.bookmark('basil',2);
   },Array.from(epub()));
+  // A stored document is not useful if the installed shell cannot reopen offline.
+  // Check the actual service-worker-controlled browser, not just IndexedDB reads.
+  assert.equal(await page.evaluate(()=>!!navigator.serviceWorker.controller),true,
+   'WebKit app must be service-worker-controlled before offline navigation');
   await context.setOffline(true);
   const offline=await page.evaluate(async()=>{
    const pdf=await LiturgyReader.get('chrysostom');
@@ -159,6 +163,30 @@ function pdf(){
   assert.equal(offline.pdf.page,2,'WebKit offline PDF record');
   assert.equal(offline.epub.page,2,'WebKit offline EPUB bookmark');
   assert.equal(offline.epub.format,'epub');
+  await page.reload({waitUntil:'domcontentloaded'});
+  await page.locator('#app .tab-heading h1').waitFor();
+  assert.ok((await page.locator('#app').innerText()).length>50,
+   'WebKit must restore the Liturgy screen with no connection');
+  // Reopen the actual saved PDF, including its extracted-text view, offline.
+  const offlinePdf=page.locator('.liturgical-text[data-text-id="chrysostom"]');
+  await offlinePdf.waitFor();
+  await offlinePdf.locator('.reader-offline summary').click();
+  await page.waitForFunction(()=>{
+   const button=document.querySelector('.liturgical-text[data-text-id="chrysostom"] [data-reader="open"]');
+   return button&&!button.disabled;
+  });
+  await offlinePdf.locator('[data-reader="open"]').click();
+  await page.waitForFunction(()=>document.querySelector('#reader-status')?.textContent==='Page 2 of 2');
+  await page.locator('[data-reader="mode"]').click();
+  await page.waitForFunction(()=>document.querySelector('#reader-text')?.textContent.includes('page two'));
+  await page.locator('[data-reader="close"]').click();
+  await page.goto(base+'index.html?tab=pray&rite=byz&date=2026-11-11',
+   {waitUntil:'domcontentloaded'});
+  await page.locator('#app .tab-heading h1').waitFor();
+  assert.ok((await page.locator('#app').innerText()).length>50,
+   'Offline deep link must render Byzantine prayer');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,
+   'Offline navigation must not introduce horizontal overflow');
   await context.setOffline(false);
   await page.reload();
   const restored=await page.evaluate(async()=>{
