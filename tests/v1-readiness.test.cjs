@@ -46,7 +46,7 @@ test('v1 calendar safeguards remain in place for joyful Sundays and conflicting 
 test('v1 release scope explicitly rejects unfinished text corpus and premature approval claims',()=>{
  const roadmap=fs.readFileSync(path.join(root,'docs/ORA-V1-COMPLETION-ROADMAP.md'),'utf8');
  const baseline=fs.readFileSync(path.join(root,'docs/ORA-V1-RELEASE-BASELINE-2026-11-15.md'),'utf8');
- assert.match(roadmap,/Roman-first Catholic prayer companion/);
+ assert.match(roadmap,/Roman-first Catholic spiritual companion/);
  assert.match(roadmap,/superseded as a planning assumption/);
  const fidelity=fs.readFileSync(path.join(root,'docs/ORA-V1-ROMAN-FIDELITY-GATE.md'),'utf8');
  assert.match(fidelity,/Morning Prayer \(Lauds\)/);
