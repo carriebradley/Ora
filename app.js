@@ -608,10 +608,12 @@
         k === 'sarum' ? (westernCommemorations(detail)[0] || detail) :
         westernCommemorations(detail)[0] || detail;
       const detailHTML = esc(displayTitle(shown));
-      const lit = observanceColor(r, k);
-      const ink = ['w', 'gold', 'y', 'rose'].includes(lit) ? '#201700' : '#fff';
-      const badgeColor = lit === 'w' ? 'var(--lit-white)' : col(lit);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings"><span class="gn">${n}</span><span class="gb" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
+      // Today uses precisely the same vestment/category pairing as Calendar.
+      const pair = calendarPair(r,k), category = pair.category;
+      const ink = ['w','gold','y','rose'].includes(category) ? '#201700' : '#fff';
+      const badgeColor = CALENDAR_CATEGORY_COLORS[category] || col(category);
+      const colors = `Vestment color ${COLOR_NAMES[pair.vestment]||pair.vestment}; calendar category ${COLOR_NAMES[category]||category}`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}"><span class="gn">${calendarSwatch(r,k,'dot today-dot')}<span>${n}</span></span><span class="gb" data-category="${esc(category)}" style="--badge-color:${badgeColor};background:${badgeColor};color:${ink}">${esc(x.badge)}</span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2332,13 +2334,13 @@
   function setLitColour() {
     try {
       const v = dayInfo(st.date);
-      // Use the same calendar and observanceColor() as each tradition's Today card.
+      // Today and Calendar share category logic while preserving source vestment data.
       // Reading and liturgy selections take precedence over the primary prayer rite.
       const rite = st.tab === 'readings' ? st.readRite
         : st.tab === 'liturgy' ? (st.liturgyView === 'byz' ? 'byz' : 'roman')
         : S.rite;
       const r = rite === 'sarum' ? v.sarum : rite === 'byz' ? v.byz : v.roman;
-      const c = observanceColor(r, rite);
+      const c = st.tab === 'today' ? calendarPair(r,rite).category : observanceColor(r,rite);
       document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c));
     } catch (e) { /* keep the default */ }
   }
@@ -2562,7 +2564,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v435';
+  const APP_BUILD = 'ora-v436';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
