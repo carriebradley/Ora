@@ -55,6 +55,28 @@
     return season?{kind:'season',short:'Fasting season',label:'Fasting season: '+season}:null;
   }
   const easterSeason=day=>/^(?:Easter Time|Eastertide|Paschaltide)$/i.test(String(day?.season||''));
+  // A season guides daily prayer even when a saint's vestment differs.
+  // Seasonal fasts include Sundays without making them individual fast days.
+  function season(day,rite){
+    const name=String(day?.season||'').trim(),title=String(day?.title||'');
+    const fastSeason=String(day?.fastSeason||'').trim();
+    if(rite==='sarum'&&day?.historicalObservance?.name==="St. Martin's Lent")
+      return {color:'v',label:"St. Martin's Lent"};
+    if(rite==='byz'&&fastSeason)return {color:'v',label:fastSeason};
+    if(rite!=='byz'&&/\b(?:Gaudete|Laetare) Sunday\b/i.test(title))
+      return {color:'rose',label:name||'Joyful Sunday'};
+    if(/^(?:Easter Time|Eastertide|Paschaltide|Pentecostarion)$/i.test(name))
+      return {color:'w',label:name};
+    if(/^Whitsuntide$/i.test(name))return {color:'r',label:name};
+    if(/Advent|Lent|Passiontide|Holy Week|Triodion|Pre-Lent|Triduum/i.test(name))
+      return {color:'v',label:name};
+    if(/Christmas|Christmastide|Nativity season/i.test(name))
+      return {color:'w',label:name};
+    const md=String(day?.date||'').slice(5);
+    if(rite==='byz'&&(md>='12-25'||(md>='01-01'&&md<='01-06')))
+      return {color:'w',label:'Nativity and Theophany'};
+    return {color:'g',label:name||'Ordinary season'};
+  }
   // A dot uses the source vestment colour and adds a category ring only
   // for a distinct colour family. Sarum yellow ('y') and calendar gold
   // refer to the same gold colour, despite their separate source labels.
@@ -65,5 +87,5 @@
       (vestment==='gold'&&outer==='y');
     return {vestment,category:outer,dual:!sameColor};
   }
-  return {blue,marian,display,fasting,fastFree,sunday,discipline,easterSeason,pair};
+  return {blue,marian,display,fasting,fastFree,sunday,discipline,easterSeason,season,pair};
 });

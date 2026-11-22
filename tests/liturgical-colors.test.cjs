@@ -118,3 +118,26 @@ test('Easter season is distinguished from Ordinary Time without rewriting source
  }
  for(const season of ['Ordinary Time','After Pentecost','Advent'])assert.equal(C.easterSeason({season}),false);
 });
+
+test('season color reflects prayer calendar, not feast or fasting-day status',()=>{
+ for(const [day,rite,color] of [
+  [{date:'2026-11-23',color:'r',season:'Ordinary Time',title:'Martyrs'},'roman','g'],
+  [{date:'2026-11-23',color:'g',season:'After Pentecost',fastSeason:'Nativity Fast'},'byz','v'],
+  [{date:'2026-11-22',color:'g',season:'After Pentecost',fastSeason:'Nativity Fast'},'byz','v'],
+  [{date:'2026-11-23',color:'r',season:'After Trinity',historicalObservance:{name:"St. Martin's Lent"}},'sarum','v'],
+  [{date:'2026-11-11',color:'y',season:'After Trinity',historicalObservance:{name:"St. Martin's Lent"}},'sarum','v'],
+  [{date:'2026-12-08',color:'w',season:'Advent',title:'Immaculate Conception'},'roman','v'],
+  [{date:'2026-04-13',color:'w',season:'Easter Time'},'roman','w'],
+  [{date:'2026-04-13',color:'w',season:'Pentecostarion'},'byz','w'],
+  [{date:'2026-12-06',color:'r',season:'Advent'},'sarum','v'],
+  [{date:'2026-12-13',color:'r',season:'Advent',title:'Gaudete Sunday'},'sarum','rose'],
+  [{date:'2026-12-25',color:'w',season:'After Pentecost'},'byz','w'],
+  [{date:'2026-05-25',color:'r',season:'Whitsuntide'},'sarum','r']
+ ]){
+  const before=JSON.stringify(day),got=C.season(day,rite);
+  assert.equal(got.color,color,rite+' '+day.date+' '+day.season);
+  assert.ok(got.label);
+  assert.equal(JSON.stringify(day),before,'do not mutate the source calendar');
+ }
+ assert.deepEqual(C.pair({color:'y'},'v'),{vestment:'y',category:'v',dual:true});
+});
