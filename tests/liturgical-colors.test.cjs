@@ -89,7 +89,10 @@ test('two-color calendar dot pairs use vestments inside, category outside, and n
   [{date:'2026-12-07',color:'v'},'v',{vestment:'v',category:'v',dual:false}],
   [{date:'2026-12-08',color:'w'},'blue',{vestment:'w',category:'blue',dual:true}],
   [{date:'2026-05-24',color:'r'},'r',{vestment:'r',category:'r',dual:false}],
-  [{date:'2026-01-20',color:'y'},'gold',{vestment:'y',category:'gold',dual:true}]
+  [{date:'2026-01-20',color:'y'},'gold',{vestment:'y',category:'gold',dual:false}],
+  [{date:'2026-11-11',color:'y',title:'Martinmas'},'gold',{vestment:'y',category:'gold',dual:false}],
+  [{date:'2026-11-11',color:'gold'},'y',{vestment:'gold',category:'y',dual:false}],
+  [{date:'2026-11-11',color:'r'},'gold',{vestment:'r',category:'gold',dual:true}]
  ]){
   const original=JSON.stringify(day);
   assert.deepEqual(C.pair(day,category),expected);

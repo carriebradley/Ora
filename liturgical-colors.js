@@ -55,11 +55,15 @@
     return season?{kind:'season',short:'Fasting season',label:'Fasting season: '+season}:null;
   }
   const easterSeason=day=>/^(?:Easter Time|Eastertide|Paschaltide)$/i.test(String(day?.season||''));
-  // A calendar dot shows the source vestment colour; a different calendar
-  // category appears as an outer ring. Compare colour names, not shades.
+  // A dot uses the source vestment colour and adds a category ring only
+  // for a distinct colour family. Sarum yellow ('y') and calendar gold
+  // refer to the same gold colour, despite their separate source labels.
   function pair(day,category){
     const vestment=day?.color||'w', outer=category||vestment;
-    return {vestment,category:outer,dual:vestment!==outer};
+    const sameColor=vestment===outer||
+      (vestment==='y'&&outer==='gold')||
+      (vestment==='gold'&&outer==='y');
+    return {vestment,category:outer,dual:!sameColor};
   }
   return {blue,marian,display,fasting,fastFree,sunday,discipline,easterSeason,pair};
 });

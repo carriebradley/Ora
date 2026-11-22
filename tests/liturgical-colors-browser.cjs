@@ -145,6 +145,23 @@ module.exports=async(page,base)=>{
  }
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-19`);
  assert.equal(await page.locator('.calendar-western-title').filter({hasText:'Thursday after the 24th Sunday'}).locator('..').locator('.sw').getAttribute('data-category'),'v','Uncelebrated St. Martin penitential weekday remains violet');
+ // Martinmas' Sarum vestment is yellow (gold): the feast's gold category
+ // is the same colour family and must not create a redundant outer ring.
+ await page.goto(`${base}index.html?tab=today&rite=sarum&date=2026-11-11`);
+ const martinRow=page.locator('.gl[data-v="sarum"]'),martinBadge=martinRow.locator('.gb');
+ assert.match(await martinRow.innerText(),/Martinmas/);
+ assert.equal(await martinRow.getAttribute('data-vestment'),'y','Sarum Martinmas vestments are yellow/gold');
+ assert.equal(await martinRow.getAttribute('data-category'),'gold','Martinmas remains a gold feast category');
+ assert.equal(await martinBadge.evaluate(el=>el.classList.contains('dual')),false,'Martinmas Today badge has no redundant gold outline');
+ assert.equal(await martinBadge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#d4a017','Martinmas badge retains original gold vestment');
+ await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-11-11`);
+ const martinLayers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
+ const martinDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(martinLayers.indexOf('sarum'));
+ assert.equal(await martinDot.getAttribute('data-vestment'),'y');
+ assert.equal(await martinDot.getAttribute('data-category'),'gold');
+ assert.equal(await martinDot.evaluate(el=>el.classList.contains('dual')),false,'Martinmas calendar has only one gold dot');
+ assert.equal(await martinDot.evaluate(el=>el.style.getPropertyValue('--ring')),'','No extra gold ring is emitted');
+ assert.equal(await martinDot.evaluate(el=>el.style.getPropertyValue('--c')),'#d4a017','Single dot uses gold vestment shade');
  // Traditional Advent Sundays keep the red Sarum vestment color with a
  // violet category ring; Sundays must not acquire any fasting marker.
  await page.goto(`${base}index.html?tab=calendar&rite=sarum&date=2026-12-06`);
