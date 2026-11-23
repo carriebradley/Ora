@@ -42,7 +42,7 @@ test('all curated saint biographies across every rite are brief, complete and so
 
 test('source-backed Western records are never displayed solely because of the date',()=>{
  assert.match(app,/const titles = S\.rite === 'byz'/);
- assert.match(app,/const optionalTitles = S\\.rite === 'roman' && calendar\\?\\.rank === 'Weekday'/);
- assert.match(app,/: \\[title, \\.\\.\\.optionalTitles\\];/);
+ assert.match(app,/const optionalTitles = S\.rite === 'roman' && calendar\?\.rank === 'Weekday'/);
+ assert.match(app,/: \[title, \.\.\.optionalTitles\];/);
  assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
 });
