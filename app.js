@@ -624,7 +624,7 @@
       const ink = ['w','gold','y','rose'].includes(vestment) ? '#000' : '#fff';
       const colors = `Vestment color ${COLOR_NAMES[vestment]||vestment}; liturgical season ${season.label} (${COLOR_NAMES[season.color]||season.color})`;
       const discipline = LiturgicalColors.discipline(r,k);
-      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${badgeFill}" data-category="${esc(season.color)}" data-vestment="${esc(vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb" style="--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
+      return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${CALENDAR_CATEGORY_COLORS[season.color]||col(season.color)}" data-category="${esc(season.color)}" data-vestment="${esc(vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb" style="--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
   }
 
@@ -2346,14 +2346,14 @@
   function setLitColour() {
     try {
       const v = dayInfo(st.date);
-      // Use the same calendar and observanceColor() as each tradition's Today card.
+      // Use the selected rite's prayer-season color, matching its Today left dot and Calendar outer ring.
       // Reading and liturgy selections take precedence over the primary prayer rite.
       const rite = st.tab === 'readings' ? st.readRite
         : st.tab === 'liturgy' ? (st.liturgyView === 'byz' ? 'byz' : 'roman')
         : S.rite;
       const r = rite === 'sarum' ? v.sarum : rite === 'byz' ? v.byz : v.roman;
-      const c = observanceColor(r, rite);
-      document.documentElement.style.setProperty('--lit', c === 'w' ? 'var(--lit-white)' : col(c));
+      const c = LiturgicalColors.season(r, rite).color;
+      document.documentElement.style.setProperty('--lit', CALENDAR_CATEGORY_COLORS[c] || col(c));
     } catch (e) { /* keep the default */ }
   }
   let renderedView = '', pageTouchActive = false, pendingTouchRender = false;
@@ -2576,7 +2576,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v446';
+  const APP_BUILD = 'ora-v447';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

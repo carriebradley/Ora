@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 module.exports=async(page,base)=>{
  const blue='#3b729f',violet='#6a3f9a',legendViolet='#8a6ba4';
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-12-08`);
- assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),blue);
+ assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),legendViolet,'Advent highlight matches season, not Marian feast');
  const navColour=async()=>page.locator('nav button.on').evaluate(button=>{
   const rgba=value=>{const canvas=document.createElement('canvas');canvas.width=canvas.height=1;const ctx=canvas.getContext('2d');ctx.fillStyle=value;ctx.fillRect(0,0,1,1);return [...ctx.getImageData(0,0,1,1).data].slice(0,3);};
   const luminance=rgb=>rgb.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((n,v,i)=>n+v*[.2126,.7152,.0722][i],0);
@@ -36,7 +36,7 @@ module.exports=async(page,base)=>{
   await page.evaluate(church=>{const s=JSON.parse(localStorage.getItem('ora.settings')||'{}');s.byzChurch=church;localStorage.setItem('ora.settings',JSON.stringify(s));},church);
   await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-12-09`);
   assert.equal(await page.locator('.gl[data-v="byz"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-color')),'',church+' Marian feast badge has no second color');
-  assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),blue,church);
+  assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),legendViolet,church+' Nativity Fast highlight matches season');
  }
  // A fasting season must be violet even when a weekday saint receives
  // a white diocesan commemoration; direct fast days also remain violet.
@@ -276,6 +276,9 @@ module.exports=async(page,base)=>{
   const row=page.locator(`.gl[data-v="${rite}"]`),badge=row.locator('.gb');
   const seasonColor=await row.getAttribute('data-category');
   const vestment=await row.getAttribute('data-vestment');
+  const seasonShade={g:'#59805d',v:'#8a6ba4',r:'#b23e3e',w:'#eee8d9',gold:'#c9a227',rose:'#c9899e',blue:'#3b729f'}[seasonColor];
+  assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),seasonShade,rite+' page highlight matches prayer season '+date);
+  assert.equal(await row.evaluate(el=>el.style.getPropertyValue('--today-category')),seasonShade,rite+' selected-row highlight matches season '+date);
   assert.equal(await row.locator('.today-season-dot').getAttribute('data-season-color'),seasonColor,rite+' Today dot matches prayer season '+date);
   assert.equal(await badge.evaluate(el=>el.style.getPropertyValue('--badge-fill')),({r:'#a8232a',w:'#f0e8da',v:'#6a3f9a',g:'#3d7a4a',y:'#d4a017',gold:'#c9a227',blue:'#3b729f',rose:'#d9899e',k:'#1c1c1c'})[vestment],rite+' badge shows vestments '+date);
   assert.equal(await badge.evaluate(el=>el.classList.contains('dual')),false,rite+' badge is always single-color');
@@ -304,6 +307,13 @@ module.exports=async(page,base)=>{
   }
  }
  await page.setViewportSize({width:390,height:844});
+ // Christ the King's solemnity is white, but its Roman Ordinary Time highlight is green.
+ await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-11-22`);
+ const kingRow=page.locator('.gl[data-v="roman"]');
+ assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#59805d','Christ the King header highlight is Ordinary Time green');
+ assert.equal(await kingRow.evaluate(el=>el.style.getPropertyValue('--today-category')),'#59805d','Roman selected-row highlight is Ordinary Time green');
+ assert.equal(await kingRow.locator('.today-season-dot').getAttribute('data-season-color'),'g');
+ assert.equal(await kingRow.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#f0e8da','solemnity badge remains white');
  // November 23: three distinct daily prayer seasons independent of badge colors.
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-23`);
  for(const [rite,want] of [['roman','g'],['byz','v'],['sarum','v']]){
@@ -317,7 +327,7 @@ module.exports=async(page,base)=>{
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-03-25`);
  assert.notEqual(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),blue,'Holy Thursday keeps precedence over Annunciation');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2027-04-05`);
- assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),blue,'transferred Annunciation is blue');
+ assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#c9a227','transferred Annunciation falls in gold Easter season');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
  await page.setViewportSize({width:320,height:844});
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'expanded colour legend fits');

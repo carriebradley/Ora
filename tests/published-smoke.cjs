@@ -95,8 +95,8 @@ module.exports=async function(browser,artifacts){
     // Both joyful Sundays are rose. Laetare remains in Lent, but Sundays
     // are never fast days, so fasting-day purple must not override rose.
     for(const [date,badge,title,colour]of [
-      ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/,'#d9899e'],
-      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/,'#d9899e']
+      ['2026-12-13','Gaudete',/Gaudete Sunday.*Third Sunday of Advent/,'#c9899e'],
+      ['2027-03-07','Laetare',/Laetare Sunday.*Fourth Sunday of Lent/,'#c9899e']
     ]){
       await visit(`${base}index.html?tab=today&rite=roman&date=${date}`,`Rose Sunday ${date}`);
       const card=page.locator('.gl[data-v="roman"]');
@@ -110,7 +110,7 @@ module.exports=async function(browser,artifacts){
       await page.setViewportSize({width:390,height:844});
     }
     await visit(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`,'Marian calendar accent');
-    assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#3b729f','published Marian accent is blue');
+    assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#8a6ba4','published Advent season accent is violet despite Marian feast');
     assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian observance accent/);
     assert.deepEqual(errors,[],'published app JavaScript errors');
     fs.writeFileSync(path.join(artifacts,'published-results.json'),JSON.stringify({url:base,build:expected,widths:[320,390],colorSchemes:['light','dark'],hours:['morning','evening','night'],errors},null,2));
