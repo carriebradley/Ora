@@ -1596,6 +1596,42 @@
       '11-12': { match:/Begnet/i, name:'Saint Begnet', meta:'Early Irish saint · Patron of Dalkey', bio:'Little is known with certainty about Begnet’s life. She is remembered in the Christian heritage of Dalkey, Ireland, where churches and local traditions preserve her name.', source:'https://www.dalkeyheritage.com/' }
     }
   };
+
+  // Curated identity-matched artwork; never search by date or substitute an
+  // unrelated saint's portrait. Links point to the artwork's credit/license.
+  // Unlisted saints use the original offline illustration below.
+  const SAINT_ART_BY_NAME = Object.freeze({
+    'Saint Clement of Rome': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/4-St.Clement_I.jpg?width=300',
+      source: 'https://commons.wikimedia.org/wiki/File:4-St.Clement_I.jpg',
+      alt: 'Mosaic medallion depicting Saint Clement I',
+      credit: 'St Paul Outside the Walls mosaic · public domain'
+    },
+    'Saint Catherine of Alexandria': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/St.CatherineofAlexandria.jpg?width=300',
+      source: 'https://commons.wikimedia.org/wiki/File:St.CatherineofAlexandria.jpg',
+      alt: 'Medieval icon depicting Saint Catherine of Alexandria',
+      credit: 'Fourteenth-century icon · public domain'
+    },
+    'Holy Great-Martyr Catherine of Alexandria': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/St.CatherineofAlexandria.jpg?width=300',
+      source: 'https://commons.wikimedia.org/wiki/File:St.CatherineofAlexandria.jpg',
+      alt: 'Medieval icon depicting Saint Catherine of Alexandria',
+      credit: 'Fourteenth-century icon · public domain'
+    },
+    'Saint Andrew Dung-Lac and Companions': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Paul_Catholic_Church_%28Westerville%2C_Ohio%29_-_stained_glass%2C_arcade%2C_Saint_Andrew_Dung_Lac.jpg?width=330',
+      source: 'https://commons.wikimedia.org/wiki/File:Saint_Paul_Catholic_Church_(Westerville,_Ohio)_-_stained_glass,_arcade,_Saint_Andrew_Dung_Lac.jpg',
+      alt: 'Stained-glass portrait depicting Saint Andrew Dung-Lac',
+      credit: 'Nheyob · CC BY-SA 3.0 (uncropped original)'
+    },
+    'Saint Martin of Tours': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Martin_of_Tours_MET_DP144442.jpg?width=330',
+      source: 'https://commons.wikimedia.org/wiki/File:Saint_Martin_of_Tours_MET_DP144442.jpg',
+      alt: 'Historical sculpture depicting Saint Martin of Tours',
+      credit: 'Metropolitan Museum of Art · CC0'
+    }
+  });
   function todaySaintBio(v) {
     const tradition = S.rite === 'byz' ? S.byzChurch : S.rite;
     const calendar = S.rite === 'byz' ? v.byz : S.rite === 'sarum' ? v.sarum : v.roman;
@@ -1636,13 +1672,30 @@
       bio: 'A verified short biography is not yet available.'
     };
     const label = tradition === 'ukrainian' ? 'Ukrainian' : tradition === 'melkite' ? 'Melkite' : tradition === 'sarum' ? 'Traditional' : 'Roman';
+    const art = SAINT_ART_BY_NAME[saint.name] ||
+      (saint.image ? { image: saint.image, source: saint.imageCredit || saint.source,
+        alt: 'Traditional depiction of ' + saint.name, credit: 'Artwork source' } : null);
     return `<section class="card today-saint-bio">
       <div class="lab">${todayAccent('bio')}<span class="grow">Saint of the Day</span><span class="saint-bio-rite">${label}</span></div>
       <h2 class="saint-bio-name">${esc(saint.name)}</h2>
       <p class="saint-bio-meta">${esc(saint.meta)}${optionalSaint ? ' · Optional memorial' : ''}</p>
       <div class="saint-bio-body">
-        ${saint.image ? `<a class="saint-bio-image-link" href="${esc(saint.imageCredit || saint.source)}" target="_blank" rel="noopener noreferrer" aria-label="View image source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(saint.image)}" alt="Traditional sacred portrait of ${esc(saint.name)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
+        <div class="saint-bio-portrait">
+          <svg class="saint-bio-fallback" viewBox="0 0 88 122" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <rect width="88" height="122" fill="#eee3cb"/>
+            <path d="M0 0H88V122H0Z" fill="none" stroke="#c9b793" stroke-width="4"/>
+            <path d="M7 14h74M7 108h74" stroke="#ae925f" stroke-width="1" opacity=".7"/>
+            <circle cx="44" cy="43" r="27" fill="none" stroke="#b99952" stroke-width="5"/>
+            <path d="M9 122c1-39 16-59 35-59s34 20 35 59Z" fill="#753844"/>
+            <path d="M31 66l13 17 13-17-3 56H34Z" fill="#f8eedb"/>
+            <path d="M29 34c0-15 30-15 30 0v17c-2 11-9 18-15 18s-13-7-15-18Z" fill="#ba8667"/>
+            <path d="M28 40c-4-18 8-24 16-24 13 0 21 11 16 24-2-10-6-12-16-12s-14 3-16 12Z" fill="#5d4040"/>
+            <path d="M38 93h12m-6-6v19" stroke="#b39a5b" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          ${art ? `<a class="saint-bio-image-link" href="${esc(art.source)}" target="_blank" rel="noopener noreferrer" aria-label="View artwork source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(art.image)}" alt="${esc(art.alt)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
+        </div>
         <p class="saint-bio-copy">${esc(saint.bio)}</p>
+        ${art ? `<p class="saint-bio-art-credit"><a href="${esc(art.source)}" target="_blank" rel="noopener noreferrer">Art: ${esc(art.credit)}</a></p>` : ''}
       </div>
       ${saint.source ? `<a class="saint-bio-source" target="_blank" rel="noopener noreferrer" href="${esc(saint.source)}">Learn more about this saint</a>` : ""}
     </section>`;

@@ -123,6 +123,7 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   await page.goto(`${base}index.html?tab=today&date=${date}&rite=roman`);
   const card=page.locator('.today-saint-bio');
   assert.equal(await card.count(),1,'Roman saint card on '+date);
+  assert.equal(await card.locator('.saint-bio-portrait .saint-bio-fallback').count(),1,'portrait fallback on '+date);
   assert.match(await card.locator('.saint-bio-name').innerText(),new RegExp(name,'i'));
   assert.equal(await card.locator('.saint-bio-meta').innerText().then(t=>/Optional memorial/.test(t)),optional,'optional label on '+date);
   assert.equal(await page.locator('.gl[data-v="roman"]').getAttribute('data-vestment'),vestment,'Roman vestment on '+date);
