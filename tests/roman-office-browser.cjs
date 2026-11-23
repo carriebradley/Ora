@@ -125,6 +125,32 @@ module.exports=async function(page,base,artifacts){
     assert.equal(await page.locator('#st0 details[open]').count(),0);
     await page.screenshot({path:path.join(artifacts,`roman-compline-${colorScheme}.png`),fullPage:true});
   }
+  // Source: First Edition Monday Night Prayer (Vol. III p. 1275), dated
+  // ordinary weekday Jan 11 2027. Check rendered order and transparent
+  // alternative-translation labels, not copyrighted word-for-word parity.
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=night`);
+  const mondayNight=page.locator('#st0');
+  assert.deepEqual(await mondayNight.locator('div.sec > b').allTextContents(),[
+    'Opening',
+    'Hymn · historical English — Before the Ending of the Day (Neale, 1852)',
+    'Psalm 86 · Douay–Rheims',
+    'Short reading · 1 Thessalonians 5:9–10 · Douay–Rheims',
+    'Responsory',
+    'Canticle of Simeon (Nunc Dimittis)',
+    'Concluding prayer',
+    'Blessing',
+    'Salve Regina'
+  ],'Monday Compline order and translation provenance');
+  const psalmAntiphons=await mondayNight.locator('div.sec').nth(2).locator('.ant').allTextContents();
+  assert.equal(psalmAntiphons.length,2,'Monday psalm antiphon is repeated');
+  assert.equal(psalmAntiphons[0],psalmAntiphons[1]);
+  const canticleAntiphons=await mondayNight.locator('div.sec').nth(5).locator('.ant').allTextContents();
+  assert.equal(canticleAntiphons.length,2,'Nunc Dimittis antiphon is repeated');
+  assert.equal(canticleAntiphons[0],canticleAntiphons[1]);
+  assert.equal(await mondayNight.locator('details:not([open]) > summary').filter({hasText:'Examination of conscience'}).count(),1,
+    'examination is available but optional');
+  assert.match(await mondayNight.innerText(),/Into your hands, Lord/i,'appointed responsory visible');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Monday Compline fits narrow phone');
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-17&kind=night`);
   const text=await page.locator('#st0').innerText();
   assert.match(text,/Psalm 143/i);assert.doesNotMatch(text,/destroy my enemies|cut off all/);

@@ -382,14 +382,14 @@
       "id": "compline.full",
       "office": "compline",
       "element": "Examination, psalmody, reading, responsory, Nunc Dimittis, collect, blessing and Marian antiphon",
-      "expected": "Ordinary Monday Night Prayer; inspect weekdays, seasons and legitimate choices",
+      "expected": "Ordinary Monday Night Prayer: Psalm 86 (Vulgate 85); 1 Thessalonians 5:9–10; responsory; Nunc Dimittis; Monday collect, blessing and Marian antiphon, with allowed alternatives.",
       "sourceUrl": "https://divineoffice.org/ord-mon-np-w1-w3/",
-      "oraModule": "roman-office.js; roman-office-texts.js",
+      "oraModule": "app.js (romanNightHTML); hours.js (romanNightPlan); roman-office-texts.js (night)",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "appointed-different-translation",
+      "note": "For 2027-01-11, compared Ora's selected Monday weekday plan and actual rendered Compline order with DivineOffice.org's First Edition Monday Night Prayer witness (Vol. III, p. 1275) and GILH 84–92. Psalm 86 (Vulgate 85) and 1 Thessalonians 5:9–10 match the source appointments. The examination is optional, psalm and Nunc Dimittis antiphons repeat, and the responsory, collect, blessing and Marian antiphon occur in order. Ora marks its psalm and short reading as Douay–Rheims and its hymn as historical English; those are not certified U.S. First Edition translations. GILH 88 permits Sunday psalms as an alternative, and GILH 92 permits multiple Marian antiphons outside Easter; Ora shows the Monday psalm and Salve Regina rather than an exhaustive option picker. Exact official wording, authorized hymn choice, collected prayer text, full seasonal variants and local calendars still need comparison against the approved book. Browser/Node regression covers structure/labels, not licensed-text identity."
     }
   ],
   "recordedAt": "2026-11-22",
