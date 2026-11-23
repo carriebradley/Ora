@@ -425,6 +425,8 @@ nav button.on b{color:color-mix(in srgb,var(--lit) 50%,var(--ink))}
 .calendar-fast-symbol{color:#a38abf;font-size:.92rem;font-weight:750}
 .calendar-guide{margin-top:10px;border-top:1px solid var(--line);color:var(--muted)}
 .calendar-guide>summary{min-height:38px;display:flex;align-items:center;color:var(--ink);font-size:.8rem;font-weight:600}
+.calendar-guide>summary::after{content:'›';font-size:1.35rem;font-weight:400;line-height:1;margin-left:auto;transition:transform .15s}
+.calendar-guide[open]>summary::after{transform:rotate(90deg)}
 .calendar-guide .calendar-key{margin:3px 0 10px}
 .calendar-guide-note{font-size:.74rem;line-height:1.5;margin:7px 2px 3px}
 </style>
