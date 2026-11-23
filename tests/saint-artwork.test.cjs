@@ -29,13 +29,18 @@ test('matched saint paintings and icons have image identity, attribution and sou
  assert.match(map['Saint Catherine of Alexandria'].credit,/public domain/i);
 });
 
-test('missing/failed remote art retains a visible offline illustrated portrait',()=>{
- assert.match(app,/class="saint-bio-portrait"/);
- assert.match(app,/class="saint-bio-fallback"/);
- assert.match(app,/art \? `<a class="saint-bio-image-link"/);
- assert.match(app,/onerror="this\.parentElement\.remove\(\)"/);
- assert.match(app,/class="saint-bio-art-credit"/);
- assert.match(html,/\.saint-bio-fallback\{display:block;width:100%;height:100%\}/);
- assert.match(html,/\.saint-bio-portrait\{position:relative;float:left;/);
- assert.match(html,/@media \(max-width:370px\).*saint-bio-portrait/);
+test('unsourced saint receives no image, fake icon, or reserved image space',()=>{
+ const render=app.slice(app.indexOf('function todaySaintBio('),app.indexOf('function viewToday()'));
+ assert.match(render,/art \? `<div class="saint-bio-portrait"/);
+ assert.doesNotMatch(render,/saint-bio-fallback/);
+ assert.doesNotMatch(render,/<svg/);
+ assert.match(render,/\: ''\}/);
+ assert.match(html,/\.saint-bio-portrait\{float:left;width:88px;/);
+ assert.doesNotMatch(html,/\.saint-bio-fallback/);
+});
+test('unavailable remote image removes portrait and its source credit, leaving only the biography',()=>{
+ const render=app.slice(app.indexOf('function todaySaintBio('),app.indexOf('function viewToday()'));
+ assert.match(render,/onerror="this\.closest\('\.saint-bio-body'\)\.querySelector\('\.saint-bio-art-credit'\)\?\.remove\(\);this\.closest\('\.saint-bio-portrait'\)\.remove\(\)"/);
+ assert.match(render,/class="saint-bio-copy"/);
+ assert.match(render,/class="saint-bio-art-credit"/);
 });
