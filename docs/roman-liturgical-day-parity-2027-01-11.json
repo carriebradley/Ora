@@ -360,23 +360,23 @@
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-ep/",
       "oraModule": "hours.js; roman-office-texts.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "Compared Monday Week I source witness's Vespers petition structure, last intention for the dead (GILH 186), Lord's Prayer, concluding collect and dismissal with the selected ord-w01-mon-ep record and actual Hours.modern/browser output for 2027-01-11. Tests verify section order and the exact content already in the selected record without introducing a licensed text fixture. This is appointment/renderer integrity against the online source witness, not independent word-for-word certification against an approved printed First Edition."
     },
     {
       "id": "vespers.hymn",
       "office": "vespers",
       "element": "Hymn and opening",
-      "expected": "Compare appointed/legitimate hymn alternative",
+      "expected": "Monday Week I witness uses an English translation of Immense caeli Conditor, 'O Boundless Wisdom, God Most High'. Ora uses a different historical English translation; approved alternate-week options remain unverified.",
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-ep/",
       "oraModule": "hours.js; roman-office-texts.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "unverified",
+      "note": "Compared the Monday Week I online source witness's hymn title, translator attribution and verses to Ora's rendered historical English version 'O great Creator of the sky'. Ora's version is a distinct translation, already labeled Hymn · historical English; no publisher lyrics imported. GILH 175 permits alternate-week hymn cycles, but this does not establish either wording's status as the exact appointed printed First Edition or as a permitted alternative. Opening structure verified only at rendering/selection level."
     },
     {
       "id": "compline.full",

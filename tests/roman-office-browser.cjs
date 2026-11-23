@@ -36,6 +36,21 @@ module.exports=async function(page,base,artifacts){
   assert.match(await official.innerText(),/he has come to his people and set them free/);
   assert.doesNotMatch(await official.innerText(),/Intercessions \(devotional\)|Scriptural refrain:/);
   assert.equal(await official.locator('.roman-office-credit').count(),1);
+  // The January 11 Monday Vespers source must survive actual browser rendering.
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=evening`);
+  const evening=page.locator('#st0');
+  assert.match(await evening.innerText(),/Hymn · historical English/i);
+  assert.match(await evening.innerText(),/Lord, bless your people/i);
+  assert.match(await evening.innerText(),/Be compassionate to those who have died/i);
+  const sequence=await evening.locator('.sec > b').allTextContents();
+  const ordered=['Responsory','Magnificat','Intercessions','Our Father','Concluding prayer','Conclusion'];
+  let lastIndex=-1;
+  for(const section of ordered){
+    const nextIndex=sequence.indexOf(section);
+    assert.ok(nextIndex>lastIndex,'missing or out-of-order published Vespers '+section);
+    lastIndex=nextIndex;
+  }
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
   for(const colorScheme of ['light','dark'])for(const width of [320,390]){
     await page.emulateMedia({colorScheme});await page.setViewportSize({width,height:844});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);

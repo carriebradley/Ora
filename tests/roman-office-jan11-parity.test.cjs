@@ -77,6 +77,50 @@ test('January 11 Vespers uses Monday Week I psalmody and the appointed Colossian
  assert.doesNotMatch(html,/Therefore we also, from the day that we heard it/);
  for(const ant of sel.antiphons)assert.ok(html.includes(ant),'missing official antiphon');
 });
+
+test('January 11 Vespers keeps Monday Week I intercessions, collect and conclusion in their proper order',()=>{
+ const plan=H.modernPsalmody(L,d,'V',options),sel=R.select(L,d,'V',options,plan);
+ assert.equal(sel.id,'ord-w01-mon-ep');
+ assert.equal(sel.source,'https://divineoffice.org/ord-w01-mon-ep/');
+ const html=H.modern(L,d,'V',options);
+ const sections=['<b>Responsory</b>','<b>Magnificat</b>','<b>Intercessions</b>',
+   '<b>Our Father</b>','<b>Concluding prayer</b>','<b>Conclusion</b>'];
+ let last=-1;
+ for(const label of sections){
+   const idx=html.indexOf(label);
+   assert.ok(idx>last,'missing or out-of-order Vespers section '+label);
+   last=idx;
+ }
+ for(const [name,value] of [
+   ['responsory',sel.responsory],['intercessions',sel.intercessions],
+   ['Lord’s Prayer',R.ordinary.ourFather],['collect',sel.collect],
+   ['dismissal',R.ordinary.dismissal]
+ ])assert.ok(html.includes(R.html(value)),name+' did not render the selected Monday record');
+ assert.match(sel.intercessions,/Lord, bless your people/);
+ assert.ok(sel.intercessions.lastIndexOf('Be compassionate to those who have died')>sel.intercessions.indexOf('Save your people, Lord'),
+   'the concluding Vespers intercession must be for the dead (GILH 186)');
+ const lastPetition=html.indexOf('Be compassionate to those who have died');
+ assert.ok(lastPetition>html.indexOf('<b>Intercessions</b>')&&lastPetition<html.indexOf('<b>Our Father</b>'));
+ assert.doesNotMatch(html,/Intercessions \\(devotional\\)|Collect \\(traditional\\)/);
+ const row=require('../docs/roman-liturgical-day-parity-2027-01-11.json').sections.find(x=>x.id==='vespers.intercessions');
+ assert.equal(row.comparison,'match-source-selection');
+ assert.equal(row.oraCompared,true);
+ assert.equal(row.textCompared,false,'printed First Edition text parity not yet independently certified');
+});
+
+test('January 11 Vespers preserves its historical hymn without labeling it approved First Edition wording',()=>{
+ const html=H.modern(L,d,'V',options);
+ assert.match(html,/<b>Hymn · historical English<\\/b>/);
+ assert.match(html,/O great Creator of the sky/);
+ assert.doesNotMatch(html,/O boundless Wisdom/);
+ assert.ok(html.indexOf('<b>Opening</b>')<html.indexOf('<b>Hymn · historical English</b>'));
+ assert.ok(html.indexOf('<b>Hymn · historical English</b>')<html.indexOf('<b>Psalmody</b>'));
+ const row=require('../docs/roman-liturgical-day-parity-2027-01-11.json').sections.find(x=>x.id==='vespers.hymn');
+ assert.equal(row.comparison,'unverified');
+ assert.equal(row.oraCompared,true);
+ assert.equal(row.textCompared,false);
+});
+
 test('properly bounded excerpts remain labeled as public-domain translations, not official U.S. wording',()=>{
  for(const ref of ['2 Thessalonians 3:10b-13','Colossians 1:9b-11']){
   assert.equal(S.records[ref].translation,'Douay-Rheims-Challoner');
