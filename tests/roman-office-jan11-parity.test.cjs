@@ -101,7 +101,7 @@ test('January 11 Vespers keeps Monday Week I intercessions, collect and conclusi
    'the concluding Vespers intercession must be for the dead (GILH 186)');
  const lastPetition=html.indexOf('Be compassionate to those who have died');
  assert.ok(lastPetition>html.indexOf('<b>Intercessions</b>')&&lastPetition<html.indexOf('<b>Our Father</b>'));
- assert.doesNotMatch(html,/Intercessions \\(devotional\\)|Collect \\(traditional\\)/);
+ assert.doesNotMatch(html,/Intercessions \(devotional\)|Collect \(traditional\)/);
  const row=require('../docs/roman-liturgical-day-parity-2027-01-11.json').sections.find(x=>x.id==='vespers.intercessions');
  assert.equal(row.comparison,'match-source-selection');
  assert.equal(row.oraCompared,true);
@@ -110,7 +110,7 @@ test('January 11 Vespers keeps Monday Week I intercessions, collect and conclusi
 
 test('January 11 Vespers preserves its historical hymn without labeling it approved First Edition wording',()=>{
  const html=H.modern(L,d,'V',options);
- assert.match(html,/<b>Hymn · historical English<\\/b>/);
+ assert.match(html,/<b>Hymn · historical English<\/b>/);
  assert.match(html,/O great Creator of the sky/);
  assert.doesNotMatch(html,/O boundless Wisdom/);
  assert.ok(html.indexOf('<b>Opening</b>')<html.indexOf('<b>Hymn · historical English</b>'));
