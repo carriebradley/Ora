@@ -111,6 +111,10 @@ module.exports=async function(browser,artifacts){
     }
     await visit(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`,'Marian calendar accent');
     assert.equal(await page.evaluate(()=>document.documentElement.style.getPropertyValue('--lit')),'#8a6ba4','published Advent season accent is violet despite Marian feast');
+    const guide = page.locator('.calendar-guide');
+    assert.equal(await guide.evaluate(el => el.open),false,'published color guide is collapsed by default');
+    await guide.locator('summary').click();
+    assert.equal(await guide.evaluate(el => el.open),true,'published color guide opens on tap');
     assert.match(await page.locator('.calendar-key').innerText(),/Blue · Marian observance accent/);
     assert.deepEqual(errors,[],'published app JavaScript errors');
     fs.writeFileSync(path.join(artifacts,'published-results.json'),JSON.stringify({url:base,build:expected,widths:[320,390],colorSchemes:['light','dark'],hours:['morning','evening','night'],errors},null,2));
