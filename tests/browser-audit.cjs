@@ -113,6 +113,23 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   assert.match(await card.innerText(),/Holy Apostle Philip/);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  }
+ // Roman Saint of the Day includes available optional memorials without
+ // changing the weekday's green vestments or replacing a solemnity's title.
+ for (const [date,name,vestment,optional] of [
+  ['2026-11-23','Clement','g',true],
+  ['2026-11-24','Andrew Dung-Lac','r',false],
+  ['2026-11-25','Catherine','g',true]
+ ]) {
+  await page.goto(`${base}index.html?tab=today&date=${date}&rite=roman`);
+  const card=page.locator('.today-saint-bio');
+  assert.equal(await card.count(),1,'Roman saint card on '+date);
+  assert.match(await card.locator('.saint-bio-name').innerText(),new RegExp(name,'i'));
+  assert.equal(await card.locator('.saint-bio-meta').innerText().then(t=>/Optional memorial/.test(t)),optional,'optional label on '+date);
+  assert.equal(await page.locator('.gl[data-v="roman"]').getAttribute('data-vestment'),vestment,'Roman vestment on '+date);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Roman saint card width on '+date);
+ }
+ await page.goto(`${base}index.html?tab=today&date=2026-11-22&rite=roman`);
+ assert.equal(await page.locator('.today-saint-bio').count(),0,'Christ the King does not appoint displaced Cecilia as Saint of the Day');
  // Melkite's dated Sunday and Great Feasts must never show a generic
  // weekday commemoration badge merely because the source is diocesan.
  await page.goto(`${base}index.html?tab=more&date=2026-11-15&rite=byz`);

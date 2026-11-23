@@ -1385,6 +1385,18 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      // U.S. Roman appointments: November 23 optional choices, November 24
+      // obligatory memorial, November 25 optional. Do not select optional
+      // memorials instead of the weekday's prayer without a user choice.
+      '11-23': BYZANTINE_BIO_CLEMENT,
+      '11-24': {
+        match: /Andrew D[uũ]ng[-– ]Lac/i,
+        name: 'Saint Andrew Dung-Lac and Companions',
+        meta: 'd. 1839 · Vietnamese Priest and Martyr',
+        bio: 'Andrew Dung-Lac was a Vietnamese priest among 117 martyrs canonized together in 1988. The group included priests, bishops, religious, and laypeople who were killed for their Christian faith during persecutions in Vietnam.',
+        source: 'https://www.franciscanmedia.org/saint-of-the-day/saint-andrew-dung-lac-and-companions/'
+      },
+      '11-25': { ...BYZANTINE_BIO_CATHERINE, name: 'Saint Catherine of Alexandria' },
       '10-01': { match: /Therese of the Child Jesus|Thérèse of the Child Jesus/i, name: "Saint Thérèse of Lisieux", meta: "1873–1897 · Carmelite Nun and Doctor", bio: "Thérèse entered Carmel at fifteen and taught a path of holiness through ordinary acts of love and trust in God. Her writings, collected as Story of a Soul, influenced Catholics worldwide.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-therese-of-lisieux/" },
       '10-04': { match: /Francis of Assisi/i, name: "Saint Francis of Assisi", meta: "c. 1181–1226 · Founder of the Franciscans", bio: "Francis renounced wealth and embraced a life of poverty, prayer, and service. He founded the Franciscan movement and sought peace and reconciliation, including through his encounter with Sultan al-Kamil.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-of-assisi/" },
       '10-09': { match: /Saint Denis/i, name: "Saint Denis of Paris", meta: "Third century · Bishop and Martyr", bio: "Denis is honored as an early bishop and martyr of Paris. His historical biography is uncertain, and familiar stories about carrying his severed head belong to later legend. The Roman calendar lists other optional memorials on this date.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-denis-and-companions/" },
@@ -1593,9 +1605,15 @@
     // Roman and Traditional commemorations displaced by a higher Sunday or
     // feast must not become the primary Saint of the Day.
     // Byzantine typika may hold the named saint in calendar.also.
+    // Roman weekday optional memorials belong in the saint biography panel
+    // even though the weekday itself remains the selected observance. Do not
+    // display a displaced saint as appointed on a Sunday or solemnity.
+    const optionalTitles = S.rite === 'roman' && calendar?.rank === 'Weekday'
+      ? (calendar?.also || []).filter(item => item?.note === 'Optional commemoration').map(item => String(item?.title || ''))
+      : [];
     const titles = S.rite === 'byz'
       ? [title, ...(calendar?.also || []).map(item => String(item?.title || ''))]
-      : [title];
+      : [title, ...optionalTitles];
     const listed = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
     const entry = listed && titles.some(item => listed.match.test(item)) ? listed : null;
     // Prefer the first actual saint over an unrelated Sunday or pre-feast
@@ -1611,6 +1629,7 @@
     const primary = commemorations.find(item =>
       recognized.test(item) && (!marianTitle.test(item) || namedSaint.test(item))) || '';
     if (!entry && !primary) return '';
+    const optionalSaint = S.rite === 'roman' && optionalTitles.includes(primary);
     const saint = entry || {
       name: displayTitle(primary),
       meta: 'Commemorated in the selected calendar',
@@ -1620,7 +1639,7 @@
     return `<section class="card today-saint-bio">
       <div class="lab">${todayAccent('bio')}<span class="grow">Saint of the Day</span><span class="saint-bio-rite">${label}</span></div>
       <h2 class="saint-bio-name">${esc(saint.name)}</h2>
-      <p class="saint-bio-meta">${esc(saint.meta)}</p>
+      <p class="saint-bio-meta">${esc(saint.meta)}${optionalSaint ? ' · Optional memorial' : ''}</p>
       <div class="saint-bio-body">
         ${saint.image ? `<a class="saint-bio-image-link" href="${esc(saint.imageCredit || saint.source)}" target="_blank" rel="noopener noreferrer" aria-label="View image source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(saint.image)}" alt="Traditional sacred portrait of ${esc(saint.name)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
         <p class="saint-bio-copy">${esc(saint.bio)}</p>
@@ -2608,7 +2627,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v454';
+  const APP_BUILD = 'ora-v455';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

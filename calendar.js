@@ -151,6 +151,11 @@
 11/13|Saint Frances Xavier Cabrini, Virgin|M|w
 11/21|Presentation of the Blessed Virgin Mary|M|w
 11/22|Saint Cecilia, Virgin and Martyr|M|r
+11/23|Saint Clement I, Pope and Martyr|O|r
+11/23|Saint Columban, Abbot|O|w
+11/23|Blessed Miguel Agustín Pro, Priest and Martyr|O|r
+11/24|Saint Andrew Dung-Lac, Priest, and Companions, Martyrs|M|r
+11/25|Saint Catherine of Alexandria, Virgin and Martyr|O|r
 11/30|Saint Andrew, Apostle|F|r
 12/3|Saint Francis Xavier, Priest|M|w
 12/6|Saint Nicholas, Bishop|O|w
