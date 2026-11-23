@@ -2026,8 +2026,11 @@
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true" title="'+esc(disciplineGuidance.map(x=>RITES[x.rite]+': '+x.info.label).join('; '))+'">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
     const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Christmas season and white vestments'],['gold','Gold · Easter/Pascha season and gold vestments'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian observance accent']];
-    h += '</div><div class="calendar-dot-guide"><span class="dot dual" style="--c:#a8232a;--ring:#8a6ba4" aria-hidden="true"></span><span><b>Inner dot</b> = liturgical vestment color; <b>outer ring</b> = liturgical season color, only when different. <b>Purple ƒ</b> = separate fasting or abstinence guidance (not always a binding obligation). Sundays are not fasting days.</span></div>';
+    const visibleRites = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional').join(' · ') || 'None selected';
+    h += '</div><div class="calendar-quick-key"><div>Dots, left to right: <b>'+visibleRites+'</b></div><div class="calendar-symbols"><span class="dot dual" style="--c:#a8232a;--ring:#8a6ba4" aria-hidden="true"></span><span><b>Inner</b> vestment · <b>Ring</b> season</span><span class="calendar-fast-symbol" aria-hidden="true">ƒ</span><span>fast/abstinence</span></div></div>';
+    h += '<details class="calendar-guide"><summary>Color guide</summary>';
     h += '<div class="calendar-key" aria-label="Season and vestment color legend">'+keys.map(([key,label])=>`<span><i class="key-dot" style="--key:${CALENDAR_CATEGORY_COLORS[key]}"></i> ${label}</span>`).join('')+'</div>';
+    h += '<p class="calendar-guide-note">The ring appears only when the colors differ. The ƒ marks separate fasting or abstinence guidance, which may not be obligatory. Sundays are not fasting days.</p></details>';
     h += '</section>';
     const v = dayInfo(st.date);
     h += `<h3 class="calendar-selected-heading">${esc(fmtLong(st.date))}</h3>${st.layers.roman ? cardRoman(v) : ''}${st.layers.byz ? cardByz(v) : ''}${st.layers.sarum ? cardSarum(v) : ''}`;
@@ -2605,7 +2608,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v451';
+  const APP_BUILD = 'ora-v453';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

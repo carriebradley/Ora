@@ -28,7 +28,11 @@ module.exports=async(page,base)=>{
  assert.equal(await page.locator('.gl[data-v="roman"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#f0e8da','Roman Marian badge is white');
  assert.equal(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#f0e8da','Traditional Marian badge is white despite St. Martin’s Lent');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
- assert.match(await page.locator('.calendar-key').innerText(),/Gold · Easter\/Pascha season/);
+ assert.equal(await page.locator('.calendar-guide').evaluate(el=>el.open),false,'full color guide begins collapsed');
+ assert.match(await page.locator('.calendar-quick-key').innerText(),/Roman · Byzantine · Traditional/,'visible dots are explained in left-to-right order');
+ await page.locator('.calendar-guide > summary').click();
+ assert.equal(await page.locator('.calendar-guide').evaluate(el=>el.open),true,'full color guide expands on demand');
+ assert.match(await page.locator('.calendar-key').textContent(),/Gold · Easter\/Pascha season/);
  const dots=await page.locator('.cell[data-d="2026-12-08"] .dot').evaluateAll(ds=>ds.map(d=>({vestment:d.dataset.vestment,category:d.dataset.category,ring:d.style.getPropertyValue('--ring'),dual:d.classList.contains('dual')})));
  assert.deepEqual(dots[0],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Roman: white Marian vestments and Advent violet ring');
  assert.deepEqual(dots[2],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Traditional: white Marian vestments and St Martin season violet ring');
@@ -191,7 +195,7 @@ module.exports=async(page,base)=>{
  const detail=page.locator('.calendar-western-title').last().locator('..').locator('.sw');
  assert.equal(await detail.getAttribute('data-vestment'),'r','selected Traditional vestment is red');
  assert.equal(await detail.getAttribute('data-category'),'v','selected Traditional category is violet');
- assert.match(await page.locator('.calendar-dot-guide').innerText(),/Sundays are not fasting days/);
+ assert.match(await page.locator('.calendar-guide-note').textContent(),/Sundays are not fasting days/);
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-05-24`);
  const pentecost=page.locator('.cell[data-d="2026-05-24"] .dot').first();
  assert.equal(await pentecost.getAttribute('data-vestment'),'r');
@@ -245,7 +249,7 @@ module.exports=async(page,base)=>{
  const martyrDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(byzLayers.indexOf('byz'));
  assert.equal(await martyrDot.getAttribute('data-category'),'g','Calendar ring follows green After Pentecost season, not red martyrs');
  assert.equal(await page.locator('.cell[data-d="2026-11-11"] .f').count(),1,'Calendar shows separate abstinence ƒ');
- assert.match(await page.locator('.calendar-dot-guide').innerText(),/Purple ƒ.*abstinence guidance/);
+ assert.match(await page.locator('.calendar-quick-key').textContent(),/ƒ.*fast\/abstinence/);
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-13`);
  const easterRoman=page.locator('.gl[data-v="roman"]');
  assert.equal(await easterRoman.locator('.gb').innerText(),'Easter Season','Easter weekday is not Ordinary Day');
@@ -259,7 +263,7 @@ module.exports=async(page,base)=>{
  assert.notEqual(await page.locator('.gl[data-v="sarum"]').getAttribute('data-category'),'g','Traditional Eastertide cannot be ordinary green even when a feast takes precedence');
  assert.notEqual(await page.locator('.gl[data-v="sarum"] .gb').innerText(),'Ordinary Day','Traditional Eastertide is not labeled Ordinary Day');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-04-13`);
- assert.match(await page.locator('.calendar-key').innerText(),/Gold · Easter\/Pascha season/);
+ assert.match(await page.locator('.calendar-key').textContent(),/Gold · Easter\/Pascha season/);
  const easterLayers=await page.locator('.legend button.on').evaluateAll(els=>els.map(el=>el.dataset.v));
  const easterDot=page.locator('.cell[data-d="2026-04-13"] .dot').nth(easterLayers.indexOf('roman'));
  assert.equal(await easterDot.getAttribute('data-vestment'),'w','Easter Calendar center is white vestment');
