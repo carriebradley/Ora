@@ -80,3 +80,20 @@ test('Solemnities use the Sunday Night Prayer pattern, ordinary days retain week
  const feb=Hours.romanNightPlan(LitCal,LitCal.D(2027,2,1));
  assert.equal(feb.kind,'weekday','feasts do not receive solemnity Compline');
 });
+
+// GILH 84–92 and the Monday First Edition Night Prayer witness assign
+// Psalm 86 (Vulgate 85) and 1 Thessalonians 5:9–10 on this ordinary Monday.
+test('2027-01-11 Monday Compline keeps the appointed weekday source and sequence',()=>{
+ const d=LitCal.D(2027,1,11),plan=Hours.romanNightPlan(LitCal,d,{epiphany:'sunday',ascension:'sunday',corpus:'sunday'});
+ assert.equal(plan.index,1);
+ assert.equal(plan.kind,'weekday');
+ assert.equal(plan.sunday,false);
+ assert.equal(plan.easter,false);
+ assert.equal(plan.alleluia,true);
+ const text=require('../roman-office-texts.js').night(plan);
+ assert.equal(text.antiphons.length,1);
+ assert.ok(text.antiphons[0]);
+ assert.ok(text.responsory);
+ assert.ok(text.gospelAntiphon);
+ assert.ok(text.collect);
+});

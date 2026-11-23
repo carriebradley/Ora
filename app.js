@@ -1820,13 +1820,13 @@
       if(!verses)return `<div class="sec"><b>Psalm ${esc(num)} (Vulgate)</b><p class="muted">Text not available in Ora's current psalter.</p></div>`;
       const label=({90:91,85:86,142:143,30:31,129:130,15:16,87:88,4:4,133:134})[num]||num;
       const refrain=official.antiphons[index];
-      return `<div class="sec"><b>Psalm ${label}</b><p class="ant"><i>Ant.</i> ${esc(refrain)}</p><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p><p>${esc(RT.ordinary.gloria).replace(/\n/g,'<br>')}</p><p class="ant"><i>Ant.</i> ${esc(refrain)}</p></div>`;
+      return `<div class="sec"><b>Psalm ${label} · Douay–Rheims</b><p class="ant"><i>Ant.</i> ${esc(refrain)}</p><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p><p>${esc(RT.ordinary.gloria).replace(/\n/g,'<br>')}</p><p class="ant"><i>Ant.</i> ${esc(refrain)}</p></div>`;
     }).join('');
     return `
       <div class="sec"><b>Opening</b>${RT.html(RT.ordinary.opening)}${RT.html(RT.ordinary.gloria+(plan.alleluia?' Alleluia.':''))}</div><details class="sec"><summary>Examination of conscience</summary><p>Recall the day before God in silence, giving thanks and asking forgiveness.</p></details>
-      <div class="sec"><b>Hymn · Before the Ending of the Day (Neale, 1852)</b><p>Before the ending of the day,<br>Creator of the world, we pray<br>That with Thy wonted favor, Thou<br>Wouldst be our guard and keeper now.</p><p>From all ill dreams defend our sight,<br>From fears and terrors of the night;<br>Withhold from us our ghostly foe,<br>That spot of sin we may not know.</p><p>O Father, that we ask be done,<br>Through Jesus Christ, Thine only Son;<br>Who, with the Holy Ghost and Thee,<br>Doth live and reign eternally. Amen.</p></div>
+      <div class="sec"><b>Hymn · historical English — Before the Ending of the Day (Neale, 1852)</b><p>Before the ending of the day,<br>Creator of the world, we pray<br>That with Thy wonted favor, Thou<br>Wouldst be our guard and keeper now.</p><p>From all ill dreams defend our sight,<br>From fears and terrors of the night;<br>Withhold from us our ghostly foe,<br>That spot of sin we may not know.</p><p>O Father, that we ask be done,<br>Through Jesus Christ, Thine only Son;<br>Who, with the Holy Ghost and Thee,<br>Doth live and reign eternally. Amen.</p></div>
       ${psalms}
-      <div class="sec"><b>Short reading · ${esc(chosen.reading)}</b><p>${esc(chosen.verse)}</p></div><div class="sec"><b>Responsory</b>${RT.html(official.responsory)}</div>
+      <div class="sec"><b>Short reading · ${esc(chosen.reading)} · Douay–Rheims</b><p>${esc(chosen.verse)}</p></div><div class="sec"><b>Responsory</b>${RT.html(official.responsory)}</div>
       <div class="sec"><b>Canticle of Simeon (Nunc Dimittis)</b><p class="ant"><i>Ant.</i> ${esc(official.gospelAntiphon)}</p>${RT.html(RT.ordinary.nuncDimittis)}${RT.html(RT.ordinary.gloria)}<p class="ant"><i>Ant.</i> ${esc(official.gospelAntiphon)}</p></div>
       <div class="sec"><b>Concluding prayer</b>${RT.html(official.collect)}</div><div class="sec"><b>Blessing</b>${RT.html(RT.ordinary.nightBlessing)}</div><div class="sec"><b>${plan.easter?'Regina Caeli':'Salve Regina'}</b><p>${plan.easter?'Queen of heaven, rejoice, alleluia. For he whom thou didst merit to bear, alleluia, hath risen as he said, alleluia. Pray for us to God, alleluia.':'Hail, holy Queen, Mother of mercy, our life, our sweetness, and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us; and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.'}</p></div>${RT.acknowledgment()}`;
   }
@@ -2608,7 +2608,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v453';
+  const APP_BUILD = 'ora-v454';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
