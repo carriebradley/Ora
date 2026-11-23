@@ -22,6 +22,44 @@ test('January 11 Lauds uses Monday Week I psalmody and the appointed 2 Thessalon
  assert.doesNotMatch(html,/For also when we were with you/);
  for(const ant of sel.antiphons)assert.ok(html.includes(ant),'missing official antiphon');
 });
+
+test('January 11 Lauds keeps the selected Monday intercessions, Lord’s Prayer and concluding prayer in order',()=>{
+ const plan=H.modernPsalmody(L,d,'L',options),selected=R.select(L,d,'L',options,plan);
+ assert.equal(selected.id,'ord-w01-mon-mp');
+ assert.equal(selected.source,'https://divineoffice.org/ord-w01-mon-mp/');
+ for(const part of ['responsory','intercessions','collect'])assert.ok(selected[part],'missing '+part);
+ const html=H.modern(L,d,'L',options);
+ const sections=['<b>Responsory</b>','<b>Benedictus</b>','<b>Intercessions</b>',
+   '<b>Our Father</b>','<b>Concluding prayer</b>','<b>Conclusion</b>'];
+ let previous=-1;
+ for(const section of sections){
+   const position=html.indexOf(section);
+   assert.ok(position>previous,'absent or out-of-order '+section);
+   previous=position;
+ }
+ for(const [label,source] of [
+   ['responsory',selected.responsory],['intercessions',selected.intercessions],
+   ['Lord’s Prayer',R.ordinary.ourFather],['collect',selected.collect],
+   ['dismissal',R.ordinary.dismissal]
+ ])assert.ok(html.includes(R.html(source)),label+' did not render the selected source verbatim');
+ assert.doesNotMatch(html,/Intercessions \(devotional\)|Collect \(traditional\)/);
+ const row=require('../docs/roman-liturgical-day-parity-2027-01-11.json').sections.find(x=>x.id==='lauds.intercessions');
+ assert.equal(row.comparison,'match-source-selection');
+ assert.equal(row.oraCompared,true);
+ assert.equal(row.textCompared,false,'approved-book wording is not certified');
+});
+
+test('January 11 Lauds labels the historical hymn, without implying approved First Edition wording',()=>{
+ const html=H.modern(L,d,'L',options);
+ assert.match(html,/<b>Hymn · historical English<\/b>/);
+ assert.doesNotMatch(html,/<b>Hymn \(traditional\)<\/b>/);
+ assert.ok(html.indexOf('Hymn · historical English')<html.indexOf('<b>Psalmody</b>'));
+ const row=require('../docs/roman-liturgical-day-parity-2027-01-11.json').sections.find(x=>x.id==='lauds.hymn');
+ assert.equal(row.comparison,'unverified');
+ assert.equal(row.oraCompared,true);
+ assert.equal(row.textCompared,false);
+});
+
 test('January 11 Vespers uses Monday Week I psalmody and the appointed Colossians excerpt',()=>{
  const plan=H.modernPsalmody(L,d,'V',options),sel=R.select(L,d,'V',options,plan);
  assert.deepEqual(sel.psalmodyRefs,['Psalm 11','Psalm 15','Canticle — Ephesians 1:3-10']);

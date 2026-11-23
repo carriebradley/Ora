@@ -186,7 +186,7 @@
     const name = which === 'L' ? 'Morning Prayer (Lauds)' : 'Evening Prayer (Vespers)';
     let h = `<p class="roman-office-heading muted" style="font-size:.82rem">${first ? 'Evening Prayer I · ' : ''}${name} · Psalter Week ${['', 'I', 'II', 'III', 'IV'][pw]}</p>`;
     h += `<div class="sec"><b>Opening</b>${RT.html(RT.ordinary.opening)}${RT.html(RT.ordinary.gloria + (RO.night(L,d,options).alleluia ? ' Alleluia.' : ''))}</div>`;
-    if (hymn) h += `<div class="sec"><b>Hymn (traditional)</b>${lines(hymn)}</div>`;
+    if (hymn) h += `<div class="sec"><b>Hymn · historical English</b>${lines(hymn)}</div>`;
     h += '<div class="sec"><b>Psalmody</b>' + items.map((it,index) => {
       const ant=official?.antiphons?.[index];
       const refrain=ant?`<div class="ant"><i>Ant.</i> ${esc(ant)}</div>`:'';

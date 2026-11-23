@@ -30,6 +30,8 @@ module.exports=async function(page,base,artifacts){
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
   const official=page.locator('#st0');
   assert.match(await official.innerText(),/I lift up my heart to you, O Lord/);
+  assert.match(await official.locator('.sec').filter({hasText:/Hymn · historical English/i}).first().textContent(),/historical English/);
+  assert.match(await official.innerText(),/Concluding prayer/i);
   assert.match(await official.innerText(),/Give us your Spirit, Lord/);
   assert.match(await official.innerText(),/he has come to his people and set them free/);
   assert.doesNotMatch(await official.innerText(),/Intercessions \(devotional\)|Scriptural refrain:/);

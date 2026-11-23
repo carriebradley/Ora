@@ -256,23 +256,23 @@
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-mp/",
       "oraModule": "hours.js; roman-office-texts.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "For 2027-01-11, the selected ord-w01-mon-mp source witness and generated Hours.modern Lauds markup are compared for Monday Week I intercession sequence and recurring response, ordinary Lord's Prayer, concluding collect and dismissal. Node tests check source-record presence, section sequence, exact rendering of the already imported source record, and absence of generic devotional or traditional fallbacks. This does NOT independently verify exact wording against the printed approved First Edition."
     },
     {
       "id": "lauds.hymn",
       "office": "lauds",
-      "element": "Hymn and opening/conclusion",
-      "expected": "Compare approved hymn alternatives and exact ordinary text",
+      "element": "Historical hymn and introductory opening",
+      "expected": "Monday Week I online witness has O Splendor of God's Glory Bright. Ora's inherited historical translation differs in individual lines. Confirm approved First Edition hymn alternatives and proper fortnightly cycle against a printed edition.",
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-mp/",
       "oraModule": "hours.js; roman-office-texts.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "unverified",
+      "note": "Compared Ora's actually rendered Monday hymn with DivineOffice.org's Monday Week I hymn. It is the same Ambrosian hymn in historical English but not an exact textual match to the online witness. Ora labels it 'Hymn · historical English'; the First Edition approved wording, twofold alternate-week hymn cycle, and translation permissions remain unverified. No copyrighted hymn text added or replaced."
     },
     {
       "id": "daytime.midmorning",
