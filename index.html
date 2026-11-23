@@ -371,12 +371,11 @@ nav button.on b{color:color-mix(in srgb,var(--lit) 50%,var(--ink))}
 .saint-bio-copy{font-family:var(--serif);font-size:1.02rem;line-height:1.6;margin:0 0 11px}
 .saint-bio-source{font-size:.8rem;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 
-/* Source-matched art overlays a stable, decorative offline icon. No blank cards. */
+/* Only an individually sourced saint image earns space in the card. */
 .today-saint-bio .saint-bio-body{display:flow-root;margin:0 0 11px}
-.today-saint-bio .saint-bio-portrait{position:relative;float:left;display:block;width:88px;aspect-ratio:88 / 122;margin:3px 14px 7px 0;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:#eee3cb}
-.today-saint-bio .saint-bio-fallback{display:block;width:100%;height:100%}
-.today-saint-bio .saint-bio-image-link{position:absolute;inset:0;display:block}
-.today-saint-bio .saint-bio-image{display:block;width:100%;height:100%;object-fit:cover}
+.today-saint-bio .saint-bio-portrait{float:left;width:88px;margin:3px 14px 7px 0}
+.today-saint-bio .saint-bio-image-link{display:block}
+.today-saint-bio .saint-bio-image{display:block;width:100%;height:auto;aspect-ratio:88 / 122;object-fit:cover;border:1px solid var(--line);border-radius:8px}
 .today-saint-bio .saint-bio-copy{font-size:1rem;line-height:1.55;margin:0;overflow-wrap:break-word}
 .today-saint-bio .saint-bio-art-credit{font-size:.72rem;line-height:1.4;color:var(--muted);margin:5px 0 0}
 .today-saint-bio .saint-bio-art-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}

@@ -1597,9 +1597,8 @@
     }
   };
 
-  // Curated identity-matched artwork; never search by date or substitute an
-  // unrelated saint's portrait. Links point to the artwork's credit/license.
-  // Unlisted saints use the original offline illustration below.
+  // Curated identity-matched artwork only; never search by date or substitute
+  // an unrelated saint's portrait. No image or reserved space without art.
   const SAINT_ART_BY_NAME = Object.freeze({
     'Saint Clement of Rome': {
       image: 'https://commons.wikimedia.org/wiki/Special:FilePath/4-St.Clement_I.jpg?width=300',
@@ -1680,20 +1679,7 @@
       <h2 class="saint-bio-name">${esc(saint.name)}</h2>
       <p class="saint-bio-meta">${esc(saint.meta)}${optionalSaint ? ' · Optional memorial' : ''}</p>
       <div class="saint-bio-body">
-        <div class="saint-bio-portrait">
-          <svg class="saint-bio-fallback" viewBox="0 0 88 122" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-            <rect width="88" height="122" fill="#eee3cb"/>
-            <path d="M0 0H88V122H0Z" fill="none" stroke="#c9b793" stroke-width="4"/>
-            <path d="M7 14h74M7 108h74" stroke="#ae925f" stroke-width="1" opacity=".7"/>
-            <circle cx="44" cy="43" r="27" fill="none" stroke="#b99952" stroke-width="5"/>
-            <path d="M9 122c1-39 16-59 35-59s34 20 35 59Z" fill="#753844"/>
-            <path d="M31 66l13 17 13-17-3 56H34Z" fill="#f8eedb"/>
-            <path d="M29 34c0-15 30-15 30 0v17c-2 11-9 18-15 18s-13-7-15-18Z" fill="#ba8667"/>
-            <path d="M28 40c-4-18 8-24 16-24 13 0 21 11 16 24-2-10-6-12-16-12s-14 3-16 12Z" fill="#5d4040"/>
-            <path d="M38 93h12m-6-6v19" stroke="#b39a5b" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          ${art ? `<a class="saint-bio-image-link" href="${esc(art.source)}" target="_blank" rel="noopener noreferrer" aria-label="View artwork source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(art.image)}" alt="${esc(art.alt)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
-        </div>
+        ${art ? `<div class="saint-bio-portrait"><a class="saint-bio-image-link" href="${esc(art.source)}" target="_blank" rel="noopener noreferrer" aria-label="View artwork source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(art.image)}" alt="${esc(art.alt)}" loading="lazy" decoding="async" onerror="this.closest('.saint-bio-body').querySelector('.saint-bio-art-credit')?.remove();this.closest('.saint-bio-portrait').remove()"></a></div>` : ''}
         <p class="saint-bio-copy">${esc(saint.bio)}</p>
         ${art ? `<p class="saint-bio-art-credit"><a href="${esc(art.source)}" target="_blank" rel="noopener noreferrer">Art: ${esc(art.credit)}</a></p>` : ''}
       </div>
@@ -2680,7 +2666,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v456';
+  const APP_BUILD = 'ora-v457';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
