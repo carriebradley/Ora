@@ -249,7 +249,7 @@ module.exports=async(page,base)=>{
  const martyrDot=page.locator('.cell[data-d="2026-11-11"] .dot').nth(byzLayers.indexOf('byz'));
  assert.equal(await martyrDot.getAttribute('data-category'),'g','Calendar ring follows green After Pentecost season, not red martyrs');
  assert.equal(await page.locator('.cell[data-d="2026-11-11"] .f').count(),1,'Calendar shows separate abstinence ƒ');
- assert.match(await page.locator('.calendar-quick-key').innerText(),/ƒ.*fast\/abstinence/);
+ assert.match(await page.locator('.calendar-quick-key').textContent(),/ƒ.*fast\/abstinence/);
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-13`);
  const easterRoman=page.locator('.gl[data-v="roman"]');
  assert.equal(await easterRoman.locator('.gb').innerText(),'Easter Season','Easter weekday is not Ordinary Day');
