@@ -28,6 +28,10 @@ module.exports=async(page,base)=>{
  assert.equal(await page.locator('.gl[data-v="roman"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#f0e8da','Roman Marian badge is white');
  assert.equal(await page.locator('.gl[data-v="sarum"] .gb').evaluate(el=>el.style.getPropertyValue('--badge-fill')),'#f0e8da','Traditional Marian badge is white despite St. Martin’s Lent');
  await page.goto(`${base}index.html?tab=calendar&rite=roman&date=2026-12-08`);
+ assert.equal(await page.locator('.calendar-guide').evaluate(el=>el.open),false,'full color guide begins collapsed');
+ assert.match(await page.locator('.calendar-quick-key').innerText(),/Roman · Byzantine · Traditional/,'visible dots are explained in left-to-right order');
+ await page.locator('.calendar-guide > summary').click();
+ assert.equal(await page.locator('.calendar-guide').evaluate(el=>el.open),true,'full color guide expands on demand');
  assert.match(await page.locator('.calendar-key').innerText(),/Gold · Easter\/Pascha season/);
  const dots=await page.locator('.cell[data-d="2026-12-08"] .dot').evaluateAll(ds=>ds.map(d=>({vestment:d.dataset.vestment,category:d.dataset.category,ring:d.style.getPropertyValue('--ring'),dual:d.classList.contains('dual')})));
  assert.deepEqual(dots[0],{vestment:'w',category:'v',ring:legendViolet,dual:true},'Roman: white Marian vestments and Advent violet ring');
