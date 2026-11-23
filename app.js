@@ -162,11 +162,26 @@
   feedP.then(() => { if (st.tab === 'justice') render(); });
   const hasReadingCitations = data => data && typeof data === 'object' && !Array.isArray(data) &&
     ['first', 'psalm', 'second', 'gospel'].some(key => typeof data[key] === 'string' && data[key].trim());
+  // Nationally appointed citations, verified against the USCCB 2027 calendar
+  // (printed p. 15) and U.S. Lectionary no. 305. References only: no licensed
+  // Lectionary body, Mass proper or optional Eucharistic prayer is bundled here.
+  const VERIFIED_MASS_CITATIONS = Object.freeze({
+    '2027-01-11': Object.freeze({
+      first: 'Hebrews 1:1-6',
+      psalm: 'Psalm 97:1, 2b, 6, 7c, 9',
+      acclamation: 'Mark 1:15',
+      gospel: 'Mark 1:14-20',
+      sourceNote: 'U.S. Lectionary 305 · verified references only; the approved reading text is on the USCCB site.'
+    })
+  });
   function loadReadings(iso) {
     if (st.readings[iso] !== undefined) return;
     st.readings[iso] = 'loading';
     feedP.then(f => {
       if (f[iso] && f[iso].sections && f[iso].sections.length) { st.readings[iso] = { full: f[iso], copyright: f._copyright }; if (st.date === iso) render(); return; }
+      // The dated official references take precedence over previously saved
+      // third-party citations, including incomplete or obsolete results.
+      if (VERIFIED_MASS_CITATIONS[iso]) { st.readings[iso] = VERIFIED_MASS_CITATIONS[iso]; if (st.date === iso) render(); return; }
       const cached = store.get('ora.readings.' + iso, null);
       if (hasReadingCitations(cached)) { st.readings[iso] = cached; if (st.date === iso) render(); return; }
       return fetch(`${READINGS_API}/${iso.slice(0, 4)}/${iso.slice(5)}.json`).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(j => {
@@ -180,7 +195,7 @@
   }
   const readingsSpeech = r => r.full
     ? r.full.sections.map(s => `${s.label}. ${s.cite}.${s.text ? ' ' + s.text.replace(/\bR\.\s*/g, '') : ''}`).join('\n\n')
-    : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}Gospel, ${r.gospel || ''}.`;
+    : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}${r.acclamation ? 'Gospel acclamation, ' + r.acclamation + '. ' : ''}Gospel, ${r.gospel || ''}.`;
   function romanReadingsHTML(iso, showAudio = true, simple = false) {
     const r = st.readings[iso];
     let h = '';
@@ -197,7 +212,8 @@
       if (!simple) h += `<div class="row">${speakBtn(readingsSpeech(r))}</div>`;
       const gs = r.full.sections.find(s => /gospel/i.test(s.label) && s.cite); if (gs && !simple) h += fathersBlock(gs.cite);
     } else if (r && hasReadingCitations(r)) {
-      for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['gospel', 'Gospel']]) if (typeof r[k] === 'string' && r[k].trim()) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
+      for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['acclamation', 'Gospel Acclamation'], ['gospel', 'Gospel']]) if (typeof r[k] === 'string' && r[k].trim()) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
+      if (r.sourceNote) h += `<p class="muted mass-citation-provenance" style="font-size:.8rem">${esc(r.sourceNote)}</p>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
     if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a><a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
     if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. All rights reserved. Ora has not verified separate digital-application reproduction permission; see the official USCCB page for the approved readings.</p>`;
@@ -2589,7 +2605,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v449';
+  const APP_BUILD = 'ora-v451';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

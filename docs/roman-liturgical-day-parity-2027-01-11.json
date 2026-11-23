@@ -74,10 +74,10 @@
       "sourceUrl": "https://www.usccb.org/resources/2027cal.pdf",
       "oraModule": "app.js (readings.json)",
       "sourceStatus": "official-calendar",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "U.S. Lectionary 305 appointment checked against 2027 USCCB calendar and weekday Lectionary index. Ora v451 displays this exact reference in an offline-safe citation-only fallback when full readings are not bundled; complete USCCB feed records take priority. Node and browser tests cover output and precedence. Approved printed wording, local feast variants and Mass proper choices are not verified."
     },
     {
       "id": "mass.psalm",
@@ -87,10 +87,10 @@
       "sourceUrl": "https://www.catholic-resources.org/Lectionary/2002USL-Weekdays-OT-I.htm",
       "oraModule": "app.js (readings.json)",
       "sourceStatus": "lectionary-index",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "U.S. Lectionary 305 appointment checked against 2027 USCCB calendar and weekday Lectionary index. Ora v451 displays this exact reference in an offline-safe citation-only fallback when full readings are not bundled; complete USCCB feed records take priority. Node and browser tests cover output and precedence. Approved printed wording, local feast variants and Mass proper choices are not verified."
     },
     {
       "id": "mass.acclamation",
@@ -100,10 +100,10 @@
       "sourceUrl": "https://www.catholic-resources.org/Lectionary/2002USL-Weekdays-OT-I.htm",
       "oraModule": "app.js (readings.json)",
       "sourceStatus": "lectionary-index",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "U.S. Lectionary 305 appointment checked against 2027 USCCB calendar and weekday Lectionary index. Ora v451 displays this exact reference in an offline-safe citation-only fallback when full readings are not bundled; complete USCCB feed records take priority. Node and browser tests cover output and precedence. Approved printed wording, local feast variants and Mass proper choices are not verified."
     },
     {
       "id": "mass.gospel",
@@ -113,10 +113,10 @@
       "sourceUrl": "https://www.usccb.org/resources/2027cal.pdf",
       "oraModule": "app.js (readings.json)",
       "sourceStatus": "official-calendar",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-source-selection",
+      "note": "U.S. Lectionary 305 appointment checked against 2027 USCCB calendar and weekday Lectionary index. Ora v451 displays this exact reference in an offline-safe citation-only fallback when full readings are not bundled; complete USCCB feed records take priority. Node and browser tests cover output and precedence. Approved printed wording, local feast variants and Mass proper choices are not verified."
     },
     {
       "id": "mass.propers",

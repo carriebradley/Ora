@@ -87,3 +87,13 @@ The [Monday Week I Evening Prayer witness](https://divineoffice.org/ord-w01-mon-
 **Source caution:** The online witness includes dynamic outer calendar labels, which can identify a different civil date; only the inner *Monday, Week I* Psalter reference is used to verify this representative January 2027 weekday. The live witness's Colossians reading body appears to run beyond the short reading's stated reference; that discrepancy does not justify expanding Ora's correctly bounded public-domain excerpt without a separate approved-book comparison.
 
 **Bounded status:** 12 of 27 source-to-Ora worksheet sections have some documented comparison; **zero** have been independently certified as word-for-word identical to the printed approved First Edition. Mass, the Office of Readings, Daytime Prayer, Night Prayer, full hymn/translation parity and human iPhone acceptance remain open.
+
+## January 11 Roman Mass citations — November 22, 2026
+
+**National U.S. Lectionary 305:** The [USCCB 2027 Liturgical Calendar, January printed p. 15](https://www.usccb.org/resources/2027cal.pdf) appoints Hebrews 1:1–6 and Mark 1:14–20. The [U.S. weekday Lectionary Cycle I index](https://www.catholic-resources.org/Lectionary/2002USL-Weekdays-OT-I.htm) identifies Psalm 97:1, 2b, 6, 7c, 9 and Gospel acclamation Mark 1:15.
+
+**Gap:** The rolling bundled `readings.json` did not contain January 11, 2027. With the third-party citations API offline or unavailable, Ora could display only a notice and external links, despite having a known official calendar appointment.
+
+**Correction in v451:** A built-in national reference record for this exact day supplies the four citations offline without embedding approved Lectionary body text. The source is labeled as U.S. Lectionary no. 305, **references only**. Any complete bundled USCCB reading record takes precedence; otherwise the vetted dated references also outrank saved third-party citations and external fallbacks. No optional prayers, private imported books or unrelated dates are changed. Node/browser tests protect display, precedence and narrow-phone layout.
+
+The four reading-reference rows are now `oraCompared=true`, `comparison=match-source-selection`, and **`textCompared=false`**. The first-day worksheet contains **16 of 27 bounded selection/renderer comparisons** and **zero certified exact approved-text comparisons**. Entrance/Communion antiphons, Mass proper collects, the ordinary, Eucharistic-prayer options and local calendar exceptions remain open. The appointed reading translation must be checked against the approved U.S. Lectionary before claiming text parity.

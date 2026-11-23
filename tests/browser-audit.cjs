@@ -177,6 +177,15 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.goto(`${base}index.html?tab=readings&rite=byz&date=2026-11-11`);
  assert.match(await page.locator('#app').innerText(),/Edmonton/);
  assert.match(await page.locator('#app').innerText(),/Luke 12:48-59/);
+ // References absent from bundled rolling RSS must be visible without a licensed text.
+ await page.goto(`${base}index.html?tab=readings&rite=roman&date=2027-01-11`);
+ await page.locator('.mass-citation-provenance').waitFor();
+ const verifiedMass=await page.locator('#app').innerText();
+ for(const reference of ['Hebrews 1:1-6','Psalm 97:1, 2b, 6, 7c, 9','Mark 1:15','Mark 1:14-20'])
+   assert.ok(verifiedMass.includes(reference),'missing Mass citation '+reference);
+ assert.match(verifiedMass,/Lectionary 305/);
+ assert.equal(await page.locator('.reading-group .tx').count(),0);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  for(const rite of ['roman','byz']) {
   await page.goto(`${base}index.html?tab=pray&date=2026-11-15&rite=${rite}&kind=night`);
   assert.match(await page.locator('#app').innerText(), /Night Prayer|Song of Simeon|Nunc Dimittis|Compline/i);
