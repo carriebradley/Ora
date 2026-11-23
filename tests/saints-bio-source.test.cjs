@@ -264,7 +264,7 @@ test('Western saint cards use only the primary observance, not displaced commemo
  assert.ok((ordinary.also||[]).some(e=>/Cecilia/.test(e.title)));
  const western=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
  assert.match(western,/const titles = S\.rite === 'byz'/);
- assert.match(western,/: \[title\];/);
+ assert.match(western,/: \[title, \.\.\.optionalTitles\];/);
  const m=app.slice(app.indexOf('const WESTERN_SHARED_SAINT_BIOS'),app.indexOf('function todaySaintBio'));
  for(const day of ['11-22','11-30','12-06','12-13','12-26','12-27','12-28'])
    assert.ok(m.includes("'"+day+"':"),day);
@@ -376,7 +376,7 @@ test('Traditional Martinmas and Saint Martin/Andrew octaves reuse sourced biogra
  }
  // A displaced saint is never resurrected by the Today card just because its date matches.
  assert.match(app,/const entry = listed && titles\.some\(item => listed\.match\.test\(item\)\) \? listed : null/);
- assert.match(app,/: \[title\];/);
+ assert.match(app,/: \[title, \.\.\.optionalTitles\];/);
 });
 
 test('Sarum Martinmas and St Martin octave titles match their biography, not unrelated fast days',()=>{
@@ -420,6 +420,9 @@ test('December 30 Anysia bio belongs to the Ukrainian mode, not the Melkite Mela
 });
 
 test('January Roman saint cards are sourced, short, and match observed Roman titles',()=>{
+ // Only weekday optional memorials supplement the selected title. Sundays
+ // remain governed by the selected calendar title, never an outranked saint.
+ assert.match(app,/const optionalTitles = S\.rite === 'roman' && calendar\?\.rank === 'Weekday'/);
  const L=require('../calendar.js');
  const roman=app.slice(app.indexOf('    roman: {',app.indexOf('const TODAY_SAINT_BIOS')),app.indexOf('    ukrainian: {'));
  const names={'01-02':'Basil the Great','01-04':'Elizabeth Ann Seton','01-05':'John Neumann','01-17':'Anthony','01-21':'Agnes'};
@@ -441,7 +444,7 @@ test('January Roman saint cards are sourced, short, and match observed Roman tit
  assert.ok(roman.includes('Saint Agnes of Rome'));
  const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
  assert.match(selector,/const titles = S\.rite === 'byz'/);
- assert.match(selector,/: \[title\];/);
+ assert.match(selector,/: \[title, \.\.\.optionalTitles\];/);
 });
 
 test('Late January Roman cards respect named primary commemoration and Sunday precedence',()=>{
@@ -461,7 +464,7 @@ test('Late January Roman cards respect named primary commemoration and Sunday pr
  assert.ok(romans.includes('name: "Saint Paul the Apostle"'));
  assert.doesNotMatch(L.roman(new Date('2027-01-31T00:00:00Z')).title,/John Bosco/);
  const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
- assert.match(selector,/: \[title\];/,'Sunday takes precedence over a displaced saint');
+ assert.match(selector,/: \[title, \.\.\.optionalTitles\];/,'Sunday takes precedence over a displaced saint');
 });
 
 test('Roman February biographies are sourced, concise, and match valid feast years',()=>{
@@ -499,7 +502,7 @@ test('2027 Lent suppresses the February Scholastica and Polycarp saint cards',()
  assert.match(get('2028-02-23').title,/Polycarp/);
  const selector=app.slice(app.indexOf('function todaySaintBio'),app.indexOf('function viewToday'));
  assert.match(selector,/const titles = S\.rite === 'byz'/);
- assert.match(selector,/: \[title\];/);
+ assert.match(selector,/: \[title, \.\.\.optionalTitles\];/);
 });
 
 test('Roman March through May saint cards follow titles and precedence',()=>{

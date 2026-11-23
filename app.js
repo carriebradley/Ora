@@ -1385,6 +1385,18 @@
   const TODAY_SAINT_BIOS = {
     roman: {
       ...WESTERN_SHARED_SAINT_BIOS,
+      // U.S. Roman appointments: November 23 optional choices, November 24
+      // obligatory memorial, November 25 optional. Do not select optional
+      // memorials instead of the weekday's prayer without a user choice.
+      '11-23': BYZANTINE_BIO_CLEMENT,
+      '11-24': {
+        match: /Andrew D[uũ]ng[-– ]Lac/i,
+        name: 'Saint Andrew Dung-Lac and Companions',
+        meta: 'd. 1839 · Vietnamese Priest and Martyr',
+        bio: 'Andrew Dung-Lac was a Vietnamese priest among 117 martyrs canonized together in 1988. The group included priests, bishops, religious, and laypeople who were killed for their Christian faith during persecutions in Vietnam.',
+        source: 'https://www.franciscanmedia.org/saint-of-the-day/saint-andrew-dung-lac-and-companions/'
+      },
+      '11-25': { ...BYZANTINE_BIO_CATHERINE, name: 'Saint Catherine of Alexandria' },
       '10-01': { match: /Therese of the Child Jesus|Thérèse of the Child Jesus/i, name: "Saint Thérèse of Lisieux", meta: "1873–1897 · Carmelite Nun and Doctor", bio: "Thérèse entered Carmel at fifteen and taught a path of holiness through ordinary acts of love and trust in God. Her writings, collected as Story of a Soul, influenced Catholics worldwide.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-therese-of-lisieux/" },
       '10-04': { match: /Francis of Assisi/i, name: "Saint Francis of Assisi", meta: "c. 1181–1226 · Founder of the Franciscans", bio: "Francis renounced wealth and embraced a life of poverty, prayer, and service. He founded the Franciscan movement and sought peace and reconciliation, including through his encounter with Sultan al-Kamil.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-francis-of-assisi/" },
       '10-09': { match: /Saint Denis/i, name: "Saint Denis of Paris", meta: "Third century · Bishop and Martyr", bio: "Denis is honored as an early bishop and martyr of Paris. His historical biography is uncertain, and familiar stories about carrying his severed head belong to later legend. The Roman calendar lists other optional memorials on this date.", source: "https://www.franciscanmedia.org/saint-of-the-day/saint-denis-and-companions/" },
@@ -1584,6 +1596,42 @@
       '11-12': { match:/Begnet/i, name:'Saint Begnet', meta:'Early Irish saint · Patron of Dalkey', bio:'Little is known with certainty about Begnet’s life. She is remembered in the Christian heritage of Dalkey, Ireland, where churches and local traditions preserve her name.', source:'https://www.dalkeyheritage.com/' }
     }
   };
+
+  // Curated identity-matched artwork; never search by date or substitute an
+  // unrelated saint's portrait. Links point to the artwork's credit/license.
+  // Unlisted saints use the original offline illustration below.
+  const SAINT_ART_BY_NAME = Object.freeze({
+    'Saint Clement of Rome': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/4-St.Clement_I.jpg?width=300',
+      source: 'https://commons.wikimedia.org/wiki/File:4-St.Clement_I.jpg',
+      alt: 'Mosaic medallion depicting Saint Clement I',
+      credit: 'St Paul Outside the Walls mosaic · public domain'
+    },
+    'Saint Catherine of Alexandria': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/St.CatherineofAlexandria.jpg?width=300',
+      source: 'https://commons.wikimedia.org/wiki/File:St.CatherineofAlexandria.jpg',
+      alt: 'Medieval icon depicting Saint Catherine of Alexandria',
+      credit: 'Fourteenth-century icon · public domain'
+    },
+    'Holy Great-Martyr Catherine of Alexandria': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/St.CatherineofAlexandria.jpg?width=300',
+      source: 'https://commons.wikimedia.org/wiki/File:St.CatherineofAlexandria.jpg',
+      alt: 'Medieval icon depicting Saint Catherine of Alexandria',
+      credit: 'Fourteenth-century icon · public domain'
+    },
+    'Saint Andrew Dung-Lac and Companions': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Paul_Catholic_Church_%28Westerville%2C_Ohio%29_-_stained_glass%2C_arcade%2C_Saint_Andrew_Dung_Lac.jpg?width=330',
+      source: 'https://commons.wikimedia.org/wiki/File:Saint_Paul_Catholic_Church_(Westerville,_Ohio)_-_stained_glass,_arcade,_Saint_Andrew_Dung_Lac.jpg',
+      alt: 'Stained-glass portrait depicting Saint Andrew Dung-Lac',
+      credit: 'Nheyob · CC BY-SA 3.0'
+    },
+    'Saint Martin of Tours': {
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Martin_of_Tours_MET_DP144442.jpg?width=330',
+      source: 'https://commons.wikimedia.org/wiki/File:Saint_Martin_of_Tours_MET_DP144442.jpg',
+      alt: 'Historical sculpture depicting Saint Martin of Tours',
+      credit: 'Metropolitan Museum of Art · CC0'
+    }
+  });
   function todaySaintBio(v) {
     const tradition = S.rite === 'byz' ? S.byzChurch : S.rite;
     const calendar = S.rite === 'byz' ? v.byz : S.rite === 'sarum' ? v.sarum : v.roman;
@@ -1593,9 +1641,15 @@
     // Roman and Traditional commemorations displaced by a higher Sunday or
     // feast must not become the primary Saint of the Day.
     // Byzantine typika may hold the named saint in calendar.also.
+    // Roman weekday optional memorials belong in the saint biography panel
+    // even though the weekday itself remains the selected observance. Do not
+    // display a displaced saint as appointed on a Sunday or solemnity.
+    const optionalTitles = S.rite === 'roman' && calendar?.rank === 'Weekday'
+      ? (calendar?.also || []).filter(item => item?.note === 'Optional commemoration').map(item => String(item?.title || ''))
+      : [];
     const titles = S.rite === 'byz'
       ? [title, ...(calendar?.also || []).map(item => String(item?.title || ''))]
-      : [title];
+      : [title, ...optionalTitles];
     const listed = TODAY_SAINT_BIOS[tradition]?.[v.iso.slice(5)];
     const entry = listed && titles.some(item => listed.match.test(item)) ? listed : null;
     // Prefer the first actual saint over an unrelated Sunday or pre-feast
@@ -1611,19 +1665,37 @@
     const primary = commemorations.find(item =>
       recognized.test(item) && (!marianTitle.test(item) || namedSaint.test(item))) || '';
     if (!entry && !primary) return '';
+    const optionalSaint = S.rite === 'roman' && optionalTitles.includes(primary);
     const saint = entry || {
       name: displayTitle(primary),
       meta: 'Commemorated in the selected calendar',
       bio: 'A verified short biography is not yet available.'
     };
     const label = tradition === 'ukrainian' ? 'Ukrainian' : tradition === 'melkite' ? 'Melkite' : tradition === 'sarum' ? 'Traditional' : 'Roman';
+    const art = SAINT_ART_BY_NAME[saint.name] ||
+      (saint.image ? { image: saint.image, source: saint.imageCredit || saint.source,
+        alt: 'Traditional depiction of ' + saint.name, credit: 'Artwork source' } : null);
     return `<section class="card today-saint-bio">
       <div class="lab">${todayAccent('bio')}<span class="grow">Saint of the Day</span><span class="saint-bio-rite">${label}</span></div>
       <h2 class="saint-bio-name">${esc(saint.name)}</h2>
-      <p class="saint-bio-meta">${esc(saint.meta)}</p>
+      <p class="saint-bio-meta">${esc(saint.meta)}${optionalSaint ? ' · Optional memorial' : ''}</p>
       <div class="saint-bio-body">
-        ${saint.image ? `<a class="saint-bio-image-link" href="${esc(saint.imageCredit || saint.source)}" target="_blank" rel="noopener noreferrer" aria-label="View image source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(saint.image)}" alt="Traditional sacred portrait of ${esc(saint.name)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
+        <div class="saint-bio-portrait">
+          <svg class="saint-bio-fallback" viewBox="0 0 88 122" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <rect width="88" height="122" fill="#eee3cb"/>
+            <path d="M0 0H88V122H0Z" fill="none" stroke="#c9b793" stroke-width="4"/>
+            <path d="M7 14h74M7 108h74" stroke="#ae925f" stroke-width="1" opacity=".7"/>
+            <circle cx="44" cy="43" r="27" fill="none" stroke="#b99952" stroke-width="5"/>
+            <path d="M9 122c1-39 16-59 35-59s34 20 35 59Z" fill="#753844"/>
+            <path d="M31 66l13 17 13-17-3 56H34Z" fill="#f8eedb"/>
+            <path d="M29 34c0-15 30-15 30 0v17c-2 11-9 18-15 18s-13-7-15-18Z" fill="#ba8667"/>
+            <path d="M28 40c-4-18 8-24 16-24 13 0 21 11 16 24-2-10-6-12-16-12s-14 3-16 12Z" fill="#5d4040"/>
+            <path d="M38 93h12m-6-6v19" stroke="#b39a5b" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          ${art ? `<a class="saint-bio-image-link" href="${esc(art.source)}" target="_blank" rel="noopener noreferrer" aria-label="View artwork source for ${esc(saint.name)}"><img class="saint-bio-image" src="${esc(art.image)}" alt="${esc(art.alt)}" loading="lazy" decoding="async" onerror="this.parentElement.remove()"></a>` : ''}
+        </div>
         <p class="saint-bio-copy">${esc(saint.bio)}</p>
+        ${art ? `<p class="saint-bio-art-credit"><a href="${esc(art.source)}" target="_blank" rel="noopener noreferrer">Art: ${esc(art.credit)}</a></p>` : ''}
       </div>
       ${saint.source ? `<a class="saint-bio-source" target="_blank" rel="noopener noreferrer" href="${esc(saint.source)}">Learn more about this saint</a>` : ""}
     </section>`;
@@ -2608,7 +2680,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v454';
+  const APP_BUILD = 'ora-v456';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
