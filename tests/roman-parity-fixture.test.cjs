@@ -29,7 +29,7 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
 test('initial source selection does not claim completed liturgical parity',()=>{
  assert.ok(fixture.sections.length>=25);
  assert.deepEqual(fixture.sections.filter(section=>section.oraCompared).map(section=>section.id).sort(),
-  ['calendar.day','invitatory.entry','lauds.psalmody','lauds.reading','lauds.benedictus','lauds.intercessions','lauds.hymn','vespers.psalmody','vespers.reading','vespers.magnificat','vespers.intercessions','vespers.hymn','mass.first-reading','mass.psalm','mass.acclamation','mass.gospel'].sort());
+  ['calendar.day','compline.full','invitatory.entry','lauds.psalmody','lauds.reading','lauds.benedictus','lauds.intercessions','lauds.hymn','vespers.psalmody','vespers.reading','vespers.magnificat','vespers.intercessions','vespers.hymn','mass.first-reading','mass.psalm','mass.acclamation','mass.gospel'].sort());
  assert.ok(fixture.sections.every(section=>!section.textCompared&&section.comparison!=='match-approved'),
   'No full-text First Edition certification was performed');
  assert.ok(fixture.sections.some(section=>!section.oraCompared&&section.comparison==='not-compared'),
