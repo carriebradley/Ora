@@ -48,7 +48,7 @@
   // Preserve the Ukrainian/Melkite choice and move Ukrainian sources to Edmonton.
   if (!S.edmonton2026) { S.edmonton2026 = true; save(); }
   const st = { tab: 'today', date: todayISO(), month: null, sel: null, layers: { roman: true, byz: true, sarum: true }, readRite: S.rite || 'roman',
-    prayView: 'office', liturgyView: 'byz', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), active: -1, readings: {}, art: {} };
+    prayView: 'office', liturgyView: 'byz', kind: new Date().getHours() < 14 ? 'morning' : 'evening', artShift: 0, quoteShift: 0, popeShift: 0, shour: (h => h < 4 ? 'C' : h < 6 ? 'M' : h < 9 ? 'L' : h < 16 ? 'LH' : h < 20 ? 'V' : 'C')(new Date().getHours()), invitatoryDate: null, active: -1, readings: {}, art: {} };
 
   {
     // Restore the current navigation after a refresh, without persisting the
@@ -1815,9 +1815,17 @@
       <div class="sec"><b>Concluding prayer</b>${RT.html(official.collect)}</div><div class="sec"><b>Blessing</b>${RT.html(RT.ordinary.nightBlessing)}</div><div class="sec"><b>${plan.easter?'Regina Caeli':'Salve Regina'}</b><p>${plan.easter?'Queen of heaven, rejoice, alleluia. For he whom thou didst merit to bear, alleluia, hath risen as he said, alleluia. Pray for us to God, alleluia.':'Hail, holy Queen, Mother of mercy, our life, our sweetness, and our hope. To thee do we cry, poor banished children of Eve; to thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us; and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.'}</p></div>${RT.acknowledgment()}`;
   }
   // Hide editorial notices from daily Roman Office without editing prayers.
-  function officePrayerMarkup(markup) {
+  function officePrayerMarkup(markup, firstHour=false) {
     const container=document.createElement('div');
     container.innerHTML=markup;
+    // GILH 34-35, 41: when Lauds begins the day's Office, the invitatory
+    // verse replaces the ordinary opening. Before Lauds its psalm and
+    // antiphon may be omitted; do not invent an unverified seasonal text.
+    if(firstHour){
+      const opening=container.querySelector('.sec');
+      if(opening?.querySelector('b')?.textContent.trim()==='Opening')
+        opening.innerHTML='<b>Invitatory verse (psalm omitted)</b><p>Lord, open my lips.<br>— And my mouth will proclaim your praise.</p>';
+    }
     for(const paragraph of container.querySelectorAll('p')){
       const text=(paragraph.textContent||'').replace(/\s+/g,' ').trim();
       if((/modern four.week psalter|each psalm.s antiphon is its own opening verse|current books. antiphons, readings and intercessions/i.test(text)
@@ -1851,6 +1859,10 @@
       h+=`<div class="byz-office-guide"><p>${esc(plan.church)} · Prayer companion</p>${LiturgySchedule.paschalBasis(P(v.iso).getUTCFullYear(),S.byzChurch)?'':'<p class="muted byz-unverified-pascha">The seasonal prayer order uses a calculated Gregorian Pascha; this church’s calendar for the year has not yet been verified.</p>'}${kindOf(rite)==='morning'&&S.byzChurch==='melkite'&&Melkite.typicon(v.iso)?.orthrosGospel?`<p>Appointed Orthros Gospel${Melkite.typicon(v.iso).orthrosNumber?' '+Melkite.typicon(v.iso).orthrosNumber:''}: ${esc(Melkite.typicon(v.iso).orthrosGospel)} · November 2026 monthly typicon.</p>`:''}${plan.brightWeek?'<p>Bright Week: use the Paschal order in your church’s service book. The ordinary psalm selections and fixed Compline additions are omitted here.</p>':''}<details><summary>Order of the full office</summary><p>The prayers below are selections for personal prayer, with clergy litanies omitted. Historical fixed prayers and Resurrection troparia use Shann’s English translation (1891). The full office also includes the appointed hymns and daily propers.</p>${kindOf(rite)==='night'?'<p>The fixed additions use Shann’s public-domain English translation (1891), including the prayers to the Mother of God and before sleep. Follow your church’s service book for the canon, kontakion, seasonal variations, final petitions and forgiveness.</p>':''}<ol>${plan.outlines.map(line=>`<li>${esc(line)}</li>`).join('')}</ol><p>Psalm numbers follow the Septuagint. ${esc(plan.note)}</p>${plan.brightWeek?'<p>During Bright Week, use the Paschal order; this ordinary outline does not apply.</p>':''}<p>The liturgical day begins with Vespers. The full daily cycle also includes the Midnight Office and First, Third, Sixth and Ninth Hours (traditionally about 6 am, 9 am, noon and 3 pm). Parish service times vary.</p><div class="row">${linksHTML('byz','any')}</div></details></div>`;
     }
     if (rite === 'sarum') h += '<h3 class="prayer-rite-title">'+esc(((SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1] === 'Little Hrs') ? 'Little Hours' : (SHOURS.find(([k]) => k === st.shour) || SHOURS[0])[1])+'</h3>';
+    if (rite === 'roman' && st.kind === 'morning') {
+      const firstHour=st.invitatoryDate===st.date;
+      h += `<div class="row roman-invitatory-choice" style="margin:0 0 12px"><button class="btn sm" data-act="romaninvitatory" aria-pressed="${firstHour}" title="Use when Morning Prayer is your first Hour today; the Invitatory psalm may be omitted before Lauds.">${firstHour?'Invitatory verse at start ✓':'First prayer today? Use Invitatory verse'}</button></div>`;
+    }
     if (rite === 'roman') h += `<div class="step prayer-opening"><div class="t">Sign of the Cross</div><div class="tx">${esc(C.TEXTS.cross)}</div></div>`;
     if (hasTTS) h += '<div class="row" style="margin:0 0 14px"><button class="btn fill" data-act="play">▶ Play session aloud</button></div>';
     steps.forEach((s, i) => {
@@ -1863,7 +1875,7 @@
       else if (s.type === 'readings') h += (rite === 'byz' ? byzReadingsHTML(v) : rite === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date));
       else if (s.type === 'office') h += window.Hours
         ? (rite === 'roman'
-            ? (s.which === 'C' ? romanNightHTML() : officePrayerMarkup(Hours.modern(L, P(st.date), s.which, S)))
+            ? (s.which === 'C' ? romanNightHTML() : officePrayerMarkup(Hours.modern(L, P(st.date), s.which, S),s.which==='L'&&st.invitatoryDate===st.date))
             : rite === 'sarum'
               ? (Hours.sarum && Hours.sarum(L, P(st.date), s.which, window.Sarum) || '<p class="muted">This Sarum office is unavailable for this date.</p>')
               : Hours.hour(L, P(st.date), s.which))
@@ -2530,6 +2542,7 @@
       case 'jtab': st.jtab = v; break;
       case 'rite': if (!Object.hasOwn(RITES, v)) return; S.rite = v; st.readRite = v; save(); break;
       case 'kind': st.kind = v; break;
+      case 'romaninvitatory': if(st.tab!=='pray'||S.rite!=='roman'||st.kind!=='morning')return; st.invitatoryDate=st.invitatoryDate===st.date?null:st.date; break;
       case 'prayview': st.prayView = v === 'mass' ? 'mass' : 'office'; break;
       case 'liturgyview': st.liturgyView = v === 'byz' ? 'byz' : 'mass'; break;
       case 'manualBook': {
@@ -2576,7 +2589,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v447';
+  const APP_BUILD = 'ora-v448';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

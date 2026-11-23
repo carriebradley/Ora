@@ -59,3 +59,9 @@ These checks cover the *appointed choice and placement*, not an independent word
 4. Only set `oraCompared=true` after real output was checked. Only set `textCompared=true` where the exact wording (or clearly identified legitimate translation) was actually compared. Any unverified case stays open.
 
 **Acceptance for #155:** a complete first-date comparison record with actual Ora-output findings and evidence for each relevant section, not merely an initial template. This PR establishes the reusable schema and source appointments; it should not by itself close #155.
+
+## First-Hour entry regression — November 22, 2026
+
+A user-selectable **First prayer today? Use Invitatory verse** choice is available on the Roman Morning Prayer page. The General Instruction of the Liturgy of the Hours, [GILH 34–35 and 41](https://www.catholicculture.org/culture/library/view.cfm?recnum=5138), places the Invitatory before the first Hour of the day, permits omission of its psalm and antiphon before Lauds, and omits the usual Lauds opening when the Invitatory precedes it. Ora uses the permitted **verse-only** form rather than inventing a season's antiphon. The choice lasts only for the selected day in the current app session; other Hours are unchanged.
+
+This documents **rubric and rendered-structure parity**, not full licensed Office text parity or independently verified hymn/psalm wording. The corresponding JSON comparison is `match-rubric-option` with `textCompared=false`; the complete Invitatory psalm remains outstanding.

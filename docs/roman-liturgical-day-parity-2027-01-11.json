@@ -164,11 +164,11 @@
       "expected": "Presence depends on which Hour is prayed first",
       "sourceUrl": "https://divineoffice.org/general-instructions/",
       "oraModule": "hours.js",
-      "sourceStatus": "pending",
-      "oraCompared": false,
+      "sourceStatus": "gilh-rubric",
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-rubric-option",
+      "note": "GILH 34-35 and 41: when Lauds is the first Hour, the Invitatory verse precedes it and the usual opening is omitted. The Invitatory psalm and antiphon may be omitted before Lauds. Ora provides the verse-only form as an explicit date-specific session choice; browser checks verify the rendered entry and preserve the ordinary Vespers opening. Full Invitatory psalm/antiphon and exact approved-edition wording are not independently compared."
     },
     {
       "id": "oor.psalmody",
