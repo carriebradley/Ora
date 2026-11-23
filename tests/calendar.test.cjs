@@ -171,7 +171,9 @@ test('Roman sanctoral has no duplicate Anthony and 1962 classes and dates are va
  assert.match(anthony[0],/Saint Anthony of Padua, Priest and Doctor of the Church\|M\|w$/);
  const grouped={};
  for(const line of modern)(grouped[line.split('|')[0]]??=[]).push(line);
- assert.deepEqual(Object.keys(grouped).filter(x=>grouped[x].length>1),['10/9']);
+ // Distinct optional choices on the same date are valid, not duplicates.
+ assert.deepEqual(Object.keys(grouped).filter(x=>grouped[x].length>1),['10/9','11/23']);
+ assert.deepEqual(grouped['11/23'].map(x=>x.split('|')[2]),['O','O','O']);
  // The Immaculate Heart displaces the June 13 memorial in 2026.
  const roman=L.roman(L.D(2028,6,13));
  assert.match(roman.title,/Anthony of Padua/);

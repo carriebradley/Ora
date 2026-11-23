@@ -1623,7 +1623,7 @@
       image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Paul_Catholic_Church_%28Westerville%2C_Ohio%29_-_stained_glass%2C_arcade%2C_Saint_Andrew_Dung_Lac.jpg?width=330',
       source: 'https://commons.wikimedia.org/wiki/File:Saint_Paul_Catholic_Church_(Westerville,_Ohio)_-_stained_glass,_arcade,_Saint_Andrew_Dung_Lac.jpg',
       alt: 'Stained-glass portrait depicting Saint Andrew Dung-Lac',
-      credit: 'Nheyob · CC BY-SA 3.0 (uncropped original)'
+      credit: 'Nheyob · CC BY-SA 3.0'
     },
     'Saint Martin of Tours': {
       image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Saint_Martin_of_Tours_MET_DP144442.jpg?width=330',
