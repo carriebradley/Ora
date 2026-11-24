@@ -1843,7 +1843,7 @@
     const choice=manualAvailable&&st.manualBook?.date===st.date&&st.manualBook?.church===S.byzLiturgyChurch?st.manualBook.id:'';
     const serviceId=choice||service.id;
     const bookId=byzantine&&['chrysostom','basil','presanctified'].includes(serviceId)&&S.byzLiturgyChurch==='melkite'?'melkite-'+serviceId:byzantine?serviceId:'roman';
-    const reader=choice||!manualAvailable?LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:day.title,dayRank:byzantine?day.rank:'',manual:!!choice}):'';
+    const reader=choice||!manualAvailable?LiturgicalText.card(bookId,{church:S.byzLiturgyChurch,date:st.date,dayTitle:day.title,dayRank:day.rank,daySeason:byzantine?'':day.season,manual:!!choice}):'';
     const manualBooks=manualAvailable?`<details class="manual-service-books" ${choice?'open':''}><summary>Open a saved service book</summary><p class="muted">The service for this date has not been verified. Choose a book to read; this does not identify the appointed service.</p><div class="row" role="group" aria-label="Choose a service book">${[['chrysostom','St. John Chrysostom'],['basil','St. Basil'],['presanctified','Presanctified Gifts']].map(([id,label])=>`<button type="button" class="btn sm" data-act="manualBook" data-v="${id}" aria-pressed="${choice===id}">${label}</button>`).join('')}</div></details>`:'';
     return `<div class="seg" aria-label="Liturgy type"><button data-act="liturgyview" data-v="mass" class="${byzantine?'':'on'}">Roman Mass</button><button data-act="liturgyview" data-v="byz" class="${byzantine?'on':''}">Divine Liturgy</button></div>
     <section class="card simple-liturgy">
@@ -2673,7 +2673,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v459';
+  const APP_BUILD = 'ora-v460';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

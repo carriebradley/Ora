@@ -107,3 +107,21 @@ For the representative **Monday, January 11, 2027**, the [Monday Ordinary Time N
 **Explicit differences:** Ora displays the Psalm 86 and 1 Thessalonians passage in **Douay–Rheims**, not the approved U.S. First Edition Scripture translation, and the hymn is a **historical English** rendering (Neale, 1852), not an established match to the witness site's chosen hymn. Version **454** makes these choices legible in the section headings without replacing any texts. GILH §88 permits Sunday psalmody as an alternative for Night Prayer; §92 permits a Marian antiphon choice outside Easter (Regina caeli during Easter). Ora currently renders one ordinary Monday option; it does not expose every approved alternative.
 
 The `compline.full` row is now `oraCompared=true`, `comparison=appointed-different-translation`, **`textCompared=false`**. **17 of 27** worksheet sections have a bounded comparison, **zero** have been certified against full printed approved wording. Follow-up under [#161](https://github.com/carriebradley/Ora/issues/161): compare a contrasting Sunday/solemnity Compline, confirm exact collects and translation/option policies from the approved book, and verify dated seasonal exceptions. No proprietary hymn or prayer text was copied into this audit.
+
+## Roman Mass ordinary — Gloria and Creed appointed by calendar rank (November 24, 2026)
+
+[USCCB *General Instruction of the Roman Missal*, §§53 and 68](https://www.usccb.org/prayer-and-worship/the-mass/general-instruction-of-the-roman-missal/girm-chapter-2) distinguishes the two Ordinary texts from the daily propers:
+
+| Appointed calendar observance | Gloria | Creed |
+| --- | --- | --- |
+| **Monday, January 11, 2027**, ordinary weekday | Not ordinarily used | Not ordinarily used |
+| Sunday outside Advent and Lent | Used | Used |
+| Sunday in Advent or Lent | Not ordinarily used | Used |
+| Solemnity, including **Boston Thursday Ascension** | Used | Used |
+| Feast | Used | Not ordinarily required |
+
+**Bug corrected in v460:** The private Roman Missal preview previously included both the Gloria and Apostles’ Creed whenever the saved book contained them, implying they were appointed on ordinary weekdays. The preview now uses Ora's Roman liturgical rank and season to display each only when normally prescribed. On Sundays and solemnities, the saved **Nicene Creed** is the standard visible choice when available, while the saved **Apostles’ Creed** remains accessible as a collapsed **Alternative: Apostles’ Creed**. This does not edit or upload any private book.
+
+**Limits:** The rule is a default for the nationally appointed calendar observance, not a determination of every actual local, votive, ritual or unusually solemn Mass; see [GIRM Chapter VII](https://www.usccb.org/prayer-and-worship/the-mass/general-instruction-of-the-roman-missal/girm-chapter-7). The unit test covers dates including the January 11 Monday, ordinary/penitential Sundays, a feast, a solemnity and Boston's Thursday Ascension. Browser tests use a synthetic local EPUB for a November Memorial and Ordinary Sunday, including access to the alternate Creed and reopening offline; they do not certify a user's Missal's contents or approved text.
+
+The JSON worksheet row `mass.ordinary` is now `oraCompared=true`, `comparison=match-rubric-option`, **`textCompared=false`**. This brings the worksheet to **18/27** bounded source/selection comparisons and **0/27** certified word-for-word approved-text comparisons. Continue [#156](https://github.com/carriebradley/Ora/issues/156) with entrance/Communion antiphons, Collect, Prayer over Offerings, Prayer after Communion, and legitimate Missal options.

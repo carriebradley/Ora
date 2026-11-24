@@ -135,14 +135,14 @@
       "id": "mass.ordinary",
       "office": "mass",
       "element": "Order of Mass and minister roles",
-      "expected": "Verify correct ordinary prayers, roles and permitted options",
-      "sourceUrl": "https://divineoffice.org/general-instructions/",
-      "oraModule": "roman-missal.js (private EPUB)",
-      "sourceStatus": "pending",
-      "oraCompared": false,
+      "expected": "For Monday 2027-01-11, neither Gloria nor Creed is ordinarily appointed (GIRM 53,68). They follow Roman calendar day and season: Sundays outside Advent/Lent ordinarily have both; Sundays of Advent/Lent Creed only; solemnities both; feasts Gloria only. Particular solemn celebrations can differ.",
+      "sourceUrl": "https://www.usccb.org/prayer-and-worship/the-mass/general-instruction-of-the-roman-missal/girm-chapter-2",
+      "oraModule": "roman-missal.js (ordinaryParts); liturgy-reader-ui.js (renderRoman); app.js (LitCal Roman rank/season)",
+      "sourceStatus": "girm-rubric",
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "match-rubric-option",
+      "note": "v460 source/renderer comparison: USCCB GIRM 53/68 vs Ora selected day rank and season. Before correction, the private Missal preview displayed Gloria and Apostles’ Creed whenever the book contained them, even on ordinary weekdays. Ora now omits unappointed parts on a matched Memorial weekday and uses the Nicene Creed on an ordinary Sunday while exposing the saved Apostles’ Creed as an explicitly collapsed alternative. Dated Node selections cover Monday 2027-01-11, Ordinary Sunday 2026-11-15, Advent Sunday 2026-12-13, Lent Sunday 2027-03-07, solemnity 2026-12-08, feast 2027-02-02, and Boston Thursday Ascension 2027-05-06; browser uses a synthetic local EPUB with matched weekday and Sunday sections, without real book text. This checks rubrics/selection only, not exact approved Missal wording. Particular Ritual/Votive or more solemn Masses and local calendar choices may lawfully differ."
     },
     {
       "id": "mass.options",
