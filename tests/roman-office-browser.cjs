@@ -206,7 +206,7 @@ module.exports=async function(page,base,artifacts){
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-06&kind=night`);
   assert.equal(await page.locator('#st0 .roman-office-heading').count(),0,
     'Thursday is an Easter weekday in Sunday-transfer provinces');
-  assert.match(await page.locator('#st0').innerText(),/Psalm 16 · Douay–Rheims/);
+  assert.match(await page.locator('#st0').textContent(),/Psalm 16 · Douay–Rheims/);
   await page.goto(`${base}index.html?tab=more&date=2027-05-08`);
   await page.locator('[data-act="settings"]').click();
   await page.locator('#s_asc').selectOption(originalAscension);
