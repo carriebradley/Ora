@@ -9,7 +9,7 @@ const end=source.indexOf('  const readingsSpeech =',start);
 assert.ok(start>=0&&end>start,'Mass citation loader is present');
 const loader=new Function('feedP','fetch','store','st','render','READINGS_API',
  source.slice(start,end)+'\nreturn {loadReadings,hasReadingCitations};');
-const htmlStart=source.indexOf('  function romanReadingsHTML(');
+const htmlStart=source.indexOf('  function romanReadingsAudioHTML(');
 const htmlEnd=source.indexOf('  /* OCA lists',htmlStart);
 assert.ok(htmlStart>=0&&htmlEnd>htmlStart,'Roman readings renderer is present');
 const citationValidator=new Function(source.slice(start,source.indexOf('  function loadReadings(',start))+
@@ -37,11 +37,11 @@ async function exercise(payload,{cached=null,feed={},reject=false,date=iso}={}){
  await Promise.race([done,new Promise((_,reject)=>setTimeout(()=>reject(Error('No render after readings attempt')),2500))]);
  return {reading:st.readings[date],writes,requests};
 }
-const render=(reading,date=iso)=>{
+const render=(reading,date=iso,showAudio=true,simple=false)=>{
  const st={readings:{[date]:reading}};
  return htmlFactory(st,s=>String(s),s=>s,
   date=>'https://bible.usccb.org/bible/readings/'+date.slice(5,7)+date.slice(8,10)+date.slice(2,4)+'.cfm',
-  ()=>'/audio',()=>'',()=>'',()=>' ',citationValidator)(date);
+  ()=>'/audio',()=>'',()=>'',()=>' ',citationValidator)(date,showAudio,simple);
 };
 
 test('invalid or missing third-party Mass citations never produce an empty truthy reading',async()=>{
@@ -132,4 +132,23 @@ test('invalid preloaded citation object renders a meaningful unavailable notice'
  const html=render({first:undefined,psalm:'',gospel:42});
  assert.match(html,/Readings aren.t available offline or for this date yet/);
  assert.doesNotMatch(html,/class="cite"/);
+});
+
+test('official daily Mass recording remains above the reading text with or without an imported ID',()=>{
+ const full={title:'Daily Mass',sections:[{label:'Reading 1',cite:'Hebrews 1:1-6',text:'Test-only placeholder'}]};
+ for(const audio of [undefined,'2418304374']){
+  const html=render({full:{...full,audio}});
+  assert.match(html,/href="\/audio"/);
+  assert.ok(html.indexOf('href="/audio"')<html.indexOf('Test-only placeholder'));
+  assert.equal(html.includes('<iframe'),Boolean(audio));
+ }
+ for(const reading of ['loading',null,{first:'Hebrews 1:1-6'}]){
+  const html=render(reading);
+  assert.match(html,/Listen to daily Mass readings/);
+  assert.doesNotMatch(html,/<iframe/);
+ }
+ const simple=render({full},iso,true,true);
+ assert.match(simple,/Listen to daily Mass readings/);
+ const suppressed=render({full:{...full,audio:'2418304374'}},iso,false,true);
+ assert.doesNotMatch(suppressed,/<iframe|Listen to daily Mass readings|Open official recording/);
 });
