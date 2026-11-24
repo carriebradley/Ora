@@ -2524,7 +2524,8 @@
     d.innerHTML = `<h3 id="settings-title">Settings</h3>
       ${sel('s_rite', 'Primary rite (prayer, quotes, hours)', Object.entries(RITES), S.rite)}
       ${sel('s_reading', 'Prayer and Scripture text size', [['compact', 'Compact'], ['comfortable', 'Comfortable'], ['large', 'Large']], S.readingSize)}
-      ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday (most US provinces)']], S.ascension)}
+      ${sel('s_asc', 'Roman: Ascension', [['thursday', 'Thursday · five US provinces'], ['sunday', 'Sunday · other US provinces']], S.ascension)}
+      <p class="muted" style="font-size:.8rem;margin:4px 0 10px">U.S. calendar: Thursday in the provinces of Boston, Hartford, New York, Omaha and Philadelphia; Sunday elsewhere. Ora keeps the option you choose.</p>
       ${sel('s_corp', 'Roman: Corpus Christi', [['thursday', 'Thursday (universal)'], ['sunday', 'Sunday']], S.corpus)}
       ${sel('s_epi', 'Roman: Epiphany', [['jan6', 'January 6 (universal)'], ['sunday', 'Sunday (USA)']], S.epiphany)}
       ${sel('s_byzchurch', 'Byzantine Catholic calendar', [['ukrainian','Ukrainian Greek Catholic · Edmonton'],['melkite','Melkite Greek Catholic · Newton (2026 verified)']], S.byzChurch)}<p class="muted">Melkite dates are verified for 2026 only. Ukrainian uses verified Edmonton dates with a labelled New Westminster/calculated fallback. Canadian local obligations are identified separately from U.S. practice.</p>
@@ -2672,7 +2673,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v458';
+  const APP_BUILD = 'ora-v459';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

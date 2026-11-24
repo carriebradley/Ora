@@ -180,6 +180,38 @@ module.exports=async function(page,base,artifacts){
       date+' contextual label fits 320px');
     await page.setViewportSize({width:390,height:844});
   }
+  // The U.S. Ascension setting is a user choice, not a location inference.
+  // In 2027 Boston + four provinces observe Thursday May 6; other U.S.
+  // provinces transfer to Sunday May 9. Check saved settings and actual HTML.
+  await page.goto(`${base}index.html?tab=more&date=2027-05-08`);
+  await page.locator('[data-act="settings"]').click();
+  assert.match(await page.locator('#dlg').innerText(),/Boston, Hartford, New York, Omaha and Philadelphia/);
+  const originalAscension=await page.locator('#s_asc').inputValue();
+  await page.locator('#s_asc').selectOption('thursday');
+  await page.locator('#dlg [data-act="savesettings"]').click();
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-08&kind=night`);
+  assert.match(await page.locator('#st0 .roman-office-heading').innerText(),
+    /First Vespers.*7th Sunday of Easter/i);
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-06&kind=night`);
+  assert.match(await page.locator('#st0 .roman-office-heading').innerText(),
+    /Second Vespers.*Ascension of the Lord/i);
+  await page.goto(`${base}index.html?tab=more&date=2027-05-08`);
+  await page.locator('[data-act="settings"]').click();
+  assert.equal(await page.locator('#s_asc').inputValue(),'thursday','regional selection persists');
+  await page.locator('#s_asc').selectOption('sunday');
+  await page.locator('#dlg [data-act="savesettings"]').click();
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-08&kind=night`);
+  assert.match(await page.locator('#st0 .roman-office-heading').innerText(),
+    /First Vespers.*Ascension of the Lord/i);
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-06&kind=night`);
+  assert.equal(await page.locator('#st0 .roman-office-heading').count(),0,
+    'Thursday is an Easter weekday in Sunday-transfer provinces');
+  assert.match(await page.locator('#st0').innerText(),/Psalm 16 · Douay–Rheims/);
+  await page.goto(`${base}index.html?tab=more&date=2027-05-08`);
+  await page.locator('[data-act="settings"]').click();
+  await page.locator('#s_asc').selectOption(originalAscension);
+  await page.locator('#dlg [data-act="savesettings"]').click();
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-17&kind=night`);
   const text=await page.locator('#st0').innerText();
   assert.match(text,/Psalm 143/i);assert.doesNotMatch(text,/destroy my enemies|cut off all/);
