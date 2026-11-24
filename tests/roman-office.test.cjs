@@ -147,7 +147,7 @@ test('Ascension local setting changes Vespers and Compline on May 5–9 2027',()
    'Sunday transfer must not acquire an invented Thursday vigil');
  const cases=[
   [5,thursday,'solemnity-i',6,/Ascension/],
-  [5,sunday,'weekday',3,/Wednesday/],
+  [5,sunday,'weekday',3,/Wednesday/,2],
   [6,thursday,'solemnity-ii',0,/Ascension/],
   [6,sunday,'weekday',4,/Thursday/],
   [8,thursday,'sunday-i',6,/7th Sunday of Easter/],
@@ -155,14 +155,14 @@ test('Ascension local setting changes Vespers and Compline on May 5–9 2027',()
   [9,thursday,'sunday-ii',0,/7th Sunday of Easter/],
   [9,sunday,'solemnity-ii',0,/Ascension/]
  ];
- for(const [day,option,kind,index,name] of cases){
+ for(const [day,option,kind,index,name,expectedAntiphons] of cases){
   const p=Hours.romanNightPlan(LitCal,d(day),option);
   assert.equal(p.kind,kind,'2027-05-'+day+' '+option.ascension);
   assert.equal(p.index,index,'psalmody '+day+' '+option.ascension);
   assert.match(p.observance,name,'liturgical context '+day+' '+option.ascension);
   assert.equal(p.easter,true,'Easter season preserved through this boundary');
   const office=RT.night(p);
-  assert.equal(office.antiphons.length,index===6?2:1);
+  assert.equal(office.antiphons.length,expectedAntiphons??(index===6?2:1));
   assert.ok(office.collect);
   assert.ok(office.gospelAntiphon);
  }
