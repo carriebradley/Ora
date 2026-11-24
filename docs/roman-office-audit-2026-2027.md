@@ -316,3 +316,16 @@ short reading in 445 offices. Remaining gaps include unresolved proper sources
 and Judith's Greek/Vulgate numbering alignment. Full-verse expansions are
 labelled. See [the prayer/reader review](PRAYER-AND-READER-REVIEW-2026-11-13.md)
 for boundaries, provenance and remaining content limits.
+
+## November 23, 2026 — Immaculate Conception Night Prayer I/II source check (Issue #161)
+
+The USCCB [2026 U.S. liturgical calendar](https://www.usccb.org/resources/2026cal.pdf) appoints the **Immaculate Conception of the Blessed Virgin Mary** on **Tuesday, December 8, 2026** as a solemnity. The [General Instruction on the Liturgy of the Hours (GILH) §§84–92, 225 and 230](https://www.catholicculture.org/culture/library/view.cfm?recnum=5138) requires Night Prayer as on Sunday after First and Second Vespers respectively. First Vespers begin the preceding evening, **Monday December 7**.
+
+| Date and context | First Edition source witness | Expected psalm(s), reading | Ora comparison and limits |
+| --- | --- | --- | --- |
+| Mon Dec 7, after **First Vespers** | [Night Prayer I for solemnities outside Sunday](https://divineoffice.org/ord-solemnities-not-on-sunday-np1/), Vol. I p. 1169 | Psalms **4 and 134**; Deuteronomy **6:4–7** | Ora selects `solemnity-i`, with two antiphons and the special solemnity-I collect. Source/sequence verified, not text-identical to official First Edition. |
+| Tue Dec 8, after **Second Vespers** | [Night Prayer II for solemnities](https://divineoffice.org/ord-sol-np2/), Vol. I p. 1172 | Psalm **91**; Revelation **22:4–5** | Ora selects `solemnity-ii`, with one antiphon and the special solemnity-II collect, distinct from ordinary Sunday II. Source/sequence verified, not full approved-text parity. |
+
+Ora's `roman-office.js` already handled the correct date transition and Sunday-type psalmody. **Version 458** adds a small Night Prayer caption identifying the Vespers context and the solemnity name, so December 7 does not misleadingly look like an ordinary Monday office. No psalm, Scripture, hymn, antiphon, responsory or collect text was changed. Node tests check the evening transition, solemnity-specific collects and chosen source records; browser tests check the rendered heading, psalms, readings, repeated antiphons, optional examination and 320px phone layout.
+
+**Remaining verification:** Psalms/readings use Douay–Rheims and the hymn remains historical English; the exact approved First Edition wording and authorized alternatives have not been certified. GILH §92 permits Marian antiphon choices outside Easter; Ora currently presents Salve Regina. Also audit an ordinary Sunday with competing solemnities and local variations before considering Night Prayer universally verified. Do not reproduce licensed prayer text in public tests.

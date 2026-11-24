@@ -97,3 +97,33 @@ test('2027-01-11 Monday Compline keeps the appointed weekday source and sequence
  assert.ok(text.gospelAntiphon);
  assert.ok(text.collect);
 });
+
+test('December 7 and 8 2026 Compline uses first and second solemnity Vespers, not weekdays',()=>{
+ const RT=require('../roman-office-texts.js');
+ const options={epiphany:'sunday',ascension:'sunday',corpus:'sunday'};
+ const vigil=LitCal.D(2026,12,7),feast=LitCal.D(2026,12,8),sunday=LitCal.D(2026,12,6);
+ const first=Hours.romanNightPlan(LitCal,vigil,options);
+ const second=Hours.romanNightPlan(LitCal,feast,options);
+ const sundaySecond=Hours.romanNightPlan(LitCal,sunday,options);
+ assert.equal(first.kind,'solemnity-i');
+ assert.equal(first.index,6,'Monday night uses Sunday First Vespers psalmody');
+ assert.match(first.observance,/Immaculate Conception/i);
+ assert.equal(second.kind,'solemnity-ii');
+ assert.equal(second.index,0,'Tuesday night uses Sunday Second Vespers psalmody');
+ assert.match(second.observance,/Immaculate Conception/i);
+ assert.equal(sundaySecond.kind,'sunday-ii');
+ const eveningPlan=Hours.modernPsalmody(LitCal,vigil,'V',options);
+ assert.equal(eveningPlan.first,true,'Monday Evening Prayer is First Vespers of solemnity');
+ assert.equal(LitCal.iso(eveningPlan.d),'2026-12-08');
+ const firstOffice=RT.night(first),secondOffice=RT.night(second);
+ assert.deepEqual(RT.record('ord-solemnities-not-on-sunday-np1').psalmodyRefs,['Psalm 4','Psalm 134']);
+ assert.deepEqual(RT.record('ord-sol-np2').psalmodyRefs,['Psalm 91']);
+ assert.equal(firstOffice.antiphons.length,2);
+ assert.equal(secondOffice.antiphons.length,1);
+ assert.equal(firstOffice.collect,RT.record('ord-solemnities-not-on-sunday-np1').collect);
+ assert.equal(secondOffice.collect,RT.record('ord-sol-np2').collect);
+ assert.notEqual(firstOffice.collect,RT.night(sundaySecond).collect,'solemnity II uses its own concluding prayer');
+ assert.notEqual(firstOffice.collect,RT.record('sun-np1').collect,'solemnity I is not ordinary Saturday prayer');
+ assert.equal(firstOffice.source,'https://divineoffice.org/ord-solemnities-not-on-sunday-np1/');
+ assert.equal(secondOffice.source,'https://divineoffice.org/ord-sol-np2/');
+});
