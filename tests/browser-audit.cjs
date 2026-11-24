@@ -109,7 +109,9 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await page.locator('[data-act="rr"][data-v="roman"]').click();
  const recording=page.locator('iframe.readings-audio-player');
  await recording.waitFor({state:'attached',timeout:10000});
- assert.match(await recording.getAttribute('src'),/soundcloud\\.com\\/player\\/.*tracks%2F2418304374/,'official November 24 recording embedded');
+ const recordingSrc=await recording.getAttribute('src');
+ assert.ok(recordingSrc.startsWith('https://w.soundcloud.com/player/'),'official SoundCloud player URL');
+ assert.ok(recordingSrc.includes('tracks%2F2418304374'),'official November 24 recording embedded');
  assert.equal(await page.locator('a[href="https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-november-24-2026"]').count(),1,'date-specific official recording remains directly accessible');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Mass audio card fits mobile width');
  // A date not yet imported must never lose the official link or show a fake
