@@ -1870,6 +1870,11 @@
     ];
     const plan=Hours.romanNightPlan(L,P(st.date),S);
     const dow=plan.index, chosen=days[dow], official=RT.night(plan);
+    // First Vespers can belong to tomorrow's Sunday or solemnity. Explain
+    // the apparent date mismatch without adding another calendar card.
+    const vespersContext=/-(?:i|ii)$/.test(plan.kind)
+      ? 'Night Prayer after '+(plan.kind.endsWith('-i')?'First':'Second')+' Vespers · '+esc(plan.observance)
+      : '';
     const psalms=chosen.refs.map((ref,index)=>{
       let num=ref;
       const selection=Hours.modernPsalm(num)[0];
@@ -1881,6 +1886,7 @@
       return `<div class="sec"><b>Psalm ${label} · Douay–Rheims</b><p class="ant"><i>Ant.</i> ${esc(refrain)}</p><p class="tx">${verses.map(row=>esc(row[2]).replace(/\s*\*\s*/g,' ')).join('<br>')}</p><p>${esc(RT.ordinary.gloria).replace(/\n/g,'<br>')}</p><p class="ant"><i>Ant.</i> ${esc(refrain)}</p></div>`;
     }).join('');
     return `
+      ${vespersContext?'<p class="roman-office-heading muted" style="font-size:.82rem">'+vespersContext+'</p>':''}
       <div class="sec"><b>Opening</b>${RT.html(RT.ordinary.opening)}${RT.html(RT.ordinary.gloria+(plan.alleluia?' Alleluia.':''))}</div><details class="sec"><summary>Examination of conscience</summary><p>Recall the day before God in silence, giving thanks and asking forgiveness.</p></details>
       <div class="sec"><b>Hymn · historical English — Before the Ending of the Day (Neale, 1852)</b><p>Before the ending of the day,<br>Creator of the world, we pray<br>That with Thy wonted favor, Thou<br>Wouldst be our guard and keeper now.</p><p>From all ill dreams defend our sight,<br>From fears and terrors of the night;<br>Withhold from us our ghostly foe,<br>That spot of sin we may not know.</p><p>O Father, that we ask be done,<br>Through Jesus Christ, Thine only Son;<br>Who, with the Holy Ghost and Thee,<br>Doth live and reign eternally. Amen.</p></div>
       ${psalms}
@@ -2666,7 +2672,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v457';
+  const APP_BUILD = 'ora-v458';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

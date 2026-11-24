@@ -151,6 +151,35 @@ module.exports=async function(page,base,artifacts){
     'examination is available but optional');
   assert.match(await mondayNight.innerText(),/Into your hands, Lord/i,'appointed responsory visible');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Monday Compline fits narrow phone');
+  // GILH 88, 230: the Immaculate Conception's First Vespers begin on
+  // December 7, and its Second Vespers are December 8. The approved
+  // First Edition source selects Sunday I / II patterns respectively.
+  for(const [date,part,psalmLabels,reading]of [
+    ['2026-12-07','First',['Psalm 4','Psalm 134'],'Deuteronomy 6:4–7'],
+    ['2026-12-08','Second',['Psalm 91'],'Revelation 22:4–5']
+  ]){
+    await page.goto(`${base}index.html?tab=pray&rite=roman&date=${date}&kind=night`);
+    const office=page.locator('#st0');
+    assert.match(await office.locator('.roman-office-heading').innerText(),
+      new RegExp('Night Prayer after '+part+' Vespers.*Immaculate Conception','i'),
+      date+' identifies liturgical day and Vespers context');
+    const headings=await office.locator('div.sec > b').allTextContents();
+    assert.deepEqual(headings.filter(x=>x.startsWith('Psalm ')),
+      psalmLabels.map(x=>x+' · Douay–Rheims'),date+' appointed psalmody');
+    assert.ok(headings.includes('Short reading · '+reading+' · Douay–Rheims'),
+      date+' appointed reading');
+    assert.equal(await office.locator('details:not([open]) > summary').filter({hasText:'Examination of conscience'}).count(),1);
+    assert.equal(await office.locator('div.sec > b').filter({hasText:'Canticle of Simeon'}).count(),1);
+    assert.equal(await office.locator('div.sec > b').filter({hasText:'Concluding prayer'}).count(),1);
+    assert.equal(await office.locator('div.sec > b').filter({hasText:'Blessing'}).count(),1);
+    assert.equal(await office.locator('div.sec > b').filter({hasText:'Salve Regina'}).count(),1);
+    assert.equal(await office.locator('.ant').count(),psalmLabels.length*2+2,
+      date+' psalm and Nunc Dimittis antiphons repeated');
+    await page.setViewportSize({width:320,height:720});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,
+      date+' contextual label fits 320px');
+    await page.setViewportSize({width:390,height:844});
+  }
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-17&kind=night`);
   const text=await page.locator('#st0').innerText();
   assert.match(text,/Psalm 143/i);assert.doesNotMatch(text,/destroy my enemies|cut off all/);
