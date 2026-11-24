@@ -19,3 +19,26 @@ test('private Missal headings match saints, Sundays and weekday seasonal prayers
  assert.deepEqual(M.match([{title:'All Saints'},{title:'All Saints'}],'All Saints'),[],'ambiguous sections are not guessed');
  assert.deepEqual(M.order([{title:'The Introductory Rites'}]),[{title:'The Introductory Rites',page:1}]);
 });
+
+test('GIRM 53/68: ordinary Roman Mass shows Gloria and Creed by calendar rank and season',()=>{
+ const L=require('../calendar.js');
+ const options={epiphany:'sunday',ascension:'thursday',corpus:'sunday'};
+ const cases=[
+  [[2027,1,11],false,false,'ordinary Monday'],
+  [[2026,11,15],true,true,'Ordinary Sunday'],
+  [[2026,12,13],false,true,'Advent Sunday'],
+  [[2027,3,7],false,true,'Lenten Sunday'],
+  [[2026,12,8],true,true,'Immaculate Conception solemnity'],
+  [[2027,2,2],true,false,'Presentation feast'],
+  [[2027,5,6],true,true,'Boston Thursday Ascension']
+ ];
+ for(const [date,gloria,creed,description] of cases){
+  const day=L.roman(L.D(...date),options);
+  assert.deepEqual(M.ordinaryParts({rank:day.rank,season:day.season}),{gloria,creed},
+    description+': '+day.rank+'/'+day.season);
+ }
+ assert.deepEqual(M.ordinaryParts({rank:'',season:''}),{gloria:false,creed:false},
+   'unknown local Mass must not presume an obligation');
+ assert.deepEqual(M.ordinaryParts({rank:'Sunday',season:'Holy Week'}),{gloria:false,creed:true},
+   'Palm Sunday uses Creed but not Gloria');
+});

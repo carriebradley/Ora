@@ -10,9 +10,10 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const prayers=page.locator('.reader-inline-text');
  assert.equal(await prayers.isVisible(),true,'prayers remain visible with management collapsed');
  assert.equal(await page.locator('dialog[open]').count(),0);
- for(const text of ['Fixture entrance.','Fixture Gloria response.','Fixture Apostles response.','Fixture offerings.','Fixture communion.','Fixture after communion.'])assert.ok((await prayers.innerText()).includes(text),text);
+ for(const text of ['Fixture entrance.','Fixture offerings.','Fixture communion.','Fixture after communion.'])assert.ok((await prayers.innerText()).includes(text),text);
+ assert.doesNotMatch(await prayers.innerText(),/Fixture (?:Gloria|Apostles|Nicene) response/,'weekday memorial does not appoint Gloria or Creed');
  assert.doesNotMatch(await prayers.innerText(),/Fixture (?:biography|Scripture|hidden|Gloria instruction|Eucharistic direction|Christmas variant|Nicene response)/);
- assert.equal(await prayers.locator('.roman-response').count(),2,'explicit source responses retain visual distinction');
+ assert.equal(await prayers.locator('.roman-response').count(),0,'weekday omits Gloria/Creed but keeps private book text untouched');
  assert.match(await prayers.innerText(),/The priest decides which permitted prayer is used at Mass/);
  assert.doesNotMatch(await prayers.innerText(),/Fixture general Eucharistic prayer one\./);
  assert.equal(await prayers.locator('[data-reader="eucharistic"][aria-pressed="true"]').count(),0,
@@ -29,6 +30,16 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.screenshot({path:path.join(artifacts,'inline-private-missal.png'),fullPage:true});
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=roman`);
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture Sunday prayer'));
+ await prayers.waitFor({state:'visible'});
+ assert.match(await prayers.innerText(),/Fixture Gloria response/,'Sunday normally includes Gloria');
+ assert.match(await prayers.innerText(),/Fixture Nicene response/,'Nicene Creed is standard');
+ assert.doesNotMatch(await prayers.innerText(),/Fixture Apostles response/,'Apostles alternative begins collapsed');
+ const creedAlternative=page.locator('.roman-mass-alternative');
+ assert.equal(await creedAlternative.count(),1);
+ assert.equal(await creedAlternative.evaluate(el=>el.open),false);
+ await creedAlternative.locator('summary').click();
+ assert.equal(await creedAlternative.evaluate(el=>el.open),true);
+ assert.match(await creedAlternative.innerText(),/Fixture Apostles response/,'Apostles alternative is accessible');
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await context.setOffline(true);await page.reload();
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture Sunday prayer'));
  assert.equal(await page.locator('dialog[open]').count(),0);await context.setOffline(false);

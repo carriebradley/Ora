@@ -12,7 +12,7 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
  for(const name of ['calendar','mass','invitatory','office-of-readings','lauds','daytime-midmorning','daytime-midday','daytime-midafternoon','vespers','compline'])assert.ok(kinds.has(name),'missing '+name);
  const ids=fixture.sections.map(x=>x.id);
  assert.equal(new Set(ids).size,ids.length,'no duplicate comparison rows');
- const validSources=new Set(['official-calendar','lectionary-index','publisher-first-edition-witness','gilh-rubric','pending']);
+ const validSources=new Set(['official-calendar','lectionary-index','publisher-first-edition-witness','gilh-rubric','girm-rubric','pending']);
  const validComparison=new Set(['not-compared','match-calendar-appointment','match-source-selection','match-rubric-option','match-approved','appointed-different-translation','legitimate-option','wrong-appointment','missing-content','out-of-order','source-conflict','unverified']);
  for(const section of fixture.sections){
   assert.match(section.sourceUrl,/^https:\/\//,'source witness required for '+section.id);
@@ -29,7 +29,7 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
 test('initial source selection does not claim completed liturgical parity',()=>{
  assert.ok(fixture.sections.length>=25);
  assert.deepEqual(fixture.sections.filter(section=>section.oraCompared).map(section=>section.id).sort(),
-  ['calendar.day','compline.full','invitatory.entry','lauds.psalmody','lauds.reading','lauds.benedictus','lauds.intercessions','lauds.hymn','vespers.psalmody','vespers.reading','vespers.magnificat','vespers.intercessions','vespers.hymn','mass.first-reading','mass.psalm','mass.acclamation','mass.gospel'].sort());
+  ['calendar.day','compline.full','mass.ordinary','invitatory.entry','lauds.psalmody','lauds.reading','lauds.benedictus','lauds.intercessions','lauds.hymn','vespers.psalmody','vespers.reading','vespers.magnificat','vespers.intercessions','vespers.hymn','mass.first-reading','mass.psalm','mass.acclamation','mass.gospel'].sort());
  assert.ok(fixture.sections.every(section=>!section.textCompared&&section.comparison!=='match-approved'),
   'No full-text First Edition certification was performed');
  assert.ok(fixture.sections.some(section=>!section.oraCompared&&section.comparison==='not-compared'),

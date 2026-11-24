@@ -34,6 +34,16 @@
   return wanted.flatMap(([title,re])=>{const i=sections.findIndex(s=>re.test(s.title.trim()));return i<0?[]:[{title,page:i+1}];});
  }
 
+
+ // GIRM 53,68 ordinary-calendar rules only. Particular Ritual Masses and
+ // celebrations of a more solemn character require separate local choices.
+ function ordinaryParts({rank='',season=''}={}){
+  const day=String(rank).trim().toLowerCase(),time=String(season).trim().toLowerCase();
+  const sunday=day==='sunday',solemnity=day==='solemnity',feast=day==='feast'||day==='feast of the lord';
+  const penitential=['advent','lent','holy week','paschal triduum'].includes(time);
+  return {gloria:solemnity||feast||(sunday&&!penitential),creed:sunday||solemnity};
+ }
+
  function fixed(sections,type){
   const patterns={
    gloria:/^(?:the )?(?:gloria|glory to god(?: in the highest)?|gloria in excelsis(?: deo)?)\b/i,
@@ -78,6 +88,6 @@
   }
   return out;
  }
- return {match,order,key,prayers,ordinary,fixed,propers};
+ return {match,order,key,prayers,ordinary,ordinaryParts,fixed,propers};
 });
 

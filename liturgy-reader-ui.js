@@ -10,10 +10,10 @@
     return prayerPreviews.get(saved.id).promise;
   }
   function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
-  function card(id,{church='ukrainian',date='',dayTitle='',dayRank='',manual=false}={}){
+  function card(id,{church='ukrainian',date='',dayTitle='',dayRank='',daySeason='',manual=false}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
     const roman=id==='roman';
-    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" ${manual?'data-manual-book="true"':''} aria-label="${manual?'Selected service book':'Prayers of the day'}">
+    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" data-day-season="${escape(daySeason)}" ${manual?'data-manual-book="true"':''} aria-label="${manual?'Selected service book':'Prayers of the day'}">
       ${roman?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
       ${inlinePanel(roman)}
       <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
@@ -63,12 +63,25 @@
   function renderRoman(section,book,part){
     const target=section.querySelector('.reader-inline-text');target.replaceChildren();
     const proper=RomanMissal.propers(part),fixed=type=>{const s=RomanMissal.fixed(book.sections,type);return s?RomanMissal.prayers(s).blocks:null;};
+    const ordinary=RomanMissal.ordinaryParts({rank:section.dataset.dayRank,season:section.dataset.daySeason});
     appendMassPart(target,'Entrance Antiphon',proper.entrance);
-    appendMassPart(target,'Gloria',fixed('gloria'));
+    if(ordinary.gloria)appendMassPart(target,'Gloria',fixed('gloria'));
     appendMassPart(target,'Collect',proper.collect);
-    // Readings are available in their own tab.
-    appendMassPart(target,'Apostles’ Creed',fixed('apostles'));
-    if(!fixed('apostles'))appendMassPart(target,'Nicene Creed',fixed('creed'));
+    // Readings are available in their own tab. Saved books are never edited.
+    if(ordinary.creed){
+      const nicene=fixed('creed'),apostles=fixed('apostles');
+      if(nicene?.length)appendMassPart(target,'Nicene Creed',nicene);
+      else appendMassPart(target,'Apostles’ Creed',apostles);
+      if(nicene?.length&&apostles?.length){
+        // Preserve an authorized alternative without silently preselecting it.
+        const alternative=document.createElement('details');
+        alternative.className='roman-mass-alternative';
+        const summary=document.createElement('summary');
+        summary.textContent='Alternative: Apostles’ Creed';alternative.append(summary);
+        appendMassPart(alternative,'Apostles’ Creed',apostles);
+        target.append(alternative);
+      }
+    }
     appendMassPart(target,'Prayer over the Offerings',proper.offerings);
     const sectionEp=document.createElement('section');sectionEp.className='roman-mass-part roman-eucharistic';
     const heading=document.createElement('h3');heading.textContent='Eucharistic Prayer';sectionEp.append(heading);
