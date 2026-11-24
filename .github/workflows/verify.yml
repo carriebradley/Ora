@@ -26,6 +26,8 @@ jobs:
         run: |
           set -o pipefail
           node --test --test-isolation=none tests/*.test.cjs 2>&1 | tee /tmp/ora-test-log.txt
+      - name: Daily Mass podcast importer regression tests
+        run: python3 -m unittest discover -s tests -p 'test_daily_readings_audio.py'
       - name: Melkite importer regression tests
         run: |
           python3 -m pip install python-docx
