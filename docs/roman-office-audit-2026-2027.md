@@ -329,3 +329,18 @@ The USCCB [2026 U.S. liturgical calendar](https://www.usccb.org/resources/2026ca
 Ora's `roman-office.js` already handled the correct date transition and Sunday-type psalmody. **Version 458** adds a small Night Prayer caption identifying the Vespers context and the solemnity name, so December 7 does not misleadingly look like an ordinary Monday office. No psalm, Scripture, hymn, antiphon, responsory or collect text was changed. Node tests check the evening transition, solemnity-specific collects and chosen source records; browser tests check the rendered heading, psalms, readings, repeated antiphons, optional examination and 320px phone layout.
 
 **Remaining verification:** Psalms/readings use Douay–Rheims and the hymn remains historical English; the exact approved First Edition wording and authorized alternatives have not been certified. GILH §92 permits Marian antiphon choices outside Easter; Ora currently presents Salve Regina. Also audit an ordinary Sunday with competing solemnities and local variations before considering Night Prayer universally verified. Do not reproduce licensed prayer text in public tests.
+
+## November 24, 2026 — Region-specific Ascension and Compline boundaries (Issues #161 / #164)
+
+The [USCCB 2027 calendar](https://www.usccb.org/resources/2027cal.pdf), **printed p. 7, note 6b**, explicitly keeps the **Ascension on Thursday, May 6, 2027** in the ecclesiastical provinces of **Boston, Hartford, New York, Omaha and Philadelphia**; other U.S. provinces **transfer it to Sunday, May 9**. The [General Instruction of the Liturgy of the Hours §230](https://divineoffice.org/general-instructions/) assigns Sunday Night Prayer after First and Second Vespers of solemnities. The source appoints different dates/ranks, not automatically different psalm texts on the corresponding Sunday.
+
+| Civil date | Thursday-Ascension provinces | Sunday-Ascension provinces |
+| --- | --- | --- |
+| Wed **May 5** evening | First Vespers / Night Prayer I of the Ascension — Sunday I psalmody (Psalms 4, 134) | Ordinary Wednesday Easter Night Prayer |
+| Thu **May 6** | Ascension Night Prayer II — Sunday II psalmody (Psalm 91) | Thursday of Easter Week VI, ordinary Thursday Night Prayer |
+| Sat **May 8** evening | First Vespers / Night Prayer I of the **Seventh Sunday of Easter** | First Vespers / Night Prayer I of the **Ascension** |
+| Sun **May 9** | Second Vespers / Night Prayer II of the **Seventh Sunday of Easter** | Second Vespers / Night Prayer II of the **Ascension** |
+
+The existing Roman calendar and `roman-office.js` appear to select these date/rank/Office boundaries correctly. **v459** adds an explicit province explanation in Settings without reading the user's location or overriding their persisted setting, and regression tests for both user choices, their rendered Night Prayer context and the persistence of the choice after reloading. The ordinary U.S. default remains Sunday. No psalm, collect, seasonal color, prayers, and no Byzantine or Traditional calendar logic change.
+
+**Evidence boundary:** This verifies date, rank, First/Second Vespers, chosen psalm-number patterns, the rendered explanation, and settings behavior against the 2027 official calendar. It does **not** independently certify ICEL translations, exact collects or hymns, every local proper, or all Night Prayer/Marian antiphon alternatives. Keep the approved-text and locality audit open.

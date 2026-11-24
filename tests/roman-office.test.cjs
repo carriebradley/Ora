@@ -127,3 +127,47 @@ test('December 7 and 8 2026 Compline uses first and second solemnity Vespers, no
  assert.equal(firstOffice.source,'https://divineoffice.org/ord-solemnities-not-on-sunday-np1/');
  assert.equal(secondOffice.source,'https://divineoffice.org/ord-sol-np2/');
 });
+
+// USCCB 2027 Liturgical Calendar, printed p. 7 n. 6b: Ascension on
+// May 6 in five U.S. provinces, or May 9 in other U.S. provinces.
+// GILH 230 applies the corresponding Sunday I / II Night Prayer.
+test('Ascension local setting changes Vespers and Compline on May 5–9 2027',()=>{
+ const RT=require('../roman-office-texts.js');
+ const thursday={epiphany:'sunday',ascension:'thursday',corpus:'sunday'};
+ const sunday={...thursday,ascension:'sunday'};
+ const d=s=>LitCal.D(2027,5,s);
+ assert.match(LitCal.roman(d(6),thursday).title,/Ascension of the Lord/);
+ assert.equal(LitCal.roman(d(6),thursday).rank,'Solemnity');
+ assert.equal(LitCal.roman(d(6),sunday).rank,'Weekday');
+ assert.match(LitCal.roman(d(9),thursday).title,/7th Sunday of Easter/);
+ assert.match(LitCal.roman(d(9),sunday).title,/Ascension of the Lord/);
+ assert.equal(Hours.modernPsalmody(LitCal,d(5),'V',thursday).first,true,
+   'Thursday observance begins with First Vespers Wednesday evening');
+ assert.equal(Hours.modernPsalmody(LitCal,d(5),'V',sunday).first,false,
+   'Sunday transfer must not acquire an invented Thursday vigil');
+ const cases=[
+  [5,thursday,'solemnity-i',6,/Ascension/],
+  [5,sunday,'weekday',3,/Wednesday/,2],
+  [6,thursday,'solemnity-ii',0,/Ascension/],
+  [6,sunday,'weekday',4,/Thursday/],
+  [8,thursday,'sunday-i',6,/7th Sunday of Easter/],
+  [8,sunday,'solemnity-i',6,/Ascension/],
+  [9,thursday,'sunday-ii',0,/7th Sunday of Easter/],
+  [9,sunday,'solemnity-ii',0,/Ascension/]
+ ];
+ for(const [day,option,kind,index,name,expectedAntiphons] of cases){
+  const p=Hours.romanNightPlan(LitCal,d(day),option);
+  assert.equal(p.kind,kind,'2027-05-'+day+' '+option.ascension);
+  assert.equal(p.index,index,'psalmody '+day+' '+option.ascension);
+  assert.match(p.observance,name,'liturgical context '+day+' '+option.ascension);
+  assert.equal(p.easter,true,'Easter season preserved through this boundary');
+  const office=RT.night(p);
+  assert.equal(office.antiphons.length,expectedAntiphons??(index===6?2:1));
+  assert.ok(office.collect);
+  assert.ok(office.gospelAntiphon);
+ }
+ assert.deepEqual(RT.record('sun-np1').psalmodyRefs,['Psalm 4','Psalm 134']);
+ assert.deepEqual(RT.record('ord-sun-np2-w1-w3').psalmodyRefs,['Psalm 91']);
+ assert.equal(thursday.ascension,'thursday','never mutate selected regional setting');
+ assert.equal(sunday.ascension,'sunday');
+});
