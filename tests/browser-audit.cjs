@@ -102,6 +102,24 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
   'PRIEST: Remember, O Lord, those who bring offerings.'
  ]);
  assert.ok(melTest.transliteration.every(x=>!x.instruction),'sung transliterations must remain visible');
+ // Daily Mass podcast must actually render on the Readings screen. The
+ // iframe may be blocked by the network, but the official USCCB link must
+ // remain available independently and must point to the selected date.
+ await page.goto(`${base}index.html?tab=readings&date=2026-11-24&rite=roman`);
+ await page.locator('[data-act="rr"][data-v="roman"]').click();
+ const recording=page.locator('iframe.readings-audio-player');
+ await recording.waitFor({state:'attached',timeout:10000});
+ assert.match(await recording.getAttribute('src'),/soundcloud\\.com\\/player\\/.*tracks%2F2418304374/,'official November 24 recording embedded');
+ assert.equal(await page.locator('a[href="https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-november-24-2026"]').count(),1,'date-specific official recording remains directly accessible');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Mass audio card fits mobile width');
+ // A date not yet imported must never lose the official link or show a fake
+ // recording player.
+ await page.goto(`${base}index.html?tab=readings&date=2030-02-03&rite=roman`);
+ await page.locator('[data-act="rr"][data-v="roman"]').click();
+ const futureAudio=page.locator('a[href="https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-february-3-2030"]');
+ await futureAudio.waitFor({state:'attached',timeout:10000});
+ assert.equal(await page.locator('iframe.readings-audio-player').count(),0,'no invented player for an unimported date');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'future-date recording link fits mobile width');
  // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
  for(const church of ['ukrainian','melkite']){
   await page.goto(`${base}index.html?tab=more&date=2026-11-14&rite=byz`);
