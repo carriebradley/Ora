@@ -14,6 +14,8 @@ usage: python3 tools/fetch_readings.py [--file sample.xml] [--out readings.json]
 import json, re, sys, os, datetime, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
+from html import unescape
+from urllib.parse import unquote
 
 FEED = 'https://bible.usccb.org/readings.rss'
 KEEP_DAYS = 800
@@ -83,7 +85,9 @@ def get(url):
 
 def track_id(html):
     """The USCCB podcast page embeds a SoundCloud player; pull out the track id."""
-    m = re.search(r'api\.soundcloud\.com(?:%2F|/)tracks(?:%2F|/)(\d+)', html)
+    # Decode URL/HTML escaping, including double-encoded iframe URLs.
+    decoded = unquote(unquote(unescape(html)))
+    m = re.search(r'api\.soundcloud\.com/tracks/(\d+)\b', decoded, re.IGNORECASE)
     return m.group(1) if m else None
 
 
@@ -98,19 +102,34 @@ def podcast_slugs(index_html):
 
 
 def add_audio(days, fetch=get):
-    """Attach a SoundCloud track id (field 'audio') to each day that lacks one. Failures are skipped quietly."""
+    """Attach official SoundCloud IDs; prioritize current/future days and report gaps."""
     try: slugs = podcast_slugs(fetch(PODCAST))
-    except Exception: slugs = {}
-    for date, rec in days.items():
-        if rec.get('audio'): continue
+    except Exception as e:
+        print('audio: podcast index unavailable:', e)
+        slugs = {}
+    today = datetime.date.today().isoformat()
+    ordered = sorted(days, key=lambda date: (date < today, abs((datetime.date.fromisoformat(date) - datetime.date.fromisoformat(today)).days)))
+    missing = []
+    for date in ordered:
+        rec = days[date]
+        if re.fullmatch(r'\d+', str(rec.get('audio', ''))): continue
         y, mo, d = date.split('-')
         guess = f'daily-mass-reading-podcast-{MONTHS[int(mo) - 1]}-{int(d)}-{y}'
-        for slug in dict.fromkeys([slugs.get(date), guess]):
+        # Prefer the standard daily Mass before alternate feast/holiday recordings.
+        for slug in dict.fromkeys([guess, slugs.get(date)]):
             if not slug: continue
             try:
                 t = track_id(fetch(f'{PODCAST}/{slug}'))
-                if t: rec['audio'] = t; break
-            except Exception: pass
+                if t:
+                    rec['audio'] = t
+                    break
+            except Exception as e:
+                print(f'audio: {date}: {slug}: {e}')
+        else:
+            missing.append(date)
+    if missing:
+        print(f'::warning::USCCB audio missing for {", ".join(missing)}; will retry on next import.')
+    return missing
 
 
 # ---------- Justice tab: daily ~5-minute readings from public-domain texts ----------

@@ -196,13 +196,22 @@
   const readingsSpeech = r => r.full
     ? r.full.sections.map(s => `${s.label}. ${s.cite}.${s.text ? ' ' + s.text.replace(/\bR\.\s*/g, '') : ''}`).join('\n\n')
     : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}${r.acclamation ? 'Gospel acclamation, ' + r.acclamation + '. ' : ''}Gospel, ${r.gospel || ''}.`;
+  // The official recording must remain accessible even when the daily import
+  // has not supplied a SoundCloud track, or the third-party iframe is blocked.
+  function romanReadingsAudioHTML(iso, audio) {
+    const track = String(audio || '');
+    const link = `<div class="row"><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">${/^\d+$/.test(track) ? 'Open official recording' : '▶ Listen to daily Mass readings'}</a></div>`;
+    const player = /^\d+$/.test(track) ? `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${track}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>` : '';
+    return player + link;
+  }
   function romanReadingsHTML(iso, showAudio = true, simple = false) {
     const r = st.readings[iso];
     let h = '';
+    if (showAudio && !(r && r.full)) h += romanReadingsAudioHTML(iso);
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
       if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>`;
-      if (showAudio && /^\d+$/.test(String(r.full.audio || ''))) h += `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${r.full.audio}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>`;
+      if (showAudio) h += romanReadingsAudioHTML(iso, r.full.audio);
       const referencesOnly = r.full.sections.every(s => !String(s.text || '').trim());
       for (const s of r.full.sections) {
         const passage = String(s.text || '');
@@ -215,7 +224,7 @@
       for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['acclamation', 'Gospel Acclamation'], ['gospel', 'Gospel']]) if (typeof r[k] === 'string' && r[k].trim()) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
       if (r.sourceNote) h += `<p class="muted mass-citation-provenance" style="font-size:.8rem">${esc(r.sourceNote)}</p>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
-    if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a><a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
+    if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a>${showAudio ? '' : `<a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a>`}<a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
     if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. All rights reserved. Ora has not verified separate digital-application reproduction permission; see the official USCCB page for the approved readings.</p>`;
     return h;
   }
@@ -2673,7 +2682,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v460';
+  const APP_BUILD = 'ora-v461';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
