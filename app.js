@@ -477,6 +477,9 @@
     const cite = (lab, val) => `<div style="margin:8px 0 2px"><div class="muted" style="font-size:.78rem;text-transform:uppercase;letter-spacing:.04em">${lab}</div><div>${val}</div></div>`;
     const textDetails = entry => entry && entry.a && entry.w ? `<details class="oortx" open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">Second reading text</summary><div class="oortx-slot" data-k="${esc(entry.a + '|' + entry.w)}"><p class="muted" style="font-size:.8rem">Loading…</p></div></details>` : '';
     let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(displayTitle(r.title))}</p>`;
+    // This screen supplies a calendar-matched readings index, not the full
+    // First Edition Hour. Never imply that omitted parts have been verified.
+    h += '<p class="muted office-readings-limits" style="font-size:.82rem;margin:0 0 12px"><b>Readings index only — not the complete Office of Readings.</b> The opening, hymn, psalmody, antiphons, responsories and concluding prayer are not included here. Use the full-office link below for those parts.</p>';
     if (first && first.r) {
       h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
       h += `<details open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">First reading text</summary><div class="asv" data-tr="dra" data-ref="${esc(first.q)}" style="font-family:var(--serif);font-size:1.02rem;line-height:1.55"></div></details>`;
@@ -2682,7 +2685,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v461';
+  const APP_BUILD = 'ora-v462';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

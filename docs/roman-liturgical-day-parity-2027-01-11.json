@@ -176,12 +176,12 @@
       "element": "Opening, hymn, psalmody and antiphons",
       "expected": "Ordinary Time Monday Week I; inspect original First Edition",
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-or/",
-      "oraModule": "oor.js; hours.js",
+      "oraModule": "app.js (oorHTML); oor.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "missing-content",
+      "note": "Compared the actual Ora Office of Readings renderer on 2027-01-11 with the Monday Week I First Edition Psalter witness (Vol III p 702) at DivineOffice.org. The witness lists opening, hymn, Psalm 6 and Psalm 9A divided into two parts, with appointed antiphons. Ora only renders a readings index; those opening, hymn, psalmody, antiphons and psalm-prayers are not bundled. The interface now labels this limitation prominently. No source text was reproduced or approved wording certified."
     },
     {
       "id": "oor.reading-one",
@@ -189,12 +189,12 @@
       "element": "Scripture and responsory",
       "expected": "Sirach 1:1-18 (weekday witness); verify year and edition",
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-or/",
-      "oraModule": "oor.js; oortext.json",
+      "oraModule": "app.js (oorHTML); oor.js",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "missing-content",
+      "note": "Ora resolves the national U.S. ordinary Monday to OOR key o1-1 and displays the appointed Sirach 1:1-18 reference, with its Douay-Rheims text requested separately. The First Edition witness appoints Sirach 1:1-18, but its associated Sirach 1:7,10,1,9 responsory is absent from Ora's readings index. This is a matching appointment with missing liturgical content, not word-for-word parity."
     },
     {
       "id": "oor.reading-two",
@@ -202,12 +202,12 @@
       "element": "Patristic reading, responsory and concluding prayer",
       "expected": "Saint Clement I, letter to Corinthians (weekday witness); passage/edition unverified",
       "sourceUrl": "https://divineoffice.org/ord-w01-mon-or/",
-      "oraModule": "oor.js; oortext.json",
+      "oraModule": "app.js (oorHTML); oor.js; oortext.json",
       "sourceStatus": "publisher-first-edition-witness",
-      "oraCompared": false,
+      "oraCompared": true,
       "textCompared": false,
-      "comparison": "not-compared",
-      "note": ""
+      "comparison": "missing-content",
+      "note": "Ora selects Clement of Rome, Letter to the Corinthians 59:2-60:4;61:3 (o1-1) and has a bundled historical Kirsopp Lake 1912 translation. The First Edition witness appoints Clement of Rome in the same passage; the translation is not the approved First Edition wording. Ora lacks the second-reading Psalm 77:14-16 responsory and the Office concluding prayer/acclamation. Scope and exact wording of the printed First Edition remain unverified."
     },
     {
       "id": "lauds.psalmody",
