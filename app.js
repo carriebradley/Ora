@@ -150,15 +150,17 @@
     const saved = store.get('ora.feed', {});
     return hasReadingsFeed(saved) ? saved : {};
   };
-  const feedP = fetch('readings.json', { cache: 'no-cache' })
+  const fetchReadingsFeed = () => fetch('readings.json', { cache: 'no-cache' })
     .then(r => r.ok ? r.json() : null)
     .then(data => {
-      if (!hasReadingsFeed(data)) return cachedFeed();
+      if (!hasReadingsFeed(data)) return feed || cachedFeed();
       store.set('ora.feed', data);
       return data;
     })
-    .catch(() => cachedFeed())
+    .catch(() => feed || cachedFeed())
     .then(data => { feed = data; return feed; });
+  let feedP = fetchReadingsFeed();
+  let readingsRefreshPending = false;
   feedP.then(() => { if (st.tab === 'justice') render(); });
   const hasReadingCitations = data => data && typeof data === 'object' && !Array.isArray(data) &&
     ['first', 'psalm', 'second', 'gospel'].some(key => typeof data[key] === 'string' && data[key].trim());
@@ -192,6 +194,29 @@
         st.readings[iso] = out; store.set('ora.readings.' + iso, out); if (st.date === iso) render();
       });
     }).catch(() => { st.readings[iso] = null; if (st.date === iso) render(); });
+  }
+  // Retry a missing recording when the Roman Readings screen is visible.
+  // Never rebuild a screen with an existing iframe: playback would stop.
+  const hasOfficialRecording = reading => /^\d+$/.test(String(reading?.full?.audio || ''));
+  const romanReadingsVisible = () => document.visibilityState === 'visible' &&
+    st.tab === 'readings' && st.readRite !== 'byz' && st.readRite !== 'sarum';
+  function refreshReadingsFeed() {
+    const iso = st.date;
+    const previous = st.readings[iso];
+    if (!romanReadingsVisible() || feed === null || readingsRefreshPending ||
+        previous === undefined || previous === 'loading' || hasOfficialRecording(previous) ||
+        document.querySelector('#app .readings-audio-player')) return Promise.resolve(false);
+    readingsRefreshPending = true;
+    feedP = fetchReadingsFeed();
+    return feedP.then(f => {
+      const full = f[iso];
+      if (!Array.isArray(full?.sections) || !full.sections.length ||
+          !hasOfficialRecording({full}) || hasOfficialRecording(st.readings[iso])) return false;
+      st.readings[iso] = {full, copyright: f._copyright};
+      if (st.date === iso && romanReadingsVisible() &&
+          !document.querySelector('#app .readings-audio-player')) render();
+      return true;
+    }).finally(() => { readingsRefreshPending = false; });
   }
   const readingsSpeech = r => r.full
     ? r.full.sections.map(s => `${s.label}. ${s.cite}.${s.text ? ' ' + s.text.replace(/\bR\.\s*/g, '') : ''}`).join('\n\n')
@@ -2697,9 +2722,11 @@
     const t = todayISO();
     if (t !== shownToday) { if (st.date === shownToday) { st.date = t; st.month = null; render(); } shownToday = t; }
   });
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refreshReadingsFeed(); });
+  setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v463';
+  const APP_BUILD = 'ora-v464';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
