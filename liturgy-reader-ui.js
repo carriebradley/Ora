@@ -1,7 +1,7 @@
 /* Documents stay in IndexedDB on this device. No upload or remote PDF viewer. */
 (function(){
   'use strict';
-  const labels={roman:'Roman Mass',chrysostom:'St. John Chrysostom · Edmonton', 'melkite-chrysostom':'St. John Chrysostom · Melkite',basil:'St. Basil the Great',presanctified:'Presanctified Gifts · Ukrainian','melkite-basil':'St. Basil the Great · Melkite','melkite-presanctified':'Presanctified Gifts · Melkite'};
+  const labels={roman:'Roman Mass','roman-office':'Office of Readings',chrysostom:'St. John Chrysostom · Edmonton', 'melkite-chrysostom':'St. John Chrysostom · Melkite',basil:'St. Basil the Great',presanctified:'Presanctified Gifts · Ukrainian','melkite-basil':'St. Basil the Great · Melkite','melkite-presanctified':'Presanctified Gifts · Melkite'};
   const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const previewBooks=new Map(),prayerPreviews=new Map();let hydrateVersion=0;
   async function prayerPreview(saved,book,parser){
@@ -12,14 +12,16 @@
   function inlinePanel(roman){return `<div class="reader-inline-panel" ${roman?'data-roman="true"':''}><div class="reader-inline-text" aria-label="Prayers of the day" hidden></div>${roman?'':'<div class="row reader-inline-controls" hidden><button class="btn" data-reader="inline-prev">Previous</button><span class="reader-inline-page muted"></span><button class="btn" data-reader="inline-next">Next</button></div>'}</div>`;}
   function card(id,{church='ukrainian',date='',dayTitle='',dayRank='',daySeason='',manual=false}={}){
     if(!labels[id])return '<p class="muted">No service book for this date.</p>';
-    const roman=id==='roman';
-    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" data-day-season="${escape(daySeason)}" ${manual?'data-manual-book="true"':''} aria-label="${manual?'Selected service book':'Prayers of the day'}">
-      ${roman?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
-      ${inlinePanel(roman)}
-      <details class="reader-offline"><summary>${roman?'Manage saved Missal':id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book'}</summary>
-        
+    const roman=id==='roman', office=id==='roman-office';
+    const manageLabel=office?'Use a saved Office book':roman?'Manage saved Missal':
+      id==='melkite-chrysostom'?'Manage Melkite Divine Liturgy PDF':'Manage saved Divine Liturgy book';
+    return `<section class="liturgical-text simple-liturgical-text" data-text-id="${id}" data-day-title="${escape(dayTitle)}" data-day-date="${escape(date)}" data-day-rank="${escape(dayRank)}" data-day-season="${escape(daySeason)}" ${manual?'data-manual-book="true"':''} aria-label="${office?'Private Office book':manual?'Selected service book':'Prayers of the day'}">
+      ${roman||office?'':`<div class="step liturgy-opening"><div class="t">Sign of the Cross</div><div class="tx">${escape(CONTENT.TEXTS.cross)}</div></div>`}
+      ${office?'':inlinePanel(roman)}
+      <details class="reader-offline"><summary>${manageLabel}</summary>
+        ${office?'<p class="muted">Save your Liturgy of the Hours PDF or EPUB for offline reading. In the book, go to the page or section for the day you want to pray.</p>':''}
         <p class="reader-status" role="status">Checking saved book…</p>
-        <button class="btn" data-reader="open" disabled>Open original book</button>
+        <button class="btn" data-reader="open" disabled>${office?'Open saved Office book':'Open original book'}</button>
         <label for="liturgical-file">Choose a PDF or EPUB</label>
         <input class="reader-file" id="liturgical-file" type="file" accept="application/pdf,application/epub+zip,.pdf,.epub" aria-describedby="reader-storage-note">
         <p class="muted" id="reader-storage-note" style="font-size:.78rem;line-height:1.45;margin:8px 0">Books and bookmarks stay on this device. Keep the original PDF or EPUB elsewhere: clearing Safari website data or reinstalling Ora may erase the saved copy.</p>
@@ -470,6 +472,7 @@
     try{const saved=await LiturgyReader.get(section.dataset.textId);if(!section.isConnected||token!==hydrateVersion)return;
       status.textContent=saved?`${saved.name} · ${saved.pages} ${saved.format==='epub'?'sections':'pages'} · saved on this device`:'No text saved for this service yet.';
       section.querySelector('[data-reader="open"]').disabled=!saved;section.querySelector('[data-reader="remove"]').disabled=!saved;
+      if(section.dataset.textId==='roman-office')return;
       if(!saved){previewBooks.delete(section.dataset.textId);prayerPreviews.delete(section.dataset.textId);preview.hidden=true;preview.replaceChildren();if(controls)controls.hidden=true;return;}
       let book,continuous=false;
       try{
@@ -592,9 +595,13 @@
     d.showModal();
     try{
       const saved=await LiturgyReader.get(id);if(token!==session)return;if(!saved)throw new Error('No saved text.');
-      const loaded=await LiturgyReader.load(saved.blob,saved.format);if(token!==session){await loaded.destroy();return;}
+      const loaded=await LiturgyReader.load(saved.bytes??saved.blob,saved.format);
+      if(token!==session){await loaded.destroy();return;}
       doc=loaded;record=saved;d.querySelector('h2').textContent='Liturgical Text · '+labels[id];
-      d.querySelector('#reader-number').max=loaded.numPages;objectURL=URL.createObjectURL(saved.blob);const original=d.querySelector('#reader-original');original.href=objectURL;original.hidden=false;
+      const originalFile=saved.blob??new Blob([saved.bytes],{
+        type:saved.format==='epub'?'application/epub+zip':'application/pdf'
+      });
+      d.querySelector('#reader-number').max=loaded.numPages;objectURL=URL.createObjectURL(originalFile);const original=d.querySelector('#reader-original');original.href=objectURL;original.hidden=false;
       if(loaded.kind==='epub'){d.querySelector('[data-reader="mode"]').hidden=true;d.querySelector('#reader-unit').textContent='Section';d.querySelector('#reader-chapters').hidden=false;original.textContent='Download original EPUB';original.download=saved.name;fillSections();}
       await showPage(saved.page||1);
     }catch(_){if(token===session)d.querySelector('#reader-status').textContent='This book could not be opened. Use an unencrypted PDF or EPUB with readable text.';}

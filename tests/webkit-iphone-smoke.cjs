@@ -174,7 +174,51 @@ function pdf(){
   assert.ok(restored.n>=2,'WebKit EPUB sections parse');
   assert.equal(restored.hasPrayer,true,'WebKit EPUB text remains readable');
   assert.equal(restored.stillHasPdf,true,'WebKit book slots are isolated');
+  const officeUrl=base+'index.html?tab=pray&rite=roman&kind=readings&date=2027-01-11';
+  await page.goto(officeUrl);
+  const office=page.getByRole('region',{name:'Private Office book'});
+  await office.locator('summary').click();
+  const openOffice=office.getByRole('button',{name:'Open saved Office book'});
+  assert.equal(await openOffice.isDisabled(),true);
+  await office.getByLabel('Choose a PDF or EPUB').setInputFiles({
+   name:'webkit-office-test.epub',mimeType:'application/epub+zip',buffer:epub()
+  });
+  await office.getByRole('status').filter({hasText:'webkit-office-test.epub'}).waitFor();
+  await openOffice.click();
+  const reader=page.locator('#liturgical-reader');
+  await reader.locator('#reader-section option').last().waitFor({state:'attached'});
+  await reader.locator('#reader-section').selectOption('2');
+  await reader.getByText('Searchable prayer after communion.').waitFor();
+  await page.waitForFunction(async()=> (await LiturgyReader.get('roman-office'))?.page===2);
+  await reader.getByRole('button',{name:'Close'}).click();
+  await page.reload();
+  await office.locator('summary').click();
+  await office.getByRole('status').filter({hasText:'webkit-office-test.epub'}).waitFor();
+  await context.setOffline(true);
+  try{
+   await openOffice.click();
+   await reader.getByText('Searchable prayer after communion.').waitFor({timeout:8000}).catch(async error=>{
+    const detail=await page.evaluate(async()=>{
+     const saved=await LiturgyReader.get('roman-office');
+     return {bookmark:saved?.page,bytes:saved?.bytes?.byteLength,title:document.querySelector('#reader-title')?.textContent,
+      status:document.querySelector('#reader-status')?.textContent,
+      readerPage:document.querySelector('#reader-number')?.value};
+    });
+    console.error('WEBKIT_OFFICE_OFFLINE_DIAGNOSTICS',JSON.stringify(detail));
+    throw error;
+   });
+   assert.match(await reader.getByRole('heading',{level:2}).innerText(),/Office of Readings/);
+   await reader.getByRole('button',{name:'Close'}).click();
+   const otherBooks=await page.evaluate(async()=>[
+    (await LiturgyReader.get('chrysostom'))?.name,
+    (await LiturgyReader.get('basil'))?.name
+   ]);
+   assert.deepEqual(otherBooks,['webkit-private-test.pdf','webkit-private-test.epub']);
+  }finally{
+   await context.setOffline(false);
+  }
   assert.deepEqual(pageErrors,[],'no uncaught app errors in WebKit');
+  console.log('Private Roman Office EPUB imports from Prayers and reopens offline at its saved section');
   console.log('WebKit iPhone-emulation: tabs, 320px large text, PDF, EPUB, offline IndexedDB reads, bookmarks and reload passed');
  }catch(error){
   if(page)await page.screenshot({path:path.join(out,'webkit-failure.png'),fullPage:true}).catch(()=>{});

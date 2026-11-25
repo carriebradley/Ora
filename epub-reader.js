@@ -37,8 +37,9 @@
     if(node.localName==='br')return '\n';
     return Array.from(node.childNodes,words).join('');
   }
-  async function load(blob){
-    const buffer=await blob.arrayBuffer(),bytes=new Uint8Array(buffer),v=new DataView(buffer);
+  async function load(source){
+    const buffer=source instanceof ArrayBuffer?source:await source.arrayBuffer();
+    const bytes=new Uint8Array(buffer),v=new DataView(buffer);
     const u16=i=>v.getUint16(i,true),u32=i=>v.getUint32(i,true);
     let end=-1;
     for(let i=bytes.length-22;i>=Math.max(0,bytes.length-65557);i--){
@@ -68,7 +69,11 @@
       if(e.method===0)data=bytes.subarray(from,from+e.compressed);
       else if(e.method===8){
         let stream;try{stream=new DecompressionStream('deflate-raw');}catch(_){throw new Error('This browser cannot open compressed EPUBs. Open the original in Books.');}
-        const reader=blob.slice(from,from+e.compressed).stream().pipeThrough(stream).getReader(),chunks=[];
+        const input=new ReadableStream({start(controller){
+          controller.enqueue(bytes.subarray(from,from+e.compressed));
+          controller.close();
+        }});
+        const reader=input.pipeThrough(stream).getReader(),chunks=[];
         let length=0;
         try{for(;;){const {done,value}=await reader.read();if(done)break;length+=value.length;if(length>ENTRY_MAX||total+length>TEXT_MAX){await reader.cancel();return fail();}chunks.push(value);}}finally{reader.releaseLock();}
         data=new Uint8Array(length);let offset=0;for(const chunk of chunks){data.set(chunk,offset);offset+=chunk.length;}

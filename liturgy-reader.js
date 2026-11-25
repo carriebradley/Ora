@@ -57,22 +57,28 @@
     if (!pdfLibrary) pdfLibrary=import('./vendor/pdfjs/pdf.mjs').then(p=>{p.GlobalWorkerOptions.workerSrc=new URL('./vendor/pdfjs/pdf.worker.mjs',location.href).href;return p;}).catch(e=>{pdfLibrary=null;throw e;});
     return pdfLibrary;
   }
-  async function load(blob,format='pdf') {
-    if(format==='epub')return EpubReader.load(blob);
+  async function load(source,format='pdf') {
+    if(format==='epub')return EpubReader.load(source);
+    // PDF.js transfers its input to the worker. Keep the saved bytes intact.
+    const data=source instanceof ArrayBuffer?source.slice(0):await source.arrayBuffer();
     ensureStreamAsyncIterator();
     const p=await library();
-    const task=p.getDocument({data:new Uint8Array(await blob.arrayBuffer()),isEvalSupported:false,enableXfa:false,useSystemFonts:true,useWasm:false});
+    const task=p.getDocument({data:new Uint8Array(data),isEvalSupported:false,enableXfa:false,useSystemFonts:true,useWasm:false});
     task.onPassword=()=>{task.destroy();};
     return task.promise;
   }
   async function save(id,file) {
-    if (!['roman','chrysostom','melkite-chrysostom','basil','presanctified','melkite-basil','melkite-presanctified'].includes(id)) throw new Error('Unknown liturgical text.');
+    if (!['roman','roman-office','chrysostom','melkite-chrysostom','basil','presanctified','melkite-basil','melkite-presanctified'].includes(id)) throw new Error('Unknown liturgical text.');
     if (!file || !file.size || file.size>MAX) throw new Error('Choose a PDF or EPUB smaller than 100 MB.');
     const head=new TextDecoder().decode(await file.slice(0,1024).arrayBuffer());
     const format=head.includes('%PDF-')?'pdf':head.startsWith('PK\x03\x04')?'epub':null;
     if(!format)throw new Error('This file is not a PDF or EPUB.');
-    const doc=await load(file,format);const pages=doc.numPages;await doc.destroy();
-    const record={id,format,name:file.name || 'Liturgical text.'+format,size:file.size,pages,page:1,blob:file,updated:new Date().toISOString()};
+    // WebKit can fail to read a persisted Blob with offline mode enabled.
+    // Store the new Office book as bytes; existing books keep their Blob records.
+    const contents=id==='roman-office'?{bytes:await file.arrayBuffer()}:{blob:file};
+    const doc=await load(contents.bytes??contents.blob,format);
+    const pages=doc.numPages;await doc.destroy();
+    const record={id,format,name:file.name || 'Liturgical text.'+format,size:file.size,pages,page:1,...contents,updated:new Date().toISOString()};
     await request('readwrite',s=>s.put(record));return record;
   }
   async function bookmark(id,page) {

@@ -504,7 +504,7 @@
     let h = `<p class="muted" style="margin:.2em 0 .6em">${esc(displayTitle(r.title))}</p>`;
     // This screen supplies a calendar-matched readings index, not the full
     // First Edition Hour. Never imply that omitted parts have been verified.
-    h += '<p class="muted office-readings-limits" style="font-size:.82rem;margin:0 0 12px"><b>Readings index only — not the complete Office of Readings.</b> The opening, hymn, psalmody, antiphons, responsories and concluding prayer are not included here. Use the full-office link below for those parts.</p>';
+    h += '<p class="muted office-readings-limits" style="font-size:.82rem;margin:0 0 12px"><b>Readings index only — not the complete Office of Readings.</b> For the full Hour, including the psalms and concluding prayer, use the online links below.</p>';
     if (first && first.r) {
       h += cite('First reading', `<a href="${bible(first.r)}" target="_blank" rel="noopener">${esc(first.r)}</a>`);
       h += `<details open style="margin:10px 0 16px"><summary class="muted" style="font-size:.88rem">First reading text</summary><div class="asv" data-tr="dra" data-ref="${esc(first.q)}" style="font-family:var(--serif);font-size:1.02rem;line-height:1.55"></div></details>`;
@@ -519,7 +519,7 @@
     const externalCalendar = S.ascension === 'thursday' ? 'usa.boston' : 'usa';
     const externalBase = `https://universalis.com/${externalCalendar}/${iso.replace(/-/g, '')}/`;
     h += `<div class="row"><a class="btn sm fill" target="_blank" rel="noopener noreferrer" href="${externalBase}readings.htm">Full office (Universalis)</a><a class="btn sm" target="_blank" rel="noopener noreferrer" href="${externalBase}i-readings.htm">First Hour · with Invitatory</a></div>`;
-    h += `<p class="muted" style="font-size:.74rem">Use the Invitatory version if this is your first Hour of the day. External prayers require internet; local observances, translations and available dates may differ. From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture in the Douay-Rheims; bundled second readings use public-domain translations.</p>`;
+    h += `<p class="muted" style="font-size:.74rem">Use the Invitatory version if this is your first Hour of the day. External prayers require internet; local observances, translations and available dates may differ. From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture uses the Douay–Rheims. Second readings include historical translations and selected First Edition texts, with their sources shown in the reading.</p>`;
     return h;
   }
   function sarumMassHTML(v) {
@@ -2020,7 +2020,7 @@
       else if (s.type === 'little') h += `<div class="muted" style="font-size:.82rem">Prime at about 6, Terce at 9, Sext at noon, None at 3. Open each hour to pray it.</div>${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'sarumhours') h += `<div class="muted" style="font-size:.82rem">Matins at night; Prime, Terce, Sext and None at about 6, 9, noon and 3.</div>${Hours.sarumMatins ? `<details class="matins-d" style="margin:4px 0"><summary class="muted">Matins</summary><div class="matins-slot" data-d="${esc(st.date)}"><p class="muted" style="font-size:.8rem">Loading Matins… (the first time, Ora downloads the Matins texts, about 3.6 MB; after that they work offline).</p></div></details>` : ''}${[['P', 'Prime'], ['T', 'Terce'], ['S', 'Sext'], ['N', 'None']].map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarum(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
       else if (s.type === 'bvm') h += `<div class="muted" style="font-size:.82rem">A short office of Mary, said on free days, chiefly Saturdays. Optional.</div>${s.hrs.map(([w, n]) => `<details style="margin:4px 0"><summary class="muted">${n}</summary>${Hours.sarumBVM(L, P(st.date), w, window.Sarum) || ''}</details>`).join('')}`;
-      else if (s.type === 'oor') h += `<div class="office-readings-text">${oorHTML(st.date)}</div>`;
+      else if (s.type === 'oor') h += `<div class="office-readings-text">${LiturgicalText.card('roman-office')}${oorHTML(st.date)}</div>`;
       else if (s.type === 'hourlink') h += rite==='byz'?`<details class="byz-propers-source"><summary>Read the appointed texts</summary><div class="row">${linksHTML(rite,s.hour)}</div></details>`:`<div class="row">${linksHTML(rite, s.hour)}</div>`;
       else if (s.type === 'silence') h += `<div class="tx">${esc(s.text || 'Be still before God.')}</div><div class="timer" id="tm${i}">${Math.floor(s.seconds / 60)}:${pad(s.seconds % 60)}</div><button class="btn sm" data-act="timer" data-i="${i}" data-s="${s.seconds}">Start timer</button>`;
       h += '</div>';
@@ -2525,7 +2525,7 @@
     document.querySelectorAll('#nav button').forEach(b => { b.classList.toggle('on', b.dataset.tab === st.tab); if (b.dataset.tab === st.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     const content = st.tab === 'today' ? viewToday() : st.tab === 'pray' ? viewPray() : st.tab === 'readings' ? viewReadings() : st.tab === 'liturgy' ? viewLiturgy() : st.tab === 'calendar' ? viewCalendar() : st.tab === 'justice' ? viewJustice() : viewMore();
     $('#app').innerHTML = tabHeading() + content;
-    if (st.tab === 'liturgy' || st.tab === 'more') LiturgicalText.hydrate();
+    if (st.tab === 'liturgy' || st.tab === 'more' || (st.tab === 'pray' && S.rite === 'roman' && st.kind === 'readings')) LiturgicalText.hydrate();
     document.querySelectorAll('.seg button[data-act], .legend button[data-act]').forEach(b => b.setAttribute('aria-pressed', b.classList.contains('on')));
     document.querySelectorAll('#app details').forEach(d => { const key = detailKey(d); if (opened.has(key)) d.open = opened.get(key); if (key === activeDetail && !active.isConnected) d.querySelector(':scope > summary')?.focus({ preventScroll: true }); });
     if (focusSelector && !active.isConnected) { const target = document.querySelector(focusSelector); if (target) target.focus({ preventScroll: true }); }
@@ -2728,7 +2728,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v465';
+  const APP_BUILD = 'ora-v466';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
