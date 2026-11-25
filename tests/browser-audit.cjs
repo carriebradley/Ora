@@ -122,6 +122,14 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await futureAudio.waitFor({state:'attached',timeout:10000});
  assert.equal(await page.locator('iframe.readings-audio-player').count(),0,'no invented player for an unimported date');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'future-date recording link fits mobile width');
+ // The Roman Office of Readings is explicitly an incomplete readings index.
+ await page.goto(`${base}index.html?tab=pray&kind=readings&date=2027-01-11&rite=roman`);
+ const oorLimits=page.locator('.office-readings-limits');
+ assert.equal(await oorLimits.count(),1,'dated Roman Office of Readings states its scope');
+ assert.match(await oorLimits.innerText(),/Readings index only.*not the complete Office of Readings/i);
+ assert.match(await page.locator('.office-readings-text').innerText(),/Sir 1:1-18/);
+ assert.match(await page.locator('.office-readings-text').innerText(),/Clement of Rome/);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated Roman Office readings fit phone width');
  // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
  for(const church of ['ukrainian','melkite']){
   await page.goto(`${base}index.html?tab=more&date=2026-11-14&rite=byz`);
