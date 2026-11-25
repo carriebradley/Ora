@@ -130,6 +130,23 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  assert.match(await page.locator('.office-readings-text').innerText(),/Sir 1:1-18/);
  assert.match(await page.locator('.office-readings-text').innerText(),/Clement of Rome/);
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'dated Roman Office readings fit phone width');
+ // Roman daytime access is dated, compact and source-linked; no fake text.
+ await page.goto(`${base}index.html?tab=pray&date=2027-01-11&rite=roman&kind=morning`);
+ const daytime=page.locator('details.roman-daytime-access');
+ assert.equal(await daytime.count(),1,'Roman prayer provides Daytime Hours');
+ assert.match(await daytime.locator('summary').innerText(),/Daytime Prayer.*Terce.*Sext.*None/);
+ assert.equal(await daytime.getAttribute('open'),null,'extra links are collapsed by default');
+ await daytime.locator('summary').click();
+ for(const [file,name] of [['terce.htm','Midmorning'],['sext.htm','Midday'],['none.htm','Midafternoon']]){
+   const anchor=daytime.locator(`a[href="https://universalis.com/usa/20270111/${file}"]`);
+   assert.equal(await anchor.count(),1,'date-specific '+name+' link');
+   assert.equal(await anchor.getAttribute('target'),'_blank');
+ }
+ assert.match(await daytime.innerText(),/does not yet contain the complete Daytime Hours/);
+ assert.match(await daytime.innerText(),/complementary psalms/);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Daytime links fit mobile width');
+ await page.goto(`${base}index.html?tab=pray&date=2027-01-11&rite=byz&kind=morning`);
+ assert.equal(await page.locator('.roman-daytime-access').count(),0,'no Roman-only source links in Byzantine rite');
  // Saint of the Day must appear below liturgical day for Byzantine Philip on November 14.
  for(const church of ['ukrainian','melkite']){
   await page.goto(`${base}index.html?tab=more&date=2026-11-14&rite=byz`);
