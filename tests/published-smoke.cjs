@@ -5,7 +5,9 @@ module.exports=async function(browser,artifacts){
   const base='https://carriebradley.github.io/Ora/';
   const expected=fs.readFileSync(require.resolve('../sw.js'),'utf8').match(/const V = '(ora-v\d+)'/)[1];
   const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
-  const errors=[];
+  const errors=[],resourceFailures=[];
+  const prayerUrl=(kind,date)=>`${base}index.html?tab=pray&rite=roman&kind=${kind}&date=${date}`;
+  const isAppResource=request=>request.url().startsWith(base)&&['document','script'].includes(request.resourceType());
   let step='initialization',currentUrl=base,lastDeployment=null,page=null;
   const checkpoint=(label,url=currentUrl)=>{
     step=label;currentUrl=url;
@@ -16,6 +18,8 @@ module.exports=async function(browser,artifacts){
   const visit=async(url,label)=>{
     checkpoint(label,url);
     await page.goto(url);
+    assert.deepEqual(resourceFailures,[],'published app document and script requests');
+    assert.deepEqual(errors,[],'published app JavaScript errors');
   };
   try{
     checkpoint('waiting for published build',base);
@@ -39,7 +43,37 @@ module.exports=async function(browser,artifacts){
     }
     assert.ok(ready,'Pages must serve this build before the published mobile check');
     checkpoint('published build ready',base);
-    page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+    page=await context.newPage();
+    page.on('pageerror',e=>errors.push(e.message));
+    page.on('response',response=>{
+      const status=response.status();
+      if(status>=400&&isAppResource(response.request()))resourceFailures.push({url:response.url(),status});
+    });
+    page.on('requestfailed',request=>{
+      if(isAppResource(request))resourceFailures.push({url:request.url(),error:request.failure()?.errorText});
+    });
+
+    // App and worker version markers can arrive before the rest of the shell.
+    // Retry only when a document or script actually fails to load.
+    const startupUrl=prayerUrl('evening','2026-11-14');
+    for(let attempt=1;attempt<=3;attempt++){
+      checkpoint(`published prayer startup ${attempt}/3`,startupUrl);
+      try{
+        await page.goto(startupUrl,{waitUntil:'domcontentloaded',timeout:15000});
+        assert.deepEqual(resourceFailures,[],'published startup document and scripts loaded');
+        assert.deepEqual(errors,[],'published prayer startup JavaScript errors');
+        assert.ok(await page.locator('#st0').isVisible(),'published prayer rendered after page load');
+        break;
+      }catch(err){
+        const retryable=resourceFailures.length>0&&resourceFailures.every(({status})=>
+          status===undefined||status===404||status===408||status===429||status>=500);
+        if(!retryable||attempt===3)throw err;
+        console.log('[published-smoke] retrying startup after asset failure: '+JSON.stringify({attempt,resourceFailures,errors}));
+        await new Promise(resolve=>setTimeout(resolve,5000));
+        resourceFailures.length=0;
+        errors.length=0;
+      }
+    }
     for(const colorScheme of ['light','dark']){
       await page.emulateMedia({colorScheme});
       for(const [kind,date,pattern]of [
@@ -62,7 +96,7 @@ module.exports=async function(browser,artifacts){
         ['evening','2027-05-16',/marriage of the Lamb is come/],
         ['night','2027-03-30',/Regina Caeli/i]
       ]){
-        await visit(`${base}index.html?tab=pray&rite=roman&kind=${kind}&date=${date}`,`Roman ${kind} ${date} ${colorScheme}`);
+        await visit(prayerUrl(kind,date),`Roman ${kind} ${date} ${colorScheme}`);
         await page.locator('#st0').waitFor();
         assert.match(await page.locator('#st0').innerText(),pattern);
         for(const width of [390,320]){
@@ -123,7 +157,7 @@ module.exports=async function(browser,artifacts){
   }catch(err){
     const failure={
       expected,sha:process.env.GITHUB_SHA||null,step,
-      url:page?.url()||currentUrl,deployment:lastDeployment,errors,
+      url:page?.url()||currentUrl,deployment:lastDeployment,errors,resourceFailures,
       error:err?.stack||String(err),at:new Date().toISOString()
     };
     fs.writeFileSync(path.join(artifacts,'published-failure.json'),JSON.stringify(failure,null,2));
