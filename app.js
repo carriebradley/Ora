@@ -1935,11 +1935,25 @@
     if(rite==='roman')return {L:'Morning Prayer',V:'Evening Prayer',C:'Night Prayer',O:'Office of Readings'}[which]||'Prayer text';
     return 'Prayer text';
   }
+  // The First Edition daytime Hours are not bundled in Ora yet. Offer
+  // date-specific, external source pages rather than invented prayer text.
+  function romanDaytimeLinksHTML(iso) {
+    const calendar = S.ascension === 'thursday' ? 'usa.boston' : 'usa';
+    const dated = iso.replace(/-/g, '');
+    const base = 'https://universalis.com/' + calendar + '/' + dated + '/';
+    const hours = [['terce.htm', 'Midmorning · Terce'], ['sext.htm', 'Midday · Sext'], ['none.htm', 'Midafternoon · None']];
+    return `<details class="roman-daytime-access" style="margin:4px 0 12px"><summary>Daytime Prayer · Terce / Sext / None</summary>
+      <p class="muted" style="font-size:.82rem;margin:8px 0">Ora does not yet contain the complete Daytime Hours. Open the selected date's prayer on Universalis (requires internet).</p>
+      <div class="row">${hours.map(([page,label])=>`<a class="btn sm" href="${esc(base+page)}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}</div>
+      <p class="muted" style="font-size:.76rem;margin:8px 0 0">If praying one Daytime Hour, use the psalms of the day. If praying more than one, use complementary psalms for the other Hours (GILH 77–83). External texts and local observances may differ from Ora's chosen calendar options.</p>
+    </details>`;
+  }
   function viewPray() {
     const v = dayInfo(st.date); loadReadings(st.date);
     const rite = S.rite, steps = stepsFor(rite, kindOf(rite), v);
     let h = `<section class="card divine-office-card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21V11l2-5c.5-1.2 2-1 2 .4V14M16 21V11l-2-5c-.5-1.2-2-1-2 .4V14M8 15l-2-3c-.7-1.1-2.3-.4-1.8.8L8 21M16 15l2-3c.7-1.1 2.3-.4 1.8.8L16 21M12 14v7"/></svg><span>Today’s Prayers</span></div><div class="seg prayer-major" role="group" aria-label="Prayer tradition">${Object.keys(RITES).map(k => `<button data-act="rite" data-v="${k}" class="${rite === k ? 'on' : ''}">${k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional'}</button>`).join('')}</div>
       ${rite === 'sarum' ? `<div class="seg hrs prayer-minor" role="group" aria-label="Prayer hour">${SHOURS.map(([k, n]) => `<button data-act="shour" data-v="${k}" class="${st.shour === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : `<div class="seg prayer-minor" role="group" aria-label="Prayer hour"><button data-act="kind" data-v="morning" class="${st.kind === 'morning' ? 'on' : ''}">${rite === 'byz' ? 'Orthros' : 'Lauds'}</button> ${rite === 'roman' ? `<button data-act="kind" data-v="readings" class="${st.kind === 'readings' ? 'on' : ''}">Office of Readings</button>` : ''}<button data-act="kind" data-v="evening" class="${st.kind === 'evening' ? 'on' : ''}">${rite === 'byz' ? 'Vespers' : 'Vespers'}</button><button data-act="kind" data-v="night" class="${st.kind === 'night' ? 'on' : ''}">${rite === 'byz' ? 'Compline' : 'Compline'}</button></div>`}`;
+    if (rite === 'roman') h += romanDaytimeLinksHTML(st.date);
     if (rite === 'roman') {
       const officeName = {morning:'Lauds',readings:'Office of Readings',evening:'Vespers',night:'Compline'}[st.kind] || 'Lauds';
       const audioName = {morning:'Morning Prayer',readings:'Office of Readings',evening:'Evening Prayer',night:'Night Prayer'}[st.kind] || 'Morning Prayer';
@@ -2685,7 +2699,7 @@
   });
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v462';
+  const APP_BUILD = 'ora-v463';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
