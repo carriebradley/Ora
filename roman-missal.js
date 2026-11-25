@@ -22,12 +22,18 @@
  // Display-only filtering: saved personal documents remain intact.
  const prayerHeading=/^(?:entrance antiphon|collect|prayer over the offerings|prayer after communion|communion antiphon|responsorial psalm|psalm \d+|first reading|second reading|gospel|alleluia|gloria|glory to god|apostles.? creed|nicene creed|profession of faith|kyrie|holy holy|sanctus|agnus dei|lamb of god|preface|eucharistic prayer|the introductory rites|the liturgy of the word|the liturgy of the eucharist|the concluding rites)\b/i;
  const direction=/^(?:rubric|instructions?\b|note to (?:the )?(?:priest|reader|celebrant)|the (?:priest|deacon|celebrant|reader) (?:then |now )?(?:says|takes|bows|stands|extends|raises|places|turns|invites|continues|joins|makes|returns|approaches)|(?:all |the people )?(?:stand|sit|kneel)\b|if (?:there is|appropriate|the)|when (?:the|all)|on (?:sundays|weekdays)|for (?:the|a) (?:optional|memorial)|see (?:page|the|also)|turn to |from the common of )/i;
- function prayers(part){
+ const antiphonAlternative=/^or(?:\s*:|$)/i;
+ function prayers(part,keepAntiphonAlternatives=false){
   if(!part||!Array.isArray(part.blocks))return part;
   const blocks=part.blocks;let start=blocks.findIndex(b=>prayerHeading.test(b.text.trim()));
   if(start<0)start=0; // Never discard a section without recognized labels.
   const kept=blocks.slice(start).filter(b=>!direction.test(b.text.trim())&&!/^\[Image:/.test(b.text.trim())&&!/^>>|^preface (?:of|i\b|ii\b)|^\[sample\]/i.test(b.text.trim())&&!/^(?:and all pray in silence|let us pray\.|the priest says|the priest continues)/i.test(b.text.trim()));
-  return {...part,blocks:kept.filter(b=>b.kind!=='instruction'&&!/^(?:the )?(?:gloria(?: in excelsis)?|creed)\b.*\b(?:is|are) (?:not )?said\b/i.test(b.text.trim()))};
+  return {...part,blocks:kept.filter(b=>{
+   const text=b.text.trim();
+   // Some EPUB editions style the printed “Or:” between antiphons as a rubric.
+   const keep=b.kind!=='instruction'||(keepAntiphonAlternatives&&antiphonAlternative.test(text));
+   return keep&&!/^(?:the )?(?:gloria(?: in excelsis)?|creed)\b.*\b(?:is|are) (?:not )?said\b/i.test(text);
+  })};
  }
  function ordinary(sections){
   const wanted=[['Gloria',/^(?:gloria|glory to god in the highest)$/i],['Creed',/^(?:nicene creed|apostles.? creed|profession of faith|the creed)$/i]];
@@ -75,7 +81,8 @@
   const out={entrance:[],collect:[],offerings:[],communion:[],after:[]};
   const heads=[['entrance',/^entrance antiphon\b/i],['collect',/^(?:collect|opening prayer)\b/i],['offerings',/^prayer over the offerings\b/i],['communion',/^communion antiphon\b/i],['after',/^prayer after communion\b/i]];
   let active=null;
-  for(const block of prayers(part).blocks){
+  for(const block of prayers(part,true).blocks){
+    if(block.kind==='instruction'&&active!=='entrance'&&active!=='communion')continue;
     const v=block.text.trim(),h=heads.find(([,re])=>re.test(v));
     if(h){active=h[0];const rest=v.replace(h[1],'').replace(/^[\s|:;·-]+/,'').trim();if(rest&&!/^(?:mt|mk|lk|jn|ps|cf|rev|rom|heb)\s*[.:]?\s*\d/i.test(rest))out[active].push({tag:'p',text:rest});continue;}
     if(!active)continue;

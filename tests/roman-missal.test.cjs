@@ -42,3 +42,35 @@ test('GIRM 53/68: ordinary Roman Mass shows Gloria and Creed by calendar rank an
  assert.deepEqual(M.ordinaryParts({rank:'Sunday',season:'Holy Week'}),{gloria:false,creed:true},
    'Palm Sunday uses Creed but not Gloria');
 });
+
+test('first week in Ordinary Time preserves separate antiphons from a private Missal',()=>{
+ const L=require('../calendar.js');
+ const day=L.roman(L.D(2027,1,11));
+ const part={title:'FIRST WEEK IN ORDINARY TIME',blocks:[
+  {tag:'h4',text:'Entrance Antiphon'},
+  {tag:'p',kind:'instruction',text:'Fixture entrance direction.'},
+  {tag:'p',text:'Fixture entrance antiphon.'},
+  {tag:'h4',text:'Collect'},
+  {tag:'p',text:'Fixture collect.'},
+  {tag:'h4',text:'Prayer over the Offerings'},
+  {tag:'p',text:'Fixture offerings prayer.'},
+  {tag:'h4',text:'Communion Antiphon Ps 36: 10'},
+  {tag:'p',text:'Fixture first communion antiphon.'},
+  {tag:'p',text:'Or: Jn 10: 10',kind:'instruction'},
+  {tag:'p',text:'Fixture alternative communion antiphon.'},
+  {tag:'h4',text:'Prayer after Communion'},
+  {tag:'p',text:'Fixture concluding prayer.'},
+  {tag:'p',kind:'instruction',text:'Or: see another section.'}
+ ]};
+ assert.deepEqual(M.match([part],day.title),[1]);
+ const proper=M.propers(part);
+ const displayed=Object.fromEntries(Object.entries(proper).map(([key,blocks])=>[key,blocks.map(block=>block.text)]));
+ assert.deepEqual(displayed,{
+  entrance:['Fixture entrance antiphon.'],
+  collect:['Fixture collect.'],
+  offerings:['Fixture offerings prayer.'],
+  communion:['Fixture first communion antiphon.','Or: Jn 10: 10','Fixture alternative communion antiphon.'],
+  after:['Fixture concluding prayer.']
+ });
+ assert.equal(M.prayers(part).blocks.some(block=>block.kind==='instruction'),false);
+});

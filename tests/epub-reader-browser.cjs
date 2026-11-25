@@ -8,6 +8,15 @@ function epub(encrypted=false,missal=false){
  if(missal){
   files['book/content.opf']=files['book/content.opf'].replace('<manifest>','<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>Test Roman Missal</dc:title><dc:publisher>Test fixture</dc:publisher><dc:date>2000-01-01</dc:date><dc:description>Fictional test edition for the conclave.</dc:description></metadata><manifest>');
   files['book/one.xhtml']='<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Fixture</title></head><body><h2>November 12 Saint Josaphat, Bishop and Martyr Memorial</h2><p>Fixture biography excluded from prayers.</p><h3>Entrance Antiphon</h3><p>Fixture entrance.</p><h3>Collect</h3><p class="rubric">Fixture hidden direction.</p><p>Fixture collect for private reading.</p><p>A reading from the fixture book</p><p>Fixture Scripture excluded from prayers.</p><h3>Prayer over the Offerings</h3><p>Fixture offerings.</p><h3>Communion Antiphon</h3><p>Fixture communion.</p><h3>Prayer after Communion</h3><p>Fixture after communion.</p><h2>THIRTY-THIRD SUNDAY IN ORDINARY TIME</h2><h3>Collect</h3><p>Fixture Sunday prayer.</p></body></html>';
+  files['book/one.xhtml']=files['book/one.xhtml'].replace('</body>',`
+    <h2>FIRST WEEK IN ORDINARY TIME</h2>
+    <h3>Entrance Antiphon</h3><p>Fixture first-week entrance.</p>
+    <h3>Collect</h3><p>Fixture first-week collect.</p>
+    <h3>Prayer over the Offerings</h3><p>Fixture first-week offerings.</p>
+    <h3>Communion Antiphon Ps 36: 10</h3><p>Fixture first-week communion.</p>
+    <p class="rubric">Or: Jn 10: 10</p><p>Fixture first-week communion alternative.</p>
+    <h3>Prayer after Communion</h3><p>Fixture first-week after communion.</p>
+    </body>`);
   files['book/two.xhtml']='<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Fixture</title></head><body><h2 id="TIR">The Introductory Rites</h2><p>Fixture fixed Mass responses.</p><h2>Gloria</h2><p class="rubric">Fixture Gloria instruction.</p><p class="all">Fixture Gloria response.</p><h2>Apostles’ Creed</h2><p class="all">Fixture Apostles response.</p><h2>Nicene Creed</h2><p>Fixture Nicene response.</p><h2>EUCHARISTIC PRAYER I (Christmas Octave)</h2><p>Fixture Christmas variant.</p><h2>EUCHARISTIC PRAYER I (THE ROMAN CANON)</h2><p class="rubric">Fixture Eucharistic direction.</p><p>Fixture general Eucharistic prayer one.</p><h2>EUCHARISTIC PRAYER II</h2><p>Fixture Eucharistic prayer two.</p><h2>EUCHARISTIC PRAYER III</h2><p>Fixture Eucharistic prayer three.</p><h2>EUCHARISTIC PRAYER IV</h2><p>Fixture Eucharistic prayer four.</p></body></html>';
  }
  if(encrypted)files['META-INF/encryption.xml']='<encryption/>';
