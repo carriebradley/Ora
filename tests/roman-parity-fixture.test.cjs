@@ -12,7 +12,7 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
  for(const name of ['calendar','mass','invitatory','office-of-readings','lauds','daytime-midmorning','daytime-midday','daytime-midafternoon','vespers','compline'])assert.ok(kinds.has(name),'missing '+name);
  const ids=fixture.sections.map(x=>x.id);
  assert.equal(new Set(ids).size,ids.length,'no duplicate comparison rows');
- const validSources=new Set(['official-calendar','lectionary-index','publisher-first-edition-witness','gilh-rubric','girm-rubric','pending']);
+ const validSources=new Set(['official-calendar','lectionary-index','publisher-first-edition-witness','proper-of-time-witness','gilh-rubric','girm-rubric','pending']);
  const validComparison=new Set(['not-compared','match-calendar-appointment','match-source-selection','match-rubric-option','match-approved','appointed-different-translation','legitimate-option','wrong-appointment','missing-content','out-of-order','source-conflict','unverified']);
  for(const section of fixture.sections){
   assert.match(section.sourceUrl,/^https:\/\//,'source witness required for '+section.id);
@@ -26,14 +26,18 @@ test('first full-day Roman parity fixture has all core Offices and Mass with sou
   if(section.textCompared)assert.equal(section.oraCompared,true,'wording comparison requires Ora output');
  }
 });
-test('initial source selection does not claim completed liturgical parity',()=>{
+test('dated comparisons cover the worksheet and preserve unresolved wording',()=>{
  assert.ok(fixture.sections.length>=25);
- assert.deepEqual(fixture.sections.filter(section=>section.oraCompared).map(section=>section.id).sort(),
-  ['calendar.day','compline.full','mass.ordinary','invitatory.entry','lauds.psalmody','lauds.reading','lauds.benedictus','lauds.intercessions','lauds.hymn','vespers.psalmody','vespers.reading','vespers.magnificat','vespers.intercessions','vespers.hymn','mass.first-reading','mass.psalm','mass.acclamation','mass.gospel','oor.psalmody','oor.reading-one','oor.reading-two','daytime.midmorning','daytime.midday','daytime.midafternoon'].sort());
+ for(const row of fixture.sections){
+  assert.equal(row.oraCompared,true,'compare the Ora display for '+row.id);
+  assert.notEqual(row.comparison,'not-compared',row.id);
+ }
+ for(const [id,comparison] of [['mass.entrance','match-source-selection'],['mass.propers','match-source-selection'],['mass.options','unverified']]){
+  const row=fixture.sections.find(section=>section.id===id);
+  assert.equal(row?.comparison,comparison,id);
+ }
  assert.ok(fixture.sections.every(section=>!section.textCompared&&section.comparison!=='match-approved'),
   'No full-text First Edition certification was performed');
- assert.ok(fixture.sections.some(section=>!section.oraCompared&&section.comparison==='not-compared'),
-  'Remaining audit rows must stay open');
  assert.deepEqual(fixture.massSections.map(x=>x.ref),['Hebrews 1:1-6','Psalm 97:1,2b,6,7c,9','Mark 1:15','Mark 1:14-20']);
 });
 

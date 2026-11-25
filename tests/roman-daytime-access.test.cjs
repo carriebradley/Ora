@@ -41,6 +41,4 @@ test('first-day worksheet records still missing internal daytime texts',()=>{
   assert.equal(row.comparison,'missing-content');
   assert.match(row.sourceUrl,/catholicculture\.org/);
  }
- assert.equal(fixture.sections.filter(x=>x.oraCompared).length,24);
- assert.equal(fixture.sections.filter(x=>x.textCompared).length,0);
 });
