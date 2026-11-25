@@ -29,9 +29,9 @@
   const blocks=section.blocks.slice(start.index+1,end);
   return blocks.length?{...section,blocks}:null;
  }
- function select(sections,title){
+ function lookup(sections,title){
   const wanted=key(title),hits=[];
-  if(!wanted)return null;
+  if(!wanted)return {selection:null,ambiguous:false};
   const pentecost=wanted==='pentecost sunday';
   sections.forEach((section,index)=>{
    const heading=key(section.title);
@@ -44,7 +44,10 @@
    const part=pentecost?pentecostDay(section):section;
    if(part)hits.push({page:index+1,part});
   });
-  return hits.length===1?hits[0]:null;
+  return {selection:hits.length===1?hits[0]:null,ambiguous:hits.length>1};
+ }
+ function select(sections,title){
+  return lookup(sections,title).selection;
  }
  function match(sections,title){
   const selected=select(sections,title);
@@ -128,6 +131,6 @@
   }
   return out;
  }
- return {match,select,order,key,prayers,ordinary,ordinaryParts,fixed,propers};
+ return {match,select,lookup,order,key,prayers,ordinary,ordinaryParts,fixed,propers};
 });
 

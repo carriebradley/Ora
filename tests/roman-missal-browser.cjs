@@ -79,6 +79,43 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await context.setOffline(true);await page.reload();
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture Sunday prayer'));
  assert.equal(await page.locator('dialog[open]').count(),0);await context.setOffline(false);
+ await page.goto(`${base}index.html?tab=liturgy&date=2026-12-25&rite=roman`);
+ const openMissal=prayers.getByRole('button',{name:'Open saved Missal'});
+ await openMissal.waitFor();
+ assert.match(await prayers.innerText(),/more than one section for this date/);
+ assert.doesNotMatch(await prayers.innerText(),/Fixture Christmas (?:vigil|day) collect/);
+ assert.equal(await prayers.locator('[data-reader="eucharistic"]').count(),0);
+ await openMissal.click();
+
+ const book=page.locator('#liturgical-reader');
+ await book.getByText('Fixture collect for private reading.',{exact:true}).waitFor();
+ const search=book.getByLabel('Find a prayer or section');
+ const section=book.locator('#reader-section');
+ await search.fill('Fixture Christmas vigil collect.');
+ await book.getByText('1 matching sections',{exact:true}).waitFor();
+ await section.selectOption(await section.locator('option').getAttribute('value'));
+ await book.getByText('Fixture Christmas vigil collect.',{exact:true}).waitFor();
+
+ await search.fill('Fixture Christmas day collect.');
+ await book.getByText('1 matching sections',{exact:true}).waitFor();
+ const chosen=await section.locator('option').getAttribute('value');
+ await section.selectOption(chosen);
+ await book.getByText('Fixture Christmas day collect.',{exact:true}).waitFor();
+ assert.doesNotMatch(await book.locator('#reader-text').innerText(),/Fixture Christmas vigil collect/);
+ await page.waitForFunction(async selected=>(await LiturgyReader.get('roman'))?.page===Number(selected),chosen);
+ assert.equal(await book.getByRole('link',{name:'Download original EPUB'}).getAttribute('download'),'fictional-fixture.epub');
+ await book.getByRole('button',{name:'Close'}).click();
+ await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
+ await context.setOffline(true);
+ try{
+   await page.reload();
+   await openMissal.click();
+   await book.getByText('Fixture Christmas day collect.',{exact:true}).waitFor();
+   assert.equal(await section.inputValue(),chosen,'saved Missal opens at the selected section offline');
+   await book.getByRole('button',{name:'Close'}).click();
+ }finally{
+   await context.setOffline(false);
+ }
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-13&rite=roman`);
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Daily prayers are not available'));
  assert.deepEqual(uploads,[],'private text is never uploaded');page.off('request',watch);
