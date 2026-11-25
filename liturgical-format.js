@@ -358,8 +358,8 @@
  // optional petition and next mandatory heading. Return display coordinates;
  // never erase or mutate source paragraphs.
  function newtonOptionalPetitions(sections){
-  const starts=new Set(),lines=new Set(),labels=new Map(),triples=new Set();
-  const result={starts,lines,labels,triples};
+  const starts=new Set(),lines=new Set(),labels=new Map(),triples=new Set(),firstPrayers=new Map();
+  const result={starts,lines,labels,triples,firstPrayers};
   if(!Array.isArray(sections)||sections.newton2009!==true)return result;
   const entries=sections.flatMap((part,section)=>(part.lines||[])
    .map((raw,index)=>({text:String(raw).trim(),section,index})));
@@ -388,13 +388,20 @@
    const end=entries.findIndex((r,i)=>i>heads[0]&&compact(r.text)===rule.end);
    if(end<0||end-heads[0]>38)continue;
    const scoped=entries.slice(heads[0]+1,end);
-   const markers=scoped.map((r,i)=>/^optional\s*:?\s*$/i.test(r.text)?i:-1).filter(i=>i>=0);
+   const markers=scoped.flatMap((r,index)=>{
+    const marker=/^optional(?:\s*:\s*(.*))?$/i.exec(r.text);
+    return marker?[{index,prayer:marker[1]?.trim()}]:[];
+   });
    if(markers.length!==1)continue;
-   const marker=scoped[markers[0]],body=scoped.slice(markers[0]+1);
+   const {index,prayer}=markers[0];
+   const marker=scoped[index],body=scoped.slice(index+1);
+   // PDF extraction can join the marker to the first printed petition.
+   if(prayer)body.unshift({...marker,text:prayer});
    const prayers=body.filter(r=>!rule.trailer||!rule.trailer.test(r.text));
    if(prayers.length!==rule.expected.length||
       !prayers.every((r,i)=>rule.expected[i].test(r.text)))continue;
    starts.add(key(marker));
+   if(prayer)firstPrayers.set(key(marker),prayer);
    if(rule.label)labels.set(key(marker),rule.label);
    if(Number.isInteger(rule.tripleIndex))triples.add(key(prayers[rule.tripleIndex]));
    for(const row of body)lines.add(key(row));
