@@ -23,10 +23,21 @@ module.exports=async function(page,base,artifacts){
   assert.equal(await page.locator('#st0 .sec').first().locator('b').textContent(),'Opening','Vespers stays unchanged');
   await page.locator('[data-act="kind"][data-v="morning"]').click();
   assert.equal(await page.locator('[data-act="romaninvitatory"]').getAttribute('aria-pressed'),'true','same-day session choice preserved');
-  await page.locator('[data-act="romaninvitatory"]').click();
+  // Navigate inside the same running app, rather than reloading and losing
+  // session state. The first-Hour choice is specific to the selected date.
+  await page.locator('#hdr [data-act="next"]').click();
+  assert.equal(await page.locator('#dp').inputValue(),'2027-01-12');
+  assert.equal(await toggle.getAttribute('aria-pressed'),'false','choice not reused on another date');
+  assert.equal(await page.locator('#st0 .sec').first().locator('b').textContent(),'Opening');
+  await page.locator('#hdr [data-act="prev"]').click();
+  assert.equal(await page.locator('#dp').inputValue(),'2027-01-11');
+  assert.equal(await toggle.getAttribute('aria-pressed'),'true','original choice survives navigation back');
+  assert.match(await intro.textContent(),/Invitatory verse/);
+  await toggle.click();
+  assert.equal(await toggle.getAttribute('aria-pressed'),'false');
   assert.equal(await page.locator('#st0 .sec').first().locator('b').textContent(),'Opening','toggle restores original opening');
-  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-12&kind=morning`);
-  assert.equal(await page.locator('[data-act="romaninvitatory"]').getAttribute('aria-pressed'),'false','choice not reused on another date');
+  await page.locator('#hdr [data-act="next"]').click();
+  assert.equal(await toggle.getAttribute('aria-pressed'),'false','cleared choice does not leak to next day');
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
   const official=page.locator('#st0');
   assert.match(await official.innerText(),/I lift up my heart to you, O Lord/);
@@ -195,6 +206,20 @@ module.exports=async function(page,base,artifacts){
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-05-06&kind=night`);
   assert.match(await page.locator('#st0 .roman-office-heading').innerText(),
     /Second Vespers.*Ascension of the Lord/i);
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-25&kind=readings`);
+  await page.setViewportSize({width:320,height:720});
+  const ordinaryOffice=page.getByRole('link',{name:'Full office (Universalis)',exact:true});
+  const firstOffice=page.getByRole('link',{name:'First Hour · with Invitatory',exact:true});
+  for(const date of ['20261125','20261126']){
+    if(date==='20261126')await page.locator('#hdr [data-act="next"]').click();
+    const datedBostonOffice=`https://universalis.com/usa.boston/${date}/`;
+    assert.equal(await ordinaryOffice.getAttribute('href'),datedBostonOffice+'readings.htm');
+    assert.equal(await firstOffice.getAttribute('href'),datedBostonOffice+'i-readings.htm');
+    assert.equal(await ordinaryOffice.isVisible(),true);
+    assert.equal(await firstOffice.isVisible(),true);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  }
+  await page.setViewportSize({width:390,height:844});
   await page.goto(`${base}index.html?tab=more&date=2027-05-08`);
   await page.locator('[data-act="settings"]').click();
   assert.equal(await page.locator('#s_asc').inputValue(),'thursday','regional selection persists');
