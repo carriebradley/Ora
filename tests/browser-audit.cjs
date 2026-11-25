@@ -428,7 +428,7 @@ async function checkLateDailyRecording(browser, base, trigger) {
  }
  fs.writeFileSync(path.join(artifacts,'browser-results.json'),JSON.stringify({pages:results,offline,errors,violations},null,2));
  console.log(JSON.stringify({pages:results.length,offline,errors,violations},null,2));
- if(process.env.GITHUB_ACTIONS==='true'&&(process.env.GITHUB_REF==='refs/heads/main'||process.env.GITHUB_REF==='refs/heads/test/published-startup-readiness')&&process.env.GITHUB_REPOSITORY==='carriebradley/Ora')
+ if(process.env.GITHUB_ACTIONS==='true'&&process.env.GITHUB_REF==='refs/heads/main'&&process.env.GITHUB_REPOSITORY==='carriebradley/Ora')
   await require('./published-smoke.cjs')(browser,artifacts);
  console.log('Ora browser audit: all page checks complete; closing browser.');
  await browser.close();
