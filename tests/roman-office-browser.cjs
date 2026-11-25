@@ -7,6 +7,18 @@ module.exports=async function(page,base,artifacts){
     assert.equal(await page.locator('.prayer-opening').count(),1);
     assert.equal(await page.locator('.prayer-opening .tx').innerText(),await page.evaluate(()=>CONTENT.TEXTS.cross));
     assert.equal(await page.evaluate(()=>document.querySelector('.prayer-opening').compareDocumentPosition(document.querySelector('#st0'))&Node.DOCUMENT_POSITION_FOLLOWING),4);
+    const psalmodyCredit=page.locator('#st0 .roman-psalmody-credit');
+    if(kind==='morning'||kind==='evening'){
+      assert.equal(await psalmodyCredit.count(),1,kind);
+      assert.equal(await psalmodyCredit.textContent(),'Psalms and biblical canticles · Douay–Rheims');
+      const section=await psalmodyCredit.evaluate(el=>({
+        heading:el.previousElementSibling?.textContent,
+        psalms:el.closest('.sec').querySelectorAll('.psalm').length
+      }));
+      assert.deepEqual(section,{heading:'Psalmody',psalms:3},kind);
+    }else{
+      assert.equal(await psalmodyCredit.count(),0,kind);
+    }
   }
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
   const toggle=page.locator('[data-act="romaninvitatory"]');
