@@ -516,8 +516,10 @@
     if (opt) h += `<p class="muted" style="font-size:.78rem;margin:2px 0">If ${esc(opt.n)} is kept today, the second reading is from ${esc(opt.a)}, <i>${esc(opt.w)}</i>.</p>` + textDetails(opt);
     if (!(first && first.r) && !(second && second.a)) h += `<p class="muted">This day is not in the table of readings Ora uses${k === 'asc-thu' ? ' (Thursday of the 6th week of Easter, where the Ascension is kept on Sunday)' : ''}. Universalis has the full office.</p>`;
     else if (!(second && second.a)) h += `<p class="muted" style="font-size:.78rem">The second reading for this day is not in the table Ora uses; Universalis has it.</p>`;
-    h += `<div class="row"><a class="btn sm fill" target="_blank" rel="noopener" href="https://universalis.com/${iso.replace(/-/g, '')}/readings.htm">Full office (Universalis)</a></div>`;
-    h += `<p class="muted" style="font-size:.74rem">From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture in the Douay-Rheims. Bundled second readings use public-domain translations; the complete official office is on Universalis.</p>`;
+    const externalCalendar = S.ascension === 'thursday' ? 'usa.boston' : 'usa';
+    const externalBase = `https://universalis.com/${externalCalendar}/${iso.replace(/-/g, '')}/`;
+    h += `<div class="row"><a class="btn sm fill" target="_blank" rel="noopener noreferrer" href="${externalBase}readings.htm">Full office (Universalis)</a><a class="btn sm" target="_blank" rel="noopener noreferrer" href="${externalBase}i-readings.htm">First Hour · with Invitatory</a></div>`;
+    h += `<p class="muted" style="font-size:.74rem">Use the Invitatory version if this is your first Hour of the day. External prayers require internet; local observances, translations and available dates may differ. From the <i>Liturgy of the Hours</i> (index by Felix Just, S.J.). Scripture in the Douay-Rheims; bundled second readings use public-domain translations.</p>`;
     return h;
   }
   function sarumMassHTML(v) {
@@ -2726,7 +2728,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v464';
+  const APP_BUILD = 'ora-v465';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

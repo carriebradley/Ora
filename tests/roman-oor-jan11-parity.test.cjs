@@ -68,3 +68,20 @@ test('three measured gaps are recorded without falsely certifying translation fi
   'Daytime audit adds three bounded missing-content records without changing Office of Readings content');
  assert.equal(worksheet.sections.filter(x=>x.textCompared).length,0);
 });
+
+test('full Office and first-Hour links follow the selected date and Ascension calendar',()=>{
+ try{
+  for(const [ascension,calendar] of [['sunday','usa'],['thursday','usa.boston']]){
+   options.ascension=ascension;
+   for(const iso of ['2027-01-11','2027-05-06']){
+    const html=render(iso);
+    const base='https://universalis.com/'+calendar+'/'+iso.replace(/-/g,'')+'/';
+    assert.ok(html.includes('href="'+base+'readings.htm"'));
+    assert.ok(html.includes('href="'+base+'i-readings.htm"'));
+    assert.match(html,/First Hour · with Invitatory/);
+    assert.match(html,/External prayers require internet/);
+    assert.doesNotMatch(html,/complete official office is on Universalis/);
+   }
+  }
+ }finally{options.ascension='sunday';}
+});
