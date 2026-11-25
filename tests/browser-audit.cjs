@@ -1,6 +1,63 @@
 const {chromium}=require('playwright');
 const fs=require('node:fs');const path=require('node:path');const os=require('node:os');const assert=require('node:assert/strict');
 const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-browser-audit');fs.mkdirSync(artifacts,{recursive:true});
+
+async function checkLateDailyRecording(browser, base, trigger) {
+ const context = await browser.newContext({viewport: {width: 390, height: 844}, serviceWorkers: 'block'});
+ try {
+  const page = await context.newPage();
+  await page.clock.install();
+  const iso = '2030-02-03';
+  const feedUrl = `${base}readings.json`;
+  const officialUrl = 'https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-february-3-2030';
+  const track = '123456789';
+  let requests = 0;
+  let recordingPublished = false;
+  await context.route('**/*', route => {
+   const url = route.request().url();
+   if (url === feedUrl) {
+    requests++;
+    return route.fulfill({json: {[iso]: {
+     sections: [{label: 'First Reading', cite: 'Test 1:1', text: 'Browser fixture reading.'}],
+     ...(recordingPublished ? {audio: track} : {})
+    }}});
+   }
+   return url.startsWith(base) ? route.continue() : route.abort();
+  });
+
+  await page.goto(`${base}index.html?tab=readings&date=${iso}&rite=roman`);
+  const reading = page.getByText('Browser fixture reading.', {exact: true});
+  const player = page.locator('iframe.readings-audio-player');
+  const officialLink = page.locator(`a[href="${officialUrl}"]`);
+  await reading.waitFor();
+  assert.equal(await player.count(), 0, 'a recording missing from the feed has no player');
+  assert.equal(await officialLink.count(), 1, 'the official link is available while waiting');
+  assert.equal(requests, 1, 'the initial feed loaded once');
+
+  recordingPublished = true;
+  if (trigger === 'foreground') {
+   await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  } else {
+   await page.clock.fastForward(5 * 60 * 1000);
+  }
+  await player.waitFor({state: 'attached'});
+  const src = new URL(await player.getAttribute('src'));
+  assert.equal(src.origin, 'https://w.soundcloud.com');
+  assert.equal(src.searchParams.get('url'), `https://api.soundcloud.com/tracks/${track}`);
+  assert.equal(requests, 2, `${trigger} refreshed the feed without reloading the page`);
+  assert.equal(await officialLink.count(), 1, 'the direct official link stays available');
+  assert.equal(await reading.count(), 1, 'the readings stay on screen');
+
+  await player.evaluate(iframe => { iframe.dataset.playbackCheck = 'current'; });
+  await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  await page.clock.fastForward(5 * 60 * 1000);
+  assert.equal(await player.getAttribute('data-playback-check'), 'current', 'later refresh triggers retain the same player');
+  assert.equal(requests, 2, 'a visible player does not trigger another feed fetch');
+ } finally {
+  await context.close();
+ }
+}
+
 (async()=>{
  const browser=await chromium.launch({...(process.env.ORA_CHROMIUM ? {executablePath:process.env.ORA_CHROMIUM} : fs.existsSync('/usr/bin/chromium') ? {executablePath:'/usr/bin/chromium'} : {}),headless:true,args:['--no-sandbox']});
  const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'allow'});
@@ -122,6 +179,8 @@ const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-brows
  await futureAudio.waitFor({state:'attached',timeout:10000});
  assert.equal(await page.locator('iframe.readings-audio-player').count(),0,'no invented player for an unimported date');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'future-date recording link fits mobile width');
+ await checkLateDailyRecording(browser, base, 'foreground');
+ await checkLateDailyRecording(browser, base, 'timer');
  // The Roman Office of Readings is explicitly an incomplete readings index.
  await page.goto(`${base}index.html?tab=pray&kind=readings&date=2027-01-11&rite=roman`);
  const oorLimits=page.locator('.office-readings-limits');
