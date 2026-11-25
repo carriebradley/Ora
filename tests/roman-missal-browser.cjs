@@ -28,6 +28,30 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  const audit=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
  violations.push(...audit.violations.map(v=>({tab:'inline-private-missal',id:v.id,examples:v.nodes.map(n=>({html:n.html,summary:n.failureSummary}))})));
  await page.screenshot({path:path.join(artifacts,'inline-private-missal.png'),fullPage:true});
+ await page.goto(`${base}index.html?tab=liturgy&date=2027-01-11&rite=roman`);
+ // Read the rendered sections in one snapshot. Feed refreshes can rebuild
+ // the prayer view while the saved EPUB preview is being hydrated.
+ const weekday=await page.waitForFunction(()=>{
+  const preview=document.querySelector('.reader-inline-text.reader-inline-missal');
+  const sections=Array.from(preview?.querySelectorAll('.roman-mass-part')??[]);
+  if(!sections.some(section=>section.textContent.includes('Fixture first-week collect.')))return false;
+  const headings=sections.map(section=>section.querySelector('h3')?.textContent);
+  const communion=sections[headings.indexOf('Communion Antiphon')];
+  return {
+   headings,
+   communion:Array.from(communion?.querySelectorAll('p')??[],p=>p.textContent),
+   pressed:preview.querySelectorAll('[data-reader="eucharistic"][aria-pressed="true"]').length
+  };
+ });
+ const mass=await weekday.jsonValue();
+ assert.deepEqual(mass.headings,[
+  'Entrance Antiphon','Collect','Prayer over the Offerings','Eucharistic Prayer',
+  'Communion Antiphon','Prayer after Communion'
+ ]);
+ assert.deepEqual(mass.communion,[
+  'Fixture first-week communion.','Or: Jn 10: 10','Fixture first-week communion alternative.'
+ ]);
+ assert.equal(mass.pressed,0,'ordinary Monday leaves Eucharistic Prayer selection open');
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=roman`);
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture Sunday prayer'));
  await prayers.waitFor({state:'visible'});
@@ -43,18 +67,6 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await context.setOffline(true);await page.reload();
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture Sunday prayer'));
  assert.equal(await page.locator('dialog[open]').count(),0);await context.setOffline(false);
- await page.goto(`${base}index.html?tab=liturgy&date=2027-01-11&rite=roman`);
- await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture first-week collect.'));
- assert.deepEqual(await prayers.locator('.roman-mass-part > h3').allTextContents(),[
-  'Entrance Antiphon','Collect','Prayer over the Offerings','Eucharistic Prayer',
-  'Communion Antiphon','Prayer after Communion'
- ]);
- const communion=prayers.locator('.roman-mass-part').filter({has:page.getByRole('heading',{name:'Communion Antiphon',exact:true})});
- assert.deepEqual(await communion.locator('p').allTextContents(),[
-  'Fixture first-week communion.','Or: Jn 10: 10','Fixture first-week communion alternative.'
- ]);
- assert.equal(await prayers.locator('[data-reader="eucharistic"][aria-pressed="true"]').count(),0,
-  'ordinary Monday leaves Eucharistic Prayer selection open');
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-13&rite=roman`);
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Daily prayers are not available'));
  assert.deepEqual(uploads,[],'private text is never uploaded');page.off('request',watch);
