@@ -195,7 +195,7 @@
       });
     }).catch(() => { st.readings[iso] = null; if (st.date === iso) render(); });
   }
-  // Retry a missing recording when the Roman Readings screen is visible.
+  // Retry missing official readings or audio when Roman Readings is visible.
   // Never rebuild a screen with an existing iframe: playback would stop.
   const hasOfficialRecording = reading => /^\d+$/.test(String(reading?.full?.audio || ''));
   const romanReadingsVisible = () => document.visibilityState === 'visible' &&
@@ -210,8 +210,9 @@
     feedP = fetchReadingsFeed();
     return feedP.then(f => {
       const full = f[iso];
-      if (!Array.isArray(full?.sections) || !full.sections.length ||
-          !hasOfficialRecording({full}) || hasOfficialRecording(st.readings[iso])) return false;
+      const current = st.readings[iso];
+      if (!Array.isArray(full?.sections) || !full.sections.length || hasOfficialRecording(current) ||
+          (current?.full && !hasOfficialRecording({full}))) return false;
       st.readings[iso] = {full, copyright: f._copyright};
       if (st.date === iso && romanReadingsVisible() &&
           !document.querySelector('#app .readings-audio-player')) render();
@@ -2738,7 +2739,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v471';
+  const APP_BUILD = 'ora-v472';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

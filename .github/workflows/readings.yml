@@ -6,7 +6,9 @@ on:
   schedule:
     - cron: '5 4,5,10,14,18,22 * * *'
   workflow_dispatch:
-permissions: { contents: write }
+permissions:
+  contents: write
+  pages: write
 concurrency:
   group: ora-daily-imports
   cancel-in-progress: false
@@ -35,3 +37,17 @@ jobs:
       - run: |
           git config user.name "ora-bot"; git config user.email "ora-bot@users.noreply.github.com"
           git add readings.json office_audio.json angelus.json; git diff --cached --quiet || (git commit -m "Update readings, office audio and Angelus" && git push)
+      # A push using the workflow token does not trigger branch-based Pages.
+      # Compare on every run so a failed build is retried even if data is unchanged.
+      - name: Publish current daily data to GitHub Pages
+        if: github.ref_name == github.event.repository.default_branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          builds="repos/${GITHUB_REPOSITORY}/pages/builds"
+          current="$(git rev-parse HEAD)"
+          latest="$(gh api "$builds/latest" --jq '[.commit, .status] | join(" ")')"
+          case "$latest" in
+            "$current built"|"$current building"|"$current queued") exit 0 ;;
+          esac
+          gh api --method POST "$builds"
