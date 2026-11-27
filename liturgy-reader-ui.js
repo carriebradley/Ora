@@ -483,7 +483,8 @@
         }else book=await LiturgyReader.load(saved.blob,saved.format);
         if(!section.isConnected||token!==hydrateVersion)return;
         const roman=section.dataset.textId==='roman'&&book.kind==='epub';
-        const selectedMass=roman?RomanMissal.select(book.sections,section.dataset.dayTitle):null;
+        const massMatch=roman?RomanMissal.lookup(book.sections,section.dataset.dayTitle):null;
+        const selectedMass=massMatch?.selection;
         const selected=Math.max(1,Math.min(book.numPages,Number(section.dataset.inlinePage)||selectedMass?.page||saved.page||1));section.dataset.inlinePage=selected;
         
         preview.classList.toggle('reader-inline-missal',roman);
@@ -492,6 +493,9 @@
           preview.replaceChildren();
           if(selectedMass){
             renderRoman(section,book,selectedMass.part);
+          }else if(massMatch.ambiguous){
+            preview.innerHTML='<p>Your Missal has more than one section for this date. Open the book to choose the Mass.</p>'+
+              '<button class="btn" type="button" data-reader="open">Open saved Missal</button>';
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';
           }
