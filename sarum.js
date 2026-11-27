@@ -2077,6 +2077,8 @@
     else if (w.feast && (w.src === 'B' || w.src === 'C') && /Kevin|Colmcille|Columba|Brendan|Fursey|Ciar|Finnian|Fintan|Canice|Laserian|Aidan|Moling|Michan|Mac Cuilinn|Eugene|Malachy|Laurence O|Patrick$|Finbarr/.test(nm) && !/Translation of Sts/.test(nm)) rule('y', 'yellow on all feasts of confessors');
     else if (w.feast && ['1/27','2/6','3/12','4/3','4/4','4/30','6/8','6/9','6/16','7/4','7/15','7/28','8/28','9/4','9/30','10/1','10/23','11/11','11/16','12/6'].includes(md) && !/Colmcille/.test(nm)) rule('y', 'yellow on all feasts of confessors');
     else if (w.feast && (/Martyr|Apostle|Evangelist/.test(nm) || ['1/25','2/22','4/23','5/1','5/6','6/30','8/1','8/3','8/29','11/25','7/27'].includes(md))) rule('r', 'red on feasts of martyrs, apostles and evangelists');
+    const colorIsDefault = !colorNote && w === t && t.rank === 'Weekday' && t.season === 'After Trinity' && color === 'g';
+    if (colorIsDefault) colorNote = 'Green is Ora’s default for ordinary weekdays after Trinity. The 1526 Sarum Missal gives no fixed vestment color for these weekdays (Warren, Part I, pp. 24–25).';
     const noteKey = w.noteKey || t.noteKey;
     let mass = (w.mk && MASS[w.mk]) || (w.vk && MASS[w.vk]) || null; const srcNote = w.mk && SRCNOTE[w.mk] || '';
     if (mass && mass.nm && mass.nm !== w.title.replace(/ \(transferred\)$/, '')) mass = null;
@@ -2085,7 +2087,7 @@
     if (!mass && (w === t || w.score <= 30)) { const sm = seasonMass(t); if (sm) mass = w !== t ? Object.assign({}, sm, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the day. ` + sm.note }) : sm; }
     if (!mass && t.fmk && (w === t || w.score <= 30)) { mass = ferialMass(t.fmk, t.wed); if (mass && w !== t) mass = Object.assign({}, mass, { note: `Today's ${w.title} is kept only as a memory, so the Mass is of the weekday. ` + mass.note }); }
     const kept = keptFor(d, w, t, fast, w.mk);
-    return { kept, historicalObservance, isFeast: !!w.feast && !/Memory/.test(w.rank), rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color, colorNote, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
+    return { kept, historicalObservance, isFeast: !!w.feast && !/Memory/.test(w.rank), rankNote: w.rankNote || '', srcNote, src: w.src || '', srcText: w.src ? SRCTXT[w.src] : '', mass, title: w.title, rank: w.rank, color, colorNote, colorIsDefault, season: t.season, fast, notes: note(noteKey) || note(t.noteKey || ''), also, date: iso(d), ember: !!(items.find(i => i.ember)) };
   }
 
   return { sarum, temporal, setData, FIXED, VIGILS, MASS };

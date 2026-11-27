@@ -524,10 +524,11 @@
   }
   function cardSarum(v) {
     const r = v.sarum;
+    const defaultColorSource = r.colorIsDefault ? '<p><a href="https://1928commonprayer.org/sarum-missal/ordinary-ministry" target="_blank" rel="noopener noreferrer">Sarum Missal · vestment rubrics</a></p>' : '';
     return `<section class="card"><div class="lab">${calendarSwatch(r,'sarum','sw')}<span class="grow">Traditional</span>${speakBtn(spokenCard(r, r.notes))}</div>
       <div class="calendar-western-title">${calendarCommemorationsHTML(r.title)}</div><div class="chips">${chipsFor(r)}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}${chip(r.historicalObservance && r.historicalObservance.name)}</div>
       ${r.historicalObservance ? `<p>${esc(r.historicalObservance.day)}</p><p class="muted">${esc(r.historicalObservance.note)}</p>` : ''}
-      ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
+      ${fastingIcons(r,'sarum')}${r.notes ? `<p style="font-family:var(--serif);font-size:1rem;line-height:1.5">${esc(r.notes)}</p>` : ''}${r.srcText || r.srcNote || r.rankNote || r.colorNote ? `<details class="srcd"><summary>Sources</summary>${r.srcText ? `<p>${esc(r.srcText)}</p>` : ''}${[r.srcNote, r.rankNote, r.colorNote].filter(Boolean).map(t => `<p>${esc(t)}</p>`).join('')}${defaultColorSource}</details>` : ''}${keptHTML(r.kept)}${alsoHTML(r.also)}</section>`;
   }
   function keptHTML(k) {
     if (!k || !k.length) return '';
@@ -653,13 +654,17 @@
     y:'#c9a227',k:'#1c1c1c'
   };
   const COLOR_NAMES = {g:'green',v:'violet',r:'red',w:'white',gold:'gold',rose:'rose',blue:'blue',y:'yellow',k:'black',dark:'dark'};
+  function vestmentLabel(day, color) {
+    const name = COLOR_NAMES[color] || color;
+    return day.colorIsDefault ? `Ora’s default vestment color ${name}` : `Vestment color ${name}`;
+  }
   function calendarPair(r,rite){
     return LiturgicalColors.pair(r,LiturgicalColors.season(r,rite).color);
   }
   function calendarSwatch(r,rite,cls='dot'){
     const p=calendarPair(r,rite);
     const season=LiturgicalColors.season(r,rite);
-    const label=`Vestment color ${COLOR_NAMES[p.vestment]||p.vestment}; liturgical season ${season.label} (${COLOR_NAMES[p.category]||p.category})`;
+    const label=`${vestmentLabel(r,p.vestment)}; liturgical season ${season.label} (${COLOR_NAMES[p.category]||p.category})`;
     return `<span class="${cls}${p.dual?' dual':''}" style="--c:${col(p.vestment)}${p.dual?';--ring:'+(CALENDAR_CATEGORY_COLORS[p.category]||col(p.category)):''}" data-vestment="${esc(p.vestment)}" data-category="${esc(p.category)}" data-season="${esc(season.label)}" title="${esc(label)}"></span>`;
   }
   // Today shows the liturgical prayer season at left, not a fasting status.
@@ -731,7 +736,7 @@
       const vestment = r.color || 'w';
       const badgeFill = col(vestment);
       const ink = ['w','gold','y','rose'].includes(vestment) ? '#000' : '#fff';
-      const colors = `Vestment color ${COLOR_NAMES[vestment]||vestment}; liturgical season ${season.label} (${COLOR_NAMES[season.color]||season.color})`;
+      const colors = `${vestmentLabel(r,vestment)}; liturgical season ${season.label} (${COLOR_NAMES[season.color]||season.color})`;
       const discipline = LiturgicalColors.discipline(r,k);
       return `<div class="gl ${x.kind}${S.rite === k ? ' selected' : ''}" style="--today-category:${CALENDAR_CATEGORY_COLORS[season.color]||col(season.color)}" data-category="${esc(season.color)}" data-vestment="${esc(vestment)}" data-season="${esc(season.label)}" data-discipline="${esc(discipline?.kind||'')}" role="button" tabindex="0" data-act="rite" data-v="${k}" aria-pressed="${S.rite === k}" aria-label="Use ${n} for prayers and readings. ${esc(colors)}${discipline ? '; '+esc(discipline.label) : ''}"><span class="today-rite">${todaySeasonDot(season)}<span class="gn">${n}</span></span><span class="today-badges"><span class="gb" style="--badge-fill:${badgeFill};background:${badgeFill};color:${ink}">${esc(x.badge)}</span></span>${detail ? `<div class="gd">${detailHTML}</div>` : ''}</div>`;
     }).join('') + '</section>';
@@ -2212,7 +2217,7 @@
       const dots = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => calendarSwatch(v[k],k)).join('');
       const disciplineGuidance = ['roman','byz','sarum'].filter(k=>st.layers[k]).map(k=>({rite:k,info:LiturgicalColors.discipline(v[k],k)})).filter(x=>x.info);
       const f = disciplineGuidance.length>0;
-      const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => {const p=calendarPair(v[k],k);return RITES[k]+': '+v[k].title+(v[k].fast?'. '+v[k].fast:'')+'. Vestment color '+(COLOR_NAMES[p.vestment]||p.vestment)+'; liturgical season '+LiturgicalColors.season(v[k],k).label+' ('+(COLOR_NAMES[p.category]||p.category)+')';}).join('. ');
+      const label = fmtLong(iso) + '. ' + ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => {const p=calendarPair(v[k],k);return RITES[k]+': '+v[k].title+(v[k].fast?'. '+v[k].fast:'')+'. '+vestmentLabel(v[k],p.vestment)+'; liturgical season '+LiturgicalColors.season(v[k],k).label+' ('+(COLOR_NAMES[p.category]||p.category)+')';}).join('. ');
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true" title="'+esc(disciplineGuidance.map(x=>RITES[x.rite]+': '+x.info.label).join('; '))+'">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
     const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Christmas season and white vestments'],['gold','Gold · Easter/Pascha season and gold vestments'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian observance accent']];
@@ -2835,7 +2840,7 @@
   setInterval(retryMissingDoAudio, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v477';
+  const APP_BUILD = 'ora-v478';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
