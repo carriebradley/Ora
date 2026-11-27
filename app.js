@@ -1843,6 +1843,7 @@
   function byzLiturgyDailyChanges(iso,church,day,service){
     const melkite=church==='melkite',dated=melkite?Melkite.entry(iso):Edmonton.entry(iso);
     const readingDay=dated?byzDay(iso,church):null;
+    const readingNote=melkite?Melkite.typicon(iso)?.readingNote:'';
     const refs=(readingDay?.sets||[]).flatMap(group=>group.r||[]).filter(pair=>
       /^(?:Epistle|Gospel|Apostle)$/i.test(pair[0]));
     const source=melkite?'https://melkite.org/liturgical-resources':
@@ -1867,6 +1868,7 @@
       '<summary>Readings &amp; propers'+(day.tone?' · Tone '+Number(day.tone):'')+'</summary>'+
       dailyHymns+
       (items||'<p class="muted">Daily reading references are unavailable.</p>')+
+      (readingNote?'<p class="muted byz-reading-note">'+esc(readingNote)+'</p>':'')+
       caution+
       '<a class="btn sm" target="_blank" rel="noopener noreferrer" href="'+esc(source)+'">'+
       esc(sourceName)+'</a>'+
@@ -2736,7 +2738,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v470';
+  const APP_BUILD = 'ora-v471';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

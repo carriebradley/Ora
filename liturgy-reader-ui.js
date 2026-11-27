@@ -322,13 +322,14 @@
           optionalLitanyDetails.className='byz-antiphon-option byz-optional-litany';
           const summary=document.createElement('summary');summary.textContent=optionalLitany.labels?.get(slot)||'Optional petitions';
           optionalLitanyDetails.append(summary);target.append(optionalLitanyDetails);
-          lastLine=null;lastRole=null;pendingRole=null;continue;
+          lastLine=null;lastRole=null;pendingRole=null;
+          if(!optionalLitany.firstPrayers.has(slot))continue;
         }
         if(optionalLitanyDetails){
           if(optionalLitany?.lines.has(slot))container=optionalLitanyDetails;
           else{optionalLitanyDetails=null;container=target;lastLine=null;lastRole=null;}
         }
-        let text=String(raw||'').trim();
+        let text=String(optionalLitany?.firstPrayers.get(slot)??raw??'').trim();
         // The verified optional Newton dismissal prints the mercy response
         // once followed by a repetition count. Supply the spoken triple only
         // inside its positively matched (and collapsed) optional block.
