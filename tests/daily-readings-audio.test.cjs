@@ -11,7 +11,7 @@ vm.runInNewContext(urlSource, context);
 vm.runInNewContext(source, context);
 const audio = context.romanReadingsAudioHTML;
 test('official player and fallback appear for a verified recording', () => {
-  const html = audio('2026-11-24', '2418304374');
+  const html = audio('2026-11-24', {audio:'2418304374'});
   assert.match(html, /<iframe/);
   assert.match(html, /tracks%2F2418304374/);
   assert.match(html, /Open official recording/);
@@ -19,9 +19,23 @@ test('official player and fallback appear for a verified recording', () => {
 });
 test('missing or malformed IDs always retain official date-specific link', () => {
   for (const id of [undefined, '', 'invalid']) {
-    const html = audio('2026-11-24', id);
+    const html = audio('2026-11-24', {audio:id});
     assert.doesNotMatch(html, /<iframe/);
     assert.match(html, /Listen to daily Mass readings/);
     assert.match(html, /podcasts\/audio\/daily-mass-reading-podcast-november-24-2026/);
   }
+});
+test('Christmas always links to the daytime recording and embeds only a verified daytime track', () => {
+  for (const recording of [undefined, {audio:'111'}, {audio:'222', audio_suffix:'night'}, {audio:'333', audio_suffix:'day'}]) {
+    const html = audio('2026-12-25', recording);
+    assert.match(html, /podcasts\/audio\/daily-mass-reading-podcast-december-25-2026-day"/);
+    assert.match(html, /Christmas Mass during the Day recording/);
+    assert.equal(html.includes('<iframe'), recording?.audio_suffix === 'day');
+  }
+});
+test('an imported alternate podcast uses the matching official page', () => {
+  const html = audio('2026-11-26', {audio:'456', audio_suffix:'thanksgiving'});
+  assert.match(html, /tracks%2F456/);
+  assert.match(html, /podcasts\/audio\/daily-mass-reading-podcast-november-26-2026-thanksgiving"/);
+  assert.match(audio('2026-11-26', {audio:'456', audio_suffix:'../../example'}), /november-26-2026"/);
 });

@@ -135,11 +135,19 @@
   const READINGS_API = 'https://cpbjr.github.io/catholic-readings-api/readings';
   const usccb = iso => `https://bible.usccb.org/bible/readings/${iso.slice(5, 7)}${iso.slice(8, 10)}${iso.slice(2, 4)}.cfm`;
   const MONTHS = ['january','february','march','april','may','june','july','august','september','october','november','december'];
-  const usccbAudio = iso => {
-    const d = new Date(iso + 'T12:00:00');
-    let u = `https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-${MONTHS[d.getMonth()]}-${d.getDate()}-${d.getFullYear()}`;
-    return u;
+  const christmasMass = iso => iso.slice(5) === '12-25';
+  const usccbAudio = (iso, suffix) => {
+    const [year, month, day] = iso.split('-');
+    const variant = christmasMass(iso) ? 'day' : suffix;
+    const ending = typeof variant === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(variant) ? `-${variant}` : '';
+    return `https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-${MONTHS[+month - 1]}-${+day}-${year}${ending}`;
   };
+  const officialTrack = (iso, record) => {
+    const track = String(record?.audio || '');
+    return /^\d+$/.test(track) && (!christmasMass(iso) || record.audio_suffix === 'day') ? track : '';
+  };
+  const readingRecording = reading => reading?.recording || reading?.full;
+  const hasReadingSections = record => Array.isArray(record?.sections) && record.sections.length > 0;
   let feed = null;
   // A successful HTTP response can still contain an empty or partial feed.
   // Never replace the last usable readings with one that has no dated text.
@@ -164,10 +172,25 @@
   feedP.then(() => { if (st.tab === 'justice') render(); });
   const hasReadingCitations = data => data && typeof data === 'object' && !Array.isArray(data) &&
     ['first', 'psalm', 'second', 'gospel'].some(key => typeof data[key] === 'string' && data[key].trim());
-  // Nationally appointed citations, verified against the USCCB 2027 calendar
-  // (printed p. 15) and U.S. Lectionary no. 305. References only: no licensed
-  // Lectionary body, Mass proper or optional Eucharistic prayer is bundled here.
+  // Verified U.S. Lectionary references for dates that need a local fallback.
   const VERIFIED_MASS_CITATIONS = Object.freeze({
+    // The dated USCCB page is a menu. Lectionary 506 is the ordinary weekday form.
+    '2026-11-26': Object.freeze({
+      first: 'Revelation 18:1-2, 21-23; 19:1-3, 9a',
+      psalm: 'Psalm 100:1b-2, 3, 4, 5',
+      acclamation: 'Luke 21:28',
+      gospel: 'Luke 21:20-28',
+      sourceNote: 'Ordinary Time weekday · U.S. Lectionary 506.'
+    }),
+    // The publisher lists four Christmas Masses. These are for Mass during the Day.
+    '2026-12-25': Object.freeze({
+      first: 'Isaiah 52:7-10',
+      psalm: 'Psalm 98:1, 2-3, 3-4, 5-6',
+      second: 'Hebrews 1:1-6',
+      gospel: 'John 1:1-18 or John 1:1-5, 9-14',
+      sourceNote: 'Christmas Mass during the Day · U.S. Lectionary 16.'
+    }),
+    // USCCB 2027 calendar, printed p. 15, and U.S. Lectionary no. 305.
     '2027-01-11': Object.freeze({
       first: 'Hebrews 1:1-6',
       psalm: 'Psalm 97:1, 2b, 6, 7c, 9',
@@ -179,41 +202,53 @@
   function loadReadings(iso) {
     if (st.readings[iso] !== undefined) return;
     st.readings[iso] = 'loading';
-    feedP.then(f => {
-      if (f[iso] && f[iso].sections && f[iso].sections.length) { st.readings[iso] = { full: f[iso], copyright: f._copyright }; if (st.date === iso) render(); return; }
-      // The dated official references take precedence over previously saved
-      // third-party citations, including incomplete or obsolete results.
-      if (VERIFIED_MASS_CITATIONS[iso]) { st.readings[iso] = VERIFIED_MASS_CITATIONS[iso]; if (st.date === iso) render(); return; }
-      const cached = store.get('ora.readings.' + iso, null);
-      if (hasReadingCitations(cached)) { st.readings[iso] = cached; if (st.date === iso) render(); return; }
-      return fetch(`${READINGS_API}/${iso.slice(0, 4)}/${iso.slice(5)}.json`).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(j => {
-        const x = j?.readings && typeof j.readings === 'object' && !Array.isArray(j.readings) ? j.readings : {};
-        const cite = value => typeof value === 'string' ? value.trim() : '';
-        const out = { first: cite(x.firstReading), psalm: cite(x.psalm), second: cite(x.secondReading), gospel: cite(x.gospel) };
-        if (!hasReadingCitations(out)) throw new Error('No usable Mass reading citations for date');
-        st.readings[iso] = out; store.set('ora.readings.' + iso, out); if (st.date === iso) render();
-      });
-    }).catch(() => { st.readings[iso] = null; if (st.date === iso) render(); });
+    feedP.then(async f => {
+      const full = f[iso];
+      if (hasReadingSections(full)) return {full, copyright: f._copyright};
+      const citations = await loadReadingCitations(iso);
+      return officialTrack(iso, full) ? {...citations, recording: full} : citations;
+    }).then(reading => {
+      st.readings[iso] = reading;
+      if (st.date === iso) render();
+    });
+  }
+  async function loadReadingCitations(iso) {
+    if (VERIFIED_MASS_CITATIONS[iso]) return VERIFIED_MASS_CITATIONS[iso];
+    const cached = store.get('ora.readings.' + iso, null);
+    if (hasReadingCitations(cached)) return cached;
+    try {
+      const response = await fetch(`${READINGS_API}/${iso.slice(0, 4)}/${iso.slice(5)}.json`);
+      if (!response.ok) return null;
+      const data = await response.json();
+      const x = data?.readings && typeof data.readings === 'object' && !Array.isArray(data.readings) ? data.readings : {};
+      const cite = value => typeof value === 'string' ? value.trim() : '';
+      const out = { first: cite(x.firstReading), psalm: cite(x.psalm), second: cite(x.secondReading), gospel: cite(x.gospel) };
+      if (!hasReadingCitations(out)) return null;
+      store.set('ora.readings.' + iso, out);
+      return out;
+    } catch (_) { return null; }
   }
   // Retry missing official readings or audio when Roman Readings is visible.
   // Never rebuild a screen with an existing iframe: playback would stop.
-  const hasOfficialRecording = reading => /^\d+$/.test(String(reading?.full?.audio || ''));
   const romanReadingsVisible = () => document.visibilityState === 'visible' &&
     st.tab === 'readings' && st.readRite !== 'byz' && st.readRite !== 'sarum';
   function refreshReadingsFeed() {
     const iso = st.date;
     const previous = st.readings[iso];
     if (!romanReadingsVisible() || feed === null || readingsRefreshPending ||
-        previous === undefined || previous === 'loading' || hasOfficialRecording(previous) ||
+        previous === undefined || previous === 'loading' || officialTrack(iso, readingRecording(previous)) ||
         document.querySelector('#app .readings-audio-player')) return Promise.resolve(false);
     readingsRefreshPending = true;
     feedP = fetchReadingsFeed();
     return feedP.then(f => {
       const full = f[iso];
       const current = st.readings[iso];
-      if (!Array.isArray(full?.sections) || !full.sections.length || hasOfficialRecording(current) ||
-          (current?.full && !hasOfficialRecording({full}))) return false;
-      st.readings[iso] = {full, copyright: f._copyright};
+      if (officialTrack(iso, readingRecording(current))) return false;
+      if (hasReadingSections(full) && (!current?.full || officialTrack(iso, full))) {
+        st.readings[iso] = {full, copyright: f._copyright};
+      } else if (officialTrack(iso, full)) {
+        st.readings[iso] = {...current, recording: full};
+      } else return false;
       if (st.date === iso && romanReadingsVisible() &&
           !document.querySelector('#app .readings-audio-player')) render();
       return true;
@@ -224,20 +259,22 @@
     : `The Mass readings. First reading, ${r.first || ''}. Psalm, ${r.psalm || ''}. ${r.second ? 'Second reading, ' + r.second + '. ' : ''}${r.acclamation ? 'Gospel acclamation, ' + r.acclamation + '. ' : ''}Gospel, ${r.gospel || ''}.`;
   // The official recording must remain accessible even when the daily import
   // has not supplied a SoundCloud track, or the third-party iframe is blocked.
-  function romanReadingsAudioHTML(iso, audio) {
-    const track = String(audio || '');
-    const link = `<div class="row"><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">${/^\d+$/.test(track) ? 'Open official recording' : '▶ Listen to daily Mass readings'}</a></div>`;
-    const player = /^\d+$/.test(track) ? `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${track}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>` : '';
+  function romanReadingsAudioHTML(iso, recording) {
+    const track = officialTrack(iso, recording);
+    const label = christmasMass(iso) ? 'Christmas Mass during the Day recording' : track ? 'Open official recording' : '▶ Listen to daily Mass readings';
+    const link = `<div class="row"><a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso, recording?.audio_suffix)}">${label}</a></div>`;
+    const player = track ? `<iframe class="readings-audio-player" title="USCCB audio of the readings" width="100%" height="88" scrolling="no" frameborder="0" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F${track}&visual=false&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false"></iframe>` : '';
     return player + link;
   }
   function romanReadingsHTML(iso, showAudio = true, simple = false) {
     const r = st.readings[iso];
     let h = '';
-    if (showAudio && !(r && r.full)) h += romanReadingsAudioHTML(iso);
+    const recording = readingRecording(r);
+    if (showAudio && !r?.full) h += romanReadingsAudioHTML(iso, recording);
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
       if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>`;
-      if (showAudio) h += romanReadingsAudioHTML(iso, r.full.audio);
+      if (showAudio) h += romanReadingsAudioHTML(iso, recording);
       const referencesOnly = r.full.sections.every(s => !String(s.text || '').trim());
       for (const s of r.full.sections) {
         const passage = String(s.text || '');
@@ -250,7 +287,7 @@
       for (const [k, n] of [['first', 'First Reading'], ['psalm', 'Psalm'], ['second', 'Second Reading'], ['acclamation', 'Gospel Acclamation'], ['gospel', 'Gospel']]) if (typeof r[k] === 'string' && r[k].trim()) h += `<div class="cite"><span>${n}</span><span>${esc(r[k])}</span></div>`;
       if (r.sourceNote) h += `<p class="muted mass-citation-provenance" style="font-size:.8rem">${esc(r.sourceNote)}</p>`;
     } else h += '<p class="muted">Readings aren’t available offline or for this date yet — use the links below.</p>';
-    if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a>${showAudio ? '' : `<a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso)}">USCCB audio</a>`}<a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
+    if (!simple) h += `<div class="row"><a class="btn fill" target="_blank" rel="noopener" href="${usccb(iso)}">USCCB page</a>${showAudio ? '' : `<a class="btn" target="_blank" rel="noopener" href="${usccbAudio(iso, recording?.audio_suffix)}">USCCB audio</a>`}<a class="btn" target="_blank" rel="noopener" href="https://universalis.com/">Universalis</a></div>`;
     if (r && r.full && !simple) h += `<p class="muted" style="font-size:.75rem">${esc(r.copyright || '')} Lectionary for Mass for Use in the Dioceses of the United States, second typical edition, © 2001, 1998, 1997, 1986, 1970 Confraternity of Christian Doctrine, Inc., Washington, DC. All rights reserved. Ora has not verified separate digital-application reproduction permission; see the official USCCB page for the approved readings.</p>`;
     return h;
   }
@@ -2739,7 +2776,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v472';
+  const APP_BUILD = 'ora-v473';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

@@ -6,16 +6,17 @@ const path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
 const start=source.indexOf('  const hasReadingCitations =');
 const end=source.indexOf('  const readingsSpeech =',start);
+const audioHelpers=source.slice(source.indexOf('  const MONTHS ='),source.indexOf('  let feed = null;'));
 assert.ok(start>=0&&end>start,'Mass citation loader is present');
 const loader=new Function('feedP','fetch','store','st','render','READINGS_API',
- source.slice(start,end)+'\nreturn {loadReadings,hasReadingCitations};');
+ audioHelpers+source.slice(start,end)+'\nreturn {loadReadings,hasReadingCitations};');
 const htmlStart=source.indexOf('  function romanReadingsAudioHTML(');
 const htmlEnd=source.indexOf('  /* OCA lists',htmlStart);
 assert.ok(htmlStart>=0&&htmlEnd>htmlStart,'Roman readings renderer is present');
 const citationValidator=new Function(source.slice(start,source.indexOf('  function loadReadings(',start))+
  '\nreturn hasReadingCitations;')();
-const htmlFactory=new Function('st','esc','displayTitle','usccb','usccbAudio','speakBtn','fathersBlock','readingsSpeech','hasReadingCitations',
- source.slice(htmlStart,htmlEnd)+'\nreturn romanReadingsHTML;');
+const htmlFactory=new Function('st','esc','displayTitle','usccb','speakBtn','fathersBlock','readingsSpeech','hasReadingCitations',
+ audioHelpers+source.slice(htmlStart,htmlEnd)+'\nreturn romanReadingsHTML;');
 const iso='2027-01-12';
 const verifiedIso='2027-01-11';
 
@@ -41,7 +42,7 @@ const render=(reading,date=iso,showAudio=true,simple=false)=>{
  const st={readings:{[date]:reading}};
  return htmlFactory(st,s=>String(s),s=>s,
   date=>'https://bible.usccb.org/bible/readings/'+date.slice(5,7)+date.slice(8,10)+date.slice(2,4)+'.cfm',
-  ()=>'/audio',()=>'',()=>'',()=>' ',citationValidator)(date,showAudio,simple);
+  ()=>'',()=>'',()=>' ',citationValidator)(date,showAudio,simple);
 };
 
 test('invalid or missing third-party Mass citations never produce an empty truthy reading',async()=>{
@@ -90,6 +91,20 @@ test('valid locally published USCCB feed still takes precedence over citation-on
  const {reading,requests,writes}=await exercise(null,{feed:{[iso]:full}});
  assert.equal(reading.full,full);assert.equal(requests,0);assert.deepEqual(writes,[]);
 });
+test('November 26 shows the official ordinary weekday citations and recording from a menu-only feed',async()=>{
+ const date='2026-11-26';
+ const publisherEntry={sections:[],audio:'2418304893'};
+ const {reading,requests}=await exercise(null,{date,feed:{[date]:publisherEntry}});
+ assert.equal(requests,0);
+ assert.equal(reading.recording,publisherEntry);
+ const html=render(reading,date);
+ assert.match(html,/Revelation 18:1-2, 21-23; 19:1-3, 9a/);
+ assert.match(html,/Luke 21:20-28/);
+ assert.match(html,/U.S. Lectionary 506/);
+ assert.match(html,/tracks%2F2418304893/);
+ assert.match(html,/november-26-2026"/);
+ assert.match(html,/readings\/112626\.cfm/);
+});
 
 
 test('January 11 official citations display offline with all four dated references and source note',async()=>{
@@ -136,10 +151,11 @@ test('invalid preloaded citation object renders a meaningful unavailable notice'
 
 test('official daily Mass recording remains above the reading text with or without an imported ID',()=>{
  const full={title:'Daily Mass',sections:[{label:'Reading 1',cite:'Hebrews 1:1-6',text:'Test-only placeholder'}]};
+ const audioLink='href="https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-january-12-2027"';
  for(const audio of [undefined,'2418304374']){
   const html=render({full:{...full,audio}});
-  assert.match(html,/href="\/audio"/);
-  assert.ok(html.indexOf('href="/audio"')<html.indexOf('Test-only placeholder'));
+  assert.ok(html.includes(audioLink));
+  assert.ok(html.indexOf(audioLink)<html.indexOf('Test-only placeholder'));
   assert.equal(html.includes('<iframe'),Boolean(audio));
  }
  for(const reading of ['loading',null,{first:'Hebrews 1:1-6'}]){

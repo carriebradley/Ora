@@ -112,16 +112,29 @@ def add_audio(days, fetch=get):
     missing = []
     for date in ordered:
         rec = days[date]
-        if re.fullmatch(r'\d+', str(rec.get('audio', ''))): continue
         y, mo, d = date.split('-')
+        christmas = (mo, d) == ('12', '25')
+        if re.fullmatch(r'\d+', str(rec.get('audio', ''))) and (not christmas or rec.get('audio_suffix') == 'day'):
+            continue
         guess = f'daily-mass-reading-podcast-{MONTHS[int(mo) - 1]}-{int(d)}-{y}'
-        # Prefer the standard daily Mass before alternate feast/holiday recordings.
-        for slug in dict.fromkeys([guess, slugs.get(date)]):
+        # The USCCB lists Christmas Night first. Ora's dated view defaults to
+        # Mass during the Day, so only import that recording for December 25.
+        alternate = slugs.get(date)
+        # The Thanksgiving Mass has its own readings. It cannot replace the
+        # weekday recording when the ordinary podcast is briefly unavailable.
+        if alternate == f'{guess}-thanksgiving':
+            alternate = None
+        candidates = [f'{guess}-day'] if christmas else [guess, alternate]
+        for slug in dict.fromkeys(candidates):
             if not slug: continue
             try:
                 t = track_id(fetch(f'{PODCAST}/{slug}'))
                 if t:
                     rec['audio'] = t
+                    if slug.startswith(guess + '-'):
+                        rec['audio_suffix'] = slug[len(guess) + 1:]
+                    else:
+                        rec.pop('audio_suffix', None)
                     break
             except Exception as e:
                 print(f'audio: {date}: {slug}: {e}')
@@ -254,7 +267,10 @@ def main():
     new, copyright_ = parse(data)
     old = json.load(open(out_path)) if os.path.exists(out_path) else {}
     for k, v in new.items():
-        if old.get(k, {}).get('audio') and not v.get('audio'): v['audio'] = old[k]['audio']
+        if old.get(k, {}).get('audio') and not v.get('audio'):
+            v['audio'] = old[k]['audio']
+            if 'audio_suffix' in old[k]:
+                v['audio_suffix'] = old[k]['audio_suffix']
     old.update(new)
     if '--no-audio' not in a: add_audio({k: v for k, v in old.items() if not k.startswith('_')})
     if '--no-justice' not in a: update_justice(old)

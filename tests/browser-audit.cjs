@@ -184,6 +184,32 @@ async function checkLateDailyRecording(browser, base, trigger) {
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'future-date recording link fits mobile width');
  await checkLateDailyRecording(browser, base, 'foreground');
  await checkLateDailyRecording(browser, base, 'timer');
+ const feastContext = await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
+ try {
+  const feastPage = await feastContext.newPage();
+  const feastFeed = {
+   '2026-11-25': {sections:[{label:'Gospel',cite:'Test 1:1'}]},
+   '2026-11-26': {sections:[],audio:'123456789'},
+   '2026-12-25': {sections:[],audio:'987654321',audio_suffix:'day'}
+  };
+  await feastContext.route('**/*', route => {
+   const url = route.request().url();
+   if (url === `${base}readings.json`) return route.fulfill({json:feastFeed});
+   return url.startsWith(base) ? route.continue() : route.abort();
+  });
+  await feastPage.goto(`${base}index.html?tab=readings&date=2026-11-26&rite=roman`);
+  await feastPage.getByText('Luke 21:20-28', {exact:true}).waitFor();
+  assert.match(await feastPage.locator('.readings-audio-player').getAttribute('src'), /tracks%2F123456789/);
+  await feastPage.goto(`${base}index.html?tab=readings&date=2026-12-25&rite=roman`);
+  await feastPage.getByText('John 1:1-18 or John 1:1-5, 9-14', {exact:true}).waitFor();
+  const dayLink = feastPage.getByRole('link', {name:'Christmas Mass during the Day recording'});
+  assert.equal(await dayLink.getAttribute('href'), 'https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-december-25-2026-day');
+  const dayPlayer = feastPage.locator('.readings-audio-player');
+  await dayPlayer.waitFor({state:'attached'});
+  assert.match(await dayPlayer.getAttribute('src'), /tracks%2F987654321/);
+ } finally {
+  await feastContext.close();
+ }
  // The Roman Office of Readings is explicitly an incomplete readings index.
  await page.goto(`${base}index.html?tab=pray&kind=readings&date=2027-01-11&rite=roman`);
  const oorLimits=page.locator('.office-readings-limits');
