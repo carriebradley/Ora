@@ -289,6 +289,7 @@ async function checkLateDailyRecording(browser, base, trigger) {
  await require('./sacred-art-browser.cjs')(page,base,artifacts);
  await require('./liturgical-colors-browser.cjs')(page,base);
  await require('./roman-office-browser.cjs')(page,base,artifacts);
+ await require('./roman-calendar-coherence-browser.cjs')(browser,base);
  await require('./byzantine-office-browser.cjs')(page,base,artifacts);
  await require('./theme-browser.cjs')(page,base);
  await require('./swipe-browser.cjs')(browser,base);
