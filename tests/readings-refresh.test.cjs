@@ -6,21 +6,22 @@ const path=require('node:path');
 const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
 const start=app.indexOf('  const MONTHS =');
 const end=app.indexOf('  const readingsSpeech =',start);
-const execute=new Function('fetch','store','st','render','document',
+const execute=new Function('fetch','store','st','render','document','updateRomanReadingsView',
  app.slice(start,end)+'\nreturn {initial: feedP, refreshReadingsFeed};');
 const date='2026-11-25';
 const full={sections:[{label:'Gospel',cite:'Luke 21:12-19'}]};
 const fresh={...full,audio:'2418304674'};
-async function setup({tab='readings',readRite='roman',previous={full},responses=[{[date]:fresh}],visible=true,existingPlayer=false}={}){
+async function setup({tab='readings',readRite='roman',previous={full},responses=[{[date]:fresh}],visible=true}={}){
  const st={date,tab,readRite,readings:{[date]:previous}};
  let requests=0,renders=0,saved={};
  const payloads=[{[date]:full},...responses];
- const document={visibilityState:visible?'visible':'hidden',querySelector:()=>existingPlayer?{}:null};
+ const document={visibilityState:visible?'visible':'hidden'};
+ const render=()=>{renders++;};
  const {initial,refreshReadingsFeed}=execute(async()=>{
   const payload=payloads[requests++];
   if(payload instanceof Error)throw payload;
   return {ok:true,json:async()=>payload};
- },{get:()=>saved,set:(_,v)=>{saved=v;}},st,()=>{renders++;},document);
+ },{get:()=>saved,set:(_,v)=>{saved=v;}},st,render,document,render);
  await initial;
  return {st,document,refresh:refreshReadingsFeed,counts:()=>({requests,renders})};
 }
@@ -52,6 +53,14 @@ test('an audio-only publisher entry adds the player while keeping available refe
  assert.equal(await h.refresh(),true);
  assert.deepEqual(h.st.readings[date],{...citations,recording});
  assert.equal(await h.refresh(),false);
+ assert.deepEqual(h.counts(),{requests:3,renders:1});
+});
+test('late official reading sections keep an already loaded recording if the update omits it',async()=>{
+ const recording={sections:[],audio:fresh.audio,audio_suffix:'vigil'};
+ const h=await setup({previous:{recording},responses:[{[date]:full}]});
+ assert.equal(await h.refresh(),true);
+ assert.deepEqual(h.st.readings[date],{full,copyright:undefined,recording});
+ assert.equal(await h.refresh(),false);
  assert.deepEqual(h.counts(),{requests:2,renders:1});
 });
 test('failed or empty refresh preserves the current readings and can be retried',async()=>{
@@ -63,8 +72,8 @@ test('failed or empty refresh preserves the current readings and can be retried'
  assert.equal(h.st.readings[date].full.audio,'2418304674');
  assert.deepEqual(h.counts(),{requests:4,renders:1});
 });
-test('hidden tabs, existing recordings, other rites and prayer do not trigger a request',async()=>{
- for(const options of [{visible:false},{tab:'pray'},{readRite:'byz'},{readRite:'sarum'},{existingPlayer:true},{previous:{full:fresh}},{previous:'loading'}]){
+test('hidden tabs, complete readings with recordings, other rites and prayer do not trigger a request',async()=>{
+ for(const options of [{visible:false},{tab:'pray'},{readRite:'byz'},{readRite:'sarum'},{previous:{full:fresh}},{previous:'loading'}]){
   const h=await setup(options);
   assert.equal(await h.refresh(),false);
   assert.deepEqual(h.counts(),{requests:1,renders:0});
