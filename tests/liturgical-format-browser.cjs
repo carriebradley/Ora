@@ -553,6 +553,19 @@ module.exports=async(page,base,artifacts,violations)=>{
  }
  await page.setViewportSize({width:390,height:844});
 
+ await page.goto(base+'index.html?tab=liturgy&rite=byz&date=2026-11-29');
+ await page.locator('[data-act="liturgyview"][data-v="byz"]').click();
+ daily=page.locator('.byz-liturgy-variations');
+ await daily.locator('summary').click();
+ assert.match(await daily.locator('summary').innerText(),/Tone 2/);
+ assert.deepEqual(await daily.locator('.reading-reference').allTextContents(),[
+  'Ephesians 6:10-17','Luke 18:18-27'
+ ],'the dated Newton Liturgy keeps the annual-calendar readings');
+ assert.match(await daily.locator('.byz-reading-note').innerText(),
+  /monthly typicon gives Luke 18:18-28; the annual calendar gives Luke 18:18-27/);
+ await daily.locator('.byz-proper-group').first().waitFor();
+ assert.equal(await daily.locator('.byz-daily-propers').getAttribute('data-church'),'melkite');
+
  // Newton's annual hymns must follow the selected month, not November alone.
  for(const [date,title] of [
   ['2026-01-04',/Troparion of the resurrection \(Tone 5\)/i],

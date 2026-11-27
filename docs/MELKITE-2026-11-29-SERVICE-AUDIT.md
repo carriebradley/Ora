@@ -1,0 +1,12 @@
+# Melkite Divine Liturgy on November 29, 2026
+
+This dated comparison advances [#168](https://github.com/carriebradley/Ora/issues/168). Newton's [2026 diocesan calendar](https://melkite.org/2026-diocese-of-newton-calendar) (PDF page 13) identifies the Thirteenth Sunday after the Holy Cross, Tone 2, with the commemoration of Paramon and Philumenes. The [November 2026 typikon](https://melkite.org/wp-content/uploads/2025/12/November-2026.docx), linked from the [diocesan resources](https://melkite.org/liturgical-resources), explicitly names the Divine Liturgy of St. John Chrysostom.
+
+| Component | Source comparison |
+| --- | --- |
+| Readings | Both sources give Ephesians 6:10–17. The annual calendar ends the Liturgy Gospel at Luke 18:27, while the monthly typikon ends it at 18:28. Ora keeps Luke 18:18–27 and shows the existing source difference in both Readings and the Liturgy's **Readings & propers** panel. Luke 24:12–35 belongs to Orthros. |
+| Dated hymns | The November record has three entries in the Melkite Troparia & Kontakia group. The typikon lists the Tone 2 resurrection hymn, Paramon and Philumenes, a reference to the particular church's patron, and the pre-Nativity kontakion. The patron choice depends on the parish. |
+| Fixed prayers | The [Newton service book](https://melkite.org/wp-content/uploads/2012/02/LITURGY2009.pdf), PDF pages 30–96, opened through Ora's PDF extraction. A direct check of the original confirms the priest's opening blessing, then the deacon's opening Litany of Peace petition and the people's response. The source-specific expansions for the Litany of Peace, Gifts, Communion preparation and Aitesis ran against the extracted book. |
+| Optional petitions | The original PDF prints optional groups in the Litany of the Gifts (PDF p. 67), Communion preparation (p. 79), and dismissal (p. 93). Extraction joined the first two markers to the first petition, which left both groups in the main prayer flow. Ora now uses the verified group boundaries to place both in separate closed disclosures and keeps the full first petition available. The dismissal uses its existing separate disclosure. |
+
+The browser fixtures use invented prayer text and reproduce the joined markers and the dated Newton selection. This review covers the compared roles, responses and optional passages. A complete line-by-line comparison of the fixed Liturgy and the remaining dated hymn groups is still open. The original PDF remains available on the device.

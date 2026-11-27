@@ -68,8 +68,7 @@ module.exports=async(page,base,artifacts)=>{
     'DEACON: Let us complete our prayer to the Lord.',
     'ALL: Lord, have mercy. (To be repeated after each petition)',
     'DEACON: For the precious gifts here offered, let us pray to the Lord.',
-    'Optional:',
-    'For this holy house and those who enter it with faith, let us pray to the Lord.',
+    'Optional : For this holy house and those who enter it with faith, let us pray to the Lord.',
     'For our deliverance from all affliction, let us pray to the Lord.',
     'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
     'The Priest prays the following prayer:'
@@ -87,8 +86,7 @@ module.exports=async(page,base,artifacts)=>{
    ],
    79:[
     'That our God who loves mankind, having received these gifts on His altar, may send down His divine grace and the gift of the Holy Spirit, let us pray.',
-    'Optional:',
-    'For our deliverance from all affliction, let us pray to the Lord.',
+    'Optional : For our deliverance from all affliction, let us pray to the Lord.',
     'Help us, save us, have mercy on us and protect us, O God, by Your grace.',
     'T H E A I T E S I S',
     'That this day may be peaceful, let us ask the Lord.',
