@@ -1945,6 +1945,14 @@
       if(opening?.querySelector('b')?.textContent.trim()==='Opening')
         opening.innerHTML='<b>Invitatory verse (psalm omitted)</b><p>Lord, open my lips.<br>— And my mouth will proclaim your praise.</p>';
     }
+    const psalmodyHeading = Array.from(container.querySelectorAll('.sec > b'))
+      .find(heading => heading.textContent === 'Psalmody');
+    if (psalmodyHeading) {
+      const credit = document.createElement('p');
+      credit.className = 'muted roman-reading-credit roman-psalmody-credit';
+      credit.textContent = 'Psalms and biblical canticles · Douay–Rheims';
+      psalmodyHeading.after(credit);
+    }
     for(const paragraph of container.querySelectorAll('p')){
       const text=(paragraph.textContent||'').replace(/\s+/g,' ').trim();
       if((/modern four.week psalter|each psalm.s antiphon is its own opening verse|current books. antiphons, readings and intercessions/i.test(text)
@@ -2728,7 +2736,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v468';
+  const APP_BUILD = 'ora-v469';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
