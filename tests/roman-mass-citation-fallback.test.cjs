@@ -8,7 +8,7 @@ const start=source.indexOf('  const hasReadingCitations =');
 const end=source.indexOf('  const readingsSpeech =',start);
 const audioHelpers=source.slice(source.indexOf('  const MONTHS ='),source.indexOf('  let feed = null;'));
 assert.ok(start>=0&&end>start,'Mass citation loader is present');
-const loader=new Function('feedP','fetch','store','st','render','READINGS_API',
+const loader=new Function('feedP','fetch','store','st','updateRomanReadingsView','READINGS_API',
  audioHelpers+source.slice(start,end)+'\nreturn {loadReadings,hasReadingCitations};');
 const htmlStart=source.indexOf('  function romanReadingsAudioHTML(');
 const htmlEnd=source.indexOf('  /* OCA lists',htmlStart);
@@ -22,8 +22,7 @@ const verifiedIso='2027-01-11';
 
 async function exercise(payload,{cached=null,feed={},reject=false,date=iso}={}){
  const st={date,readings:{}},writes=[];
- let requests=0,resolveDone;
- const done=new Promise(resolve=>{resolveDone=resolve;});
+ let requests=0;
  const fetch=async url=>{requests++;
   assert.equal(url,'https://cpbjr.github.io/catholic-readings-api/readings/'+date.slice(0,4)+'/'+date.slice(5)+'.json');
   if(reject)throw Error('network offline');
@@ -31,11 +30,11 @@ async function exercise(payload,{cached=null,feed={},reject=false,date=iso}={}){
  };
  const store={get:(key)=>key==='ora.readings.'+date?cached:null,
   set:(key,value)=>writes.push({key,value})};
- const {loadReadings}=loader(Promise.resolve(feed),fetch,store,st,()=>resolveDone(),
+ const {loadReadings}=loader(Promise.resolve(feed),fetch,store,st,()=>{},
   'https://cpbjr.github.io/catholic-readings-api/readings');
- loadReadings(date);
+ const done=loadReadings(date);
  assert.equal(st.readings[date],'loading');
- await Promise.race([done,new Promise((_,reject)=>setTimeout(()=>reject(Error('No render after readings attempt')),2500))]);
+ await done;
  return {reading:st.readings[date],writes,requests};
 }
 const render=(reading,date=iso,showAudio=true,simple=false)=>{

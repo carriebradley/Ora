@@ -6,8 +6,8 @@ const path=require('node:path');
 const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
 const start=app.indexOf('  const MONTHS =');
 const end=app.indexOf('  const readingsSpeech =',start);
-const execute=new Function('fetch','store','st','render','document','updateRomanReadingsView',
- app.slice(start,end)+'\nreturn {initial: feedP, refreshReadingsFeed};');
+const execute=new Function('fetch','store','st','render','document','updateRomanReadingsView','READINGS_API',
+ app.slice(start,end)+'\nreturn {initial: feedP, loadReadings, refreshReadingsFeed};');
 const date='2026-11-25';
 const full={sections:[{label:'Gospel',cite:'Luke 21:12-19'}]};
 const fresh={...full,audio:'2418304674'};
@@ -62,6 +62,28 @@ test('late official reading sections keep an already loaded recording if the upd
  assert.deepEqual(h.st.readings[date],{full,copyright:undefined,recording});
  assert.equal(await h.refresh(),false);
  assert.deepEqual(h.counts(),{requests:2,renders:1});
+});
+test('an initial recording renders during the fallback lookup and late official text wins',async()=>{
+ const recording={sections:[],audio:fresh.audio};
+ const st={date,tab:'readings',readRite:'roman',readings:{}};
+ const states=[];
+ const {promise:lookup,resolve:finishLookup}=Promise.withResolvers();
+ const {promise:requested,resolve:markRequested}=Promise.withResolvers();
+ const feeds=[{'2026-11-24':full,[date]:recording},{[date]:full}];
+ const {loadReadings,refreshReadingsFeed}=execute(async url=>{
+  if(url==='readings.json') return {ok:true,json:async()=>feeds.shift()};
+  markRequested();
+  return lookup;
+ },{get:()=>null,set:()=>{}},st,()=>{}, {visibilityState:'visible'},
+ () => states.push(st.readings[date]), 'https://example.test');
+ const loaded=loadReadings(date);
+ await requested;
+ assert.deepEqual(states,[{citationsPending:true,recording}]);
+ assert.equal(await refreshReadingsFeed(),true);
+ finishLookup({ok:true,json:async()=>({readings:{gospel:'Fallback 1:1'}})});
+ await loaded;
+ assert.deepEqual(states,[{citationsPending:true,recording},{full,copyright:undefined,recording}]);
+ assert.equal(st.readings[date].full,full);
 });
 test('failed or empty refresh preserves the current readings and can be retried',async()=>{
  const h=await setup({responses:[new Error('offline'),{}, {[date]:fresh}]});

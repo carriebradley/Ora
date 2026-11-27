@@ -202,20 +202,29 @@
   function loadReadings(iso) {
     if (st.readings[iso] !== undefined) return;
     st.readings[iso] = 'loading';
-    feedP.then(async f => {
+    return feedP.then(async f => {
       const full = f[iso];
-      if (hasReadingSections(full)) return {full, copyright: f._copyright};
-      const citations = await loadReadingCitations(iso);
-      return officialTrack(iso, full) ? {...citations, recording: full} : citations;
-    }).then(reading => {
-      st.readings[iso] = reading;
-      if (st.date === iso) render();
+      if (hasReadingSections(full)) {
+        st.readings[iso] = {full, copyright: f._copyright};
+      } else {
+        const recording = officialTrack(iso, full) ? full : null;
+        const saved = VERIFIED_MASS_CITATIONS[iso] || store.get('ora.readings.' + iso, null);
+        if (hasReadingCitations(saved)) {
+          st.readings[iso] = recording ? {...saved, recording} : saved;
+        } else {
+          st.readings[iso] = {citationsPending: true, recording};
+          if (recording && st.date === iso) updateRomanReadingsView(iso);
+          const citations = await fetchReadingCitations(iso);
+          const current = st.readings[iso];
+          // The official feed may have supplied the text during this lookup.
+          if (current.full) return;
+          st.readings[iso] = current.recording ? {...citations, recording: current.recording} : citations;
+        }
+      }
+      if (st.date === iso) updateRomanReadingsView(iso);
     });
   }
-  async function loadReadingCitations(iso) {
-    if (VERIFIED_MASS_CITATIONS[iso]) return VERIFIED_MASS_CITATIONS[iso];
-    const cached = store.get('ora.readings.' + iso, null);
-    if (hasReadingCitations(cached)) return cached;
+  async function fetchReadingCitations(iso) {
     try {
       const response = await fetch(`${READINGS_API}/${iso.slice(0, 4)}/${iso.slice(5)}.json`);
       if (!response.ok) return null;
@@ -271,7 +280,7 @@
     const r = st.readings[iso];
     const title = `<div class="roman-readings-title">${romanReadingsTitleHTML(r, simple)}</div>`;
     const audio = showAudio ? romanReadingsAudioHTML(iso, readingRecording(r)) : '';
-    return title + audio + `<div class="roman-readings-content">${romanReadingsContentHTML(iso, r, showAudio, simple)}</div>`;
+    return `<div data-roman-readings-date="${esc(iso)}">${title}${audio}<div class="roman-readings-content">${romanReadingsContentHTML(iso, r, showAudio, simple)}</div></div>`;
   }
   function romanReadingsTitleHTML(r, simple = false) {
     return r?.full?.title && !simple ? `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>` : '';
@@ -279,7 +288,7 @@
   function romanReadingsContentHTML(iso, r, showAudio = true, simple = false) {
     let h = '';
     const recording = readingRecording(r);
-    if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
+    if (r === 'loading' || r?.citationsPending) h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
       const referencesOnly = r.full.sections.every(s => !String(s.text || '').trim());
       for (const s of r.full.sections) {
@@ -1852,15 +1861,16 @@
     const rr = st.readRite === 'byz' ? 'byz' : st.readRite === 'sarum' ? 'sarum' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<section class="card"${rr === 'roman' ? ` data-roman-readings-date="${esc(st.date)}"` : ''}><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
+    return `<section class="card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
   }
   function updateRomanReadingsView(iso) {
-    const card = document.querySelector('#app [data-roman-readings-date]');
-    if (card?.dataset.romanReadingsDate !== iso || !card.querySelector('.readings-audio-player')) { render(); return; }
+    const panel = document.querySelector('#app [data-roman-readings-date]');
+    if (panel?.dataset.romanReadingsDate !== iso) return;
+    if (!panel.querySelector('.readings-audio-player')) { render(); return; }
     // Replace the text around the iframe without detaching its playback context.
     const r = st.readings[iso];
-    card.querySelector('.roman-readings-title').innerHTML = romanReadingsTitleHTML(r);
-    card.querySelector('.roman-readings-content').innerHTML = romanReadingsContentHTML(iso, r);
+    panel.querySelector('.roman-readings-title').innerHTML = romanReadingsTitleHTML(r);
+    panel.querySelector('.roman-readings-content').innerHTML = romanReadingsContentHTML(iso, r);
   }
   // Supplemental daily parts are kept separate by sui iuris church and date.
   // Any part successfully placed in the document must not be repeated below.
@@ -2790,7 +2800,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v474';
+  const APP_BUILD = 'ora-v475';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
