@@ -2,6 +2,45 @@ const {chromium}=require('playwright');
 const fs=require('node:fs');const path=require('node:path');const os=require('node:os');const assert=require('node:assert/strict');
 const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-browser-audit');fs.mkdirSync(artifacts,{recursive:true});
 
+async function checkLateOfficeRecording(browser, base, trigger) {
+ const context = await browser.newContext({viewport: {width: 390, height: 844}, serviceWorkers: 'block'});
+ try {
+  const page = await context.newPage();
+  await page.clock.install();
+  const iso = '2030-02-03';
+  const feedUrl = `${base}office_audio.json`;
+  const recording = {u: 'https://example.test/morning.mp3', t: 'Morning Prayer'};
+  let feed = {'2030-02-02': {MorningPrayer: recording}};
+  let requests = 0;
+  await context.route('**/*', route => {
+   const url = route.request().url();
+   if (url === feedUrl) {
+    requests++;
+    return route.fulfill({json: feed});
+   }
+   return url.startsWith(base) ? route.continue() : route.abort();
+  });
+  await page.goto(`${base}index.html?tab=pray&date=${iso}&rite=roman&kind=morning`);
+  const slot = page.locator('.roman-office-player .doaud');
+  await slot.getByText('No Divine Office recording for this day yet', {exact: false}).waitFor();
+  assert.equal(requests, 1);
+  feed = {...feed, [iso]: {MorningPrayer: recording}};
+  if (trigger === 'foreground') await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  else await page.clock.fastForward(5 * 60 * 1000);
+  const player = slot.locator('audio');
+  await player.waitFor({state: 'attached'});
+  assert.equal(await player.getAttribute('src'), recording.u);
+  assert.equal(requests, 2);
+  await player.evaluate(el => { el.dataset.playbackCheck = 'current'; });
+  await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  await page.clock.fastForward(5 * 60 * 1000);
+  assert.equal(await player.getAttribute('data-playback-check'), 'current');
+  assert.equal(requests, 2, 'available Office recording does not trigger another fetch');
+ } finally {
+  await context.close();
+ }
+}
+
 async function checkLateDailyRecording(browser, base, trigger, arrival = 'text-first') {
  const context = await browser.newContext({viewport: {width: 390, height: 844}, serviceWorkers: 'block'});
  try {
@@ -223,6 +262,8 @@ async function checkLateDailyRecording(browser, base, trigger, arrival = 'text-f
  await checkLateDailyRecording(browser, base, 'timer');
  await checkLateDailyRecording(browser, base, 'timer', 'recording-first');
  await checkLateDailyRecording(browser, base, 'foreground', 'initial-recording');
+ await checkLateOfficeRecording(browser, base, 'foreground');
+ await checkLateOfficeRecording(browser, base, 'timer');
  const feastContext = await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
  try {
   const feastPage = await feastContext.newPage();

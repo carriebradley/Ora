@@ -2336,9 +2336,40 @@
   }
   /* ---------- Divine Office recordings (DivineOffice.org podcast). office_audio.json holds only the links,
      refreshed twice a day by tools/fetch_divineoffice.py; the audio streams from Divine Office's own podcast host. ---------- */
-  let doAudio = null;
-  const doP = fetch('office_audio.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).catch(() => null)
-    .then(j => { const ok = j && Object.keys(j).length; doAudio = ok ? j : (store.get('ora.doaudio', {}) || {}); if (ok) store.set('ora.doaudio', j); hydrateDo(); });   // an empty list never replaces the last good one
+  let doAudio = store.get('ora.doaudio', {}) || {};
+  let doAudioPending = false;
+  function refreshDoAudio() {
+    if (doAudioPending) return Promise.resolve(false);
+    doAudioPending = true;
+    return fetch('office_audio.json', { cache: 'no-cache' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data || typeof data !== 'object' || Array.isArray(data) || !Object.keys(data).length) return false;
+        const updated = {};
+        for (const [day, entries] of Object.entries(data)) {
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !entries || typeof entries !== 'object' || Array.isArray(entries)) continue;
+          updated[day] = {...doAudio[day], ...entries};
+        }
+        if (!Object.keys(updated).length) return false;
+        if (doAudio[st.date] && !updated[st.date]) updated[st.date] = doAudio[st.date];
+        doAudio = updated;
+        store.set('ora.doaudio', doAudio);
+        // Only retry empty slots. Existing audio elements keep their playback state.
+        document.querySelectorAll('.doaud[data-done]').forEach(el => {
+          if (!el.querySelector('audio')) delete el.dataset.done;
+        });
+        hydrateDo();
+        return true;
+      })
+      .catch(() => false)
+      .finally(() => { doAudioPending = false; });
+  }
+  refreshDoAudio();
+  function retryMissingDoAudio() {
+    if (document.visibilityState !== 'visible' || st.tab !== 'pray' || S.rite !== 'roman') return;
+    const slot = document.querySelector('.roman-office-player .doaud');
+    if (slot && !slot.querySelector('audio')) refreshDoAudio();
+  }
   const doSlot = (iso, name, quiet) => name ? `<div class="doaud"${quiet ? ' data-q="1"' : ''} data-iso="${esc(iso)}" data-k="${esc(String(name).replace(/[^A-Za-z]/g, ''))}"></div>` : '';
   function hydrateDo() {
     if (!doAudio) return;
@@ -2798,9 +2829,11 @@
   });
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refreshReadingsFeed(); });
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', retryMissingDoAudio);
+  setInterval(retryMissingDoAudio, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v475';
+  const APP_BUILD = 'ora-v476';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
