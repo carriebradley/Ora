@@ -52,6 +52,18 @@ module.exports=async(page,context,base,artifacts,violations)=>{
   'Fixture first-week communion.','Or: Jn 10: 10','Fixture first-week communion alternative.'
  ]);
  assert.equal(mass.pressed,0,'ordinary Monday leaves Eucharistic Prayer selection open');
+ await page.goto(`${base}index.html?tab=liturgy&date=2027-05-16&rite=roman`);
+ const pentecost=await page.waitForFunction(()=>{
+  const preview=document.querySelector('.reader-inline-text.reader-inline-missal');
+  const text=preview?.textContent;
+  return text?.includes('Fixture Pentecost day collect.') ? text : false;
+ });
+ const pentecostText=await pentecost.jsonValue();
+ assert.doesNotMatch(pentecostText,/Fixture Pentecost vigil collect/);
+ assert.match(pentecostText,/Fixture Pentecost day entrance/);
+ assert.match(pentecostText,/Fixture Pentecost day prayer after communion/);
+ assert.match(pentecostText,/Fixture Gloria response/);
+ assert.match(pentecostText,/Fixture Nicene response/);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-11-15&rite=roman`);
  await page.waitForFunction(()=>document.querySelector('.reader-inline-text')?.textContent.includes('Fixture Sunday prayer'));
  await prayers.waitFor({state:'visible'});

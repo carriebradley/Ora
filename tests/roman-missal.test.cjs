@@ -74,3 +74,31 @@ test('first week in Ordinary Time preserves separate antiphons from a private Mi
  });
  assert.equal(M.prayers(part).blocks.some(block=>block.kind==='instruction'),false);
 });
+
+test('Pentecost daytime preview isolates explicitly marked forms in a saved Missal',()=>{
+ const L=require('../calendar.js');
+ const day=L.roman(L.D(2027,5,16));
+ assert.equal(day.title,'Pentecost Sunday');
+ const vigilText={tag:'p',text:'Fixture vigil collect.'};
+ const dayText={tag:'p',text:'Fixture daytime collect.'};
+ const heading=text=>({tag:'h4',text});
+ const combined={title:day.title,blocks:[
+  heading('At the Vigil Mass'),heading('Extended form'),heading('Collect'),vigilText,
+  heading('At the Mass during the Day'),heading('Collect'),dayText,
+  heading('Vigil Mass — Simple form'),heading('Collect'),vigilText
+ ]};
+ const preview=M.select([combined],day.title);
+ assert.equal(preview.page,1);
+ assert.deepEqual(M.propers(preview.part).collect,[dayText]);
+ assert.equal(combined.blocks.length,10,'original book remains intact');
+ assert.equal(M.select([{...combined,blocks:combined.blocks.slice(0,4)}],day.title),null,
+  'a vigil-only group cannot supply the daytime Mass');
+ assert.equal(M.select([{...combined,blocks:[...combined.blocks,heading('At the Mass during the Day'),dayText]}],day.title),null,
+  'multiple daytime sections require a manual choice');
+ const separate={title:'At the Mass during the Day',context:'Pentecost Sunday',blocks:[heading('Collect'),dayText]};
+ assert.equal(M.select([separate],day.title).part,separate);
+ assert.equal(M.select([{...separate,context:'Easter Time'}],day.title),null,
+  'a generic daytime heading needs the correct context');
+ assert.equal(M.select([combined,separate],day.title),null,
+  'duplicate eligible sections are not selected automatically');
+});

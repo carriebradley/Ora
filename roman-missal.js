@@ -6,16 +6,49 @@
   s=s.replace(/^(january|february|march|april|may|june|july|august|september|october|november|december) \d{1,2}\b/,'');
   [...ordinals].sort((a,b)=>b.length-a.length).forEach(w=>{s=s.replace(new RegExp('\\b'+w+'\\b','g'),String(ordinals.indexOf(w)+1));});
   s=s.replace(/\b(\d+)(st|nd|rd|th)\b/g,'$1').replace(/\bst\b/g,'saint').replace(/\b(the|of|in|and|a|an|optional|memorial|feast|solemnity|transferred)\b/g,' ').replace(/\s+/g,' ').trim();
-  s=s.replace(/nativity christmas/g,'christmas').replace(/^sunday after epiphany lord (?=baptism lord$)/,'').replace(/^1 sunday after pentecost (?=most holy trinity$)/,'').replace(/^last sunday ordinary time (?=our lord jesus christ king universe$)/,'').replace(/^pentecost (?:at )?mass during day$/,'pentecost sunday');
+  s=s.replace(/nativity christmas/g,'christmas').replace(/^sunday after epiphany lord (?=baptism lord$)/,'').replace(/^1 sunday after pentecost (?=most holy trinity$)/,'').replace(/^last sunday ordinary time (?=our lord jesus christ king universe$)/,'').replace(/^pentecost(?: sunday)? (?:at )?mass during day$/,'pentecost sunday');
   const weekday=s.match(/^(monday|tuesday|wednesday|thursday|friday|saturday) (\d+) week (advent|lent|easter|ordinary time)$/);
   if(weekday)s=weekday[3]==='ordinary time'?weekday[2]+' week ordinary time':weekday[3]+' '+weekday[2]+' '+weekday[1];
   return s;
  }
- function match(sections,title){
+ const dayMass=/^(?:at )?mass during day$/;
+ const vigilMass=/^(?:at )?vigil mass(?: (?:extended|simple) form)?$/;
+ function pentecostDay(section){
+  const forms=[];
+  for(const [index,block] of (section.blocks||[]).entries()){
+   if(block.tag!=='h4'&&block.kind!=='instruction')continue;
+   const heading=key(block.text);
+   if(dayMass.test(heading))forms.push({index,day:true});
+   else if(vigilMass.test(heading))forms.push({index,day:false});
+  }
+  if(!forms.length)return section;
+  const daytime=forms.filter(form=>form.day);
+  if(daytime.length!==1)return null;
+  const start=daytime[0];
+  const end=forms[forms.indexOf(start)+1]?.index;
+  const blocks=section.blocks.slice(start.index+1,end);
+  return blocks.length?{...section,blocks}:null;
+ }
+ function select(sections,title){
   const wanted=key(title),hits=[];
-  if(!wanted)return [];
-  sections.forEach((s,i)=>{if(key(s.title)===wanted||(wanted==='easter sunday resurrection lord'&&key(s.context||'')==='easter time'&&/^(?:at )?mass during day$/.test(key(s.title))))hits.push(i+1);});
-  return hits.length===1?hits:[]; // Never silently choose between alternative Masses.
+  if(!wanted)return null;
+  const pentecost=wanted==='pentecost sunday';
+  sections.forEach((section,index)=>{
+   const heading=key(section.title);
+   const context=key(section.context||'');
+   const contextualDay=dayMass.test(heading)&&(
+    (wanted==='easter sunday resurrection lord'&&context==='easter time')||
+    (pentecost&&(context==='pentecost'||context==='pentecost sunday'))
+   );
+   if(heading!==wanted&&!contextualDay)return;
+   const part=pentecost?pentecostDay(section):section;
+   if(part)hits.push({page:index+1,part});
+  });
+  return hits.length===1?hits[0]:null;
+ }
+ function match(sections,title){
+  const selected=select(sections,title);
+  return selected?[selected.page]:[];
  }
  function order(sections){return sections.flatMap((s,i)=>/^the introductory rites$/i.test(s.title.trim())?[{title:s.title,page:i+1}]:[]).slice(0,1);}
 
@@ -95,6 +128,6 @@
   }
   return out;
  }
- return {match,order,key,prayers,ordinary,ordinaryParts,fixed,propers};
+ return {match,select,order,key,prayers,ordinary,ordinaryParts,fixed,propers};
 });
 
