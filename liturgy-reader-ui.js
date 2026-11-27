@@ -483,15 +483,15 @@
         }else book=await LiturgyReader.load(saved.blob,saved.format);
         if(!section.isConnected||token!==hydrateVersion)return;
         const roman=section.dataset.textId==='roman'&&book.kind==='epub';
-        const matches=roman?RomanMissal.match(book.sections,section.dataset.dayTitle):[];
-        const selected=Math.max(1,Math.min(book.numPages,Number(section.dataset.inlinePage)||(matches[0])||saved.page||1));section.dataset.inlinePage=selected;
+        const selectedMass=roman?RomanMissal.select(book.sections,section.dataset.dayTitle):null;
+        const selected=Math.max(1,Math.min(book.numPages,Number(section.dataset.inlinePage)||selectedMass?.page||saved.page||1));section.dataset.inlinePage=selected;
         
         preview.classList.toggle('reader-inline-missal',roman);
         preview.classList.remove('reader-byzantine-prayers');
         if(roman){
           preview.replaceChildren();
-          if(matches.length){
-            renderRoman(section,book,book.sections[matches[0]-1]);
+          if(selectedMass){
+            renderRoman(section,book,selectedMass.part);
           }else{
             preview.textContent='Daily prayers are not available for this date in the saved Missal.';
           }
