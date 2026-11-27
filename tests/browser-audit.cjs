@@ -2,7 +2,7 @@ const {chromium}=require('playwright');
 const fs=require('node:fs');const path=require('node:path');const os=require('node:os');const assert=require('node:assert/strict');
 const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-browser-audit');fs.mkdirSync(artifacts,{recursive:true});
 
-async function checkLateDailyRecording(browser, base, trigger) {
+async function checkLateDailyRecording(browser, base, trigger, audioFirst = false) {
  const context = await browser.newContext({viewport: {width: 390, height: 844}, serviceWorkers: 'block'});
  try {
   const page = await context.newPage();
@@ -12,7 +12,7 @@ async function checkLateDailyRecording(browser, base, trigger) {
   const officialUrl = 'https://bible.usccb.org/podcasts/audio/daily-mass-reading-podcast-february-3-2030';
   const track = '123456789';
   const previousDay = {'2030-02-02': {sections: [{label: 'First Reading', cite: 'Test 1:1'}]}};
-  const officialReading = {sections: [{label: 'First Reading', cite: 'Test 2:1', text: 'Browser fixture reading.'}]};
+  const officialReading = {title: 'Fixture Mass', sections: [{label: 'First Reading', cite: 'Test 2:1', text: 'Browser fixture reading.'}]};
   const refresh = () => trigger === 'foreground'
    ? page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')))
    : page.clock.fastForward(5 * 60 * 1000);
@@ -23,6 +23,9 @@ async function checkLateDailyRecording(browser, base, trigger) {
    if (url === feedUrl) {
     requests++;
     return route.fulfill({json: feed});
+   }
+   if (url.startsWith('https://w.soundcloud.com/player/')) {
+    return route.fulfill({contentType: 'text/html', body: '<p>Recording fixture</p>'});
    }
    return url.startsWith(base) ? route.continue() : route.abort();
   });
@@ -35,14 +38,27 @@ async function checkLateDailyRecording(browser, base, trigger) {
   assert.equal(await officialLink.count(), 1, 'the official link is available while waiting');
   assert.equal(requests, 1, 'the initial feed loaded once');
 
-  feed = {...previousDay, [iso]: officialReading};
-  await refresh();
-  await reading.waitFor();
-  assert.equal(await player.count(), 0, 'a recording missing from the feed has no player');
-  assert.equal(requests, 2, `${trigger} loaded the reading while audio was still pending`);
+  if (audioFirst) {
+   feed = {...previousDay, [iso]: {sections: [], audio: track}};
+   await refresh();
+   await player.contentFrame().getByText('Recording fixture').waitFor();
+   assert.equal(await reading.count(), 0, 'the player is available while the reading is pending');
+   const playerFrame = await (await player.elementHandle()).contentFrame();
+   feed = {...previousDay, [iso]: officialReading};
+   await refresh();
+   await reading.waitFor();
+   await page.getByRole('heading', {name: 'Fixture Mass'}).waitFor();
+   assert.equal(await (await player.elementHandle()).contentFrame(), playerFrame, 'late readings preserve the running frame');
+  } else {
+   feed = {...previousDay, [iso]: officialReading};
+   await refresh();
+   await reading.waitFor();
+   assert.equal(await player.count(), 0, 'a recording missing from the feed has no player');
+   assert.equal(requests, 2, `${trigger} loaded the reading while audio was still pending`);
 
-  feed = {...previousDay, [iso]: {...officialReading, audio: track}};
-  await refresh();
+   feed = {...previousDay, [iso]: {...officialReading, audio: track}};
+   await refresh();
+  }
   await player.waitFor({state: 'attached'});
   const src = new URL(await player.getAttribute('src'));
   assert.equal(src.origin, 'https://w.soundcloud.com');
@@ -184,6 +200,7 @@ async function checkLateDailyRecording(browser, base, trigger) {
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'future-date recording link fits mobile width');
  await checkLateDailyRecording(browser, base, 'foreground');
  await checkLateDailyRecording(browser, base, 'timer');
+ await checkLateDailyRecording(browser, base, 'timer', true);
  const feastContext = await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
  try {
   const feastPage = await feastContext.newPage();

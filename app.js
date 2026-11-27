@@ -228,29 +228,30 @@
       return out;
     } catch (_) { return null; }
   }
-  // Retry missing official readings or audio when Roman Readings is visible.
-  // Never rebuild a screen with an existing iframe: playback would stop.
+  // Retry until the visible date has both published sections and a recording.
   const romanReadingsVisible = () => document.visibilityState === 'visible' &&
     st.tab === 'readings' && st.readRite !== 'byz' && st.readRite !== 'sarum';
   function refreshReadingsFeed() {
     const iso = st.date;
     const previous = st.readings[iso];
     if (!romanReadingsVisible() || feed === null || readingsRefreshPending ||
-        previous === undefined || previous === 'loading' || officialTrack(iso, readingRecording(previous)) ||
-        document.querySelector('#app .readings-audio-player')) return Promise.resolve(false);
+        previous === undefined || previous === 'loading' ||
+        (previous?.full && officialTrack(iso, readingRecording(previous)))) return Promise.resolve(false);
     readingsRefreshPending = true;
     feedP = fetchReadingsFeed();
     return feedP.then(f => {
       const full = f[iso];
       const current = st.readings[iso];
-      if (officialTrack(iso, readingRecording(current))) return false;
-      if (hasReadingSections(full) && (!current?.full || officialTrack(iso, full))) {
+      const recording = readingRecording(current);
+      const currentTrack = officialTrack(iso, recording);
+      const incomingTrack = officialTrack(iso, full);
+      if (hasReadingSections(full) && (!current?.full || (!currentTrack && incomingTrack))) {
         st.readings[iso] = {full, copyright: f._copyright};
-      } else if (officialTrack(iso, full)) {
+        if (currentTrack && !incomingTrack) st.readings[iso].recording = recording;
+      } else if (!currentTrack && incomingTrack) {
         st.readings[iso] = {...current, recording: full};
       } else return false;
-      if (st.date === iso && romanReadingsVisible() &&
-          !document.querySelector('#app .readings-audio-player')) render();
+      if (st.date === iso && romanReadingsVisible()) updateRomanReadingsView(iso);
       return true;
     }).finally(() => { readingsRefreshPending = false; });
   }
@@ -268,13 +269,18 @@
   }
   function romanReadingsHTML(iso, showAudio = true, simple = false) {
     const r = st.readings[iso];
+    const title = `<div class="roman-readings-title">${romanReadingsTitleHTML(r, simple)}</div>`;
+    const audio = showAudio ? romanReadingsAudioHTML(iso, readingRecording(r)) : '';
+    return title + audio + `<div class="roman-readings-content">${romanReadingsContentHTML(iso, r, showAudio, simple)}</div>`;
+  }
+  function romanReadingsTitleHTML(r, simple = false) {
+    return r?.full?.title && !simple ? `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>` : '';
+  }
+  function romanReadingsContentHTML(iso, r, showAudio = true, simple = false) {
     let h = '';
     const recording = readingRecording(r);
-    if (showAudio && !r?.full) h += romanReadingsAudioHTML(iso, recording);
     if (r === 'loading') h += '<p class="muted">Loading readings…</p>';
     else if (r && r.full) {
-      if (r.full.title && !simple) h += `<h3 class="reading-main-title">${esc(displayTitle(r.full.title))}</h3>`;
-      if (showAudio) h += romanReadingsAudioHTML(iso, recording);
       const referencesOnly = r.full.sections.every(s => !String(s.text || '').trim());
       for (const s of r.full.sections) {
         const passage = String(s.text || '');
@@ -1846,7 +1852,15 @@
     const rr = st.readRite === 'byz' ? 'byz' : st.readRite === 'sarum' ? 'sarum' : 'roman';
     const b = (k, t) => `<button data-act="rr" data-v="${k}" class="${rr === k ? 'on' : ''}">${t}</button>`;
     const body = rr === 'byz' ? byzReadingsHTML(v) : rr === 'sarum' ? sarumMassHTML(v) : romanReadingsHTML(st.date);
-    return `<section class="card"><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
+    return `<section class="card"${rr === 'roman' ? ` data-roman-readings-date="${esc(st.date)}"` : ''}><div class="office-card-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C9 4.5 6 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-3-.5-6-.5-9 1.5zM12 6.5v13"/></svg><span>Today’s Readings</span></div><div class="seg">${b('roman', 'Roman')}${b('byz', 'Byzantine')}${b('sarum', 'Traditional')}</div>${body}</section>`;
+  }
+  function updateRomanReadingsView(iso) {
+    const card = document.querySelector('#app [data-roman-readings-date]');
+    if (card?.dataset.romanReadingsDate !== iso || !card.querySelector('.readings-audio-player')) { render(); return; }
+    // Replace the text around the iframe without detaching its playback context.
+    const r = st.readings[iso];
+    card.querySelector('.roman-readings-title').innerHTML = romanReadingsTitleHTML(r);
+    card.querySelector('.roman-readings-content').innerHTML = romanReadingsContentHTML(iso, r);
   }
   // Supplemental daily parts are kept separate by sui iuris church and date.
   // Any part successfully placed in the document must not be repeated below.
@@ -2776,7 +2790,7 @@
   setInterval(refreshReadingsFeed, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v473';
+  const APP_BUILD = 'ora-v474';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;
