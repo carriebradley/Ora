@@ -32,6 +32,19 @@ test('late official recording replaces fallback on Roman Readings without a page
  assert.equal(await h.refresh(),false);
  assert.deepEqual(h.counts(),{requests:2,renders:1});
 });
+test('official readings replace third-party citations before the audio arrives',async()=>{
+ const initialCitations={gospel:'Luke 21:12-19'};
+ const withText={sections:[{label:'Gospel',cite:'Luke 21:12-19',text:'Official feed fixture.'}]};
+ const withAudio={...withText,audio:fresh.audio};
+ const h=await setup({previous:initialCitations,responses:[{[date]:withText},{[date]:withText},{[date]:withAudio}]});
+ assert.equal(await h.refresh(),true);
+ assert.equal(h.st.readings[date].full,withText);
+ assert.equal(await h.refresh(),false);
+ assert.deepEqual(h.counts(),{requests:3,renders:1});
+ assert.equal(await h.refresh(),true);
+ assert.equal(h.st.readings[date].full,withAudio);
+ assert.deepEqual(h.counts(),{requests:4,renders:2});
+});
 test('failed or empty refresh preserves the current readings and can be retried',async()=>{
  const h=await setup({responses:[new Error('offline'),{}, {[date]:fresh}]});
  assert.equal(await h.refresh(),false);
