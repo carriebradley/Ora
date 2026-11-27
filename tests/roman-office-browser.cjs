@@ -61,6 +61,47 @@ module.exports=async function(page,base,artifacts){
     assert.ok(nextIndex>lastIndex,'missing or out-of-order published Vespers '+section);
     lastIndex=nextIndex;
   }
+  // Move across Advent's opening evening with the app's date controls.
+  await page.goto(`${base}index.html?tab=pray&rite=roman&date=2026-11-28&kind=evening`);
+  const adventHour=()=>page.locator('#st0').evaluate(el=>{
+    const sections=Array.from(el.querySelectorAll('.sec'));
+    const title=sec=>sec.querySelector('b')?.textContent||'';
+    const gospel=sections.find(sec=>['Benedictus','Magnificat'].includes(title(sec)));
+    return {
+      heading:el.querySelector('.roman-office-heading')?.textContent||'',
+      reading:title(sections.find(sec=>title(sec).startsWith('Short reading'))||el),
+      gospel:gospel?title(gospel):'',
+      antiphons:Array.from(gospel?.querySelectorAll('.ant')||[],ant=>ant.textContent),
+      collect:sections.find(sec=>title(sec)==='Concluding prayer')?.textContent||''
+    };
+  });
+  const firstAdvent=await adventHour();
+  assert.match(firstAdvent.heading,/^Evening Prayer I · .*Psalter Week I$/);
+  assert.equal(firstAdvent.reading,'Short reading · 1 Thessalonians 5:23-24');
+  assert.equal(firstAdvent.gospel,'Magnificat');
+
+  await page.locator('#hdr [data-act="next"]').click();
+  assert.equal(await page.locator('#dp').inputValue(),'2026-11-29');
+  const secondAdvent=await adventHour();
+  assert.match(secondAdvent.heading,/^Evening Prayer \(Vespers\) · Psalter Week I$/);
+  assert.equal(secondAdvent.reading,'Short reading · Philippians 4:4-7');
+  assert.equal(secondAdvent.gospel,'Magnificat');
+
+  await page.locator('[data-act="kind"][data-v="morning"]').click();
+  const morningAdvent=await adventHour();
+  assert.match(morningAdvent.heading,/^Morning Prayer \(Lauds\) · Psalter Week I$/);
+  assert.equal(morningAdvent.reading,'Short reading · Romans 13:11-12');
+  assert.equal(morningAdvent.gospel,'Benedictus');
+  const adventHours=[firstAdvent,secondAdvent,morningAdvent];
+  for(const {antiphons,collect} of adventHours){
+    assert.equal(antiphons.length,2);
+    assert.equal(antiphons[0],antiphons[1]);
+    assert.ok(collect);
+  }
+  assert.equal(new Set(adventHours.map(hour=>hour.antiphons[0])).size,3);
+  assert.equal(new Set(adventHours.map(hour=>hour.collect)).size,1);
+  console.log('First Sunday of Advent: Saturday Evening Prayer I, Sunday Evening Prayer II and Sunday Lauds passed.');
+
   await page.goto(`${base}index.html?tab=pray&rite=roman&date=2027-01-11&kind=morning`);
   for(const colorScheme of ['light','dark'])for(const width of [320,390]){
     await page.emulateMedia({colorScheme});await page.setViewportSize({width,height:844});
