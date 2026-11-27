@@ -17,6 +17,11 @@ test('private Missal headings match saints, Sundays and weekday seasonal prayers
  for(const [title,page] of [['Saint Josaphat, Bishop and Martyr',1],['33rd Sunday in Ordinary Time',2],['Monday of the 33rd Week in Ordinary Time',3],['Monday of the 1st Week of Advent',4],['Second Sunday of Easter (Sunday of Divine Mercy)',5],['The Baptism of the Lord',6],['Our Lord Jesus Christ, King of the Universe',7],['Easter Sunday of the Resurrection of the Lord',8],['Pentecost Sunday',9],['All Saints',12]])assert.deepEqual(M.match(sections,title),[page],title);
  assert.deepEqual(M.match(sections,'Saint Martin of Tours, Bishop'),[]);
  assert.deepEqual(M.match([{title:'All Saints'},{title:'All Saints'}],'All Saints'),[],'ambiguous sections are not guessed');
+ const christmas='Nativity of the Lord (Christmas)';
+ assert.deepEqual(M.lookup([{title:christmas},{title:christmas}],christmas),
+  {selection:null,ambiguous:true},'a choice is available when both forms match');
+ assert.deepEqual(M.lookup([],christmas),
+  {selection:null,ambiguous:false},'a missing section remains a separate state');
  assert.deepEqual(M.order([{title:'The Introductory Rites'}]),[{title:'The Introductory Rites',page:1}]);
 });
 
