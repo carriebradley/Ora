@@ -22,7 +22,7 @@
   const fmtShort = s => { const d = P(s); return `${L.DN[d.getUTCDay()].slice(0, 3)}, ${L.MN[d.getUTCMonth()].slice(0, 3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
   const fmtLong = s => { const d = P(s); return `${L.DN[d.getUTCDay()]}, ${L.MN[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`; };
   const hash = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
-  const COLORS = { blue: LiturgicalColors.blue, y: '#d4a017', w: '#f0e8da', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227' };
+  const COLORS = { blue: LiturgicalColors.blue, y: '#d4a017', w: '#f0e8da', r: '#a8232a', g: '#3d7a4a', v: '#6a3f9a', rose: '#d9899e', k: '#1c1c1c', gold: '#c9a227', dark: '#6b5871' };
   const col = c => COLORS[c] || COLORS.g;
   const MAJOR = /Solemnity|Principal|Great Feast|Triduum|Holy Week|Class I$/;
   const RITES = { roman: 'Roman (modern)', byz: 'Byzantine', sarum: 'Traditional' };
@@ -512,6 +512,7 @@
     return `<section class="card"><div class="lab">${calendarSwatch(r,'byz','sw')}<span class="grow">Byzantine · ${S.byzChurch === "melkite" ? "Melkite" : "Ukrainian"}</span>${speakBtn(spokenCard(r))}</div>
       <div class="calendar-byz-saints">${byzantineCommemorationsHTML(displayTitle(r.title))}</div><div class="chips">${chipsFor(r)}${r.tone ? chip('Tone ' + r.tone) : ''}${chip(r.fastSeason, LiturgicalColors.sunday(r) ? '' : 'fast')}${r.fast && !LiturgicalColors.sunday(r) ? chip(r.fast, LiturgicalColors.fastFree(r.fast) ? '' : 'fast') : ''}</div><p class="muted">${esc(r.fastingNote)}</p>${fastingIcons(r,'byz')}
       ${alsoHTML(r.also)}${r.sourceNote ? `<p class="muted"><a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(r.sourceNote)}</a></p>` : ''}
+      ${r.vestmentSource ? `<p class="muted"><a href="${esc(r.vestmentSource)}" target="_blank" rel="noopener noreferrer">Dark vestments · Melkite Typikon</a></p>` : ''}
       <p class="muted">Pascha ${fmtLong(r.pascha)}${LiturgySchedule.paschalBasis(P(v.iso).getUTCFullYear(),S.byzChurch)?'':' · calculated; not yet verified for this church'}</p></section>`;
   }
   const FMON = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -651,7 +652,7 @@
     gold:'#c9a227',rose:'#c9899e',blue:'#3b729f',
     y:'#c9a227',k:'#1c1c1c'
   };
-  const COLOR_NAMES = {g:'green',v:'violet',r:'red',w:'white',gold:'gold',rose:'rose',blue:'blue',y:'yellow',k:'black'};
+  const COLOR_NAMES = {g:'green',v:'violet',r:'red',w:'white',gold:'gold',rose:'rose',blue:'blue',y:'yellow',k:'black',dark:'dark'};
   function calendarPair(r,rite){
     return LiturgicalColors.pair(r,LiturgicalColors.season(r,rite).color);
   }
@@ -2215,10 +2216,11 @@
       h += `<button class="cell ${out ? 'out' : ''} ${iso === today ? 'today' : ''} ${iso === st.date ? 'sel' : ''}" data-act="pick" data-d="${iso}" aria-label="${esc(label)}" aria-pressed="${iso === st.date}"${iso === today ? ' aria-current="date"' : ''}><span>${d.getUTCDate()}</span>${f ? '<span class="f" aria-hidden="true" title="'+esc(disciplineGuidance.map(x=>RITES[x.rite]+': '+x.info.label).join('; '))+'">ƒ</span>' : ''}<span class="dots" aria-hidden="true">${dots}</span></button>`;
     }
     const keys=[['g','Green · Ordinary Time / After Pentecost'],['v','Violet · Advent, Lent and fasting seasons'],['r','Red · Whitsuntide and martyr vestments'],['w','Off-white · Christmas season and white vestments'],['gold','Gold · Easter/Pascha season and gold vestments'],['rose','Rose · Gaudete (Advent III) and Laetare (Lent IV)'],['blue','Blue · Marian observance accent']];
+    if (st.layers.byz && S.byzChurch === 'melkite') keys.push(['dark','Dark · Melkite vestments']);
     const visibleRites = ['roman', 'byz', 'sarum'].filter(k => st.layers[k]).map(k => k === 'roman' ? 'Roman' : k === 'byz' ? 'Byzantine' : 'Traditional').join(' · ') || 'None selected';
     h += '</div><div class="calendar-quick-key"><div>Dots, left to right: <b>'+visibleRites+'</b></div><div class="calendar-symbols"><span class="dot dual" style="--c:#a8232a;--ring:#8a6ba4" aria-hidden="true"></span><span><b>Inner</b> vestment · <b>Ring</b> season</span><span class="calendar-fast-symbol" aria-hidden="true">ƒ</span><span>fast/abstinence</span></div></div>';
     h += '<details class="calendar-guide"><summary>Color guide</summary>';
-    h += '<div class="calendar-key" aria-label="Season and vestment color legend">'+keys.map(([key,label])=>`<span><i class="key-dot" style="--key:${CALENDAR_CATEGORY_COLORS[key]}"></i> ${label}</span>`).join('')+'</div>';
+    h += '<div class="calendar-key" aria-label="Season and vestment color legend">'+keys.map(([key,label])=>`<span><i class="key-dot" style="--key:${CALENDAR_CATEGORY_COLORS[key] || col(key)}"></i> ${label}</span>`).join('')+'</div>';
     h += '<p class="calendar-guide-note">The ring appears only when the colors differ. The ƒ marks separate fasting or abstinence guidance, which may not be obligatory. Sundays are not fasting days.</p></details>';
     h += '</section>';
     const v = dayInfo(st.date);
@@ -2833,7 +2835,7 @@
   setInterval(retryMissingDoAudio, 5 * 60 * 1000);
   // Check the published build, not the GitHub commit: Pages can lag behind.
   // A visible notice avoids interrupting someone halfway through a prayer.
-  const APP_BUILD = 'ora-v476';
+  const APP_BUILD = 'ora-v477';
   let updateShown = false;
   async function checkForPublishedUpdate() {
     if (document.visibilityState !== 'visible' || updateShown) return;

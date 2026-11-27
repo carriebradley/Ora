@@ -4,6 +4,13 @@
   else root.Melkite = factory(root.MELKITE_2026);
 })(typeof self !== 'undefined' ? self : this, function(data) {
   const entry = date => data.days[typeof date === 'string' ? date : date.toISOString().slice(0,10)] || null;
+  // The public Melkite Typikon records a vestment category for this date.
+  const datedVestments = {
+    '2026-11-27': {
+      color: 'dark',
+      vestmentSource: 'https://melkitetypikon.org/calendar'
+    }
+  };
   // Factual appointments transcribed from the user-provided November 2026
   // monthly typicon. No complete service-book or Scripture translations copied.
   const typiconSource={title:'November 2026 monthly typicon',compiler:'Rev. Protodeacon Saleem Naber, Christ the Savior Melkite Catholic Church, Yonkers',file:'November-2026.docx',url:'https://melkite.org/liturgical-resources'};
@@ -120,7 +127,7 @@
       ? (computedRank === 'Great Feast' ? 'Great Feast' : 'Sunday')
       : observed && /^(Great Feast|Feast|Holy Week|Holy Day|Vigil)$/.test(computedRank)
         ? computedRank : 'Diocesan calendar';
-    return {...fallback,title:titleCase(e.observance || e.saints || 'Weekday'),rank,tone:e.tone??typicon(date)?.tone??0,also:e.observance && e.saints ? [{title:titleCase(e.saints),rank:'Commemoration'}] : [],fast,fastSeason,fastingNote:notes.join(' '),sourcePage:e.page};
+    return {...fallback,...datedVestments[iso],title:titleCase(e.observance || e.saints || 'Weekday'),rank,tone:e.tone??typicon(date)?.tone??0,also:e.observance && e.saints ? [{title:titleCase(e.saints),rank:'Commemoration'}] : [],fast,fastSeason,fastingNote:notes.join(' '),sourcePage:e.page};
   }
   return {entry,read,calendar,typicon,typiconSource,source:data};
 });
