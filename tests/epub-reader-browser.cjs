@@ -17,6 +17,15 @@ function epub(encrypted=false,missal=false){
     <p class="rubric">Or: Jn 10: 10</p><p>Fixture first-week communion alternative.</p>
     <h3>Prayer after Communion</h3><p>Fixture first-week after communion.</p>
     </body>`);
+  files['book/one.xhtml']=files['book/one.xhtml'].replace('</body>',`
+    <h2>Pentecost Sunday</h2>
+    <h3>At the Vigil Mass</h3><h4>Extended form</h4>
+    <h3>Collect</h3><p>Fixture Pentecost vigil collect.</p>
+    <h3>At the Mass during the Day</h3>
+    <h3>Entrance Antiphon</h3><p>Fixture Pentecost day entrance.</p>
+    <h3>Collect</h3><p>Fixture Pentecost day collect.</p>
+    <h3>Prayer after Communion</h3><p>Fixture Pentecost day prayer after communion.</p>
+    </body>`);
   files['book/two.xhtml']='<html xmlns="http://www.w3.org/1999/xhtml"><head><title>Fixture</title></head><body><h2 id="TIR">The Introductory Rites</h2><p>Fixture fixed Mass responses.</p><h2>Gloria</h2><p class="rubric">Fixture Gloria instruction.</p><p class="all">Fixture Gloria response.</p><h2>Apostles’ Creed</h2><p class="all">Fixture Apostles response.</p><h2>Nicene Creed</h2><p>Fixture Nicene response.</p><h2>EUCHARISTIC PRAYER I (Christmas Octave)</h2><p>Fixture Christmas variant.</p><h2>EUCHARISTIC PRAYER I (THE ROMAN CANON)</h2><p class="rubric">Fixture Eucharistic direction.</p><p>Fixture general Eucharistic prayer one.</p><h2>EUCHARISTIC PRAYER II</h2><p>Fixture Eucharistic prayer two.</p><h2>EUCHARISTIC PRAYER III</h2><p>Fixture Eucharistic prayer three.</p><h2>EUCHARISTIC PRAYER IV</h2><p>Fixture Eucharistic prayer four.</p></body></html>';
  }
  if(encrypted)files['META-INF/encryption.xml']='<encryption/>';
