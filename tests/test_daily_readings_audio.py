@@ -1,3 +1,4 @@
+import datetime
 import unittest
 from fetch_readings import add_audio, track_id, PODCAST
 
@@ -23,6 +24,32 @@ class DailyReadingsAudioTests(unittest.TestCase):
             return 'https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F2418304374'
         self.assertEqual(add_audio(days, recovered), [])
         self.assertEqual(days['2026-11-24']['audio'], '2418304374')
+
+    def test_near_term_podcast_can_arrive_before_its_readings(self):
+        today = datetime.date(2026, 11, 27)
+        days = {'2026-11-27': {'audio': '123', 'sections': [{'cite': 'Existing reading'}]}}
+        requested = []
+
+        def fetch(url):
+            if url == PODCAST:
+                return ''
+            requested.append(url.rsplit('/', 1)[-1])
+            if url.endswith('november-28-2026'):
+                return ''
+            return 'https://api.soundcloud.com/tracks/456'
+
+        self.assertEqual(add_audio(days, fetch, preview_from=today), [])
+        self.assertEqual(requested, [
+            'daily-mass-reading-podcast-november-28-2026',
+            'daily-mass-reading-podcast-november-29-2026',
+        ])
+        self.assertNotIn('2026-11-28', days)
+        self.assertEqual(days[today.isoformat()]['sections'], [{'cite': 'Existing reading'}])
+        self.assertEqual(days['2026-11-29'], {
+            'link': 'https://bible.usccb.org/bible/readings/112926.cfm',
+            'sections': [],
+            'audio': '456',
+        })
 
     def test_christmas_replaces_legacy_track_with_the_daytime_recording(self):
         date = '2026-12-25'

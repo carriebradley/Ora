@@ -16,9 +16,11 @@ import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
 from urllib.parse import unquote
+from zoneinfo import ZoneInfo
 
 FEED = 'https://bible.usccb.org/readings.rss'
 KEEP_DAYS = 800
+AUDIO_PREVIEW_DAYS = 2
 
 
 class Sections(HTMLParser):
@@ -101,18 +103,26 @@ def podcast_slugs(index_html):
     return out
 
 
-def add_audio(days, fetch=get):
-    """Attach official SoundCloud IDs; prioritize current/future days and report gaps."""
+def add_audio(days, fetch=get, *, preview_from=None):
+    """Attach official SoundCloud IDs, including near-term dates without readings."""
     try: slugs = podcast_slugs(fetch(PODCAST))
     except Exception as e:
         print('audio: podcast index unavailable:', e)
         slugs = {}
-    today = datetime.date.today().isoformat()
-    ordered = sorted(days, key=lambda date: (date < today, abs((datetime.date.fromisoformat(date) - datetime.date.fromisoformat(today)).days)))
+    today = preview_from or datetime.date.today()
+    dates = set(days)
+    if preview_from is not None:
+        dates.update((today + datetime.timedelta(days=offset)).isoformat()
+                     for offset in range(AUDIO_PREVIEW_DAYS + 1))
+    ordered = sorted(dates, key=lambda date: (date < today.isoformat(), abs((datetime.date.fromisoformat(date) - today).days)))
     missing = []
     for date in ordered:
-        rec = days[date]
         y, mo, d = date.split('-')
+        has_readings_record = date in days
+        rec = days[date] if has_readings_record else {
+            'link': f'https://bible.usccb.org/bible/readings/{mo}{d}{y[2:]}.cfm',
+            'sections': [],
+        }
         christmas = (mo, d) == ('12', '25')
         if re.fullmatch(r'\d+', str(rec.get('audio', ''))) and (not christmas or rec.get('audio_suffix') == 'day'):
             continue
@@ -135,11 +145,14 @@ def add_audio(days, fetch=get):
                         rec['audio_suffix'] = slug[len(guess) + 1:]
                     else:
                         rec.pop('audio_suffix', None)
+                    days[date] = rec
                     break
             except Exception as e:
-                print(f'audio: {date}: {slug}: {e}')
+                if has_readings_record:
+                    print(f'audio: {date}: {slug}: {e}')
         else:
-            missing.append(date)
+            if has_readings_record:
+                missing.append(date)
     if missing:
         print(f'::warning::USCCB audio missing for {", ".join(missing)}; will retry on next import.')
     return missing
@@ -272,7 +285,11 @@ def main():
             if 'audio_suffix' in old[k]:
                 v['audio_suffix'] = old[k]['audio_suffix']
     old.update(new)
-    if '--no-audio' not in a: add_audio({k: v for k, v in old.items() if not k.startswith('_')})
+    if '--no-audio' not in a:
+        dates = {k: v for k, v in old.items() if not k.startswith('_')}
+        eastern_today = datetime.datetime.now(ZoneInfo('America/New_York')).date()
+        add_audio(dates, preview_from=eastern_today)
+        old.update(dates)
     if '--no-justice' not in a: update_justice(old)
     old['_copyright'] = copyright_ or old.get('_copyright', '')
     days = sorted(k for k in old if not k.startswith('_'))
