@@ -127,3 +127,43 @@ test('new memorial witnesses keep weekday psalms and newly checked apostle Vespe
     const r=select(s,'V');assert.deepEqual(r.antiphons,R.record(r.id).antiphons,s);
   }
 });
+
+test('first Sunday of Advent uses three distinct appointed Hours across the civil date boundary',()=>{
+  // USCCB 2027 calendar and DivineOffice.org First Edition witnesses:
+  // adv-w01-sun-ep1 (Saturday evening), adv-w01-sun-mp, adv-w01-sun-ep2.
+  const boston={...options,ascension:'thursday'};
+  const cases=[
+    ['2026-11-28','V',true,'adv-w01-sun-ep1','1 Thessalonians 5:23-24',
+      ['p140(1-9)','p141','b:Canticle · Philippians 2|Philippians 2:6-11']],
+    ['2026-11-29','L',false,'adv-w01-sun-mp','Romans 13:11-12',
+      ['p62(2-9)','c210','p149']],
+    ['2026-11-29','V',false,'adv-w01-sun-ep2','Philippians 4:4-7',
+      ['p109(1-5,7)','p113(1-8)','b:Canticle · Revelation 19|Revelation 19:1-7']]
+  ];
+  const gospelAntiphons=new Set(),collects=new Set();
+  for(const [iso,which,first,id,reading,items]of cases){
+    const date=new Date(iso+'T00:00:00Z');
+    const plan=H.modernPsalmody(L,date,which,boston);
+    assert.equal(L.iso(plan.d),'2026-11-29',id);
+    assert.equal(plan.first,first,id);
+    assert.equal(plan.pw,1,id);
+    assert.deepEqual(plan.items,items,id);
+    const hour=R.select(L,plan.d,which,boston,plan);
+    assert.equal(hour?.id,id);
+    assert.equal(hour.readingRef,reading);
+    assert.equal(hour.antiphons?.length,3);
+    assert.ok(hour.gospelAntiphon&&hour.collect,id);
+    gospelAntiphons.add(hour.gospelAntiphon);
+    collects.add(hour.collect);
+
+    const rendered=H.modern(L,date,which,boston);
+    const gospel=which==='L'?'Benedictus':'Magnificat';
+    const canticle=rendered.slice(rendered.indexOf('<b>'+gospel+'</b>'),rendered.indexOf('<b>Intercessions</b>'));
+    assert.ok(rendered.includes('<b>Short reading · '+reading+'</b>'),id);
+    assert.ok(rendered.includes('<b>Concluding prayer</b>'+R.html(hour.collect)),id);
+    assert.equal(canticle.split(hour.gospelAntiphon).length-1,2,id);
+    assert.doesNotMatch(rendered,/Collect \(traditional\)|Short reading \(traditional chapter\)|Intercessions \(devotional\)|Scriptural refrain:/);
+  }
+  assert.equal(gospelAntiphons.size,3,'each Hour has its own Gospel canticle antiphon');
+  assert.equal(collects.size,1,'the three Hours share the Sunday Collect');
+});
