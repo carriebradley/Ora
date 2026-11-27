@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
-const start=app.indexOf('  let feed = null;');
+const start=app.indexOf('  const MONTHS =');
 const end=app.indexOf('  const readingsSpeech =',start);
 const execute=new Function('fetch','store','st','render','document',
  app.slice(start,end)+'\nreturn {initial: feedP, refreshReadingsFeed};');
@@ -44,6 +44,15 @@ test('official readings replace third-party citations before the audio arrives',
  assert.equal(await h.refresh(),true);
  assert.equal(h.st.readings[date].full,withAudio);
  assert.deepEqual(h.counts(),{requests:4,renders:2});
+});
+test('an audio-only publisher entry adds the player while keeping available references',async()=>{
+ const citations={gospel:'Luke 21:12-19'};
+ const recording={sections:[],audio:fresh.audio};
+ const h=await setup({previous:citations,responses:[{[date]:recording,'2026-11-24':full}]});
+ assert.equal(await h.refresh(),true);
+ assert.deepEqual(h.st.readings[date],{...citations,recording});
+ assert.equal(await h.refresh(),false);
+ assert.deepEqual(h.counts(),{requests:2,renders:1});
 });
 test('failed or empty refresh preserves the current readings and can be retried',async()=>{
  const h=await setup({responses:[new Error('offline'),{}, {[date]:fresh}]});

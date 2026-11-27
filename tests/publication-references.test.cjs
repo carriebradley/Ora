@@ -17,7 +17,7 @@ test('citation-only archive removes every Scripture body and unknown copyrighted
  temp(dir=>{
   const input=path.join(dir,'feed.json'),output=path.join(dir,'refs.json');
   const corpus={'2026-11-21':{title:'An Ordinary Feast',
-    link:'https://untrusted.example/evil',audio:12345,
+    link:'https://untrusted.example/evil',audio:12345,audio_suffix:'fixture-day',
     sections:[{label:'Reading 1',cite:'Romans 12:1-2',text:'PROTECTED FIXTURE BODY',notes:'MORE PROTECTED FIXTURE'}],
     dangerousHtml:'<b>PROTECTED FIXTURE</b>'},
     _copyright:'Fixture publisher acknowledgement',
@@ -29,6 +29,7 @@ test('citation-only archive removes every Scripture body and unknown copyrighted
   assert.deepEqual(data['2026-11-21'].sections,[{label:'Reading 1',cite:'Romans 12:1-2'}]);
   assert.equal(data['2026-11-21'].link,'https://bible.usccb.org/bible/readings/112126.cfm');
   assert.equal(data['2026-11-21'].audio,'12345');
+  assert.equal(data['2026-11-21'].audio_suffix,'fixture-day');
   assert.deepEqual(data._justice,corpus._justice);
   assert.equal(data._copyright,corpus._copyright);
   assert.doesNotMatch(JSON.stringify(data),/PROTECTED FIXTURE/);
@@ -42,7 +43,8 @@ test('scheduled feed refresh can explicitly keep only citations across old and n
  temp(dir=>{
   const input=path.join(dir,'feed.json'),xml=path.join(dir,'feed.xml');
   fs.writeFileSync(input,JSON.stringify({'2026-11-20':{
-   sections:[{label:'Gospel',cite:'John 1:1-2',text:'OLD PROTECTED PASSAGE'}]}}));
+   sections:[{label:'Gospel',cite:'John 1:1-2',text:'OLD PROTECTED PASSAGE'}]},
+   '2026-11-21':{sections:[],audio:'12345',audio_suffix:'fixture-day'}}));
   fs.writeFileSync(xml,'<rss><channel><copyright>Fixture</copyright><item>'+
    '<title>Fixture feast</title><link>https://bible.usccb.org/bible/readings/112126.cfm</link>'+
    '<description>&lt;h4&gt;Reading 1 &lt;a&gt;Romans 12:1-2&lt;/a&gt;&lt;/h4&gt;'+
@@ -53,6 +55,8 @@ test('scheduled feed refresh can explicitly keep only citations across old and n
   assert.equal(updated._publication_mode,'references-only');
   assert.deepEqual(updated['2026-11-20'].sections,[{label:'Gospel',cite:'John 1:1-2'}]);
   assert.equal(updated['2026-11-21'].sections[0].cite,'Romans 12:1-2');
+  assert.equal(updated['2026-11-21'].audio,'12345');
+  assert.equal(updated['2026-11-21'].audio_suffix,'fixture-day');
   assert.doesNotMatch(JSON.stringify(updated),/PROTECTED PASSAGE/);
  });
 });
@@ -60,15 +64,16 @@ test('Roman readings renderer safely shows citations and official links without 
  const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
  const start=app.indexOf('const readingsSpeech = r =>');
  const end=app.indexOf('/* OCA lists',start);
+ const audioHelpers=app.slice(app.indexOf('  const MONTHS ='),app.indexOf('  let feed = null;'));
  assert.ok(start>=0&&end>start,'Roman renderer must be present');
  const st={readings:{'2026-11-21':{full:{
    title:'Fixture feast',sections:[{label:'Reading 1',cite:'Romans 12:1-2'},
      {label:'Gospel',cite:'John 1:1-2'}]}}}};
  const esc=s=>String(s??'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
  const usccb=()=> 'https://bible.usccb.org/bible/readings/112126.cfm';
- const render=new Function('st','esc','displayTitle','speakBtn','usccb','usccbAudio','fathersBlock',
-   app.slice(start,end)+'\nreturn {romanReadingsHTML,readingsSpeech};')(
-    st,esc,s=>s,s=>'<button>'+esc(s)+'</button>',usccb,usccb,()=>'<p>Related patristic citation</p>');
+ const render=new Function('st','esc','displayTitle','speakBtn','usccb','fathersBlock',
+   audioHelpers+app.slice(start,end)+'\nreturn {romanReadingsHTML,readingsSpeech};')(
+    st,esc,s=>s,s=>'<button>'+esc(s)+'</button>',usccb,()=>'<p>Related patristic citation</p>');
  const compact=render.romanReadingsHTML('2026-11-21',false,true);
  const regular=render.romanReadingsHTML('2026-11-21',false,false);
  assert.match(compact,/Romans 12:1-2/);

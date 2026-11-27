@@ -38,6 +38,9 @@ def references_only(source):
             safe['title'] = record['title']
         if str(record.get('audio', '')).isdigit() and record.get('audio'):
             safe['audio'] = str(record['audio'])
+            suffix = record.get('audio_suffix')
+            if isinstance(suffix, str) and re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', suffix):
+                safe['audio_suffix'] = suffix
         out[key] = safe
     out['_publication_mode'] = 'references-only'
     return out
