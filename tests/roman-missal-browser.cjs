@@ -81,10 +81,18 @@ module.exports=async(page,context,base,artifacts,violations)=>{
  assert.equal(await page.locator('dialog[open]').count(),0);await context.setOffline(false);
  await page.goto(`${base}index.html?tab=liturgy&date=2026-12-25&rite=roman`);
  const openMissal=prayers.getByRole('button',{name:'Open saved Missal'});
- await openMissal.waitFor();
- assert.match(await prayers.innerText(),/more than one section for this date/);
- assert.doesNotMatch(await prayers.innerText(),/Fixture Christmas (?:vigil|day) collect/);
- assert.equal(await prayers.locator('[data-reader="eucharistic"]').count(),0);
+ const ambiguity=await page.waitForFunction(()=>{
+  const preview=document.querySelector('.reader-inline-text.reader-inline-missal');
+  if(!preview?.querySelector('button[data-reader="open"]'))return false;
+  return {
+   text:preview.textContent,
+   eucharisticButtons:preview.querySelectorAll('[data-reader="eucharistic"]').length
+  };
+ });
+ const message=await ambiguity.jsonValue();
+ assert.match(message.text,/more than one section for this date/);
+ assert.doesNotMatch(message.text,/Fixture Christmas (?:vigil|day) collect/);
+ assert.equal(message.eucharisticButtons,0);
  await openMissal.click();
 
  const book=page.locator('#liturgical-reader');

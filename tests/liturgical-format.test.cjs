@@ -1114,6 +1114,20 @@ test('Newton optional blocks are identified only with their complete exact petit
  assert.deepEqual([...groups.starts],['0:4','1:7']);
  assert.deepEqual([...groups.lines],['0:5','0:6','0:7','0:8','2:0','2:1']);
  assert.equal(JSON.stringify(source),snapshot,'original book remains intact');
+ const joined=source.map(part=>({...part,lines:part.lines.slice()}));
+ joined.newton2009=true;
+ joined[0].lines.splice(4,2,'Optional : '+source[0].lines[5]);
+ joined[1].lines[7]='Optional : '+source[2].lines[0];
+ joined[2].lines.shift();
+ const joinedGroups=F.newtonOptionalPetitions(joined);
+ assert.deepEqual([...joinedGroups.starts],['0:4','1:7']);
+ assert.deepEqual([...joinedGroups.firstPrayers],[
+  ['0:4',source[0].lines[5]],['1:7',source[2].lines[0]]
+ ]);
+ assert.deepEqual([...joinedGroups.lines],['0:4','0:5','0:6','0:7','1:7','2:0']);
+ joined[0].lines[4]='Optional : A different petition.';
+ assert.equal(F.newtonOptionalPetitions(joined).starts.has('0:4'),false,
+  'a joined marker does not bypass the source check');
  const unknown=source.map(p=>({...p,lines:p.lines.slice()}));
  assert.equal(F.newtonOptionalPetitions(unknown).lines.size,0,'unknown book has no source-specific grouping');
  const changed=source.map(p=>({...p,lines:p.lines.slice()}));changed.newton2009=true;
