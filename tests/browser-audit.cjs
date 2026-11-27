@@ -2,7 +2,7 @@ const {chromium}=require('playwright');
 const fs=require('node:fs');const path=require('node:path');const os=require('node:os');const assert=require('node:assert/strict');
 const artifacts=process.env.ORA_ARTIFACT_DIR || path.join(os.tmpdir(),'ora-browser-audit');fs.mkdirSync(artifacts,{recursive:true});
 
-async function checkLateDailyRecording(browser, base, trigger, audioFirst = false) {
+async function checkLateDailyRecording(browser, base, trigger, arrival = 'text-first') {
  const context = await browser.newContext({viewport: {width: 390, height: 844}, serviceWorkers: 'block'});
  try {
   const page = await context.newPage();
@@ -13,11 +13,14 @@ async function checkLateDailyRecording(browser, base, trigger, audioFirst = fals
   const track = '123456789';
   const previousDay = {'2030-02-02': {sections: [{label: 'First Reading', cite: 'Test 1:1'}]}};
   const officialReading = {title: 'Fixture Mass', sections: [{label: 'First Reading', cite: 'Test 2:1', text: 'Browser fixture reading.'}]};
+  const withRecording = {...previousDay, [iso]: {sections: [], audio: track}};
+  const recordingInitially = arrival === 'initial-recording';
+  const {promise:lookup, resolve:releaseCitations} = Promise.withResolvers();
   const refresh = () => trigger === 'foreground'
    ? page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')))
    : page.clock.fastForward(5 * 60 * 1000);
   let requests = 0;
-  let feed = previousDay;
+  let feed = recordingInitially ? withRecording : previousDay;
   await context.route('**/*', route => {
    const url = route.request().url();
    if (url === feedUrl) {
@@ -27,6 +30,12 @@ async function checkLateDailyRecording(browser, base, trigger, audioFirst = fals
    if (url.startsWith('https://w.soundcloud.com/player/')) {
     return route.fulfill({contentType: 'text/html', body: '<p>Recording fixture</p>'});
    }
+   if (recordingInitially && url.startsWith('https://cpbjr.github.io/catholic-readings-api/')) {
+    return lookup.then(() => route.fulfill({
+     headers: {'access-control-allow-origin': '*'},
+     json: {readings: {gospel: 'Fallback 2:1'}}
+    }));
+   }
    return url.startsWith(base) ? route.continue() : route.abort();
   });
 
@@ -34,13 +43,24 @@ async function checkLateDailyRecording(browser, base, trigger, audioFirst = fals
   const reading = page.getByText('Browser fixture reading.', {exact: true});
   const player = page.locator('iframe.readings-audio-player');
   const officialLink = page.locator(`a[href="${officialUrl}"]`);
-  await page.getByText('Readings aren’t available offline or for this date yet', {exact: false}).waitFor();
+  if (recordingInitially) {
+   await player.contentFrame().getByText('Recording fixture').waitFor();
+   await page.getByText('Loading readings…', {exact: true}).waitFor();
+   const initialFrame = await (await player.elementHandle()).contentFrame();
+   releaseCitations();
+   await page.getByText('Fallback 2:1', {exact: true}).waitFor();
+   assert.equal(await (await player.elementHandle()).contentFrame(), initialFrame, 'late backup citations preserve the running frame');
+  } else {
+   await page.getByText('Readings aren’t available offline or for this date yet', {exact: false}).waitFor();
+  }
   assert.equal(await officialLink.count(), 1, 'the official link is available while waiting');
   assert.equal(requests, 1, 'the initial feed loaded once');
 
-  if (audioFirst) {
-   feed = {...previousDay, [iso]: {sections: [], audio: track}};
-   await refresh();
+  if (arrival !== 'text-first') {
+   if (!recordingInitially) {
+    feed = withRecording;
+    await refresh();
+   }
    await player.contentFrame().getByText('Recording fixture').waitFor();
    assert.equal(await reading.count(), 0, 'the player is available while the reading is pending');
    const playerFrame = await (await player.elementHandle()).contentFrame();
@@ -63,7 +83,8 @@ async function checkLateDailyRecording(browser, base, trigger, audioFirst = fals
   const src = new URL(await player.getAttribute('src'));
   assert.equal(src.origin, 'https://w.soundcloud.com');
   assert.equal(src.searchParams.get('url'), `https://api.soundcloud.com/tracks/${track}`);
-  assert.equal(requests, 3, `${trigger} refreshed the feed without reloading the page`);
+  const expectedRequests = recordingInitially ? 2 : 3;
+  assert.equal(requests, expectedRequests, `${trigger} refreshed the feed without reloading the page`);
   assert.equal(await officialLink.count(), 1, 'the direct official link stays available');
   assert.equal(await reading.count(), 1, 'the readings stay on screen');
 
@@ -71,7 +92,7 @@ async function checkLateDailyRecording(browser, base, trigger, audioFirst = fals
   await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
   await page.clock.fastForward(5 * 60 * 1000);
   assert.equal(await player.getAttribute('data-playback-check'), 'current', 'later refresh triggers retain the same player');
-  assert.equal(requests, 3, 'a visible player does not trigger another feed fetch');
+  assert.equal(requests, expectedRequests, 'complete readings and a player do not trigger another feed fetch');
  } finally {
   await context.close();
  }
@@ -200,7 +221,8 @@ async function checkLateDailyRecording(browser, base, trigger, audioFirst = fals
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'future-date recording link fits mobile width');
  await checkLateDailyRecording(browser, base, 'foreground');
  await checkLateDailyRecording(browser, base, 'timer');
- await checkLateDailyRecording(browser, base, 'timer', true);
+ await checkLateDailyRecording(browser, base, 'timer', 'recording-first');
+ await checkLateDailyRecording(browser, base, 'foreground', 'initial-recording');
  const feastContext = await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
  try {
   const feastPage = await feastContext.newPage();
