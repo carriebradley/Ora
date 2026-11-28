@@ -245,6 +245,10 @@ module.exports=async(page,base)=>{
  assert.equal(await jamesRow.getAttribute('data-vestment'),'dark');
  assert.match(await jamesRow.getAttribute('aria-label'),/Vestment color dark/);
  assert.equal(await jamesRow.locator('.today-season-dot').getAttribute('data-season-color'),'v');
+ const traditionalFriday=page.locator('.gl[data-v="sarum"]');
+ assert.equal(await traditionalFriday.locator('.gb').innerText(),'Fast Day');
+ assert.equal(await traditionalFriday.locator('.today-season-dot').getAttribute('data-season-color'),'v');
+ assert.match(await traditionalFriday.getAttribute('aria-label'),/Ora’s default vestment color green/);
  const darkBadgeFill=await jamesRow.locator('.gb').evaluate(el=>el.style.getPropertyValue('--badge-fill'));
  assert.equal(darkBadgeFill,'#6b5871');
  await page.goto(`${base}index.html?tab=calendar&rite=byz&date=2026-11-27`);
@@ -252,6 +256,12 @@ module.exports=async(page,base)=>{
  assert.equal(await jamesDot.getAttribute('data-category'),'v');
  assert.equal(await jamesDot.evaluate(el=>el.style.getPropertyValue('--c')),darkBadgeFill);
  assert.equal(await page.getByRole('link',{name:'Dark vestments · Melkite Typikon'}).count(),1);
+ const fridayCell=page.locator('.cell[data-d="2026-11-27"]');
+ assert.match(await fridayCell.getAttribute('aria-label'),/Ora’s default vestment color green/);
+ const traditionalSources=page.locator('section.card').filter({has:page.locator('.sw[data-vestment="g"][data-season="St. Martin\'s Lent"]')}).locator('.srcd');
+ await traditionalSources.locator('summary').click();
+ assert.match(await traditionalSources.innerText(),/Green is Ora’s default/);
+ assert.equal(await traditionalSources.getByRole('link',{name:'Sarum Missal · vestment rubrics'}).count(),1);
  await page.goto(`${base}index.html?tab=today&rite=byz&date=2026-11-22`);
  assert.equal(await page.locator('.gl[data-v="byz"] .today-season-dot').getAttribute('data-season-color'),'v','Sunday remains in Nativity prayer season');
  await page.goto(`${base}index.html?tab=today&rite=roman&date=2026-04-03`);
