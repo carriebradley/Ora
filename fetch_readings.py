@@ -15,6 +15,7 @@ import json, re, sys, os, datetime, urllib.request, urllib.error
 import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from html import unescape
+from http.client import HTTPException
 from urllib.parse import unquote
 from zoneinfo import ZoneInfo
 
@@ -64,6 +65,8 @@ class Sections(HTMLParser):
 def parse(xml_bytes):
     root = ET.fromstring(xml_bytes)
     ch = root.find('channel')
+    if ch is None:
+        raise ET.ParseError('Missing RSS channel')
     copyright_ = (ch.findtext('copyright') or '').strip()
     out = {}
     for it in ch.findall('item'):
@@ -273,12 +276,25 @@ def update_justice(old, fetch=None):
 def main():
     a = sys.argv[1:]
     out_path = a[a.index('--out') + 1] if '--out' in a else 'readings.json'
-    if '--file' in a: data = open(a[a.index('--file') + 1], 'rb').read()
+    rss_failed = False
+    if '--file' in a:
+        with open(a[a.index('--file') + 1], 'rb') as source:
+            new, copyright_ = parse(source.read())
     else:
         req = urllib.request.Request(FEED, headers={'User-Agent': 'ora-personal-prayer-app/1.0 (personal use)'})
-        data = urllib.request.urlopen(req, timeout=30).read()
-    new, copyright_ = parse(data)
-    old = json.load(open(out_path)) if os.path.exists(out_path) else {}
+        try:
+            with urllib.request.urlopen(req, timeout=30) as response:
+                new, copyright_ = parse(response.read())
+        except (OSError, HTTPException, ET.ParseError) as error:
+            if '--no-audio' in a or not os.path.isfile(out_path):
+                raise
+            print(f'::warning::USCCB readings feed unavailable ({error}). Keeping saved readings and checking podcasts.')
+            new, copyright_ = {}, ''
+            rss_failed = True
+    old = {}
+    if os.path.exists(out_path):
+        with open(out_path, encoding='utf-8') as archive:
+            old = json.load(archive)
     for k, v in new.items():
         if old.get(k, {}).get('audio') and not v.get('audio'):
             v['audio'] = old[k]['audio']
@@ -290,7 +306,7 @@ def main():
         eastern_today = datetime.datetime.now(ZoneInfo('America/New_York')).date()
         add_audio(dates, preview_from=eastern_today)
         old.update(dates)
-    if '--no-justice' not in a: update_justice(old)
+    if '--no-justice' not in a and not rss_failed: update_justice(old)
     old['_copyright'] = copyright_ or old.get('_copyright', '')
     days = sorted(k for k in old if not k.startswith('_'))
     for k in days[:-KEEP_DAYS]: del old[k]
@@ -304,7 +320,8 @@ def main():
         old = references_only(old)
     else:
         old.pop('_publication_mode', None)
-    json.dump(old, open(out_path, 'w'), ensure_ascii=False, separators=(',', ':'), sort_keys=True)
+    with open(out_path, 'w', encoding='utf-8') as archive:
+        json.dump(old, archive, ensure_ascii=False, separators=(',', ':'), sort_keys=True)
     print(f'{len(new)} days from feed; {len(days)} total in {out_path}')
 
 
