@@ -1,6 +1,13 @@
 import datetime
+import io
+import json
+import tempfile
 import unittest
-from fetch_readings import add_audio, track_id, PODCAST
+from pathlib import Path
+from unittest.mock import patch
+from zoneinfo import ZoneInfo
+
+from fetch_readings import FEED, MONTHS, PODCAST, add_audio, main, track_id
 
 class DailyReadingsAudioTests(unittest.TestCase):
     def test_track_id_escaped(self):
@@ -50,6 +57,40 @@ class DailyReadingsAudioTests(unittest.TestCase):
             'sections': [],
             'audio': '456',
         })
+
+    def test_import_keeps_saved_readings_and_adds_audio_during_a_readings_feed_outage(self):
+        today = datetime.datetime.now(ZoneInfo('America/New_York')).date()
+        date = today.isoformat()
+        suffix = '-day' if (today.month, today.day) == (12, 25) else ''
+        slug = f'daily-mass-reading-podcast-{MONTHS[today.month - 1]}-{today.day}-{today.year}{suffix}'
+        saved = {'sections': [{'label': 'Gospel', 'cite': 'John 1:1', 'text': 'Test fixture'}]}
+
+        for failure in (TimeoutError('test timeout'), b'<html>Unavailable</html>'):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as directory:
+                archive = Path(directory, 'readings.json')
+                archive.write_text(json.dumps({date: saved, '_copyright': 'Test source credit'}))
+
+                def open_url(request, timeout):
+                    url = request.full_url
+                    if url == FEED:
+                        if isinstance(failure, Exception):
+                            raise failure
+                        return io.BytesIO(failure)
+                    if url == f'{PODCAST}/{slug}':
+                        return io.BytesIO(b'https://api.soundcloud.com/tracks/456')
+                    return io.BytesIO(b'')
+
+                with (
+                    patch('sys.argv', ['fetch_readings.py', '--out', str(archive), '--no-justice']),
+                    patch('fetch_readings.urllib.request.urlopen', side_effect=open_url),
+                    patch.dict('os.environ', {'ORA_READINGS_PUBLICATION_MODE': 'full'}),
+                ):
+                    main()
+
+                updated = json.loads(archive.read_text())
+                self.assertEqual(updated[date]['sections'], saved['sections'])
+                self.assertEqual(updated[date]['audio'], '456')
+                self.assertEqual(updated['_copyright'], 'Test source credit')
 
     def test_christmas_replaces_legacy_track_with_the_daytime_recording(self):
         date = '2026-12-25'
